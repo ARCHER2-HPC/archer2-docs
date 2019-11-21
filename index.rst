@@ -1,7 +1,7 @@
 ARCHER2 User Documentation
 ==========================
 
-This is a location for drafting ARCHER2 documentation.
+This is a location for drafting ARCHER2 documentation and to test deployment.
 
 .. toctree::
    :maxdepth: 2
