@@ -1,0 +1,16 @@
+install:
+  - pip install --user Sphinx
+  - pip install --user sphinx_rtd_theme
+
+script:
+  - make html
+
+deploy:
+  provider: pages
+  repo: aturner-epcc/archer2-docs
+  target-branch: gh-pages
+  local-dir: _build/html
+  github_token: $ARCHER2DOC_TOKEN
+  skip-cleanup: true
+  on:
+    branch: master
