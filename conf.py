@@ -24,9 +24,9 @@ copyright = u'2019, EPCC'
 author = u'EPCC'
 
 # The short X.Y version
-version = u''
+version = u'0.1'
 # The full version, including alpha/beta/rc tags
-release = u''
+release = u'alpha'
 
 
 # -- General configuration ---------------------------------------------------
@@ -107,8 +107,8 @@ htmlhelp_basename = 'ARCHER2-doc'
 html_context = {
   # Create an "Edit on GitHub" link in the page headers.
   'display_github': True,
-  'github_user': 'EPCCed',
-  'github_repo': 'docs',
+  'github_user': 'aturner-epcc',
+  'github_repo': 'archer2-docs',
   'github_version': 'master/'
 }
 
