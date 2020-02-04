@@ -7,7 +7,7 @@ script:
 
 deploy:
   provider: pages
-  repo: aturner-epcc/archer2-docs
+  repo: archer2-hpc/archer2-docs
   target-branch: gh-pages
   local-dir: _build/html
   github_token: $ARCHER2DOC_TOKEN
