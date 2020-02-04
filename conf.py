@@ -107,9 +107,9 @@ htmlhelp_basename = 'ARCHER2-doc'
 html_context = {
   # Create an "Edit on GitHub" link in the page headers.
   'display_github': True,
-  'github_user': 'aturner-epcc',
+  'github_user': 'archer2-hpc',
   'github_repo': 'archer2-docs',
-  'github_version': 'master/'
+  'github_version': 'gh-pages/'
 }
 
 
