@@ -109,7 +109,7 @@ html_context = {
   'display_github': True,
   'github_user': 'archer2-hpc',
   'github_repo': 'archer2-docs',
-  'github_version': 'gh-pages/'
+  'github_version': 'master/'
 }
 
 
