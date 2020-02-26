@@ -15,6 +15,16 @@ This is a location for drafting ARCHER2 documentation and to test deployment.
 
    user-guide/overview.rst
    user-guide/connecting.rst
+   user-guide/data.rst
+   user-guide/sw-environment.rst
+   user-guide/scheduler.rst
+   user-guide/io.rst
+   user-guide/dev-environment.rst
+   user-guide/containers.rst
+   user-guide/python.rst
+   user-guide/analysis.rst
+   user-guide/debug.rst
+   user-guide/profile.rst
 
 .. toctree::
    :maxdepth: 2
