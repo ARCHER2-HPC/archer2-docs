@@ -13,7 +13,7 @@ distribution, then the simplest way to make these available is often to install
 your own version of `Miniconda <https://conda.io/miniconda.html>`__  and add the packages you need. We provide 
 instructions on how to do this below. An alternative way to provide your own
 packages (and to make them available more generally to other people in your
-project and beyond) would be to use a Singularity container, see the :doc:`singularity`
+project and beyond) would be to use a Singularity container, see the :doc:`containers`
 chapter of this User Guide for more information on this topic.
 
 Accessing central Anaconda Python
