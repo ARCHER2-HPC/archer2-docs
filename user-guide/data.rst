@@ -3,6 +3,11 @@ Data management and transfer
 
 This section covers best practice and tools for data management on ARCHER2.
 
+.. note::
+
+  If oyu have any questions on data management and transfer please do not 
+  hesitate to contact the ARCHER2 service desk at support@archer2.ac.uk.
+
 Useful resources and links
 --------------------------
 
@@ -115,58 +120,199 @@ Solid state storage
 RDF storage
 ^^^^^^^^^^^
 
-There are three archive file-systems.
+.. TODO add description of RDF storage
 
-/epsrc
-/nerc
-/general
-Most projects will have an allocation on one of these file-systems. If you have a requirement to use these file-systems and your project does not have an allocation (or the allocation is insufficient) please contact the helpdesk.
+Td that projects EITHER use a single group and user quotas or use group quotas only to avoid confusion.
 
-The file-systems are provided by the RDF but are directly mounted by the ARCHER login nodes and serial-batch/post-processing nodes as well as the RDF data-mover nodes and analysis cluster.
+Archiving and data transfer
+---------------------------
 
-The archive file-systems are parallel file-systems built using GPFS. They are intended as a safe location for large data-sets so backups to an off-site tape library are performed daily. Backups of deleted files are retained for 180 days. N.B. files with filenames that contain non-ascii characters and/or non-printable characters cannot be backed up using our automated process and so will be omitted from all backups.
+Data transfer speed may be limited by many different factors so the
+best data transfer mechanism to use depends on the type of data being
+transferred and where the data is going.
 
-As with any parallel file-system large data files are handled more efficiently than large numbers of small data files. If your data consists of a large number of related files you should consider packing them into larger archive files for long term storage. This will also make it easier to manage your data as the collection can be treated as a single object.
+  - **Disk speed** - The ARCHER /work file-systems and the RDF file-systems
+    are highly parallel consisting of a very large number of high performance
+    disk drives. This allows them to support a very high data bandwidth.
+    Unless the remote system has a similar parallel file-system you may
+    find your transfer speed limited by disk performance.
+  - **Meta-data performance** - Meta-data operations such as opening and
+    closing files or listing the owner or size of a file are much less parallel
+    than read/write operations. If your data consists of a very large number
+    of small files you may find your transfer speed is limited by meta-data
+    operations. Meta-data operations performed by other users of the system
+    will interact strongly with those you perform so reducing the number of
+    such operations you use, may reduce variability in your IO timings.
+  - **Network speed** - Data transfer performance can be limited by network
+    speed. More importantly it is limited by the slowest section of the
+    network between source and destination.
+  - **Firewall speed** - Most modern networks are protected by some form of
+    firewall that filters out malicious traffic. This filtering has some
+    overhead and can result in a reduction in data transfer performance.
+    The needs of a general purpose network that hosts email/web-servers and
+    desktop machines are quite different from a research network that needs
+    to support high volume data transfers. If you are trying to transfer
+    data to or from a host on a general purpose network you may find the
+    firewall for that network will limit the transfer rate you can achieve.
 
-Understanding rdf file systems quotas
-It should be noted that on the RDF the group allocations are implemented using GPFS "file-sets" this means that the quota and usage is what you expect it to be (the amount of data held within the directory tree). Files outside of these directory trees don't cound towards the group totals.
+The method you use to transfer data to/from ARCHER2 will depend on how much 
+you want to transfer and where to. The methods we cover in this guide are:
 
-However the user quotas are still standard unix file-quotas and the usage values is the sum of all of the files owned by the user wherever they are within the /nerc, /epsrc or /general file-system. The user quotas will only sum to the group value if all of the users concerned only have access to a single file-set.
+  - **scp/sftp/rsync** - These are the simplest methods of transferring data and
+    can be used up to moderate amounts of data. If you are transferring data
+    to your workstation/laptop then this is the method you will use.
+  - **Globus Online (GO)** - If you are transferring large amounts of data to another
+    central computing facility then GO provides high performance parallel data
+    transfer functionality. Both ends of the transfer must be setup as GO 
+    endpoints (ARCHER2 is configured as a GO endpoint.
 
-To be clear, every file counts towards both a user quota and a group quota (or a file-set in the case of the RDF file-systems) but one is a limit on the space taken by files owned by a specific user, the other is a limit on the space taken by files belonging to a group (or directory tree).
+Before discussing specific data transfer methods, we cover *archiving* which is
+an essential process for transferring data efficiently.
 
-The group/file-set quota used by a project is constrained such that it can never total more than the overall disk space allcated to the project. However, there is no such limit on the user quotas. Most projects do not choose to set user quotas at all and leave all user quotas to be without limit.
+Archiving
+~~~~~~~~~
 
-We would recommend that projects EITHER use a single group and user quotas or use group quotas only to avoid confusion.
+If you have related data that consists of a large number of small files it is
+strongly recommended to pack the files into a larger "archive" file for ease of
+transfer and manipulation. A single large file makes more efficient use of the
+file system and is easier to move and copy and transfer because significantly
+fewer meta-data operations are required. Archive files can be created using tools
+like ``tar`` and zip.
 
-Data Transfer via SSH
----------------------
+tar
+^^^
+
+The ``tar`` command packs files into a "tape archive" format. The command has
+general form:
+
+::
+
+  tar [options] [file(s)]
+
+Common options include:
+
+  - ``-c`` create a new archive
+  - ``-v`` verbosely list files processed
+  - ``-W`` verify the archive after writing
+  - ``-l`` confirm all file hard links are included in the archive
+  - ``-f`` use an archive file (for historical reasons, tar writes 
+    its output to stdout by default rather than a file).
+    
+Putting these together:
+
+::
+
+  tar -cvWlf mydata.tar mydata
+
+will create and verify an archive. Further information on the hard link check
+can be found in the ``tar`` manual (accessed via ``man tar`` or at
+`man tar <https://linux.die.net/man/1/tar>`__.
+
+To extract files from a tar file, the option ``-x`` is used. For example:
+
+::
+
+  tar -xf mydata.tar
+
+will recover the contents of ``mydata.tar`` to the current working directory.
+
+To verify an existing tar file against a set of data, the ``-d`` (diff) option
+can be used. By default, no output will be given if a verification succeeds
+and an example of a failed verification follows:
+
+::
+
+  $> tar -df mydata.tar mydata/*
+  mydata/damaged_file: Mod time differs
+  mydata/damaged_file: Size differs
+
+Note that tar files do not store checksums with their data, requiring the original
+data to be present during verification.
+
+zip
+^^^
+
+The zip file format is widely used for archiving files and is supported by most
+major operating systems. The utility to create zip files can be run from the command
+line as:
+
+::
+
+  zip [options] mydata.zip [file(s)] 
+
+Common options are:
+
+  - ``-r`` used to zip up a directory
+  - ``-#`` where "#" represents a digit ranging from 0 to 9 to specify compression level,
+    0 being the least and 9 the most. Default compression is -6 but we recommend using
+    -0 to speed up the archiving process.
+    
+Together:
+
+::
+
+  zip -0r mydata.zip mydata
+
+will create an archive.
+
+.. note:: 
+
+  Unlike tar, zip files do not preserve hard links. File data will be copied on archive
+  creation, *e.g.* an uncompressed zip archive of a 100MB file and a hard link to that
+  file will be approximately 200MB in size. This makes zip an unsuitable format if you
+  wish to precisely reproduce the file system layout.
+
+The corresponding ``unzip`` command is used to extract data from the archive. The simplest
+use case is:
+
+::
+
+  unzip mydata.zip
+
+which recovers the contents of the archive to the current working directory.
+
+Files in a zip archive are stored with a CRC checksum to help detect data loss.
+``unzip`` provides options for verifying this checksum against the stored files. The
+relevant flag is ``-t`` and is used as follows:
+
+::
+
+  $> unzip -t mydata.zip
+  Archive:  mydata.zip
+      testing: mydata/                 OK
+      testing: mydata/file             OK
+  No errors detected in compressed data of mydata.zip.
+
+Data transfer via SSH
+~~~~~~~~~~~~~~~~~~~~~
 
 The easiest way of transferring data to/from ARCHER2 is to use one of
 the standard programs based on the SSH protocol such as ``scp``,
 ``sftp`` or ``rsync``. These all use the same underlying mechanism (SSH)
 as you normally use to log-in to ARCHER2. So, once the the command has
 been executed via the command line, you will be prompted for your
-password for the specified account on the **remote machine**.
+password for the specified account on the *remote machine* (ARCHER2 in
+this case).
 
 To avoid having to type in your password multiple times you can set up a
 *SSH key pair* and use an *SSH agent* as documented in the User Guide at
 :doc:`connecting`.
 
-SSH Transfer Performance Considerations
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+SSH data transfer performance considerations
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The ssh protocol encrypts all traffic it sends. This means that
-file-transfer using ssh consumes a relatively large amount of CPU time
-at both ends of the transfer. The ARCHER2 DSN has
-fairly fast processors that can sustain about 100 MB/s transfer.
-The encryption algorithm used is negotiated between the ssh-client and the ssh-server. There are command
-line flags that allow you to specify a preference for which encryption
-algorithm should be used. You may be able to improve transfer speeds by
-reqeusting a different algorithm than the default. The *arcfour*
-algorithm is usually quite fast if both hosts support it.
+The SSH protocol encrypts all traffic it sends. This means that
+file transfer using SSH consumes a relatively large amount of CPU time
+at both ends of the transfer (for encryption and decryption). The ARCHER2
+login nodes have fairly fast processors that can sustain about 100 MB/s
+transfer. The encryption algorithm used is negotiated between the SSH
+client and the SSH server. There are command line flags that allow you
+to specify a preference for which encryption algorithm should be used.
+You may be able to improve transfer speeds by requesting a different
+algorithm than the default. The *arcfour* algorithm is usually fast if
+both hosts support it.
 
-A single ssh based transfer will usually not be able to saturate the
+A single SSH based transfer will usually not be able to saturate the
 available network bandwidth or the available disk bandwidth so you may
 see an overall improvement by running several data transfer operations
 in parallel. To reduce metadata interactions it is a good idea to
@@ -174,31 +320,31 @@ overlap transfers of files from different directories.
 
 In addition, you should consider the following when transferring data:
 
-* Only transfer those files that are required. Consider which data you
-  really need to keep.
-* Combine lots of small files into a single *tar* archive, to reduce the
-  overheads associated in initiating many separate data transfers (over
-  SSH each file counts as an individual transfer).
-* Compress data before sending it, e.g. using gzip.
+  - Only transfer those files that are required. Consider which data you
+    really need to keep.
+  - Combine lots of small files into a single *tar* archive, to reduce the
+    overheads associated in initiating many separate data transfers (over
+    SSH, each file counts as an individual transfer).
+  - Compress data before transferring it, *e.g.* using ``gzip``.
 
-scp command
-~~~~~~~~~~~
+scp
+^^^
 
 The ``scp`` command creates a copy of a file, or if given the ``-r``
-flag, a directory, on a remote machine.
+flag, a directory either from a local machine onto a remote machine
+or from a remote machine onto a local machine.
 
- 
-For example, to transfer files to ARCHER2:
+For example, to transfer files to ARCHER2 from a local machine:
 
 ::
 
-    scp [options] source user@dsn.archer2.ac.uk:[destination]
+    scp [options] source user@login.archer2.ac.uk:[destination]
 
 (Remember to replace ``user`` with your ARCHER2 username in the example
 above.)
 
 In the above example, the ``[destination]`` is optional, as when left
-out scp will simply copy the source into the user's home directory. Also
+out ``scp`` will copy the source into your home directory. Also,
 the ``source`` should be the absolute path of the file/directory being
 copied or the command should be executed in the directory containing the
 source file/directory.
@@ -209,34 +355,35 @@ If you want to request a different encryption algorithm add the ``-c
 
 ::
 
-    scp [options] -c arcfour source user@dsn.archer2.ac.uk:[destination]
+    scp [options] -c arcfour source user@login.archer2.ac.uk:[destination]
 
 (Remember to replace ``user`` with your ARCHER2 username in the example
 above.)
 
-rsync command
-~~~~~~~~~~~~~
+rsync
+^^^^^
 
 The ``rsync`` command can also transfer data between hosts using a
 ``ssh`` connection. It creates a copy of a file or, if given the ``-r``
-flag, a directory at the given destination, similar to scp above.
+flag, a directory at the given destination, similar to ``scp`` above.
 
 Given the ``-a`` option rsync can also make exact copies (including
 permissions), this is referred to as *mirroring*. In this case the
-``rsync`` command is executed with ssh to create the copy on a remote
+``rsync`` command is executed with ``ssh`` to create the copy on a remote
 machine.
 
-To transfer files to ARCHER2 using ``rsync`` the command should have the form:
+To transfer files to ARCHER2 using ``rsync`` with ``ssh`` the command
+has the form:
 
 ::
 
-    rsync [options] -e ssh source user@dsn.archer2.ac.uk:[destination]
+    rsync [options] -e ssh source user@login.archer2.ac.uk:[destination]
 
 (Remember to replace ``user`` with your ARCHER2 username in the example
 above.)
 
 In the above example, the ``[destination]`` is optional, as when left
-out rsync will simply copy the source into the users home directory.
+out rsync will copy the source into your home directory.
 Also the ``source`` should be the absolute path of the file/directory
 being copied or the command should be executed in the directory
 containing the source file/directory.
@@ -251,49 +398,27 @@ using a quoted string as the argument of the ``-e`` flag. e.g.
 (Remember to replace ``user`` with your ARCHER2 username in the example
 above.)
 
-Using the RDF from ARCHER2
--------------------------
+Globus online (GO)
+~~~~~~~~~~~~~~~~~~
 
-The ARCHER2 DSN provides access to the RDF file system via direct mounts on a virtual
-machine (VM). To access the VM with the RDF file system mounts you should log into
-the DSN as normal and then use SSH to connect to the ``dsn-rdf`` VM:
+Globus online is a web-based file transfer portal provided by the Globus project:
 
-::
+  - `www.globus.org <https://www.globus.org>`__
 
-   ssh user@dsn-rdf
+You will need to register with the web portal and create an account before you can
+use GO. Internally, GO uses the GridFTP file transfer mechanism but the web portal
+provides a simple user interface and handles all the management of file transfers.
+GO will retry failed transfers and send notifications when transfers complete so
+there is no need to stay logged into the web portal while transfers are ongoing.
 
-(Remember to replace ``user`` with your ARCHER2 username in the example
-above.)
+To transfer data between sites, both ends of the transfer need to support
+a GO *endpoint*. GO also provide a client you can install on your laptop or
+workstation that can act as a local endpoint (though you often do not have a network
+connection with sufficient bandwidth from your local system to support high performance
+data transfers). You have to activate an endpoint before use, either by enabling
+the connector software on your local machine or by providing login details in
+your browser for a server endpoint. Once activated, endpoints will remain active for
+a couple of days allowing transfers to complete.
 
-Once you are on the RDF access VM, you will be able to find the RDF file systems 
-mounted as:
-
-* ``/epsrc``
-* ``/nerc``
-* ``/general``
-
-
-The specific file system for your project's data will depend on which was allocated when the
-project was setup.
-
-.. note:: Not all projects on ARCHER2 have space allocated on the RDF. If you are unsure if you have space or not, please contact the `ARCHER2 Helpdesk <mailto:support@archer2.ac.uk>`_
-
-Moving data between the RDF and the ARCHER2 file system
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The simplest (and most efficient) way to do this is to use the ``cp`` command on the RDF access VM. For example, once you are logged onto the RDF access VM you could copy data from the RDF to the ARCHER2 file system with:
-
-::
-
-   cp /general/t01/t01/user/some_data.tar.gz /lustre/home/t01/user/
-
-.. warning:: You should never use ``mv`` to move data between RDF file systems and ARCHER2 file systems (or between any two different file systems) as there is the potential to lose data. You should always copy the data, verify that the copy is not corrupted and then delete the original version.
-
-Transferring data to/from the RDF
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If you wish to transfer data to/from the RDF then you should use the RDF Data Transfer Nodes (DTNs) rather than the ARCHER2 DSN node. Documentation on how to transfer data to/from the RDF can be found on the RDF website:
-
-* `RDF Data Transfer Guide <http://rdf.ac.uk/documentation/data-management/transfers.php>`__
-
-
+The GO endpoint on ARCHER2 is called "ARCHER2". When activating this endpoint use
+the same username and password you use to login to ARCHER2.
