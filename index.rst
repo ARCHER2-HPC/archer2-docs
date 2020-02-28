@@ -11,7 +11,7 @@ This is a location for drafting ARCHER2 documentation and to test deployment.
 
 .. toctree::
    :maxdepth: 2
-   :caption: User guide
+   :caption: User and best practice guide
 
    user-guide/overview.rst
    user-guide/connecting.rst
