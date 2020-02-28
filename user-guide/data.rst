@@ -5,7 +5,7 @@ This section covers best practice and tools for data management on ARCHER2.
 
 .. note::
 
-  If oyu have any questions on data management and transfer please do not 
+  If you have any questions on data management and transfer please do not 
   hesitate to contact the ARCHER2 service desk at support@archer2.ac.uk.
 
 Useful resources and links
@@ -16,12 +16,12 @@ Useful resources and links
 Data management
 ---------------
 
-We strongly recommend that you give some thought to how you use the various data-storage
+We strongly recommend that you give some thought to how you use the various data storage
 facilities that are part of the ARCHER2 service. This will not only allow you to use the
 machine more effectively but also to ensure that your valuable data is protected.
 
-File systems
-~~~~~~~~~~~~
+ARCHER2 storage
+~~~~~~~~~~~~~~~
 
 The ARCHER2 service, like many HPC systems has a complex structure. There are a number of
 different data storage types available to users:
@@ -67,7 +67,7 @@ effectively.
 
 .. warning::
 
-  files with filenames that contain non-ascii characters and/or non-printable characters
+  Files with filenames that contain non-ascii characters and/or non-printable characters
   cannot be backed up using our automated process and so will be omitted from all backups.
 
 Work file systems
@@ -122,8 +122,6 @@ RDF storage
 
 .. TODO add description of RDF storage
 
-Td that projects EITHER use a single group and user quotas or use group quotas only to avoid confusion.
-
 Archiving and data transfer
 ---------------------------
 
@@ -131,7 +129,7 @@ Data transfer speed may be limited by many different factors so the
 best data transfer mechanism to use depends on the type of data being
 transferred and where the data is going.
 
-  - **Disk speed** - The ARCHER /work file-systems and the RDF file-systems
+  - **Disk speed** - The ARCHER2 /work file-systems and the RDF file-systems
     are highly parallel consisting of a very large number of high performance
     disk drives. This allows them to support a very high data bandwidth.
     Unless the remote system has a similar parallel file-system you may
@@ -177,7 +175,7 @@ strongly recommended to pack the files into a larger "archive" file for ease of
 transfer and manipulation. A single large file makes more efficient use of the
 file system and is easier to move and copy and transfer because significantly
 fewer meta-data operations are required. Archive files can be created using tools
-like ``tar`` and zip.
+like ``tar`` and ``zip``.
 
 tar
 ^^^
@@ -204,9 +202,7 @@ Putting these together:
 
   tar -cvWlf mydata.tar mydata
 
-will create and verify an archive. Further information on the hard link check
-can be found in the ``tar`` manual (accessed via ``man tar`` or at
-`man tar <https://linux.die.net/man/1/tar>`__.
+will create and verify an archive.
 
 To extract files from a tar file, the option ``-x`` is used. For example:
 
@@ -228,6 +224,11 @@ and an example of a failed verification follows:
 
 Note that tar files do not store checksums with their data, requiring the original
 data to be present during verification.
+
+.. seealso:: 
+
+  Further information on using ``tar`` can be found in the ``tar`` manual
+  (accessed via ``man tar`` or at `man tar <https://linux.die.net/man/1/tar>`__).
 
 zip
 ^^^
@@ -282,6 +283,11 @@ relevant flag is ``-t`` and is used as follows:
       testing: mydata/                 OK
       testing: mydata/file             OK
   No errors detected in compressed data of mydata.zip.
+
+.. seealso:: 
+
+  Further information on using ``zip`` can be found in the ``zip`` manual
+  (accessed via ``man zip`` or at `man zip <https://linux.die.net/man/1/zip>`__).
 
 Data transfer via SSH
 ~~~~~~~~~~~~~~~~~~~~~
@@ -398,6 +404,11 @@ using a quoted string as the argument of the ``-e`` flag. e.g.
 (Remember to replace ``user`` with your ARCHER2 username in the example
 above.)
 
+.. seealso:: 
+
+  Further information on using ``rsync`` can be found in the ``rsync`` manual
+  (accessed via ``man rsync`` or at `man rsync <https://linux.die.net/man/1/rsync>`__).
+
 Globus online (GO)
 ~~~~~~~~~~~~~~~~~~
 
@@ -422,3 +433,5 @@ a couple of days allowing transfers to complete.
 
 The GO endpoint on ARCHER2 is called "ARCHER2". When activating this endpoint use
 the same username and password you use to login to ARCHER2.
+
+.. TODO: Add screencast of using GO to transfer data
