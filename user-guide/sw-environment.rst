@@ -21,10 +21,10 @@ In this section, we provide:
 Using the ``module`` command
 ----------------------------
 
-We only cover basic usage of the ``module`` command here. For full documentation
-please see:
+.. seealso::
 
--  `Linux manual page on modules <http://linux.die.net/man/1/module>`__
+  We only cover basic usage of the ``module`` command here. For full documentation
+  please see the `Linux manual page on modules <http://linux.die.net/man/1/module>`__
 
 The ``module`` command takes a subcommand to indicate what operation
 you wish to perform. Common subcommands are:
@@ -37,6 +37,8 @@ you wish to perform. Common subcommands are:
   - ``module swap old new`` - Swap module ``new`` for module ``old`` in your environment
   - ``module help name`` - Show help information on module ``name``
   - ``module show name`` - List what module ``name`` actually does to your environment
+
+These are described in more detail below.
 
 Information on the available modules
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -145,20 +147,37 @@ remove a loaded module:
 
     module remove gromacs
 
-(or ``module rm intel-compilers-17`` or
-``module unload intel-compilers-17``) will unload what ever version of
-intel-compilers-17 (even if it is not the default) you might have
-loaded. There are many situations in which you might want to change the
+will unload what ever version of ``gromacs`` (even if it is not the default)
+you might have loaded. 
+
+There are many situations in which you might want to change the
 presently loaded version to a different one, such as trying the latest
 version which is not yet the default or using a legacy version to keep
 compatibility with old data. This can be achieved most easily by using 
 "module swap oldmodule newmodule". 
 
-Suppose you have loaded version 16.0.2.181, say, of intel-compilers-16, the following command will change to version 16.0.3.210:
+Suppose you have loaded version 2020.1 of ``gromacs``, the following
+command will change to version 2019.4:
 
 ::
 
-    module swap intel-compilers-16 intel-compilers-16/16.0.2.181
+    module swap gromacs gromacs/2019.4
+
+You did not need to specify the version of the loaded module in your
+current environment as this can be inferred as it will be the only one
+you have loaded.
+
+.. note::
+
+  The ``module swap`` command is most often used on ARCHER2 to switch 
+  between different compiler environments, *e.g.* Cray compilers to 
+  GNU compilers. The software development environment is described in
+  more detail in the :doc:`dev-environment` chapter.
+
+Capturing your environment for reuse
+------------------------------------
+
+.. TODO: How to capture your current module environment
 
 Shell environment overview
 --------------------------
