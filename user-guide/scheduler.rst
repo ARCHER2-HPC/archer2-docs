@@ -1,101 +1,112 @@
-Running Jobs on Cirrus
-======================
+Running jobs on ARCHER2
+=======================
 
-The Cirrus facility uses PBSPro to schedule jobs.
+.. warning::
+
+  The ARCHER2 Service is not yet available. This documentation is in
+  development.
+
+As with most HPC services, ARCHER2 uses a scheduler to manage access to
+resources and ensure that the thousands of different users of system
+are able to share the system and all get access to the resources they
+require. ARCHER2 uses the Slurm software to schedule jobs.
 
 Writing a submission script is typically the most convenient way to
-submit your job to the job submission system. Example submission scripts
+submit your job to the scheduler. Example submission scripts
 (with explanations) for the most common job types are provided below.
 
 Interactive jobs are also available and can be particularly useful for
 developing and debugging applications. More details are available below.
 
-.. note:: There are a number of different queues on Cirrus. In general, you should not specify a queue and the submission system will select the correct one for your job.
+.. info::
 
-If you have any questions on how to run jobs on Cirrus do not hesitate
-to contact the `Cirrus Helpdesk <http://www.cirrus.ac.uk/support/>`_.
+  If you have any questions on how to run jobs on Cirrus do not hesitate
+  to contact the `ARCHER2 Service Desk <mailto:support@archer2.ac.uk>`_.
 
-Using PBS Pro
--------------
+You typically interact with Slurm by issuing Slurm commands
+from the login nodes (to submit, check and cancel jobs), and by
+specifying Slurm directives that describe the resources required for your
+jobs in job submission scripts.
 
-You typically interact with PBS by (1) specifying PBS directives in job
-submission scripts (see examples below) and (2) issuing PBS commands
-from the login nodes.
+Basic SLURM commands
+--------------------
 
-There are three key commands used to interact with the PBS on the
+There are three key commands used to interact with the Slurm on the
 command line:
 
--  ``qsub``
--  ``qstat``
--  ``qdel``
+-  ``sinfo`` - Get information on the partitions and resources available
+-  ``sbatch jobscript.slurm`` - Submit a job submission script (in this case called: ``jobscript.slurm``) to the scheduler
+-  ``squeue`` - Get the current status of jobs submitted to the scheduler
+-  ``scancel 12345`` - Cancel a job (in this case with the job ID ``12345``)
 
-Check the PBS ``man`` page for more advanced commands:
+We cover each of these commands in more detail below.
 
-::
+``sinfo``: information on resources
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    man pbs
+``sinfo`` is used to query information about available resources and partitions.
+Without any options, ``sinfo`` lists the status of all resources and partitions,
+e.g.
 
-The qsub command
-~~~~~~~~~~~~~~~~
-
-The qsub command submits a job to PBS:
-
-::
-
-    qsub job_script.pbs
-
-This will submit your job script "job\_script.pbs" to the job-queues.
-See the sections below for details on how to write job scripts.
-
-.. note:: There are a number of different queues on Cirrus. In general, you should not specify a queue and the submission system will select the correct one for your job.
-
-The qstat command
-~~~~~~~~~~~~~~~~~
-
-Use the command qstat to view the job queue. For example:
+.. TODO: Add example of sinfo command without options
 
 ::
 
-    qstat
+  [user@archer2 ~]$ sinfo 
 
-will list all jobs on Cirrus.
+``sbatch``: submitting jobs
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can view just your jobs by using:
+``sbatch`` is used to submit a job script to the job submission system. The script
+will typically contain one or more ``srun`` commands to launch parallel tasks.
 
-::
-
-    qstat -u $USER
-
-The ``-a`` option to qstat provides the output in a more useful
-format.
-
-To see more information about a queued job, use:
+When you submit the job, the scheduler provides the job ID, which is used to identify
+this job in other Slurm commands and when looking at resource usage in SAFE.
 
 ::
 
-    qstat -f $JOBID
+  [user@archer2 ~]$ sbatch test-job.slurm
+  Submitted batch job 12345
 
-This option may be useful when your job fails to enter a running state.
-The output contains a PBS ``comment`` field which may explain why the job
-failed to run.
+``squeue``: monitoring jobs
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
-The qdel command
-~~~~~~~~~~~~~~~~
-
-Use this command to delete a job from Cirrus's job queue. For example:
+``squeue`` without any options or arguments shows the current status of all jobs
+known to the scheduler. For example:
 
 ::
 
-    qdel $JOBID
+  squeue
 
-will remove the job with ID ``$JOBID`` from the queue.
+will list all jobs on ARCHER2.
 
-Queue Limits
-------------
+The output of this is often overwhelmingly large. You can restrict the output
+to just your jobs by adding the ``-u $USER`` option:
 
-Queues on Cirrus are designed to enable users to use the system flexibly while 
-retaining fair access for all.
+::
+
+  squeue -u $USER
+
+.. TODO: add example output
+
+``scancel``: deleting jobs
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``scancel`` is used to delete a jobs from the scheduler. If the job is waiting 
+to run it is simply cancelled, if it is a running job then it is stopped 
+immediately. You need to provide the job ID of the job you wish to cancel/stop.
+For example:
+
+::
+
+  scancel 12345
+
+will cancel (if waiting) or stop (if running) the job with ID ``12345``.
+
+Resource Limits
+---------------
+
+There are different resource limits on ARCHER2 for different purposes.
 
 Standard compute node queues
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
