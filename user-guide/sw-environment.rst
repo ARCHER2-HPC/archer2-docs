@@ -20,7 +20,7 @@ By default, all users on ARCHER2 start with the default software
 environment loaded.
 
 Software modules on ARCHER2 are provided by both Cray (usually known
-as the *Cray Development Environment, CDE* and by EPCC, who provide 
+as the *Cray Development Environment, CDE*) and by EPCC, who provide 
 the Service Provision and Computational Science and Engineering 
 services.
 
