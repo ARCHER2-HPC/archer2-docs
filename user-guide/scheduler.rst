@@ -28,6 +28,405 @@ from the login nodes (to submit, check and cancel jobs), and by
 specifying Slurm directives that describe the resources required for your
 jobs in job submission scripts.
 
+Best practice
+-------------
+
+This guidance is adapted from
+`the advice provided by NERSC <https://docs.nersc.gov/jobs/best-practices/>`__
+
+.. TODO: update to match ARCHER2
+
+Do Not Run Production Jobs in Global Homes
+------------------------------------------
+
+| As a general best practice, users should do production runs from
+| ``$SCRATCH`` instead of ``$HOME``.
+
+| ``$HOME`` is meant for permanent and relatively small storage. It is
+  not
+| tuned to perform well for parallel jobs. Home is perfect for storing
+| files such as source codes and shell scripts, etc. Please note that
+| while building software in /global/home is generally good, it is best
+| to install dynamic libraries that are used on compute nodes
+| in `global common <../../filesystems/global-common>`__ for best
+| performance.
+
+| ``$SCRATCH`` is meant for large and temporary storage. It is optimized
+| for read and write operations. ``$SCRATCH`` is perfect for staging
+  data
+| and performing parallel computations. Running in ``$SCRATCH`` also
+  helps
+| to improve the responsiveness of the global file systems (global homes
+| and global project) in general.
+
+Specify account
+---------------
+
+| For users who are members of multiple NERSC repositories charges are
+| made to the default account, as set in
+  `Iris <https://iris.nersc.gov>`__,
+| unless the ``#SBATCH --account=<NERSC repository>`` flag has been
+| set. It is good practice to always set the account flag to ensure the
+| appropriate allocation is charged.
+
+Time Limits
+-----------
+
+| Due to backfill scheduling, short and variable-length jobs generally
+| start quickly resulting in much better job throughput.
+
+.. code:: slurm
+
+    #SBATCH --time-min=<lower_bound>
+    #SBATCH --time=<upper_bound>
+
+Long Running Jobs
+-----------------
+
+| Simulations which must run for a long period of time achieve the best
+| throughput when composed of many small jobs utilizing
+| checkpoint/restart chained together.
+
+-  `Example: job chaining <examples/index.md#dependencies>`__
+
+Improve Efficiency by Preparing User Environment Before Running
+---------------------------------------------------------------
+
+| When compute nodes are allocated for a batch job, all commands other
+  than the
+| ``srun`` command, such as: loading modules, setting up runtime
+  environment
+| variables, compiling applications, and preparing input data, etc.,
+  will run on
+| the head compute node (the first compute node in the pool of allocated
+  nodes).
+| Running on a compute node is much more inefficient than running
+| on a login node. It also creates a burden on the global home file
+  system.
+
+| Using the `Linux here
+  document <https://en.wikipedia.org/wiki/Here_document>`__
+| as in the example below will run those commands to prepare the user
+| environment for the batch job on the login node to help improve job
+  efficiency
+| and save computing cost of the batch job. It can also help to
+  alleviate the
+| burden on the global home file system. This script also keeps the user
+| environment needed for the batch job in a single file.
+
+| !!! Example
+| This is an example to prepare the user environment on a login node,
+| propagate this environment to a batch job, and submit the batch job.
+  This
+| can be accomplished in a single script.
+
+::
+
+    You could do so by preparing a file named "prepare-env.sh" in the example
+    below, and running it as "./prepare-env.sh" on a login node. This script:
+
+    * Sets up the user environment for the batch job first on a login node,
+      such as loading modules, setting environment variables, or copying input
+      files, etc.;
+    * Creates a batch script named "prepare-env.sl";
+    * Submits "prepare-env.sl", this job will inherit the user environment
+      just set earlier in the script. 
+
+::
+
+    --8<-- "docs/jobs/examples/prepare-env/prepare-env.sh"
+
+I/O Performance
+---------------
+
+| Cori has dedicated large, local, parallel scratch file systems. The
+| scratch file systems are intended for temporary uses such as storage
+| of checkpoints or application input and output. Data and I/O intensive
+| applications should use the local scratch (or Burst Buffer)
+| filesystems.
+
+| These systems should be referenced with the environment variable
+| ``$SCRATCH``.
+
+| !!! tip
+| On Cori
+| the `Burst Buffer <examples/index.md#burst-buffer-test>`__ offers the
+| best I/O performance.
+
+| !!! warn
+| Scratch filesystems are not backed up and old files are
+| subject to purging.
+
+File System Licenses
+--------------------
+
+| A batch job will not start if the specified file system is unavailable
+| due to maintenance or an outage or if a performance issue with
+| filesystem is detected.
+
+.. code:: slurm
+
+    #SBATCH --license=SCRATCH,cfs
+
+Available Licenses on Cori
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+-  ``cscratch1`` (or ``SCRATCH``)
+-  ``cfs``
+-  ``projecta``
+-  ``projectb``
+-  ``dna``
+-  ``seqfs``
+-  ``cvmfs``
+
+Large Jobs
+----------
+
+| Large jobs may take longer to start up, especially on KNL nodes. The
+| srun option ``--bcast=<destination_path>`` is recommended for large
+  jobs
+| requesting over 1500 MPI tasks. By default, Slurm loads the executable
+| to the allocated compute nodes from the current working directory;
+| this may take long time when the file system (where the executable
+| resides) is slow. With the ``--bcast=/tmp/myjob``, the executable will
+| be copied to the ``/tmp/myjob`` directory. Since ``/tmp`` is part of
+  the
+| memory on the compute nodes, it can speed up the job startup time.
+
+.. code:: bash
+
+    sbcast --compress=lz4 /path/to/exe /tmp/exe
+    srun /tmp/exe
+
+Network Locality
+----------------
+
+| For jobs which are sensitive to interconnect (MPI) performance and
+| utilize less than ~300 nodes it is possible to request that all nodes
+| are in a single Aries dragonfly group.
+
+| Slurm has a concept of "switches" which on Cori are configured to map
+| to Aries electrical groups. Since this places an additional constraint
+| on the scheduler a maximum time to wait for the requested topology can
+| be specified.
+
+| !!! example
+| Wait up to 60 minutes
+| ``slurm     sbatch --switches=1@60 job.sh``
+
+| !!! info "Additional details and information"
+| \* `Cray XC Series Network
+  (pdf) <https://www.cray.com/sites/default/files/resources/CrayXCNetwork.pdf>`__
+
+Core Specialization
+-------------------
+
+| Core specialization is a feature designed to isolate system overhead
+| (system interrupts, etc.) to designated cores on a compute node. It is
+| generally helpful for running on KNL, especially if the application
+| does not plan to use all physical cores on a 68-core compute node.
+  Setting
+| aside 2 or 4 cores for core specialization is recommended.
+
+| The ``srun`` flag for core specialization is ``-S`` or
+  ``--core-spec``. It
+| only works in a batch script with ``sbatch``. It can not be requested
+  as
+| a flag with ``salloc`` for interactive jobs, since ``salloc`` is
+  already a
+| wrapper script for ``srun``.
+
+-  `Example <examples/index.md#core-specialization>`__
+
+Process Placement
+-----------------
+
+| Several mechanisms exist to control process placement on NERSC's Cray
+| systems. Application performance can depend strongly on placement
+| depending on the communication pattern and other computational
+| characteristics.
+
+Examples are run on Cori.
+
+Default
+~~~~~~~
+
+::
+
+    user@nid01041:~> srun -n 8 -c 2 check-mpi.intel.cori|sort -nk 4
+    Hello from rank 0, on nid01041. (core affinity = 0-63)
+    Hello from rank 1, on nid01041. (core affinity = 0-63)
+    Hello from rank 2, on nid01111. (core affinity = 0-63)
+    Hello from rank 3, on nid01111. (core affinity = 0-63)
+    Hello from rank 4, on nid01118. (core affinity = 0-63)
+    Hello from rank 5, on nid01118. (core affinity = 0-63)
+    Hello from rank 6, on nid01282. (core affinity = 0-63)
+    Hello from rank 7, on nid01282. (core affinity = 0-63)
+
+``MPICH_RANK_REORDER_METHOD``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+| The ``MPICH_RANK_REORDER_METHOD`` environment variable is used to
+| specify other types of MPI task placement. For example, setting it to
+| 0 results in a round-robin placement:
+
+::
+
+    user@nid01041:~> MPICH_RANK_REORDER_METHOD=0 srun -n 8 -c 2 check-mpi.intel.cori|sort -nk 4
+    Hello from rank 0, on nid01041. (core affinity = 0-63)
+    Hello from rank 1, on nid01111. (core affinity = 0-63)
+    Hello from rank 2, on nid01118. (core affinity = 0-63)
+    Hello from rank 3, on nid01282. (core affinity = 0-63)
+    Hello from rank 4, on nid01041. (core affinity = 0-63)
+    Hello from rank 5, on nid01111. (core affinity = 0-63)
+    Hello from rank 6, on nid01118. (core affinity = 0-63)
+    Hello from rank 7, on nid01282. (core affinity = 0-63)
+
+| There are other modes available with the ``MPICH_RANK_REORDER_METHOD``
+| environment variable, including one which lets the user provide a file
+| called ``MPICH_RANK_ORDER`` which contains a list of each task's
+| placement on each node. These options are described in detail in the
+| ``intro_mpi`` man page.
+
+``grid_order``
+^^^^^^^^^^^^^^
+
+| For MPI applications which perform a large amount of nearest-neighbor
+| communication, e.g., stencil-based applications on structured grids,
+| Cray provides a tool in the ``perftools-base`` module called
+| ``grid_order`` which can generate a ``MPICH_RANK_ORDER`` file
+  automatically
+| by taking as parameters the dimensions of the grid, core count,
+| etc. For example, to place MPI tasks in row-major order on a Cartesian
+| grid of size $(4, 4, 4)$, using 32 tasks per node on Cori:
+
+::
+
+    cori$ module load perftools-base
+    cori$ grid_order -R -c 32 -g 4,4,4
+    # grid_order -R -Z -c 32 -g 4,4,4
+    # Region 3: 0,0,1 (0..63)
+    0,1,2,3,16,17,18,19,32,33,34,35,48,49,50,51,4,5,6,7,20,21,22,23,36,37,38,39,52,53,54,55
+    8,9,10,11,24,25,26,27,40,41,42,43,56,57,58,59,12,13,14,15,28,29,30,31,44,45,46,47,60,61,62,63
+
+| One can then save this output to a file called ``MPICH_RANK_ORDER``
+  and
+| then set ``MPICH_RANK_REORDER_METHOD=3`` before running the job, which
+| tells Cray MPI to read the ``MPICH_RANK_ORDER`` file to set the MPI
+  task
+| placement. For more information, please see the man page
+  ``man grid_order`` (available when the ``perftools-base`` module is
+  loaded) on
+| Cori.
+
+Hugepages
+---------
+
+| Huge pages are virtual memory pages which are bigger than the default
+| page size of 4K bytes. Huge pages can improve memory performance
+| for common access patterns on large data sets since it helps to reduce
+| the number of virtual to physical address translations than compated
+  with
+| using the default 4K. Huge pages also
+| increase the maximum size of data and text in a program accessible by
+| the high speed network, and reduce the cost of accessing memory, such
+  as
+| in the case of many MPI\_Alltoall operations. Using hugepages
+| can help to `reduce the application runtime
+  variability <../performance/variability.md>`__.
+
+To use hugepages for an application (with the 2M hugepages as an
+example):
+
+::
+
+    module load craype-hugepages2M
+    cc -o mycode.exe mycode.c
+
+And also load the same hugepages module at runtime.
+
+| The craype-hugepages2M module is loaded by deafult on Cori.
+| Users could unload the craype-hugepages2M module explicitly to disable
+  the hugepages usage.
+
+| !!! note
+| The craype-hugepages2M module is loaded by default since the Cori CLE7
+  upgrade on July 30, 2019.
+
+Due to the hugepages memory fragmentation issue, applications may get
+"Cannot allocate memory" warnings or errors when there are not enough
+hugepages on the compute node, such as:
+
+::
+
+    libhugetlbfs [nid000xx:xxxxx]: WARNING: New heap segment map at 0x10000000 failed: Cannot allocate memory
+
+The verbosity level of libhugetlbfs HUGETLB\_VERBOSE is set to 0 on Cori
+by default to surpress debugging messages. Users can adjust this value
+to obtain more info.
+
+When to Use Huge Pages
+~~~~~~~~~~~~~~~~~~~~~~
+
+-  For MPI applications, map the static data and/or heap onto huge
+   pages.
+-  For an application which uses shared memory, which needs to be
+   concurrently registered with the high speed network drivers for
+   remote communication.
+-  For SHMEM applications, map the static data and/or private heap
+   onto huge pages.
+-  For applications written in Unified Parallel C, Coarray Fortran,
+   and other languages based on the PGAS programming model, map the
+   static data and/or private heap onto huge pages.
+-  For an application doing heavy I/O.
+-  To improve memory performance for common access patterns on large
+   data sets.
+
+When to Avoid Huge Pages
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+-  Applications sometimes consist of many steering programs in addition
+   to the core application. Applying huge page behavior to all processes
+   would not provide any benefit and would consume huge pages that would
+   otherwise benefit the core application. The runtime environment
+   variable HUGETLB\_RESTRICT\_EXE can be used to specify the susbset of
+   the programs to use hugepages.
+-  For certain applications if using hugepages either causes issues or
+   slowing
+   down performances, users can explicitly unload the craype-hugepages2M
+   module.
+   One such example is that when an application forks more subprocesses
+   (such as
+   pthreads) and allocate memory, the newly allocated memory are the
+   small 4K
+   pages.
+
+Task Packing
+------------
+
+| Users requiring large numbers of single-task jobs have several options
+  at
+| NERSC. The options include:
+
+-  Submitting jobs to the `shared QOS <examples/index.md#shared>`__,
+-  Using a `workflow tool <workflow-tools.md>`__ to combine the tasks
+   into one
+   larger job,
+-  Using `job arrays <examples/index.md#job-arrays>`__ to submit many
+   individual
+   jobs which look very similar.
+
+| If you have a large number of indpendent serial jobs (that is, the
+  jobs do not
+| have dependencies on each other), you may wish to pack the individual
+  tasks
+| into one bundled Slurm job to help with queue throughput. Packing
+  multiple
+| tasks into one Slurm job can be done via multiple ``srun`` commands in
+  the same
+| job script
+| (`example <examples/index.md#multiple-parallel-jobs-simultaneously>`__).
+
 Basic SLURM commands
 --------------------
 
@@ -108,428 +507,123 @@ Resource Limits
 
 There are different resource limits on ARCHER2 for different purposes.
 
-Standard compute node queues
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. TODO: Add in partition and QOS limits once they are known
 
-There are a number of queues available to general users on Cirrus that route jobs to the standard
-compute nodes. Standard jobs
-are automatically routed into either ``workq``, ``indy`` or ``large``  depending on the project 
-that submitted the job and the size of the job. To use any of these queues, you **should not** specify 
-a queue name in your job script.
+Troubleshooting
+---------------
 
-* ``workq``: Jobs in this queue can have a maximum walltime of 96 hours (4 days) and a maximum job size of 2520 cores (70 
-  nodes). **Each project** can use a maximum of 2520 cores (70 nodes) summed across all their running jobs at any one time
-  and **each user** can have a maximum of 20 jobs running (note that these limits can be dynamically altered by the service to improve throughput on the system). Jobs running in this queue are node shared by default (i.e.
-  multiple jobs can share a single compute node). If you want to use node exclusive then you must specify this using the PBS
-  options described below.
-* ``indy``: Jobs in this queue have a variable maximum job size and walltime (use `qstat -Qf indy` on Cirrus to check the current limits. Jobs running in this queue are node shared by default (i.e.
-  multiple jobs can share a single compute node). If you want to use node exclusive then you must specify this using the PBS
-  options described below. This queue is only available to projects from industrial clients.
-* ``large``: There is no 
-  upper limit on job size in this queue but there is a minimum job size of 2521
-  cores (71 nodes), a maximum walltime of 48 hours (2 days),
-  **each user** can have a maximum of 1 job running at any one time, and a maximum
-  of 4 jobs in the queue (including a running job). Jobs running in this queue are node shared by default (i.e.
-  multiple jobs can share a single compute node). If you want to use node exclusive then you must specify this using the PBS
-  options described below.
-
-GPU compute node queues
-~~~~~~~~~~~~~~~~~~~~~~~
-
-If you wish to use the GPU compute nodes then you need to submit to the ``gpu`` queue by adding 
-``-q gpu`` to your submission. You will also need to specify how many GPU accelerators you wish to
-use. Full details are available in the GPU chapter of this User Guide. 
-
-Jobs in the ``gpu`` queue can havea maximum walltime of 6 hours. There is a maximum job size of 2
-nodes (as there are 2 nodes available). Each user can only have one job running at any one time.
-
-Queue error messages
+Slurm error messages
 ~~~~~~~~~~~~~~~~~~~~
 
-If you try to submit a job that asks for more than the maximum allowed wall
-time or cores you will see an error similar to:
-
-::
-
-    [user@cirrus-login0 ~]$ qsub submit.pbs 
-    qsub: Job violates queue and/or server resource limits
-
-Output from PBS jobs
---------------------
+.. TODO: add in examples of common Slurm error messages
 
-PBS produces standard output and standard error for each batch job can
-be found in files ``<jobname>.o<Job ID>`` and ``<jobname>.e<Job ID>``
-respectively. These files appear in the job's working directory once
-your job has completed or its maximum allocated time to run (i.e. wall
-time, see later sections) has ran out.
+Slurm queued reasons
+~~~~~~~~~~~~~~~~~~~~
 
-Running Parallel Jobs
----------------------
+.. TODO explain ``Reason`` column from ``squeue``
 
-This section describes how to write job submission scripts specifically
-for different kinds of parallel jobs on Cirrus.
+Output from Slurm jobs
+----------------------
 
-All parallel job submission scripts require (as a minimum) you to
-specify four things:
+Slurm places standard output (STDOUT) and standard error (STDERR) for each
+job in the file ``slurm_<Job ID>.out``. This file appears in the
+job's working directory once your job starts running.
 
--  The number of nodes and cores per node you require via the
-   ``-l select=[Nodes]:ncpus=36`` option. Each node has 36 physical
-   cores (2x 18-core sockets). For example, to select 4 nodes
-   (144 physical cores in total) you would use
-   ``-l select=4:ncpus=36``. **We strongly recommend that all parallel
-   jobs use node exclusive mode as described below to get best performance.**
--  The placement option ``-l place=scatter`` to ensure that parallel
-   processes/threads are scheduled to the full set of compute nodes
-   assigned to the job.
--  The maximum length of time (i.e. walltime) you want the job to run
-   for via the ``-l walltime=[hh:mm:ss]`` option. To ensure the
-   minimum wait time for your job, you should specify a walltime as
-   short as possible for your job (i.e. if your job is going to run for
-   3 hours, do not specify 12 hours). On average, the longer the
-   walltime you specify, the longer you will queue for.
--  The project code that you want to charge the job to via the
-   ``-A [project code]`` option
 
-In addition to these mandatory specifications, there are many other
-options you can provide to PBS. The following options may be useful:
-
-- The name for your job is set using ``-N My_job``. In the examples below
-  the name will be "My\_job", but you can replace "My\_job" with any
-  name you want. The name will be used in various places. In particular
-  it will be used in the queue listing and to generate the name of your
-  output and/or error file(s). Note there is a limit on the size of the
-  name.
+.. note::
 
-Exclusive Node Access
-~~~~~~~~~~~~~~~~~~~~~
+  This file is plain text and can contain useful information to help debugging
+  if a job is not working as expected. The ARCHER2 Service Desk team will often
+  ask you to provide the contents of this file if oyu contact them for help 
+  with issues.
 
-Exclusive node access means each node is dedicated to one user only.
+Specifying resources in job scripts
+-----------------------------------
 
-To make sure your jobs have exclusive node access you should add the
-``excl`` sharing directive to the ``place`` option in your jobs:
+You specify the resources you require for your job using directives at the
+top of your job submission script using lines that start with the directive
+``#SBATCH``. 
 
-::
+.. note::
 
-    #PBS -l place=scatter:excl
+  Options provided using ``#SBATCH`` directives can also be specified as 
+  command line options to ``srun``.
 
-All of our example parallel job submission scripts below specify this option as
-this mode of use is strongly recommended for all parallel jobs on Cirrus.
+If you do not specify any options, then the default for each option will
+be applied. As a minimum, all job submissions must specify the budget that
+they wish to charge the job too with the option:
 
-Running MPI parallel jobs
--------------------------
+  - ``--account=<budget ID>`` your budget ID is usually something like
+    ``t01`` or ``t01-test``. You can see which budget codes you can 
+    charge to in SAFE.
 
-When you are running parallel jobs requiring MPI you will use an MPI launch
-command to start your executable in parallel. The name and options for
-this MPI launch command depend on which MPI library you are using:
-HPE MPT (Message Passing Toolkit), Intel MPI or OpenMPI. We give details below
-of the commands used in each case and our example job submission scripts
-have examples for both libraries.
+Other common options that are used are:
 
-.. note:: If you are using a centrally-installed MPI software package you will need to know which MPI library was used to compile it so you can use the correct MPI launch command. You can find this information using the ``module show`` command. For example:
+  - ``--time=<hh:mm:ss>`` the maximum walltime for your job. *e.g.* For a 6.5 hour
+    walltime, you would use ``--time=6:30:0``.
+  - ``--name=<jobname>`` set a name for the job to help identify it in 
+    Slurm command output.
 
-::
+In addition, parallel jobs will also need to specify how many nodes,
+parallel processes and threads they require.
 
-   [auser@cirrus-login0 ~]$ module show vasp
-   -------------------------------------------------------------------
-   /lustre/sw/modulefiles/vasp/5.4.4-intel17-mpt214:
+  - ``--nodes=<nodes>`` the number of nodes to use for the job.
+  - ``--tasks-per-node=<processes per node>`` the number of parallel processes
+    (e.g. MPI ranks) per node.
+  - ``--cpus-per-task=<threads per task>`` the number of threads per
+    parallel process (e.g. number of OpenMP threads per MPI task for
+    hybrid MPI/OpenMP jobs). **Note:** you must also set the ``OMP_NUM_THREADS``
+    environment variable if using OpenMP in your job.
 
-   conflict	 vasp 
-   module		 load mpt 
-   module		 load intel-compilers-17 
-   module		 load intel-cmkl-17 
-   module		 load gcc/6.2.0 
-   prepend-path	 PATH /lustre/home/y07/vasp5/5.4.4-intel17-mpt214/bin 
-   setenv		 VASP5 /lustre/home/y07/vasp5/5.4.4-intel17-mpt214 
-   setenv		 VASP5_VDW_KERNEL /lustre/home/y07/vasp5/5.4.4-intel17-mpt214/vdw_kernal/vdw_kernel.bindat 
-   -------------------------------------------------------------------
+.. note::
 
-This shows that VASP was compiled with HPE MPT (from the ``module load mpt`` in 
-the output from the command. If a package was compiled with Intel MPI there 
-would be ``module load intel-mpi-17`` in the output instead.
+  For parallel jobs, ARCHER2 operates in a *node exclusive* way. This means
+  that you are assigned resources in the units of full compute nodes for your
+  jobs (*i.e.* 128 cores) and that no other user can share those compute nodes
+  with you. Hence, the minimum amount of resource you can request for a parallel
+  job is 1 node (or 128 cores).
 
-HPE MPT (Message Passing Toolkit)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+``srun``: Launching parallel jobs
+---------------------------------
 
-HPE MPT is accessed at both compile and runtime by loading the ``mpt`` module:
+If you are running parallel jobs, your job submission script should contain
+one or more ``srun`` commands to launch the parallel executable across the
+compute nodes. As well as launching the executable, ``srun`` also allows you
+to specify the distribution and placement (or *pinning*) of the parallel
+processes and threads.
 
-::
+This section describes how to use the ``srun`` command within your job
+submission scripts on ARCHER2.
 
-   module load mpt
+.. TODO: Description of ``srun`` options
 
-HPE MPT: parallel launcher ``mpiexec_mpt``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Example job submission scripts
+-------------------------------
 
-The HPE MPT parallel launcher on Cirrus is ``mpiexec_mpt``.
+A subset of example job submission scripts are included in full below. You 
+can also download these examples at:
 
-.. note:: This parallel job launcher is only available once you have loaded the ``mpt`` module.
+.. TODO: add links to job submission scripts
 
-A sample MPI launch line using ``mpiexec_mpt`` looks like:
-
-::
-
-    mpiexec_mpt -ppn 36 -n 72 ./my_mpi_executable.x arg1 arg2
-
-This will start the parallel executable "my\_mpi\_executable.x" with
-arguments "arg1" and "arg2". The job will be started using 72 MPI
-processes, with 36 MPI processes are placed on each compute node 
-(this would use all the physical cores on each node). This would
-require 2 nodes to be requested in the PBS options. Note that the ordering of flags is important.
-
-The most important ``mpiexec_mpt`` flags are:
-
- ``-n [total number of MPI processes]``
-    Specifies the total number of distributed memory parallel processes
-    (not including shared-memory threads). For jobs that use all
-    physical cores this will usually be a multiple of 36. The default on
-    Cirrus is 1.
- ``-ppn [parallel processes per node]``
-    Specifies the number of distributed memory parallel processes per
-    node. There is a choice of 1-36 for physical cores on Cirrus compute
-    nodes (1-72 if you are using Hyper-Threading) If you are running with
-    exclusive node usage, the most economic choice is always to run with
-    "fully-packed" nodes on all physical cores if possible, i.e.
-    ``-ppn 36`` . Running "unpacked" or "underpopulated" (i.e. not using
-    all the physical cores on a node) is useful if you need large
-    amounts of memory per parallel process or you are using more than
-    one shared-memory thread per parallel process.
-
-.. note:: ``mpiexec_mpt`` only works from within a PBS job submission script.
-
-.. warning:: You must use the ``-ppn`` option to the ``mpiexec_mpt`` command otherwise you will see an error similar to: *mpiexec_mpt error: Need 36 processes but have only 1 left in PBS_NODEFILE.*
-
-.. warning:: When using the ``mpiexec_mpt`` command, the ``-ppn`` option must come before the ``-n`` option otherwise you will see an error similar to: *MPT ERROR: Not enough slots from job scheduler for requested ranks*. (This applies to the the default version of MPT and versions from 2.18 upwards.)
-
-.. note:: If you are using an older version of MPT (2.17 or earlier), the ``-n`` option must come before the ``-ppn`` option when using the ``mpiexec_mpt`` command. If you get the options the wrong way around you will see an error similar to: *MPT ERROR: Not enough slots from job scheduler for requested ranks*
-
-Please use ``man mpiexec_mpt`` query further options. (This is only available
-once you have loaded the ``mpt`` module.)
-
-HPE MPT: interactive MPI using ``mpirun``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-If you want to run short interactive parallel applications (e.g. for 
-debugging) then you can run HPE MPT compiled MPI applications on the login
-nodes using the ``mpirun`` command.
-
-For instance, to run a simple, short 4-way MPI job on the login node, issue the
-following command (once you have loaded the appropriate modules):
-
-:: 
-
-    mpirun -n 4 ./hello_mpi.x
-
-.. note:: you should not run long, compute- or memory-intensive jobs on the login nodes. Any such processes are liable to termination by the system with no warning.
-
-
-HPE MPT: running hybrid MPI/OpenMP applications
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-If you are running hybrid MPI/OpenMP code using HPE MPT you will also often make
-use of the ``omplace`` tool in your job launcher line. This tool 
-takes the number of threads as the option ``-nt``:
-
- ``-nt [threads per parallel process]``
-    Specifies the number of cores for each parallel process to use for
-    shared-memory threading. (This is in addition to the
-    ``OMP_NUM_THREADS`` environment variable if you are using OpenMP for
-    your shared memory programming.) The default on Cirrus is 1.
-
-Please use ``man mpiexec_mpt`` and ``man omplace`` to query further options.
-(Again, these are only available once you have loaded the ``mpt`` module.)
-
-Intel MPI
-~~~~~~~~~
-
-Intel MPI is accessed at runtime by loading the ``intel-mpi-17``.
-
-::
-
-   module load intel-mpi-17
-
-Intel MPI: parallel job launcher ``mpirun``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The Intel MPI parallel job launcher on Cirrus is ``mpirun``.
-
-.note :: This parallel job launcher is only available once you have loaded the ``intel-mpi-17`` module.
-
-A sample MPI launch line using ``mpirun`` looks like:
-
-::
-
-    mpirun -n 72 -ppn 36 ./my_mpi_executable.x arg1 arg2
-
-This will start the parallel executable "my\_mpi\_executable.x" with
-arguments "arg1" and "arg2". The job will be started using 72 MPI
-processes, with 36 MPI processes are placed on each compute node 
-(this would use all the physical cores on each node). This would
-require 2 nodes to be requested in the PBS options.
-
-The most important ``mpirun`` flags are:
-
- ``-n [total number of MPI processes]``
-    Specifies the total number of distributed memory parallel processes
-    (not including shared-memory threads). For jobs that use all
-    physical cores this will usually be a multiple of 36. The default on
-    Cirrus is 1.
- ``-ppn [parallel processes per node]``
-    Specifies the number of distributed memory parallel processes per
-    node. There is a choice of 1-36 for physical cores on Cirrus compute
-    nodes (1-72 if you are using Hyper-Threading) If you are running with
-    exclusive node usage, the most economic choice is always to run with
-    "fully-packed" nodes on all physical cores if possible, i.e.
-    ``-ppn 36`` . Running "unpacked" or "underpopulated" (i.e. not using
-    all the physical cores on a node) is useful if you need large
-    amounts of memory per parallel process or you are using more than
-    one shared-memory thread per parallel process.
-
-Documentation on using Intel MPI (including ``mpirun``) can be found 
-online at:
-
-* `Intel MPI Documentation <https://software.intel.com/en-us/articles/intel-mpi-library-documentation>`__
-
-Intel MPI: running hybrid MPI/OpenMP applications
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-If you are running hybrid MPI/OpenMP code using Intel MPI you need to 
-set the ``I_MPI_PIN_DOMAIN`` environment variable to ``omp`` so that
-MPI tasks are pinned with enough space for OpenMP threads.
-
-For example, in your job submission script you would use:
-
-::
-
-   export I_MPI_PIN_DOMAIN=omp
-
-You can then also use the ``KMP_AFFINITY`` enviroment variable 
-to control placement of OpenMP threads. For more information, see:
-
-* `Intel OpenMP Thread Affinity Control <https://software.intel.com/en-us/articles/openmp-thread-affinity-control>`__
-
-Intel MPI: MPI-IO setup
-^^^^^^^^^^^^^^^^^^^^^^^
-
-If you wish to use MPI-IO with Intel MPI you must set a couple of 
-additional environment variables in your job submission script to
-tell the MPI library to use the Lustre file system interface.
-Specifically, you should add the lines:
-
-::
-
-   export I_MPI_EXTRA_FILESYSTEM=on
-   export I_MPI_EXTRA_FILESYSTEM_LIST=lustre
-
-after you have loaded the ``intel-mpi-17`` module.
-
-If you fail to set these environment variables you may see errors such as:
-
-::
-
-   This requires fcntl(2) to be implemented. As of 8/25/2011 it is not. Generic MPICH
-   Message: File locking failed in
-   ADIOI_Set_lock(fd 0,cmd F_SETLKW/7,type F_WRLCK/1,whence 0) with return value
-   FFFFFFFF and errno 26.
-   - If the file system is NFS, you need to use NFS version 3, ensure that the lockd
-    daemon is running on all the machines, and mount the directory with the 'noac'
-    option (no attribute caching).
-   - If the file system is LUSTRE, ensure that the directory is mounted with the 'flock'
-    option.
-   ADIOI_Set_lock:: Function not implemented
-   ADIOI_Set_lock:offset 0, length 10
-   application called MPI_Abort(MPI_COMM_WORLD, 1) - process 3
-
-OpenMPI
-~~~~~~~~~
-
-OpenMPI is accessed at runtime by loading the module ``openmpi``. There are three OpenMPI modules currently installed::
-  
- module load openmpi/2.1.0
- module load openmpi/3.1.4
- module load openmpi/4.0.1
-
-``openmpi/2.1.0`` is installed to be primarily used with Singularity. For user applications not using Singularity the newer versions of OpenMPI should be selected, with ``openmpi/4.0.1`` being preferable.
-
-OpenMPI: parallel job launcher ``mpirun``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The OpenMPI parallel job launcher on Cirrus is ``mpirun``.
-
-.note :: This parallel job launcher is only available once you have loaded one of the OpenMPI modules.
-
-A sample MPI launch line using ``mpirun`` looks like:
-
-::
-
-    mpirun -n 72 -N 36 ./my_mpi_executable.x arg1 arg2
-
-This will start the parallel executable "my\_mpi\_executable.x" with
-arguments "arg1" and "arg2". The job will be started using 72 MPI
-processes, with 36 MPI processes are placed on each compute node 
-(this would use all the physical cores on each node). This would
-require 2 nodes to be requested in the PBS options.
-
-The most important ``mpirun`` flags are:
-
- ``-n [total number of MPI processes]``
-    Specifies the total number of distributed memory parallel processes
-    (not including shared-memory threads). For jobs that use all
-    physical cores this will usually be a multiple of 36.
- ``-N [parallel processes per node]``
-    Specifies the number of distributed memory parallel processes per
-    node. There is a choice of 1-36 for physical cores on Cirrus compute
-    nodes (1-72 if you are using Hyper-Threading) If you are running with
-    exclusive node usage, the most economic choice is always to run with
-    "fully-packed" nodes on all physical cores if possible, i.e.
-    ``-N 36`` . Running "unpacked" or "underpopulated" (i.e. not using
-    all the physical cores on a node) is useful if you need large
-    amounts of memory per parallel process or you are using more than
-    one shared-memory thread per parallel process.
-
-Note, to use OpenMPI the PBS batch script used for running parallel jobs must include the ``mpiprocs`` keyword when specifying the number of nodes and processes to run, i.e. to run on 2 nodes using 36 process on each node (72 in total), the PBS select line would be::
-
-  #PBS -l select=2:ncpus=36:mpiprocs=36
-    
-Documentation on using OpenMPI (including ``mpirun``) can be found 
-online at:
-
-* `OpenMPI Documentation <https://www.open-mpi.org/doc/current/>`__
-
-
-
-Example parallel MPI job submission scripts
--------------------------------------------
-
-A subset of example job submssion scripts are included in full below. The
-full set are available via the following links:
-
-
-Example: HPE MPT job submission script for MPI parallel job
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Example: job submission script for MPI parallel job
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A simple MPI job submission script to submit a job using 4 compute
-nodes (maximum of 144 physical cores) for 20 minutes would look like:
+nodes and 128 MPI ranks per node for 20 minutes would look like:
 
 ::
 
-    #!/bin/bash --login
+    #!/bin/bash
 
-    # PBS job options (name, compute nodes, job time)
-    #PBS -N Example_MPI_Job
-    # Select 4 full nodes
-    #PBS -l select=4:ncpus=36
-    # Parallel jobs should always specify exclusive node access
-    #PBS -l place=scatter:excl
-    #PBS -l walltime=00:20:00
+    # Slurm job options (name, compute nodes, job time)
+    #SBATCH --name=Example_MPI_Job
+    #SBATCH --time=0:20:0
+    #SBATCH --nodes=4
+    #SBATCH --tasks-per-node=128
+    #SBATCH --cpus-per-task=1
 
-    # Replace [budget code] below with your project code (e.g. t01)
-    #PBS -A [budget code]             
-
-    # Change to the directory that the job was submitted from
-    cd $PBS_O_WORKDIR
-  
-    # Load any required modules
-    module load mpt
-    module load intel-compilers-17
+    # Replace [budget code] below with your budget code (e.g. t01)
+    #SBATCH --account=[budget code]             
 
     # Set the number of threads to 1
     #   This prevents any threaded system libraries from automatically 
@@ -537,24 +631,21 @@ nodes (maximum of 144 physical cores) for 20 minutes would look like:
     export OMP_NUM_THREADS=1
 
     # Launch the parallel job
-    #   Using 144 MPI processes and 36 MPI processes per node
-    #
-    #   '-ppn' option is required for all HPE MPT jobs otherwise you will get an error similar to:
-    #       'mpiexec_mpt error: Need 36 processes but have only 1 left in PBS_NODEFILE.'
-    #
-    mpiexec_mpt -ppn 36 -n 144 ./my_mpi_executable.x arg1 arg2 > my_stdout.txt 2> my_stderr.txt
+    #   Using 1024 MPI processes and 128 MPI processes per node
+    #   srun picks up the distribution from the sbatch options
+    srun ./my_mpi_executable.x
 
-This will run your executable "my\_mpi\_executable.x" in parallel on 144
-MPI processes using 2 nodes (36 cores per node, i.e. not using hyper-threading). PBS will
-allocate 4 nodes to your job and mpirun_mpt will place 36 MPI processes on each node
+This will run your executable "my\_mpi\_executable.x" in parallel on 1024
+MPI processes using 4 nodes (128 cores per node, i.e. not using hyper-threading). Slurm will
+allocate 4 nodes to your job and srun will place 128 MPI processes on each node
 (one per physical core).
 
-See above for a more detailed discussion of the different PBS options
+See above for a more detailed discussion of the different ``sbatch`` options
 
-.. warning:: You must use the ``-ppn`` option when using HPE MPT otherwise you will see an error similar to: *mpiexec_mpt error: Need 36 processes but have only 1 left in PBS_NODEFILE.*
+Example: job submission script for MPI+OpenMP (mixed mode) parallel job
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Example: HPE MPT job submission script for MPI+OpenMP (mixed mode) parallel job
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. TODO: Update for ARCHER2
 
 Mixed mode codes that use both MPI (or another distributed memory
 parallel model) and OpenMP should take care to ensure that the shared
@@ -603,130 +694,6 @@ of the ``omplace`` command to specify the number of threads.
     mpiexec_mpt -ppn 2 -n 8 omplace -nt 18 ./my_mixed_executable.x arg1 arg2 > my_stdout.txt 2> my_stderr.txt
 
 .. warning:: You must use the ``-ppn`` option when using HPE MPT otherwise you will see an error similar to: *mpiexec_mpt error: Need 36 processes but have only 1 left in PBS_NODEFILE.*
-
-
-Example: OpenMPI job submission script for MPI parallel job
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-A simple MPI job submission script to submit a job using 4 compute
-nodes (maximum of 144 physical cores) for 20 minutes would look like:
-
-::
-
-    #!/bin/bash --login
-
-    # PBS job options (name, compute nodes, job time)
-    #PBS -N Example_MPI_Job
-    # Select 4 full nodes
-    #PBS -l select=4:ncpus=36:mpiprocs=36
-    # Parallel jobs should always specify exclusive node access
-    #PBS -l place=scatter:excl
-    #PBS -l walltime=00:20:00
-
-    # Replace [budget code] below with your project code (e.g. t01)
-    #PBS -A [budget code]             
-
-    # Change to the directory that the job was submitted from
-    cd $PBS_O_WORKDIR
-  
-    # Load any required modules
-    module load openmpi/4.0.1
-    module load intel-compilers-17
-
-    # Set the number of threads to 1
-    #   This prevents any threaded system libraries from automatically 
-    #   using threading.
-    export OMP_NUM_THREADS=1
-
-    # Launch the parallel job
-    #   Using 144 MPI processes and 36 MPI processes per node
-    #
-    mpirun --mca pml ucx --mca btl ^openib -N 36 -n 144 ./my_mpi_executable.x arg1 arg2 > my_stdout.txt 2> my_stderr.txt
-
-This will run your executable "my\_mpi\_executable.x" in parallel on 144
-MPI processes using 2 nodes (36 cores per node, i.e. not using hyper-threading). PBS will
-allocate 4 nodes to your job and mpirun will place 36 MPI processes on each node
-(one per physical core).
-
-Note the ``--mca pml ucx --mca btl ^openib`` part of the command above is only required for OpenMPI version 4.0.1. It is not required for the older versions of OpenMPI installed on ARCHER.
-	     
-Example: job submission script for parallel non-MPI based jobs
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If you want to run on multiple nodes, where each node is running a self-contained job, not using MPI
-(e.g.) for processing data or a parameter sweep, you can use the HPE MPT ``mpiexec_mpt`` launcher to control job placement.
-
-In the example script below, ``work.bash`` is a bash script which runs a threaded executable with a command-line input and
-``perf.bash`` is a bash script which copies data from the CPU performance counters to an output file. As both handle the
-threading themselves, it is sufficient to allocate 1 MPI rank. Using the ampersand ``&`` allows both to execute simultaneously.
-Both ``work.bash`` and ``perf.bash`` run on 4 nodes.
-
-::
-
-   #!/bin/bash --login
-   # PBS job options (name, compute nodes, job time)
-   #PBS -N Example_MixedMode_Job
-   # Select 4 full nodes
-   #PBS -l select=4:ncpus=36
-   # Parallel jobs should always specify exclusive node access
-   #PBS -l place=scatter:excl
-   #PBS -l walltime=6:0:0
-   
-   # Replace [budget code] below with your project code (e.g. t01)
-   #PBS -A [budget code]
-   
-   # Change to the directory that the job was submitted from
-   cd $PBS_O_WORKDIR
-   
-   # Load any required modules
-   module load mpt
-
-   # Set this variable to inform mpiexec_mpt these are not MPI jobs
-   export MPI_SHEPHERD=true
-
-   # Execute work and perf scripts on nodes simultaneously.
-   mpiexec_mpt -ppn 1 -n 4 work.bash &
-   mpiexec_mpt -ppn 1 -n 4 perf.bash &
-   wait
-
-.note :: The ``wait`` command is required to stop the PBS job finishing before the scripts finish.  If you find odd behaviour, especially with respect to the values of bash variables, double check you have set ``MPI_SHEPHERD=true``
-
-Serial Jobs
------------
-
-Serial jobs are setup in a similar way to parallel jobs on Cirrus. The
-only changes are:
-
-1. You should request a single core with ``select=1:ncpus=1``
-2. You will not need to use a parallel job launcher to run your executable
-
-A simple serial script to compress a file would be:
-
-::
-
-    #!/bin/bash --login
-
-    # PBS job options (name, compute nodes, job time)
-    #PBS -N Example_Serial_Job
-    #PBS -l select=1:ncpus=1
-    #PBS -l walltime=0:20:0
-
-    # Replace [budget code] below with your project code (e.g. t01)
-    #PBS -A [budget code]
-
-    # Change to the directory that the job was submitted from
-    cd $PBS_O_WORKDIR
-
-    # Load any required modules
-    module load intel-compilers-16
-
-    # Set the number of threads to 1 to ensure serial
-    export OMP_NUM_THREADS=1
-
-    # Run the serial executable
-    gzip my_big_file.dat
-
-.. _jobarrays:
 
 Job arrays
 ----------
