@@ -1,6 +1,11 @@
 Data management and transfer
 ============================
 
+.. warning::
+
+  The ARCHER2 Service is not yet available. This documentation is in
+  development.
+
 This section covers best practice and tools for data management on ARCHER2.
 
 .. note::

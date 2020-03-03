@@ -1,6 +1,11 @@
 Connecting to ARCHER2
 =====================
 
+.. warning::
+
+  The ARCHER2 Service is not yet available. This documentation is in
+  development.
+
 On the ARCHER2 system interactive access can be achieved via SSH, either
 directly from a command line terminal or using an SSH client. In
 addition data can be transferred to and from the ARCHER2 system using

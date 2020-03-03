@@ -1,6 +1,11 @@
 Overview
 ========
 
+.. warning::
+
+  The ARCHER2 Service is not yet available. This documentation is in
+  development.
+
 Information on each of the centrally-installed Research Software packages, versions available,
 how to get access, example job submission scripts, good practice for getting best performance,
 links to associated training and webinars, links to associated technical reports (eCSE final 

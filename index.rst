@@ -1,6 +1,11 @@
 ARCHER2 User Documentation
 ==========================
 
+.. warning::
+
+  The ARCHER2 Service is not yet available. This documentation is in
+  development.
+
 This is a location for drafting ARCHER2 documentation and to test deployment.
 
 .. toctree::

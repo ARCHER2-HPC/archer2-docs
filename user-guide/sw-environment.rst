@@ -1,6 +1,11 @@
 Software environment
 ====================
 
+.. warning::
+
+  The ARCHER2 Service is not yet available. This documentation is in
+  development.
+
 The software environment on ARCHER2 is primarily controlled through
 the ``module`` command. By loading and switching software modules you
 control which software and versions are available to you.
