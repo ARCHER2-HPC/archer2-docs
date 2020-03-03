@@ -1,5 +1,10 @@
-Singularity Containers
-======================
+Containers
+==========
+
+.. warning::
+
+  The ARCHER2 Service is not yet available. This documentation is in
+  development.
 
 This page was originally based on the documentation at the `University of Sheffield HPC service:
 <http://docs.hpc.shef.ac.uk/en/latest/sharc/software/apps/singularity.html>`_.
@@ -10,13 +15,13 @@ This means that a non-privileged user can "swap out" the Linux operating system 
 environment on the host for a Linux OS and environment that they control.
 So if the host system is running CentOS Linux but your application runs in Ubuntu Linux
 with a particular software stack; you can create an Ubuntu image, install your software
-into that image, copy the image to another host (e.g. Cirrus), and run your application
+into that image, copy the image to another host (e.g. ARCHER2), and run your application
 on that host in it’s native Ubuntu environment.
 
 Singularity also allows you to leverage the resources of whatever host you are on.
-This includes high-speed interconnects (i.e. Infinband on Cirrus),
-file systems (i.e. /lustre on Cirrus) and potentially other resources (e.g. the
-licensed Intel compilers on Cirrus).
+This includes high-speed interconnects (i.e. Infinband on ARCHER2),
+file systems (i.e. /lustre on ARCHER2) and potentially other resources (e.g. the
+licensed Intel compilers on ARCHER2).
 
 **Note:** Singularity only supports Linux containers. You cannot create images
 that use Windows or macOS (this is a restriction of the containerisation model
@@ -34,17 +39,17 @@ About Singularity Containers (Images)
 Similar to Docker,
 a Singularity container (or, more commonly, *image*) is a self-contained software stack.
 As Singularity does not require a root-level daemon to run its images (as
-is required by Docker) it is suitable for use on a multi-user HPC system such as Cirrus.
+is required by Docker) it is suitable for use on a multi-user HPC system such as ARCHER2.
 Within the container/image, you have exactly the same permissions as you do in a
 standard login session on the system.
 
 In practice, this means that an image created on your local machine
 with all your research software installed for local development
-will also run on Cirrus.
+will also run on ARCHER2.
 
 Pre-built images (such as those on `DockerHub <http://hub.docker.com>`_ or
 `SingularityHub <https://singularity-hub.org/>`_) can simply be downloaded
-and used on Cirrus (or anywhere else Singularity is installed); see
+and used on ARCHER2 (or anywhere else Singularity is installed); see
 :ref:`use_image_singularity`).
 
 Creating and modifying images requires root permission and so
@@ -54,10 +59,10 @@ usually within a virtual machine on your laptop/workstation); see
 
 .. _use_image_singularity:
 
-Using Singularity Images on Cirrus
+Using Singularity Images on ARCHER2
 ----------------------------------
 
-Singularity images can be used on Cirrus in a number of ways, including:
+Singularity images can be used on ARCHER2 in a number of ways, including:
 
 * Interactively on the login nodes
 * Interactively on compute nodes
@@ -66,31 +71,31 @@ Singularity images can be used on Cirrus in a number of ways, including:
 
 We provide information on each of these scenarios (apart from the parallel use where
 we are still preparing the documentation) below. First, we describe briefly how to
-get exisitng images onto Cirrus so you can use them.
+get exisitng images onto ARCHER2 so you can use them.
 
-Getting existing images onto Cirrus
+Getting existing images onto ARCHER2
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Singularity images are simply files so, if you already have an image file, you can use
-``scp`` to copy the file to Cirrus as you would with any other file.
+``scp`` to copy the file to ARCHER2 as you would with any other file.
 
 If you wish to get a file from one of the container image repositories then Singularity
-allows you to do this from Cirrus itself.
+allows you to do this from ARCHER2 itself.
 
-This functionality requires tools that are not part of the standard OS on Cirrus so we have
+This functionality requires tools that are not part of the standard OS on ARCHER2 so we have
 provided a Singularity image that allows you to build images from remote repositories (i.e.
 you use a Singularity image to build Singularity images!).
 
-For example, to retrieve an image from DockerHub on Cirrus we fist need to enter an
+For example, to retrieve an image from DockerHub on ARCHER2 we fist need to enter an
 interactive session in the image we provide for building Singularity images:
 
 ::
 
-   [user@cirrus-login0 ~]$ module load singularity
-   [user@cirrus-login0 ~]$ singularity exec $CIRRUS_SIMG/cirrus-sbuild.simg /bin/bash --login
+   [user@archer2-login0 ~]$ module load singularity
+   [user@archer2-login0 ~]$ singularity exec $CIRRUS_SIMG/archer2-sbuild.simg /bin/bash --login
    Singularity>
 
-This invokes a login bash shell within the ``$CIRRUS_SIMG/cirrus-sbuild.simg`` image as
+This invokes a login bash shell within the ``$CIRRUS_SIMG/archer2-sbuild.simg`` image as
 indicated by our prompt change. (We need a login shell to allow ``module`` commands to work
 within the image.)
 
@@ -120,11 +125,11 @@ commands) and pull an image from DockerHub:
 The first argument to ``singularity build`` (lolcow.simg) specifies a path and name for your container.
 The second argument (docker://godlovedc/lolcow) gives the DockerHub URI from which to download the image.
 
-Now we can exit the image and run our new image we have just built on the Cirrus login node:
+Now we can exit the image and run our new image we have just built on the ARCHER2 login node:
 
 ::
 
-   [user@cirrus-login0 ~]$ singularity run lolcow.simg
+   [user@archer2-login0 ~]$ singularity run lolcow.simg
 
 This image contains a *runscript* that tells Singularity what to do if we run the image. We demonstrate
 different ways to use images below.
@@ -142,8 +147,8 @@ you use the ``singularity shell`` command. Using the image we built in the examp
 
 ::
 
-   [user@cirrus-login0 ~]$ module load singularity
-   [user@cirrus-login0 ~]$ singularity shell lolcow.simg
+   [user@archer2-login0 ~]$ module load singularity
+   [user@archer2-login0 ~]$ singularity shell lolcow.simg
    Singularity: Invoking an interactive shell within container...
 
    Singularity lolcow.simg:~>
@@ -153,14 +158,14 @@ centrally-installed software (``/lustre/sw``) is also available in images by def
 the ``module`` command will not work in images unless you have installed he required software and
 configured the environment correctly; we describe how to do this below.
 
-Once you have finished using your image, you return to the Cirrus login node command line with the
+Once you have finished using your image, you return to the ARCHER2 login node command line with the
 ``exit`` command:
 
 ::
 
    Singularity lolcow.simg:~> exit
    exit
-   [user@cirrus-login0 ~]$
+   [user@archer2-login0 ~]$
 
 Interactive use on the compute nodes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -173,7 +178,7 @@ For example, to reserve a full node for you to work on interactively you would u
 
 ::
 
-   [user@cirrus-login0 ~]$ qsub -IVl select=1:ncpus=36,walltime=0:20:0,place=scatter:excl -A t01
+   [user@archer2-login0 ~]$ qsub -IVl select=1:ncpus=36,walltime=0:20:0,place=scatter:excl -A t01
    qsub: waiting for job 234192.indy2-login0 to start
 
    ...wait until job starts...
@@ -194,7 +199,7 @@ in the same way as on the login node
    Singularity lolcow.simg:~> exit
    exit
    [user@r1i2n13 ~]$ exit
-   [user@cirrus-login0 ~]$
+   [user@archer2-login0 ~]$
 
 Note we used ``exit`` to leave the interactive image shell and then ``exit`` again to leave the
 interactive job on the compute node.
@@ -208,7 +213,7 @@ execute the runscript in the job. You can also use ``singularity exec`` to execu
 commands (or scripts) within the image.
 
 An exmaple job submission script to run a serial job that executes the runscript within the
-``lolcow.simg`` we built above on Cirrus would be:
+``lolcow.simg`` we built above on ARCHER2 would be:
 
 ::
 
@@ -241,17 +246,17 @@ Creating Your Own Singularity Images
 ------------------------------------
 
 As we saw above, you can create Singularity images by importing from
-DockerHub or Singularity Hub on Cirrus itself. If you wish to create your
+DockerHub or Singularity Hub on ARCHER2 itself. If you wish to create your
 own custom image then you must install Singularity on a system where you
 have root (or administrator) privileges - often your own laptop or
 workstation.
 
 We provide links below to instructions on how to install Singularity
 locally and then cover what options you need to include in a
-Singularity recipe file to create images that can run on Cirrus and
+Singularity recipe file to create images that can run on ARCHER2 and
 access the software development modules. (This can be useful if you
 want to create a custom environment but still want to compile and
-link against libraries that you only have access to on Cirrus such
+link against libraries that you only have access to on ARCHER2 such
 as the Intel compilers, HPE MPI libraries, etc.)
 
 Installing Singularity on Your Local Machine
@@ -273,22 +278,22 @@ If you are using Linux then you can usually install Singularity directly, see:
 
 * `Installing Singularity on Linux <https://www.sylabs.io/guides/2.6/user-guide/installation.html#install-on-linux>`_
 
-Singularity Recipes to Access modules on Cirrus
+Singularity Recipes to Access modules on ARCHER2
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 You may want your custom image to be able to access the modules environment
-on Cirrus so you can make use of custom software that you cannot access
+on ARCHER2 so you can make use of custom software that you cannot access
 elsewhere. We demonstrate how to do this for a CentOS 7 image but the steps
 are easily translated for other flavours of Linux.
 
-For the Cirrus modules to be available in your Singularity container you need to
+For the ARCHER2 modules to be available in your Singularity container you need to
 ensure that the ``environment-modules`` package is installed in your image.
 
 In addition, when you use the container you must invoke access as a login
 shell to have access to the module commands.
 
 Here is an example recipe file to build a CentOS 7 image with access to
-TCL modules alread installed on Cirrus:
+TCL modules alread installed on ARCHER2:
 
 ::
 
@@ -299,24 +304,24 @@ TCL modules alread installed on Cirrus:
        yum update -y
        yum install environment-modules -y
 
-If we save this recipe to a file called ``cirrus-mods.def`` then we can use the
+If we save this recipe to a file called ``archer2-mods.def`` then we can use the
 following command to build this image (remember this command must be run on a
-system where you have root access, not Cirrus):
+system where you have root access, not ARCHER2):
 
 ::
 
-   me@my-system:~> sudo singularity build cirrus-mods.simg cirrus-mods.def
+   me@my-system:~> sudo singularity build archer2-mods.simg archer2-mods.def
 
-The resulting image file (``cirrus-mods.simg``) can then be compied to Cirrus
+The resulting image file (``archer2-mods.simg``) can then be compied to ARCHER2
 using scp.
 
-When you use the image interactively on Cirrus you must start with a login
+When you use the image interactively on ARCHER2 you must start with a login
 shell, i.e.:
 
 ::
 
-   [user@cirrus-login0 ~]$ module load singularity
-   [user@cirrus-login0 ~]$ singularity exec cirrus-mods.simg /bin/bash --login
+   [user@archer2-login0 ~]$ module load singularity
+   [user@archer2-login0 ~]$ singularity exec archer2-mods.simg /bin/bash --login
    Singularity> module avail intel-compilers
 
    ------------------------- /lustre/sw/modulefiles ---------------------

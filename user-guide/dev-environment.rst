@@ -1,11 +1,16 @@
-Application Development Environment
+Application development environment
 ===================================
 
-The application development environment on Cirrus is primarily
+.. warning::
+
+  The ARCHER2 Service is not yet available. This documentation is in
+  development.
+
+The application development environment on ARCHER2 is primarily
 controlled through the *modules* environment. By loading and switching
 modules you control the compilers, libraries and software available.
 
-This means that for compiling on Cirrus you typically set the compiler
+This means that for compiling on ARCHER2 you typically set the compiler
 you wish to use using the appropriate modules, then load all the
 required library modules (e.g. numerical libraries, IO format libraries).
 
@@ -13,9 +18,9 @@ Additionally, if you are compiling parallel applications using MPI
 (or SHMEM, etc.) then you will need to load one of the MPI environments
 and use the appropriate compiler wrapper scripts.
 
-By default, all users on Cirrus start with no modules loaded.
+By default, all users on ARCHER2 start with no modules loaded.
 
-Basic usage of the ``module`` command on Cirrus is covered below. For
+Basic usage of the ``module`` command on ARCHER2 is covered below. For
 full documentation please see:
 
 -  `Linux manual page on modules <http://linux.die.net/man/1/module>`__
@@ -32,7 +37,7 @@ software) are available on the system is performed using the
 
 ::
 
-    [user@cirrus-login0 ~]$ module avail
+    [user@archer2-login0 ~]$ module avail
     ...
 
 This will list all the names and versions of the modules available on
@@ -48,7 +53,7 @@ available versions of the Intel Compiler type:
 
 ::
 
-    [user@cirrus-login0 ~]$ module avail intel-compilers
+    [user@archer2-login0 ~]$ module avail intel-compilers
  
     --------------------------------------- /lustre/sw/modulefiles ---------------------------------------
     intel-compilers-16/16.0.2.181 intel-compilers-16/16.0.3.210
@@ -58,7 +63,7 @@ If you want more info on any of the modules, you can use the
 
 ::
 
-    [user@cirrus-login0 ~]$ module help mpt
+    [user@archer2-login0 ~]$ module help mpt
 
     ----------- Module Specific Help for 'mpt/2.14' -------------------
 
@@ -72,7 +77,7 @@ and their versions you have presently loaded in your envionment:
 
 ::
 
-    [user@cirrus-login0 ~]$ module list
+    [user@archer2-login0 ~]$ module list
     Currently Loaded Modulefiles:
     1) mpt/2.14                        3) intel-fc-16/16.0.3.210
     2) intel-cc-16/16.0.3.210          4) intel-compilers-16/16.0.3.210
@@ -119,7 +124,7 @@ Suppose you have loaded version 16.0.2.181, say, of intel-compilers-16, the foll
 Modules provided by Spack
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. note:: The majority of users will not need to use the modules provided by Spack. The standard set of mdules available to users should cover most common use cases on Cirrus.
+.. note:: The majority of users will not need to use the modules provided by Spack. The standard set of mdules available to users should cover most common use cases on ARCHER2.
 
 The Spack package manager provides many more modules (particularly for libraries and 
 dependencies) than are visible by default to users. If you wish to see or use the
@@ -136,7 +141,7 @@ Care must be taken when using modules provided by Spack as they behave different
 from standard Linux modules.
 
 The `Spack <http://spack.readthedocs.io>`__ package management tool is used
-to manage much of the software and libraries installed on Cirrus. Spack allows
+to manage much of the software and libraries installed on ARCHER2. Spack allows
 us to automatically resolve dependencies and have multiple versions of tested
 software installed simultaneously without them interfering with each other.
 
@@ -162,7 +167,7 @@ Spack arranges things so that if you load the boost module:
 then you do not also need to load the bzip2, mpt and zlib modules.
 
 This, however, can lead to behaviour that is unexpected for modules. For example,
-on Cirrus there are two versions of zlib available: 1.2.8 and 1.2.10. You may
+on ARCHER2 there are two versions of zlib available: 1.2.8 and 1.2.10. You may
 imagine that you can use boost with zlib 1.2.8 with the following commands:
 
 ::
@@ -179,14 +184,14 @@ Spack module then you must use Spack commands, e.g.
 
 ::
 
-    [auser@cirrus-login0 ~]$ module load spack
-    [auser@cirrus-login0 ~]$ module avail boost
+    [auser@archer2-login0 ~]$ module load spack
+    [auser@archer2-login0 ~]$ module avail boost
 
     ------------ /lustre/sw/spack/share/spack/modules/linux-centos7-x86_64 ------------
     boost-1.63.0-intel-17.0.2-fl25xqn boost-1.64.0-gcc-6.2.0-pftxg46
 
 
-    [auser@cirrus-login0 ~]$ spack find -dl boost
+    [auser@archer2-login0 ~]$ spack find -dl boost
     ==> 2 installed packages.
     -- linux-centos7-x86_64 / gcc@6.2.0 -----------------------------
     pftxg46    boost@1.64.0
@@ -211,7 +216,7 @@ Available Compiler Suites
 
 .. note::
 
-   As Cirrus uses dynamic linking by default you will generally also need
+   As ARCHER2 uses dynamic linking by default you will generally also need
    to load any modules you used to compile your code in your job submission
    script when you run your code.
 
@@ -234,7 +239,7 @@ C++ with Intel Compilers
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 Intel compilers rely on GCC C++ headers and libraries to support most recent C++
-features. If you are using Intel compilers to compile C++ on Cirrus you should 
+features. If you are using Intel compilers to compile C++ on ARCHER2 you should 
 also load the gcc/6.2.0 module to have access to the correct C++ files:
 
 ::
@@ -263,13 +268,13 @@ Once you have loaded the module, the compilers are available as:
 Compiling MPI codes
 -------------------
 
-There are two MPI libraries currently available on Cirrus:
+There are two MPI libraries currently available on ARCHER2:
 
 * HPE Message Passing Toolkit (MPT)
 * Intel MPI
 
 The compilation and run commands are different depending on which of these
-libraries you choose. Most of the applications we have compiled on Cirrus
+libraries you choose. Most of the applications we have compiled on ARCHER2
 have made use of the HPE MPT library and we only use Intel MPI if HPE MPT
 cannot be used for some reason. If you can use either library it is
 worthwhile running a few tests to discover if either provides a performance
@@ -283,7 +288,7 @@ for examples of how to run jobs compiled against the different MPI libraries.
 .. note::
 
    By default, all compilers produce dynamic executables on
-   Cirrus. This means that you must load the same modules at runtime (usually
+   ARCHER2. This means that you must load the same modules at runtime (usually
    in your job submission script) as you have loaded at compile time.
 
 Using HPE MPT
@@ -469,7 +474,7 @@ Useful compiler options
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Whilst difference codes will benefit from compiler optimisations in
-different ways, for reasonable performance on Cirrus, at least
+different ways, for reasonable performance on ARCHER2, at least
 initially, we suggest the following compiler options:
 
 Intel
@@ -490,7 +495,7 @@ GNU
     ``-Ofast -funroll-loops``
 
 Vectorisation, which is one of the important compiler optimisations for
-Cirrus, is enabled by default as follows:
+ARCHER2, is enabled by default as follows:
 
 Intel
     At ``-O2`` and above
@@ -511,7 +516,7 @@ GNU
 Using static linking/libraries
 -------------------------------
 
-By default, executables on Cirrus are built using shared/dynamic libraries 
+By default, executables on ARCHER2 are built using shared/dynamic libraries 
 (that is, libraries which are loaded at run-time as and when
 needed by the application) when using the wrapper scripts. 
 

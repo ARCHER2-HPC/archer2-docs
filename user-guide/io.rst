@@ -1,5 +1,10 @@
 I/O and file systems
 ====================
 
-Using the ARCHER2 file systems and efficient I/O.
+.. warning::
+
+  The ARCHER2 Service is not yet available. This documentation is in
+  development.
+
+Using the ARCHER2 file systems and achieving efficient I/O.
 
