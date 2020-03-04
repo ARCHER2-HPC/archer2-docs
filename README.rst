@@ -14,7 +14,7 @@ This documentation is drawn from the `Cirrus documentation <https://github.com/E
 Rendered documentation
 ----------------------
 
-* `ARCHER2 Documentation (HTML) on Github pages <https://archer2-hpc.github.io/archer2-docs/index.html/>`_
+* `ARCHER2 Documentation (HTML) on Github pages <https://archer2-hpc.github.io/archer2-docs/index.html>`_
 
 How to contribute
 -----------------
