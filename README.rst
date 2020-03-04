@@ -1,10 +1,7 @@
 ARCHER2 Documentation
 =====================
 
-.. warning:
-
-  The ARCHER2 Service is not yet available. This documentation is in
-  development.
+**Note: The ARCHER2 Service is not yet available. This documentation is in development.**
 
 ARCHER2 is the next generation UK national supercomputing service.
 
