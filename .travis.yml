@@ -4,6 +4,7 @@ install:
 
 script:
   - make html
+  - cp _static/CNAME CNAME
 
 deploy:
   provider: pages
