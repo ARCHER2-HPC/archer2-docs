@@ -97,6 +97,7 @@ html_static_path = ['_static']
 # 'searchbox.html']``.
 #
 # html_sidebars = {}
+html_favicon = 'favicon.ico'
 
 
 # -- Options for HTMLHelp output ---------------------------------------------
