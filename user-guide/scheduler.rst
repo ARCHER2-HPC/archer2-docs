@@ -470,10 +470,12 @@ Long Running Jobs
 ~~~~~~~~~~~~~~~~~
 
 Simulations which must run for a long period of time achieve the best
-throughput when composed of many small jobs utilizing
-checkpoint/restart chained together.
-
--  `Example: job chaining <examples/index.md#dependencies>`__
+throughput when composed of many small jobs using a checkpoint and
+restart method chained together (see above for how to chain jobs together).
+However, this method does occur a startup and shutdown overhead for each
+job as the state is saved and loaded so you should experiment to find the 
+best balance between runtime (long runtimes minimise the checkpoint/restart
+overheads) and throughput (short runtimes maxim
 
 Improve efficiency by preparing user environment before running
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
