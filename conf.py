@@ -98,7 +98,7 @@ html_static_path = ['_static']
 #
 # html_sidebars = {}
 html_favicon = 'favicon.ico'
-
+html_baseurl = 'docs.archer2.ac.uk'
 
 # -- Options for HTMLHelp output ---------------------------------------------
 
