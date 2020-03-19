@@ -175,13 +175,19 @@ For example, to set a stripe size of 4 MiB for the existing directory ``res_dir`
    [user@archer2]$ lfs setstripe -s 4m -c -1 res_dir/
 
    
-ARCHER2 recommended Stripe Settings
-"""""""""""""""""""""""""""""""""""""
+Recommended ARCHER2 I/O settings
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 
 I/O Profiling
 -------------
+
+CrayPat
+^^^^^^^
+
+Darshan
+^^^^^^^
 
 
 
