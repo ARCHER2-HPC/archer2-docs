@@ -109,6 +109,11 @@ Resource Limits
 
 There are different resource limits on ARCHER2 for different purposes.
 
+.. note:
+
+   Details on the resource limits will be added when the ARCHER2 system
+   is available.
+
 .. TODO: Add in partition and QOS limits once they are known
 
 Troubleshooting
@@ -117,10 +122,20 @@ Troubleshooting
 Slurm error messages
 ~~~~~~~~~~~~~~~~~~~~
 
+.. note:
+
+  More information on common error messages will be added when the ARCHER2 system
+  is available.
+
 .. TODO: add in examples of common Slurm error messages
 
 Slurm queued reasons
 ~~~~~~~~~~~~~~~~~~~~
+
+.. note:
+
+  Explanations of the reasons for jobs being queued and not running will be added
+  when the ARCHER2 system is available.
 
 .. TODO explain ``Reason`` column from ``squeue``
 
@@ -128,7 +143,7 @@ Output from Slurm jobs
 ----------------------
 
 Slurm places standard output (STDOUT) and standard error (STDERR) for each
-job in the file ``slurm_<Job ID>.out``. This file appears in the
+job in the file ``slurm_<JobID>.out``. This file appears in the
 job's working directory once your job starts running.
 
 
@@ -155,7 +170,7 @@ If you do not specify any options, then the default for each option will
 be applied. As a minimum, all job submissions must specify the budget that
 they wish to charge the job too with the option:
 
-  - ``--account=<budget ID>`` your budget ID is usually something like
+  - ``--account=<budgetID>`` your budget ID is usually something like
     ``t01`` or ``t01-test``. You can see which budget codes you can 
     charge to in SAFE.
 
