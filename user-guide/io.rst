@@ -182,6 +182,7 @@ Recommended ARCHER2 I/O settings
 
 I/O Profiling
 -------------
+ARCHER2 has a number of tools available for users to profile and analyse the I/O activity of software applications.
 
 CrayPat
 ^^^^^^^
