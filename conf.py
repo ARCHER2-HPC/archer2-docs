@@ -24,9 +24,9 @@ copyright = u'2019, EPCC'
 author = u'EPCC'
 
 # The short X.Y version
-version = u'0.1'
+version = u'0.2'
 # The full version, including alpha/beta/rc tags
-release = u'alpha'
+release = u'0.2alpha'
 
 
 # -- General configuration ---------------------------------------------------

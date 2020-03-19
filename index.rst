@@ -34,12 +34,12 @@ ARCHER2 User and Best Practice Guide
 Research Software
    Information on each of the centrally-installed research software packages.
 
-Software Libraries:
+Software Libraries
    Information on the centrally-installed software libraries. Most libraries work
    *as expected* so no additional notes are required however a small number require
    specific documentation
 
-Data Analysis and Tools:
+Data Analysis and Tools
    Information on data analysis tools and other useful utilities.
 
 Essential Skills
