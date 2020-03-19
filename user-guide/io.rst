@@ -65,7 +65,7 @@ Disk quotas
 Sharing data with other ARCHER2 users
 -------------------------------------
 
-How you share data with other ARCHER users depends on whether they belong to the same project as you or not. Each project has two levels of shared directories that can be used for sharing data.
+How you share data with other ARCHER2 users depends on whether they belong to the same project as you or not. Each project has two levels of shared directories that can be used for sharing data.
 
 Sharing data with users in your project
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -99,7 +99,35 @@ For example, if your project code is x01 the sharing directory would be located 
 ::
 
    /work/x01/shared
-   
+
+
+Common I/O patterns
+-------------------
+There is a number of I/O patterns that are frequently used in applications:
+
+
+Single file, single writer (Serial I/O)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+A common approach is to funnel all the I/O through a single master process. Although this has the advantage of producing a single file, the fact that only a single client is doing all the I/O means that it gains little benefit from the parallel file system.
+
+File-per-process (FPP)
+^^^^^^^^^^^^^^^^^^^^^^
+One of the first parallel strategies people use for I/O is for each parallel process to write to its own file. This is a simple scheme to implement and understand but has the disadvantage that, at the end of the calculation, the data is spread across many different files and may therefore be difficult to use for further analysis without a data reconstruction stage.
+
+Single file, multiple writers without collective operations
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+There are a number of ways to achieve this. For example, many processes can open the same file but access different parts by skipping some initial offset; parallel I/O libraries such as MPI-IO, HDF5 and NetCDF also enable this.
+
+Shared-file I/O has the advantage that all the data is organised correctly in a single file making analysis or restart more straightforward.
+
+The problem is that, with many clients all accessing the same file, there can be a lot of contention for file system resources.
+
+Single Shared File with collective writes (SSF)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The problem with having many clients performing I/O at the same time is that, to prevent them clashing with each other, the I/O library may have to take a conservative approach. For example, a file may be locked while each client is accessing it which means that I/O is effectively serialised and performance may be poor.
+
+However, if I/O is done collectively where the library knows that all clients are doing I/O at the same time, then reads and writes can be explicitly coordinated to avoid clashes. It is only through collective I/O that the full bandwidth of the file system can be realised while accessing a single file.
+
 
 Achieving efficient I/O
 -----------------------
@@ -114,15 +142,6 @@ Striping
 One of the main factors leading to the high performance of Lustre file systems is the ability to stripe data across multiple Object Storage Targets (OSTs) in a round-robin fashion. Files are striped when the data is split up in chunks that will then be stored on different OSTs across the Lustre system. Striping might improve the I/O performance because it increases the available bandwith since multiple processes can read and write the same files simultaneously. However striping can also increase the overhead. Choosing the right striping configuration is key to obtain high performance results.
 
 Users have control of a number of striping settings on Lustre file systems. Although these parameters can be set on a per-file basis they are usually set on directory where your output files will be written so that all output files inherit the settings.
-
-::
-
-   lfs setstripe
-   
-
-::
-
-   lfs getstripe
 
 
 Default configuration
@@ -156,7 +175,7 @@ For example, to set a stripe size of 4 MiB for the existing directory ``res_dir`
    [user@archer2]$ lfs setstripe -s 4m -c -1 res_dir/
 
    
-ARCHER2 recommended Striping Settings
+ARCHER2 recommended Stripe Settings
 """""""""""""""""""""""""""""""""""""
 
 
