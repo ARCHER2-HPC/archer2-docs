@@ -60,7 +60,7 @@ usually within a virtual machine on your laptop/workstation); see
 .. _use_image_singularity:
 
 Using Singularity Images on ARCHER2
-----------------------------------
+-----------------------------------
 
 Singularity images can be used on ARCHER2 in a number of ways, including:
 
@@ -74,7 +74,7 @@ we are still preparing the documentation) below. First, we describe briefly how 
 get exisitng images onto ARCHER2 so you can use them.
 
 Getting existing images onto ARCHER2
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Singularity images are simply files so, if you already have an image file, you can use
 ``scp`` to copy the file to ARCHER2 as you would with any other file.
@@ -279,7 +279,7 @@ If you are using Linux then you can usually install Singularity directly, see:
 * `Installing Singularity on Linux <https://www.sylabs.io/guides/2.6/user-guide/installation.html#install-on-linux>`_
 
 Singularity Recipes to Access modules on ARCHER2
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 You may want your custom image to be able to access the modules environment
 on ARCHER2 so you can make use of custom software that you cannot access

@@ -10,7 +10,7 @@ The software environment on ARCHER2 is primarily controlled through
 the ``module`` command. By loading and switching software modules you
 control which software and versions are available to you.
 
-.. info::
+.. note::
 
   A module is a self-contained description of a software package - it
   contains the settings required to run a software package and, usually,
