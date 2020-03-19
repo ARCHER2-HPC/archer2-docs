@@ -4,7 +4,7 @@ ARCHER2 Documentation
 **Note: The ARCHER2 Service is not yet available. This documentation is in
 development. ARCHER2 is due to commence operation in 2020, replacing
 the current service ARCHER. For more information on ARCHER, please
-visit the `ARCHER web site <http://www.archer.ac.uk`__.**
+visit the `ARCHER web site <http://www.archer.ac.uk>`__.**
 
 ARCHER2 is the next generation UK National Supercomputing Service. You can find more
 information on the service and the research it supports on the
