@@ -123,19 +123,23 @@ Users have control of a number of striping settings on Lustre file systems. Alth
 ::
 
    lfs getstripe
-Command to query the stripe settings for a directory (or file).
+
 
 Default configuration
 """"""""""""""""""""""
-::
+ The ``/work`` file systems on ARCHER2 have the same default stripe settings:
 
-   lfs getstripe res_dir
+* A default stripe count of -1
+* A default stripe size of 1 MiB (1048576 bytes)
+  
+These settings have been chosen to provide a good compromise for the wide variety of I/O patterns that are seen on the system but are unlikely to be optimal for any one particular scenario.
+The Lustre command to query the stripe settings for a directory (or file) is ``lfs getstripe``. For example, to query the stripe settings of an already created directory ``res_dir``:
+
+::
+   
+   [user@archer2]$ lfs getstripe res_dir/
    res_dir
    stripe_count:   1 stripe_size:    1048576 stripe_offset:  -1 
-   res_dir/single
-   stripe_count:   1 stripe_size:    1048576 stripe_offset:  -1 
-   res_dir/double
-   stripe_count:   1 stripe_size:    1048576 stripe_offset:  -1
    
 Setting Custom Striping Configurations
 """"""""""""""""""""""""""""""""""""""
@@ -149,7 +153,7 @@ For example, to set a stripe size of 4 MiB for the existing directory ``res_dir`
 
 ::
 
-   lfs setstripe -s 4m -c -1 res_dir/
+   [user@archer2]$ lfs setstripe -s 4m -c -1 res_dir/
 
    
 ARCHER2 recommended Striping Settings
@@ -157,7 +161,8 @@ ARCHER2 recommended Striping Settings
 
 
 
-
+I/O Profiling
+=============
 
 
 
