@@ -10,9 +10,30 @@ Using the ARCHER2 file systems
 ------------------------------
 Different file systems are configured for different purposes and performance. ARCHER2 has three file systems available to users:
 
++-------------+------------------------+
+| Node type   | Available file systems |
++=============+========================+
+| Login       | /home     |  /work     |
++-------------+------------------------+
+| Compute     | /work     |   SSS      |
++-------------+------------------------+
+| PP          |           |            |
++-------------+------------------------+
+
+
+.. warning::
+
+   Any data used in a parallel jobs should be located on ``/work`` (Lustre) or the solid state storage. 
+
+
 Home
 ^^^^
-This file system is not mounted on the compute nodes, and backed up for disaster recovery purposes only. Data recovery for accidental deletion is not supported. Home directories provide a convenient means for a user to have access to files such as source files, input files or configuration files. The home directory for each user is located at:
+
+.. warning::
+
+  This file system is backed up for disaster recovery purposes only. Data recovery for accidental deletion is not supported.
+  
+Home directories provide a convenient means for a user to have access to files such as source files, input files or configuration files. This file system is only mounted on the login nodes. The home directory for each user is located at:
 
 ::
 
@@ -32,6 +53,11 @@ It should be noted that the home file system is not designed, and does not have 
 
 Work
 ^^^^
+.. warning::
+
+   There is no separate backup of data on any of the work file systems, which means that in the event of a major hardware failure, or if a user accidently deletes essential data, it will not be possible to recover the lost files.
+
+
 High-performance Lustre file system mounted on the compute nodes. All parallel calculations must be run from directories on the ``/work`` file system and all files required by the calculation (apart from the executable) must reside on ``/work``. Each project will be assigned space on a particular Lustre partition with the assignments chosen to balance the load across the available infrastructure.
 
 The work directory for each user is located at:
@@ -49,14 +75,17 @@ where
 
 ``[username]`` is your login name.
 
-It is important to note that there is no separate backup of data on any of the work file systems, which means that in the event of a major hardware failure, or if a user accidently deletes essential data, it will not be possible to recover the lost files.
-
 Links from the ``/home`` file system to directories or files on ``/work`` are strongly discouraged. If links are used, executables and data files on ``/work`` to be used by applications on the compute nodes (i.e. those executed via the ``aprun`` command) should be referenced directly on ``/work``.
 
 
-BurstBuffer
-^^^^^^^^^^^
-The 1.1 PiB all-flashed ARCHER2 Burst Buffer is based on the Cray DataWarp technology to significantly increase the I/O performance for all file sizes and all access patterns. Accessible only from compute nodes, the Burst Buffer provides per-job (or short-term) storage for I/O intensive codes.
+Solid State Storage (SSS)
+^^^^^^^^^^^^^^^^^^^^^^^^^
+.. warning::
+   
+   This section is in development and it will be completed as soon as possible.
+     
+The 1.1 PiB ARCHER2 solid state file system significantly increase the I/O performance for all file sizes and access patterns.
+
 
 
 Disk quotas
@@ -148,7 +177,7 @@ Default configuration
 """"""""""""""""""""""
  The ``/work`` file systems on ARCHER2 have the same default stripe settings:
 
-* A default stripe count of -1
+* A default stripe count of 1
 * A default stripe size of 1 MiB (1048576 bytes)
   
 These settings have been chosen to provide a good compromise for the wide variety of I/O patterns that are seen on the system but are unlikely to be optimal for any one particular scenario.
