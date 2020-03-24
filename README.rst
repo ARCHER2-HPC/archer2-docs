@@ -25,6 +25,7 @@ Rendered documentation
 
 * `ARCHER2 Documentation (HTML) <https://docs.archer2.ac.uk>`_
 
+
 How to contribute
 -----------------
 
