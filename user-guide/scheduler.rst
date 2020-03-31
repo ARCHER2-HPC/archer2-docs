@@ -18,7 +18,7 @@ submit your job to the scheduler. Example submission scripts
 Interactive jobs are also available and can be particularly useful for
 developing and debugging applications. More details are available below.
 
-.. info::
+.. hint::
 
   If you have any questions on how to run jobs on ARCHER2 do not hesitate
   to contact the `ARCHER2 Service Desk <mailto:support@archer2.ac.uk>`_.
@@ -496,31 +496,31 @@ Improve efficiency by preparing user environment before running
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When compute nodes are allocated for a batch job, all commands other
-  than the
+than the
 ``srun`` command, such as: loading modules, setting up runtime
-  environment
+environment
 variables, compiling applications, and preparing input data, etc.,
-  will run on
+will run on
 the head compute node (the first compute node in the pool of allocated
-  nodes).
+nodes).
 Running on a compute node is much more inefficient than running
 on a login node. It also creates a burden on the global home file
-  system.
+system.
 
 Using the `Linux here
-  document <https://en.wikipedia.org/wiki/Here_document>`__
+document <https://en.wikipedia.org/wiki/Here_document>`__
 as in the example below will run those commands to prepare the user
 environment for the batch job on the login node to help improve job
-  efficiency
+efficiency
 and save computing cost of the batch job. It can also help to
-  alleviate the
+alleviate the
 burden on the global home file system. This script also keeps the user
 environment needed for the batch job in a single file.
 
 !!! Example
 This is an example to prepare the user environment on a login node,
 propagate this environment to a batch job, and submit the batch job.
-  This
+This
 can be accomplished in a single script.
 
 ::
@@ -551,27 +551,24 @@ filesystems.
 These systems should be referenced with the environment variable
 ``$SCRATCH``.
 
-!!! tip
-On Cori
-the `Burst Buffer <examples/index.md#burst-buffer-test>`__ offers the
-best I/O performance.
+.. hint::
+  On Cori the `Burst Buffer <examples/index.md#burst-buffer-test>`__ offers the
+  best I/O performance.
 
-!!! warn
-Scratch filesystems are not backed up and old files are
-subject to purging.
+.. warning::
+  Scratch filesystems are not backed up and old files are
+  subject to purging.
 
 Large Jobs
 ~~~~~~~~~~
 
 Large jobs may take longer to start up, especially on KNL nodes. The
-srun option ``--bcast=<destination_path>`` is recommended for large
-  jobs
+srun option ``--bcast=<destination_path>`` is recommended for large jobs
 requesting over 1500 MPI tasks. By default, Slurm loads the executable
 to the allocated compute nodes from the current working directory;
 this may take long time when the file system (where the executable
 resides) is slow. With the ``--bcast=/tmp/myjob``, the executable will
-be copied to the ``/tmp/myjob`` directory. Since ``/tmp`` is part of
-  the
+be copied to the ``/tmp/myjob`` directory. Since ``/tmp`` is part of the
 memory on the compute nodes, it can speed up the job startup time.
 
 .. code:: bash
@@ -596,8 +593,9 @@ Wait up to 60 minutes
 ``slurm     sbatch --switches=1@60 job.sh``
 
 !!! info "Additional details and information"
-\* `Cray XC Series Network
-  (pdf) <https://www.cray.com/sites/default/files/resources/CrayXCNetwork.pdf>`__
+
+`Cray XC Series Network (pdf)
+<https://www.cray.com/sites/default/files/resources/CrayXCNetwork.pdf>`__
 
 Core specialization
 ~~~~~~~~~~~~~~~~~~~
@@ -606,15 +604,15 @@ Core specialization is a feature designed to isolate system overhead
 (system interrupts, etc.) to designated cores on a compute node. It is
 generally helpful for running on KNL, especially if the application
 does not plan to use all physical cores on a 68-core compute node.
-  Setting
+Setting
 aside 2 or 4 cores for core specialization is recommended.
 
 The ``srun`` flag for core specialization is ``-S`` or
-  ``--core-spec``. It
+``--core-spec``. It
 only works in a batch script with ``sbatch``. It can not be requested
-  as
+as
 a flag with ``salloc`` for interactive jobs, since ``salloc`` is
-  already a
+already a
 wrapper script for ``srun``.
 
 -  `Example <examples/index.md#core-specialization>`__
@@ -675,7 +673,7 @@ For MPI applications which perform a large amount of nearest-neighbor
 communication, e.g., stencil-based applications on structured grids,
 Cray provides a tool in the ``perftools-base`` module called
 ``grid_order`` which can generate a ``MPICH_RANK_ORDER`` file
-  automatically
+automatically
 by taking as parameters the dimensions of the grid, core count,
 etc. For example, to place MPI tasks in row-major order on a Cartesian
 grid of size $(4, 4, 4)$, using 32 tasks per node on Cori:
@@ -690,13 +688,13 @@ grid of size $(4, 4, 4)$, using 32 tasks per node on Cori:
     8,9,10,11,24,25,26,27,40,41,42,43,56,57,58,59,12,13,14,15,28,29,30,31,44,45,46,47,60,61,62,63
 
 One can then save this output to a file called ``MPICH_RANK_ORDER``
-  and
+and
 then set ``MPICH_RANK_REORDER_METHOD=3`` before running the job, which
 tells Cray MPI to read the ``MPICH_RANK_ORDER`` file to set the MPI
-  task
+task
 placement. For more information, please see the man page
-  ``man grid_order`` (available when the ``perftools-base`` module is
-  loaded) on
+``man grid_order`` (available when the ``perftools-base`` module is
+loaded) on
 Cori.
 
 Hugepages
@@ -706,14 +704,14 @@ Huge pages are virtual memory pages which are bigger than the default
 page size of 4K bytes. Huge pages can improve memory performance
 for common access patterns on large data sets since it helps to reduce
 the number of virtual to physical address translations than compated
-  with
+with
 using the default 4K. Huge pages also
 increase the maximum size of data and text in a program accessible by
 the high speed network, and reduce the cost of accessing memory, such
-  as
+as
 in the case of many MPI\_Alltoall operations. Using hugepages
 can help to `reduce the application runtime
-  variability <../performance/variability.md>`__.
+variability <../performance/variability.md>`__.
 
 To use hugepages for an application (with the 2M hugepages as an
 example):
@@ -727,11 +725,11 @@ And also load the same hugepages module at runtime.
 
 The craype-hugepages2M module is loaded by deafult on Cori.
 Users could unload the craype-hugepages2M module explicitly to disable
-  the hugepages usage.
+the hugepages usage.
 
 !!! note
 The craype-hugepages2M module is loaded by default since the Cori CLE7
-  upgrade on July 30, 2019.
+upgrade on July 30, 2019.
 
 Due to the hugepages memory fragmentation issue, applications may get
 "Cannot allocate memory" warnings or errors when there are not enough
@@ -785,7 +783,7 @@ Task Packing
 ~~~~~~~~~~~~
 
 Users requiring large numbers of single-task jobs have several options
-  at
+at
 ARCHER2. The options include:
 
 -  Submitting jobs to the `shared QOS <examples/index.md#shared>`__,
@@ -797,13 +795,13 @@ ARCHER2. The options include:
    jobs which look very similar.
 
 If you have a large number of indpendent serial jobs (that is, the
-  jobs do not
+jobs do not
 have dependencies on each other), you may wish to pack the individual
-  tasks
+tasks
 into one bundled Slurm job to help with queue throughput. Packing
-  multiple
+multiple
 tasks into one Slurm job can be done via multiple ``srun`` commands in
-  the same
+the same
 job script
 (`example <examples/index.md#multiple-parallel-jobs-simultaneously>`__).
 
