@@ -19,8 +19,8 @@ Useful Links
 * ONETEP documentation  https://www.onetep.org/Main/Documentation
 
 
-Using ONETEP on Archer
-----------------------
+Using ONETEP on ARCHER2
+-----------------------
 
 ONETEP is licensed software. Please see the ONETEP
 `license page <https://www.onetep.org/Main/License>`__ for details.

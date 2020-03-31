@@ -24,10 +24,10 @@ Useful Links
 * `NAMD Tutorials <http://www.ks.uiuc.edu/Training/Tutorials/index-all.html#namd>`__
 
 
-Using NAMD on Archer
---------------------
+Using NAMD on ARCHER2
+---------------------
 
-NAMD is freely available to all Archer users.
+NAMD is freely available to all ARCHER2 users.
 
 
 Running parallel NAMD jobs

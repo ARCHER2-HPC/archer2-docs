@@ -18,10 +18,10 @@ Useful Links
 * ELK home page       http://elk.sourceforge.net
 * ELK documentation   http://elk.sourceforge.net/#documentation
 
-Using ELK on Archer
--------------------
+Using ELK on ARCHER2
+--------------------
 
-ELK is freely available to all users on Archer.
+ELK is freely available to all users on ARCHER2.
 
 
 .. warning::

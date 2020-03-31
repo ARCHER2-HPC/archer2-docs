@@ -24,11 +24,11 @@ Useful Links
 * NWChem forum           http://www.nwchem-sw.org/index.php/Special:AWCforum
 
 
-Using NWChem on Archer
-----------------------
+Using NWChem on ARCHER2
+-----------------------
 
 NWChem is released under an Educational Community License (ECL 2.0) and is
-freely available to all users on Archer.
+freely available to all users on ARCHER2.
 
 .. warning::
 
@@ -38,7 +38,7 @@ freely available to all users on Archer.
 Where can I get help?
 ^^^^^^^^^^^^^^^^^^^^^
 
-If you have problems accessing or running NWChem on Archer, please contact
+If you have problems accessing or running NWChem on ARCHER2, please contact
 the Service Desk. General questions on the use of NWChem might also be
 directed to the NWChem forum (see link above). More experienced users with
 detailed technical issues on NWChem should consider submitting them to

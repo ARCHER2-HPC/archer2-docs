@@ -29,14 +29,14 @@ Useful Links
 * ChemShell forums         https://www.chemshell.org/forum 
 
 
-Using ChemShell on Archer
--------------------------
+Using ChemShell on ARCHER2
+--------------------------
 
 The python-based version of ChemShell is open-source and is freely
-available to all users on Archer.
+available to all users on ARCHER2.
 
 The older version of Tcl-based ChemShell requires a license. Users
-with a valid license should request access via the Archer SAFE.
+with a valid license should request access via the ARCHER2 SAFE.
 
 .. warning::
 
@@ -57,7 +57,6 @@ Py-ChemShell
 
    #!/bin/bash
 
-   #SLURM ...
 
 Tcl-Chemshell
 ^^^^^^^^^^^^^

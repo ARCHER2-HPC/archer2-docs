@@ -26,10 +26,10 @@ Useful Links
 * Code Saturne users' forum https://www.code-saturne.org/forum/
 
 
-Using Code Saturne on Archer
-----------------------------
+Using Code Saturne on ARCHER2
+-----------------------------
 
-Code Saturne is freely available to all users on Archer.
+Code Saturne is freely available to all users on ARCHER2.
 
 
 .. warning::
@@ -40,7 +40,7 @@ Code Saturne is freely available to all users on Archer.
 Running parallel Code Saturne jobs
 ----------------------------------
 
-Ccde Saturne can exploit multiple nodes on Archer and will generally be run
+Ccde Saturne can exploit multiple nodes on ARCHER2 and will generally be run
 in exclusive mode.
 
 For example, the following script will run a Code Saturne job using 4 nodes

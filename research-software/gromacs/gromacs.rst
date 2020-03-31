@@ -7,7 +7,7 @@ GROMACS
   The ARCHER2 Service is not yet available. This documentation is in
   development.
 
-`GROMACS <http://www.gromacs.org/>`__ GROMACS is a versatile package to
+`GROMACS <http://www.gromacs.org/>`__  is a versatile package to
 perform molecular dynamics, i.e. simulate the Newtonian equations of
 motion for systems with hundreds to millions of particles.  It is
 primarily designed for biochemical molecules like proteins, lipids
@@ -23,8 +23,8 @@ Useful Links
 * `GROMACS User Guides <http://manual.gromacs.org/documentation/>`__
 * `GROMACS Tutorials <http://www.gromacs.org/Documentation/Tutorials>`__
 
-Using GROMACS on Archer
------------------------
+Using GROMACS on ARCHER2
+------------------------
 
 GROMACS is Open Source software and is freely available to all users.
 Four versions are available:

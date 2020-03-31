@@ -25,13 +25,13 @@ Useful Links
 * OpenFOAM documentation  https://www.openfoam.com/documentation/
 
 
-Using OpenFOAM on Archer
-------------------------
+Using OpenFOAM on ARCHER2
+-------------------------
 
 OpenFOAM is released under a GPL v3 license and is freely available to
-all users on Archer.
+all users on ARCHER2.
 
-To use OpenFOAM on Archer you should first load the OpenFOAM module:
+To use OpenFOAM on ARCHER2 you should first load the OpenFOAM module:
 
 ::
 
@@ -50,7 +50,7 @@ be added to any job/batch submission scripts you want to use to run OpenFOAM.
 Available Versions
 ^^^^^^^^^^^^^^^^^^
 
-You can see the versions of OpenFOAM available on Archer from the command line
+You can see the versions of OpenFOAM available on ARCHER2 from the command line
 with ``module avail openfoam``.
 
 Running parallel OpenFOAM jobs

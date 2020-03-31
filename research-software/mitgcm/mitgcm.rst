@@ -22,8 +22,8 @@ Useful Links
 * MITgcm home page       http://mitgcm.org
 * MITgcm documentation   https://mitgcm.readthedocs.io/en/latest/
 
-Using MITgcm on Archer
-----------------------
+Using MITgcm on ARCHER2
+-----------------------
 
 .. warning::
 

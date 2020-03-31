@@ -37,12 +37,12 @@ Useful Links
 * `VASP Manual <http://cms.mpi.univie.ac.at/vasp/vasp/vasp.html>`__
 * `VASP Licensing <http://www.vasp.at/index.php/faqs/71-how-can-i-purchase-a-vasp-license>`__
 
-Using VASP on Archer
---------------------
+Using VASP on ARCHER2
+---------------------
 
 **VASP is only available to users who have a valid VASP licence.**
 
-If you have a VASP licence and wish to have access to VASP on Archer
+If you have a VASP licence and wish to have access to VASP on ARCHER2
 (you may need to speak to your supervisor or line manager to obtain
 the appropriate license details).
 
@@ -69,7 +69,7 @@ Once loaded, the executables are called:
 * ``vasp_ncl`` - Non-collinear version
 
 
-You can access the LDA and PBE pseudopotentials for VASP on Archer at:
+You can access the LDA and PBE pseudopotentials for VASP on ARCHER2 at:
 
 :: 
 

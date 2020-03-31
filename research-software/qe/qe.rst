@@ -19,10 +19,10 @@ Useful Links
   `User Guides <http://www.quantum-espresso.org/users-manual/>`__
 * Quantum Espresso `Tutorials <http://www.quantum-espresso.org/tutorials/>`__
 
-Using QE on Archer
-------------------
+Using QE on ARCHER2
+-------------------
 
-QE is released under a GPL v2 license and is freely available to all Archer
+QE is released under a GPL v2 license and is freely available to all ARCHER2
 users.
 
 

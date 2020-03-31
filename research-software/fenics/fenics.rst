@@ -20,10 +20,10 @@ Useful Links
 * FEniCS home page       https://fenicsproject.org
 * FEniCS documentation   https://fenicsproject.org/documentation/
 
-Using FEniCS on Archer
-----------------------
+Using FEniCS on ARCHER2
+-----------------------
 
-FEniCS is freely available to all users on Archer.
+FEniCS is freely available to all users on ARCHER2.
 
 
 Running parallel FEniCS jobs

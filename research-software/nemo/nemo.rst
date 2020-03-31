@@ -19,11 +19,11 @@ Useful Links
 * NEMO users' area       http://forge.ipsl.jussieu.fr/nemo/wiki/Users
 
 
-Using NEMO on Archer
---------------------
+Using NEMO on ARCHER2
+---------------------
 
 NEMO is released under a CeCILL license and if freely available to
-all users on Archer.
+all users on ARCHER2.
 
 
 .. warning::

@@ -16,7 +16,7 @@ reports, white papers), links to instruction manuals and further information.
 Centrally supported packages
 ----------------------------
 
-Archer provides a number of research software packages as `centrally
+ARCHER2 provides a number of research software packages as `centrally
 supported packages`. Many of these packages are free to use, but others
 require a license (which you, or your research group, need to supply).
 

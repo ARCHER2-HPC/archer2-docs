@@ -20,10 +20,10 @@ Useful Links
 * LAMMPS Documentation https://lammps.sandia.gov/doc/Manual.html 
 * LAMMPS Mailing list details https://lammps.sandia.gov/mail.html
 
-Using LAMMPS on Archer
-----------------------
+Using LAMMPS on ARCHER2
+-----------------------
 
-LAMMPS is freely available to all Archer users.
+LAMMPS is freely available to all ARCHER2 users.
 
 The centrally installed version of LAMMPS is compiled with all the
 standard packages included: `ASPHERE`, `BODY`, ..
@@ -36,7 +36,7 @@ and we can help out if necessary (see below).
 Running parallel LAMMPS jobs
 ----------------------------
 
-LAMMPS can exploit multiple nodes on Archer and will generally be run in
+LAMMPS can exploit multiple nodes on ARCHER2 and will generally be run in
 exclusive mode using more than one node.
 
 For example, the following script will run a LAMMPS MD job using 4 nodes
@@ -79,7 +79,7 @@ for extensibility,  may mean that it is convenient for users to compile
 their own copy. In practice, LAMMPS is relatively easy to compile, so we
 encourage users to have a go.
 
-Compilation instructions for LAMMPS on Archer can be found on GitHub:
+Compilation instructions for LAMMPS on ARCHER2 can be found on GitHub:
 
 https://github.com/hpc-uk/build-instructions/tree/master/LAMMPS
 

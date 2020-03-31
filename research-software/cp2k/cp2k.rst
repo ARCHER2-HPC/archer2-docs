@@ -20,14 +20,14 @@ Useful links
 * `CP2K HOWTOs <https://www.cp2k.org/howto>`__
 * `CP2K FAQs <https://www.cp2k.org/faq>`__
 
-Using CP2K on Archer
---------------------
+Using CP2K on ARCHER2
+---------------------
 
 CP2K is available through the `cp2k` module. MPI only `cp2k.popt`
 and MPI/OpenMP Hybrid `cp2k.psmp` binaries are available.
 
 
-For Archer, CP2K has been compiled with the following optional features:
+For ARCHER2, CP2K has been compiled with the following optional features:
 FFTW for fast Fourier transforms, `libint` to enable methods including
 Hartree-Fock exchange, `libxsmm` for efficient small matrix multiplications,
 `libxc` to provide a wider choice of exchange-correlation functionals,
@@ -134,5 +134,5 @@ Hints and Tips
 Compiling CP2K
 --------------
 
-Details of how to compile CP2K on Archer are available
+Details of how to compile CP2K on ARCHER2 are available
 https://github.com/hpc-uk/build-instructions/tree/master/CP2K

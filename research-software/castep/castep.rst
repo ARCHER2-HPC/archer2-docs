@@ -21,12 +21,12 @@ Useful Links
 * `CASTEP Tutorials <http://www.castep.org/CASTEP/OnlineTutorials>`__
 * `CASTEP Licensing <http://www.castep.org/CASTEP/GettingCASTEP>`__
 
-Using CASTEP on Archer
-----------------------
+Using CASTEP on ARCHER2
+-----------------------
 
 **CASTEP is only available to users who have a valid CASTEP licence.**
 
-If you have a CASTEP licence and wish to have access to CASTEP on Archer,
+If you have a CASTEP licence and wish to have access to CASTEP on ARCHER2,
 please make a request via the SAFE LINK REQUIRED.
 Please have your license details to hand.
 
@@ -41,7 +41,7 @@ Please have your license details to hand.
 Running parallel CASTEP jobs
 ----------------------------
 
-CASTEP can exploit multiple nodes on Archer and will generally be run in
+CASTEP can exploit multiple nodes on ARCHER2 and will generally be run in
 exclusive mode over more than one node.
 
 For example, the following script will run a CASTEP job using 4 nodes
@@ -83,5 +83,5 @@ Hints and Tips
 Compiling CASTEP
 ----------------
 
-The latest instructions for building CASTEP on Archer2 may be found
+The latest instructions for building CASTEP on ARCHER2 may be found
 at https://github.com/hpc-uk/build-instructions/tree/master/CASTEP

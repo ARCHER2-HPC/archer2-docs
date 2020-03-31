@@ -24,11 +24,11 @@ Useful Links
 * Nektar gitlab repository  https://gitlab.nektar.info/nektar
 
 
-Using Nektar++ on Archer
-------------------------
+Using Nektar++ on ARCHER2
+-------------------------
 
 Nektar++ is released under an MIT license and is available to all users
-on Archer.
+on ARCHER2.
 
 .. warning::
 
@@ -42,7 +42,7 @@ Specific issues with Nektar++ itself might be submitted to the issue
 tracker at the Nektar++ gitlab repository (see link above). More general
 questions might also be directed to the Nektar-users mailing list
 https://mailman.ic.ac.uk/mailman/listinfo/nektar-users.
-Issues specific to the use or behaviour of Netkar++ on Archer should be
+Issues specific to the use or behaviour of Netkar++ on ARCHER2 should be
 sent to the Service Desk.
 
 
