@@ -95,6 +95,23 @@ and Sphinx technologies.
    :caption: Research software
 
    research-software/overview.rst
+   research-software/castep/castep.rst
+   research-software/chemshell/chemshell.rst
+   research-software/code-saturne/code-saturne.rst
+   research-software/cp2k/cp2k.rst
+   research-software/elk/elk.rst
+   research-software/fenics/fenics.rst
+   research-software/gromacs/gromacs.rst
+   research-software/lammps/lammps.rst
+   research-software/mitgcm/mitgcm.rst
+   research-software/mo-unified-model/mo-unified-model.rst
+   research-software/namd/namd.rst
+   research-software/nemo/nemo.rst
+   research-software/nwchem/nwchem.rst
+   research-software/onetep/onetep.rst
+   research-software/openfoam/openfoam.rst
+   research-software/qe/qe.rst
+   research-software/vasp/vasp.rst
 
 .. toctree::
    :maxdepth: 2
