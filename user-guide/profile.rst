@@ -31,8 +31,8 @@ How to use CrayPat-lite
 
 ::
    
- [user@archer2]$ cc -h std=c99  -o mpi_test.x mpi_test.c
- INFO: creating the CrayPat-instrumented executable 'mpi_test.x' (lite-samples) ...OK  
+ [user@archer2]$ cc -h std=c99  -o myapplication.x myapplication.c
+ INFO: creating the CrayPat-instrumented executable 'myapplication.x' (lite-samples) ...OK  
 
 4. Run the generated executable normally submitting a job.
 
@@ -73,5 +73,48 @@ the timing and performance of individual application procedures.
 
 CrayPat can perform two types of performance analysis: *sampling* experiments and *tracing* experiments. A sampling experiment probes the code at a predefined interval and produces a report based on these statistics. A tracing experiment explicitly monitors the code performance within named routines. Typically, the overhead associated with a tracing experiment is higher than that associated with a sampling experiment but provides much more detailed information. The key to getting useful data out of a sampling experiment is to run your profiling for a representative length of time.
 
-Sampling experiments
-^^^^^^^^^^^^^^^^^^^^
+Sampling analysis
+^^^^^^^^^^^^^^^^^
+
+
+1. Ensure the ``perftools-base`` module is loaded
+
+::
+
+   module list
+
+2. Load ``perfotools`` module
+
+::
+
+   module load perftools
+
+
+3. Compile your code in the standard way. Object files need to be made available to CrayPat to correctly build an instrumented executable for profiling or tracing, this means that compile and link stage should be separated by using the ``-c`` compile flag. 
+
+::
+   
+ [user@archer2]$ cc -h std=c99 -c myapplication.c
+ [user@archer2]$ cc myapplication.o -o myapplication.x 
+
+4. Instrument your application
+   To instrument then the binary, run the ``pat_build`` command. This will generate a new binary with ``+pat`` appended to the end (e.g. ``myapplication.x+pat``)
+
+::
+ 
+   [user@archer2]$ pat_build myapplication.x
+
+
+5. Run the new executable with ``+pat`` appended as you would with the regular executable. This will generate a performance data file with the suffix ``.xf`` (e.g. ``myapplication+pat+5511-2558sdot.xf``).
+   
+6. Generate report data
+   
+This ``.xt`` file contains the raw sampling data from the run and needs to be post processed to produce useful results. This is done using the ``pat_report`` tool which converts all the raw data into a summarised and readable form.
+
+::
+
+   
+   [user@archer2]$ pat_report myapplication+pat+5511-2558sdot.xf > myreport.txt
+
+This report will generate two more files, one with the extension ``.ap2`` which holds the same data as the ``.xf`` but in the post processed form. The other file has a ``.apa`` extension and is a text file with a suggested configuration for generating a traced experiment. 
+   
