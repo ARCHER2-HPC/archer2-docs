@@ -6,7 +6,6 @@ Profiling and performance tuning
   The ARCHER2 Service is not yet available. This documentation is in
   development.
 
-Profiling and understanding performance on ARCHER2 including performance tuning advice.
 
 CrayPat-lite
 ------------
@@ -16,32 +15,34 @@ To use CrayPat-lite you only need to make sure that the base CrayPat perftools-b
 
 How to use CrayPat-lite
 ^^^^^^^^^^^^^^^^^^^^^^^
-Ensure the ``perftools-base`` module is loaded
+1. Ensure the ``perftools-base`` module is loaded
 
 ::
 
    module list
 
-Load ``perfotools-lite module``
+2. Load ``perfotools-lite module``
 
 ::
 
    module load perftools-lite
 
-Compile your application normally. An information message from CrayPat-lite will appear indicating that the executable has been instrumented.
+3. Compile your application normally. An information message from CrayPat-lite will appear indicating that the executable has been instrumented.
 
 ::
    
  [user@archer2]$ ftn -h std=c99  -o test mpi_test.c
  INFO: creating the CrayPat-instrumented executable 'mpi_test' (lite-samples) ...OK  
 
-Run the generated executable normally submitting a job.
+4. Run the generated executable normally submitting a job.
 
-After the job finishes executing, CrayPat-lite output should be printed to stdout i.e. at the end of the job's output file generated. A new directory will also be created in the directory the run occurred in with ``.rpt`` and ``.ap2`` files. The ``.rpt`` files are text files that contain the same information printed in the job's output file, the ``.ap2`` files can be used to obtained more detailed information  and can be visualized with the ``app2`` tool.
+After the job finishes executing, CrayPat-lite output should be printed to stdout i.e. at the end of the job's output file generated. A new directory will also be created in the directory the run occurred in with ``.rpt`` and ``.ap2`` files. The ``.rpt`` files are text files that contain the same information printed in the job's output file, the ``.ap2`` files can be used to obtained more detailed information  and can be visualized with the Cray Apprentice2 tool.
+
+Further help
+^^^^^^^^^^^^
+* `CrayPat-lite User Guide <https://pubs.cray.com/content/S-2376/7.0.0/cray-performance-measurement-and-analysis-tools-user-guide/craypat-lite>`__
 
 
-CrayPat-lite options
-^^^^^^^^^^^^^^^^^^^^
 
 CrayPat
 -------
