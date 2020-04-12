@@ -21,7 +21,7 @@ How to use CrayPat-lite
 
    module list
 
-2. Load ``perfotools-lite module``
+2. Load ``perfotools-lite`` module
 
 ::
 
