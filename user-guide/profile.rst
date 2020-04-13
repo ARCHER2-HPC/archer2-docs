@@ -105,7 +105,7 @@ Sampling analysis
    [user@archer2]$ pat_build myapplication.x
 
 
-5. Run the new executable with ``+pat`` appended as you would with the regular executable. This will generate a performance data file with the suffix ``.xf`` (e.g. ``myapplication+pat+5511-2558sdot.xf``).
+5. Run the new executable with ``+pat`` appended as you would with the regular executable. This will generate a performance data file with the suffix ``.xf`` (e.g. ``myapplication+pat+15571-2838s.xf``).
    
 6. Generate report data
    
@@ -114,7 +114,7 @@ This ``.xt`` file contains the raw sampling data from the run and needs to be po
 ::
 
    
-   [user@archer2]$ pat_report myapplication+pat+5511-2558sdot.xf > myreport.txt
+   [user@archer2]$ pat_report myapplication+pat+15571-2838s.xf > myreport.txt
 
 This report will generate two more files, one with the extension ``.ap2`` which holds the same data as the ``.xf`` but in the post processed form. The other file has a ``.apa`` extension and is a text file with a suggested configuration for generating a traced experiment. 
    
