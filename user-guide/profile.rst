@@ -201,7 +201,7 @@ small amount of additional programming work:
 
   * ``MPI_Cart_sub`` can divide a Cartesian communicator into regular slices.
 
-* If the communication pattern is what you want, but the data on each
+* If the communication *pattern* is what you want, but the data on each
   process is not arranged in the required layout, consider using MPI
   derived data types for the input and/or output. This can be useful,
   for example, if you want to communicate non-contiguous data such as
