@@ -71,6 +71,18 @@ Other helpful commands are:
 * ``module purge`` which unloads all modules, returning you to a clean
   environment
 
+Points to be aware of include:
+
+* Some modules will conflict with others. A simple example would be the conflict
+  arising when trying to load a different version of an already loaded module.
+  When a conflict occurs, the loading process will fail and an error message
+  will be displayed. Examination of the message and the modulefiles (via
+  ``module show``) should reveal the cause of the conflict and how to resolve
+  it.
+* The order in which modules are loaded *can* matter. Consider two modules
+  which set the same variable to a different value. The final value
+  would be that set by the module which loaded last.
+
 Programming environments
 ------------------------
 
