@@ -71,3 +71,54 @@ Other helpful commands are:
 * ``module purge`` which unloads all modules, returning you to a clean
   environment
 
+Programming Environments
+------------------------
+
+When compiling code on ARCHER2, it is recommended that you make use of the Cray
+compiler wrappers. These ensure that the correct libraries and headers (for
+example, MPI or Cray LibSci) are included during all stages of compilation and
+linking. These wrappers should be accessed by providing the following compiler
+names, whether on the command line or in build scripts or configure options:
+
++----------+--------------+
+| Language | Wrapper name |
++==========+==============+
+| C        | cc           |
++----------+--------------+
+| C++      | CC           |
++----------+--------------+
+| Fortran  | ftn          |
++----------+--------------+
+
+``man`` pages are available for each wrapper.
+
+On login to ARCHER2, the ``PrgEnv-cray`` module will be loaded, as will a `cce`
+module. The latter makes available Cray's compilers from the Cray Compiling
+Environment (CCE), while the former provides the correct wrappers and support to
+use them. The GNU Compiler Collection (GCC) and the AMD Optimizing Compiler
+Collection (AOCC) compilers are also available. To make use of any of the three
+Programming Environments, simply swap to the correct ``PrgEnv`` module. The
+default version of the corresponding compiler suite will also be loaded, but you
+may swap to another version if you wish.
+
+The following table summarises the suites and associated programming environments.
+
++------------+--------+--------------------------------+
+| Suite name | Module | Programming environment module |
++============+========+================================+
+| AOCC       |``aocc``| ``PrgEnv-amd``                 |
++------------+--------+--------------------------------+
+| CCE        |``cce`` | ``PrgEnv-cray``                |
++------------+--------+--------------------------------+
+| GCC        |``gcc`` | ``PrgEnv-gnu``                 |
++------------+--------+--------------------------------+
+
+As an example, after logging in you may wish to use GCC as your compiler suite.
+Running ``module swap PrgEnv-cray PrgEnv-gnu`` will unload the Cray environment
+and replace it with the GNU environment. It will also unload the ``cce`` module
+and load the default version of the ``gcc`` module. If you need to use a
+different version, for example 5.3.0, you would follow up with ``module swap gcc
+gcc/5.3.0``. At this point you may invoke the wrappers and they will correctly
+use Cray's libraries and tools in conjunction with GCC.
+
+Please note that unlike ARCHER, the Intel compilers are not available on ARCHER2.
