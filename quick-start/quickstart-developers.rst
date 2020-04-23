@@ -1,4 +1,4 @@
-Quickstart for Developers
+Quickstart for developers
 =========================
 
 .. warning::
@@ -71,7 +71,7 @@ Other helpful commands are:
 * ``module purge`` which unloads all modules, returning you to a clean
   environment
 
-Programming Environments
+Programming environments
 ------------------------
 
 When compiling code on ARCHER2, it is recommended that you make use of the Cray
