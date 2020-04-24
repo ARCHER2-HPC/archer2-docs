@@ -138,6 +138,27 @@ use Cray's libraries and tools in conjunction with GCC.
 Please note that unlike ARCHER, the Intel compilers are not available on
 ARCHER2.
 
+Changing the version of the development environment
+---------------------------------------------------
+
+The programming environment on ARCHER2, consisting of the compilers and
+libraries, are versioned together under the Cray Developer Toolkit (CDT).
+Software comprising the CDT will be updated over time. If you wish, you may
+choose to use a given version over the default by loading the appropriate
+module, e.g. for CDT 18.12::
+
+  module load cdt/18.12
+
+A given CDT module will load those versions of the following software that
+together make it up:
+
+* Cray ATP (Abnormal Termination Processing)
+* Cray LibSci
+* Cray MPT (Message Passing Toolkit, providing MPI)
+* Cray PMI (Process Manager Interface Library)
+* The Cray Programming Environment
+* The current compiler (dependent on which ``PrgEnv`` is active)
+
 Linking on ARCHER2
 ------------------
 
