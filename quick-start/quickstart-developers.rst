@@ -102,7 +102,9 @@ names, whether on the command line or in build scripts or configure options:
 | Fortran  | ftn          |
 +----------+--------------+
 
-``man`` pages are available for each wrapper.
+``man`` pages are available for each wrapper. You can see the full set of
+compiler and linker options by passing the ``-craype-verbose`` option to the
+wrapper.
 
 On login to ARCHER2, the ``PrgEnv-cray`` module will be loaded, as will a `cce`
 module. The latter makes available Cray's compilers from the Cray Compiling
@@ -133,4 +135,28 @@ different version, for example 5.3.0, you would follow up with ``module swap gcc
 gcc/5.3.0``. At this point you may invoke the wrappers and they will correctly
 use Cray's libraries and tools in conjunction with GCC.
 
-Please note that unlike ARCHER, the Intel compilers are not available on ARCHER2.
+Please note that unlike ARCHER, the Intel compilers are not available on
+ARCHER2.
+
+Linking on ARCHER2
+==================
+
+Executables on ARCHER2 will, by default, link dynamically. This is in contrast to
+ARCHER where the default was to build statically.
+
+Passing the ``-static`` or ``-dynamic`` flags to the wrappers will set that
+behaviour. Alternatively, the behaviour of the compiler wrappers for your
+current login shell can be changed by setting the ``CRAYPE_LINK_TYPE``
+environment variable as follows::
+
+  export CRAYPE_LINK_TYPE=static
+
+to build static executables from now on, or
+
+::
+
+  export CRAYPE_LINK_TYPE=dynamic
+
+to return to the default dynamic behaviour.
+
+RPATHS?
