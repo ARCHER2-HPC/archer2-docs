@@ -139,7 +139,7 @@ Please note that unlike ARCHER, the Intel compilers are not available on
 ARCHER2.
 
 Linking on ARCHER2
-==================
+------------------
 
 Executables on ARCHER2 will, by default, link dynamically. This is in contrast to
 ARCHER where the default was to build statically.
