@@ -81,7 +81,9 @@ Points to be aware of include:
   it.
 * The order in which modules are loaded *can* matter. Consider two modules
   which set the same variable to a different value. The final value
-  would be that set by the module which loaded last.
+  would be that set by the module which loaded last. If you suspect that two
+  modules may be interfering with one another, you can examine their contents
+  with ``module show``.
 
 Programming environments
 ------------------------
