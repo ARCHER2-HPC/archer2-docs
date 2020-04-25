@@ -94,18 +94,18 @@ Sampling analysis
 
 ::
    
- [user@archer2]$ cc -h std=c99 -c myapplication.c
- [user@archer2]$ cc myapplication.o -o myapplication.x 
+ [user@archer2]$ cc -h std=c99 -c myapp.c
+ [user@archer2]$ cc myapplication.o -o myapp.x 
 
 4. Instrument your application
-   To instrument then the binary, run the ``pat_build`` command. This will generate a new binary with ``+pat`` appended to the end (e.g. ``myapplication.x+pat``)
+   To instrument then the binary, run the ``pat_build`` command. This will generate a new binary with ``+pat`` appended to the end (e.g. ``myapp.x+pat``)
 
 ::
  
    [user@archer2]$ pat_build myapplication.x
 
 
-5. Run the new executable with ``+pat`` appended as you would with the regular executable. This will generate a performance data file with the suffix ``.xf`` (e.g. ``myapplication+pat+15571-2838s.xf``).
+5. Run the new executable with ``+pat`` appended as you would with the regular executable. This will generate a performance data file with the suffix ``.xf`` (e.g. ``myapp+pat+15571-2838s.xf``).
    
 6. Generate report data
    
@@ -114,7 +114,21 @@ This ``.xt`` file contains the raw sampling data from the run and needs to be po
 ::
 
    
-   [user@archer2]$ pat_report myapplication+pat+15571-2838s.xf > myreport.txt
+   [user@archer2]$ pat_report myapp+pat+15571-2838s.xf > myreport.txt
 
-This report will generate two more files, one with the extension ``.ap2`` which holds the same data as the ``.xf`` but in the post processed form. The other file has a ``.apa`` extension and is a text file with a suggested configuration for generating a traced experiment. 
-   
+This report will generate two more files, one with the extension ``.ap2`` which holds the same data as the ``.xf`` but in the post processed form. The other file has a ``.apa`` extension and is a text file with a suggested configuration for generating a traced experiment. The ``.ap2`` file generated is used to view performance data graphically with the Cray Apprentice2 tool, and the latter is used for more detailed tracing experiments. 
+ 
+
+Tracing analysis
+^^^^^^^^^^^^^^^^
+We can produce a focused tracing experiment based on the results from the *sampling* experiment using ``pat_build`` with the ``.apa`` file produced during the sampling.
+
+::
+
+    [user@archer2]$ pat_build -O myapp+pat+15571-2838s.apa
+
+This will produce a third binary with extension ``+apa``. This binary should once again be run on the compute nodes and the name of the executable changed to ``myapp+apa``. 
+
+Further help
+^^^^^^^^^^^^
+* `CrayPat User Guide <https://pubs.cray.com/content/S-2376/7.0.0/cray-performance-measurement-and-analysis-tools-user-guide/craypat>`__
