@@ -85,8 +85,8 @@ Points to be aware of include:
   modules may be interfering with one another, you can examine their contents
   with ``module show``.
 
-Programming environments
-------------------------
+Compiler wrappers
+-----------------
 
 When compiling code on ARCHER2, it is recommended that you make use of the Cray
 compiler wrappers. These ensure that the correct libraries and headers (for
@@ -108,14 +108,18 @@ names, whether on the command line or in build scripts or configure options:
 compiler and linker options by passing the ``-craype-verbose`` option to the
 wrapper.
 
+Programming environments
+------------------------
+
 On login to ARCHER2, the ``PrgEnv-cray`` module will be loaded, as will a `cce`
 module. The latter makes available Cray's compilers from the Cray Compiling
 Environment (CCE), while the former provides the correct wrappers and support to
 use them. The GNU Compiler Collection (GCC) and the AMD Optimizing Compiler
 Collection (AOCC) compilers are also available. To make use of any of the three
-Programming Environments, simply swap to the correct ``PrgEnv`` module. The
-default version of the corresponding compiler suite will also be loaded, but you
-may swap to another version if you wish.
+Programming Environments, simply swap to the correct ``PrgEnv`` module. At this
+point the compiler wrappers (``cc``, ``CC`` and ``ftn``) will correctly call the
+compilers from the new suite. The default version of the corresponding compiler
+suite will also be loaded, but you may swap to another version if you wish.
 
 The following table summarises the suites and associated programming environments.
 
@@ -134,8 +138,8 @@ Running ``module swap PrgEnv-cray PrgEnv-gnu`` will unload the Cray environment
 and replace it with the GNU environment. It will also unload the ``cce`` module
 and load the default version of the ``gcc`` module. If you need to use a
 different version, for example 5.3.0, you would follow up with ``module swap gcc
-gcc/5.3.0``. At this point you may invoke the wrappers and they will correctly
-use Cray's libraries and tools in conjunction with GCC.
+gcc/5.3.0``. At this point you may invoke the compiler wrappers and they will
+correctly use Cray's libraries and tools in conjunction with GCC.
 
 Please note that unlike ARCHER, the Intel compilers are not available on
 ARCHER2.
