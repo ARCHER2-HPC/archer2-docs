@@ -235,18 +235,19 @@ to return to the default dynamic behaviour.
 Using RPATHs to link
 ^^^^^^^^^^^^^^^^^^^^
 
-A dynamically linked executable will usually allow the linker to find the
-libraries it needs at runtime by searching the paths in the ``LD_LIBRARY_PATH``
-environment variable. This is flexible in that it allows an executable to use
-newly installed library versions without rebuilding, but you may prefer to bake
-the paths to specific libraries into the executable, keeping them constant.
-While the libraries are still dynamically loaded at run time, from the end
-user's point of view the resulting behaviour will be similar to that of a
-statically compiled executable in that they will not need to concern themselves
-with ensuring the linker will be able to find the libraries.
+The default behaviour of a dynamically linked executable will be to allow the
+linker to provide the libraries it needs at runtime by searching the paths in
+the ``LD_LIBRARY_PATH`` environment variable. This is flexible in that it allows
+an executable to use newly installed library versions without rebuilding, but in
+some cases you may prefer to bake the paths to specific libraries into the
+executable, keeping them constant. While the libraries are still dynamically
+loaded at run time, from the end user's point of view the resulting behaviour
+will be similar to that of a statically compiled executable in that they will
+not need to concern themselves with ensuring the linker will be able to find the
+libraries.
 
-This is be achieved by using RPATHs as compiler options. To set the compiler
-wrappers to use this behaviour, you can set the following environment variable::
+This is achieved by providing RPATHs to the compiler as options. To set the
+compiler wrappers to do this, you can set the following environment variable::
 
   export CRAY_ADD_RPATH=yes
 
