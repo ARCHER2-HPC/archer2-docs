@@ -141,6 +141,13 @@ different version, for example 5.3.0, you would follow up with ``module swap gcc
 gcc/5.3.0``. At this point you may invoke the compiler wrappers and they will
 correctly use Cray's libraries and tools in conjunction with GCC.
 
+When choosing the programming environment, a big factor will likely be which
+compilers you have previously used for your code's development. The Cray Fortran
+compiler is similar to the compiler you may be familiar with from ARCHER, while
+the Cray C and C++ compilers provided on ARCHER2 are new versions that are now
+derived from Clang. The AMD C/C++ and Fortran compilers are respectively derived
+from Clang and Flang. The GCC suite provides gcc and gfortran.
+
 Please note that unlike ARCHER, the Intel compilers are not available on
 ARCHER2.
 
