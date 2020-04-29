@@ -1,5 +1,5 @@
-Profiling and performance tuning
-================================
+Profiling 
+==========
 
 .. warning::
 
