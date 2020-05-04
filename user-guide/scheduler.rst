@@ -29,7 +29,7 @@ specifying Slurm directives that describe the resources required for your
 jobs in job submission scripts.
 
 
-Basic SLURM commands
+Basic Slurm commands
 --------------------
 
 There are three key commands used to interact with the Slurm on the
@@ -53,7 +53,16 @@ e.g.
 
 ::
 
-  [user@archer2 ~]$ sinfo 
+  sinfo 
+
+  PARTITION       AVAIL  TIMELIMIT  NODES  STATE NODELIST
+  standard           up 2-00:00:00      1  fail* cn580
+  standard           up 2-00:00:00    128  down$ cn[96,579,793,814,1025-1044,1081-1088]
+  standard           up 2-00:00:00     26  maint cn[27,93-95,206,232,310,492,568,577-578,585-588,813,815-816,818,846,889,921-924,956]
+  standard           up 2-00:00:00      2   fail cn[274,871]
+  standard           up 2-00:00:00      4  down* cn[528,614,637,845]
+  standard           up 2-00:00:00   1034  alloc cn[1-26,28-38,40-58,62-86,88-92,97-174,176-205,207-231,233-273,275-309,311-333,335-341,344-371,373-376,378-413,415-452,454-489,493-513,515-527,529-532,535-539,541-550,554-561,563-567,569,572-576,581-584,589-595,598-601,603-613,615,617-620,623-631,633-636,638-647,651-659,661-678,680-687,690-695,697-716,718-736,738-775,777-790,792,794-812,817,819-844,847-852,854-870,872-888,890-920,925-955,957-977,980-1014,1016-1020,1023-1024,1045,1047-1070,1072-1080,1089-1105,1107-1152]
+  standard           up 2-00:00:00     26   idle cn[61,490-491,540,551-552,562,570,596,602,621,632,648-650,660,688-689,696,853,978-979,1015,1021-1022,1071]
 
 ``sbatch``: submitting jobs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -66,7 +75,7 @@ this job in other Slurm commands and when looking at resource usage in SAFE.
 
 ::
 
-  [user@archer2 ~]$ sbatch test-job.slurm
+  sbatch test-job.slurm
   Submitted batch job 12345
 
 ``squeue``: monitoring jobs
@@ -145,7 +154,6 @@ Output from Slurm jobs
 Slurm places standard output (STDOUT) and standard error (STDERR) for each
 job in the file ``slurm_<JobID>.out``. This file appears in the
 job's working directory once your job starts running.
-
 
 .. note::
 
@@ -349,7 +357,7 @@ process per core and specifies 4 hours maximum runtime per subjob:
     #   using threading.
     export OMP_NUM_THREADS=1
 
-    srun /path/to/exe $SLURM_ARRAY_TASK_ID
+    srun /path/to/exe $Slurm_ARRAY_TASK_ID
 
 
 Submitting a job array
@@ -489,7 +497,7 @@ time for your job with the ``--time-min`` option to SBATCH:
     #SBATCH --time=<upper_bound>
 
 Within your job script, you can get the time remaining in the job with
-``squeue -h -j ${SLURM_JOBID} -o %L`` to allow you to deal with potentially
+``squeue -h -j ${Slurm_JOBID} -o %L`` to allow you to deal with potentially
 varying runtimes when using this option.
 
 Long Running Jobs
@@ -540,16 +548,16 @@ below, and running it as ``bash prepare-env.sh`` on a login node. This script:
 
     # Submit this script as: "bash prepare-env.sh" instead of "sbatch prepare-env.sh"
 
-    # Prepare user env needed for SLURM batch job
+    # Prepare user env needed for Slurm batch job
     # such as module load, setup runtime environment variables, or copy input files, etc.
     # Basically, these are the commands you usually run ahead of the srun command 
 
     module load cray-netcdf
     export OMP_NUM_THREADS=4
 
-    # Generate the SLURM batch script below with the here document, 
+    # Generate the Slurm batch script below with the here document, 
     # then "sbatch" the script later, the user env set up above will run on the login node
-    # instead of on a head compute node (if included in the SLURM batch script),
+    # instead of on a head compute node (if included in the Slurm batch script),
     # and inherited into the batch job.
 
     cat << EOF > prepare-env.slurm 
@@ -580,7 +588,7 @@ Large Jobs
 
 Large jobs may take longer to start up. The ``sbcast`` command 
 is recommended for large jobs requesting over 1500 MPI tasks.
-By default, SLURM reads the executable on the allocated compute nodes
+By default, Slurm reads the executable on the allocated compute nodes
 from the location where it is installed; this may take long time when
 the file system (where the executable resides) is slow or busy. The
 ``sbcast`` command, the executable can be copied to the ``/tmp``
@@ -599,7 +607,7 @@ For jobs which are sensitive to interconnect (MPI) performance and
 utilize less than or equal to 256 nodes it is possible to request that all nodes
 are in a single Slingshot dragonfly group.
 
-SLURM has a concept of "switches" which on ARCHER2 are configured to map
+Slurm has a concept of "switches" which on ARCHER2 are configured to map
 to Slingshot groups (there are 256 nodes per group). Since this places an additional constraint
 on the scheduler a maximum time to wait for the requested topology can
 be specified. For example:
@@ -624,6 +632,13 @@ maximum number of tasks is reached:
 
 ::
 
+    salloc --nodes=8 --tasks-per-node=2 --cpus-per-task=1 --time=0:10:0 --account=t01
+
+    salloc: Granted job allocation 24236
+    salloc: Waiting for resource configuration
+    salloc: Nodes cn13 are ready for job
+
+    module load xthi
     srun --nodes=8 --tasks-per-node=2 xthi
 
     Hello from rank 0, on nid01041. (core affinity = 0-63)
@@ -644,6 +659,13 @@ specify other types of MPI task placement. For example, setting it to
 
 ::
 
+    salloc --nodes=8 --tasks-per-node=2 --cpus-per-task=1 --time=0:10:0 --account=t01
+
+    salloc: Granted job allocation 24236
+    salloc: Waiting for resource configuration
+    salloc: Nodes cn13 are ready for job
+
+    module load xthi
     export MPICH_RANK_REORDER_METHOD=0
     srun --nodes=8 --tasks-per-node=2 xthi
 
@@ -690,25 +712,16 @@ task placement. For more information, please see the man page
 ``man grid_order`` (available when the ``perftools-base`` module is
 loaded).
 
-.. TODO: GOT TO HERE
-
-Hugepages
-~~~~~~~~~
+Huge pages
+~~~~~~~~~~
 
 Huge pages are virtual memory pages which are bigger than the default
 page size of 4K bytes. Huge pages can improve memory performance
 for common access patterns on large data sets since it helps to reduce
-the number of virtual to physical address translations than compated
-with
-using the default 4K. Huge pages also
-increase the maximum size of data and text in a program accessible by
-the high speed network, and reduce the cost of accessing memory, such
-as
-in the case of many MPI\_Alltoall operations. Using hugepages
-can help to `reduce the application runtime
-variability <../performance/variability.md>`__.
+the number of virtual to physical address translations when compared
+to using the default 4KB.
 
-To use hugepages for an application (with the 2M hugepages as an
+To use huge pages for an application (with the 2 MB huge pages as an
 example):
 
 ::
@@ -716,27 +729,18 @@ example):
     module load craype-hugepages2M
     cc -o mycode.exe mycode.c
 
-And also load the same hugepages module at runtime.
+And also load the same huge pages module at runtime.
 
-The craype-hugepages2M module is loaded by deafult on Cori.
-Users could unload the craype-hugepages2M module explicitly to disable
-the hugepages usage.
+.. warning::
 
-!!! note
-The craype-hugepages2M module is loaded by default since the Cori CLE7
-upgrade on July 30, 2019.
+  Due to the huge pages memory fragmentation issue, applications may get
+  *Cannot allocate memory* warnings or errors when there are not enough
+  hugepages on the compute node, such as: 
+  ``libhugetlbfs [nid000xx:xxxxx]: WARNING: New heap segment map at 0x10000000 failed: Cannot allocate memory``
 
-Due to the hugepages memory fragmentation issue, applications may get
-"Cannot allocate memory" warnings or errors when there are not enough
-hugepages on the compute node, such as:
-
-::
-
-    libhugetlbfs [nid000xx:xxxxx]: WARNING: New heap segment map at 0x10000000 failed: Cannot allocate memory
-
-The verbosity level of libhugetlbfs HUGETLB\_VERBOSE is set to 0 on Cori
-by default to surpress debugging messages. Users can adjust this value
-to obtain more info.
+By default, The verbosity level of libhugetlbfs ``HUGETLB_VERBOSE`` is set 
+to ``0`` on ARCHER2 to surpress debugging messages. Users can adjust this value
+to obtain more information on huge pages use.
 
 When to Use Huge Pages
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -762,42 +766,12 @@ When to Avoid Huge Pages
    to the core application. Applying huge page behavior to all processes
    would not provide any benefit and would consume huge pages that would
    otherwise benefit the core application. The runtime environment
-   variable HUGETLB\_RESTRICT\_EXE can be used to specify the susbset of
+   variable ``HUGETLB_RESTRICT_EXE`` can be used to specify the susbset of
    the programs to use hugepages.
 -  For certain applications if using hugepages either causes issues or
-   slowing
-   down performances, users can explicitly unload the craype-hugepages2M
-   module.
-   One such example is that when an application forks more subprocesses
-   (such as
-   pthreads) and allocate memory, the newly allocated memory are the
-   small 4K
-   pages.
+   slows down performance. One such example is that when an application
+   forks more subprocesses (such as pthreads) and these threads allocate
+   memory, the newly allocated memory are the default 4 KB pages.
 
-Task Packing
-~~~~~~~~~~~~
-
-Users requiring large numbers of single-task jobs have several options
-at
-ARCHER2. The options include:
-
--  Submitting jobs to the `shared QOS <examples/index.md#shared>`__,
--  Using a `workflow tool <workflow-tools.md>`__ to combine the tasks
-   into one
-   larger job,
--  Using `job arrays <examples/index.md#job-arrays>`__ to submit many
-   individual
-   jobs which look very similar.
-
-If you have a large number of indpendent serial jobs (that is, the
-jobs do not
-have dependencies on each other), you may wish to pack the individual
-tasks
-into one bundled Slurm job to help with queue throughput. Packing
-multiple
-tasks into one Slurm job can be done via multiple ``srun`` commands in
-the same
-job script
-(`example <examples/index.md#multiple-parallel-jobs-simultaneously>`__).
 
 
