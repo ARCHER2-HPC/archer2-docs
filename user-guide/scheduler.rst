@@ -684,7 +684,7 @@ called ``MPICH_RANK_ORDER`` which contains a list of each task's
 placement on each node. These options are described in detail in the
 ``intro_mpi`` man page.
 
-**``grid_order``**
+**grid_order**
 
 For MPI applications which perform a large amount of nearest-neighbor
 communication, e.g., stencil-based applications on structured grids,
@@ -736,7 +736,9 @@ And also load the same huge pages module at runtime.
   Due to the huge pages memory fragmentation issue, applications may get
   *Cannot allocate memory* warnings or errors when there are not enough
   hugepages on the compute node, such as: 
-  ``libhugetlbfs [nid000xx:xxxxx]: WARNING: New heap segment map at 0x10000000 failed: Cannot allocate memory``
+  ::
+  
+    libhugetlbfs [nid000xx:xxxxx]: WARNING: New heap segment map at 0x10000000 failed: Cannot allocate memory``
 
 By default, The verbosity level of libhugetlbfs ``HUGETLB_VERBOSE`` is set 
 to ``0`` on ARCHER2 to surpress debugging messages. Users can adjust this value
