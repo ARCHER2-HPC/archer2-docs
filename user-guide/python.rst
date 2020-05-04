@@ -7,8 +7,7 @@ Python for general users
 Cray Python 3 distribution
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Python on ARCHER2 is provided by Cray. Both Python 2 and Python 3 versions of
-the distributions are supported.
+Python 3 on ARCHER2 is provided by Cray.
 
 The central installation provides many of the most common packages used for
 scientific computation and data analysis. These include:
