@@ -7,206 +7,336 @@ Quickstart for users
   development.
 
 This guide aims to quickly enable new users to get up and running on 
-ARCHER2 by running through the process of getting an ARCHER account,
+ARCHER2 by running through the process of getting an ARCHER2 account,
 logging in and running your first job.
 
-Request an account on ARCHER
-The first step is to sign up for an account on the ARCHER SAFE Website. This account is used to manage your user accounts and report on your usage and quotas. The video below demonstrates how to do this.
+Request an account on ARCHER2
+-----------------------------
 
+The first step is to sign up for an account on the ARCHER2 SAFE website. This account
+is used to manage your user accounts and report on your usage and quotas. To do this:
 
-Once you have a SAFE account you will need to request a user account on ARCHER itself. To do this you will require a Project Code (and occaisionally Project Password); you usually obtain these from the Principle Investigator (PI) or project manager for the project you will be working on. The video below demonstrates the process of requesting a user account.
+1. Go to the `SAFE New User Signup Form <https://www.archer.ac.uk/safe/signup.jsp>`__
+2. Fill in your personal details.  You can come back later and change them if you wish
+3. Click *Submit*
 
+You are now registered. Your SAFE password will be emailed to the email address you provided. You can then login 
+with that email address and password.
 
-The PI or project manager of project will be asked to approve your request. After your request has been approved, the systems team will create the account, and when this has been done, you will receive an email. You can then come back to SAFE and pick up the initial, one use password for your new account (ARCHER account passwords are also sometimes referred to as LDAP passwords by the system).
+Once you have a SAFE account you will need to request a user account on ARCHER2 itself.
+To do this you will require a *Project Code*; you usually obtain this from the Principle
+Investigator (PI) or project manager for the project you will be working on. Once you have
+the Project Code:
 
+1. `Log into SAFE <https://www.archer.ac.uk/safe>`__
+2. Use the *Login accounts - Request new account* menu item
+3. Select the correct project from the drop down list
+4. Select the *ARCHER2* machine in the list of available machines
+5. Click *Next*
+6. Enter a username for the account
+7. Click *Request* 
 
-Collect your ARCHER password
-Login to SAFE at: https://www.archer.ac.uk/safe/
-Go to section "Your user accounts".
-Choose the relevant account and click "View"
-This will display details of your account. In the section labelled "Password", enter your SAFE password and click "View" again, and you will see your password for ARCHER.
-This password is generated randomly by the software. It's best to copy-and-paste it across when you log in to the service machine. After you login, you will be prompted to change it. You should enter this password again, and then you will be prompted for your new, easy-to-remember password.
+The PI or project manager of the project will be asked to approve your request. After your
+request has been approved the account will be created and when this has been done you will
+receive an email. You can then come back to SAFE and pick up the initial, one use password
+for your new account (ARCHER2 account passwords are also sometimes referred to as LDAP
+passwords by the system).
 
-Note: when you change your password on the service machine in this way, this is not reflected on the SAFE.
+You should now collect your ARCHER2 password:
 
+1. `Log into SAFE <https://www.archer.ac.uk/safe>`__
+2. Use the *Login accounts* menu to select your new login account
+3. This will display details of your account. Use the *View Login Account Password* button
+   to view your single-use ARCHER2 password.
 
-Quick Start Screencast
-A screencast version of the Quick Start:
+This password is generated randomly by the software. It's best to copy-and-paste it across
+when you log in to the service machine. After you login, you will be prompted to change it.
+You should enter this password again, and then you will be prompted for your new,
+easy-to-remember password. Your new password should conform to
+`the ARCHER2 Password Policy <https://www.archer2.ac.uk/about/policies/passwords_usernames.html>`__.
 
+.. note::
 
-Login to ARCHER
-To log into ARCHER you should use the "login.archer.ac.uk" address:
+  When you change your password on the service machine in this way, this is not reflected on the SAFE.
 
-ssh [userID]@login.archer.ac.uk
-More information on connecting to ARCHER is available in the User Guide.
+Login to ARCHER2
+----------------
 
+To log into ARCHER2 you should use the ``login.archer2.ac.uk`` address:
+
+:: 
+
+   ssh [userID]@login.archer2.ac.uk
+
+More information on connecting to ARCHER2 is available in :doc:`../user-guide/connecting`.
 
 File systems and manipulating data
-ARCHER has a number of different file systems mounted and understanding the difference between them is crucial to being able to use the system. In particular, transferring and moving data often requires a bit of thought in advance to ensure that the data is secure and in a useful form.
+----------------------------------
 
-ARCHER file systems are:
+ARCHER2 has a number of different file systems and understanding the difference between them is crucial
+to being able to use the system. In particular, transferring and moving data often requires a bit of
+thought in advance to ensure that the data is secure and in a useful form.
 
-/home: backed up for disaster recovery purposes only, data recovery for accidental deletion is not supported. NFS, available on login and service nodes.
-/work: not backed-up. Lustre, available on login, service and compute nodes.
-UK-RDF: backed up for disaster recovery purposes only, data recovery for accidental deletion is not supported. GPFS, available on login nodes (and serial nodes).
-Top tips for managing data on ARCHER:
+ARCHER2 file systems are:
 
-Do not generate huge (>1000) numbers of files in a single directory
-Archive directories or large numbers of files before moving them between file systems (e.g. using tar)
-When using tar or rsync between file systems mounted on ARCHER avoid using the compression options as these slow operations down (as file system bandwidth is generally better than throttling by CPU performance by using compression).
-Think about automating the combination and transfer of multiple files output by software on ARCHER to the UK-RDF. The Data Management Guide linked below provides examples of how to automatically verify the integrity of an archive and examples of how to do this.
-Much of the performance difference on transferring data is due to numbers of files involved in the transfer. You should ensure that your work flow is set up so that you do not generate huge (>1000) numbers of files in a single directory
+* **/home**: backed up for disaster recovery purposes only, data recovery for accidental deletion is not
+  supported. NFS, available on login and service nodes.
+* **/work**: not backed-up. Lustre, available on login, service and compute nodes.
 
-Information on best practice in managing you data is available in our Data Management Guide:
+.. TODO: Need to add the solid state storage to this
 
-Data Management Guide
-Write your first program on ARCHER
-Open a text file on the system using your favourite text editor called "hello_world.f90". For example, using vi:
+Top tips for managing data on ARCHER2:
 
-auser@eslogin01:~> vi hello_world.f90
-Now copy and paste the source code below into the file and save it.
+* Do not generate huge (>1000) numbers of files in a single directory
+* Much of the performance difference on transferring data is due to numbers of files involved in the
+  transfer - minimise the number of files that you have to transfer by using archiving tools to improve
+  performance.
+* Archive directories or large numbers of files before moving them between file systems (e.g. using tar)
+* When using ``tar`` or ``rsync`` between file systems mounted on ARCHER2 avoid using the compression
+  options as these slow operations down (as file system bandwidth is generally better than throttling
+  by CPU performance by using compression).
+* Think about automating the combination and transfer of multiple files output by software on ARCHER2 to
+  other resources. The Data Management Guide linked below provides examples of how to automatically
+  verify the integrity of an archive and examples of how to do this.
 
-! Example Hello World program
-program hello_world
-use mpi
-implicit none
+.. seealso::
 
-! Set up the variables
-integer :: irank, nrank
-integer :: iout, ierr
-character(len=5) :: cirank
-character(len=30) :: filename
+  Information on best practice in managing you data is available in the section
+  :doc:`../user-guide/data`.
 
-! Initialize MPI and get my rank and total
-call mpi_init(ierr)
-call mpi_comm_rank(MPI_COMM_WORLD, irank, ierr)
-call mpi_comm_size(MPI_COMM_WORLD, nrank, ierr)
+Accessing software
+------------------
 
-! Set the filename from this process and open for writing
-write(cirank, "(I0.5)") irank
-filename = "output"//cirank//".out"
-iout = 10 + irank
-open(unit=iout, file=filename, form="FORMATTED")
+Software on ARCHER2 is principally accessed through environment modules. These
+load and unload the desired compilers, tools and libraries through the
+``module`` command and its subcommands. Some will be loaded by default on login,
+providing a default working environment; many more will be available for use but
+initially unloaded, allowing you to set up the environment to suit your needs.
 
-! Write the output
-write(iout,'(A,I5,A,I5)') "Hello from ", irank, " of ", nrank
+At any stage you can check which modules have been loaded by running::
 
-! Close the output file and finalize MPI
-close(iout)
-call mpi_finalize(ierr)
+  module list
 
-end program hello_world
+Running the following command will display all environment modules available on
+ARCHER2, whether loaded or unloaded::
 
-Compile your first program
-Now use the Fortran compiler wrapper command "ftn" to compile the code:
+  module avail
 
-auser@eslogin01:~> ftn -o hello_world.x hello_world.f90
-Note: for C programs you would use the "cc" command and for C++ programs you would use the "CC" command.
+The search field for this command may be narrowed by providing the first few
+characters of the module name being queried. For example, all available versions
+and variants of VASP may be found by running::
 
-More information on compilers on ARCHER is available in the User Guide.
+  module avail vasp
+
+You will see that different versions are available for many modules. For
+example, ``vasp/5.4.4`` and ``vasp/6.1.0`` are two available versions of
+VASP. Furthermore, a default version may be specified and will be used if no
+version is provided by the user.
+
+.. note::
+
+  VASP is licensed software, as are some other software packages on ARCHER2. You must
+  have a valid licence to use licensed software on ARCHER2. Often you will need to
+  request access through the SAFE. More on this below.
+
+The ``module load`` and ``module add`` commands perform the same action, loading
+a module for use. Following the above,
+
+::
+
+  module load vasp
+
+would load the default version of VASP, while
+
+::
+
+  module load vasp/5.4.4
+
+would specifically load version 5.4.4. A loaded module may be unloaded through
+the identical ``module unload``, ``module remove`` or ``module delete``
+commands, e.g.
+
+::
+
+  module unload vasp
+
+which would unload whichever version of VASP is currently in the environment.
+Rather than issuing separate unload and load commands, versions of a module may
+be swapped as follows::
+
+  module swap vasp vasp/5.4.4
+
+Other helpful commands are:
+
+* ``module help <modulename>`` which provides a short description of the module
+* ``module show <modulename>`` which displays the contents of the modulefile
+
+Points to be aware of include:
+
+* Some modules will conflict with others. A simple example would be the conflict
+  arising when trying to load a different version of an already loaded module.
+  When a conflict occurs, the loading process will fail and an error message
+  will be displayed. Examination of the message and the modulefiles (via
+  ``module show``) should reveal the cause of the conflict and how to resolve
+  it.
+* The order in which modules are loaded *can* matter. Consider two modules
+  which set the same variable to a different value. The final value
+  would be that set by the module which loaded last. If you suspect that two
+  modules may be interfering with one another, you can examine their contents
+  with ``module show``.
+
+Requesting access to licensed software
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 
 Create a job submission script
-To run a program on the ARCHER compute nodes you need to write a job submission script that tells the system how many compute nodes you want to reserve and for how long. You also need to use the "aprun" command to tell ARCHER how to place the parallel processes and threads onto the cores you have reserved.
+------------------------------
 
-More information on job submission and process/thread placement on ARCHER is available in the User Guide.
+To run a program on the ARCHER2 compute nodes you need to write a job submission script that tells the
+system how many compute nodes you want to reserve and for how long. You also need to use the ``srun``
+command to launch your parallel executable.
 
-Parallel jobs on ARCHER should be run from the /work filesystem as /home is not mounted on the compute nodes - you will see a chdir error if you try to run a job from the /home filesystem.
+.. seealso::
 
-Create a job submission script called "submit.pbs" in your space on the work filesystem using your favourite text editor. For example, using vi:
+  For a more details on the Slurm scheduler on ARCHER2 and writing job submission scripts see the
+  :doc:`../user-guide/scheduler` section of the User and Best Practice Guide.
 
-auser@eslogin01:~> cd /work/z01/z01/auser
-auser@eslogin01:/work/z01/z01/auser> vi submit.pbs
-(You will need to use your project code and username to get to the correct directory. i.e. replace the "z01" above with your project code and replace the username "auser" with your ARCHER username.
+.. warning::
 
-Paste the following text into your job submission script, replacing ENTER_YOUR_BUDGET_CODE_HERE with your budget code e.g. e99-ham.
+   Parallel jobs on ARCHER2 should be run from the /work file system as /home is not available on the
+   compute nodes - you will see a ``chdir`` error if you try to run a job from the /home file system.
 
-#!/bin/bash --login
+Create a job submission script called ``submit.slurm`` in your space on the work file system using your
+favourite text editor. For example, using ``vim``:
 
-#PBS -N hello_world
-#PBS -l select=1
-#PBS -l walltime=0:5:0
-#PBS -A ENTER_YOUR_BUDGET_CODE_HERE
+::
 
-# This shifts to the directory that you submitted the job from
-cd $PBS_O_WORKDIR
+  auser@eslogin01:~> cd /work/t01/t01/auser
+  auser@eslogin01:/work/t01/t01/auser> vim submit.slurm
 
-aprun -n 24 $HOME/hello_world.x
+.. note::
+  
+  You will need to use your project code and username to get to the correct directory.
+  i.e. replace the `z01` above with your project code and replace the username `auser` with your ARCHER2 username.
 
-cat output*.out > helloworld.out
-The bolt job submission script creation tool can be used to automatically create job submission scripts with the correct options and parameters. See:
+Paste the following text into your job submission script, replacing ``ENTER_YOUR_BUDGET_CODE_HERE`` with
+your budget code e.g. ``e99-ham``.
 
-bolt: Job submission script creation tool
-You can also use the checkScript command to check any job scripts you have written for correctness before you submit them. See:
+::
 
-checkScript: Script validation tool
+  #!/bin/bash --login
+
+  #SBATCH --job-name=test_job
+  #SBATCH --nodes=1
+  #SBATCH --tasks-per-node=128
+  #SBATCH --cores-per-task==1
+  #SBATCH --time=0:5:0
+  #SBATCH -account=ENTER_YOUR_BUDGET_CODE_HERE
+
+  # Load the xthi module to get access to the xthi program
+  module load xthi
+
+  # srun launches the parallel program based on the SBATCH options
+  srun xthi
 
 Submit your job to the queue
-You submit your job to the job submission using the "qsub" command:
+----------------------------
 
-auser@eslogin01:/work/z01/z01/auser> qsub submit.pbs
-72136.sdb
-The value retuned is your Job ID.
+You submit your job to the queues using the ``sbatch`` command:
 
+::
+
+  auser@eslogin01:/work/t01/t01/auser> sbatch submit.slurm
+  Submitted batch job 23996
+  
+  The value returned is your *Job ID*.
 
 Monitoring your job
-You use the "qstat" command to examine jobs in the queue. Use:
+-------------------
 
-auser@eslogin01:/work/z01/z01/auser> qstat -u $USER
-To list all the jobs you have in the queue. PBS will also provide an estimate of the start time for any queued jobs that the system is actively scheduling for by adding the "-T" option:
+You use the ``squeue`` command to examine jobs in the queue. Use:
 
-auser@eslogin01:/work/z01/z01/auser> qstat -Tu $USER
-Note: the majority of jobs will not have an estimated start time as the system will be aiming to schedule them in an opportunistic manner (i.e. as soon as resources become available).
+::
 
-To see more details about the queued job, Use:
+  auser@eslogin01:/work/t01/t01/auser> squeue -u $USER
 
-auser@eslogin01:/work/z01/z01/auser> qstat -f $JOBID
-If your job does not enter a running state in the queues, this option may be useful as it contains a Comment field which may explain the reason why.
+To list all the jobs **you** have in the queue. ``squeue`` on its own lists all jobs
+in the queue from all users.
 
-You can use the checkQueue utility to access information on all your jobs quickly, see:
-
-Using checkQueue
+.. TODO: Add information on queue reasons once they are known
 
 Checking the output from the job
-The job submission script above should write the output to a file called "helloworld.out", you can check this with the "cat" command. If the job was successful you should see output that looks something like:
+--------------------------------
 
-auser@eslogin01:/work/z01/z01/auser> cat helloworld.out
-Hello from     0 of    24
-Hello from     1 of    24
-Hello from     2 of    24
-Hello from     3 of    24
-Hello from     4 of    24
-Hello from     5 of    24
-Hello from     6 of    24
-Hello from     7 of    24
-Hello from     8 of    24
-Hello from     9 of    24
-Hello from    10 of    24
-Hello from    11 of    24
-Hello from    12 of    24
-Hello from    13 of    24
-Hello from    14 of    24
-Hello from    15 of    24
-Hello from    16 of    24
-Hello from    17 of    24
-Hello from    18 of    24
-Hello from    19 of    24
-Hello from    20 of    24
-Hello from    21 of    24
-Hello from    22 of    24
-Hello from    23 of    24
-If something has gone wrong, you will find any error messages in the file "hello_world.e[jobID]".
+The job submission script above should write the output to a file called ``slurm-<jobID>.out``
+(i.e. if the Job ID was 23996, the file would be ``slurm-23996.out``), you can check the contents
+of this file with the ``cat`` command. If the job was successful you should see output that looks
+something like:
 
-Acknowledging ARCHER
-You should use the following phrase to acknowledge ARCHER in all reseach outputs that have used the facility:
+:: 
 
-This work used the ARCHER UK National Supercomputing Service (http://www.archer.ac.uk).
+  auser@eslogin01:/work/t01/t01/auser> cat slurm-23996.out
+  nid00001
+  Hello from rank 20, thread 0, on nid00001. (core affinity = 20)
+  Hello from rank 27, thread 0, on nid00001. (core affinity = 27)
+  Hello from rank 23, thread 0, on nid00001. (core affinity = 23)
+  Hello from rank 34, thread 0, on nid00001. (core affinity = 34)
+  Hello from rank 18, thread 0, on nid00001. (core affinity = 18)
+  Hello from rank 33, thread 0, on nid00001. (core affinity = 33)
+  Hello from rank 19, thread 0, on nid00001. (core affinity = 19)
+  Hello from rank 22, thread 0, on nid00001. (core affinity = 22)
+  Hello from rank 6, thread 0, on nid00001. (core affinity = 6)
+  Hello from rank 26, thread 0, on nid00001. (core affinity = 26)
+  Hello from rank 31, thread 0, on nid00001. (core affinity = 31)
+  Hello from rank 21, thread 0, on nid00001. (core affinity = 21)
+  Hello from rank 35, thread 0, on nid00001. (core affinity = 35)
+  Hello from rank 32, thread 0, on nid00001. (core affinity = 32)
+  Hello from rank 28, thread 0, on nid00001. (core affinity = 28)
+  Hello from rank 25, thread 0, on nid00001. (core affinity = 25)
+  Hello from rank 24, thread 0, on nid00001. (core affinity = 24)
+  Hello from rank 30, thread 0, on nid00001. (core affinity = 30)
+  Hello from rank 29, thread 0, on nid00001. (core affinity = 29)
+  Hello from rank 10, thread 0, on nid00001. (core affinity = 10)
+  Hello from rank 2, thread 0, on nid00001. (core affinity = 2)
+  Hello from rank 11, thread 0, on nid00001. (core affinity = 11)
+  Hello from rank 0, thread 0, on nid00001. (core affinity = 0)
+  Hello from rank 1, thread 0, on nid00001. (core affinity = 1)
+  Hello from rank 7, thread 0, on nid00001. (core affinity = 7)
+  Hello from rank 4, thread 0, on nid00001. (core affinity = 4)
+  Hello from rank 3, thread 0, on nid00001. (core affinity = 3)
+  Hello from rank 5, thread 0, on nid00001. (core affinity = 5)
+  Hello from rank 8, thread 0, on nid00001. (core affinity = 8)
+  Hello from rank 9, thread 0, on nid00001. (core affinity = 9)
+  Hello from rank 12, thread 0, on nid00001. (core affinity = 12)
+  Hello from rank 13, thread 0, on nid00001. (core affinity = 13)
+  Hello from rank 14, thread 0, on nid00001. (core affinity = 14)
+  Hello from rank 15, thread 0, on nid00001. (core affinity = 15)
+  Hello from rank 16, thread 0, on nid00001. (core affinity = 16)
+  Hello from rank 17, thread 0, on nid00001. (core affinity = 17)
+  ... output trimmed ...
 
-You should also tag outputs with the keyword ARCHER whenever possible.
+If something has gone wrong, you will find any error messages in the file instead of the
+expected output.
+
+Acknowledging ARCHER2
+---------------------
+
+.. TODO: Update with DOI for ARCHER2, once we have it
+
+You should use the following phrase to acknowledge ARCHER2 in all research outputs that have used the facility:
+
+This work used the ARCHER2 UK National Supercomputing Service (https://www.archer2.ac.uk).
+
+You should also tag outputs with the keyword ARCHER2 whenever possible.
 
 Useful Links
+------------
+
+If you plan to compile your own programs on ARCHER2, you may also want to look at
+:doc:`quickstart-developers`.
+
 Links to other documentation you may find useful:
 
-ARCHER User Guide - Covers basic use of ARCHER: e.g. compilation, running jobs and using Python
-ARCHER Best Practice Guide - Covers optimisation, debugging, performance monitoring and other advanced topics.
-UK-RDF User Guide - Covers using the UK Research Data Facility including the Data Analytic Cluster and the Data Transfer Nodes.
+* :doc:`ARCHER2 User and Best Practice Guide <../user-guide/overview>` - Covers all aspects of use of the ARCHER2 service. This includes fundamentals (required by all users to use the system effectively), best practice for getting the most out of ARCHER2, and more advanced technical topics.
+* 
