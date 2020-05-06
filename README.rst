@@ -75,7 +75,7 @@ Building the documentation on a local Linux machine
 
 Have
 
-* Python 2
+* Python 3
 * sphinx
 
 installed, then run ::
