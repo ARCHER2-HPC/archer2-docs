@@ -188,7 +188,30 @@ Points to be aware of include:
 Requesting access to licensed software
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Some of the software installed on ARCHER2 requires a user to have a valid licence agreed with the 
+software owners/developers to be able to use it (for example, VASP). Although you will be able to
+load this software on ARCHER2 you will be barred from actually using it until your licence has been
+verified.
 
+You request access to licensed software through the EPCC SAFE (the web administration tool you used
+to apply for your account and retrieve your initial password) by being added to the appropriate
+*Package Group*. To request access to licensed software:
+
+.. TODO: Update SAFE link
+
+1. Log in to `SAFE <https://www.archer.ac.uk/safe/>`__
+2. Go to the Menu *Login accounts* and select the login account which requires access to the software
+3. Click *New Package Group Request*
+4. Select the software from the list of available packages and click *Select Package Group*
+5. Fill in as much information as possible about your license; at the very least provide the information
+   requested at the top of the screen such as the licence holder's name and contact details. If you are
+   covered by the license because the licence holder is your supervisor, for example, please state this.
+6. Click *Submit*
+
+Your request will then be processed by the ARCHER2 Service Desk who will confirm your license with the
+software owners/developers before enabling your access to the software on ARCHER2. This can take several
+days (depending on how quickly the software owners/developers take to respond) but you will be advised
+once this has been done.
 
 Create a job submission script
 ------------------------------
@@ -339,4 +362,4 @@ If you plan to compile your own programs on ARCHER2, you may also want to look a
 Links to other documentation you may find useful:
 
 * :doc:`ARCHER2 User and Best Practice Guide <../user-guide/overview>` - Covers all aspects of use of the ARCHER2 service. This includes fundamentals (required by all users to use the system effectively), best practice for getting the most out of ARCHER2, and more advanced technical topics.
-* 
+* `Cray Programming Environment User Guide <https://pubs.cray.com/content/S-2529/17.05/xctm-series-programming-environment-user-guide-1705-s-2529/introduction>`__
