@@ -7,25 +7,9 @@ Overview
   development.
 
 The ARCHER2 quick start guide provides the minimum information for new users or users
-transferring from ARCHER. The following table lists the sections available and who 
-they are of primary interest to.
+transferring from ARCHER. There are two versions available:
 
-+----------------------------------------+-------------------------------------------------+
-| Section                                | Primary interest                                |
-+========================================+=================================================+
-| Registering for a SAFE account         | New users                                       |
-+----------------------------------------+-------------------------------------------------+
-| Obtaining a machine (login) account    | New users, ARCHER users                         |
-+----------------------------------------+-------------------------------------------------+
-| Logging in and transferring data       | New users, ARCHER users                         |
-+----------------------------------------+-------------------------------------------------+
-| File systems and manipulating data     | New users, ARCHER users                         |
-+----------------------------------------+-------------------------------------------------+
-| Compiling a simple program             | New users compiling their own research software |
-+----------------------------------------+-------------------------------------------------+
-| Accessing centrally-installed software | New users                                       |
-+----------------------------------------+-------------------------------------------------+
-| Running a parallel job                 | New users, ARCHER users                         |
-+----------------------------------------+-------------------------------------------------+
-| Acknowledging ARCHER2                  | New users, ARCHER users                         |
-+----------------------------------------+-------------------------------------------------+
+* :doc:`quickstart-users`: Covers the basics of ARCHER2 useful for all users, including: applying for
+  an account, logging in and transferring data, accessing software and running jobs.
+* :doc:`quickstart-developers`: Covers additional topics around compiling your
+  own programs on ARCHER2, debugging and profiling.
