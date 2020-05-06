@@ -6,84 +6,8 @@ Quickstart for developers
   The ARCHER2 Service is not yet available. This documentation is in
   development.
 
-This guide aims to quickly enable developers to work on ARCHER2.
-
-Modules on ARCHER2
-------------------
-
-Software on ARCHER2 is principally accessed through environment modules. These
-load and unload the desired compilers, tools and libraries through the
-``module`` command and its subcommands. Some will be loaded by default on login,
-providing a default working environment; many more will be available for use but
-initially unloaded, allowing you to set up the environment to suit your needs.
-
-At any stage you can check which modules have been loaded by running::
-
-  module list
-
-Running the following command will display all environment modules available on
-ARCHER2, whether loaded or unloaded::
-
-  module avail
-
-The search field for this command may be narrowed by providing the first few
-characters of the module name being queried. For example, all available versions
-and variants of FFTW may be found by running::
-
-  module avail fftw
-
-You will see that different versions are available for many modules. For
-example, ``fftw/3.3.4.5`` and ``fftw/3.3.4.11`` are two available versions of
-FFTW. Furthermore, a default version may be specified and will be used if no
-version is provided by the user.
-
-The ``module load`` and ``module add`` commands perform the same action, loading
-a module for use. Following the above,
-
-::
-
-  module load fftw
-
-would load the default version of FFTW, while
-
-::
-
-  module load fftw/3.3.4.5
-
-would specifically load version 3.3.4.5. A loaded module may be unloaded through
-the identical ``module unload``, ``module remove`` or ``module delete``
-commands, e.g.
-
-::
-
-  module unload fftw
-
-which would unload whichever version of FFTW is currently in the environment.
-Rather than issuing separate unload and load commands, versions of a module may
-be swapped as follows::
-
-  module swap fftw/3.3.4.5 fftw/3.3.4.11
-
-Other helpful commands are:
-
-* ``module help <modulename>`` which provides a short description of the module
-* ``module show <modulename>`` which displays the contents of the modulefile
-* ``module purge`` which unloads all modules, returning you to a clean
-  environment
-
-Points to be aware of include:
-
-* Some modules will conflict with others. A simple example would be the conflict
-  arising when trying to load a different version of an already loaded module.
-  When a conflict occurs, the loading process will fail and an error message
-  will be displayed. Examination of the message and the modulefiles (via
-  ``module show``) should reveal the cause of the conflict and how to resolve
-  it.
-* The order in which modules are loaded *can* matter. Consider two modules
-  which set the same variable to a different value. The final value
-  would be that set by the module which loaded last. If you suspect that two
-  modules may be interfering with one another, you can examine their contents
-  with ``module show``.
+This guide aims to quickly enable developers to work on ARCHER2. It assumes
+that you are familiar with the material in :doc:`quickstart-users`.
 
 Compiler wrappers
 -----------------
@@ -266,3 +190,56 @@ You can also provide RPATHs directly to the compilers using the
 ``-Wl,-rpath=<path-to-directory>`` flag, where the provided path is to the
 directory containing the libraries which are themselves typically specified with
 flags of the type ``-l<library-name>``.
+
+Debugging tools
+---------------
+
+The following debugging tools are available on ARCHER2:
+
+* **gdb4hpc** is a command-line debugging tool provided by Cray. It works similarly to
+  [gdb](https://www.gnu.org/software/gdb/), but allows the user to debug multiple parallel processes
+  without multiple windows. gdb4hpc can be used to investigate deadlocked code, segfaults, and other
+  errors for C/C++ and Fortran code. Users can single-step code and focus on specific processes groups
+  to help identify unexpected code behavior. (text from [ALCF](https://www.alcf.anl.gov/support-center/theta/gdb)).
+* **valgrind4hpc** is a parallel memory debugging tool that aids in detection of memory leaks and
+  errors in parallel applications. It aggregates like errors across processes and threads to simply
+  debugging of parallel appliciations.
+* **STAT** generate merged stack traces for parallel applications. Also has visualisation tools.
+* **ATP** scalable core file and backtrace analysis when parallel programs crash.
+* **CCDB** Cray Comparative Debugger. Compare two versions of code side-by-side to analyse differences.
+
+.. TODO: Add more detail on using debuggers
+
+.. note::
+
+  We will add more information on using the debugging tools once the ARCHER2 system is available.
+
+Profiling tools
+---------------
+
+Profiling on ARCHER2 is provide through the Cray Performance Measurement and Analysis Tools (CrayPat). This has
+a number of different components:
+
+* **CrayPAT** the full-featured program analysis tool set. CrayPat in turn consists of the following major components.
+    * pat_build, the utility used to instrument programs
+    * the CrayPat run time environment, which collects the specified performance data during program execution
+    * pat_report, the first-level data analysis tool, used to produce text reports or export data for more sophisticated analysis
+* **CrayPAT-lite** a simplified and easy-to-use version of CrayPat that provides basic performance analysis information automatically, with a minimum of user interaction.
+* **Reveal** the next-generation integrated performance analysis and code optimization tool, which enables the user to correlate performance data captured during program execution directly to the original source, and identify opportunities for further optimization.
+* **Cray PAPI** components, which are support packages for those who want to access performance counters
+* **Cray Apprentice2** the second-level data analysis tool, used to visualize, manipulate, explore, and compare sets of program performance data in a GUI environment.
+
+.. TODO: Add more detail on using debuggers
+
+.. note::
+
+  We will add more information on using the profiling tools once the ARCHER2 system is available.
+
+Useful Links
+------------
+
+Links to other documentation you may find useful:
+
+* :doc:`ARCHER2 User and Best Practice Guide <../user-guide/overview>` - Covers all aspects of use of the ARCHER2 service. This includes fundamentals (required by all users to use the system effectively), best practice for getting the most out of ARCHER2, and more advanced technical topics.
+* `Cray Programming Environment User Guide <https://pubs.cray.com/content/S-2529/17.05/xctm-series-programming-environment-user-guide-1705-s-2529/introduction>`__
+* `Cray Performance Measurement and Analysis Tools User Guide <https://pubs.cray.com/content/S-2376/7.0.0/cray-performance-measurement-and-analysis-tools-user-guide/about-the-cray-performance-measurement-and-analysis-tools-user-guide>`__
