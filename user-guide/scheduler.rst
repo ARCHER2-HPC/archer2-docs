@@ -29,7 +29,7 @@ specifying Slurm directives that describe the resources required for your
 jobs in job submission scripts.
 
 
-Basic SLURM commands
+Basic Slurm commands
 --------------------
 
 There are three key commands used to interact with the Slurm on the
@@ -53,7 +53,16 @@ e.g.
 
 ::
 
-  [user@archer2 ~]$ sinfo 
+  sinfo 
+
+  PARTITION       AVAIL  TIMELIMIT  NODES  STATE NODELIST
+  standard           up 2-00:00:00      1  fail* cn580
+  standard           up 2-00:00:00    128  down$ cn[96,579,793,814,1025-1044,1081-1088]
+  standard           up 2-00:00:00     26  maint cn[27,93-95,206,232,310,492,568,577-578,585-588,813,815-816,818,846,889,921-924,956]
+  standard           up 2-00:00:00      2   fail cn[274,871]
+  standard           up 2-00:00:00      4  down* cn[528,614,637,845]
+  standard           up 2-00:00:00   1034  alloc cn[1-26,28-38,40-58,62-86,88-92,97-174,176-205,207-231,233-273,275-309,311-333,335-341,344-371,373-376,378-413,415-452,454-489,493-513,515-527,529-532,535-539,541-550,554-561,563-567,569,572-576,581-584,589-595,598-601,603-613,615,617-620,623-631,633-636,638-647,651-659,661-678,680-687,690-695,697-716,718-736,738-775,777-790,792,794-812,817,819-844,847-852,854-870,872-888,890-920,925-955,957-977,980-1014,1016-1020,1023-1024,1045,1047-1070,1072-1080,1089-1105,1107-1152]
+  standard           up 2-00:00:00     26   idle cn[61,490-491,540,551-552,562,570,596,602,621,632,648-650,660,688-689,696,853,978-979,1015,1021-1022,1071]
 
 ``sbatch``: submitting jobs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -66,7 +75,7 @@ this job in other Slurm commands and when looking at resource usage in SAFE.
 
 ::
 
-  [user@archer2 ~]$ sbatch test-job.slurm
+  sbatch test-job.slurm
   Submitted batch job 12345
 
 ``squeue``: monitoring jobs
@@ -109,7 +118,7 @@ Resource Limits
 
 There are different resource limits on ARCHER2 for different purposes.
 
-.. note:
+.. note::
 
    Details on the resource limits will be added when the ARCHER2 system
    is available.
@@ -122,7 +131,7 @@ Troubleshooting
 Slurm error messages
 ~~~~~~~~~~~~~~~~~~~~
 
-.. note:
+.. note::
 
   More information on common error messages will be added when the ARCHER2 system
   is available.
@@ -132,7 +141,7 @@ Slurm error messages
 Slurm queued reasons
 ~~~~~~~~~~~~~~~~~~~~
 
-.. note:
+.. note::
 
   Explanations of the reasons for jobs being queued and not running will be added
   when the ARCHER2 system is available.
@@ -145,7 +154,6 @@ Output from Slurm jobs
 Slurm places standard output (STDOUT) and standard error (STDERR) for each
 job in the file ``slurm_<JobID>.out``. This file appears in the
 job's working directory once your job starts running.
-
 
 .. note::
 
@@ -349,7 +357,7 @@ process per core and specifies 4 hours maximum runtime per subjob:
     #   using threading.
     export OMP_NUM_THREADS=1
 
-    srun /path/to/exe $SLURM_ARRAY_TASK_ID
+    srun /path/to/exe $Slurm_ARRAY_TASK_ID
 
 
 Submitting a job array
@@ -390,8 +398,8 @@ or for a longer chain:
    jobid3=$(sbatch --parsable --dependency=afterok:$jobid1 third_job.sh)
    sbatch --dependency=afterok:$jobid2,afterok:$jobid3 last_job.sh
 
-Interactive Jobs
-----------------
+Interactive Jobs: ``salloc``
+----------------------------
 
 When you are developing or debugging code you often want to run many
 short jobs with a small amount of editing the code between runs. This
@@ -400,46 +408,50 @@ to test on the compute nodes (e.g. you may want to test running on
 multiple nodes across the high performance interconnect). One of the
 best ways to achieve this on ARCHER2 is to use interactive jobs.
 
-An interactive job allows you to issue ``mpirun_mpt`` commands directly
+An interactive job allows you to issue ``srun`` commands directly
 from the command line without using a job submission script, and to
 see the output from your program directly in the terminal.
 
+You use the ``salloc`` command to reserve compute nodes for interactive
+jobs.
+
 To submit a request for an interactive job reserving 8 nodes
-(288 physical cores) for 1 hour you would
+(1024 physical cores) for 1 hour you would
 issue the following qsub command from the command line:
 
 ::
 
-    qsub -IVl select=8:ncpus=36,walltime=1:0:0,place=scatter:excl -A [project code]
+    salloc --nodes=8 --tasks-per-node=128 --cpus-per-task=1 --time=1:0:0 --account=t01
+    
 
 When you submit this job your terminal will display something like:
 
 ::
 
-    qsub: waiting for job 19366.indy2-login0 to start
+    salloc: Granted job allocation 24236
+    salloc: Waiting for resource configuration
+    salloc: Nodes cn13 are ready for job
 
 It may take some time for your interactive job to start. Once it
 runs you will enter a standard interactive terminal session.
 Whilst the interactive session lasts you will be able to run parallel
-jobs on the compute nodes by issuing the ``mpirun_mpt``  command
-directly at your command prompt (remember you will need to load the
-``mpt`` module and any compiler modules before running)  using the
-same syntax as you would inside a job script. The maximum number
-of cores you can use is limited by the value of select you specify
-when you submit a request for the interactive job.
+jobs on the compute nodes by issuing the ``srun``  command
+directly at your command prompt using the same syntax as you would inside
+a job script. The maximum number of nodes you can use is limited by resources
+requested in the ``salloc`` command.
 
 If you know you will be doing a lot of intensive debugging you may
 find it useful to request an interactive session lasting the expected
 length of your working session, say a full day.
 
 Your session will end when you hit the requested walltime. If you
-wish to finish before this you should use the ``exit`` command.
+wish to finish before this you should use the ``exit`` command - this will
+return you to your prompt before you issued the ``salloc`` command.
 
 Reservations
 ------------
 
-The mechanism for submitting reservations on ARCHER2 has yet to be
-specified.
+The mechanism for submitting reservations on ARCHER2 has yet to be specified.
 
 .. TODO: Add information on how to submit reservations
 
@@ -453,6 +465,8 @@ This guidance is adapted from
 
 Do not run production jobs in /home
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. TODO: check - /home may not be available on compute nodes so this text may change
 
 As a general best practice, users should run production runs from the
 ``/work`` file systems rather than the ``/home`` file systems.
@@ -474,12 +488,17 @@ Time Limits
 ~~~~~~~~~~~
 
 Due to backfill scheduling, short and variable-length jobs generally
-start quickly resulting in much better job throughput.
+start quickly resulting in much better job throughput. You can specify a minimum
+time for your job with the ``--time-min`` option to SBATCH:
 
 ::
 
     #SBATCH --time-min=<lower_bound>
     #SBATCH --time=<upper_bound>
+
+Within your job script, you can get the time remaining in the job with
+``squeue -h -j ${Slurm_JOBID} -o %L`` to allow you to deal with potentially
+varying runtimes when using this option.
 
 Long Running Jobs
 ~~~~~~~~~~~~~~~~~
@@ -490,85 +509,23 @@ restart method chained together (see above for how to chain jobs together).
 However, this method does occur a startup and shutdown overhead for each
 job as the state is saved and loaded so you should experiment to find the 
 best balance between runtime (long runtimes minimise the checkpoint/restart
-overheads) and throughput (short runtimes maxim
-
-Improve efficiency by preparing user environment before running
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-When compute nodes are allocated for a batch job, all commands other
-than the
-``srun`` command, such as: loading modules, setting up runtime
-environment
-variables, compiling applications, and preparing input data, etc.,
-will run on
-the head compute node (the first compute node in the pool of allocated
-nodes).
-Running on a compute node is much more inefficient than running
-on a login node. It also creates a burden on the global home file
-system.
-
-Using the `Linux here
-document <https://en.wikipedia.org/wiki/Here_document>`__
-as in the example below will run those commands to prepare the user
-environment for the batch job on the login node to help improve job
-efficiency
-and save computing cost of the batch job. It can also help to
-alleviate the
-burden on the global home file system. This script also keeps the user
-environment needed for the batch job in a single file.
-
-!!! Example
-This is an example to prepare the user environment on a login node,
-propagate this environment to a batch job, and submit the batch job.
-This
-can be accomplished in a single script.
-
-::
-
-    You could do so by preparing a file named "prepare-env.sh" in the example
-    below, and running it as "./prepare-env.sh" on a login node. This script:
-
-    * Sets up the user environment for the batch job first on a login node,
-      such as loading modules, setting environment variables, or copying input
-      files, etc.;
-    * Creates a batch script named "prepare-env.sl";
-    * Submits "prepare-env.sl", this job will inherit the user environment
-      just set earlier in the script. 
-
-::
-
-    --8<-- "docs/jobs/examples/prepare-env/prepare-env.sh"
+overheads) and throughput (short runtimes maximise throughput).
 
 I/O performance
 ~~~~~~~~~~~~~~~
 
-Cori has dedicated large, local, parallel scratch file systems. The
-scratch file systems are intended for temporary uses such as storage
-of checkpoints or application input and output. Data and I/O intensive
-applications should use the local scratch (or Burst Buffer)
-filesystems.
-
-These systems should be referenced with the environment variable
-``$SCRATCH``.
-
-.. hint::
-  On Cori the `Burst Buffer <examples/index.md#burst-buffer-test>`__ offers the
-  best I/O performance.
-
-.. warning::
-  Scratch filesystems are not backed up and old files are
-  subject to purging.
+.. TODO: Advice on IO performance on ARCHER2
 
 Large Jobs
 ~~~~~~~~~~
 
-Large jobs may take longer to start up, especially on KNL nodes. The
-srun option ``--bcast=<destination_path>`` is recommended for large jobs
-requesting over 1500 MPI tasks. By default, Slurm loads the executable
-to the allocated compute nodes from the current working directory;
-this may take long time when the file system (where the executable
-resides) is slow. With the ``--bcast=/tmp/myjob``, the executable will
-be copied to the ``/tmp/myjob`` directory. Since ``/tmp`` is part of the
+Large jobs may take longer to start up. The ``sbcast`` command 
+is recommended for large jobs requesting over 1500 MPI tasks.
+By default, Slurm reads the executable on the allocated compute nodes
+from the location where it is installed; this may take long time when
+the file system (where the executable resides) is slow or busy. The
+``sbcast`` command, the executable can be copied to the ``/tmp``
+directory on each of the compute nodes. Since ``/tmp`` is part of the
 memory on the compute nodes, it can speed up the job startup time.
 
 .. code:: bash
@@ -580,59 +537,43 @@ Network Locality
 ~~~~~~~~~~~~~~~~
 
 For jobs which are sensitive to interconnect (MPI) performance and
-utilize less than ~300 nodes it is possible to request that all nodes
+utilize less than or equal to 256 nodes it is possible to request that all nodes
 are in a single Slingshot dragonfly group.
 
-Slurm has a concept of "switches" which on Cori are configured to map
-to Aries electrical groups. Since this places an additional constraint
+Slurm has a concept of "switches" which on ARCHER2 are configured to map
+to Slingshot groups (there are 256 nodes per group). Since this places an additional constraint
 on the scheduler a maximum time to wait for the requested topology can
-be specified.
+be specified. For example:
 
-!!! example
-Wait up to 60 minutes
-``slurm     sbatch --switches=1@60 job.sh``
+::
 
-!!! info "Additional details and information"
-
-`Cray XC Series Network (pdf)
-<https://www.cray.com/sites/default/files/resources/CrayXCNetwork.pdf>`__
-
-Core specialization
-~~~~~~~~~~~~~~~~~~~
-
-Core specialization is a feature designed to isolate system overhead
-(system interrupts, etc.) to designated cores on a compute node. It is
-generally helpful for running on KNL, especially if the application
-does not plan to use all physical cores on a 68-core compute node.
-Setting
-aside 2 or 4 cores for core specialization is recommended.
-
-The ``srun`` flag for core specialization is ``-S`` or
-``--core-spec``. It
-only works in a batch script with ``sbatch``. It can not be requested
-as
-a flag with ``salloc`` for interactive jobs, since ``salloc`` is
-already a
-wrapper script for ``srun``.
-
--  `Example <examples/index.md#core-specialization>`__
+    sbatch --switches=1@60 job.sh``
 
 Process Placement
 ~~~~~~~~~~~~~~~~~
 
-Several mechanisms exist to control process placement on ARCHER2's Cray
-systems. Application performance can depend strongly on placement
+Several mechanisms exist to control process placement on ARCHER2.
+Application performance can depend strongly on placement
 depending on the communication pattern and other computational
 characteristics.
-
-Examples are run on Cori.
 
 Default
 ^^^^^^^
 
+The default is to place MPI tasks sequentially on nodes until the
+maximum number of tasks is reached:
+
 ::
 
-    user@nid01041:~> srun -n 8 -c 2 check-mpi.intel.cori|sort -nk 4
+    salloc --nodes=8 --tasks-per-node=2 --cpus-per-task=1 --time=0:10:0 --account=t01
+
+    salloc: Granted job allocation 24236
+    salloc: Waiting for resource configuration
+    salloc: Nodes cn13 are ready for job
+
+    module load xthi
+    srun --nodes=8 --tasks-per-node=2 xthi
+
     Hello from rank 0, on nid01041. (core affinity = 0-63)
     Hello from rank 1, on nid01041. (core affinity = 0-63)
     Hello from rank 2, on nid01111. (core affinity = 0-63)
@@ -651,7 +592,16 @@ specify other types of MPI task placement. For example, setting it to
 
 ::
 
-    user@nid01041:~> MPICH_RANK_REORDER_METHOD=0 srun -n 8 -c 2 check-mpi.intel.cori|sort -nk 4
+    salloc --nodes=8 --tasks-per-node=2 --cpus-per-task=1 --time=0:10:0 --account=t01
+
+    salloc: Granted job allocation 24236
+    salloc: Waiting for resource configuration
+    salloc: Nodes cn13 are ready for job
+
+    module load xthi
+    export MPICH_RANK_REORDER_METHOD=0
+    srun --nodes=8 --tasks-per-node=2 xthi
+
     Hello from rank 0, on nid01041. (core affinity = 0-63)
     Hello from rank 1, on nid01111. (core affinity = 0-63)
     Hello from rank 2, on nid01118. (core affinity = 0-63)
@@ -667,7 +617,7 @@ called ``MPICH_RANK_ORDER`` which contains a list of each task's
 placement on each node. These options are described in detail in the
 ``intro_mpi`` man page.
 
-**``grid_order``**
+**grid_order**
 
 For MPI applications which perform a large amount of nearest-neighbor
 communication, e.g., stencil-based applications on structured grids,
@@ -676,44 +626,35 @@ Cray provides a tool in the ``perftools-base`` module called
 automatically
 by taking as parameters the dimensions of the grid, core count,
 etc. For example, to place MPI tasks in row-major order on a Cartesian
-grid of size $(4, 4, 4)$, using 32 tasks per node on Cori:
+grid of size $(4, 4, 4)$, using 32 tasks per node:
 
 ::
 
-    cori$ module load perftools-base
-    cori$ grid_order -R -c 32 -g 4,4,4
+    module load perftools-base
+    grid_order -R -c 32 -g 4,4,4
+
     # grid_order -R -Z -c 32 -g 4,4,4
     # Region 3: 0,0,1 (0..63)
     0,1,2,3,16,17,18,19,32,33,34,35,48,49,50,51,4,5,6,7,20,21,22,23,36,37,38,39,52,53,54,55
     8,9,10,11,24,25,26,27,40,41,42,43,56,57,58,59,12,13,14,15,28,29,30,31,44,45,46,47,60,61,62,63
 
-One can then save this output to a file called ``MPICH_RANK_ORDER``
-and
+One can then save this output to a file called ``MPICH_RANK_ORDER`` and
 then set ``MPICH_RANK_REORDER_METHOD=3`` before running the job, which
 tells Cray MPI to read the ``MPICH_RANK_ORDER`` file to set the MPI
-task
-placement. For more information, please see the man page
+task placement. For more information, please see the man page
 ``man grid_order`` (available when the ``perftools-base`` module is
-loaded) on
-Cori.
+loaded).
 
-Hugepages
-~~~~~~~~~
+Huge pages
+~~~~~~~~~~
 
 Huge pages are virtual memory pages which are bigger than the default
 page size of 4K bytes. Huge pages can improve memory performance
 for common access patterns on large data sets since it helps to reduce
-the number of virtual to physical address translations than compated
-with
-using the default 4K. Huge pages also
-increase the maximum size of data and text in a program accessible by
-the high speed network, and reduce the cost of accessing memory, such
-as
-in the case of many MPI\_Alltoall operations. Using hugepages
-can help to `reduce the application runtime
-variability <../performance/variability.md>`__.
+the number of virtual to physical address translations when compared
+to using the default 4KB.
 
-To use hugepages for an application (with the 2M hugepages as an
+To use huge pages for an application (with the 2 MB huge pages as an
 example):
 
 ::
@@ -721,27 +662,20 @@ example):
     module load craype-hugepages2M
     cc -o mycode.exe mycode.c
 
-And also load the same hugepages module at runtime.
+And also load the same huge pages module at runtime.
 
-The craype-hugepages2M module is loaded by deafult on Cori.
-Users could unload the craype-hugepages2M module explicitly to disable
-the hugepages usage.
+.. warning::
 
-!!! note
-The craype-hugepages2M module is loaded by default since the Cori CLE7
-upgrade on July 30, 2019.
+  Due to the huge pages memory fragmentation issue, applications may get
+  *Cannot allocate memory* warnings or errors when there are not enough
+  hugepages on the compute node, such as: 
+  ::
+  
+    libhugetlbfs [nid000xx:xxxxx]: WARNING: New heap segment map at 0x10000000 failed: Cannot allocate memory``
 
-Due to the hugepages memory fragmentation issue, applications may get
-"Cannot allocate memory" warnings or errors when there are not enough
-hugepages on the compute node, such as:
-
-::
-
-    libhugetlbfs [nid000xx:xxxxx]: WARNING: New heap segment map at 0x10000000 failed: Cannot allocate memory
-
-The verbosity level of libhugetlbfs HUGETLB\_VERBOSE is set to 0 on Cori
-by default to surpress debugging messages. Users can adjust this value
-to obtain more info.
+By default, The verbosity level of libhugetlbfs ``HUGETLB_VERBOSE`` is set 
+to ``0`` on ARCHER2 to surpress debugging messages. Users can adjust this value
+to obtain more information on huge pages use.
 
 When to Use Huge Pages
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -767,42 +701,12 @@ When to Avoid Huge Pages
    to the core application. Applying huge page behavior to all processes
    would not provide any benefit and would consume huge pages that would
    otherwise benefit the core application. The runtime environment
-   variable HUGETLB\_RESTRICT\_EXE can be used to specify the susbset of
+   variable ``HUGETLB_RESTRICT_EXE`` can be used to specify the susbset of
    the programs to use hugepages.
 -  For certain applications if using hugepages either causes issues or
-   slowing
-   down performances, users can explicitly unload the craype-hugepages2M
-   module.
-   One such example is that when an application forks more subprocesses
-   (such as
-   pthreads) and allocate memory, the newly allocated memory are the
-   small 4K
-   pages.
+   slows down performance. One such example is that when an application
+   forks more subprocesses (such as pthreads) and these threads allocate
+   memory, the newly allocated memory are the default 4 KB pages.
 
-Task Packing
-~~~~~~~~~~~~
-
-Users requiring large numbers of single-task jobs have several options
-at
-ARCHER2. The options include:
-
--  Submitting jobs to the `shared QOS <examples/index.md#shared>`__,
--  Using a `workflow tool <workflow-tools.md>`__ to combine the tasks
-   into one
-   larger job,
--  Using `job arrays <examples/index.md#job-arrays>`__ to submit many
-   individual
-   jobs which look very similar.
-
-If you have a large number of indpendent serial jobs (that is, the
-jobs do not
-have dependencies on each other), you may wish to pack the individual
-tasks
-into one bundled Slurm job to help with queue throughput. Packing
-multiple
-tasks into one Slurm job can be done via multiple ``srun`` commands in
-the same
-job script
-(`example <examples/index.md#multiple-parallel-jobs-simultaneously>`__).
 
 
