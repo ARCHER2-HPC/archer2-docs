@@ -116,7 +116,7 @@ This ``.xt`` file contains the raw sampling data from the run and needs to be po
 ::
 
    
-   [user@archer2]$ pat_report myapp+pat+15571-2838s.xf 
+   [user@archer2]$ pat_report jacobi+pat+15571-2838s.xf 
    Table 1:  Profile by Function (limited entries shown)
 
    Samp% |  Samp |  Imb. |  Imb. | Group
