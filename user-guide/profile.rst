@@ -92,12 +92,14 @@ Sampling analysis
    module load perftools
 
 
-3. Compile your code in the standard way. Object files need to be made available to CrayPat to correctly build an instrumented executable for profiling or tracing, this means that compile and link stage should be separated by using the ``-c`` compile flag. 
+3. Compile your code in the standard way always using the Cray compiler wrappers (ftn, cc and CC). Object files need to be made available to CrayPat to correctly build an instrumented executable for profiling or tracing, this means that compile and link stage should be separated by using the ``-c`` compile flag. 
 
 ::
    
  [user@archer2]$ cc -h std=c99 -c jacobi.c
  [user@archer2]$ cc jacobi.o -o jacobi 
+
+
 
 4. Instrument your application
    To instrument then the binary, run the ``pat_build`` command. This will generate a new binary with ``+pat`` appended to the end (e.g. ``jacobi+pat``)
@@ -146,6 +148,8 @@ This report will generate two more files, one with the extension ``.ap2`` which 
 
 Tracing analysis
 ^^^^^^^^^^^^^^^^
+Automatic Program Analysis (APA)¶
+"""""""""""""""""""""""""""""""""
 We can produce a focused tracing experiment based on the results from the *sampling* experiment using ``pat_build`` with the ``.apa`` file produced during the sampling.
 
 ::
@@ -181,7 +185,18 @@ This will produce a third binary with extension ``+apa``. This binary should onc
  ||   3.3% |  0.428731 | 0.557342 | 57.0% |   395,104.9 | MPI_Isend
  |=========================================================================
 
+Manual Program Analysis
+"""""""""""""""""""""""
 
+CrayPat allows you to manually choose your profiling preference. This is particularly useful if the APA mode does not meet your tracing analysis requirements.
+
+The entire program can be traced as a whole using ``-w``:
+
+::
+
+   [user@archer2]$ pat_build -w jacobi
+
+   
 Further help
 ^^^^^^^^^^^^
 * `CrayPat User Guide <https://pubs.cray.com/content/S-2376/7.0.0/cray-performance-measurement-and-analysis-tools-user-guide/craypat>`__
