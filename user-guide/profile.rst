@@ -94,18 +94,18 @@ Sampling analysis
 
 ::
    
- [user@archer2]$ cc -h std=c99 -c myapp.c
- [user@archer2]$ cc myapplication.o -o myapp.x 
+ [user@archer2]$ cc -h std=c99 -c jacobi.c
+ [user@archer2]$ cc jacobi.o -o jacobi 
 
 4. Instrument your application
-   To instrument then the binary, run the ``pat_build`` command. This will generate a new binary with ``+pat`` appended to the end (e.g. ``myapp.x+pat``)
+   To instrument then the binary, run the ``pat_build`` command. This will generate a new binary with ``+pat`` appended to the end (e.g. ``jacobi+pat``)
 
 ::
  
-   [user@archer2]$ pat_build myapplication.x
+   [user@archer2]$ pat_build jacobi
 
 
-5. Run the new executable with ``+pat`` appended as you would with the regular executable. This will generate a performance data file with the suffix ``.xf`` (e.g. ``myapp+pat+15571-2838s.xf``).
+5. Run the new executable with ``+pat`` appended as you would with the regular executable. This will generate performance data files with the suffix ``.xf`` (e.g. ``jacobi+pat+12265-1573s/xf-files``).
    
 6. Generate report data
    
@@ -114,7 +114,30 @@ This ``.xt`` file contains the raw sampling data from the run and needs to be po
 ::
 
    
-   [user@archer2]$ pat_report myapp+pat+15571-2838s.xf > myreport.txt
+   [user@archer2]$ pat_report myapp+pat+15571-2838s.xf 
+   Table 1:  Profile by Function (limited entries shown)
+
+   Samp% |  Samp |  Imb. |  Imb. | Group
+         |       |  Samp | Samp% |  Function
+         |       |       |       |   PE=HIDE
+  100.0% | 849.5 |    -- |    -- | Total
+ |--------------------------------------------------
+ |  56.7% | 481.4 |    -- |    -- | MPI
+ ||-------------------------------------------------
+ ||  48.7% | 414.1 |  50.9 | 11.0% | MPI_Allreduce
+ ||   4.4% |  37.5 | 118.5 | 76.6% | MPI_Waitall
+ ||   3.0% |  25.2 |  44.8 | 64.5% | MPI_Isend
+ ||=================================================
+ |  29.9% | 253.9 |  55.1 | 18.0% | USER
+ ||-------------------------------------------------
+ ||  29.9% | 253.9 |  55.1 | 18.0% | main
+ ||=================================================
+ |  13.4% | 114.1 |    -- |    -- | ETC
+ ||-------------------------------------------------
+ ||  13.4% | 113.9 |  26.1 | 18.8% | __cray_memcpy_SNB
+ |==================================================
+ 
+ 
 
 This report will generate two more files, one with the extension ``.ap2`` which holds the same data as the ``.xf`` but in the post processed form. The other file has a ``.apa`` extension and is a text file with a suggested configuration for generating a traced experiment. The ``.ap2`` file generated is used to view performance data graphically with the Cray Apprentice2 tool, and the latter is used for more detailed tracing experiments. 
  
@@ -125,9 +148,37 @@ We can produce a focused tracing experiment based on the results from the *sampl
 
 ::
 
-    [user@archer2]$ pat_build -O myapp+pat+15571-2838s.apa
+    [user@archer2]$ pat_build -O jacobi+pat+12265-1573s/build-options.apa
+    
 
-This will produce a third binary with extension ``+apa``. This binary should once again be run on the compute nodes and the name of the executable changed to ``myapp+apa``. 
+This will produce a third binary with extension ``+apa``. This binary should once again be run on the compute nodes and the name of the executable changed to ``jacobi+apa``. As with the sampling analysis, a report can be produced using ``pat_report``.
+
+::
+
+   [user@archer2]$ pat_report jacobi+apa+13955-1573t
+   Table 1:  Profile by Function Group and Function (limited entries shown)
+
+   Time% |      Time |     Imb. |  Imb. |       Calls | Group
+         |           |     Time | Time% |             |  Function
+         |           |          |       |             |   PE=HIDE
+
+  100.0% | 12.987762 |       -- |    -- | 1,387,544.9 | Total
+ |-------------------------------------------------------------------------
+ |  44.9% |  5.831320 |       -- |    -- |         2.0 | USER
+ ||------------------------------------------------------------------------
+ ||  44.9% |  5.831229 | 0.398671 |  6.4% |         1.0 | main
+ ||========================================================================
+ |  29.2% |  3.789904 |       -- |    -- |   199,111.0 | MPI_SYNC
+ ||------------------------------------------------------------------------
+ ||  29.2% |  3.789115 | 1.792050 | 47.3% |   199,109.0 | MPI_Allreduce(sync)
+ ||========================================================================
+ |  25.9% |  3.366537 |       -- |    -- | 1,188,431.9 | MPI
+ ||------------------------------------------------------------------------
+ ||  18.0% |  2.334765 | 0.164646 |  6.6% |   199,109.0 | MPI_Allreduce
+ ||   3.7% |  0.486714 | 0.882654 | 65.0% |   199,108.0 | MPI_Waitall
+ ||   3.3% |  0.428731 | 0.557342 | 57.0% |   395,104.9 | MPI_Isend
+ |=========================================================================
+
 
 Further help
 ^^^^^^^^^^^^
