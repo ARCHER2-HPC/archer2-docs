@@ -196,7 +196,12 @@ The entire program can be traced as a whole using ``-w``:
 
    [user@archer2]$ pat_build -w jacobi
 
-   
+Using ``-g`` a program can be instrumented to trace all function entry point references belonging to the trace function group tracegroup (mpi, libsci, lapack, scalapack, heap, etc).a
+
+::
+
+   [user@archer2]$ pat_build -w	-g mpi jacobi
+
 Further help
 ^^^^^^^^^^^^
 * `CrayPat User Guide <https://pubs.cray.com/content/S-2376/7.0.0/cray-performance-measurement-and-analysis-tools-user-guide/craypat>`__
