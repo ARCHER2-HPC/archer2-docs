@@ -148,7 +148,7 @@ This report will generate two more files, one with the extension ``.ap2`` which 
 
 Tracing analysis
 ^^^^^^^^^^^^^^^^
-Automatic Program Analysis (APA)¶
+Automatic Program Analysis (APA)
 """""""""""""""""""""""""""""""""
 We can produce a focused tracing experiment based on the results from the *sampling* experiment using ``pat_build`` with the ``.apa`` file produced during the sampling.
 
