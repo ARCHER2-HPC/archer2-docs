@@ -91,6 +91,7 @@ and Sphinx technologies.
    user-guide/analysis.rst
    user-guide/debug.rst
    user-guide/profile.rst
+   user-guide/tuning.rst
 
 .. toctree::
    :maxdepth: 2
