@@ -110,7 +110,8 @@ Sampling analysis
 
 
 5. Run the new executable with ``+pat`` appended as you would with the regular executable. This will generate performance data files with the suffix ``.xf`` (e.g. ``jacobi+pat+12265-1573s/xf-files``).
-   
+
+
 6. Generate report data
    
 This ``.xt`` file contains the raw sampling data from the run and needs to be post processed to produce useful results. This is done using the ``pat_report`` tool which converts all the raw data into a summarised and readable form.
@@ -118,7 +119,7 @@ This ``.xt`` file contains the raw sampling data from the run and needs to be po
 ::
 
    
-   [user@archer2]$ pat_report jacobi+pat+15571-2838s.xf
+   [user@archer2]$ pat_report jacobi+pat+12265-1573s
    
    Table 1:  Profile by Function (limited entries shown)
 
@@ -155,7 +156,7 @@ The ``pat_report`` command is able to produce many different profile reports fro
 
 ::
 
-   [user@archer2]$ pat_report -O ca+src,load_balance jacobi+pat+15571-2838s.xf
+   [user@archer2]$ pat_report -O ca+src,load_balance  jacobi+pat+12265-1573s
    
    Table 1:  Profile by Function and Callers, with Line Numbers (limited entries shown)
 
