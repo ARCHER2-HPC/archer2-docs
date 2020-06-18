@@ -16,8 +16,8 @@ reports, white papers), links to instruction manuals and further information.
 Centrally supported packages
 ----------------------------
 
-ARCHER2 provides a number of research software packages as `centrally
-supported packages`. Many of these packages are free to use, but others
+ARCHER2 provides a number of research software packages as *centrally
+supported packages*. Many of these packages are free to use, but others
 require a license (which you, or your research group, need to supply).
 
 The centrally supported package will usually be the current stable release,
@@ -28,27 +28,24 @@ of the package.
 The following sections provide details on access to each of the centrally
 supported packages:
 
-.. toctree::
-   :maxdepth: 2
-
-   castep/castep.rst
-   code-saturne/code-saturne.rst
-   chemshell/chemshell.rst
-   cp2k/cp2k.rst
-   elk/elk.rst
-   fenics/fenics.rst
-   gromacs/gromacs.rst
-   lammps/lammps.rst
-   mo-unified-model/mo-unified-model.rst
-   mitgcm/mitgcm.rst
-   namd/namd.rst
-   nektar++/nektar++.rst
-   nemo/nemo.rst
-   nwchem/nwchem.rst
-   onetep/onetep.rst
-   openfoam/openfoam.rst
-   qe/qe.rst
-   vasp/vasp.rst
+- :doc:`castep/castep`
+- :doc:`code-saturne/code-saturne`
+- :doc:`chemshell/chemshell`
+- :doc:`cp2k/cp2k`
+- :doc:`elk/elk`
+- :doc:`fenics/fenics`
+- :doc:`gromacs/gromacs`
+- :doc:`lammps/lammps`
+- :doc:`mo-unified-model/mo-unified-model`
+- :doc:`mitgcm/mitgcm`
+- :doc:`namd/namd`
+- :doc:`nektar++/nektar++`
+- :doc:`nemo/nemo`
+- :doc:`nwchem/nwchem`
+- :doc:`onetep/onetep`
+- :doc:`openfoam/openfoam`
+- :doc:`qe/qe`
+- :doc:`vasp/vasp`
 
 Not on the list?
 ^^^^^^^^^^^^^^^^

@@ -72,6 +72,8 @@ and Sphinx technologies.
    :caption: Quick start
 
    quick-start/overview.rst
+   quick-start/quickstart-users.rst
+   quick-start/quickstart-developers.rst
 
 .. toctree::
    :maxdepth: 2
@@ -89,6 +91,7 @@ and Sphinx technologies.
    user-guide/analysis.rst
    user-guide/debug.rst
    user-guide/profile.rst
+   user-guide/tuning.rst
 
 .. toctree::
    :maxdepth: 2
