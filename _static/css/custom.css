@@ -1,12 +1,82 @@
+
+
 a {
-    color: #1B567E;
+    color: #2573a7;
+}
+
+a:hover {
+	color: #1c567d;
 }
 a:visited {
-    color: #1B567E;
+    color: #9b59b6;
 }
+
+footer p {
+	color: #737373;
+}
+
+
+
 .wy-menu-vertical a {
     color: #d9d9d9;
 }
 .wy-menu-vertical a:visited {
     color: #d9d9d9;
+}
+.wy-menu-vertical header {
+    color: #7aaed1;
+}
+.wy-menu-vertical p.caption{
+    color: #7aaed1;
+}
+
+
+
+.rst-content dl:not(.docutils) dt {
+ display:table;
+ margin:6px 0;
+ font-size:90%;
+ line-height:normal;
+ /*! background:#e7f2fa; */
+ background:#ffffff;
+ color:#2573a7;
+ /*! border-top:solid 3px #6ab0de; */
+ border-top: 0px;
+ padding:6px;
+ position:relative
+}
+
+.rst-content tt.literal, .rst-content tt.literal, .rst-content code.literal {
+    color: #da2e1b;
+}
+
+
+.wy-alert.wy-alert-warning .wy-alert-title,
+.rst-content .wy-alert-warning.note .wy-alert-title,
+.rst-content .attention .wy-alert-title,
+.rst-content .caution .wy-alert-title,
+.rst-content .wy-alert-warning.danger .wy-alert-title,
+.rst-content .wy-alert-warning.error .wy-alert-title,
+.rst-content .wy-alert-warning.hint .wy-alert-title,
+.rst-content .wy-alert-warning.important .wy-alert-title,
+.rst-content .wy-alert-warning.tip .wy-alert-title,
+.rst-content .warning .wy-alert-title,
+.rst-content .wy-alert-warning.seealso .wy-alert-title,
+.rst-content .admonition-todo .wy-alert-title,
+.rst-content .wy-alert-warning.admonition .wy-alert-title,
+.wy-alert.wy-alert-warning .rst-content .admonition-title,
+.rst-content .wy-alert.wy-alert-warning .admonition-title,
+.rst-content .wy-alert-warning.note .admonition-title,
+.rst-content .attention .admonition-title,
+.rst-content .caution .admonition-title,
+.rst-content .wy-alert-warning.danger .admonition-title,
+.rst-content .wy-alert-warning.error .admonition-title,
+.rst-content .wy-alert-warning.hint .admonition-title,
+.rst-content .wy-alert-warning.important .admonition-title,
+.rst-content .wy-alert-warning.tip .admonition-title,
+.rst-content .warning .admonition-title,
+.rst-content .wy-alert-warning.seealso .admonition-title,
+.rst-content .admonition-todo .admonition-title,
+.rst-content .wy-alert-warning.admonition .admonition-title {
+ background:#CD6D18;
 }
