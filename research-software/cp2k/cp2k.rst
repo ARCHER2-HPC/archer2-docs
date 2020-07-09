@@ -66,7 +66,7 @@ For example, the following script will run a CP2K job using 4 nodes
    # Replace [budget code] below with your project code (e.g. t01)
 
 
-   #SBATCH --name=CP2K_test
+   #SBATCH --job-name=CP2K_test
    #SBATCH --nodes=4
    #SBATCH --ntasks=512
    #SBATCH --tasks-per-node=128
@@ -107,7 +107,7 @@ To run CP2K using MPI and OpenMP, load the ``cp2k`` module and use the
     # Remember to replace [budget code] below with your account code,
     # e.g. '--account=t01'.
 
-    #SBATCH --name=CP2K_test
+    #SBATCH --job-name=CP2K_test
     #SBATCH --nodes=4
     #SBATCH --ntasks=128
     #SBATCH --tasks-per-node=32

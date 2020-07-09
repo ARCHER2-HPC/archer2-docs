@@ -186,7 +186,7 @@ Other common options that are used are:
 
   - ``--time=<hh:mm:ss>`` the maximum walltime for your job. *e.g.* For a 6.5 hour
     walltime, you would use ``--time=6:30:0``.
-  - ``--name=<jobname>`` set a name for the job to help identify it in 
+  - ``--job-name=<jobjob-name>`` set a job-name for the job to help identify it in 
     Slurm command output.
 
 In addition, parallel jobs will also need to specify how many nodes,
@@ -240,8 +240,8 @@ nodes and 128 MPI ranks per node for 20 minutes would look like:
 
     #!/bin/bash
 
-    # Slurm job options (name, compute nodes, job time)
-    #SBATCH --name=Example_MPI_Job
+    # Slurm job options (job-name, compute nodes, job time)
+    #SBATCH --job-name=Example_MPI_Job
     #SBATCH --time=0:20:0
     #SBATCH --nodes=4
     #SBATCH --tasks-per-node=128
@@ -291,8 +291,8 @@ process. This results in all 128 physical cores per node being used.
 
     #!/bin/bash
 
-    # Slurm job options (name, compute nodes, job time)
-    #SBATCH --name=Example_MPI_Job
+    # Slurm job options (job-name, compute nodes, job time)
+    #SBATCH --job-name=Example_MPI_Job
     #SBATCH --time=0:20:0
     #SBATCH --nodes=4
     #SBATCH --ntasks=32
@@ -341,8 +341,8 @@ process per core and specifies 4 hours maximum runtime per subjob:
 ::
 
     #!/bin/bash
-    # Slurm job options (name, compute nodes, job time)
-    #SBATCH --name=Example_Array_Job
+    # Slurm job options (job-name, compute nodes, job time)
+    #SBATCH --job-name=Example_Array_Job
     #SBATCH --time=0:20:0
     #SBATCH --nodes=4
     #SBATCH --tasks-per-node=128

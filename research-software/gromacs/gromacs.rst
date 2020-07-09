@@ -52,7 +52,7 @@ The following script will run a GROMACS MD job using 4 nodes
    
    # Replace [budget code] below with your project code (e.g. t01)
 
-   #SBATCH --name-mdrun_test
+   #SBATCH --job-name-mdrun_test
    #SBATCH --nodes=4
    #SBATCH --ntasks=512
    #SBATCH --tasks-per-node=128
@@ -89,7 +89,7 @@ total) and 6 OpenMP threads per MPI process.
    
    # Replace [budget code] below with your project code (e.g. t01)
 
-   #SBATCH --name-mdrun_test
+   #SBATCH --job-name-mdrun_test
    #SBATCH --nodes=4
    #SBATCH --ntasks=64
    #SBATCH --tasks-per-node=16
