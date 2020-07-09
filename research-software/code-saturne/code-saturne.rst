@@ -34,7 +34,7 @@ Code Saturne is freely available to all users on ARCHER2.
 
 .. warning::
 
-  The exact version information and module name is pending.
+  The exact version information and module job-name is pending.
 
 
 Running parallel Code Saturne jobs
@@ -58,7 +58,7 @@ For example, the following script will run a Code Saturne job using 4 nodes
    # Replace [budget code] below with your account code,
    # e.g. '--account=t01'
 
-   #SBATCH --name=CodeSaturne
+   #SBATCH --job-name=CodeSaturne
    #SBATCH --nodes=4
    #SBATCH --tasks-per-node=128
    #SBATCH --cpus-per-task=1

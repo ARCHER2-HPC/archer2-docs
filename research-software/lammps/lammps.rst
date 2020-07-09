@@ -52,7 +52,7 @@ For example, the following script will run a LAMMPS MD job using 4 nodes
 
    # Replace [budget code] below with your project code (e.g. t01)
    
-   #SBATCH --name=lammps_test
+   #SBATCH --job-name=lammps_test
    #SBATCH --nodes-4
    #SBATCH --ntasks=512
    #SBATCH --tasks-per-node=128
