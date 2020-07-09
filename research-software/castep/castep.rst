@@ -59,7 +59,7 @@ For example, the following script will run a CASTEP job using 4 nodes
    # Replace [budget code] below with your account code,
    # e.g. '--account=t01'
 
-   #SBATCH --name=CASTEP
+   #SBATCH --job-name=CASTEP
    #SBATCH --nodes=4
    #SBATCH --tasks-per-node=128
    #SBATCH --cpus-per-task=1
