@@ -85,7 +85,7 @@ Sampling analysis
 
    module list
 
-2. Load ``perfotools`` module
+2. Load ``perftools`` module
 
 ::
 
