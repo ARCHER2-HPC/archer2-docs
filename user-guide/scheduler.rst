@@ -195,9 +195,13 @@ parallel processes and threads they require.
   - ``--nodes=<nodes>`` the number of nodes to use for the job.
   - ``--tasks-per-node=<processes per node>`` the number of parallel processes
     (e.g. MPI ranks) per node.
+  - ``--cpus-per-task=1`` if you are using parallel processes only with no
+    threading then you should set the number of CPUs (cores) per parallel
+    process to 1. **Note:** if you are using threading (e.g. with OpenMP)
+    then you will need to change this option as described below.
 
-For parallel jobs that use threading (e.g. OpenMP) , you will also need to 
-specify a couple of additional options.
+For parallel jobs that use threading (e.g. OpenMP), you will also need to 
+change an option and specify an additional option.
 
   - ``--cpus-per-task=<threads per task>`` the number of threads per
     parallel process (e.g. number of OpenMP threads per MPI task for
@@ -224,7 +228,7 @@ compute nodes.
 .. warning::
 
    To ensure that processes and threads are correctly mapped
-   (or *pinned*) to cores you should always specify `--cpu-bind=cores` option
+   (or *pinned*) to cores, you should always specify `--cpu-bind=cores` option
    to `srun`.
 
 Example job submission scripts
