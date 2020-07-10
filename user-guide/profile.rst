@@ -46,7 +46,7 @@ How to use CrayPat-lite
 
    #!/bin/bash
 
-   #SBATCH --name=craypat_test
+   #SBATCH --job-name=craypat_test
    #SBATCH --nodes=4
    #SBATCH --ntasks=512
    #SBATCH --tasks-per-node=128

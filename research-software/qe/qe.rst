@@ -46,7 +46,7 @@ For example, the following script will run a QE ``pw.x`` job using 4 nodes
    # Remember to replace [budget code] below with your own account code,
    # e.g. '--account=t01-queenie`
 
-   #SBATCH --name=qe_test
+   #SBATCH --job-name=qe_test
    #SBATCH --nodes=4
    #SBATCH --ntasks=512
    #SBATCH --ntasks-per-node=128

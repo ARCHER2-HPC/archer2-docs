@@ -90,7 +90,7 @@ The following script will run a VASP job using 4 nodes (128x4 cores).
    # Remember to replace [budget code] below with your account code,
    # e.g., '--account=t01-victoria'
 
-   #SBATCH --name=VASP_test
+   #SBATCH --job-name=VASP_test
    #SBATCH --nodes=4
    #SBATCH --ntasks=512
    #SBATCH --tasks-per-node=128
