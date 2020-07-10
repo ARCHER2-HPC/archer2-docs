@@ -48,9 +48,8 @@ How to use CrayPat-lite
 
    #SBATCH --job-name=craypat_test
    #SBATCH --nodes=4
-   #SBATCH --ntasks=512
    #SBATCH --tasks-per-node=128
-   #SBATCH --cpus-per-core=1
+   #SBATCH --cpus-per-task=1
    #SBATCH --time=00:20:00
    
    #SBATCH --account=[budget code]
