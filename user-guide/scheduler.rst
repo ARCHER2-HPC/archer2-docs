@@ -195,10 +195,20 @@ parallel processes and threads they require.
   - ``--nodes=<nodes>`` the number of nodes to use for the job.
   - ``--tasks-per-node=<processes per node>`` the number of parallel processes
     (e.g. MPI ranks) per node.
+  - ``--cpus-per-task=1`` if you are using parallel processes only with no
+    threading then you should set the number of CPUs (cores) per parallel
+    process to 1. **Note:** if you are using threading (e.g. with OpenMP)
+    then you will need to change this option as described below.
+
+For parallel jobs that use threading (e.g. OpenMP), you will also need to 
+change an option and specify an additional option.
+
   - ``--cpus-per-task=<threads per task>`` the number of threads per
     parallel process (e.g. number of OpenMP threads per MPI task for
     hybrid MPI/OpenMP jobs). **Note:** you must also set the ``OMP_NUM_THREADS``
     environment variable if using OpenMP in your job.
+  - ``--threads-per-core=1`` restrict threads to use physical cores rather
+    than SMT (hardware threads).
 
 .. note::
 
@@ -213,14 +223,13 @@ parallel processes and threads they require.
 
 If you are running parallel jobs, your job submission script should contain
 one or more ``srun`` commands to launch the parallel executable across the
-compute nodes. As well as launching the executable, ``srun`` also allows you
-to specify the distribution and placement (or *pinning*) of the parallel
-processes and threads.
+compute nodes.
 
-This section describes how to use the ``srun`` command within your job
-submission scripts on ARCHER2.
+.. warning::
 
-.. TODO: Description of ``srun`` options
+   To ensure that processes and threads are correctly mapped
+   (or *pinned*) to cores, you should always specify `--cpu-bind=cores` option
+   to `srun`.
 
 Example job submission scripts
 -------------------------------
@@ -258,7 +267,7 @@ nodes and 128 MPI ranks per node for 20 minutes would look like:
     # Launch the parallel job
     #   Using 1024 MPI processes and 128 MPI processes per node
     #   srun picks up the distribution from the sbatch options
-    srun ./my_mpi_executable.x
+    srun --cpu-bind=cores ./my_mpi_executable.x
 
 This will run your executable "my\_mpi\_executable.x" in parallel on 1024
 MPI processes using 4 nodes (128 cores per node, i.e. not using hyper-threading). Slurm will
@@ -284,44 +293,44 @@ process. This results in all 128 physical cores per node being used.
 
 .. note:: 
 
-   the use of the ``--cpu-bind=cores`` option to generate the correct 
-   affinity settings.
+   Note the use of the ``--threads-per-core=1`` option to ``sbatch`` and the ``--cpu-bind=cores``
+   option to ``srun``to generate the correct pinning.
 
 ::
 
-    #!/bin/bash
+  #!/bin/bash
 
-    # Slurm job options (job-name, compute nodes, job time)
-    #SBATCH --job-name=Example_MPI_Job
-    #SBATCH --time=0:20:0
-    #SBATCH --nodes=4
-    #SBATCH --ntasks=32
-    #SBATCH --tasks-per-node=8
-    #SBATCH --cpus-per-task=16
+  # Slurm job options (job-name, compute nodes, job time)
+  #SBATCH --job-name=Example_MPI_Job
+  #SBATCH --time=0:20:0
+  #SBATCH --nodes=4
+  #SBATCH --ntasks=32
+  #SBATCH --tasks-per-node=8
+  #SBATCH --cpus-per-task=16
+  #SBATCH --threads-per-core=1
 
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code] 
+  # Replace [budget code] below with your project code (e.g. t01)
+  #SBATCH --account=[budget code] 
 
-    # Set the number of threads to 16
-    #   There are 16 OpenMP threads per MPI process
-    export OMP_NUM_THREADS=16
+  # Set the number of threads to 16
+  #   There are 16 OpenMP threads per MPI process
+  export OMP_NUM_THREADS=16
 
-    # Launch the parallel job
-    #   Using 32 MPI processes
-    #   8 MPI processes per node
-    #   16 OpenMP threads per MPI process
- 
-   srun ./my_mixed_executable.x arg1 arg2 > my_stdout.txt 2> my_stderr.txt
+  # Launch the parallel job
+  #   Using 32 MPI processes
+  #   8 MPI processes per node
+  #   16 OpenMP threads per MPI process
+  srun --cpu-bind=cores ./my_mixed_executable.x arg1 arg2
 
 Job arrays
 ----------
 
-The SLurm job scheduling system offers the *job array* concept,
+The Slurm job scheduling system offers the *job array* concept,
 for running collections of almost-identical jobs. For example,
 running the same program several times with different arguments
 or input data.
 
-Each job in a job array is called a *subjob*.  The subjobs of a job
+Each job in a job array is called a *subjob*. The subjobs of a job
 array can be submitted and queried as a unit, making it easier and
 cleaner to handle the full set, compared to individual jobs.
 
@@ -357,7 +366,7 @@ process per core and specifies 4 hours maximum runtime per subjob:
     #   using threading.
     export OMP_NUM_THREADS=1
 
-    srun /path/to/exe $Slurm_ARRAY_TASK_ID
+    srun --cpu-bind=cores /path/to/exe $Slurm_ARRAY_TASK_ID
 
 
 Submitting a job array
@@ -421,21 +430,20 @@ issue the following qsub command from the command line:
 
 ::
 
-    salloc --nodes=8 --tasks-per-node=128 --cpus-per-task=1 --time=1:0:0 --account=t01
+    salloc --nodes=8 --tasks-per-node=128 --cpus-per-task=1 --time=1:0:0 --account=[budget code]
     
-
 When you submit this job your terminal will display something like:
 
 ::
 
     salloc: Granted job allocation 24236
     salloc: Waiting for resource configuration
-    salloc: Nodes cn13 are ready for job
+    salloc: Nodes nid000002 are ready for job
 
 It may take some time for your interactive job to start. Once it
 runs you will enter a standard interactive terminal session.
 Whilst the interactive session lasts you will be able to run parallel
-jobs on the compute nodes by issuing the ``srun``  command
+jobs on the compute nodes by issuing the ``srun --cpu-bind=cores``  command
 directly at your command prompt using the same syntax as you would inside
 a job script. The maximum number of nodes you can use is limited by resources
 requested in the ``salloc`` command.
