@@ -248,6 +248,42 @@ Using ``-g`` a program can be instrumented to trace all function entry point ref
 
    [user@archer2]$ pat_build -w	-g mpi jacobi
 
+
+Dynamically-linked binaries
+"""""""""""""""""""""""""""
+CrayPat allows you to profile un-instrumented, dynamically linked binaries with the ``pat_run`` utility. ``pat_run`` delivers profiling information for codes that cannot easily be rebuilt.
+To use ``pat_run``:
+
+1. Load ``perfotools-lite`` module if it is not already loaded
+
+::
+
+   module load perftools-lite
+
+2. Run your application normally including the ``pat_run`` command rigth after your ``srun`` options
+
+::
+
+    srun [srun-options] pat_run [pat_run-options] program [program-options]
+
+3. Use ``pat_report`` to examine any data collected during the execution of the application.
+
+::
+
+   [user@archer2]$ pat_report jacobi+pat+12265-1573s 
+
+Some useful ``pat_run`` options are:
+
+
+``-w``
+    Collect data by tracing.
+``-g``
+    Trace functions belonging to group names. See the -g option in pat_build(1) for a list of valid tracegroup values.
+``-r``
+    Generate a text report upon successful execution.
+
+
+
 Further help
 ^^^^^^^^^^^^
 * `CrayPat User Guide <https://pubs.cray.com/content/S-2376/7.0.0/cray-performance-measurement-and-analysis-tools-user-guide/craypat>`__
