@@ -250,7 +250,7 @@ Using ``-g`` a program can be instrumented to trace all function entry point ref
 
 
 Dynamically-linked binaries
-"""""""""""""""""""""""""""
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 CrayPat allows you to profile un-instrumented, dynamically linked binaries with the ``pat_run`` utility. ``pat_run`` delivers profiling information for codes that cannot easily be rebuilt.
 To use ``pat_run``:
 
