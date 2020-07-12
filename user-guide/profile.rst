@@ -254,11 +254,11 @@ Dynamically-linked binaries
 CrayPat allows you to profile un-instrumented, dynamically linked binaries with the ``pat_run`` utility. ``pat_run`` delivers profiling information for codes that cannot easily be rebuilt.
 To use ``pat_run``:
 
-1. Load ``perfotools-lite`` module if it is not already loaded
+1. Load ``perfotools-base`` module if it is not already loaded
 
 ::
 
-   module load perftools-lite
+   module load perftools-base
 
 2. Run your application normally including the ``pat_run`` command rigth after your ``srun`` options
 
