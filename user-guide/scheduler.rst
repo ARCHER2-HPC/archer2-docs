@@ -580,7 +580,7 @@ maximum number of tasks is reached:
     salloc: Nodes cn13 are ready for job
 
     module load xthi
-    srun --nodes=8 --tasks-per-node=2 xthi
+    srun --cpu-bind=cores xthi
 
     Hello from rank 0, on nid01041. (core affinity = 0-63)
     Hello from rank 1, on nid01041. (core affinity = 0-63)
@@ -608,7 +608,7 @@ specify other types of MPI task placement. For example, setting it to
 
     module load xthi
     export MPICH_RANK_REORDER_METHOD=0
-    srun --nodes=8 --tasks-per-node=2 xthi
+    srun --cpu-bind=core xthi
 
     Hello from rank 0, on nid01041. (core affinity = 0-63)
     Hello from rank 1, on nid01111. (core affinity = 0-63)
