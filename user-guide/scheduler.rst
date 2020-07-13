@@ -573,23 +573,32 @@ maximum number of tasks is reached:
 
 ::
 
-    salloc --nodes=8 --tasks-per-node=2 --cpus-per-task=1 --time=0:10:0 --account=t01
+  salloc --nodes=8 --tasks-per-node=2 --cpus-per-task=1 --time=0:10:0 --account=t01
 
-    salloc: Granted job allocation 24236
-    salloc: Waiting for resource configuration
-    salloc: Nodes cn13 are ready for job
+  salloc: Granted job allocation 24236
+  salloc: Waiting for resource configuration
+  salloc: Nodes cn13 are ready for job
 
-    module load xthi
-    srun --cpu-bind=cores xthi
+  module load xthi
+  export OMP_NUM_THREADS=1
+  srun --cpu-bind=cores xthi
 
-    Hello from rank 0, on nid01041. (core affinity = 0-63)
-    Hello from rank 1, on nid01041. (core affinity = 0-63)
-    Hello from rank 2, on nid01111. (core affinity = 0-63)
-    Hello from rank 3, on nid01111. (core affinity = 0-63)
-    Hello from rank 4, on nid01118. (core affinity = 0-63)
-    Hello from rank 5, on nid01118. (core affinity = 0-63)
-    Hello from rank 6, on nid01282. (core affinity = 0-63)
-    Hello from rank 7, on nid01282. (core affinity = 0-63)
+  Hello from rank 0, thread 0, on nid000001. (core affinity = 0,128)
+  Hello from rank 1, thread 0, on nid000001. (core affinity = 16,144)
+  Hello from rank 2, thread 0, on nid000002. (core affinity = 0,128)
+  Hello from rank 3, thread 0, on nid000002. (core affinity = 16,144)
+  Hello from rank 4, thread 0, on nid000003. (core affinity = 0,128)
+  Hello from rank 5, thread 0, on nid000003. (core affinity = 16,144)
+  Hello from rank 6, thread 0, on nid000004. (core affinity = 0,128)
+  Hello from rank 7, thread 0, on nid000004. (core affinity = 16,144)
+  Hello from rank 8, thread 0, on nid000005. (core affinity = 0,128)
+  Hello from rank 9, thread 0, on nid000005. (core affinity = 16,144)
+  Hello from rank 10, thread 0, on nid000006. (core affinity = 0,128)
+  Hello from rank 11, thread 0, on nid000006. (core affinity = 16,144)
+  Hello from rank 12, thread 0, on nid000007. (core affinity = 0,128)
+  Hello from rank 13, thread 0, on nid000007. (core affinity = 16,144)
+  Hello from rank 14, thread 0, on nid000008. (core affinity = 0,128)
+  Hello from rank 15, thread 0, on nid000008. (core affinity = 16,144)
 
 ``MPICH_RANK_REORDER_METHOD``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -600,24 +609,33 @@ specify other types of MPI task placement. For example, setting it to
 
 ::
 
-    salloc --nodes=8 --tasks-per-node=2 --cpus-per-task=1 --time=0:10:0 --account=t01
+  salloc --nodes=8 --tasks-per-node=2 --cpus-per-task=1 --time=0:10:0 --account=t01
 
-    salloc: Granted job allocation 24236
-    salloc: Waiting for resource configuration
-    salloc: Nodes cn13 are ready for job
+  salloc: Granted job allocation 24236
+  salloc: Waiting for resource configuration
+  salloc: Nodes cn13 are ready for job
 
-    module load xthi
-    export MPICH_RANK_REORDER_METHOD=0
-    srun --cpu-bind=core xthi
+  module load xthi
+  export OMP_NUM_THREADS=1
+  export MPICH_RANK_REORDER_METHOD=0
+  srun --cpu-bind=core xthi
 
-    Hello from rank 0, on nid01041. (core affinity = 0-63)
-    Hello from rank 1, on nid01111. (core affinity = 0-63)
-    Hello from rank 2, on nid01118. (core affinity = 0-63)
-    Hello from rank 3, on nid01282. (core affinity = 0-63)
-    Hello from rank 4, on nid01041. (core affinity = 0-63)
-    Hello from rank 5, on nid01111. (core affinity = 0-63)
-    Hello from rank 6, on nid01118. (core affinity = 0-63)
-    Hello from rank 7, on nid01282. (core affinity = 0-63)
+  Hello from rank 0, thread 0, on nid000001. (core affinity = 0,128)
+  Hello from rank 1, thread 0, on nid000002. (core affinity = 0,128)
+  Hello from rank 2, thread 0, on nid000003. (core affinity = 0,128)
+  Hello from rank 3, thread 0, on nid000004. (core affinity = 0,128)
+  Hello from rank 4, thread 0, on nid000005. (core affinity = 0,128)
+  Hello from rank 5, thread 0, on nid000006. (core affinity = 0,128)
+  Hello from rank 6, thread 0, on nid000007. (core affinity = 0,128)
+  Hello from rank 7, thread 0, on nid000008. (core affinity = 0,128)
+  Hello from rank 8, thread 0, on nid000001. (core affinity = 16,144)
+  Hello from rank 9, thread 0, on nid000002. (core affinity = 16,144)
+  Hello from rank 10, thread 0, on nid000003. (core affinity = 16,144)
+  Hello from rank 11, thread 0, on nid000004. (core affinity = 16,144)
+  Hello from rank 12, thread 0, on nid000005. (core affinity = 16,144)
+  Hello from rank 13, thread 0, on nid000006. (core affinity = 16,144)
+  Hello from rank 14, thread 0, on nid000007. (core affinity = 16,144)
+  Hello from rank 15, thread 0, on nid000008. (core affinity = 16,144)
 
 There are other modes available with the ``MPICH_RANK_REORDER_METHOD``
 environment variable, including one which lets the user provide a file
@@ -679,7 +697,7 @@ And also load the same huge pages module at runtime.
   hugepages on the compute node, such as: 
   ::
   
-    libhugetlbfs [nid000xx:xxxxx]: WARNING: New heap segment map at 0x10000000 failed: Cannot allocate memory``
+    libhugetlbfs [nid0000xx:xxxxx]: WARNING: New heap segment map at 0x10000000 failed: Cannot allocate memory``
 
 By default, The verbosity level of libhugetlbfs ``HUGETLB_VERBOSE`` is set 
 to ``0`` on ARCHER2 to surpress debugging messages. Users can adjust this value
