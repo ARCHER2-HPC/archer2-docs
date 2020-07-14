@@ -618,7 +618,7 @@ specify other types of MPI task placement. For example, setting it to
   module load xthi
   export OMP_NUM_THREADS=1
   export MPICH_RANK_REORDER_METHOD=0
-  srun --cpu-bind=core xthi
+  srun --cpu-bind=cores xthi
 
   Hello from rank 0, thread 0, on nid000001. (core affinity = 0,128)
   Hello from rank 1, thread 0, on nid000002. (core affinity = 0,128)
