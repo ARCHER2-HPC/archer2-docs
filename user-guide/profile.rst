@@ -48,9 +48,8 @@ How to use CrayPat-lite
 
    #SBATCH --job-name=craypat_test
    #SBATCH --nodes=4
-   #SBATCH --ntasks=512
    #SBATCH --tasks-per-node=128
-   #SBATCH --cpus-per-core=1
+   #SBATCH --cpus-per-task=1
    #SBATCH --time=00:20:00
    
    #SBATCH --account=[budget code]
@@ -85,7 +84,7 @@ Sampling analysis
 
    module list
 
-2. Load ``perfotools`` module
+2. Load ``perftools`` module
 
 ::
 
@@ -110,7 +109,8 @@ Sampling analysis
 
 
 5. Run the new executable with ``+pat`` appended as you would with the regular executable. This will generate performance data files with the suffix ``.xf`` (e.g. ``jacobi+pat+12265-1573s/xf-files``).
-   
+
+
 6. Generate report data
    
 This ``.xt`` file contains the raw sampling data from the run and needs to be post processed to produce useful results. This is done using the ``pat_report`` tool which converts all the raw data into a summarised and readable form.
@@ -118,7 +118,8 @@ This ``.xt`` file contains the raw sampling data from the run and needs to be po
 ::
 
    
-   [user@archer2]$ pat_report jacobi+pat+15571-2838s.xf 
+   [user@archer2]$ pat_report jacobi+pat+12265-1573s
+   
    Table 1:  Profile by Function (limited entries shown)
 
    Samp% |  Samp |  Imb. |  Imb. | Group
@@ -144,8 +145,52 @@ This ``.xt`` file contains the raw sampling data from the run and needs to be po
  
 
 This report will generate two more files, one with the extension ``.ap2`` which holds the same data as the ``.xf`` but in the post processed form. The other file has a ``.apa`` extension and is a text file with a suggested configuration for generating a traced experiment. The ``.ap2`` file generated is used to view performance data graphically with the Cray Apprentice2 tool, and the latter is used for more detailed tracing experiments. 
- 
 
+The ``pat_report`` command is able to produce many different profile reports from the profile data. You can select a predefined report with the ``-O`` flag to ``pat_report``. A selection of the most generally useful predefined report types are
+
+* **ca+src** - Show the callers (bottom-up view) leading to the routines that have a high use in the report and include source code line numbers for the calls and time-consuming statements.
+* **load_balance** - Show load-balance statistics for the high-use routines in the program. Parallel processes with minimum, maximum and median times for routines will be displayed. Only available with tracing experiments.
+* **mpi_callers** - Show MPI message statistics. Only available with tracing experiments.
+
+
+::
+
+   [user@archer2]$ pat_report -O ca+src,load_balance  jacobi+pat+12265-1573s
+   
+   Table 1:  Profile by Function and Callers, with Line Numbers (limited entries shown)
+
+   Samp% |  Samp |  Imb. |  Imb. | Group
+         |       |  Samp | Samp% |  Function
+         |       |       |       |   PE=HIDE
+  100.0% | 849.5 |    -- |    -- | Total
+ |--------------------------------------------------
+ |--------------------------------------
+ |  56.7% | 481.4 | MPI
+ ||-------------------------------------
+ ||  48.7% | 414.1 | MPI_Allreduce
+ 3|        |       |  main:jacobi.c:line.80
+ ||   4.4% |  37.5 | MPI_Waitall
+ 3|        |       |  main:jacobi.c:line.73
+ ||   3.0% |  25.2 | MPI_Isend
+ |||------------------------------------
+ 3||   1.6% |  13.2 | main:jacobi.c:line.65
+ 3||   1.4% |  12.0 | main:jacobi.c:line.69
+ ||=====================================
+ |  29.9% | 253.9 | USER
+ ||-------------------------------------
+ ||  29.9% | 253.9 | main
+ |||------------------------------------
+ 3||  18.7% | 159.0 | main:jacobi.c:line.76
+ 3||   9.1% |  76.9 | main:jacobi.c:line.84
+ |||====================================
+ ||=====================================
+ |  13.4% | 114.1 | ETC
+ ||-------------------------------------
+ ||  13.4% | 113.9 | __cray_memcpy_SNB
+ 3|        |       |  __cray_memcpy_SNB
+ |======================================
+
+   
 Tracing analysis
 ^^^^^^^^^^^^^^^^
 Automatic Program Analysis (APA)
@@ -162,6 +207,7 @@ This will produce a third binary with extension ``+apa``. This binary should onc
 ::
 
    [user@archer2]$ pat_report jacobi+apa+13955-1573t
+   
    Table 1:  Profile by Function Group and Function (limited entries shown)
 
    Time% |      Time |     Imb. |  Imb. |       Calls | Group
@@ -196,11 +242,47 @@ The entire program can be traced as a whole using ``-w``:
 
    [user@archer2]$ pat_build -w jacobi
 
-Using ``-g`` a program can be instrumented to trace all function entry point references belonging to the trace function group tracegroup (mpi, libsci, lapack, scalapack, heap, etc).a
+Using ``-g`` a program can be instrumented to trace all function entry point references belonging to the trace function group tracegroup (mpi, libsci, lapack, scalapack, heap, etc)
 
 ::
 
    [user@archer2]$ pat_build -w	-g mpi jacobi
+
+
+Dynamically-linked binaries
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+CrayPat allows you to profile un-instrumented, dynamically linked binaries with the ``pat_run`` utility. ``pat_run`` delivers profiling information for codes that cannot easily be rebuilt.
+To use ``pat_run``:
+
+1. Load the ``perfotools-base`` module if it is not already loaded
+
+::
+
+   module load perftools-base
+
+2. Run your application normally including the ``pat_run`` command rigth after your ``srun`` options
+
+::
+
+    srun [srun-options] pat_run [pat_run-options] program [program-options]
+
+3. Use ``pat_report`` to examine any data collected during the execution of your application.
+
+::
+
+   [user@archer2]$ pat_report jacobi+pat+12265-1573s 
+
+Some useful ``pat_run`` options are:
+
+
+``-w``
+    Collect data by tracing.
+``-g``
+    Trace functions belonging to group names. See the -g option in pat_build(1) for a list of valid tracegroup values.
+``-r``
+    Generate a text report upon successful execution.
+
+
 
 Further help
 ^^^^^^^^^^^^
