@@ -283,7 +283,39 @@ Some useful ``pat_run`` options are:
     Generate a text report upon successful execution.
 
 
-
 Further help
 ^^^^^^^^^^^^
 * `CrayPat User Guide <https://pubs.cray.com/content/S-2376/7.0.0/cray-performance-measurement-and-analysis-tools-user-guide/craypat>`__
+
+  
+    
+Cray Apprentice2
+----------------
+Cray Apprentice2 is an optional GUI tool that is used to visualize and manipulate the performance analysis data captured during program execution. Cray Apprentice2 can be run either on the Cray system or, optionally, on a standalone Linux desktop machine. Cray Apprentice2 can display a wide variety of reports and graphs, depending on the type of program being analyzed, the way in which the program was instrumented for data capture, and the data that was collected during program execution.
+
+You will need to use CrayPat first, to instrument your program and capture performance analysis data, and then use Cray Apprentice2 to visualize and explore the resulting data files.
+
+The number and appearance of the reports that can be generated using Cray Apprentice2 is determined by the kind and quantity of data captured during program execution, which in turn is determined by the way in which the program was instrumented and the environment variables in effect at the time of program execution. For example, changing the PAT_RT_SUMMARY environment variable to 0 before executing the instrumented program nearly doubles the number of reports available when analyzing the resulting data in Cray Apprentice2.
+
+::
+
+   export PAT_RT_SUMMARY=0
+
+
+To use Cray Apprentice2 (``app2``), load ``perftools-base`` module if it is not already loaded
+
+::
+
+   module load perftools-base
+   
+then open the Cray Apprentice2 data (``.ap2``) generated during the instrumentation phase
+
+::
+
+   [user@archer2]$ app2 jacobi+pat+12265-1573s/datafile.ap2
+
+    
+   
+Hardware Performance Counters
+-----------------------------
+
