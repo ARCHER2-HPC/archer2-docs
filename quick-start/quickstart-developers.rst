@@ -319,5 +319,7 @@ Useful Links
 Links to other documentation you may find useful:
 
 * :doc:`ARCHER2 User and Best Practice Guide <../user-guide/overview>` - Covers all aspects of use of the ARCHER2 service. This includes fundamentals (required by all users to use the system effectively), best practice for getting the most out of ARCHER2, and more advanced technical topics.
-* `Cray Programming Environment User Guide <https://pubs.cray.com/content/S-2529/17.05/xctm-series-programming-environment-user-guide-1705-s-2529/introduction>`__
+* `Cray Programming Environment User Guide <https://pubs.cray.com/bundle/XC_Series_Programming_Environment_User_Guide_1705_S-2529/page/Record_of_Revision.html>`__
 * `Cray Performance Measurement and Analysis Tools User Guide <https://pubs.cray.com/bundle/Cray_Performance_Measurement_and_Analysis_Tools_User_Guide_644_S-2376/page/About_the_Cray_Performance_Measurement_and_Analysis_Tools_User_Guide.html>`__
+
+.. TODO: Update the two Cray documentation links to Shasta whenever/if ever this becomes available.
