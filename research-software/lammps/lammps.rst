@@ -50,22 +50,20 @@ For example, the following script will run a LAMMPS MD job using 4 nodes
 
    #!/bin/bash --login
 
-   # Replace [budget code] below with your project code (e.g. t01)
-   
    #SBATCH --job-name=lammps_test
-   #SBATCH --nodes-4
+   #SBATCH --nodes=4
    #SBATCH --ntasks=512
    #SBATCH --tasks-per-node=128
    #SBATCH --cpus-per-task=1
    #SBATCH --time=00:20:00
    
+   # Replace [budget code] below with your project code (e.g. t01)
    #SBATCH --account=[budget code]
    
    # Load the relevant LAMMPS module
-
    module load lammps/2019-12
 
-   srun lmp_mpi < in.test
+   srun lmp_mpi -in in.test > out.test
 
 
 Hints and Tips
