@@ -14,9 +14,9 @@ Compiler wrappers
 
 When compiling code on ARCHER2, it is recommended that you make use of the Cray
 compiler wrappers. These ensure that the correct libraries and headers (for
-example, MPI or Cray LibSci) are included during all stages of compilation and
-linking. These wrappers should be accessed by providing the following compiler
-names, whether on the command line or in build scripts or configure options:
+example, MPI or Cray LibSci) will be used during the compilation and
+linking stages. These wrappers should be accessed by providing the following compiler
+names:
 
 +----------+--------------+
 | Language | Wrapper name |
@@ -28,30 +28,40 @@ names, whether on the command line or in build scripts or configure options:
 | Fortran  | ftn          |
 +----------+--------------+
 
-``man`` pages are available for each wrapper. You can see the full set of
-compiler and linker options by passing the ``-craype-verbose`` option to the
-wrapper.
+This means that you should use the wrapper names whether on the command line, in
+build scripts, or in configure options. It could be helpful to set some or all
+of the following environment variables before running a build to ensure that the
+build tool is aware of the wrappers::
+
+  export CC=cc
+  export CXX=CC
+  export FC=ftn
+  export F77=ftn
+  export F90=ftn
+
+``man`` pages are available for each wrapper. You can also see the full set of
+compiler and linker options being used by passing the ``-craype-verbose`` option
+to the wrapper when using it.
 
 Programming environments
 ------------------------
 
-On login to ARCHER2, the ``PrgEnv-cray`` module will be loaded, as will a `cce`
+On login to ARCHER2, the ``PrgEnv-cray`` module will be loaded, as will a ``cce``
 module. The latter makes available Cray's compilers from the Cray Compiling
 Environment (CCE), while the former provides the correct wrappers and support to
 use them. The GNU Compiler Collection (GCC) and the AMD Optimizing Compiler
 Collection (AOCC) compilers are also available. To make use of any of the three
-Programming Environments, simply swap to the correct ``PrgEnv`` module. At this
-point the compiler wrappers (``cc``, ``CC`` and ``ftn``) will correctly call the
-compilers from the new suite. The default version of the corresponding compiler
-suite will also be loaded, but you may swap to another version if you wish.
+Programming Environments, simply swap to the correct ``PrgEnv`` module. After
+doing so the compiler wrappers (``cc``, ``CC`` and ``ftn``) will correctly call
+the compilers from the new suite. The default version of the corresponding 
+compiler suite will also be loaded, but you may swap to another version if you 
+wish.
 
 The following table summarises the suites and associated programming environments.
 
 +------------+--------+--------------------------------+
 | Suite name | Module | Programming environment module |
 +============+========+================================+
-| AOCC       |``aocc``| ``PrgEnv-amd``                 |
-+------------+--------+--------------------------------+
 | CCE        |``cce`` | ``PrgEnv-cray``                |
 +------------+--------+--------------------------------+
 | GCC        |``gcc`` | ``PrgEnv-gnu``                 |
@@ -60,10 +70,11 @@ The following table summarises the suites and associated programming environment
 As an example, after logging in you may wish to use GCC as your compiler suite.
 Running ``module swap PrgEnv-cray PrgEnv-gnu`` will unload the Cray environment
 and replace it with the GNU environment. It will also unload the ``cce`` module
-and load the default version of the ``gcc`` module. If you need to use a
-different version, for example 5.3.0, you would follow up with ``module swap gcc
-gcc/5.3.0``. At this point you may invoke the compiler wrappers and they will
-correctly use Cray's libraries and tools in conjunction with GCC.
+and load the default version of the ``gcc`` module; at the time of writing, this
+is GCC 9.3.0. If you need to use a different version of GCC, for example 8.1.0,
+you would follow up with ``module swap gcc gcc/8.1.0``. At this point you may 
+invoke the compiler wrappers and they will correctly use Cray's libraries and 
+tools in conjunction with GCC 8.1.0.
 
 When choosing the programming environment, a big factor will likely be which
 compilers you have previously used for your code's development. The Cray Fortran
@@ -72,8 +83,13 @@ the Cray C and C++ compilers provided on ARCHER2 are new versions that are now
 derived from Clang. The AMD C/C++ and Fortran compilers are respectively derived
 from Clang and Flang. The GCC suite provides gcc and gfortran.
 
-Please note that unlike ARCHER, the Intel compilers are not available on
-ARCHER2.
+.. note::
+
+  Unlike ARCHER, the Intel compilers are not available on ARCHER2.
+
+.. note::
+
+  We will add information on the AOCC compilers when they become available.
 
 Changing the version of the development environment
 ---------------------------------------------------
@@ -108,8 +124,6 @@ good starting point for reasonable performance:
 +============+===================================================================+
 | Cray       | Default options                                                   |
 +------------+-------------------------------------------------------------------+
-| AMD        | **investigate**                                                   |
-+------------+-------------------------------------------------------------------+
 | GNU        | ``-O2 -ftree-vectorize -funroll-loops -ffast-math``               |
 +------------+-------------------------------------------------------------------+
 
@@ -123,8 +137,6 @@ flags may lead to it producing incorrect output.
 | Compilers  | Optimisation flags                                                |
 +============+===================================================================+
 | Cray       | ``-O3 -hfp3``                                                     |
-+------------+-------------------------------------------------------------------+
-| AMD        | **investigate**                                                   |
 +------------+-------------------------------------------------------------------+
 | GNU        | ``-Ofast -funroll-loops``                                         |
 +------------+-------------------------------------------------------------------+
@@ -141,10 +153,12 @@ from 4 to 8 bytes. In this case, the following flags may be used:
 +============+===================================================================+
 | Cray       | ``-O3 -hfp3``                                                     |
 +------------+-------------------------------------------------------------------+
-| AMD        | **investigate**                                                   |
-+------------+-------------------------------------------------------------------+
 | GNU        | ``-freal-4-real-8 -finteger-4-integer-8``                         |
 +------------+-------------------------------------------------------------------+
+
+.. note::
+
+  We will add information on the AOCC compilers when they become available.
 
 Linking on ARCHER2
 ------------------
@@ -196,17 +210,25 @@ Debugging tools
 
 The following debugging tools are available on ARCHER2:
 
-* **gdb4hpc** is a command-line debugging tool provided by Cray. It works similarly to
-  [gdb](https://www.gnu.org/software/gdb/), but allows the user to debug multiple parallel processes
-  without multiple windows. gdb4hpc can be used to investigate deadlocked code, segfaults, and other
-  errors for C/C++ and Fortran code. Users can single-step code and focus on specific processes groups
-  to help identify unexpected code behavior. (text from [ALCF](https://www.alcf.anl.gov/support-center/theta/gdb)).
-* **valgrind4hpc** is a parallel memory debugging tool that aids in detection of memory leaks and
-  errors in parallel applications. It aggregates like errors across processes and threads to simply
-  debugging of parallel appliciations.
-* **STAT** generate merged stack traces for parallel applications. Also has visualisation tools.
-* **ATP** scalable core file and backtrace analysis when parallel programs crash.
-* **CCDB** Cray Comparative Debugger. Compare two versions of code side-by-side to analyse differences.
+* **gdb4hpc** is a command-line debugging tool provided by Cray. It works 
+  similarly to [gdb](https://www.gnu.org/software/gdb/), but allows the user to
+  debug multiple parallel processes without multiple windows. gdb4hpc can be 
+  used to investigate deadlocked code, segfaults, and other errors for C/C++ and
+  Fortran code. Users can single-step code and focus on specific processes 
+  groups to help identify unexpected code behavior. (text from 
+  `ALCF: <https://www.alcf.anl.gov/support-center/theta/gdb>`_). Available via 
+  ``module load gdb4hpc``.
+* **valgrind4hpc** is a parallel memory debugging tool that aids in detection of
+  memory leaks and errors in parallel applications. It aggregates like errors 
+  across processes and threads to simplify debugging of parallel appliciations. 
+  Available via ``module load valgrind4hpc``.
+* **STAT**, the Stack Trace Analysis Tool, generates merged stack traces for 
+  parallel applications. Also has visualisation tools. Available via 
+  ``module load cray-stat``.
+* **ATP** scalable core file and backtrace analysis when parallel programs
+  crash. Output can be viewed with STAT. Available via ``module load atp``.
+* **CCDB**, the Cray Comparative Debugger. Compare two versions of code 
+  side-by-side to analyse differences. Available via ``module load cray-ccdb``.
 
 .. TODO: Add more detail on using debuggers
 
@@ -220,16 +242,16 @@ Profiling tools
 Profiling on ARCHER2 is provide through the Cray Performance Measurement and Analysis Tools (CrayPat). This has
 a number of different components:
 
-* **CrayPAT** the full-featured program analysis tool set. CrayPat in turn consists of the following major components.
-    * pat_build, the utility used to instrument programs
-    * the CrayPat run time environment, which collects the specified performance data during program execution
-    * pat_report, the first-level data analysis tool, used to produce text reports or export data for more sophisticated analysis
-* **CrayPAT-lite** a simplified and easy-to-use version of CrayPat that provides basic performance analysis information automatically, with a minimum of user interaction.
+* CrayPAT the full-featured program analysis tool set, made available via ``module load perftools``. CrayPat in turn consists of the following major components:
+   * pat_build, the utility used to instrument programs
+   * the CrayPat run time environment, which collects the specified performance data during program execution
+   * pat_report, the first-level data analysis tool, used to produce text reports or export data for more sophisticated analysis
+* **CrayPAT-lite** a simplified and easy-to-use version of CrayPat that provides basic performance analysis information automatically, with a minimum of user interaction. Available via ``perftools-lite``.
 * **Reveal** the next-generation integrated performance analysis and code optimization tool, which enables the user to correlate performance data captured during program execution directly to the original source, and identify opportunities for further optimization.
-* **Cray PAPI** components, which are support packages for those who want to access performance counters
+* **Cray PAPI** components, which are support packages for those who want to access performance counters. Available via ``module load papi``.
 * **Cray Apprentice2** the second-level data analysis tool, used to visualize, manipulate, explore, and compare sets of program performance data in a GUI environment.
 
-.. TODO: Add more detail on using debuggers
+.. TODO: Add more detail on using profilers
 
 .. note::
 
