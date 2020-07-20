@@ -119,13 +119,15 @@ The compiler options you use will depend on both the software you are building
 and also on the current stage of development. The following flags should be a
 good starting point for reasonable performance:
 
-+------------+-------------------------------------------------------------------+
-| Compilers  | Optimisation flags                                                |
-+============+===================================================================+
-| Cray       | Default options                                                   |
-+------------+-------------------------------------------------------------------+
-| GNU        | ``-O2 -ftree-vectorize -funroll-loops -ffast-math``               |
-+------------+-------------------------------------------------------------------+
++--------------+-------------------------------------------------------------------+
+| Compilers    | Optimisation flags                                                |
++==============+===================================================================+
+| Cray C/C++   | ``-O2 -ftree-vectorize -funroll-loops -ffast-math``               |
++--------------+-------------------------------------------------------------------+
+| Cray Fortran | Default options                                                   |
++--------------+-------------------------------------------------------------------+
+| GNU          | ``-O2 -ftree-vectorize -funroll-loops -ffast-math``               |
++--------------+-------------------------------------------------------------------+
 
 When you are happy with your code's performance you may wish to enable more
 aggressive optimisations; in this case you could start using the following
@@ -133,28 +135,29 @@ flags. Please note, however, that these optimisations may lead to deviations
 from IEEE/ISO specifications. If your code relies on strict adherence then these
 flags may lead to it producing incorrect output.
 
-+------------+-------------------------------------------------------------------+
-| Compilers  | Optimisation flags                                                |
-+============+===================================================================+
-| Cray       | ``-O3 -hfp3``                                                     |
-+------------+-------------------------------------------------------------------+
-| GNU        | ``-Ofast -funroll-loops``                                         |
-+------------+-------------------------------------------------------------------+
++--------------+-------------------------------------------------------------------+
+| Compilers    | Optimisation flags                                                |
++==============+===================================================================+
+| Cray C/C++   | ``-Ofast -funroll-loops``                                         |
++--------------+-------------------------------------------------------------------+
+| Cray Fortran | ``-O3 -hfp3``                                                     |
++--------------+-------------------------------------------------------------------+
+| GNU          | ``-Ofast -funroll-loops``                                         |
++--------------+-------------------------------------------------------------------+
 
-Vectorisation is enabled by the Cray compilers at ``-O1`` and above, by the AMD
-compilers at **find out** and above, and by the GNU compilers at ``-O3`` and
-above or when using ``-ftree-vectorize``.
+Vectorisation is enabled by the Cray compilers at ``-O1`` and above and by the GNU 
+compilers at ``-O3`` and above or when using ``-ftree-vectorize``.
 
 You may wish to promote default ``real`` and ``integer`` types in Fortran codes
 from 4 to 8 bytes. In this case, the following flags may be used:
 
-+------------+-------------------------------------------------------------------+
-| Compiler   | Fortran ``real`` and ``integer`` promotion flags                  |
-+============+===================================================================+
-| Cray       | ``-O3 -hfp3``                                                     |
-+------------+-------------------------------------------------------------------+
-| GNU        | ``-freal-4-real-8 -finteger-4-integer-8``                         |
-+------------+-------------------------------------------------------------------+
++--------------+-------------------------------------------------------------------+
+| Compiler     | Fortran ``real`` and ``integer`` promotion flags                  |
++==============+===================================================================+
+| Cray Fortran | ``-s real64 -s integer64``                                        |
++--------------+-------------------------------------------------------------------+
+| GNU          | ``-freal-4-real-8 -finteger-4-integer-8``                         |
++--------------+-------------------------------------------------------------------+
 
 .. note::
 
