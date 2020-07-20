@@ -211,24 +211,42 @@ Debugging tools
 The following debugging tools are available on ARCHER2:
 
 * **gdb4hpc** is a command-line debugging tool provided by Cray. It works 
-  similarly to [gdb](https://www.gnu.org/software/gdb/), but allows the user to
+  similarly to `gdb <https://www.gnu.org/software/gdb/>`_, but allows the user to
   debug multiple parallel processes without multiple windows. gdb4hpc can be 
   used to investigate deadlocked code, segfaults, and other errors for C/C++ and
-  Fortran code. Users can single-step code and focus on specific processes 
-  groups to help identify unexpected code behavior. (text from 
-  `ALCF: <https://www.alcf.anl.gov/support-center/theta/gdb>`_). Available via 
+  Fortran code. Users can single-step code and focus on specific process 
+  groups to help identify unexpected code behavior (text from 
+  `ALCF <https://www.alcf.anl.gov/support-center/theta/gdb>`_). Available via 
   ``module load gdb4hpc``.
 * **valgrind4hpc** is a parallel memory debugging tool that aids in detection of
   memory leaks and errors in parallel applications. It aggregates like errors 
   across processes and threads to simplify debugging of parallel appliciations. 
   Available via ``module load valgrind4hpc``.
 * **STAT**, the Stack Trace Analysis Tool, generates merged stack traces for 
-  parallel applications. Also has visualisation tools. Available via 
+  parallel applications. It also provides visualisation tools. Available via 
   ``module load cray-stat``.
-* **ATP** scalable core file and backtrace analysis when parallel programs
-  crash. Output can be viewed with STAT. Available via ``module load atp``.
-* **CCDB**, the Cray Comparative Debugger. Compare two versions of code 
-  side-by-side to analyse differences. Available via ``module load cray-ccdb``.
+* **ATP**, Abnormal Termiation Processing, offers scalable core file and
+  backtrace analysis when parallel programs crash. Output can be viewed with
+  STAT. Available via ``module load atp``.
+* **CCDB**, the Cray Comparative Debugger, allows you to compare two versions
+  of code side-by-side to analyse differences. Available via 
+  ``module load cray-ccdb``.
+
+A quick way to start examining the cause of unexpected program termination is to
+use ATP. It is enabled simply by placing the following two commands in your
+batch script before the executable is run::
+
+  module load atp
+  export ATP_ENABLED=1
+
+ATP will merge the stack traces into a single file, ``atpMergedBT.dot``, which
+can then be viewed with STAT's ``stat-view`` from the ``cray-stat`` module. For
+jobs which seemingly become stuck but which fail to crash, you may instead want
+to use STAT itself to perform a stack trace while the program is still running.
+
+For more information on debugging parallel codes, see the documentation
+at :doc:`ARCHER2 User and Best Practice Guide - Debugging
+<../user-guide/debug>`.
 
 .. TODO: Add more detail on using debuggers
 
@@ -239,17 +257,55 @@ The following debugging tools are available on ARCHER2:
 Profiling tools
 ---------------
 
-Profiling on ARCHER2 is provide through the Cray Performance Measurement and Analysis Tools (CrayPat). This has
-a number of different components:
+Profiling on ARCHER2 is provided through the Cray Performance Measurement and
+Analysis Tools (CrayPAT). This has a number of different components:
 
-* CrayPAT the full-featured program analysis tool set, made available via ``module load perftools``. CrayPat in turn consists of the following major components:
-   * pat_build, the utility used to instrument programs
-   * the CrayPat run time environment, which collects the specified performance data during program execution
-   * pat_report, the first-level data analysis tool, used to produce text reports or export data for more sophisticated analysis
-* **CrayPAT-lite** a simplified and easy-to-use version of CrayPat that provides basic performance analysis information automatically, with a minimum of user interaction. Available via ``perftools-lite``.
-* **Reveal** the next-generation integrated performance analysis and code optimization tool, which enables the user to correlate performance data captured during program execution directly to the original source, and identify opportunities for further optimization.
-* **Cray PAPI** components, which are support packages for those who want to access performance counters. Available via ``module load papi``.
-* **Cray Apprentice2** the second-level data analysis tool, used to visualize, manipulate, explore, and compare sets of program performance data in a GUI environment.
+* **CrayPAT** the full-featured program analysis tool set. CrayPAT consists of
+  pat_build, the utility used to instrument programs, the CrayPat run time
+  environment, which collects the specified performance data during program
+  execution, and pat_report, the first-level data analysis tool, used to produce
+  text reports or export data for more sophisticated analysis
+* **CrayPAT-lite** a simplified and easy-to-use version of CrayPAT that provides
+  basic performance analysis information automatically, with a minimum of user
+  interaction.
+* **Reveal** the next-generation integrated performance analysis and code 
+  optimization tool, which enables the user to correlate performance data 
+  captured during program execution directly to the original source, and 
+  identify opportunities for further optimization.
+* **Cray PAPI** components, which are support packages for those who want to 
+  access performance counters.
+* **Cray Apprentice2** the second-level data analysis tool, used to visualize, 
+  manipulate, explore, and compare sets of program performance data in a GUI 
+  environment.
+
+The above tools are made available for use by firstly loading the
+``perftools-base`` module followed by either ``perftools`` (for CrayPAT, Reveal
+and Apprentice2) or one of the ``perftools-lite`` modules.
+
+The simplest way to get started profiling your code is with CrayPAT-lite. For
+example, to sample a run of a code you would load the ``perftools-base`` and
+``perftools-lite`` modules, and then compile (you will receive a message that
+the executable is being instrumented). Performing a batch run as usual with this
+executable will produce a directory such as ``my_prog+74653-2s`` which can be
+passed to ``pat_report`` to view the results. In this example, 
+
+::
+
+  pat_report -O calltree+src my_prog+74653-2s
+
+will produce a report containing the call tree.
+You can view available report keywords to be provided to the ``-O`` option by
+running ``pat_report -O -h``. The available ``perftools-lite`` modules are:
+
+* ``perftools-lite``, instrumenting a basic sampling experiment.
+* ``perftools-lite-events``, instrumenting a tracing experiment.
+* ``perftools-lite-gpu``, instrumenting OpenACC and OpenMP 4 use of GPUs.
+* ``perftools-lite-hbm``, instrumenting for memory bandwidth usage.
+* ``perftools-lite-loops``, instrumenting a loop work estimate experiment.
+
+For more information on profiling parallel codes, see the documentation
+at :doc:`ARCHER2 User and Best Practice Guide - Profiling
+<../user-guide/profile>`.
 
 .. TODO: Add more detail on using profilers
 
