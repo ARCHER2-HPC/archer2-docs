@@ -91,26 +91,28 @@ from Clang and Flang. The GCC suite provides gcc and gfortran.
 
   We will add information on the AOCC compilers when they become available.
 
-Changing the version of the development environment
----------------------------------------------------
+.. TODO: Possibly - uncomment the following section if CDT modules become available.
 
-The programming environment on ARCHER2, consisting of the compilers and
-libraries, are versioned together under the Cray Developer Toolkit (CDT).
-Software comprising the CDT will be updated over time. If you wish, you may
-choose to use a given version over the default by loading the appropriate
-module, e.g. for CDT 18.12::
+.. Changing the version of the development environment
+.. ---------------------------------------------------
 
-  module load cdt/18.12
+.. The programming environment on ARCHER2, consisting of the compilers and
+.. libraries, are versioned together under the Cray Developer Toolkit (CDT).
+.. Software comprising the CDT will be updated over time. If you wish, you may
+.. choose to use a given version over the default by loading the appropriate
+.. module, e.g. for CDT 18.12::
 
-A given CDT module will load those versions of the following software that
-together make it up:
+..  module load cdt/18.12
 
-* Cray ATP (Abnormal Termination Processing)
-* Cray LibSci
-* Cray MPT (Message Passing Toolkit, providing MPI)
-* Cray PMI (Process Manager Interface Library)
-* The Cray Programming Environment
-* The current compiler (dependent on which ``PrgEnv`` is active)
+.. A given CDT module will load those versions of the following software that
+.. together make it up:
+
+.. * Cray ATP (Abnormal Termination Processing)
+.. * Cray LibSci
+.. * Cray MPT (Message Passing Toolkit, providing MPI)
+.. * Cray PMI (Process Manager Interface Library)
+.. * The Cray Programming Environment
+.. * The current compiler (dependent on which ``PrgEnv`` is active)
 
 Useful compiler options
 -----------------------
@@ -122,7 +124,7 @@ good starting point for reasonable performance:
 +--------------+-------------------------------------------------------------------+
 | Compilers    | Optimisation flags                                                |
 +==============+===================================================================+
-| Cray C/C++   | ``-O2 -ftree-vectorize -funroll-loops -ffast-math``               |
+| Cray C/C++   | ``-O2 -funroll-loops -ffast-math``               |
 +--------------+-------------------------------------------------------------------+
 | Cray Fortran | Default options                                                   |
 +--------------+-------------------------------------------------------------------+
@@ -145,8 +147,9 @@ flags may lead to it producing incorrect output.
 | GNU          | ``-Ofast -funroll-loops``                                         |
 +--------------+-------------------------------------------------------------------+
 
-Vectorisation is enabled by the Cray compilers at ``-O1`` and above and by the GNU 
-compilers at ``-O3`` and above or when using ``-ftree-vectorize``.
+Vectorisation is enabled by the Cray Fortran compiler at ``-O1`` and above, by
+Cray C and C++ at ``-O2`` and above or when using ``-ftree-vectorize``, and by
+the GNU compilers at ``-O3`` and above or when using ``-ftree-vectorize``.
 
 You may wish to promote default ``real`` and ``integer`` types in Fortran codes
 from 4 to 8 bytes. In this case, the following flags may be used:
@@ -166,23 +169,9 @@ from 4 to 8 bytes. In this case, the following flags may be used:
 Linking on ARCHER2
 ------------------
 
-Executables on ARCHER2 will, by default, link dynamically. This is in contrast to
-ARCHER where the default was to build statically.
-
-Passing the ``-static`` or ``-dynamic`` flags to the wrappers will set that
-behaviour. Alternatively, the behaviour of the compiler wrappers for your
-current login shell can be changed by setting the ``CRAYPE_LINK_TYPE``
-environment variable as follows::
-
-  export CRAYPE_LINK_TYPE=static
-
-to build static executables from now on, or
-
-::
-
-  export CRAYPE_LINK_TYPE=dynamic
-
-to return to the default dynamic behaviour.
+Executables on ARCHER2 link dynamically, and the Cray Programming Environment
+does not currently support static linking. This is in contrast to ARCHER where
+the default was to build statically. 
 
 Using RPATHs to link
 ^^^^^^^^^^^^^^^^^^^^
