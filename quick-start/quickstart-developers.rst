@@ -12,11 +12,10 @@ that you are familiar with the material in :doc:`quickstart-users`.
 Compiler wrappers
 -----------------
 
-When compiling code on ARCHER2, it is recommended that you make use of the Cray
-compiler wrappers. These ensure that the correct libraries and headers (for
-example, MPI or Cray LibSci) will be used during the compilation and
-linking stages. These wrappers should be accessed by providing the following compiler
-names:
+When compiling code on ARCHER2, you should make use of the Cray compiler
+wrappers. These ensure that the correct libraries and headers (for example, MPI
+or Cray LibSci) will be used during the compilation and linking stages. These
+wrappers should be accessed by providing the following compiler names:
 
 +----------+--------------+
 | Language | Wrapper name |
@@ -46,16 +45,15 @@ to the wrapper when using it.
 Programming environments
 ------------------------
 
-On login to ARCHER2, the ``PrgEnv-cray`` module will be loaded, as will a ``cce``
-module. The latter makes available Cray's compilers from the Cray Compiling
-Environment (CCE), while the former provides the correct wrappers and support to
-use them. The GNU Compiler Collection (GCC) and the AMD Optimizing Compiler
-Collection (AOCC) compilers are also available. To make use of any of the three
-Programming Environments, simply swap to the correct ``PrgEnv`` module. After
-doing so the compiler wrappers (``cc``, ``CC`` and ``ftn``) will correctly call
-the compilers from the new suite. The default version of the corresponding 
-compiler suite will also be loaded, but you may swap to another version if you 
-wish.
+On login to ARCHER2, the ``PrgEnv-cray`` module will be loaded, as will a
+``cce`` module. The latter makes available Cray's compilers from the Cray
+Compiling Environment (CCE), while the former provides the correct wrappers and
+support to use them. The GNU Compiler Collection (GCC) is also available. To make
+use of any Programming Environment, simply swap to the correct ``PrgEnv``
+module. After doing so the compiler wrappers (``cc``, ``CC`` and ``ftn``) will
+correctly call the compilers from the new suite. The default version of the
+corresponding compiler suite will also be loaded, but you may swap to another
+available version if you wish.
 
 The following table summarises the suites and associated programming environments.
 
@@ -80,8 +78,7 @@ When choosing the programming environment, a big factor will likely be which
 compilers you have previously used for your code's development. The Cray Fortran
 compiler is similar to the compiler you may be familiar with from ARCHER, while
 the Cray C and C++ compilers provided on ARCHER2 are new versions that are now
-derived from Clang. The AMD C/C++ and Fortran compilers are respectively derived
-from Clang and Flang. The GCC suite provides gcc and gfortran.
+derived from Clang. The GCC suite provides gcc and gfortran.
 
 .. note::
 
@@ -124,11 +121,11 @@ good starting point for reasonable performance:
 +--------------+-------------------------------------------------------------------+
 | Compilers    | Optimisation flags                                                |
 +==============+===================================================================+
-| Cray C/C++   | ``-O2 -funroll-loops -ffast-math``               |
+| Cray C/C++   | ``-O2 -funroll-loops -ffast-math``                                |
 +--------------+-------------------------------------------------------------------+
 | Cray Fortran | Default options                                                   |
 +--------------+-------------------------------------------------------------------+
-| GNU          | ``-O2 -ftree-vectorize -funroll-loops -ffast-math``               |
+| GCC          | ``-O2 -ftree-vectorize -funroll-loops -ffast-math``               |
 +--------------+-------------------------------------------------------------------+
 
 When you are happy with your code's performance you may wish to enable more
@@ -144,12 +141,12 @@ flags may lead to it producing incorrect output.
 +--------------+-------------------------------------------------------------------+
 | Cray Fortran | ``-O3 -hfp3``                                                     |
 +--------------+-------------------------------------------------------------------+
-| GNU          | ``-Ofast -funroll-loops``                                         |
+| GCC          | ``-Ofast -funroll-loops``                                         |
 +--------------+-------------------------------------------------------------------+
 
 Vectorisation is enabled by the Cray Fortran compiler at ``-O1`` and above, by
 Cray C and C++ at ``-O2`` and above or when using ``-ftree-vectorize``, and by
-the GNU compilers at ``-O3`` and above or when using ``-ftree-vectorize``.
+the GCC compilers at ``-O3`` and above or when using ``-ftree-vectorize``.
 
 You may wish to promote default ``real`` and ``integer`` types in Fortran codes
 from 4 to 8 bytes. In this case, the following flags may be used:
@@ -159,8 +156,19 @@ from 4 to 8 bytes. In this case, the following flags may be used:
 +==============+===================================================================+
 | Cray Fortran | ``-s real64 -s integer64``                                        |
 +--------------+-------------------------------------------------------------------+
-| GNU          | ``-freal-4-real-8 -finteger-4-integer-8``                         |
+| gfortran     | ``-freal-4-real-8 -finteger-4-integer-8``                         |
 +--------------+-------------------------------------------------------------------+
+
+More documentation on the compilers is available through ``man``. The pages to
+read are accessed as follow:
+
++-----------------+-----------------+-----------------+------------------+
+| Compiler suite  | C               | C++             | Fortran          |
++=================+=================+=================+==================+
+| Cray            | ``man craycc``  | ``man crayCC``  | ``man crayftn``  |
++-----------------+-----------------+-----------------+------------------+
+| GNU             | ``man gcc``     | ``man g++``     | ``man gfortran`` |
++-----------------+-----------------+-----------------+------------------+
 
 .. note::
 
