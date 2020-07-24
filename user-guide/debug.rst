@@ -17,7 +17,7 @@ The following debugging tools are available on ARCHER2:
   errors in parallel applications. It aggregates like errors across processes and threads to simply
   debugging of parallel appliciations.
 * `STAT`_ generate merged stack traces for parallel applications. Also has visualisation tools.
-* **ATP** scalable core file and backtrace analysis when parallel programs crash.
+* **ATP** scalable core file and backtrace analysis when parallel programs crash. Note that this is not currently working on ARCHER2.
 * **CCDB** Cray Comparative Debugger. Compare two versions of code side-by-side to analyse differences.
 
 gdb4hpc
@@ -28,11 +28,11 @@ The GNU Debugger for HPC (gdb4hpc) is a GDB-based debugger used to debug applica
 Setting up for gdb4hpc
 ~~~~~~~~~~~~~~~~~~~~~~
 
-For your executable to be compatible with gdb4hpc, you will need to compile your code with the debugging flag ``-g``:
+For your executable to be compatible with gdb4hpc, it will need to be coded with MPI. You will also need to compile your code with the debugging flag ``-g``:
 
 ::
 
-    cc -g mu_program.c -o my_executable
+    cc -g my_program.c -o my_exe
     
 To use the gdb4hpc tool, you need to request an allocation interactive session:
 
@@ -51,6 +51,68 @@ Once you've launched your interactive session and navigated to the ``/work`` dir
 ::
 
     module load gdb4hpc
+    
+Launching through gdb4hpc
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Launch ``gdb4hpc``:
+
+::
+    
+    gdb4hpc
+    
+You will get some information about this version of the program and, eventually, you will get a command prompt:
+
+::
+
+  gdb4hpc 4.5 - Cray Line Mode Parallel Debugger
+  With Cray Comparative Debugging Technology.
+  Copyright 2007-2019 Cray Inc. All Rights Reserved.
+  Copyright 1996-2016 University of Queensland. All Rights Reserved.
+  Type "help" for a list of commands.
+  Type "help <cmd>" for detailed help about a command.
+  dbg all>
+  
+We will use ``launch`` to begin a multi-process application within gdb4hpc. Consider that we are wanting to test an application called ``my_exe``, and that we want this to be launched across all 256 processes in two nodes. We would launch this in gdb4hpc by running:
+
+::
+
+    dbg all> launch --launcher-args="--tasks-per-node=128 --cpus-per-task=1 --exclusive" $my_prog{256} ./my_ex
+    
+The default launcher is ``srun`` and the ``--launcher-args="..."`` allows you to set launcher flags for ``srun``. The variable ``$my_prog`` is a dummy name for the program being launched -- you could use whatever name you want for it. The number in the brackets ``{256}`` is the number of processes over which you want to launch the program, it's 256 here, but you could use any number (make sure to update your ``salloc`` submission if you want to use more). You should try to run this on as few processors as possible -- the more you use, the longer it will take for gdb4hpc to load the program.
+
+Once the program is launched, gdb4hpc will load up the program and begin to run it. You will get output to screen something that looks like:
+
+::
+
+    Starting application, please wait...
+    Creating MRNet communication network...
+    Waiting for debug servers to attach to MRNet communications network...
+    Timeout in 400 seconds. Please wait for the attach to complete.
+    Number of dbgsrvs connected: [0];  Timeout Counter: [1]
+    Number of dbgsrvs connected: [0];  Timeout Counter: [2]
+    Number of dbgsrvs connected: [0];  Timeout Counter: [3]
+    Number of dbgsrvs connected: [1];  Timeout Counter: [0]
+    Number of dbgsrvs connected: [1];  Timeout Counter: [1]
+    Number of dbgsrvs connected: [2];  Timeout Counter: [0]
+    Finalizing setup...
+    Launch complete.
+    my_prog{0..255}: Initial breakpoint, main at /PATH/TO/my_program.c:34
+    
+The line number at which the initial breakpoint is made (in the above example, line 34) corresponds to the line number at which MPI is initialised. You will not be able to see any parts of the code outside of the MPI region of a code with gdb4hpc.
+
+Once the code is loaded, you can use various commands to move through your code. The following lists and describes some of the most useful ones:
+
+  * ``help`` -- Lists all gdb4hpc commands. You can run ``help COMMAND_NAME`` to learn more about a specific command (*e.g.* ``help launch`` will tell you about the launch command
+  * ``list`` -- Will show the current line of code and the 9 lines following. Repeeated use of ``list`` will move you down the code in ten-line chunks.
+  * ``next`` -- Will jump to the next step in the program for each process and output which line of code each process is one. It will not enter subroutines. Note that there is no reverse-step in gdb4hpc.
+  * ``step`` -- Like ``next``, but this will step into subroutines.
+  * ``up`` -- Go up one level in the program (*e.g.* from a subroutine back to main).
+  * ``print var`` -- Prints the value of variable ``var`` at this point in the code.
+  * ``watch var`` -- Like print, but will print whenever a variable changes value.
+  * ``quit`` -- Exits gdb4hpc.
+  
+Remember to exit the interactive session once you are done debugging.
     
 Attaching with gdb4hpc
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -143,15 +205,6 @@ When you are finished using ``gbd4hpc``, simply run:
   dbg all> quit
   
 Do not forget to exit your interactive session.
-
-Launching through gdb4hpc
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-In your interactive session, launch gdb4hpc:
-
-::
-
-    gdb4hpc
     
 STAT
 ----
@@ -255,3 +308,5 @@ This produces a graph displaying all the different places within the program tha
 ..note::
 
   To see the graph, you will need to have exported your X display.
+
+Remember to exit the interactive session once you are done debugging.
