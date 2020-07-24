@@ -213,14 +213,11 @@ Debugging tools
 
 The following debugging tools are available on ARCHER2:
 
-* **gdb4hpc** is a command-line debugging tool provided by Cray. It works 
-  similarly to `gdb <https://www.gnu.org/software/gdb/>`_, but allows the user to
-  debug multiple parallel processes without multiple windows. gdb4hpc can be 
-  used to investigate deadlocked code, segfaults, and other errors for C/C++ and
-  Fortran code. Users can single-step code and focus on specific process 
-  groups to help identify unexpected code behavior (text from 
-  `ALCF <https://www.alcf.anl.gov/support-center/theta/gdb>`_). Available via 
-  ``module load gdb4hpc``.
+* **gdb4hpc** is a command-line tool working similarly to `gdb
+  <https://www.gnu.org/software/gdb/>`_ that allows users to debug parallel
+  programs. It can launch parallel programs or attach to ones already running and
+  allows the user to step through the execution to identify the causes of any
+  unexpected behaviour. Available via ``module load gdb4hpc``.
 * **valgrind4hpc** is a parallel memory debugging tool that aids in detection of
   memory leaks and errors in parallel applications. It aggregates like errors 
   across processes and threads to simplify debugging of parallel appliciations. 
@@ -233,19 +230,33 @@ The following debugging tools are available on ARCHER2:
   STAT. Available via ``module load atp``.
 * **CCDB**, the Cray Comparative Debugger, allows you to compare two versions
   of code side-by-side to analyse differences. Available via 
-  ``module load cray-ccdb``.
+  ``module load cray-ccdb`` and used in conjunction with gdb4hpc.
 
-A quick way to start examining the cause of unexpected program termination is to
-use ATP. It is enabled simply by placing the following two commands in your
-batch script before the executable is run::
+To get started debugging on ARCHER2, you might like to use gdb4hpc. You should
+first of all compile your code using the `-g` flag to enable debugging symbols.
+To debug in a parallel run, start an interactive job. For example,
 
-  module load atp
-  export ATP_ENABLED=1
+::
 
-ATP will merge the stack traces into a single file, ``atpMergedBT.dot``, which
-can then be viewed with STAT's ``stat-view`` from the ``cray-stat`` module. For
-jobs which seemingly become stuck but which fail to crash, you may instead want
-to use STAT itself to perform a stack trace while the program is still running.
+  salloc --nodes=1 --tasks-per-node=128 --cpus-per-task=1 --time=1:00:00 -account=ENTER_YOUR_BUDGET_CODE_HERE
+
+will start an interactive job using all 128 cores on one node, 1 core per task,
+for one hour at most, charging usage to your budget. When the interactive
+session has started, you can load and start gdb4hpc by running
+
+::
+
+  module load gdb4hpc
+  gdb4hpc
+
+Once inside gdb4hpc, you can start your program's execution with the ``launch``
+command::
+
+  dbg all> launch $a{128} ./cs_solver
+
+You may then ``step`` through the code's execution, ``continue`` to breakpoints
+that you set with ``break``, ``print`` the values of variables at these points,
+and perform a ``backtrace`` on the stack if the program crashes.
 
 For more information on debugging parallel codes, see the documentation
 at :doc:`ARCHER2 User and Best Practice Guide - Debugging
