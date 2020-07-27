@@ -230,18 +230,8 @@ The following debugging tools are available on ARCHER2:
   ``module load cray-ccdb`` and used in conjunction with gdb4hpc.
 
 To get started debugging on ARCHER2, you might like to use gdb4hpc. You should
-first of all compile your code using the `-g` flag to enable debugging symbols.
-To debug in a parallel run, start an interactive job. For example,
-
-::
-
-  salloc --nodes=1 --tasks-per-node=128 --cpus-per-task=1 --time=1:00:00 -account=ENTER_YOUR_BUDGET_CODE_HERE
-
-will start an interactive job using all 128 cores on one node, 1 core per task,
-for one hour at most, charging usage to your budget. When the interactive
-session has started, you can load and start gdb4hpc by running
-
-::
+first of all compile your code using the ``-g`` flag to enable debugging symbols.
+Once compiled, load the gdb4hpc module and start it::
 
   module load gdb4hpc
   gdb4hpc
@@ -249,11 +239,16 @@ session has started, you can load and start gdb4hpc by running
 Once inside gdb4hpc, you can start your program's execution with the ``launch``
 command::
 
-  dbg all> launch $a{128} ./cs_solver
+  dbg all> launch $my_prog{128} ./prog
 
-You may then ``step`` through the code's execution, ``continue`` to breakpoints
-that you set with ``break``, ``print`` the values of variables at these points,
-and perform a ``backtrace`` on the stack if the program crashes.
+In this example, a job called ``my_prog`` will be launched to run the executable
+file ``prog`` over 128 cores on a compute node. If you run ``squeue`` in another
+terminal you will be able to see it running. Inside gdb4hpc you may then
+``step`` through the code's execution, ``continue`` to breakpoints that you set
+with ``break``, ``print`` the values of variables at these points, and perform a
+``backtrace`` on the stack if the program crashes. Debugging jobs will end when
+you exit gdb4hpc, or you can end them yourself by running, in this example,
+``release $my_prog``.
 
 For more information on debugging parallel codes, see the documentation
 at :doc:`ARCHER2 User and Best Practice Guide - Debugging
