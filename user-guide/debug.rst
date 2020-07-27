@@ -13,7 +13,7 @@ The following debugging tools are available on ARCHER2:
   without multiple windows. gdb4hpc can be used to investigate deadlocked code, segfaults, and other
   errors for C/C++ and Fortran code. Users can single-step code and focus on specific processes groups
   to help identify unexpected code behavior. (text from `ALCF<https://www.alcf.anl.gov/support-center/theta/gdb>`_).
-* **valgrind4hpc** is a parallel memory debugging tool that aids in detection of memory leaks and
+* `valgrind4hpc`_ is a parallel memory debugging tool that aids in detection of memory leaks and
   errors in parallel applications. It aggregates like errors across processes and threads to simply
   debugging of parallel appliciations.
 * `STAT`_ generate merged stack traces for parallel applications. Also has visualisation tools.
@@ -205,6 +205,61 @@ When you are finished using ``gbd4hpc``, simply run:
   dbg all> quit
   
 Do not forget to exit your interactive session.
+
+valgrind4hpc
+------------
+
+Valgrind4hpc is a Valgrind-based debugging tool to aid in the detection of  memory  leaks  and  errors  in  parallel applications. Valgrind4hpc aggregates any duplicate messages  across  ranks  to  help  provide  an understandable picture of program behavior. Valgrind4hpc manages starting and redirecting output from many copies of  Valgrind,  as  well  as deduplicating  and filtering Valgrind messages.  If your program can be debugged with Valgrind, it can be debugged with valgrind4hpc.
+
+The valgrind4hpc module enables the use of standard valgrind as well as the valgrind4hpc version more suitable to parallel programs.
+
+Using valgrind
+~~~~~~~~~~~~~~
+
+First, load ``valgrind4hpc``:
+
+::
+
+    module load valgrind4hpc
+    
+Next, run your executable through valgrind:
+
+::
+
+    valgrind --tool=memcheck --leak-check=yes my_executable
+    
+The log outputs to screen. The `ERROR SUMMARY` will tell you whether, and how many, memory errors there are in your script. Furthermore, if you compile your code using the ``-g`` debugging flag (e.g. ``gcc -g my_progam.c -o my_executable.c``), the log will point out the code lines where the error occurs.
+
+Valgrind also includes a tool called Massif that can be used to give insight into the memory usage of your program. It takes regular snapshots and outputs this data into a single file, which can be visualised to show the total amount of memory used as a function of time. This shows when peaks and bottlenecks occur and allows you to identify which data structures in your code are responsible for the largest memory usage of your program.
+
+Documentation explaining how to use Massif is available at the `official Massif manual<https://www.valgrind.org/docs/manual/ms-manual.html>`_. In short, you should run your executable as follows:
+
+::
+
+    valgrind --tool=massif my_executable
+    
+he memory profiling data will be output into a file called ``massif.out.pid``, where pid is the runtime process ID of your program. A custom filename can be chosen using the ``--massif-out-file option``, as follows:
+
+::
+
+    valgrind --tool=massif --massif-out-file=optional_filename.out my_executable
+
+The output file contains raw profiling statistics. To view a summary including a graphical plot of memory usage over time, use the ``ms_print`` command as follows:
+
+::
+
+    ms_print massif.out.12345
+
+or, to save to a file:
+
+::
+
+    ms_print massif.out.12345 > massis.analysis.12345
+
+This will show total memory usage over time as well as a breakdown of the top data structures contributing to memory usage at each snapshot where there has been a significant allocation or deallocation of memory. 
+
+Using vlagrind4hpc
+~~~~~~~~~~~~~~~~~~
     
 STAT
 ----
