@@ -17,8 +17,8 @@ The following debugging tools are available on ARCHER2:
   errors in parallel applications. It aggregates like errors across processes and threads to simply
   debugging of parallel appliciations.
 * `STAT`_ generate merged stack traces for parallel applications. Also has visualisation tools.
-* **ATP** scalable core file and backtrace analysis when parallel programs crash. Note that this is not currently working on ARCHER2.
-* **CCDB** Cray Comparative Debugger. Compare two versions of code side-by-side to analyse differences.
+* `ATP`_ scalable core file and backtrace analysis when parallel programs crash. Note that this is not currently working on ARCHER2.
+* `CCDB`_ Cray Comparative Debugger. Compare two versions of code side-by-side to analyse differences.
 
 gdb4hpc
 -------
@@ -270,30 +270,21 @@ STAT will attach to a running program and query that program to find out where a
 
 Using STAT on ARCHER2
 ~~~~~~~~~~~~~~~~~~~~~
-To use the stat tool, you need to request an allocation session:
 
-::
-
-    salloc --nodes=2 --tasks-per-node=128 --cpus-per-task=1 --time=01:00:00 --account=[budget code]
-    
-You will know your session has launched when getting the message:
-
-::
-
-    salloc: Granted job allocation 925
-    
-Once you've launched your interactive session and navigated to the ``/work`` directory where you will run your code. You will need to load the ``cray-stat`` module:
+On the login node, load the ``cray-stat`` module:
 
 ::
 
     module load cray-stat
     
-Then, launch your job as normal, but as a background task (by adding an ``&`` at the end of the command). For example, if you are running an executable called ``my_exe`` using 256 processes, you would run:
+Then, launch your job using ``srun`` as a background task (by adding an ``&`` at the end of the command). For example, if you are running an executable called ``my_exe`` using 256 processes, you would run:
 
 ::
 
-    srun -n 256 ./my_exe &
+    srun -n=256 --nodes=2 --tasks-per-node=128 --cpus-per-task=1 --time=01:00:00 --account=[budget code] ./my_exe &
     
+Note that this example has set the job time limit to 1 hour -- if you need longer, change the ``--time`` command.
+
 You will need the Program ID (PID) of the job you have just launched -- the PID is printed to sreen upon launch, or you can get it by running:
 
 ::
@@ -345,14 +336,13 @@ You will get an output that looks like this:
     
     Results written to $PATH_TO_RUN_DIRECTORY/stat_results/my_exe.0000
 
-Once STAT is finished, you can kill the srun job and exit the salloc job using the following commands (again replacing PID with the first srun ID):
+Once STAT is finished, you can kill the srun job using `scancel` (replacing JID with the job ID of the job you just launched):
 
 ::
-
-    kill -9 PID
-    exit
     
-From the login node, you can view the results that STAT has produced using the following command (note that "my_exe" will need to be replaced with the name of the executable you ran):
+    scancel JID
+    
+You can view the results that STAT has produced using the following command (note that "my_exe" will need to be replaced with the name of the executable you ran):
 
 ::
 
@@ -360,8 +350,43 @@ From the login node, you can view the results that STAT has produced using the f
     
 This produces a graph displaying all the different places within the program that the parallel processes were when you queried them.
 
-..note::
+.. note::
 
-  To see the graph, you will need to have exported your X display.
+  To see the graph, you will need to have exported your X display when logging in.
 
-Remember to exit the interactive session once you are done debugging.
+ATP
+---
+  
+To enable ATP you should load the atp module and set the "ATP_ENABLED" environment variable to 1 on the login node:
+
+::
+
+    module load atp
+    export ATP_ENABLED=1
+    
+Then, launch your job using ``srun`` as a background task (by adding an ``&`` at the end of the command). For example, if you are running an executable called ``my_exe`` using 256 processes, you would run:
+
+::
+
+    srun -n=256 --nodes=2 --tasks-per-node=128 --cpus-per-task=1 --time=01:00:00 --account=[budget code] ./my_exe &
+    
+ Note that this example has set the job time limit to 1 hour -- if you need longer, change the ``--time`` command.
+ 
+ Once the job has finished running, load the ``stat`` module to view the results:
+ 
+ ::
+ 
+     module load cray-stat
+     
+and view the merged stack trace using:
+
+::
+
+    stat-view atpMergedBT.dot
+    
+.. note::
+  
+  To see the graph, you will need to have exported your X display when logging in.
+
+CCDB
+----
