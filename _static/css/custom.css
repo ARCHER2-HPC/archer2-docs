@@ -26,6 +26,12 @@ footer p {
     color: #7aaed1;
 }
 
+.wy-side-nav-search .wy-dropdown>a:hover,
+.wy-side-nav-search>a:hover, .wy-side-nav-search>a:visited {
+ background:hsla(0,0%,100%,.1);
+ color: #fff
+}
+
 .rst-content dl:not(.docutils) dt {
  display:table;
  margin:6px 0;
