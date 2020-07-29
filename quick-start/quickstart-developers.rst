@@ -225,9 +225,11 @@ The following debugging tools are available on ARCHER2:
 * **ATP**, Abnormal Termiation Processing, offers scalable core file and
   backtrace analysis when parallel programs crash. Output can be viewed with
   STAT. Available via ``module load atp``.
-* **CCDB**, the Cray Comparative Debugger, allows you to compare two versions
+.. * **CCDB**, the Cray Comparative Debugger, allows you to compare two versions
   of code side-by-side to analyse differences. Available via 
   ``module load cray-ccdb`` and used in conjunction with gdb4hpc.
+
+.. TODO: Uncomment CCDB from the list above if/when it is functional.
 
 To get started debugging on ARCHER2, you might like to use gdb4hpc. You should
 first of all compile your code using the ``-g`` flag to enable debugging symbols.
