@@ -25,32 +25,9 @@ gdb4hpc
 
 The GNU Debugger for HPC (gdb4hpc) is a GDB-based debugger used to debug applications compiled with CCE, PGI, GNU, and Intel Fortran, C and C++ compilers. It allows programmers to either launch an application within it or to attach to an already-running application. Attaching to an already-running and hanging application is a quick way of understanding why the application is hanging, whereas launching an application through gdb4hpc will allow you to see your application running step-by-step, output the values of variables, and check whether the application runs as expected.
 
-Setting up for gdb4hpc
-~~~~~~~~~~~~~~~~~~~~~~
+.. note::
 
-For your executable to be compatible with gdb4hpc, it will need to be coded with MPI. You will also need to compile your code with the debugging flag ``-g``:
-
-::
-
-    cc -g my_program.c -o my_exe
-    
-To use the gdb4hpc tool, you need to request an allocation interactive session:
-
-::
-
-    salloc --nodes=2 --tasks-per-node=128 --cpus-per-task=1 --time=01:00:00 --account=[budget code]
-    
-You will know your session has launched when getting the message:
-
-::
-
-    salloc: Granted job allocation 925
-    
-Once you've launched your interactive session and navigated to the ``/work`` directory where you will run your code. You will need to load the ``gdb4hpc`` module:
-
-::
-
-    module load gdb4hpc
+  For your executable to be compatible with gdb4hpc, it will need to be coded with MPI. You will also need to compile your code with the debugging flag ``-g`` (e.g. ``cc -g my_program.c -o my_exe``).
     
 Launching through gdb4hpc
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -123,7 +100,9 @@ In your interactive session, launch your executable as a background task (by add
 
 ::
 
-    srun -n 256 ./my_exe &
+    srun -n 256 --nodes=2 --tasks-per-node=128 --cpus-per-task=1 --time=01:00:00 --account=[budget code] ./my_exe &
+    
+Make sure to replace the ``--account`` input to your budget code (e.g. if you are using bdudget t01, that part should look like ``--account=t01``).
     
 You will need to get the full job ID of the job you have just launched. To do this, run:
 
@@ -213,6 +192,11 @@ Valgrind4hpc is a Valgrind-based debugging tool to aid in the detection of  memo
 
 The valgrind4hpc module enables the use of standard valgrind as well as the valgrind4hpc version more suitable to parallel programs.
 
+
+.. warning::
+
+  There is a known issue with `valgrind4hpc`: the compiler wrappers (ftn, cc, CC) do not work while this module is loaded. To compile, you will need to unload the module (`module unload valgrind4hpc`), compile, and reload the module (`module load valrgind4hpc`).
+
 Using valgrind
 ~~~~~~~~~~~~~~
 
@@ -258,8 +242,26 @@ or, to save to a file:
 
 This will show total memory usage over time as well as a breakdown of the top data structures contributing to memory usage at each snapshot where there has been a significant allocation or deallocation of memory. 
 
-Using vlagrind4hpc
+Using valgrind4hpc
 ~~~~~~~~~~~~~~~~~~
+
+First, load ``valgrind4hpc``:
+
+::
+
+    module load valgrind4hpc
+    
+Valgrind4hpc will launch an srun job to run the executable while it profiles. To test an executable called ``my_executable`` that requires two arguments ``arg1`` and ``arg2`` on two nodes and 256 processes, run:
+
+::
+
+    valgrind4hpc --tool=memcheck --num-ranks=256 --launcher-args="--exclusive --ntasks-per-node=128 --cpus-per-task=1" my_executable -- arg1 arg2
+    
+In particular, note the ``--`` separating the executable from the arguments (this is not necessary of your executable takes no arguments). The ``--lancher-args="arguments"`` allow you to set launcher flags for ``srun``.
+
+Valgrind4hpc only supports certain tools found in valgrind. These are: memcheck, helgrind, exp-sgcheck, or drd. The ``--valgrind-args="arguments"`` allows users to use valgrind options not supported in valgrind4hpc (e.g. ``--leak-check``) -- note, however, that some of these options might interfere with valgrind4hpc.
+
+More information on valgrind4hpc can be found in the manual (``man valgrind4hpc``). 
     
 STAT
 ----
