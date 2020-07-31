@@ -15,10 +15,10 @@ The following debugging tools are available on ARCHER2:
   to help identify unexpected code behavior. (text from `ALCF<https://www.alcf.anl.gov/support-center/theta/gdb>`_).
 * `valgrind4hpc`_ is a parallel memory debugging tool that aids in detection of memory leaks and
   errors in parallel applications. It aggregates like errors across processes and threads to simply
-  debugging of parallel appliciations.
+  debugging of parallel applications.
 * `STAT`_ generate merged stack traces for parallel applications. Also has visualisation tools.
 * `ATP`_ scalable core file and backtrace analysis when parallel programs crash. Note that this is not currently working on ARCHER2.
-* `CCDB`_ Cray Comparative Debugger. Compare two versions of code side-by-side to analyse differences.
+.. * `CCDB`_ Cray Comparative Debugger. Compare two versions of code side-by-side to analyse differences.
 
 gdb4hpc
 -------
@@ -56,7 +56,7 @@ We will use ``launch`` to begin a multi-process application within gdb4hpc. Cons
 
     dbg all> launch --launcher-args="--tasks-per-node=128 --cpus-per-task=1 --exclusive" $my_prog{256} ./my_ex
     
-The default launcher is ``srun`` and the ``--launcher-args="..."`` allows you to set launcher flags for ``srun``. The variable ``$my_prog`` is a dummy name for the program being launched -- you could use whatever name you want for it. The number in the brackets ``{256}`` is the number of processes over which you want to launch the program, it's 256 here, but you could use any number (make sure to update your ``salloc`` submission if you want to use more). You should try to run this on as few processors as possible -- the more you use, the longer it will take for gdb4hpc to load the program.
+The default launcher is ``srun`` and the ``--launcher-args="..."`` allows you to set launcher flags for ``srun``. The variable ``$my_prog`` is a dummy name for the program being launched and you could use whatever name you want for it -- this will be the name of the ``srun`` job that will be run. The number in the brackets ``{256}`` is the number of processes over which the program will be executed, it's 256 here, but you could use any number. You should try to run this on as few processors as possible -- the more you use, the longer it will take for gdb4hpc to load the program.
 
 Once the program is launched, gdb4hpc will load up the program and begin to run it. You will get output to screen something that looks like:
 
@@ -81,7 +81,7 @@ The line number at which the initial breakpoint is made (in the above example, l
 Once the code is loaded, you can use various commands to move through your code. The following lists and describes some of the most useful ones:
 
   * ``help`` -- Lists all gdb4hpc commands. You can run ``help COMMAND_NAME`` to learn more about a specific command (*e.g.* ``help launch`` will tell you about the launch command
-  * ``list`` -- Will show the current line of code and the 9 lines following. Repeeated use of ``list`` will move you down the code in ten-line chunks.
+  * ``list`` -- Will show the current line of code and the 9 lines following. Repeated use of ``list`` will move you down the code in ten-line chunks.
   * ``next`` -- Will jump to the next step in the program for each process and output which line of code each process is one. It will not enter subroutines. Note that there is no reverse-step in gdb4hpc.
   * ``step`` -- Like ``next``, but this will step into subroutines.
   * ``up`` -- Go up one level in the program (*e.g.* from a subroutine back to main).
@@ -102,7 +102,7 @@ In your interactive session, launch your executable as a background task (by add
 
     srun -n 256 --nodes=2 --tasks-per-node=128 --cpus-per-task=1 --time=01:00:00 --account=[budget code] ./my_exe &
     
-Make sure to replace the ``--account`` input to your budget code (e.g. if you are using bdudget t01, that part should look like ``--account=t01``).
+Make sure to replace the ``--account`` input to your budget code (*e.g.* if you are using budget t01, that part should look like ``--account=t01``).
     
 You will need to get the full job ID of the job you have just launched. To do this, run:
 
@@ -124,7 +124,7 @@ the appropriate job id is 1051. Next, you will need to run ``sstat`` on this job
 
     sstat 1051
     
-This will output a large amount of information about this specific job. We are looking for the first number of this ouput, which should look like ``JOB_ID.##``  -- the number after the job ID is the number of slurm tasks performed in this interactive session. For our example (where ``srun`` is the first slurm task performed), the number is 1051.0.
+This will output a large amount of information about this specific job. We are looking for the first number of this output, which should look like ``JOB_ID.##``  -- the number after the job ID is the number of slurm tasks performed in this interactive session. For our example (where ``srun`` is the first slurm task performed), the number is 1051.0.
 
 Launch ``gdb4hpc``:
 
@@ -167,7 +167,7 @@ As it is attaching, gdb4hpc will output text to screen that looks like:
     Attach complete.
     Current rank location:
 
-After this, you will get an output that, amongst other things, tells you which line of your code each process is on, and what each process is doing. This can be helpful to see where the hang-up is.
+After this, you will get an output that, among other things, tells you which line of your code each process is on, and what each process is doing. This can be helpful to see where the hang-up is.
 
 If you accidentally attached to the wrong job, you can detach by running:
 
@@ -188,7 +188,7 @@ Do not forget to exit your interactive session.
 valgrind4hpc
 ------------
 
-Valgrind4hpc is a Valgrind-based debugging tool to aid in the detection of  memory  leaks  and  errors  in  parallel applications. Valgrind4hpc aggregates any duplicate messages  across  ranks  to  help  provide  an understandable picture of program behavior. Valgrind4hpc manages starting and redirecting output from many copies of  Valgrind,  as  well  as deduplicating  and filtering Valgrind messages.  If your program can be debugged with Valgrind, it can be debugged with valgrind4hpc.
+Valgrind4hpc is a Valgrind-based debugging tool to aid in the detection of  memory  leaks  and  errors  in  parallel applications. Valgrind4hpc aggregates any duplicate messages  across  ranks  to  help  provide  an understandable picture of program behavior. Valgrind4hpc manages starting and redirecting output from many copies of  Valgrind,  as  well  as recombining  and filtering Valgrind messages.  If your program can be debugged with Valgrind, it can be debugged with valgrind4hpc.
 
 The valgrind4hpc module enables the use of standard valgrind as well as the valgrind4hpc version more suitable to parallel programs.
 
@@ -212,7 +212,7 @@ Next, run your executable through valgrind:
 
     valgrind --tool=memcheck --leak-check=yes my_executable
     
-The log outputs to screen. The `ERROR SUMMARY` will tell you whether, and how many, memory errors there are in your script. Furthermore, if you compile your code using the ``-g`` debugging flag (e.g. ``gcc -g my_progam.c -o my_executable.c``), the log will point out the code lines where the error occurs.
+The log outputs to screen. The `ERROR SUMMARY` will tell you whether, and how many, memory errors there are in your script. Furthermore, if you compile your code using the ``-g`` debugging flag (*e.g.* ``gcc -g my_progam.c -o my_executable.c``), the log will point out the code lines where the error occurs.
 
 Valgrind also includes a tool called Massif that can be used to give insight into the memory usage of your program. It takes regular snapshots and outputs this data into a single file, which can be visualised to show the total amount of memory used as a function of time. This shows when peaks and bottlenecks occur and allows you to identify which data structures in your code are responsible for the largest memory usage of your program.
 
@@ -238,7 +238,7 @@ or, to save to a file:
 
 ::
 
-    ms_print massif.out.12345 > massis.analysis.12345
+    ms_print massif.out.12345 > massif.analysis.12345
 
 This will show total memory usage over time as well as a breakdown of the top data structures contributing to memory usage at each snapshot where there has been a significant allocation or deallocation of memory. 
 
@@ -259,7 +259,7 @@ Valgrind4hpc will launch an srun job to run the executable while it profiles. To
     
 In particular, note the ``--`` separating the executable from the arguments (this is not necessary of your executable takes no arguments). The ``--lancher-args="arguments"`` allow you to set launcher flags for ``srun``.
 
-Valgrind4hpc only supports certain tools found in valgrind. These are: memcheck, helgrind, exp-sgcheck, or drd. The ``--valgrind-args="arguments"`` allows users to use valgrind options not supported in valgrind4hpc (e.g. ``--leak-check``) -- note, however, that some of these options might interfere with valgrind4hpc.
+Valgrind4hpc only supports certain tools found in valgrind. These are: memcheck, helgrind, exp-sgcheck, or drd. The ``--valgrind-args="arguments"`` allows users to use valgrind options not supported in valgrind4hpc (*e.g.* ``--leak-check``) -- note, however, that some of these options might interfere with valgrind4hpc.
 
 More information on valgrind4hpc can be found in the manual (``man valgrind4hpc``). 
     
@@ -287,7 +287,7 @@ Then, launch your job using ``srun`` as a background task (by adding an ``&`` at
     
 Note that this example has set the job time limit to 1 hour -- if you need longer, change the ``--time`` command.
 
-You will need the Program ID (PID) of the job you have just launched -- the PID is printed to sreen upon launch, or you can get it by running:
+You will need the Program ID (PID) of the job you have just launched -- the PID is printed to screen upon launch, or you can get it by running:
 
 ::
 
@@ -308,7 +308,7 @@ This will present you with a set of text that looks like this:
     157185 pts/8    00:00:00 srun
     157191 pts/8    00:00:00 ps
 
-Once your application has reached the point where it hangs, issue the following comman (replacing PID with the ID of the **first** srun task -- in the above example, I would replace PID with 157183):
+Once your application has reached the point where it hangs, issue the following command (replacing PID with the ID of the **first** srun task -- in the above example, I would replace PID with 157183):
 
 ::
 
@@ -338,7 +338,7 @@ You will get an output that looks like this:
     
     Results written to $PATH_TO_RUN_DIRECTORY/stat_results/my_exe.0000
 
-Once STAT is finished, you can kill the srun job using `scancel` (replacing JID with the job ID of the job you just launched):
+Once STAT is finished, you can kill the srun job using ``scancel`` (replacing JID with the job ID of the job you just launched):
 
 ::
     
@@ -390,5 +390,11 @@ and view the merged stack trace using:
   
   To see the graph, you will need to have exported your X display when logging in.
 
-CCDB
-----
+.. CCDB
+.. ----
+.. 
+.. #####################
+.. Some notes & things to do
+.. * CCDB is not currently working -- will need to be added once it's fixed
+.. * Will need to test various programs once accounts, partitions, and qos's are implemented 
+
