@@ -13,22 +13,35 @@ logging in and running your first job.
 Request an account on ARCHER2
 -----------------------------
 
+.. warning::
+
+  You need to use both a password and a passphrase-protected SSH key pair to log into 
+  ARCHER2. You get the password from SAFE but will need to setup your own SSH key 
+  pair and add the public part to your account via SAFE before you will be able to 
+  log in. We cover the authentication steps below.
+
+Obtain an account on the SAFE website
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 The first step is to sign up for an account on the ARCHER2 SAFE website. This account
 is used to manage your user accounts and report on your usage and quotas. To do this:
 
-1. Go to the `SAFE New User Signup Form <https://www.archer.ac.uk/safe/signup.jsp>`__
+1. Go to the `SAFE New User Signup Form <https://safe.epcc.ed.ac.uk/signup.jsp>`__
 2. Fill in your personal details.  You can come back later and change them if you wish
 3. Click *Submit*
 
 You are now registered. Your SAFE password will be emailed to the email address you provided. You can then login 
 with that email address and password.
 
+Request an ARCHER2 login account
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Once you have a SAFE account you will need to request a user account on ARCHER2 itself.
 To do this you will require a *Project Code*; you usually obtain this from the Principle
 Investigator (PI) or project manager for the project you will be working on. Once you have
 the Project Code:
 
-1. `Log into SAFE <https://www.archer.ac.uk/safe>`__
+1. `Log into SAFE <https://safe.epcc.ed.ac.uk>`__
 2. Use the *Login accounts - Request new account* menu item
 3. Select the correct project from the drop down list
 4. Select the *ARCHER2* machine in the list of available machines
@@ -42,9 +55,36 @@ receive an email. You can then come back to SAFE and pick up the initial, one us
 for your new account (ARCHER2 account passwords are also sometimes referred to as LDAP
 passwords by the system).
 
+Generating and adding an SSH key pair
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+How you generate your SSH key pair depends on which operating system you use and which 
+SSH client you use to connect to ARCHER2. We will not cover the details on generating an
+SSH key pair here, but [detailed information on generating an SSH key pair is available
+in the ARCHER2 User and Best Practice Guide](https://docs.archer2.ac.uk/user-guide/connecting.html).
+
+Once you have generated your SSH key pair, you should add the public part to your
+login account using SAFE:
+
+1. `Log into SAFE <https://safe.epcc.ed.ac.uk>`__
+2. Use the menu *Login accounts* and select the ARCHER2 account you want to add the SSH key to
+3. On the subsequent Login account details page click the *Add Credential* button
+4. Select *SSH public key* as the Credential Type and click *Next*
+5. Either copy and paste the public part of your SSH key into the SSH Public key box or use the
+   button to select the public key file on your computer.
+6. Click *Add* to associate the public SSH key part with your account
+
+Once you have done this, your SSH key will be added to your ARCHER2 account.
+
+Remember, you will need to use both an SSH key and password to log into ARCHER2 so you will also
+need to collect your initial password before you can log into ARCHER2. We cover this next.
+
+Collecting your ARCHER2 password
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 You should now collect your ARCHER2 password:
 
-1. `Log into SAFE <https://www.archer.ac.uk/safe>`__
+1. `Log into SAFE <https://safe.epcc.ed.ac.uk>`__
 2. Use the *Login accounts* menu to select your new login account
 3. This will display details of your account. Use the *View Login Account Password* button
    to view your single-use ARCHER2 password.
@@ -68,7 +108,35 @@ To log into ARCHER2 you should use the ``login.archer2.ac.uk`` address:
 
    ssh [userID]@login.archer2.ac.uk
 
-More information on connecting to ARCHER2 is available in :doc:`../user-guide/connecting`.
+You will first be prompted for the passphrase associated with your
+SSH key pair. Once you have entered your passphrase successfully, you
+will then be prompted for your password. You need to enter both 
+correctly to be able to access ARCHER2.
+
+.. note::
+
+  If your SSH key pair is not stored in the default location (usually
+  ``~/.ssh/id_rsa``) on your local system, you may need to specify the
+  path to the private part of the key wih the ``-i`` option to ``ssh``.
+  For example, if your key is in a file called ``keys/id_rsa_archer2``
+  you would use the command
+  ``ssh -i keys/id_rsa_archer2 username@login.archer2.ac.uk``
+  to log in.
+
+.. note::
+
+  When you first log into ARCHER2, you will be prompted to change your
+  initial password. This is a three step process:
+  
+  1. When promoted to enter your *ldap password*: Re-enter the password you retrieved from SAFE
+  2. When prompted to enter your new password: type in a new password
+  3. When prompted to re-enter the new password: re-enter the new password
+  
+  Your password has now been changed
+
+.. seealso::
+
+  More information on connecting to ARCHER2 is available in :doc:`../user-guide/connecting`.
 
 File systems and manipulating data
 ----------------------------------
@@ -129,7 +197,7 @@ and variants of VASP may be found by running::
   module avail vasp
 
 You will see that different versions are available for many modules. For
-example, ``vasp/5.4.4`` and ``vasp/6.1.0`` are two available versions of
+example, ``vasp/5/5.4.4`` and ``vasp/6/6.1.0`` are two available versions of
 VASP. Furthermore, a default version may be specified and will be used if no
 version is provided by the user.
 
@@ -150,7 +218,7 @@ would load the default version of VASP, while
 
 ::
 
-  module load vasp/5.4.4
+  module load vasp/5/5.4.4
 
 would specifically load version 5.4.4. A loaded module may be unloaded through
 the identical ``module unload``, ``module remove`` or ``module delete``
@@ -164,7 +232,7 @@ which would unload whichever version of VASP is currently in the environment.
 Rather than issuing separate unload and load commands, versions of a module may
 be swapped as follows::
 
-  module swap vasp vasp/5.4.4
+  module swap vasp vasp/5/5.4.4
 
 Other helpful commands are:
 
@@ -197,9 +265,7 @@ You request access to licensed software through the EPCC SAFE (the web administr
 to apply for your account and retrieve your initial password) by being added to the appropriate
 *Package Group*. To request access to licensed software:
 
-.. TODO: Update SAFE link
-
-1. Log in to `SAFE <https://www.archer.ac.uk/safe/>`__
+1. Log in to `SAFE <https://safe.epcc.ed.ac.uk>`__
 2. Go to the Menu *Login accounts* and select the login account which requires access to the software
 3. Click *New Package Group Request*
 4. Select the software from the list of available packages and click *Select Package Group*
@@ -228,7 +294,7 @@ command to launch your parallel executable.
 .. warning::
 
    Parallel jobs on ARCHER2 should be run from the /work file system as /home is not available on the
-   compute nodes - you will see a ``chdir`` error if you try to run a job from the /home file system.
+   compute nodes - you will see a ``chdir`` or *file not found* error if you try to run a job from the /home file system.
 
 Create a job submission script called ``submit.slurm`` in your space on the work file system using your
 favourite text editor. For example, using ``vim``:
@@ -241,7 +307,7 @@ favourite text editor. For example, using ``vim``:
 .. note::
   
   You will need to use your project code and username to get to the correct directory.
-  i.e. replace the `z01` above with your project code and replace the username `auser` with your ARCHER2 username.
+  i.e. replace the `t01` above with your project code and replace the username `auser` with your ARCHER2 username.
 
 Paste the following text into your job submission script, replacing ``ENTER_YOUR_BUDGET_CODE_HERE`` with
 your budget code e.g. ``e99-ham``.
@@ -261,7 +327,7 @@ your budget code e.g. ``e99-ham``.
   module load xthi
 
   # srun launches the parallel program based on the SBATCH options
-  srun xthi
+  srun --cppu-bind=cores xthi
 
 Submit your job to the queue
 ----------------------------
@@ -287,8 +353,6 @@ You use the ``squeue`` command to examine jobs in the queue. Use:
 To list all the jobs **you** have in the queue. ``squeue`` on its own lists all jobs
 in the queue from all users.
 
-.. TODO: Add information on queue reasons once they are known
-
 Checking the output from the job
 --------------------------------
 
@@ -300,7 +364,6 @@ something like:
 :: 
 
   auser@eslogin01:/work/t01/t01/auser> cat slurm-23996.out
-  nid00001
   Hello from rank 20, thread 0, on nid00001. (core affinity = 20)
   Hello from rank 27, thread 0, on nid00001. (core affinity = 27)
   Hello from rank 23, thread 0, on nid00001. (core affinity = 23)
