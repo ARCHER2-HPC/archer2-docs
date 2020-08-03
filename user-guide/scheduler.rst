@@ -201,14 +201,12 @@ parallel processes and threads they require.
     then you will need to change this option as described below.
 
 For parallel jobs that use threading (e.g. OpenMP), you will also need to 
-change an option and specify an additional option.
+change the ``--cpus-per-task`` option.
 
   - ``--cpus-per-task=<threads per task>`` the number of threads per
     parallel process (e.g. number of OpenMP threads per MPI task for
     hybrid MPI/OpenMP jobs). **Note:** you must also set the ``OMP_NUM_THREADS``
     environment variable if using OpenMP in your job.
-  - ``--threads-per-core=1`` restrict threads to use physical cores rather
-    than SMT (hardware threads).
 
 .. note::
 
@@ -293,8 +291,9 @@ process. This results in all 128 physical cores per node being used.
 
 .. note:: 
 
-   Note the use of the ``--threads-per-core=1`` option to ``sbatch`` and the ``--cpu-bind=cores``
-   option to ``srun``to generate the correct pinning.
+   Note the use of the ``export OMP_PLACES=cores`` environment option and
+   the ``--hint=nomultithread`` and ``--distribution=block:block``
+   options to ``srun``to generate the correct pinning.
 
 ::
 
@@ -307,20 +306,22 @@ process. This results in all 128 physical cores per node being used.
   #SBATCH --ntasks=32
   #SBATCH --tasks-per-node=8
   #SBATCH --cpus-per-task=16
-  #SBATCH --threads-per-core=1
 
   # Replace [budget code] below with your project code (e.g. t01)
   #SBATCH --account=[budget code] 
 
-  # Set the number of threads to 16
+  # Set the number of threads to 16 and specify placement
   #   There are 16 OpenMP threads per MPI process
+  #   We want one thread per physical core
   export OMP_NUM_THREADS=16
+  export OMP_PLACES=cores
 
   # Launch the parallel job
   #   Using 32 MPI processes
   #   8 MPI processes per node
   #   16 OpenMP threads per MPI process
-  srun --cpu-bind=cores ./my_mixed_executable.x arg1 arg2
+  #   Additional srun options to pin one thread per physical core
+  srun --hint=nomultithread --distribution=block:block ./my_mixed_executable.x arg1 arg2
 
 Job arrays
 ----------
