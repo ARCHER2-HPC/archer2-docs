@@ -18,7 +18,7 @@ Request an account on ARCHER2
   You need to use both a password and a passphrase-protected SSH key pair to log into 
   ARCHER2. You get the password from SAFE but will need to setup your own SSH key 
   pair and add the public part to your account via SAFE before you will be able to 
-  log in. We cover both of these authentication methods below.
+  log in. We cover the authentication steps below.
 
 Obtain an account on the SAFE website
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
