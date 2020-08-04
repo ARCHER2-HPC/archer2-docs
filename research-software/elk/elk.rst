@@ -50,7 +50,7 @@ MPI ELK jobs
    # Replace [budget code] with your account code, e.g.,
    # '--account=t01-brenda'
 
-   #SBATCH --name=elk_job
+   #SBATCH --job-name=elk_job
    #SBATCH --nodes=4
    #SBATCH --ntasks=512
    #SBATCH --tasks-per-node=128

@@ -320,8 +320,10 @@ transfer. The encryption algorithm used is negotiated between the SSH
 client and the SSH server. There are command line flags that allow you
 to specify a preference for which encryption algorithm should be used.
 You may be able to improve transfer speeds by requesting a different
-algorithm than the default. The *arcfour* algorithm is usually fast if
-both hosts support it.
+algorithm than the default. The ``aes128-ctr`` or ``aes256-ctr`` algorithms
+are well supported and fast as they are implemented in hardware. **Note:**
+these are not usually the default choice when using ``scp`` so you will
+need to manually specify them.
 
 A single SSH based transfer will usually not be able to saturate the
 available network bandwidth or the available disk bandwidth so you may
@@ -366,7 +368,7 @@ If you want to request a different encryption algorithm add the ``-c
 
 ::
 
-    scp [options] -c arcfour source user@login.archer2.ac.uk:[destination]
+    scp [options] -c aes128-ctr source user@login.archer2.ac.uk:[destination]
 
 (Remember to replace ``user`` with your ARCHER2 username in the example
 above.)
