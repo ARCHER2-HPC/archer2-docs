@@ -294,7 +294,7 @@ process. This results in all 128 physical cores per node being used.
 .. note:: 
 
    Note the use of the ``--threads-per-core=1`` option to ``sbatch`` and the ``--cpu-bind=cores``
-   option to ``srun``to generate the correct pinning.
+   option to ``srun`` to generate the correct pinning.
 
 ::
 
