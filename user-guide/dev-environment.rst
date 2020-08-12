@@ -431,7 +431,7 @@ Type ``man intro_libsci`` for further details.
 FFTW                 ``module load cray-fftw``
 ================== ======================================
 
-FFTW_ provides Fast Fourrier Transforms, and is available in
+FFTW_ provides Fast Fourier Transforms, and is available in
 version 3 only.
 
 
