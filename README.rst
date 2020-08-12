@@ -59,16 +59,6 @@ To build the HTML documentation run::
 
     make html
 
-If you want to build the PDF documentation you will need:
-
-* `GNU Make <http://gnuwin32.sourceforge.net/packages/make.htm>`_
-* `MikTeX <http://miktex.org/download>`_
-
-Then from the command line, the following will build the .pdf file ::
-
-    make latexpdf
-
-On first run, MikTeX will prompt you to install various extra LaTeX packages.
 
 Building the documentation on a local Linux machine
 ###################################################
