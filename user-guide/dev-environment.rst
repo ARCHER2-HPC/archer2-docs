@@ -407,7 +407,7 @@ access to the following libraries.
 ================== ======================================
   Library             Module
 ------------------ --------------------------------------
-BLAS, LAPACK, ...     ``module load cray-lisci``
+BLAS, LAPACK, ...     ``module load cray-libsci``
 ================== ======================================
 
 Cray scientific libraries, available for all compiler choices
