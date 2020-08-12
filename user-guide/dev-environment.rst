@@ -199,7 +199,7 @@ Which compiler environment?
 If you are unsure which compiler you should choose, we suggest the
 starting point should be the GNU compiler collection; this is
 perhaps the most commonly used by code developers, particularly in
-the open source software domain. A partable, standard-conforming
+the open source software domain. A portable, standard-conforming
 code should (in principle) compile in any of the three programming
 environments.
 
