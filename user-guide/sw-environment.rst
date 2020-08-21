@@ -132,7 +132,7 @@ software may be deleted.
 
 You can list all the modules of a particular type by providing an
 argument to the ``module avail`` command. For example, to list all
-available versions of the FFTW library, use:
+available versions of the Cray FFTW library, use:
 
 .. code-block:: console
 
@@ -210,21 +210,21 @@ Loading, removing and swapping modules
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To load a module to use the ``module load`` command. For example,
-to load the default version of FFTW into your environment, use:
+to load the default version of Cray FFTW into your environment, use:
 
 .. code-block:: console
 
     module load cray-fftw
 
-Once you have done this, your environment will be setup to use the FFTW library.
-This version of the command will load the default version of FFTW. If
+Once you have done this, your environment will be setup to use the Cray FFTW
+library. The above command will load the default version of Cray FFTW. If
 you need a specific version of the software, you can add more information:
 
 .. code-block:: console
 
     module load cray-fftw/3.3.8.5
 
-will load FFTW version 3.3.8.5 into your environment, regardless of the
+will load Cray FFTW version 3.3.8.5 into your environment, regardless of the
 default.
 
 If you want to remove software from your environment, ``module remove`` will
