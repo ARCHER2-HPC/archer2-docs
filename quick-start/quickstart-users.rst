@@ -24,7 +24,7 @@ Obtain an account on the SAFE website
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The first step is to sign up for an account on the ARCHER2 SAFE website. The SAFE account
-is used to manage all of your machine accounts, allowing you to report on your usage and quotas.
+is used to manage all of your login accounts, allowing you to report on your usage and quotas.
 To do this:
 
 1. Go to the `SAFE New User Signup Form <https://safe.epcc.ed.ac.uk/signup.jsp>`__
@@ -66,8 +66,8 @@ Generating and adding an SSH key pair
 
 How you generate your SSH key pair depends on which operating system you use and which 
 SSH client you use to connect to ARCHER2. We will not cover the details on generating an
-SSH key pair here, but detailed information on this topic is available in the ARCHER2 User
-and Best Practice Guide (see https://docs.archer2.ac.uk/user-guide/connecting.html).
+SSH key pair here, but detailed information on this topic is available in the [ARCHER2 User
+and Best Practice Guide] ( https://docs.archer2.ac.uk/user-guide/connecting.html).
 
 After generating your SSH key pair, add the public part to your login account using SAFE:
 
