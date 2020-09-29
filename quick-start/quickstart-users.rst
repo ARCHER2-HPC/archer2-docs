@@ -327,7 +327,7 @@ your budget code e.g. ``e99-ham``.
   module load xthi
 
   # srun launches the parallel program based on the SBATCH options
-  srun --cppu-bind=cores xthi
+  srun --cpu-bind=cores xthi
 
 Submit your job to the queue
 ----------------------------
