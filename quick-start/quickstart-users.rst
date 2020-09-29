@@ -319,9 +319,9 @@ your budget code e.g. ``e99-ham``.
   #SBATCH --job-name=test_job
   #SBATCH --nodes=1
   #SBATCH --tasks-per-node=128
-  #SBATCH --cores-per-task==1
+  #SBATCH --cpus-per-task=1
   #SBATCH --time=0:5:0
-  #SBATCH -account=ENTER_YOUR_BUDGET_CODE_HERE
+  #SBATCH --account=ENTER_YOUR_BUDGET_CODE_HERE
 
   # Load the xthi module to get access to the xthi program
   module load xthi
