@@ -123,13 +123,13 @@ For example, at login, the default set of modules are:
 
 ::
   
-Currently Loaded Modulefiles:
- 1) cpe-cray                          7) cray-dsmml/0.1.2(default)                           
- 2) cce/10.0.3(default)               8) perftools-base/20.09.0(default)                     
- 3) craype/2.7.0(default)             9) xpmem/2.2.35-7.0.1.0_1.3__gd50fabf.shasta(default)  
- 4) craype-x86-rome                  10) cray-mpich/8.0.15(default)                          
- 5) libfabric/1.11.0.0.233(default)  11) cray-libsci/20.08.1.2(default)                      
- 6) craype-network-ofi  
+  Currently Loaded Modulefiles:
+  1) cpe-cray                          7) cray-dsmml/0.1.2(default)                           
+  2) cce/10.0.3(default)               8) perftools-base/20.09.0(default)                     
+  3) craype/2.7.0(default)             9) xpmem/2.2.35-7.0.1.0_1.3__gd50fabf.shasta(default)  
+  4) craype-x86-rome                  10) cray-mpich/8.0.15(default)                          
+  5) libfabric/1.11.0.0.233(default)  11) cray-libsci/20.08.1.2(default)                      
+  6) craype-network-ofi  
 
 from which we see the default programming environment is Cray (indicated
 by ``cpe-cray`` (at 1 in the list above) and the default compiler module is ``cce/10.0.3``
@@ -184,7 +184,7 @@ compiler and compiler options:
 | PrgEnv   | Compiler| Wrapper      | Compiler          | Compiler options    |
 |          |         | man page     | man page          | summary             |
 +----------+---------+--------------+-------------------+---------------------+
-| AOCC     |         |              |  TBC              |  ``clang --help     |
+| AOCC     |         |              |  TBC              |  ``clang --help``   |
 +----------+         |              +-------------------+---------------------+
 | Cray     | C       | ``man cc``   |  ``man craycc``   |  ``clang --help``   |
 +----------+         |              +-------------------+---------------------+
