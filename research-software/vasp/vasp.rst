@@ -46,21 +46,27 @@ If you have a VASP licence and wish to have access to VASP on ARCHER2
 (you may need to speak to your supervisor or line manager to obtain
 the appropriate license details).
 
+.. TODO: Add instructions on requesting VASP access
 
-.. warning::
+.. note::
 
-  Include details of how to apply for access via te SAFE
-
+  Both VASP 5 and VASP 6 are available on ARCHER2. You generally need
+  a different licence for each of these versions.
 
 Running parallel VASP jobs
 --------------------------
 
-To access VASP you should load the ``vasp`` module in your job submission
-scripts:
+To access VASP you should load the appropriate ``vasp`` module in your job submission
+scripts.
+
+VASP 5
+~~~~~~
+
+To load the default version of VASP 5, you would use:
 
 ::
 
-   module add vasp
+   module load vasp/5
 
 Once loaded, the executables are called:
 
@@ -69,43 +75,115 @@ Once loaded, the executables are called:
 * ``vasp_ncl`` - Non-collinear version
 
 
-You can access the LDA and PBE pseudopotentials for VASP on ARCHER2 at:
+Once the module has been loaded, you can access the LDA and PBE pseudopotentials for
+VASP on ARCHER2 at:
 
 :: 
 
-   /vasp4/location/pot
+  $VASP_PSPOT_DIR
 
 
-The following script will run a VASP job using 4 nodes (128x4 cores).
-
-.. warning::
-
-  The following script is a draft and requires verification.
+The following script will run a VASP job using 2 nodes (128x2, 256 total cores).
 
 ::
 
-   #!/bin/bash
+  #!/bin/bash
 
-   # Request 4 nodes (512 MPI tasks at 128 tasks per node) for 20 minutes.   
-   # Remember to replace [budget code] below with your account code,
-   # e.g., '--account=t01-victoria'
+  # Request 2 nodes (256 MPI tasks at 128 tasks per node) for 20 minutes.   
+  # Remember to replace [budget code] below with your account code,
+  # e.g., '--account=t01-victoria'
 
-   #SBATCH --job-name=VASP_test
-   #SBATCH --nodes=4
-   #SBATCH --ntasks=512
-   #SBATCH --tasks-per-node=128
-   #SBATCH --cpus-per-task=1
-   #SBATCH --time=00:20:00
-   
-   #SBATCH --account=[budget code]
-   
-   
-   # Load the relevant VASP module
-   # and run the appropriate VASP executable (here 'vasp_std')
+  #SBATCH --job-name=VASP_test
+  #SBATCH --nodes=4
+  #SBATCH --ntasks=512
+  #SBATCH --tasks-per-node=128
+  #SBATCH --cpus-per-task=1
+  #SBATCH --time=00:20:00
+  
+  #SBATCH --account=[budget code]
+  
+  # Make sure the number of OpenMP threads is set to 1
+  export OMP_NUM_THREADS=1
 
-   module load vasp/5.4.3.2.1
-   srun ... vasp_std
+  # Load the relevant VASP module
+  # and run the appropriate VASP executable (here 'vasp_std')
 
+  module load vasp/5
+
+  srun --cpu-bind=cores vasp_std
+
+VASP 6
+~~~~~~
+
+To load the default version of VASP 6, you would use:
+
+::
+
+   module load vasp/6
+
+Once loaded, the executables are called:
+
+* ``vasp_std`` - Multiple k-point version
+* ``vasp_gam`` - GAMMA-point only version
+* ``vasp_ncl`` - Non-collinear version
+
+Once the module has been loaded, you can access the LDA and PBE pseudopotentials for
+VASP on ARCHER2 at:
+
+:: 
+
+  $VASP_PSPOT_DIR
+
+
+The following script will run a VASP job using 2 nodes (128x2, 256 total cores) using
+only MPI ranks and no OpenMP threading.
+
+.. note::
+
+  VASP 6 can make use of OpenMP threads in addition to running with pure MPI. We will
+  add notes on performance and use of threading in VASP as information becomes 
+  available.
+
+::
+
+  #!/bin/bash
+
+  # Request 2 nodes (256 MPI tasks at 128 tasks per node) for 20 minutes.   
+  # Remember to replace [budget code] below with your account code,
+  # e.g., '--account=t01-victoria'
+
+  #SBATCH --job-name=VASP_test
+  #SBATCH --nodes=4
+  #SBATCH --ntasks=512
+  #SBATCH --tasks-per-node=128
+  #SBATCH --cpus-per-task=1
+  #SBATCH --time=00:20:00
+  
+  #SBATCH --account=[budget code]
+  
+  # Make sure the number of OpenMP threads is set to 1
+  export OMP_NUM_THREADS=1
+
+  # Load the relevant VASP module
+  # and run the appropriate VASP executable (here 'vasp_std')
+
+  module load vasp/6
+
+  srun --cpu-bind=cores vasp_std
+
+Compiling VASP on ARCHER2
+-------------------------
+
+If you wish to compile your own version of VASP on ARCHER2 (either
+VASP 5 or VASP 6) you can find information on how we compiled the
+central versions in the build instructions GitHub repository. See:
+
+   - [Build instructions for VASP on GitHub](https://github.com/hpc-uk/build-instructions/tree/main/VASP)
 
 Hints and tips
 --------------
+
+.. note::
+
+  We will add information on running VASP efficiently on ARCHER2
+  as it becomes available.
