@@ -7,7 +7,7 @@ Containers
   development.
 
 This page was originally based on the documentation at the `University of Sheffield HPC service
-<http://docs.hpc.shef.ac.uk/en/latest/sharc/software/apps/singularity.html>`.
+<http://docs.hpc.shef.ac.uk/en/latest/sharc/software/apps/singularity.html>`__.
 
 Designed around the notion of mobility of compute and reproducible science,
 Singularity enables users to have full control of their operating system environment.
@@ -82,62 +82,15 @@ Singularity images are simply files, so, if you already have an image file, you 
 If you wish to get a file from one of the container image repositories then Singularity
 allows you to do this from ARCHER2 itself.
 
-This functionality requires tools that are not part of the standard OS on ARCHER2 so we have
-provided a Singularity image that allows you to build images from remote repositories (i.e.
-you use a Singularity image to build Singularity images!).
-
-For example, to retrieve an image from DockerHub on ARCHER2 we fist need to enter an
-interactive session in the image we provide for building Singularity images:
+For example, to retrieve an image from SingularityHub on Cirrus we can simply issue a Singularity
+command to pull the image.
 
 ::
 
-   [user@archer2-login0 ~]$ module load singularity
-   [user@archer2-login0 ~]$ singularity exec $CIRRUS_SIMG/archer2-sbuild.simg /bin/bash --login
-   Singularity>
+   [user@cirrus-login1 ~]$ module load singularity
+   [user@cirrus-login1 ~]$ singularity pull hello-world.sif shub://vsoch/hello-world
 
-This invokes a login bash shell within the ``$CIRRUS_SIMG/archer2-sbuild.simg`` image as
-indicated by our prompt change. (We need a login shell to allow ``module`` commands to work
-within the image.)
-
-Now we are in the image we can load the singularity module (to get access to the Singularity
-commands) and pull an image from DockerHub:
-
-::
-
-   Singularity> module load singularity
-   Singularity> singularity build lolcow.simg docker://godlovedc/lolcow
-   Docker image path: index.docker.io/godlovedc/lolcow:latest
-   Cache folder set to /lustre/home/t01/user/.singularity/docker
-   Importing: base Singularity environment
-   Importing: /lustre/home/t01/user/.singularity/docker/sha256:9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118.tar.gz
-   Importing: /lustre/home/t01/user/.singularity/docker/sha256:3b61febd4aefe982e0cb9c696d415137384d1a01052b50a85aae46439e15e49a.tar.gz
-   Importing: /lustre/home/t01/user/.singularity/docker/sha256:9d99b9777eb02b8943c0e72d7a7baec5c782f8fd976825c9d3fb48b3101aacc2.tar.gz
-   Importing: /lustre/home/t01/user/.singularity/docker/sha256:d010c8cf75d7eb5d2504d5ffa0d19696e8d745a457dd8d28ec6dd41d3763617e.tar.gz
-   Importing: /lustre/home/t01/user/.singularity/docker/sha256:7fac07fb303e0589b9c23e6f49d5dc1ff9d6f3c8c88cabe768b430bdb47f03a9.tar.gz
-   Importing: /lustre/home/t01/user/.singularity/docker/sha256:8e860504ff1ee5dc7953672d128ce1e4aa4d8e3716eb39fe710b849c64b20945.tar.gz
-   Importing: /lustre/home/t01/user/.singularity/metadata/sha256:ab22e7ef68858b31e1716fa2eb0d3edec81ae69c6b235508d116a09fc7908cff.tar.gz
-   WARNING: Building container as an unprivileged user. If you run this container as root
-   WARNING: it may be missing some functionality.
-   Building Singularity image...
-   Singularity container built: lolcow.simg
-   Cleaning up...
-
-The first argument to the singularity build command (``lolcow.simg``) specifies a path and name for your container.
-The second argument (``docker://godlovedc/lolcow``) gives the DockerHub URI from which to download the image.
-
-Now we can exit the ``archer2-sbuild`` image and run the new ``lolcow`` image that we have just built on the ARCHER2 login node:
-
-::
-
-   [user@archer2-login0 ~]$ singularity run lolcow.simg
-
-This image contains a *runscript* that tells Singularity what to do if we run the image. We demonstrate
-different ways to use images below.
-
-Similar syntax can be used for Singularity Hub. For more information see the Singularity documentation:
-
-* `Build a Container <https://www.sylabs.io/guides/2.6/user-guide/build_a_container.html>`_
-
+The image located at the ``shub`` URI is written to a Singularity Image File (SIF) called ``hello-world.sif``.
 
 Interactive use on the login nodes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
