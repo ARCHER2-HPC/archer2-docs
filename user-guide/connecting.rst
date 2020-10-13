@@ -254,9 +254,12 @@ Can you connect to the login node?
 
 Try the command ``ping -c 3 login.archer2.ac.uk``. If you successfully connect
 to the login node, the output should include:
+
 ::
+
   --- login.dyn.archer2.ac.uk ping statistics ---
   3 packets transmitted, 3 received, 0% packet loss, time 38ms
+
 (the ping time '38ms' is not important). If not all packets are received
 there could be a problem with your internet connection, or the login node could
 be unavailable.
@@ -268,12 +271,16 @@ Verbose debugging output from ``ssh`` can be very useful for diganosing the
 issue. In particular, it can be used to distinguish between problems with the
 SSH key and password - further details are given below. To enable verbose output
 add the ``-vvv`` flag to your SSH command. For example:
+
 ::
+
   ssh -vvv username@login.archer2.ac.uk
 
 The output is lengthy, but somewhere in there you should see lines similar to
 the following:
+
 ::
+
   debug1: Next authentication method: publickey
   debug1: Offering public key: RSA SHA256:<key-hash> <path_to_private_key>
   debug3: send_pubkey_test
@@ -326,7 +333,9 @@ a problem with your SSH key. Some things to check:
    contained in. On Linux/MacOS for example, if your private keys are held in
    ``~/.ssh/`` you can check this with ``ls -al ~/.ssh``. This should give
    something similar to the following output:
+
    ::
+
      $ ls -al ~/.ssh/
      drwx------.  2 user group    48 Jul 15 20:24 .
      drwx------. 12 user group  4096 Oct 13 12:11 ..
@@ -334,6 +343,7 @@ a problem with your SSH key. Some things to check:
      -rw-------.  1 user group 12686 Jul 15 20:23 id_rsa
      -rw-r--r--.  1 user group  2785 Jul 15 20:23 id_rsa.pub
      -rw-r--r--.  1 user group  1967 Oct 13 14:11 known_hosts
+
    The important section here is the string of letters and dashes at the start,
    for the lines ending in ``.``, ``id_rsa``, and ``id_rsa.pub``, which indicate
    permissions on the containing directory, private key, and public key
@@ -354,6 +364,7 @@ a problem with your SSH key. Some things to check:
 +-------------+----------------+----------------+
 | Public Key  | ``-rw-r--r--`` |      644       |
 +-------------+----------------+----------------+
+
 ``chmod`` can be used to set permissions on the target in the following way:
 ``chmod <code> <target>``. So for example to set correct permissions on the
 private key file ``id_rsa_ARCHER2`` one would use the command ``chmod 600
