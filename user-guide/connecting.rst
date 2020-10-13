@@ -241,7 +241,7 @@ system.
   option as described above) or add the path to your SSH config file by using the
   ``IdentityFile`` option.
 
-SSH Debugging Tips
+SSH debugging tips
 ------------------
 
 If you find ou are unable to connect via SSH there are a number of ways you can
@@ -263,49 +263,6 @@ to the login node, the output should include:
 (the ping time '38ms' is not important). If not all packets are received
 there could be a problem with your internet connection, or the login node could
 be unavailable.
-
-SSH verbose output
-~~~~~~~~~~~~~~~~~~
-
-Verbose debugging output from ``ssh`` can be very useful for diganosing the
-issue. In particular, it can be used to distinguish between problems with the
-SSH key and password - further details are given below. To enable verbose output
-add the ``-vvv`` flag to your SSH command. For example:
-
-::
-
-  ssh -vvv username@login.archer2.ac.uk
-
-The output is lengthy, but somewhere in there you should see lines similar to
-the following:
-
-::
-
-  debug1: Next authentication method: publickey
-  debug1: Offering public key: RSA SHA256:<key-hash> <path_to_private_key>
-  debug3: send_pubkey_test
-  debug3: send packet: type 50
-  debug2: we sent a publickey packet, wait for reply
-  debug3: receive packet: type 60
-  debug1: Server accepts key: pkalg ssh-rsa vlen 2071
-  debug2: input_userauth_pk_ok: fp SHA256:<key-hash>
-  debug3: sign_and_send_pubkey: RSA SHA256:<key-hash>
-  Enter passphrase for key '<path_to_private_key>':
-  debug3: send packet: type 50
-  debug3: receive packet: type 51
-  Authenticated with partial success.
-
-Most importantly, you can see which files ssh has checked for private keys, and
-you can see if any key is accepted. The line ``Authenticated with partial
-success`` indicates that the SSH key has been accepted, and you will next be
-asked for your password. By default ssh will go through a list of standard
-private key files, as well as any you have specified with ``-i`` or a config
-file. This is fine, as long as one of the files mentioned is the one that
-matches the public key uploaded to SAFE.
-
-If you do not see ``Authenticated with partial success`` anywhere in the verbose
-output, consider the suggestions under *SSH key* below. If you do, but are unable
-to connect, consider the suggestions under *Password* below.
 
 SSH key
 ~~~~~~~
@@ -400,3 +357,49 @@ Windows users please note that ``Ctrl+V`` does not work to paste in to PuTTY,
 MobaXterm, or PowerShell. Instead use ``Shift+Ins`` to paste. Alternatively,
 right-click and select 'Paste' in PuTTY and MobaXterm, or simply right-click to
 paste in PowerShell.
+
+SSH verbose output
+~~~~~~~~~~~~~~~~~~
+
+Verbose debugging output from ``ssh`` can be very useful for diganosing the
+issue. In particular, it can be used to distinguish between problems with the
+SSH key and password - further details are given below. To enable verbose output
+add the ``-vvv`` flag to your SSH command. For example:
+
+::
+
+  ssh -vvv username@login.archer2.ac.uk
+
+The output is lengthy, but somewhere in there you should see lines similar to
+the following:
+
+::
+
+  debug1: Next authentication method: publickey
+  debug1: Offering public key: RSA SHA256:<key-hash> <path_to_private_key>
+  debug3: send_pubkey_test
+  debug3: send packet: type 50
+  debug2: we sent a publickey packet, wait for reply
+  debug3: receive packet: type 60
+  debug1: Server accepts key: pkalg ssh-rsa vlen 2071
+  debug2: input_userauth_pk_ok: fp SHA256:<key-hash>
+  debug3: sign_and_send_pubkey: RSA SHA256:<key-hash>
+  Enter passphrase for key '<path_to_private_key>':
+  debug3: send packet: type 50
+  debug3: receive packet: type 51
+  Authenticated with partial success.
+
+Most importantly, you can see which files ssh has checked for private keys, and
+you can see if any key is accepted. The line ``Authenticated with partial
+success`` indicates that the SSH key has been accepted, and you will next be
+asked for your password. By default ssh will go through a list of standard
+private key files, as well as any you have specified with ``-i`` or a config
+file. This is fine, as long as one of the files mentioned is the one that
+matches the public key uploaded to SAFE.
+
+If you do not see ``Authenticated with partial success`` anywhere in the verbose
+output, consider the suggestions under *SSH key* above. If you do, but are 
+unable to connect, consider the suggestions under *Password* above.
+
+The equivalent information can be obtained in PuTTY or MobaXterm by enabling
+all logging in settings.
