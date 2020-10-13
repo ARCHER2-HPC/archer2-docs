@@ -313,6 +313,14 @@ a problem with your SSH key. Some things to check:
    offered by ssh using ``ssh -vvv``. If your private key has a non-default name
    you can use the ``-i`` flag to provide it to ssh, i.e. ``ssh -i path/to/key
    username@login.archer2.ac.uk``.
+ - Are you entering the passphrase correctly? You will be asked for your private
+   key's passphrase first. If you enter it incorrectly you will usually be asked
+   to enter it again, and usually up to three times in total, after which ssh
+   will fail with ``Permission denied (publickey)``. If you would like to
+   confirm your passphrase without attempting to connect, you can use
+   ``ssh-keygen -y -f /path/to/private/key``. If successful, this command will
+   print the corresponding public key. You can also use this to check it is the
+   one uploaded to SAFE.
  - Are permissions correct on the ssh key? One common issue is that the
    permissions are incorrect on the either the key file, or the directory it's
    contained in. On Linux/MacOS for example, if your private keys are held in
@@ -376,3 +384,8 @@ manager, from which you can copy and paste it. This will also help you generate
 a secure password. If you need to reset your password, instructions for doing so
 can be found `here
 <https://epcced.github.io/safe-docs/safe-for-users/#reset_machine>`__.
+
+Windows users please note that ``Ctrl+V`` does not work to paste in to PuTTY,
+MobaXterm, or PowerShell. Instead use ``Shift+Ins`` to paste. Alternatively,
+right-click and select 'Paste' in PuTTY and MobaXterm, or simply right-click to
+paste in PowerShell.
