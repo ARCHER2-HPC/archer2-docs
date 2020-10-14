@@ -244,7 +244,7 @@ system.
 SSH debugging tips
 ------------------
 
-If you find ou are unable to connect via SSH there are a number of ways you can
+If you find you are unable to connect via SSH there are a number of ways you can
 try and diagnose the issue. Some of these are collected below - if you are
 having difficulties connecting we suggest trying these before contacting the
 ARCHER2 service desk.
