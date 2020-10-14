@@ -361,7 +361,7 @@ paste in PowerShell.
 SSH verbose output
 ~~~~~~~~~~~~~~~~~~
 
-Verbose debugging output from ``ssh`` can be very useful for diganosing the
+Verbose debugging output from ``ssh`` can be very useful for diagnosing the
 issue. In particular, it can be used to distinguish between problems with the
 SSH key and password - further details are given below. To enable verbose output
 add the ``-vvv`` flag to your SSH command. For example:
