@@ -19,21 +19,15 @@ scaling from one to thousands of processors; properties and relativity.
 Useful Links
 ------------
 
-* NWChem home page       http://www.nwchem-sw.org/
-* NWChem documentation   https://github.com/nwchemgit/nwchem/wiki
-* NWChem forum           http://www.nwchem-sw.org/index.php/Special:AWCforum
-
+* NWChem home page       https://nwchemgit.github.io/
+* NWChem documentation   https://nwchemgit.github.io/Home.html
+* NWChem forum           https://nwchemgit.github.io/Forum.html
 
 Using NWChem on ARCHER2
 -----------------------
 
 NWChem is released under an Educational Community License (ECL 2.0) and is
 freely available to all users on ARCHER2.
-
-.. warning::
-
-  Information on the NWChem module is pending
-
 
 Where can I get help?
 ^^^^^^^^^^^^^^^^^^^^^
@@ -44,21 +38,42 @@ directed to the NWChem forum (see link above). More experienced users with
 detailed technical issues on NWChem should consider submitting them to
 the NWChem github issue tracker https://github.com/nwchemgit/nwchem/issues.
 
-
 Running NWChem jobs
 -------------------
 
+The following script will run a NWChem job using 2 nodes (256 cores) in the 
+standard partition. It assumes that the input file is called `test_calc.nw`.
 
-.. warning::
+::
 
-  Information on NWChem is pending
+  #!/bin/bash
+
+  # Request 2 nodes with 128 MPI tasks per node for 20 minutes
+  # Replace [budget code] below with your account code,
+  # e.g. '--account=t01'
+
+  #SBATCH --job-name=CASTEP
+  #SBATCH --nodes=2
+  #SBATCH --tasks-per-node=128
+  #SBATCH --cpus-per-task=1
+  #SBATCH --time=00:20:00
+
+  #SBATCH --partition=standard
+  #SBATCH --qos=standard
+  
+  #SBATCH --account=[budget code]
+
+  # Load the NWChem module, avoid any unintentional OpenMP threading by
+  # setting OMP_NUM_THREADS, and launch the code.
+  module load nwchem
+  export OMP_NUM_THREADS=1
+  srun -cpu-bind=cores nwchem test_calc
 
 
 Compiling NWChem
 ----------------
 
+The latest instructions for building NWChem on ARCHER2 may be found
+in the GitHub repository of build instructions:
 
-.. warning::
-
-  Information on NWChem is pending
-
+  - `Build instructions for NWChem on GitHub <https://github.com/hpc-uk/build-instructions/tree/master/NWChem>`__

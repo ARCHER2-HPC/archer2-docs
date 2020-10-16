@@ -56,6 +56,7 @@ The following script will run a GROMACS MD job using 4 nodes
    #SBATCH --time=00:20:00
    
    #SBATCH --account=[budget code]
+   
    #SBATCH --partition=standard
    #SBATCH --qos=standard
    
@@ -109,5 +110,5 @@ Compiling Gromacs
 The latest instructions for building GROMACS on ARCHER2 may be found
 in the GitHub repository of build instructions:
 
-  - [Build instructions for GROMACS on GitHub](https://github.com/hpc-uk/build-instructions/blob/main/GROMACS/ARCHER2_2020.3_gcc10.md)
+  - `Build instructions for GROMACS on GitHub <https://github.com/hpc-uk/build-instructions/blob/main/GROMACS/ARCHER2_2020.3_gcc10.md>`__
 

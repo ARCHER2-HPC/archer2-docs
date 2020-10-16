@@ -84,4 +84,4 @@ Compiling QE
 The latest instructions for building QE on ARCHER2 can be found
 in the GitHub repository of build instructions:
 
- - [Build instructions for Quantum Espresso](https://github.com/hpc-uk/build-instructions/blob/main/QuantumEspresso/qe66_archer2_gnu.md)
+ - `Build instructions for Quantum Espresso <https://github.com/hpc-uk/build-instructions/blob/main/QuantumEspresso/qe66_archer2_gnu.md>`__
