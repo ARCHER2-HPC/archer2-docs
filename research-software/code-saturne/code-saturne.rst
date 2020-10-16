@@ -65,6 +65,8 @@ For example, the following script will run a Code Saturne job using 4 nodes
    #SBATCH --time=00:20:00
    
    #SBATCH --account=[budget code]
+   #SBATCH --partition=[partition code]
+   #SBATCH --qos=[QOS code]
 
    # Load the Code Saturne mdoule and run
 

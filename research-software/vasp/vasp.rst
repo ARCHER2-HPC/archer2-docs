@@ -101,6 +101,8 @@ The following script will run a VASP job using 2 nodes (128x2, 256 total cores).
   #SBATCH --time=00:20:00
   
   #SBATCH --account=[budget code]
+  #SBATCH --partition=[partition code]
+  #SBATCH --qos=[QOS code]
   
   # Make sure the number of OpenMP threads is set to 1
   export OMP_NUM_THREADS=1
@@ -160,6 +162,8 @@ only MPI ranks and no OpenMP threading.
   #SBATCH --time=00:20:00
   
   #SBATCH --account=[budget code]
+  #SBATCH --partition=[partition code]
+  #SBATCH --qos=[QOS code]
   
   # Make sure the number of OpenMP threads is set to 1
   export OMP_NUM_THREADS=1
