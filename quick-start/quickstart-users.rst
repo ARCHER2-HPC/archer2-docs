@@ -344,7 +344,8 @@ favourite text editor. For example, using ``vim``:
   i.e. replace the `t01` above with your project code and replace the username `auser` with your ARCHER2 username.
 
 Paste the following text into your job submission script, replacing ``ENTER_YOUR_BUDGET_CODE_HERE`` with
-your budget code e.g. ``e99-ham``.
+your budget code e.g. ``e99-ham``, ``ENTER_PARTITION_HERE`` with the partition you wish to run on (e.g 
+``standard``), and ``ENTER_QOS_HERE`` with the quality of service you want (e.g. ``standard``).
 
 ::
 
@@ -356,6 +357,8 @@ your budget code e.g. ``e99-ham``.
   #SBATCH --cpus-per-task=1
   #SBATCH --time=0:5:0
   #SBATCH --account=ENTER_YOUR_BUDGET_CODE_HERE
+  #SBATCH --partition=ENTER_PARTITION_HERE
+  #SBATCH --qos=ENTER_QOS_HERE
 
   # Load the xthi module to get access to the xthi program
   module load xthi

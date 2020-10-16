@@ -125,6 +125,8 @@ Example Python submission script
 
     # Replace [budget code] below with your project code (e.g. t01)
     #SBATCH --account=[budget code]
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
     
     # Load the Python module
     module load cray-python
@@ -154,6 +156,8 @@ when it reaches the line ``from mpi4py import MPI``.
 
     # Replace [budget code] below with your budget code (e.g. t01)
     #SBATCH --account=[budget code]
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
 
     # Load the Python module
     module load cray-python

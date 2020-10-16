@@ -53,6 +53,8 @@ How to use CrayPat-lite
    #SBATCH --time=00:20:00
    
    #SBATCH --account=[budget code]
+   #SBATCH --partition=standard
+   #SBATCH --qos=standard
    
    srun mpi_test.x
 

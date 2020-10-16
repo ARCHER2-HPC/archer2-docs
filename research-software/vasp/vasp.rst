@@ -106,6 +106,8 @@ The following script will run a VASP job using 2 nodes (128x2, 256 total cores).
   #SBATCH --qos=standard
   
   #SBATCH --account=[budget code]
+  #SBATCH --partition=standard
+  #SBATCH --qos=standard
   
   # Load the VASP module, avoid any unintentional OpenMP threading by
   # setting OMP_NUM_THREADS, and launch the code.
@@ -164,6 +166,8 @@ only MPI ranks and no OpenMP threading.
   #SBATCH --qos=standard
   
   #SBATCH --account=[budget code]
+  #SBATCH --partition=standard
+  #SBATCH --qos=standard
   
   # Load the VASP module, avoid any unintentional OpenMP threading by
   # setting OMP_NUM_THREADS, and launch the code.

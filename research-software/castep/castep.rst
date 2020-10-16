@@ -57,6 +57,8 @@ assumes that the input files have the file stem ``text_calc``.
   #SBATCH --qos=standard
   
   #SBATCH --account=[budget code]
+  #SBATCH --partition=standard
+  #SBATCH --qos=standard
 
   # Load the CASTEP module, avoid any unintentional OpenMP threading by
   # setting OMP_NUM_THREADS, and launch the code.
