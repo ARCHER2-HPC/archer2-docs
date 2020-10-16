@@ -542,6 +542,7 @@ memory on the compute nodes, it can speed up the job startup time.
     sbcast --compress=lz4 /path/to/exe /tmp/exe
     srun /tmp/exe
 
+<!-- TODO: revist once this is working
 Network Locality
 ~~~~~~~~~~~~~~~~
 
@@ -557,6 +558,7 @@ be specified. For example:
 ::
 
     sbatch --switches=1@60 job.sh``
+-->
 
 Process Placement
 ~~~~~~~~~~~~~~~~~

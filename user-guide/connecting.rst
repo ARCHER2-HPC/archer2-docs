@@ -240,3 +240,166 @@ system.
   need to either specify the path to your ssh key in the command line (using the ``-i``
   option as described above) or add the path to your SSH config file by using the
   ``IdentityFile`` option.
+
+SSH debugging tips
+------------------
+
+If you find you are unable to connect via SSH there are a number of ways you can
+try and diagnose the issue. Some of these are collected below - if you are
+having difficulties connecting we suggest trying these before contacting the
+ARCHER2 service desk.
+
+Can you connect to the login node?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Try the command ``ping -c 3 login.archer2.ac.uk``. If you successfully connect
+to the login node, the output should include:
+
+::
+
+  --- login.dyn.archer2.ac.uk ping statistics ---
+  3 packets transmitted, 3 received, 0% packet loss, time 38ms
+
+(the ping time '38ms' is not important). If not all packets are received
+there could be a problem with your internet connection, or the login node could
+be unavailable.
+
+SSH key
+~~~~~~~
+
+If you get the error message ``Permission denied (publickey)`` this can indicate
+a problem with your SSH key. Some things to check:
+
+ - Have you uploaded the key to SAFE? Please note that if the same key is
+   reuploaded SAFE will not map the "new" key to ARCHER2. If for some reason
+   this is required, please delete the key first, then reupload.
+ - Is ssh using the correct key? You can check which keys are being found and
+   offered by ssh using ``ssh -vvv``. If your private key has a non-default name
+   you can use the ``-i`` flag to provide it to ssh, i.e. ``ssh -i path/to/key
+   username@login.archer2.ac.uk``.
+ - Are you entering the passphrase correctly? You will be asked for your private
+   key's passphrase first. If you enter it incorrectly you will usually be asked
+   to enter it again, and usually up to three times in total, after which ssh
+   will fail with ``Permission denied (publickey)``. If you would like to
+   confirm your passphrase without attempting to connect, you can use
+   ``ssh-keygen -y -f /path/to/private/key``. If successful, this command will
+   print the corresponding public key. You can also use this to check it is the
+   one uploaded to SAFE.
+ - Are permissions correct on the ssh key? One common issue is that the
+   permissions are incorrect on the either the key file, or the directory it's
+   contained in. On Linux/MacOS for example, if your private keys are held in
+   ``~/.ssh/`` you can check this with ``ls -al ~/.ssh``. This should give
+   something similar to the following output:
+
+   ::
+
+     $ ls -al ~/.ssh/
+     drwx------.  2 user group    48 Jul 15 20:24 .
+     drwx------. 12 user group  4096 Oct 13 12:11 ..
+     -rw-------.  1 user group   113 Jul 15 20:23 authorized_keys
+     -rw-------.  1 user group 12686 Jul 15 20:23 id_rsa
+     -rw-r--r--.  1 user group  2785 Jul 15 20:23 id_rsa.pub
+     -rw-r--r--.  1 user group  1967 Oct 13 14:11 known_hosts
+
+   The important section here is the string of letters and dashes at the start,
+   for the lines ending in ``.``, ``id_rsa``, and ``id_rsa.pub``, which indicate
+   permissions on the containing directory, private key, and public key
+   respectively. If your permissions are not correct, they can be set with
+   ``chmod``. Consult the table below for the relevant ``chmod`` command. On
+   Windows, permissions are handled differently but can be set by right-clicking
+   on the file and selecting Properties > Security > Advanced. The user, SYSTEM,
+   and Administrators should have ``Full control``, and no other
+   permissions should exist for both public and private key files, and the
+   containing folder.
+
++-------------+----------------+----------------+
+| Target      | Permissions    | ``chmod`` Code |
++=============+================+================+
+| Directory   | ``drwx------`` |      700       |
++-------------+----------------+----------------+
+| Private Key | ``-rw-------`` |      600       |
++-------------+----------------+----------------+
+| Public Key  | ``-rw-r--r--`` |      644       |
++-------------+----------------+----------------+
+
+``chmod`` can be used to set permissions on the target in the following way:
+``chmod <code> <target>``. So for example to set correct permissions on the
+private key file ``id_rsa_ARCHER2`` one would use the command ``chmod 600
+id_rsa_ARCHER2``.
+
+.. note::
+  Unix file permissions can be understood in the following way. There are three
+  groups that can have file permissions: (owning) *users*, (owning) *groups*,
+  and *others*. The available permissions are *read*, *write*, and *execute*.
+  The first character indicates whether the target is a file ``-``, or directory
+  ``d``. The next three characters indicate the owning user's permissions. The
+  first character is ``r`` if they have read permission, ``-`` if they don't,
+  the second character is ``w`` if they have write permission, ``-`` if they
+  don't, the third character is ``x`` if they have execute permission, ``-`` if
+  they don't. This pattern is then repeated for *group*, and *other*
+  permissions. For example the pattern ``-rw-r--r--`` indicates that the owning
+  user can read and write the file, members of the owning group can read it, and
+  anyone else can also read it. The ``chmod`` codes are constructed by treating
+  the user, group, and owner permission strings as binary numbers, then
+  converting them to decimal. For example the permission string ``-rwx------``
+  becomes ``111 000 000`` -> ``700``.
+
+Password
+~~~~~~~~
+
+If you are having trouble entering your password consider using a password
+manager, from which you can copy and paste it. This will also help you generate
+a secure password. If you need to reset your password, instructions for doing so
+can be found `here
+<https://epcced.github.io/safe-docs/safe-for-users/#reset_machine>`__.
+
+Windows users please note that ``Ctrl+V`` does not work to paste in to PuTTY,
+MobaXterm, or PowerShell. Instead use ``Shift+Ins`` to paste. Alternatively,
+right-click and select 'Paste' in PuTTY and MobaXterm, or simply right-click to
+paste in PowerShell.
+
+SSH verbose output
+~~~~~~~~~~~~~~~~~~
+
+Verbose debugging output from ``ssh`` can be very useful for diagnosing the
+issue. In particular, it can be used to distinguish between problems with the
+SSH key and password - further details are given below. To enable verbose output
+add the ``-vvv`` flag to your SSH command. For example:
+
+::
+
+  ssh -vvv username@login.archer2.ac.uk
+
+The output is lengthy, but somewhere in there you should see lines similar to
+the following:
+
+::
+
+  debug1: Next authentication method: publickey
+  debug1: Offering public key: RSA SHA256:<key-hash> <path_to_private_key>
+  debug3: send_pubkey_test
+  debug3: send packet: type 50
+  debug2: we sent a publickey packet, wait for reply
+  debug3: receive packet: type 60
+  debug1: Server accepts key: pkalg ssh-rsa vlen 2071
+  debug2: input_userauth_pk_ok: fp SHA256:<key-hash>
+  debug3: sign_and_send_pubkey: RSA SHA256:<key-hash>
+  Enter passphrase for key '<path_to_private_key>':
+  debug3: send packet: type 50
+  debug3: receive packet: type 51
+  Authenticated with partial success.
+
+Most importantly, you can see which files ssh has checked for private keys, and
+you can see if any key is accepted. The line ``Authenticated with partial
+success`` indicates that the SSH key has been accepted, and you will next be
+asked for your password. By default ssh will go through a list of standard
+private key files, as well as any you have specified with ``-i`` or a config
+file. This is fine, as long as one of the files mentioned is the one that
+matches the public key uploaded to SAFE.
+
+If you do not see ``Authenticated with partial success`` anywhere in the verbose
+output, consider the suggestions under *SSH key* above. If you do, but are 
+unable to connect, consider the suggestions under *Password* above.
+
+The equivalent information can be obtained in PuTTY or MobaXterm by enabling
+all logging in settings.
