@@ -45,48 +45,50 @@ to the wrapper when using it.
 Programming environments
 ------------------------
 
-On login to ARCHER2, the ``PrgEnv-cray`` module will be loaded, as will a
+On login to ARCHER2, the ``PrgEnv-cray`` collection will be loaded, as will a
 ``cce`` module. The latter makes available Cray's compilers from the Cray
 Compiling Environment (CCE), while the former provides the correct wrappers and
-support to use them. The GNU Compiler Collection (GCC) is also available. To make
-use of any Programming Environment, simply swap to the correct ``PrgEnv``
-module. After doing so the compiler wrappers (``cc``, ``CC`` and ``ftn``) will
+support to use them. The GNU Compiler Collection (GCC) is also available.
+
+To make use of any Programming Environment, restore the correct ``PrgEnv``
+collection. After doing so the compiler wrappers (``cc``, ``CC`` and ``ftn``) will
 correctly call the compilers from the new suite. The default version of the
 corresponding compiler suite will also be loaded, but you may swap to another
 available version if you wish.
 
 The following table summarises the suites and associated programming environments.
 
-+------------+--------+--------------------------------+
-| Suite name | Module | Programming environment module |
-+============+========+================================+
-| CCE        |``cce`` | ``PrgEnv-cray``                |
-+------------+--------+--------------------------------+
-| GCC        |``gcc`` | ``PrgEnv-gnu``                 |
-+------------+--------+--------------------------------+
++------------+--------+------------------------------------+
+| Suite name | Module | Programming environment collection |
++============+========+====================================+
+| CCE        |``cce`` | ``PrgEnv-cray``                    |
++------------+--------+------------------------------------+
+| GCC        |``gcc`` | ``PrgEnv-gnu``                     |
++------------+--------+------------------------------------+
+| AOCC       |``aocc``| ``PrgEnv-aocc``                    |
++------------+--------+------------------------------------+
 
 As an example, after logging in you may wish to use GCC as your compiler suite.
-Running ``module swap PrgEnv-cray PrgEnv-gnu`` will unload the Cray environment
-and replace it with the GNU environment. It will also unload the ``cce`` module
+Running ``module restore PrgEnv-gnu`` will replace the Cray environment
+with the GNU environment. It will also unload the ``cce`` module
 and load the default version of the ``gcc`` module; at the time of writing, this
-is GCC 9.3.0. If you need to use a different version of GCC, for example 8.1.0,
-you would follow up with ``module swap gcc gcc/8.1.0``. At this point you may 
+is GCC 10.1.0. If you need to use a different version of GCC, for example 9.3.0,
+you would follow up with ``module swap gcc gcc/9.3.0``. At this point you may 
 invoke the compiler wrappers and they will correctly use Cray's libraries and 
-tools in conjunction with GCC 8.1.0.
+tools in conjunction with GCC 9.3.0.
 
 When choosing the programming environment, a big factor will likely be which
 compilers you have previously used for your code's development. The Cray Fortran
 compiler is similar to the compiler you may be familiar with from ARCHER, while
 the Cray C and C++ compilers provided on ARCHER2 are new versions that are now
-derived from Clang. The GCC suite provides gcc and gfortran.
+derived from Clang. The GCC suite provides gcc/g++ and gfortran. The AOCC suite
+provides AMD Clang/Clang++ and AMD Flang.
 
 .. note::
 
   Unlike ARCHER, the Intel compilers are not available on ARCHER2.
 
-.. note::
 
-  We will add information on the AOCC compilers when they become available.
 
 .. TODO: Possibly - uncomment the following section if CDT modules become available.
 
@@ -172,14 +174,19 @@ read are accessed as follow:
 
 .. note::
 
-  We will add information on the AOCC compilers when they become available.
+  There are no ``man`` pages for the AOCC compilers at the moment.
 
 Linking on ARCHER2
 ------------------
 
 Executables on ARCHER2 link dynamically, and the Cray Programming Environment
 does not currently support static linking. This is in contrast to ARCHER where
-the default was to build statically. 
+the default was to build statically.
+
+The compiler wrapper scripts on ARCHER link runtime libraries in using the
+``runpath`` by default. This means that the paths to the runtime libraries
+are encoded into the executable so you do not need to load the compiler 
+environment in your job submission scripts.
 
 Using RPATHs to link
 ^^^^^^^^^^^^^^^^^^^^

@@ -19,7 +19,7 @@ control which software and versions are available to you.
 By default, all users on ARCHER2 start with the default software
 environment loaded.
 
-Software modules on ARCHER2 are provided by both Cray (usually known
+Software modules on ARCHER2 are provided by both HPE Cray (usually known
 as the *Cray Development Environment, CDE*) and by EPCC, who provide 
 the Service Provision, and Computational Science and Engineering 
 services.
@@ -43,6 +43,8 @@ you wish to perform. Common subcommands are:
   - ``module list [name]`` - List modules currently loaded in your environment,
     optionally filtered by ``[name]``
   - ``module avail [name]`` - List modules available, optionally filtered by ``[name]``
+  - ``module savelist`` - List module collections available (usually used for accessing different programming environments)
+  - ``module restore name`` - Restore the module collection called ``name`` (usually used for setting up a programming environment)
   - ``module load name`` - Load the module called ``name`` into your environment
   - ``module remove name`` - Remove the module called ``name`` from your environment
   - ``module swap old new`` - Swap module ``new`` for module ``old`` in your environment
@@ -59,68 +61,52 @@ and their versions you have presently loaded in your environment:
 
 .. code-block:: console
 
-    auser@login01-nmn:~> module list
-    Currently Loaded Modulefiles:
-     1) cce/10.0.0(default)                                 
-     2) cray-libsci/20.03.1.4(default)                      
-     3) cray-mpich/8.0.10(default)                          
-     4) PrgEnv-cray/7.0.0(default)                          
-     5) craype/2.6.4(default)                               
-     6) craype-x86-rome                                     
-     7) libfabric/1.10.0.0.249(default)                     
-     8) craype-network-slingshot10                          
-     9) cray-dsmml/0.1.0(default)                           
-    10) perftools-base/20.05.0(default)                     
-    11) xpmem/2.2.35-7.0.1.0_3.9__gfa8d091.shasta(default)
+    auser@uan01:~> module list
+Currently Loaded Modulefiles:
+ 1) cpe-aocc                          7) cray-dsmml/0.1.2(default)                           
+ 2) aocc/2.1.0.3(default)             8) perftools-base/20.09.0(default)                     
+ 3) craype/2.7.0(default)             9) xpmem/2.2.35-7.0.1.0_1.3__gd50fabf.shasta(default)  
+ 4) craype-x86-rome                  10) cray-mpich/8.0.15(default)                          
+ 5) libfabric/1.11.0.0.233(default)  11) cray-libsci/20.08.1.2(default)                      
+ 6) craype-network-ofi  
 
 Finding out which software modules are available on the system is performed using the
 ``module avail`` command. To list all software modules available, use:
 
 .. code-block:: console
 
-    auser@login01-nmn:~> module avail
-    ----------------------- /opt/cray/pe/perftools/20.05.0/modulefiles ------------------------
-    perftools       perftools-lite-events  perftools-lite-hbm    perftools-nwpc     
-    perftools-lite  perftools-lite-gpu     perftools-lite-loops  perftools-preload  
-    
-    -------------------------- /opt/cray/pe/craype/2.6.4/modulefiles --------------------------
-    craype-hugepages1G  craype-hugepages8M   craype-hugepages128M  craype-network-slingshot10  
-    craype-hugepages2G  craype-hugepages16M  craype-hugepages256M  craype-x86-rome             
-    craype-hugepages2M  craype-hugepages32M  craype-hugepages512M  
-    craype-hugepages4M  craype-hugepages64M  craype-network-none   
-    
-    ----------------------------- /usr/local/Modules/modulefiles ------------------------------
-    dot  module-git  module-info  modules  null  use.own  
-    
-    -------------------------------- /opt/cray/pe/modulefiles ---------------------------------
-    atp/3.5.4(default)                         cray-openshmemx/10.1.0(default)         
-    cce/10.0.0(default)                        cray-parallel-netcdf/1.11.1.1(default)  
-    cray-ccdb/4.5.4(default)                   cray-pmi-lib/6.0.5(default)             
-    cray-cti/2.5.6(default)                    cray-pmi/6.0.5(default)                 
-    cray-dsmml/0.1.0(default)                  cray-stat/4.4.5(default)                
-    cray-fftw/3.3.8.4(default)                 craype-dl-plugin-py3/20.05.1            
-    cray-fftw/3.3.8.5                          craype/2.6.4(default)                   
-    cray-ga/5.7.0.3                            craypkg-gen/1.3.9(default)              
-    cray-hdf5-parallel/1.10.5.2(default)       gdb4hpc/4.5.6(default)                  
-    cray-hdf5/1.10.5.2(default)                iobuf/2.0.9(default)                    
-    cray-libsci/20.03.1.4(default)             papi/5.7.0.3(default)                   
-    cray-mpich-abi/8.0.10                      perftools-base/20.05.0(default)         
-    cray-mpich/8.0.10(default)                 PrgEnv-cray/7.0.0(default)              
-    cray-netcdf-hdf5parallel/4.6.3.2(default)  PrgEnv-gnu/7.0.0(default)               
-    cray-netcdf/4.6.3.2(default)               valgrind4hpc/2.5.5(default)             
+  auser@uan01:~> module avail
+  ------------------------------- /opt/cray/pe/perftools/20.09.0/modulefiles --------------------------------
+  perftools       perftools-lite-events  perftools-lite-hbm    perftools-nwpc     
+  perftools-lite  perftools-lite-gpu     perftools-lite-loops  perftools-preload  
 
-    ---------------------------------- /opt/cray/modulefiles ----------------------------------
-    capsules/0.8.3(default)                                                                 
-    chapel/1.20.1(default)                                                                  
-    cray-lustre-client/2.12.0.5_cray_166_gf6711cf-7.0.1.0_2.24__gf6711cfb3.shasta(default)  
-    cray-shasta-mlnx-firmware/1.0.5(default)                                                
-    dvs/2.12_2.2.259-7.0.1.0_6.1__g6ee74127(default)                                        
-    libfabric/1.10.0.0.249(default)                                                         
-    spark/3.0.0(default)                                                                    
-    xpmem/2.2.35-7.0.1.0_3.9__gfa8d091.shasta(default)                                      
-    
-    ------------------------------------ /opt/modulefiles -------------------------------------
-    cray-python/3.8.2.0(default)  cray-R/3.6.3(default)  gcc/8.1.0  gcc/9.3.0(default)
+  ---------------------------------- /opt/cray/pe/craype/2.7.0/modulefiles ----------------------------------
+  craype-hugepages1G  craype-hugepages8M   craype-hugepages128M  craype-network-ofi          
+  craype-hugepages2G  craype-hugepages16M  craype-hugepages256M  craype-network-slingshot10  
+  craype-hugepages2M  craype-hugepages32M  craype-hugepages512M  craype-x86-rome             
+  craype-hugepages4M  craype-hugepages64M  craype-network-none   
+
+  ------------------------------------- /usr/local/Modules/modulefiles --------------------------------------
+  dot  module-git  module-info  modules  null  use.own  
+
+  -------------------------------------- /opt/cray/pe/cpe-prgenv/7.0.0 --------------------------------------
+  cpe-aocc  cpe-cray  cpe-gnu  
+
+  -------------------------------------------- /opt/modulefiles ---------------------------------------------
+  aocc/2.1.0.3(default)  cray-R/4.0.2.0(default)  gcc/8.1.0  gcc/9.3.0  gcc/10.1.0(default)  
+                                    
+
+  ---------------------------------------- /opt/cray/pe/modulefiles -----------------------------------------
+  atp/3.7.4(default)              cray-mpich-abi/8.0.15             craype-dl-plugin-py3/20.06.1(default)  
+  cce/10.0.3(default)             cray-mpich-ucx/8.0.15             craype/2.7.0(default)                  
+  cray-ccdb/4.7.1(default)        cray-mpich/8.0.15(default)        craypkg-gen/1.3.10(default)            
+  cray-cti/2.7.3(default)         cray-netcdf-hdf5parallel/4.7.4.0  gdb4hpc/4.7.3(default)                 
+  cray-dsmml/0.1.2(default)       cray-netcdf/4.7.4.0               iobuf/2.0.10(default)                  
+  cray-fftw/3.3.8.7(default)      cray-openshmemx/11.1.1(default)   papi/6.0.0.2(default)                  
+  cray-ga/5.7.0.3                 cray-parallel-netcdf/1.12.1.0     perftools-base/20.09.0(default)        
+  cray-hdf5-parallel/1.12.0.0     cray-pmi-lib/6.0.6(default)       valgrind4hpc/2.7.2(default)            
+  cray-hdf5/1.12.0.0              cray-pmi/6.0.6(default)           
+  cray-libsci/20.08.1.2(default)  cray-python/3.8.5.0(default)    
 
 This will list all the names and versions of the modules available on
 the service. Not all of them may work in your account though due to,
@@ -132,45 +118,44 @@ software may be deleted.
 
 You can list all the modules of a particular type by providing an
 argument to the ``module avail`` command. For example, to list all
-available versions of the FFTW library, use:
+available versions of the HPE Cray FFTW library, use:
 
 .. code-block:: console
 
-    auser@login01-nmn:~> module avail cray-fftw
+  auser@uan01:~> module avail cray-fftw
  
-    --------------------------- /opt/cray/pe/modulefiles ---------------------------
-    cray-fftw/3.3.8.4(default)  cray-fftw/3.3.8.5
+  ---------------------------------------- /opt/cray/pe/modulefiles -----------------------------------------
+  cray-fftw/3.3.8.7(default) 
 
 If you want more info on any of the modules, you can use the
 ``module help`` command:
 
 .. code-block:: console
 
-    auser@login01-nmn:~> module help cray-fftw
+  auser@uan01:~> module help cray-fftw
 
-    -------------------------------------------------------------------
-    Module Specific Help for /opt/cray/pe/modulefiles/cray-fftw/3.3.8.4:
+  -------------------------------------------------------------------
+  Module Specific Help for /opt/cray/pe/modulefiles/cray-fftw/3.3.8.7:
+
+
+  ===================================================================
+  FFTW 3.3.8.7
+  ============
+    Release Date:
+    -------------
+      June 2020
+
+
+    Purpose:
+    --------
+      This Cray FFTW 3.3.8.7 release is supported on Cray Shasta Systems. 
+      FFTW is supported on the host CPU but not on the accelerator of Cray systems.
+
+      The Cray FFTW 3.3.8.7 release provides the following:
+        - Optimizations for AMD Rome CPUs.
+      See the Product and OS Dependencies section for details
     
-    
-    ===================================================================
-    FFTW 3.3.8.4
-    ============
-      Release Date:
-      -------------
-        November 2019
-    
-    
-      Purpose:
-      --------
-        This Cray FFTW 3.3.8.4 release is supported on Cray Systems. 
-        FFTW is supported on the host CPU but not on the accelerator of Cray systems.
-    
-        The Cray FFTW 3.3.8.4 release provides the following:
-          - Support for AMD Rome CPUs.
-        See the Product and OS Dependencies section for details.
-    
-    
-    [...]
+  [...]
 
 The ``module show`` command reveals what operations the module actually
 performs to change your environment when it is loaded. We provide a brief
@@ -179,52 +164,59 @@ For example, for the default FFTW module:
 
 .. code-block:: console
 
-    auser@login01-nmn:~> module show cray-fftw
+  auser@uan01:~> module show cray-fftw
+  -------------------------------------------------------------------
+  /opt/cray/pe/modulefiles/cray-fftw/3.3.8.7:
 
-    -------------------------------------------------------------------
-    /opt/cray/pe/modulefiles/cray-fftw/3.3.8.4:
-
-    conflict        cray-fftw
-    conflict        fftw
-    setenv          FFTW_VERSION 3.3.8.4
-    setenv          CRAY_FFTW_VERSION 3.3.8.4
-    setenv          CRAY_FFTW_PREFIX /opt/cray/pe/fftw/3.3.8.4/x86_rome
-    setenv          FFTW_ROOT /opt/cray/pe/fftw/3.3.8.4/x86_rome
-    setenv          FFTW_DIR /opt/cray/pe/fftw/3.3.8.4/x86_rome/lib
-    setenv          FFTW_INC /opt/cray/pe/fftw/3.3.8.4/x86_rome/include
-    prepend-path    PATH /opt/cray/pe/fftw/3.3.8.4/x86_rome/bin
-    prepend-path    MANPATH /opt/cray/pe/fftw/3.3.8.4/share/man
-    prepend-path    CRAY_LD_LIBRARY_PATH /opt/cray/pe/fftw/3.3.8.4/x86_rome/lib
-    setenv          PE_FFTW_REQUIRED_PRODUCTS PE_MPICH
-    prepend-path    PE_PKGCONFIG_PRODUCTS PE_FFTW
-    setenv          PE_FFTW_TARGET_broadwell broadwell
-    setenv          PE_FFTW_TARGET_haswell haswell
-    setenv          PE_FFTW_TARGET_ivybridge ivybridge
-    setenv          PE_FFTW_TARGET_mic_knl mic_knl
-    setenv          PE_FFTW_TARGET_sandybridge sandybridge
-    setenv          PE_FFTW_TARGET_share share
-    setenv          PE_FFTW_TARGET_x86_64 x86_64
+  conflict        cray-fftw
+  conflict        fftw
+  setenv          FFTW_VERSION 3.3.8.7
+  setenv          CRAY_FFTW_VERSION 3.3.8.7
+  setenv          CRAY_FFTW_PREFIX /opt/cray/pe/fftw/3.3.8.7/x86_rome
+  setenv          FFTW_ROOT /opt/cray/pe/fftw/3.3.8.7/x86_rome
+  setenv          FFTW_DIR /opt/cray/pe/fftw/3.3.8.7/x86_rome/lib
+  setenv          FFTW_INC /opt/cray/pe/fftw/3.3.8.7/x86_rome/include
+  prepend-path    PATH /opt/cray/pe/fftw/3.3.8.7/x86_rome/bin
+  prepend-path    MANPATH /opt/cray/pe/fftw/3.3.8.7/share/man
+  prepend-path    CRAY_LD_LIBRARY_PATH /opt/cray/pe/fftw/3.3.8.7/x86_rome/lib
+  prepend-path    PE_PKGCONFIG_PRODUCTS PE_FFTW
+  setenv          PE_FFTW_TARGET_x86_skylake x86_skylake
+  setenv          PE_FFTW_TARGET_x86_rome x86_rome
+  setenv          PE_FFTW_TARGET_x86_cascadelake x86_cascadelake
+  setenv          PE_FFTW_TARGET_x86_64 x86_64
+  setenv          PE_FFTW_TARGET_share share
+  setenv          PE_FFTW_TARGET_sandybridge sandybridge
+  setenv          PE_FFTW_TARGET_mic_knl mic_knl
+  setenv          PE_FFTW_TARGET_ivybridge ivybridge
+  setenv          PE_FFTW_TARGET_haswell haswell
+  setenv          PE_FFTW_TARGET_broadwell broadwell
+  setenv          PE_FFTW_VOLATILE_PKGCONFIG_PATH /opt/cray/pe/fftw/3.3.8.7/@PE_FFTW_TARGET@/lib/pkgconfig
+  setenv          PE_FFTW_PKGCONFIG_VARIABLES PE_FFTW_OMP_REQUIRES_@openmp@
+  setenv          PE_FFTW_OMP_REQUIRES { }
+  setenv          PE_FFTW_OMP_REQUIRES_openmp _mp
+  setenv          PE_FFTW_PKGCONFIG_LIBS fftw3_mpi:libfftw3_threads:fftw3:fftw3f_mpi:libfftw3f_threads:fftw3f
+  module-whatis   {FFTW 3.3.8.7 - Fastest Fourier Transform in the West}
     [...]
 
 Loading, removing and swapping modules
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To load a module to use the ``module load`` command. For example,
-to load the default version of FFTW into your environment, use:
+to load the default version of HPE Cray FFTW into your environment, use:
 
 .. code-block:: console
 
-    module load cray-fftw
+  auser@uan01:~> module load cray-fftw
 
-Once you have done this, your environment will be setup to use the FFTW library.
-This version of the command will load the default version of FFTW. If
+Once you have done this, your environment will be setup to use the HPE Cray FFTW
+library. The above command will load the default version of HPE Cray FFTW. If
 you need a specific version of the software, you can add more information:
 
 .. code-block:: console
 
-    module load cray-fftw/3.3.8.5
+  auser@uan01:~> module load cray-fftw/3.3.8.7
 
-will load FFTW version 3.3.8.5 into your environment, regardless of the
+will load HPE Cray FFTW version 3.3.8.7 into your environment, regardless of the
 default.
 
 If you want to remove software from your environment, ``module remove`` will
@@ -232,7 +224,7 @@ remove a loaded module:
 
 .. code-block:: console
 
-    module remove cray-fftw
+  auser@uan01:~> module remove cray-fftw
 
 will unload what ever version of ``cray-fftw`` (even if it is not the default)
 you might have loaded. 
@@ -243,23 +235,16 @@ version which is not yet the default or using a legacy version to keep
 compatibility with old data. This can be achieved most easily by using 
 "module swap oldmodule newmodule". 
 
-Suppose you have loaded version 3.3.8.4 of ``cray-fftw``, the following
+Suppose you have loaded version 3.3.8.7 of ``cray-fftw``, the following
 command will change to version 3.3.8.5:
 
 .. code-block:: console
 
-    module swap cray-fftw cray-fftw/3.3.8.5
+  auser@uan01:~> module swap cray-fftw cray-fftw/3.3.8.5
 
 You did not need to specify the version of the loaded module in your
 current environment as this can be inferred as it will be the only one
 you have loaded.
-
-.. note::
-
-  The ``module swap`` command is most often used on ARCHER2 to switch 
-  between different compiler environments, *e.g.* Cray compilers to 
-  GNU compilers. The software development environment is described in
-  more detail in the :doc:`dev-environment` chapter.
 
 Capturing your environment for reuse
 ------------------------------------
@@ -267,40 +252,101 @@ Capturing your environment for reuse
 .. TODO Update section once Lmod is installed on ARCHER2
 
 Sometimes it is useful to save the module environment that you are using to
-compile a piece of code or execute a piece of software. You can save the list of
-loaded modules by executing:
+compile a piece of code or execute a piece of software. This is known as a
+module *collection* You can save a collection from your current environment 
+by executing:
 
 .. code-block:: console
 
-    module save [environment_name]
+  auser@uan01:~> module save [collection_name]
 
 .. note::
 
-    If you do not specify the environment name, it is called ``default``.
+  If you do not specify the environment name, it is called ``default``.
 
-You can find the list of saved module enviroments by executing:
+You can find the list of saved module environments by executing:
 
 .. code-block:: console
 
-    module savelist
+  auser@uan01:~> module savelist
+  Named collection list:
+   1) default   2) PrgEnv-aocc   3) PrgEnv-cray   4) PrgEnv-gnu 
+
+.. note::
+
+  All users have three PrgEnv collections available. These are used
+  to setup the different programming environments for compiling 
+  software.
 
 You can load a saved module environment by executing:
 
 .. code-block:: console
 
-    module restore <environment_name>
+  auser@uan01:~> module restore PrgEnv-gnu
+  Unloading cray-fftw/3.3.8.7
+  Unloading cray-libsci/20.08.1.2
+  Unloading cray-mpich/8.0.15
+  Unloading xpmem/2.2.35-7.0.1.0_1.3__gd50fabf.shasta
+
+  Unloading perftools-base/20.09.0
+    WARNING: Did not unuse /opt/cray/pe/perftools/20.09.0/modulefiles
+
+  Unloading cray-dsmml/0.1.2
+  Unloading craype-network-ofi
+  Unloading libfabric/1.11.0.0.233
+  Unloading craype-x86-rome
+
+  Unloading craype/2.7.0
+    WARNING: Did not unuse /opt/cray/pe/craype/2.7.0/modulefiles
+
+  Unloading aocc/2.1.0.3
+  Unloading cpe-aocc
+  Loading cpe-gnu
+  Loading gcc/10.1.0
+  Loading craype/2.7.0
+  Loading craype-x86-rome
+  Loading libfabric/1.11.0.0.233
+  Loading craype-network-ofi
+  Loading cray-dsmml/0.1.2
+  Loading perftools-base/20.09.0
+  Loading xpmem/2.2.35-7.0.1.0_1.3__gd50fabf.shasta
+  Loading cray-mpich/8.0.15
+  Loading cray-libsci/20.08.1.2
 
 To list the saved environment modules, you can execute:
 
 .. code-block:: console
 
-    module saveshow
+  auser@uan01:~> module saveshow
+  -------------------------------------------------------------------
+  /home/t01/t01/atuser/.module/default:
+
+  module use --append /opt/cray/pe/perftools/20.09.0/modulefiles
+  module use --append /opt/cray/pe/craype/2.7.0/modulefiles
+  module use --append /usr/local/Modules/modulefiles
+  module use --append /opt/cray/pe/cpe-prgenv/7.0.0
+  module use --append /opt/modulefiles
+  module use --append /opt/cray/modulefiles
+  module use --append /opt/cray/pe/modulefiles
+  module use --append /opt/cray/pe/craype-targets/default/modulefiles
+  module load cpe-aocc
+  module load aocc
+  module load craype
+  module load craype-x86-rome
+  module load --notuasked libfabric
+  module load craype-network-ofi
+  module load cray-dsmml
+  module load perftools-base
+  module load xpmem
+  module load cray-mpich
+  module load cray-libsci
+  module load cray-fftw
 
 To delete a module environment, you can execute:
 
 .. code-block:: console
 
-    module saverm <environment_name>
+  auser@uan01:~> module saverm <environment_name>
 
 Shell environment overview
 --------------------------
@@ -311,14 +357,13 @@ that can be listed by executing ``printenv`` or ``export``.
 
 The environment variables listed before are useful to define the behaviour of
 the software you run. For instance, ``OMP_NUM_THREADS`` define the number of
-threads. Another example is the environment variable ``CRAYPE_LINK_TYPE``, which
-defines the linking type (static or dynamic).
+threads.
 
 To define an environment variable, you need to execute:
 
 .. code-block:: console
 
-    export OMP_NUM_THREADS=4
+  export OMP_NUM_THREADS=4
 
 Please note there are no blanks between the variable name, the assignation
 symbol, and the value. If the value is a string, enclose the string in double
@@ -328,13 +373,13 @@ You can show the value of a specific environment variable if you print it:
 
 .. code-block:: console
 
-    echo $OMP_NUM_THREADS
+  echo $OMP_NUM_THREADS
 
 Do not forget the dollar symbol.
 To remove an environment variable, just execute:
 
 .. code-block:: console
 
-    unset OMP_NUM_THREADS
+  unset OMP_NUM_THREADS
 
 

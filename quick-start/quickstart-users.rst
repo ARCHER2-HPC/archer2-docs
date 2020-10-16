@@ -36,10 +36,27 @@ You can then login  with that email address and password. (You can change your i
 SAFE password whenever you want by selecting the `Change SAFE password` option from the
 `Your details` menu.)
 
+Generating and adding an SSH key pair
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+How you generate your SSH key pair depends on which operating system you use and which 
+SSH client you use to connect to ARCHER2. We will not cover the details on generating an
+SSH key pair here, but detailed information on generating an SSH key pair is available
+in the `ARCHER2 User and Best Practice Guide <https://docs.archer2.ac.uk/user-guide/connecting.html>`__.
+
+Once you have generated your SSH key pair, you should add the public part to your
+login account using SAFE:
+
+1. `Log into SAFE <https://safe.epcc.ed.ac.uk>`__
+2. Use the menu *Your details* and select *Update personal details*
+3. Either copy and paste the public part of your SSH key into the SSH Public key box or use the
+   button to select the public key file on your computer.
+4. Click *Update* to associate the public SSH key part with your SAFE account
+
 Request an ARCHER2 login account
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Once you have a SAFE account you will need to request a user account on ARCHER2 itself.
+Once you have a SAFE account and an SSH key you will need to request a user account on ARCHER2 itself.
 To do this you will require a *Project Code*; you usually obtain this from the Principle
 Investigator (PI) or project manager for the project you will be working on. Once you have
 the Project Code:
@@ -60,6 +77,7 @@ for your new account.
 .. note::
 
   ARCHER2 account passwords are also sometimes referred to as LDAP passwords by the system.
+
 
 Generating and adding an SSH key pair
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -189,18 +207,24 @@ on login, providing a default working environment; many more will be available
 for use but initially unloaded, allowing you to set up the environment to suit
 your needs.
 
-At any stage you can check which modules have been loaded by running::
+At any stage you can check which modules have been loaded by running
+
+::
 
   module list
 
 Running the following command will display all environment modules available on
-ARCHER2, whether loaded or unloaded::
+ARCHER2, whether loaded or unloaded
+
+::
 
   module avail
 
 The search field for this command may be narrowed by providing the first few
 characters of the module name being queried. For example, all available versions
-and variants of VASP may be found by running::
+and variants of VASP may be found by running
+
+::
 
   module avail vasp
 
@@ -220,9 +244,9 @@ a module for use. Following the above,
 
 ::
 
-  module load vasp
+  module load vasp/5
 
-would load the default version of VASP, while
+would load the default version of VASP 5, while
 
 ::
 
@@ -311,8 +335,8 @@ favourite text editor. For example, using ``vim``:
 
 ::
 
-  auser@eslogin01:~> cd /work/t01/t01/auser
-  auser@eslogin01:/work/t01/t01/auser> vim submit.slurm
+  auser@uan01:~> cd /work/t01/t01/auser
+  auser@uan01:/work/t01/t01/auser> vim submit.slurm
 
 .. note::
   
@@ -329,7 +353,7 @@ your budget code e.g. ``e99-ham``.
   #SBATCH --job-name=test_job
   #SBATCH --nodes=1
   #SBATCH --tasks-per-node=128
-  #SBATCH --cores-per-task=1
+  #SBATCH --cpus-per-task=1
   #SBATCH --time=0:5:0
   #SBATCH --account=ENTER_YOUR_BUDGET_CODE_HERE
 
@@ -346,7 +370,7 @@ You submit your job to the queues using the ``sbatch`` command:
 
 ::
 
-  auser@eslogin01:/work/t01/t01/auser> sbatch submit.slurm
+  auser@uan01:/work/t01/t01/auser> sbatch submit.slurm
   Submitted batch job 23996
   
   The value returned is your *Job ID*.
@@ -358,7 +382,7 @@ You use the ``squeue`` command to examine jobs in the queue. Use:
 
 ::
 
-  auser@eslogin01:/work/t01/t01/auser> squeue -u $USER
+  auser@uan01:/work/t01/t01/auser> squeue -u $USER
 
 To list all the jobs **you** have in the queue. ``squeue`` on its own lists all jobs
 in the queue from all users.
@@ -438,3 +462,6 @@ If you plan to compile your own programs on ARCHER2, you may also want to look a
 Other documentation you may find useful:
 
 * :doc:`ARCHER2 User and Best Practice Guide <../user-guide/overview>` - Covers all aspects of use of the ARCHER2 service. This includes fundamentals (required by all users to use the system effectively), best practice for getting the most out of ARCHER2, and more advanced technical topics.
+
+* `Cray Programming Environment User Guide <https://pubs.cray.com/content/S-2529/17.05/xctm-series-programming-environment-user-guide-1705-s-2529/introduction>`__
+

@@ -26,7 +26,10 @@ Using LAMMPS on ARCHER2
 LAMMPS is freely available to all ARCHER2 users.
 
 The centrally installed version of LAMMPS is compiled with all the
-standard packages included: `ASPHERE`, `BODY`, ..
+standard packages included: `ASPHERE`, `BODY`, `CLASS2`, `COLLOID`, 
+`COMPRESS`, `CORESHELL`, `DIPOLE`, `GRANULAR`, `KSPACE`, `MANYBODY`,
+'MC`, `MISC`, `MOLECULE`, `OPT`, `PERI`, `QEQ`, `REPLICA`, `RIGID`, 
+`SHOCK`, `SNAP`, `SRD`.
 
 We do not install any `USER` packages. If you are interested in a `USER`
 package, we would encourage you to try to compile your own version
@@ -59,11 +62,13 @@ For example, the following script will run a LAMMPS MD job using 4 nodes
    
    # Replace [budget code] below with your project code (e.g. t01)
    #SBATCH --account=[budget code]
+   #SBATCH --partition=[partition code]
+   #SBATCH --qos=[QOS code]
    
    # Load the relevant LAMMPS module
-   module load lammps/2019-12
+   module load lammps
 
-   srun lmp_mpi -in in.test > out.test
+   srun lmp -i in.test -o out.test
 
 
 Hints and Tips

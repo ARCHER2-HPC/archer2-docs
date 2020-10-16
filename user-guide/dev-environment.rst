@@ -21,19 +21,60 @@ and provides a development environment which includes:
 * Singularity containers
 
 Access to particular software, and particular versions, is managed by
-a standard TCL module framework. For a broad overview, a full list of what's
-available can be seen by typing
+a standard TCL module framework. Most software is available via standard
+software modules and the different programming environments are available
+via module collections.
+
+You can see what programming environments are available with:
 
 ::
 
-  $ module avail
+  auser@uan01:~> module savelist
+  Named collection list:
+   1) PrgEnv-aocc   2) PrgEnv-cray   3) PrgEnv-gnu 
+
+
+Other software modules can be listed with
+
+::
+
+  auser@uan01:~> module avail
+  ------------------------------- /opt/cray/pe/perftools/20.09.0/modulefiles --------------------------------
+  perftools       perftools-lite-events  perftools-lite-hbm    perftools-nwpc     
+  perftools-lite  perftools-lite-gpu     perftools-lite-loops  perftools-preload  
+
+  ---------------------------------- /opt/cray/pe/craype/2.7.0/modulefiles ----------------------------------
+  craype-hugepages1G  craype-hugepages8M   craype-hugepages128M  craype-network-ofi          
+  craype-hugepages2G  craype-hugepages16M  craype-hugepages256M  craype-network-slingshot10  
+  craype-hugepages2M  craype-hugepages32M  craype-hugepages512M  craype-x86-rome             
+  craype-hugepages4M  craype-hugepages64M  craype-network-none   
+
+  ------------------------------------- /usr/local/Modules/modulefiles --------------------------------------
+  dot  module-git  module-info  modules  null  use.own  
+
+  -------------------------------------- /opt/cray/pe/cpe-prgenv/7.0.0 --------------------------------------
+  cpe-aocc  cpe-cray  cpe-gnu  
+
+  -------------------------------------------- /opt/modulefiles ---------------------------------------------
+  aocc/2.1.0.3(default)  cray-R/4.0.2.0(default)  gcc/8.1.0  gcc/9.3.0  gcc/10.1.0(default)  
+                                    
+
+  ---------------------------------------- /opt/cray/pe/modulefiles -----------------------------------------
+  atp/3.7.4(default)              cray-mpich-abi/8.0.15             craype-dl-plugin-py3/20.06.1(default)  
+  cce/10.0.3(default)             cray-mpich-ucx/8.0.15             craype/2.7.0(default)                  
+  cray-ccdb/4.7.1(default)        cray-mpich/8.0.15(default)        craypkg-gen/1.3.10(default)            
+  cray-cti/2.7.3(default)         cray-netcdf-hdf5parallel/4.7.4.0  gdb4hpc/4.7.3(default)                 
+  cray-dsmml/0.1.2(default)       cray-netcdf/4.7.4.0               iobuf/2.0.10(default)                  
+  cray-fftw/3.3.8.7(default)      cray-openshmemx/11.1.1(default)   papi/6.0.0.2(default)                  
+  cray-ga/5.7.0.3                 cray-parallel-netcdf/1.12.1.0     perftools-base/20.09.0(default)        
+  cray-hdf5-parallel/1.12.0.0     cray-pmi-lib/6.0.6(default)       valgrind4hpc/2.7.2(default)            
+  cray-hdf5/1.12.0.0              cray-pmi/6.0.6(default)           
+  cray-libsci/20.08.1.2(default)  cray-python/3.8.5.0(default)      
 
 A full discussion of the module system is available in
 :doc:`sw-environment`.
 
-
 .. TODO: Review if and when the TCL module system is updated
-
 
 A consistent set of modules is loaded on login to the machine (currently
 ``PrgEnv-cray``, see below). Developing applications then means selecting
@@ -41,16 +82,13 @@ and loading the appropriate set of modules before starting work.
 
 This section is aimed at code developers and will concentrate on the
 compilation environment and building libraries and executables,
-and specifically
-parallel executables. Other topics such as :doc:`python`
-and :doc:`containers` are
-covered in more detail in separate sections of the documentation.
+and specifically parallel executables. Other topics such as :doc:`python`
+and :doc:`containers` are covered in more detail in separate sections of the documentation.
 
 Managing development
 --------------------
 
-ARCHER2 supports common revision control software such as ``git``, ``svn``,
-and ``mercurial``.
+ARCHER2 supports common revision control software such as ``git``.
 
 Standard GNU autoconf tools are available, along with ``make`` (which
 is GNU Make). Versions of ``cmake`` are available.
@@ -60,18 +98,7 @@ typically reside in ``/usr/bin``, while others are provided as part
 of the module system. Some tools may be available in different versions
 via both ``/usr/bin`` and via the module system.
 
-Compilation via the queue system
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Build jobs which take considerable time, or use considerable
-resources (via e.g., ``make -j``), should be considered candidates
-for the queue system. This might be interactively, or via a script.
-See :doc:`scheduler` for further details of interactive and batch
-jobs.
-
-As the hardware and software environment on both the login nodes and
-the back end nodes is uniform on ARCHER2, there are no special
-considerations for building applications via the queue system.
+.. TODO: Add in note on compiling in queues once this is available
 
 
 Compilation environment
@@ -85,7 +112,7 @@ determined by the relevant compiler module. A summary is:
 ================== ====================================== ====================
   PrgEnv module     Compiler Suite                         Compiler module
 ================== ====================================== ====================
-  ``PrgEnv-aocc``   AMD Optimising C/C++ Compiler           TBC              
+  ``PrgEnv-aocc``   AMD Optimising C/C++ Compiler           ``aocc``             
   ``PrgEnv-cray``   Cray Compiler Environment               ``cce``           
   ``PrgEnv-gnu``    Gnu Compiler Collection                 ``gcc``          
 ================== ====================================== ====================
@@ -97,25 +124,18 @@ For example, at login, the default set of modules are:
 ::
   
   Currently Loaded Modulefiles:
-   1) cce/10.0.0(default)                                 
-   2) cray-libsci/20.03.1.4(default)                      
-   3) cray-mpich/8.0.10(default)                          
-   4) PrgEnv-cray/7.0.0(default)                          
-   5) craype/2.6.4(default)                               
-   6) craype-x86-rome                                     
-   7) libfabric/1.10.0.0.249(default)                     
-   8) craype-network-slingshot10                          
-   9) cray-dsmml/0.1.0(default)                           
-  10) perftools-base/20.05.0(default)                     
-  11) xpmem/2.2.35-7.0.1.0_3.9__gfa8d091.shasta(default)  
+  1) cpe-cray                          7) cray-dsmml/0.1.2(default)                           
+  2) cce/10.0.3(default)               8) perftools-base/20.09.0(default)                     
+  3) craype/2.7.0(default)             9) xpmem/2.2.35-7.0.1.0_1.3__gd50fabf.shasta(default)  
+  4) craype-x86-rome                  10) cray-mpich/8.0.15(default)                          
+  5) libfabric/1.11.0.0.233(default)  11) cray-libsci/20.08.1.2(default)                      
+  6) craype-network-ofi  
 
-from which we see the default programming environment is ``PrgEnv-cray``
-(at 4 in the list above) and the default compiler module is ``cce``
-(at 1 in the list above). The programming
-environment will give access to a consistent set of compiler
-(CCE version 10.0.0),  message passing interface
-MPI library via ``cray-mpich`` (at 3), and other library e.g.,
-``cray-libsci`` (at 2 in the list above) infrastructure.
+from which we see the default programming environment is Cray (indicated
+by ``cpe-cray`` (at 1 in the list above) and the default compiler module is ``cce/10.0.3``
+(at 2 in the list above). The programming environment will give access to a consistent set
+of compiler, MPI library via ``cray-mpich`` (at 10), and other libraries e.g.,
+``cray-libsci`` (at 11 in the list above) infrastructure.
 
 Within a given programming environment, it is possible to swap to
 a different compiler version by swapping the relevant compiler
@@ -149,8 +169,6 @@ e.g., ``mpicc`` should also be replaced by the relevant wrapper ``cc``
   a specific compiler invocation. This will
   ensure consistent compile/link time behaviour.
 
-
-
 Compiler man pages and help
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -166,19 +184,19 @@ compiler and compiler options:
 | PrgEnv   | Compiler| Wrapper      | Compiler          | Compiler options    |
 |          |         | man page     | man page          | summary             |
 +----------+---------+--------------+-------------------+---------------------+
-| AOCC     |         |              |  TBC              |  TBC                |
+| AOCC     |         |              |  TBC              |  ``clang --help``   |
 +----------+         |              +-------------------+---------------------+
 | Cray     | C       | ``man cc``   |  ``man craycc``   |  ``clang --help``   |
 +----------+         |              +-------------------+---------------------+
 | Gnu      |         |              |  ``man gcc``      |  ``gcc --help``     |
 +----------+---------+--------------+-------------------+---------------------+
-| AOCC     |         |              | TBC               | TBC                 |
+| AOCC     |         |              | TBC               | ``clang++ --help``  |
 +----------+         |              +-------------------+---------------------+
 | Cray     | C++     | ``man CC``   | ``man crayCC``    | ``clang++ --help``  |
 +----------+         |              +-------------------+---------------------+
 | Gnu      |         |              | ``man g++``       |  ``g++ --help``     |
 +----------+---------+--------------+-------------------+---------------------+
-| AOCC     |         |              | TBC               | TBC                 |
+| AOCC     |         |              | TBC               | ``flang --help``    |
 +----------+         |              +-------------------+---------------------+
 | Cray     | Fortran | ``man ftn``  | ``man crayftn``   |``ftn --craype-help``|
 +----------+         |              +-------------------+---------------------+
@@ -197,7 +215,7 @@ Which compiler environment?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you are unsure which compiler you should choose, we suggest the
-starting point should be the GNU compiler collection; this is
+starting point should be the GNU compiler collection (GCC, ``PrgEnv-gnu``); this is
 perhaps the most commonly used by code developers, particularly in
 the open source software domain. A portable, standard-conforming
 code should (in principle) compile in any of the three programming
@@ -211,7 +229,6 @@ provide further details of the different programming environments.
 
   Intel compilers are not available on ARCHER2.
 
-
 AMD Optimizing C/C++ Compiler (AOCC)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -223,9 +240,7 @@ Switch the the AOCC programming environment via
 
 ::
 
-  $ module swap PrgEnv-cray PrgEnv-aocc
-
-
+  $ module restore PrgEnv-aocc
 
 .. note::
 
@@ -252,6 +267,12 @@ options are similar to those for gcc/clang. However, the Fortran
 compiler remains based around Cray-specific options. Be sure to separate
 C/C++ compiler options and Fortran compiler options (typically ``CFLAGS``
 and ``FFLAGS``) if compiling mixed C/Fortran applications.
+
+Switch the the Cray programming environment via
+
+::
+
+  $ module restore PrgEnv-cray
 
 Useful CCE C/C++ options
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -327,7 +348,7 @@ environment:
 
 ::
 
-  $ module swap PrgEnv-cray PrgEnv-gnu
+  $ module restore PrgEnv-gnu
 
 Reference material
 ^^^^^^^^^^^^^^^^^^
@@ -336,14 +357,13 @@ Reference material
 
 :Fortran documentation: https://gcc.gnu.org/onlinedocs/gcc-9.3.0/gfortran/
 
-
 Message passing interface (MPI)
 -------------------------------
 
 MPICH
 ~~~~~
 
-Cray provide as standard an MPICH implementation of the message passing
+HPE Cray provide as standard an MPICH implementation of the message passing
 interface which is specifically optimised for the ARCHER2 network. The
 current implementation supports MPI standard version 3.1. This
 implementation should be used wherever possible.
@@ -371,21 +391,15 @@ MPI reference material
 MPI standard documents: https://www.mpi-forum.org/docs/
 
 
-
-Using a different MPI
-~~~~~~~~~~~~~~~~~~~~~
-
-.. note::
-
-  Details will appear here (if this is possible)
-
-
 Linking and libraries
 ---------------------
 
 Linking to libraries is performed dynamically on ARCHER2. One can use
 the ``-craype-verbose`` flag to the compiler wrapper to check
-exactly what linker arguments are invoked.
+exactly what linker arguments are invoked. The compiler wrapper scripts
+encode the paths to the programming environment system libraries using
+the "runpath". This ensures that the executable can find the correct
+runtime libraries without the matching software modules loaded.
 
 The library runpath associated with an executable can be inspected
 via, e.g.,
@@ -398,11 +412,13 @@ via, e.g.,
 Commonly used libraries
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Modules with names prefixed by ``cray-`` are provided by Cray, and are
+Modules with names prefixed by ``cray-`` are provided by HPE Cray, and are
 supported to be consistent with any of the programming environments
 and associated compilers. These modules should be the first choice for
 access to the following libraries.
 
+HPE Cray LibSci
+^^^^^^^^^^^^^^^
 
 ================== ======================================
   Library             Module
@@ -423,7 +439,8 @@ Type ``man intro_libsci`` for further details.
 .. _BLACS:      https://www.netlib.org/blacs/
 .. _ScaLAPACK:  http://www.netlib.org/scalapack/
 
-
+FFTW
+^^^^
 
 ================== ======================================
   Library             Module
@@ -437,6 +454,8 @@ version 3 only.
 
 .. _FFTW:      http://www.fftw.org
 
+HDF5
+^^^^
 
 ================== ======================================
   Library             Module
@@ -449,7 +468,8 @@ version 3 only.
 Hierarchical Data Format HDF5_ is available in serial and parallel
 versions.
 
-
+NetCDF
+^^^^^^
 
 ================== ===========================================
   Library             Module
@@ -489,6 +509,3 @@ versions of public packages, particularly development versions
 which are not available centrally, are encouraged to try the build
 configuration and consult the Service Desk if there are problems.
 
-.. note::
-
-  Full details will appear as they become available

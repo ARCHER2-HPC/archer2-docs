@@ -21,7 +21,7 @@ How to use CrayPat-lite
 
 ::
 
-   module list
+   module load perftools-base
 
 2. Load ``perfotools-lite`` module
 
@@ -58,7 +58,7 @@ How to use CrayPat-lite
 
 5. Analyse the data
    
-After the job finishes executing, CrayPat-lite output should be printed to stdout i.e. at the end of the job's output file generated. A new directory will also be created in the directory the run occurred in with ``.rpt`` and ``.ap2`` files. The ``.rpt`` files are text files that contain the same information printed in the job's output file, the ``.ap2`` files can be used to obtained more detailed information  and can be visualized with the Cray Apprentice2 tool.
+After the job finishes executing, CrayPat-lite output should be printed to stdout i.e. at the end of the job's output file generated. A new directory will also be created in the directory the run occurred in with ``.rpt`` and ``.ap2`` files. The ``.rpt`` files are text files that contain the same information printed in the job's output file, the ``.ap2`` files can be used to obtained more detailed information  and can be visualized with the Cray Apprentice2 tool (for information on using this, please take a look at `Cray Apprentice2`_).
 
 Further help
 ^^^^^^^^^^^^
@@ -82,7 +82,7 @@ Sampling analysis
 
 ::
 
-   module list
+   module load perftools-base
 
 2. Load ``perftools`` module
 
@@ -144,7 +144,7 @@ This ``.xt`` file contains the raw sampling data from the run and needs to be po
  
  
 
-This report will generate two more files, one with the extension ``.ap2`` which holds the same data as the ``.xf`` but in the post processed form. The other file has a ``.apa`` extension and is a text file with a suggested configuration for generating a traced experiment. The ``.ap2`` file generated is used to view performance data graphically with the Cray Apprentice2 tool, and the latter is used for more detailed tracing experiments. 
+This report will generate two more files, one with the extension ``.ap2`` which holds the same data as the ``.xf`` but in the post processed form. The other file has a ``.apa`` extension and is a text file with a suggested configuration for generating a traced experiment. The ``.ap2`` file generated is used to view performance data graphically with the Cray Apprentice2 tool (for information on using this, please take a look at `Cray Apprentice2`_), and the latter is used for more detailed tracing experiments. 
 
 The ``pat_report`` command is able to produce many different profile reports from the profile data. You can select a predefined report with the ``-O`` flag to ``pat_report``. A selection of the most generally useful predefined report types are
 
