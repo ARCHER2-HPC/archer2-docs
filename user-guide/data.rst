@@ -416,6 +416,110 @@ above.)
   Further information on using ``rsync`` can be found in the ``rsync`` manual
   (accessed via ``man rsync`` or at `man rsync <https://linux.die.net/man/1/rsync>`__).
 
+SSH data transfer example
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Here we have a short example demonstrating transfer of data directly from ARCHER
+to ARCHER2. The first step will be to set up an SSH key for access to ARCHER2
+directly from ARCHER. Note that this process does require the ability to pass a
+file from ARCHER to ARCHER2 via a trusted location which has access to both
+machines. 
+
+First login to **ARCHER**, and generate a new SSH key. To do this we use the
+following command:
+
+::
+
+  ssh-keygen -b 4096 -C "otbz01@archer -> otbz19@archer2" -f ~/.ssh/id_RSA_A2
+
+This generates a new 4096 bit RSA SSH key with the comment ``otbz01@archer ->
+otbz19archer2``, and stores the private key in the file ``~/.ssh/id_RSA_A2``,
+and the public key in a corresponding ``.pub`` file. During key generation
+process we are asked to enter a passphrase. SSH keys should *always* be
+passphrase protected, but this is especially important when they are kept on a
+publicly accessible machine such as ARCHER. Please *do not* leave the
+passphrase blank when setting up your SSH key. 
+
+Next we must transfer the public key to ARCHER2 and add it to the 
+`authorized_keys` file there. We must do this via a trusted intermediary which
+is able to access both machines - in this case a local computer. On the local
+(trusted) machine we first scp the *public* key from ARCHER to the local
+machine.
+
+::
+
+  scp -i Z:\\.ssh\id_ARCHER_RSA otbz01@login.archer.ac.uk:~/.ssh/id_RSA_A2.pub ./
+
+Note the ``-i`` flag which has the same meaning as when used in ``ssh`` - it 
+specifies an identity file which contains the private key to be used. We then
+copy the public key over to ARCHER2 using:
+
+::
+
+  scp -i Z:\\.ssh\id_rsa_ARCHER2 id_RSA_A2.pub otbz19@login1.archer2.ac.uk:~/.ssh/
+
+Once transferred, we can now safely remove the public key from the local
+machine. We then connect to ARCHER2 and append the new public key to 
+``authorized_keys`` using:
+
+::
+
+  cat id_RSA_A2.pub >> authorized_keys
+
+which appends the public key from ARCHER to the list of authorised keys. We can
+then safely delete the public key.
+
+.. note::
+
+  You can simplify this step if no ``authorized_keys`` exists on ARCHER2. In
+  that case you can simply copy the public key to ARCHER2 and rename it to
+  ``authorized_keys`` using ``scp <public_key>
+  <username>@login1.archer2.ac.uk:~/.ssh/authorized_keys``. If the ``~/.ssh``
+  directory does not exist you may need to connect to ARCHER2 first and create
+  it, or move files around after copying the public key over.
+
+You can test that the above has worked by attempting to ssh to ARCHER2 from
+ARCHER. All being well, we are now ready to transfer data directly between the
+two machines. We begin by combining our important research data in to a single
+archive file using the following command:
+
+::
+
+  tar -czf cat_pictures.tar.gz Cally.jpg Oscar.jpg Marvin.jpg
+
+.. figure:: ../images/cats.png
+   :width: 480px
+   :align: center
+   :alt: Three cats in separate photos, Cally (tabby and white), Oscar (ginger),
+         and Marvin (cream).
+
+   The three important research images. Cally, Oscar, and Marvin (clockwise left
+   to bottom right).
+
+We then initiate the data transfer from ARCHER to ARCHER2, here using ``rsync``
+to allow the tramsfer to be recommenced without needing to start again, in the
+event of a loss of connection or other failure.
+
+::
+
+  rsync -Pv -e"ssh -i /home/z01/z01/otbz01/.ssh/id_RSA_A2" ./cat_pictures.tar.gz otbz19@login1.archer2.ac.uk:/work/z19/z19/otbz19/
+
+Note the use of the ``-P`` flag to allow partial transfer -- the same command
+could be used to restart the transfer after a loss of connection. The ``-e``
+flag allows specification of the ssh command - we have used this to add the
+location of the identity file. Unfortunately the ``~`` shortcut is not correctly
+expanded, so we have specified the full path. We move our research archive to
+our project work directory on ARCHER2. 
+
+If we were unconcerned about being able to restart an interrupted transfer, we
+could instead use the ``scp`` command,
+
+::
+
+  scp -i ~/.ssh/id_RSA_A2 cat_pictures.tar.gz otbz19@login1.archer2.ac.uk:/work/z19/z19/otbz19/
+
+but ``rsync`` is recommended for larger transfers.
+
 Globus online (GO)
 ~~~~~~~~~~~~~~~~~~
 
