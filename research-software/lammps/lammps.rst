@@ -62,8 +62,8 @@ For example, the following script will run a LAMMPS MD job using 4 nodes
    
    # Replace [budget code] below with your project code (e.g. t01)
    #SBATCH --account=[budget code]
-   #SBATCH --partition=[partition code]
-   #SBATCH --qos=[QOS code]
+   #SBATCH --partition=standard
+   #SBATCH --qos=standard
    
    # Load the relevant LAMMPS module
    module load lammps

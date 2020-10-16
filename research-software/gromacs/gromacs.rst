@@ -56,8 +56,8 @@ The following script will run a GROMACS MD job using 4 nodes
    #SBATCH --time=00:20:00
    
    #SBATCH --account=[budget code]
-   #SBATCH --partition=[partition code]
-   #SBATCH --qos=[QOS code]
+   #SBATCH --partition=standard
+   #SBATCH --qos=standard
    
    # Load the relevant GROMACS module
 
@@ -88,8 +88,8 @@ total) and 6 OpenMP threads per MPI process.
    #SBATCH --time=00:20:00
 
    #SBATCH --account=[budget code]
-   #SBATCH --partition=[partition code]
-   #SBATCH --qos=[QOS code]
+   #SBATCH --partition=standard
+   #SBATCH --qos=standard
    
    # Load the relevant GROMACS module
 

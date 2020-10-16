@@ -256,8 +256,8 @@ nodes and 128 MPI ranks per node for 20 minutes would look like:
 
     # Replace [budget code] below with your budget code (e.g. t01)
     #SBATCH --account=[budget code]             
-    #SBATCH --partition=[partition code]
-    #SBATCH --qos=[QOS code]
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
 
     # Set the number of threads to 1
     #   This prevents any threaded system libraries from automatically 
@@ -311,8 +311,8 @@ process. This results in all 128 physical cores per node being used.
 
   # Replace [budget code] below with your project code (e.g. t01)
   #SBATCH --account=[budget code] 
-  #SBATCH --partition=[partition code]
-  #SBATCH --qos=[QOS code]
+  #SBATCH --partition=standard
+  #SBATCH --qos=standard
 
   # Set the number of threads to 16 and specify placement
   #   There are 16 OpenMP threads per MPI process
@@ -365,8 +365,8 @@ process per core and specifies 4 hours maximum runtime per subjob:
 
     # Replace [budget code] below with your budget code (e.g. t01)
     #SBATCH --account=[budget code]  
-    #SBATCH --partition=[partition code]
-    #SBATCH --qos=[QOS code]
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
 
     # Set the number of threads to 1
     #   This prevents any threaded system libraries from automatically 
@@ -566,7 +566,7 @@ maximum number of tasks is reached:
 ::
 
   salloc --nodes=8 --tasks-per-node=2 --cpus-per-task=1 --time=0:10:0 \
-         --account=[account code] --partition=partition code] --qos=[QOS code]
+         --account=[account code] --partition=partition code] --qos=standard
 
   salloc: Granted job allocation 24236
   salloc: Waiting for resource configuration
