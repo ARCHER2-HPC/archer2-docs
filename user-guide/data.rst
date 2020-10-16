@@ -425,7 +425,7 @@ directly from ARCHER. Note that this process does require the ability to pass a
 file from ARCHER to ARCHER2 via a trusted location which has access to both
 machines. 
 
-First login to **ARCHER**, and generate a new SSH key. To do this we use the
+First log in to ARCHER, and generate a new SSH key. To do this we use the
 following command:
 
 ::
@@ -497,7 +497,7 @@ archive file using the following command:
    to bottom right).
 
 We then initiate the data transfer from ARCHER to ARCHER2, here using ``rsync``
-to allow the tramsfer to be recommenced without needing to start again, in the
+to allow the transfer to be recommenced without needing to start again, in the
 event of a loss of connection or other failure.
 
 ::
