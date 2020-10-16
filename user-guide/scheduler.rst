@@ -542,23 +542,6 @@ memory on the compute nodes, it can speed up the job startup time.
     sbcast --compress=lz4 /path/to/exe /tmp/exe
     srun /tmp/exe
 
-<!-- TODO: revist once this is working
-Network Locality
-~~~~~~~~~~~~~~~~
-
-For jobs which are sensitive to interconnect (MPI) performance and
-utilize less than or equal to 256 nodes it is possible to request that all nodes
-are in a single Slingshot dragonfly group.
-
-Slurm has a concept of "switches" which on ARCHER2 are configured to map
-to Slingshot groups (there are 256 nodes per group). Since this places an additional constraint
-on the scheduler a maximum time to wait for the requested topology can
-be specified. For example:
-
-::
-
-    sbatch --switches=1@60 job.sh``
--->
 
 Process Placement
 ~~~~~~~~~~~~~~~~~
