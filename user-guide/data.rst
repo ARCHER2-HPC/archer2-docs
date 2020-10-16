@@ -421,9 +421,7 @@ SSH data transfer example
 
 Here we have a short example demonstrating transfer of data directly from ARCHER
 to ARCHER2. The first step will be to set up an SSH key for access to ARCHER2
-directly from ARCHER. Note that this process does require the ability to pass a
-file from ARCHER to ARCHER2 via a trusted location which has access to both
-machines. 
+directly from ARCHER.
 
 First log in to ARCHER, and generate a new SSH key. To do this we use the
 following command:
@@ -440,47 +438,26 @@ passphrase protected, but this is especially important when they are kept on a
 publicly accessible machine such as ARCHER. Please *do not* leave the
 passphrase blank when setting up your SSH key. 
 
-Next we must transfer the public key to ARCHER2 and add it to the 
-`authorized_keys` file there. We must do this via a trusted intermediary which
-is able to access both machines - in this case a local computer. On the local
-(trusted) machine we first scp the *public* key from ARCHER to the local
-machine.
+Next we must add the new public key to ARCHER2 through SAFE. We can either open
+the ``id_RSA_A2.pub`` file in our preferred text editor on ARCHER, or use ``cat
+id_RSA_A2.pub`` to output the file contents to screen. Either way we should
+carefully copy the full SSH key and comment, and then in SAFE go to *Login
+accounts - <user>@archer2 - Add Credential* to add the new SSH key. Once the new
+key is active you can test that this has worked by attempting to ssh to ARCHER2
+from ARCHER.
 
-::
+.. note :: 
 
-  scp -i Z:\\.ssh\id_ARCHER_RSA otbz01@login.archer.ac.uk:~/.ssh/id_RSA_A2.pub ./
+   In a terminal Ctrl+C will generally kill the current process. To copy from
+   the terminal, highlight the text with your mouse and right-click. On most
+   platforms this will either copy the text to clipboard directly, or bring up a
+   context menu with a *Copy* option. If you are having trouble copying and
+   pasting your new SSH key, you can use ``scp`` to transfer the public key file
+   from ARCHER back to a trusted computer with access to both ARCHER and SAFE,
+   and then upload it directly.
 
-Note the ``-i`` flag which has the same meaning as when used in ``ssh`` - it 
-specifies an identity file which contains the private key to be used. We then
-copy the public key over to ARCHER2 using:
-
-::
-
-  scp -i Z:\\.ssh\id_rsa_ARCHER2 id_RSA_A2.pub otbz19@login1.archer2.ac.uk:~/.ssh/
-
-Once transferred, we can now safely remove the public key from the local
-machine. We then connect to ARCHER2 and append the new public key to 
-``authorized_keys`` using:
-
-::
-
-  cat id_RSA_A2.pub >> authorized_keys
-
-which appends the public key from ARCHER to the list of authorised keys. We can
-then safely delete the public key.
-
-.. note::
-
-  You can simplify this step if no ``authorized_keys`` exists on ARCHER2. In
-  that case you can simply copy the public key to ARCHER2 and rename it to
-  ``authorized_keys`` using ``scp <public_key>
-  <username>@login1.archer2.ac.uk:~/.ssh/authorized_keys``. If the ``~/.ssh``
-  directory does not exist you may need to connect to ARCHER2 first and create
-  it, or move files around after copying the public key over.
-
-You can test that the above has worked by attempting to ssh to ARCHER2 from
-ARCHER. All being well, we are now ready to transfer data directly between the
-two machines. We begin by combining our important research data in to a single
+All being well, we are now ready to transfer data directly between the two
+machines. We begin by combining our important research data in to a single
 archive file using the following command:
 
 ::
