@@ -66,8 +66,8 @@ Generating and adding an SSH key pair
 
 How you generate your SSH key pair depends on which operating system you use and which 
 SSH client you use to connect to ARCHER2. We will not cover the details on generating an
-SSH key pair here, but detailed information on this topic is available in the [ARCHER2 User
-and Best Practice Guide] ( https://docs.archer2.ac.uk/user-guide/connecting.html).
+SSH key pair here, but detailed information on this topic is available in the `ARCHER2 User
+and Best Practice Guide <https://docs.archer2.ac.uk/user-guide/connecting.html>`__.
 
 After generating your SSH key pair, add the public part to your login account using SAFE:
 
