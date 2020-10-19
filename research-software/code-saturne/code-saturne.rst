@@ -29,12 +29,11 @@ Useful Links
 Using Code Saturne on ARCHER2
 -----------------------------
 
-Code Saturne is freely available to all users on ARCHER2.
+Code Saturne is released under the GNU General Public Licence v2 and so is freely available to all users on ARCHER2.
 
+You can load Code_Saturne 6.0.5 for use by running the following command::
 
-.. warning::
-
-  The exact version information and module job-name is pending.
+  module load code_saturne/6.0.5-gcc10
 
 
 Running parallel Code Saturne jobs
@@ -43,40 +42,64 @@ Running parallel Code Saturne jobs
 Ccde Saturne can exploit multiple nodes on ARCHER2 and will generally be run
 in exclusive mode.
 
-For example, the following script will run a Code Saturne job using 4 nodes
-(128x4  cores).
+After setting up a case it should be initialized by running the following
+command from the case directory, where *setup.xml* is the input file::
 
-.. warning::
+  code_saturne run --initialize --param setup.xml
 
-  The following SLURM script requires validation
+This will create a directory named for the current date and time 
+(e.g. 20201019-1636) inside the RESU directory. Inside the new directory
+will be a script named *run_solver* which will need some additions to 
+resemble the one shown below. You will need to add the ``#SBATCH`` options to 
+set the job name, size and so on. You will also need to add 
+the two ``module load`` commands, and ``srun --cpu-bind=cores``
+as well as the ``--mpi`` option to the line executing ``./cs_solver`` to ensure
+parallel execution on the compute nodes.
+
+The script below will run a Code_Saturne job over 4 nodes (128 x 4 = 512 cores)
+for a maximum of 20 minutes.
 
 ::
 
-   #!/bin/bash
+  #!/bin/bash
+  #SBATCH --job-name=CSExample
+  #SBATCH --time=0:20:00
+  #SBATCH --nodes=4
+  #SBATCH --tasks-per-node=128
+  #SBATCH --cpus-per-task=1
+  #SBATCH --account=[budget code]
+  #SBATCH --partition=standard
+  #SBATCH --qos=standard
 
-   # Request 4 nodes with 128 MPI tasks per node for 20 minutes
-   # Replace [budget code] below with your account code,
-   # e.g. '--account=t01'
+  # Export paths here if necessary or recommended.
+  export LD_LIBRARY_PATH="/opt/cray/pe/libsci/20.08.1.2/GNU/9.1/x86_64/lib":$LD_LI
+  BRARY_PATH
+  export LD_LIBRARY_PATH="/work/y07/shared/code_saturne/6.0.5-gcc10/lib":$LD_LIBRA
+  RY_PATH
 
-   #SBATCH --job-name=CodeSaturne
-   #SBATCH --nodes=4
-   #SBATCH --tasks-per-node=128
-   #SBATCH --cpus-per-task=1
-   #SBATCH --time=00:20:00
-   
-   #SBATCH --account=[budget code]
-   #SBATCH --partition=standard
-   #SBATCH --qos=standard
+  module load /work/y07/shared/archer2-modules/modulefiles-cse/epcc-setup-env
+  module load code_saturne
 
-   # Load the Code Saturne mdoule and run
+  export OMP_NUM_THREADS=1
 
-   module load code-saturne
+  cd /path/to/case/RESU/[date]-[time]
 
-   code_saturne run --param case.xml
+  # Run solver.
+  srun --cpu-bind=cores ./cs_solver --mpi $@
+  export CS_RET=$?
 
+  exit $CS_RET
+
+The *run_solver* script can then be submitted to the batch system with
+
+::
+
+  sbatch run_solver
 
 Hints and tips
 --------------
 
 Compiling Code Saturne
 ----------------------
+
+Instructions detailing how Code_Saturne was built on ARCHER2 are available at https://github.com/hpc-uk/build-instructions/tree/main/Code_Saturne
