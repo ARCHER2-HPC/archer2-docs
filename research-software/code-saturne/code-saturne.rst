@@ -1,4 +1,4 @@
-Code Saturne
+Code_Saturne
 ============
 
 .. warning::
@@ -21,25 +21,25 @@ flows, atmospheric flows, rotor/stator interaction for hydraulic machines.
 Useful Links
 ------------
 
-* Code Saturne home page https://www.code-saturne.org/cms/
-* Code Saturne user guides https://www.code-saturne.org/cms/documentation/guides
-* Code Saturne users' forum https://www.code-saturne.org/forum/
+* Code_Saturne home page https://www.code-saturne.org/cms/
+* Code_Saturne user guides https://www.code-saturne.org/cms/documentation/guides
+* Code_Saturne users' forum https://www.code-saturne.org/forum/
 
 
-Using Code Saturne on ARCHER2
+Using Code_Saturne on ARCHER2
 -----------------------------
 
-Code Saturne is released under the GNU General Public Licence v2 and so is freely available to all users on ARCHER2.
+Code_Saturne is released under the GNU General Public Licence v2 and so is freely available to all users on ARCHER2.
 
 You can load Code_Saturne 6.0.5 for use by running the following command::
 
   module load code_saturne/6.0.5-gcc10
 
 
-Running parallel Code Saturne jobs
+Running parallel Code_Saturne jobs
 ----------------------------------
 
-Ccde Saturne can exploit multiple nodes on ARCHER2 and will generally be run
+Code_Saturne can exploit multiple nodes on ARCHER2 and will generally be run
 in exclusive mode.
 
 After setting up a case it should be initialized by running the following
@@ -99,7 +99,7 @@ The *run_solver* script can then be submitted to the batch system with
 Hints and tips
 --------------
 
-Compiling Code Saturne
+Compiling Code_Saturne
 ----------------------
 
 Instructions detailing how Code_Saturne was built on ARCHER2 are available at https://github.com/hpc-uk/build-instructions/tree/main/Code_Saturne
