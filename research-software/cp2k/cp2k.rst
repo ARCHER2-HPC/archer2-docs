@@ -74,6 +74,8 @@ For example, the following script will run a CP2K job using 4 nodes
    #SBATCH --time=00:20:00
 
    #SBATCH --account=[budget code]
+   #SBATCH --partition=standard
+   #SBATCH --qos=standard
 
    # Load the relevant CP2K module
    # Ensure that no libraries are inadvertently using threading
@@ -115,6 +117,8 @@ To run CP2K using MPI and OpenMP, load the ``cp2k`` module and use the
     #SBATCH --time=00:20:00
 
     #SBATCH --account=[budget code]
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
 
     # Load the relevant CP2K module
     # Ensure OMP_NUM_THREADS is consistent with cpus-per-task above

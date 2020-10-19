@@ -54,16 +54,34 @@ For example, the following script will run a QE ``pw.x`` job using 4 nodes
    #SBATCH --time=00:20:00
    
    #SBATCH --account=[budget code]
+   #SBATCH --partition=standard
+   #SBATCH --qos=standard
    
    # Load the relevant Quantum Espresso module
 
-   module load qe/1.2.3.4
+   module load qe
 
-   srun ... pw.x test_calc.in
+   srun ... pw.x < test_calc.in
 
 
 Hints and tips
 --------------
 
+The QE module is set to load up the default QE-provided pseudo-
+potentials. If you wish to use non-default pseudo-potentials,
+you will need to change the ``ESPRESSO_PSEUDO`` variable to point
+to the directory you wish. This can be done by adding the following
+line **after** the module is loaded
+
+::
+
+  export ESPRESSO_PSEUDO /path/to/pseudo_potentials
+
+
 Compiling QE
 ------------
+
+The latest instructions for building QE on ARCHER2 can be found
+in the GitHub repository of build instructions:
+
+ - `Build instructions for Quantum Espresso <https://github.com/hpc-uk/build-instructions/blob/main/QuantumEspresso/qe66_archer2_gnu.md>`__

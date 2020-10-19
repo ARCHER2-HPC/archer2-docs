@@ -191,6 +191,15 @@ The Lustre command to query the stripe settings for a directory (or file) is ``l
    
 Setting Custom Striping Configurations
 """"""""""""""""""""""""""""""""""""""
+
+.. warning::
+
+  You cannot currently perform parallel IO to a striped file if the
+  number of MPI processes is larger than the stripe count. Although
+  this is unlikely to be an issue in production runs, where the number
+  of processes will normally be in the hundreds, it could cause an
+  issue during development or benchmarking.
+
 Users can set stripe settings for a directory (or file) using the ``lfs setstripe`` command. The options for ``lfs setstripe`` are:
 
 * ``[--stripe-count|-c]`` to set the stripe count; 0 means use the system default (usually 1) and -1 means stripe over all available OSTs.

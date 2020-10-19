@@ -244,7 +244,7 @@ system.
 SSH debugging tips
 ------------------
 
-If you find ou are unable to connect via SSH there are a number of ways you can
+If you find you are unable to connect via SSH there are a number of ways you can
 try and diagnose the issue. Some of these are collected below - if you are
 having difficulties connecting we suggest trying these before contacting the
 ARCHER2 service desk.
@@ -361,7 +361,7 @@ paste in PowerShell.
 SSH verbose output
 ~~~~~~~~~~~~~~~~~~
 
-Verbose debugging output from ``ssh`` can be very useful for diganosing the
+Verbose debugging output from ``ssh`` can be very useful for diagnosing the
 issue. In particular, it can be used to distinguish between problems with the
 SSH key and password - further details are given below. To enable verbose output
 add the ``-vvv`` flag to your SSH command. For example:

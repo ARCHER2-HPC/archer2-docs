@@ -7,8 +7,8 @@ Quickstart for users
   development.
 
 This guide aims to quickly enable new users to get up and running on 
-ARCHER2 by running through the process of getting an ARCHER2 account,
-logging in and running your first job.
+ARCHER2. It covers the process of getting an ARCHER2 account, logging in
+and running your first job.
 
 Request an account on ARCHER2
 -----------------------------
@@ -16,22 +16,25 @@ Request an account on ARCHER2
 .. warning::
 
   You need to use both a password and a passphrase-protected SSH key pair to log into 
-  ARCHER2. You get the password from SAFE but will need to setup your own SSH key 
-  pair and add the public part to your account via SAFE before you will be able to 
-  log in. We cover the authentication steps below.
+  ARCHER2. You get the password from SAFE, but, you will also need to setup your own
+  SSH key pair and add the public part to your account via SAFE before you will be able
+  to log in. We cover the authentication steps below.
 
 Obtain an account on the SAFE website
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The first step is to sign up for an account on the ARCHER2 SAFE website. This account
-is used to manage your user accounts and report on your usage and quotas. To do this:
+The first step is to sign up for an account on the ARCHER2 SAFE website. The SAFE account
+is used to manage all of your login accounts, allowing you to report on your usage and quotas.
+To do this:
 
 1. Go to the `SAFE New User Signup Form <https://safe.epcc.ed.ac.uk/signup.jsp>`__
 2. Fill in your personal details.  You can come back later and change them if you wish
 3. Click *Submit*
 
-You are now registered. Your SAFE password will be emailed to the email address you provided. You can then login 
-with that email address and password.
+You are now registered. Your SAFE password will be emailed to the email address you provided.
+You can then login  with that email address and password. (You can change your initial
+SAFE password whenever you want by selecting the `Change SAFE password` option from the
+`Your details` menu.)
 
 Generating and adding an SSH key pair
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -68,9 +71,37 @@ the Project Code:
 
 The PI or project manager of the project will be asked to approve your request. After your
 request has been approved the account will be created and when this has been done you will
-receive an email. You can then come back to SAFE and pick up the initial, one use password
-for your new account (ARCHER2 account passwords are also sometimes referred to as LDAP
-passwords by the system).
+receive an email. You can then come back to SAFE and pick up the initial single-use password
+for your new account.
+
+.. note::
+
+  ARCHER2 account passwords are also sometimes referred to as LDAP passwords by the system.
+
+
+Generating and adding an SSH key pair
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+How you generate your SSH key pair depends on which operating system you use and which 
+SSH client you use to connect to ARCHER2. We will not cover the details on generating an
+SSH key pair here, but detailed information on this topic is available in the `ARCHER2 User
+and Best Practice Guide <https://docs.archer2.ac.uk/user-guide/connecting.html>`__.
+
+After generating your SSH key pair, add the public part to your login account using SAFE:
+
+1. `Log into SAFE <https://safe.epcc.ed.ac.uk>`__
+2. Use the menu *Login accounts* and select the ARCHER2 account to be associated with the SSH key
+3. On the subsequent Login account details page, click the *Add Credential* button
+4. Select *SSH public key* as the Credential Type and click *Next*
+5. Either copy and paste the public part of your SSH key into the SSH Public key box or use the
+   button to select the public key file on your computer
+6. Click *Add* to associate the public SSH key part with your account
+
+Once you have done this, your SSH key will be added to your ARCHER2 account.
+
+Remember, you will need to use both an SSH key and password to log into ARCHER2 so you will also
+need to collect your initial password before you can log into ARCHER2 for the first time.
+We cover this next.
 
 Collecting your ARCHER2 password
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -79,18 +110,18 @@ You should now collect your ARCHER2 password:
 
 1. `Log into SAFE <https://safe.epcc.ed.ac.uk>`__
 2. Use the *Login accounts* menu to select your new login account
-3. This will display details of your account. Use the *View Login Account Password* button
-   to view your single-use ARCHER2 password.
+3. Use the *View Login Account Password* button to view your single-use ARCHER2 password
 
 This password is generated randomly by the software. It's best to copy-and-paste it across
-when you log in to the service machine. After you login, you will be prompted to change it.
-You should enter this password again, and then you will be prompted for your new,
-easy-to-remember password. Your new password should conform to
-`the ARCHER2 Password Policy <https://www.archer2.ac.uk/about/policies/passwords_usernames.html>`__.
+when you log in to ARCHER2. After you login, you will immediately be prompted to begin the process
+of changing your password. You should now enter the initial password again, and then you will be
+prompted for your new, easy-to-remember password. Your new password should conform to the
+`ARCHER2 Password Policy <https://www.archer2.ac.uk/about/policies/passwords_usernames.html>`__.
 
 .. note::
 
-  When you change your password on the service machine in this way, this is not reflected on the SAFE.
+  The *View Login Account Password* option within SAFE will continue to display your old initial
+  password. Your SAFE account has no knowledge of your new machine account password.
 
 Login to ARCHER2
 ----------------
@@ -103,8 +134,8 @@ To log into ARCHER2 you should use the ``login.archer2.ac.uk`` address:
 
 You will first be prompted for the passphrase associated with your
 SSH key pair. Once you have entered your passphrase successfully, you
-will then be prompted for your password. You need to enter both 
-correctly to be able to access ARCHER2.
+will then be prompted for your machine account password. You need to
+enter both credentials correctly to be able to access ARCHER2.
 
 .. note::
 
@@ -121,11 +152,11 @@ correctly to be able to access ARCHER2.
   When you first log into ARCHER2, you will be prompted to change your
   initial password. This is a three step process:
   
-  1. When promoted to enter your *ldap password*: Re-enter the password you retrieved from SAFE
+  1. When prompted to enter your *ldap password*: re-enter the password you retrieved from SAFE
   2. When prompted to enter your new password: type in a new password
   3. When prompted to re-enter the new password: re-enter the new password
   
-  Your password has now been changed
+  Your password has now been changed.
 
 .. seealso::
 
@@ -141,28 +172,29 @@ thought in advance to ensure that the data is secure and in a useful form.
 ARCHER2 file systems are:
 
 * **/home**: backed up for disaster recovery purposes only, data recovery for accidental deletion is not
-  supported. NFS, available on login and service nodes.
-* **/work**: not backed-up. Lustre, available on login, service and compute nodes.
+  supported. NFS is available on login and service nodes.
+* **/work**: not backed-up. Lustre is available on login, service and compute nodes.
 
 .. TODO: Need to add the solid state storage to this
 
 Top tips for managing data on ARCHER2:
 
-* Do not generate huge (>1000) numbers of files in a single directory
-* Much of the performance difference on transferring data is due to numbers of files involved in the
+* Do not generate huge numbers of files (>1000) in a single directory.
+* Poor performance relating to file transfer is often due to the number of files involved in the
   transfer - minimise the number of files that you have to transfer by using archiving tools to improve
   performance.
-* Archive directories or large numbers of files before moving them between file systems (e.g. using tar)
-* When using ``tar`` or ``rsync`` between file systems mounted on ARCHER2 avoid using the compression
-  options as these slow operations down (as file system bandwidth is generally better than throttling
-  by CPU performance by using compression).
-* Think about automating the combination and transfer of multiple files output by software on ARCHER2 to
+* Archive directories or large numbers of files before moving them between file systems (e.g. by using
+  commands like ``tar`` or ``zip``).
+* When using ``tar`` or ``rsync`` between file systems mounted on ARCHER2 avoid the use of compression
+  options as these can slow performance (time saved by transferring smaller compressed files is usually less
+  than the overhead added by having to compress files on the fly).
+* Think about automating the merging and transfer of multiple files output by software on ARCHER2 to
   other resources. The Data Management Guide linked below provides examples of how to automatically
-  verify the integrity of an archive and examples of how to do this.
+  verify the integrity of an archive.
 
 .. seealso::
 
-  Information on best practice in managing you data is available in the section
+  Information on best practice in managing you data is available here, 
   :doc:`../user-guide/data`.
 
 Accessing software
@@ -170,9 +202,10 @@ Accessing software
 
 Software on ARCHER2 is principally accessed through environment modules. These
 load and unload the desired compilers, tools and libraries through the
-``module`` command and its subcommands. Some will be loaded by default on login,
-providing a default working environment; many more will be available for use but
-initially unloaded, allowing you to set up the environment to suit your needs.
+``module`` command and its subcommands. Some modules will be loaded by default
+on login, providing a default working environment; many more will be available
+for use but initially unloaded, allowing you to set up the environment to suit
+your needs.
 
 At any stage you can check which modules have been loaded by running
 
@@ -196,13 +229,13 @@ and variants of VASP may be found by running
   module avail vasp
 
 You will see that different versions are available for many modules. For
-example, ``vasp/5/5.4.4`` and ``vasp/6/6.1.1`` are two available versions of
-VASP. Furthermore, a default version may be specified and will be used if no
+example, ``vasp/5/5.4.4`` and ``vasp/6/6.1.0`` are two available versions of
+VASP. Furthermore, a default version may be specified; this is used if no
 version is provided by the user.
 
 .. note::
 
-  VASP is licensed software, as are some other software packages on ARCHER2. You must
+  VASP is licensed software, as are other software packages on ARCHER2. You must
   have a valid licence to use licensed software on ARCHER2. Often you will need to
   request access through the SAFE. More on this below.
 
@@ -219,7 +252,7 @@ would load the default version of VASP 5, while
 
   module load vasp/5/5.4.4
 
-would specifically load version 5.4.4. A loaded module may be unloaded through
+would specifically load version ``5.4.4``. A loaded module may be unloaded through
 the identical ``module unload``, ``module remove`` or ``module delete``
 commands, e.g.
 
@@ -227,9 +260,11 @@ commands, e.g.
 
   module unload vasp
 
-which would unload whichever version of VASP is currently in the environment.
+The above unloads whichever version of VASP is currently in the environment.
 Rather than issuing separate unload and load commands, versions of a module may
-be swapped as follows::
+be swapped as follows:
+
+::
 
   module swap vasp vasp/5/5.4.4
 
@@ -243,7 +278,7 @@ Points to be aware of include:
 * Some modules will conflict with others. A simple example would be the conflict
   arising when trying to load a different version of an already loaded module.
   When a conflict occurs, the loading process will fail and an error message
-  will be displayed. Examination of the message and the modulefiles (via
+  will be displayed. Examination of the message and the module output (via
   ``module show``) should reveal the cause of the conflict and how to resolve
   it.
 * The order in which modules are loaded *can* matter. Consider two modules
@@ -257,7 +292,7 @@ Requesting access to licensed software
 
 Some of the software installed on ARCHER2 requires a user to have a valid licence agreed with the 
 software owners/developers to be able to use it (for example, VASP). Although you will be able to
-load this software on ARCHER2 you will be barred from actually using it until your licence has been
+load this software on ARCHER2, you will be barred from actually using it until your licence has been
 verified.
 
 You request access to licensed software through the EPCC SAFE (the web administration tool you used
@@ -309,7 +344,8 @@ favourite text editor. For example, using ``vim``:
   i.e. replace the `t01` above with your project code and replace the username `auser` with your ARCHER2 username.
 
 Paste the following text into your job submission script, replacing ``ENTER_YOUR_BUDGET_CODE_HERE`` with
-your budget code e.g. ``e99-ham``.
+your budget code e.g. ``e99-ham``, ``ENTER_PARTITION_HERE`` with the partition you wish to run on (e.g 
+``standard``), and ``ENTER_QOS_HERE`` with the quality of service you want (e.g. ``standard``).
 
 ::
 
@@ -321,6 +357,8 @@ your budget code e.g. ``e99-ham``.
   #SBATCH --cpus-per-task=1
   #SBATCH --time=0:5:0
   #SBATCH --account=ENTER_YOUR_BUDGET_CODE_HERE
+  #SBATCH --partition=ENTER_PARTITION_HERE
+  #SBATCH --qos=ENTER_QOS_HERE
 
   # Load the xthi module to get access to the xthi program
   module load xthi
@@ -409,9 +447,12 @@ Acknowledging ARCHER2
 
 .. TODO: Update with DOI for ARCHER2, once we have it
 
-You should use the following phrase to acknowledge ARCHER2 in all research outputs that have used the facility:
+You should use the following phrase to acknowledge ARCHER2 for all research outputs that were
+generated using the ARCHER2 service:
 
-This work used the ARCHER2 UK National Supercomputing Service (https://www.archer2.ac.uk).
+::
+
+  This work used the ARCHER2 UK National Supercomputing Service (https://www.archer2.ac.uk).
 
 You should also tag outputs with the keyword ARCHER2 whenever possible.
 
@@ -421,7 +462,9 @@ Useful Links
 If you plan to compile your own programs on ARCHER2, you may also want to look at
 :doc:`quickstart-developers`.
 
-Links to other documentation you may find useful:
+Other documentation you may find useful:
 
 * :doc:`ARCHER2 User and Best Practice Guide <../user-guide/overview>` - Covers all aspects of use of the ARCHER2 service. This includes fundamentals (required by all users to use the system effectively), best practice for getting the most out of ARCHER2, and more advanced technical topics.
+
 * `Cray Programming Environment User Guide <https://pubs.cray.com/content/S-2529/17.05/xctm-series-programming-environment-user-guide-1705-s-2529/introduction>`__
+
