@@ -119,10 +119,11 @@ ARCHER2:
 
     ssh username@login.archer2.ac.uk
 
-You will first be prompted for the passphrase associated with your
-SSH key pair. Once you have entered your passphrase successfully, you
-will then be prompted for your password. You need to enter both 
-correctly to be able to access ARCHER2.
+You will first be prompted for your machine account password.  Once you have entered your password successfully, you will then be prompted for the passphrase associated with your SSH key pair.  You need to enter both credentials correctly to be able to access ARCHER2.
+
+.. note::
+
+  The **first** time you log in you will be prompted to change your ldap password after first entering your password successfully; you will first have to re-enter your initial password, then enter a new password that you choose, and then re-enter the new password to confirm.  Only then will you be asked for your SSH passphrase.
 
 .. note::
 
