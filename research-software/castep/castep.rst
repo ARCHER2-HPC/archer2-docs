@@ -17,9 +17,9 @@ spectroscopies, NMR, and core level spectra.
 Useful Links
 ------------
 
-* `CASTEP User Guides <http://www.castep.org/CASTEP/Documentation>`__
-* `CASTEP Tutorials <http://www.castep.org/CASTEP/OnlineTutorials>`__
-* `CASTEP Licensing <http://www.castep.org/CASTEP/GettingCASTEP>`__
+  - `CASTEP User Guides <http://www.castep.org/CASTEP/Documentation>`__
+  - `CASTEP Tutorials <http://www.castep.org/CASTEP/OnlineTutorials>`__
+  - `CASTEP Licensing <http://www.castep.org/CASTEP/GettingCASTEP>`__
 
 Using CASTEP on ARCHER2
 -----------------------
@@ -27,9 +27,11 @@ Using CASTEP on ARCHER2
 **CASTEP is only available to users who have a valid CASTEP licence.**
 
 If you have a CASTEP licence and wish to have access to CASTEP on ARCHER2,
-please make a request via the SAFE LINK REQUIRED.
-Please have your license details to hand.
+please make a request via the SAFE, see:
 
+  - `How to request access to package groups <https://epcced.github.io/safe-docs/safe-for-users/#how-to-request-access-to-a-package-group>`__
+
+Please have your license details to hand.
 
 Running parallel CASTEP jobs
 ----------------------------
@@ -50,15 +52,17 @@ assumes that the input files have the file stem ``text_calc``.
   #SBATCH --tasks-per-node=128
   #SBATCH --cpus-per-task=1
   #SBATCH --time=00:20:00
+
+  #SBATCH --partition=standard
+  #SBATCH --qos=standard
   
   #SBATCH --account=[budget code]
+  #SBATCH --partition=standard
+  #SBATCH --qos=standard
 
   # Load the CASTEP module, avoid any unintentional OpenMP threading by
   # setting OMP_NUM_THREADS, and launch the code.
-  
   module load castep
-
-  # Run without using OpenMP threads
   export OMP_NUM_THREADS=1
   srun -cpu-bind=cores castep.mpi test_calc
 
@@ -66,6 +70,10 @@ assumes that the input files have the file stem ``text_calc``.
 Hints and Tips
 --------------
 
+.. note::
+
+  We will add information on running CASTEP efficiently on ARCHER2
+  as it becomes available.
 
 Compiling CASTEP
 ----------------
@@ -73,4 +81,4 @@ Compiling CASTEP
 The latest instructions for building CASTEP on ARCHER2 may be found
 in the GitHub repository of build instructions:
 
-  - [Build instructions for CASTEP on GitHub](https://github.com/hpc-uk/build-instructions/tree/master/CASTEP)
+  - `Build instructions for CASTEP on GitHub <https://github.com/hpc-uk/build-instructions/tree/master/CASTEP>`__

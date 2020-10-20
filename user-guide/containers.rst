@@ -177,11 +177,13 @@ An example job submission script to run a serial job that executes the runscript
     #SBATCH -J simgtest
     #SBATCH -o simgtest.o%j
     #SBATCH -e simgtest.o%j
-    #SBATCH -p [partition]
-    #SBATCH -A [budget code]
     #SBATCH --nodes=1
     #SBATCH --ntasks=1
     #SBATCH --time=00:10:00
+
+    #SBATCH --account= [budget code]
+    #SBATCH --partition= standard
+    #SBATCH --qos=standard
 
     # Change to the directory that the job was submitted from
     cd $HOME
@@ -217,12 +219,14 @@ Below is an example job submission script that runs a Singularity container over
     #SBATCH -J simgtest
     #SBATCH -o simgtest.o%j
     #SBATCH -e simgtest.o%j
-    #SBATCH -p [partition]
-    #SBATCH -A [budget code]
     #SBATCH --nodes=4
     #SBATCH --ntasks=256
     #SBATCH --time=01:10:00
 
+    #SBATCH --account=[budget code]
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+    
     # setup resource-related environment
     NNODES=$SLURM_JOB_NUM_NODES
     NCORESPN=$SLURM_CPUS_ON_NODE

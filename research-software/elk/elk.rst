@@ -58,6 +58,8 @@ MPI ELK jobs
    #SBATCH --time=00:20:00
 
    #SBATCH --account=[budget code]
+   #SBATCH --partition=standard
+   #SBATCH --qos=standard
 
    # Load the elk module
    # Launch the executable
