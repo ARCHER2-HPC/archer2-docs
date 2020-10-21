@@ -79,7 +79,7 @@ end is a shared resource.
 
 A typical SLURM job submission script for OpenFOAM is given here. This would
 request 4 nodes to run with 128 MPI tasks per node (a total of 512 MPI tasks).
-Each MPI task is allocated one core (``--cpus-per-task=1).
+Each MPI task is allocated one core (``--cpus-per-task=1``).
 
 ::
 
