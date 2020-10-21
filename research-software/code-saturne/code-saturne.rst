@@ -49,52 +49,45 @@ command from the case directory, where *setup.xml* is the input file::
 
 This will create a directory named for the current date and time 
 (e.g. 20201019-1636) inside the RESU directory. Inside the new directory
-will be a script named *run_solver* which will need some additions to 
-resemble the one shown below. You will need to add the ``#SBATCH`` options to 
-set the job name, size and so on. You will also need to add 
-the two ``module load`` commands, and ``srun --cpu-bind=cores``
-as well as the ``--mpi`` option to the line executing ``./cs_solver`` to ensure
-parallel execution on the compute nodes.
+will be a script named *run_solver*. You may alter this to resemble the
+script below, or you may wish to simply create a new one with the
+contents shown.
 
-The script below will run a Code_Saturne job over 4 nodes (128 x 4 = 512 cores)
+If you wish to alter the existing *run_solver* script you will need to add all
+the ``#SBATCH`` options shown to set the job name, size and so on. You should also
+add the two ``module`` commands, and ``srun --cpu-bind=cores`` as well as the
+``--mpi`` option to the line executing ``./cs_solver`` to ensure parallel
+execution on the compute nodes. The ``export LD_LIBRARY_PATH=...`` and ``cd``
+commands are redundant and may be retained or removed.
+
+This script will run an MPI-only Code_Saturne job over 4 nodes (128 x 4 = 512 cores)
 for a maximum of 20 minutes.
 
 ::
 
   #!/bin/bash
+  #SBATCH --export=none
   #SBATCH --job-name=CSExample
   #SBATCH --time=0:20:00
   #SBATCH --nodes=4
   #SBATCH --tasks-per-node=128
   #SBATCH --cpus-per-task=1
+
+  # Replace [budget code] below with your budget code (e.g. t01)
   #SBATCH --account=[budget code]
   #SBATCH --partition=standard
   #SBATCH --qos=standard
 
-  # Export paths here if necessary or recommended.
-  export LD_LIBRARY_PATH="/opt/cray/pe/libsci/20.08.1.2/GNU/9.1/x86_64/lib":$LD_LI
-  BRARY_PATH
-  export LD_LIBRARY_PATH="/work/y07/shared/code_saturne/6.0.5-gcc10/lib":$LD_LIBRA
-  RY_PATH
-
-  module load /work/y07/shared/archer2-modules/modulefiles-cse/epcc-setup-env
+  module -s restore /etc/cray-pe.d/PrgEnv-gnu
   module load code_saturne
 
+  # Prevent threading.
   export OMP_NUM_THREADS=1
-
-  cd /path/to/case/RESU/[date]-[time]
 
   # Run solver.
   srun --cpu-bind=cores ./cs_solver --mpi $@
-  export CS_RET=$?
 
-  exit $CS_RET
-
-The *run_solver* script can then be submitted to the batch system with
-
-::
-
-  sbatch run_solver
+The script can then be submitted to the batch system with ``sbatch``.
 
 Hints and tips
 --------------
