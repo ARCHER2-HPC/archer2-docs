@@ -16,8 +16,8 @@ The following debugging tools are available on ARCHER2:
 * `valgrind4hpc`_ is a parallel memory debugging tool that aids in detection of memory leaks and
   errors in parallel applications. It aggregates like errors across processes and threads to simply
   debugging of parallel applications.
-* `STAT`_ generate merged stack traces for parallel applications. Also has visualisation tools.
 * `ATP`_ scalable core file and backtrace analysis when parallel programs crash. Note that this is not currently working on ARCHER2.
+.. * `STAT`_ generate merged stack traces for parallel applications. Also has visualisation tools.
 .. * `CCDB`_ Cray Comparative Debugger. Compare two versions of code side-by-side to analyse differences.
 
 gdb4hpc
@@ -277,99 +277,99 @@ Valgrind4hpc only supports certain tools found in valgrind. These are: memcheck,
 
 More information on valgrind4hpc can be found in the manual (``man valgrind4hpc``). 
     
-STAT
-----
-
-The Stack Trace Analysis Tool (STAT) is a cross-platform debugging tool from the University of Wisconsin-Madison. ATP is based on the same technology as STAT, both are designed to gather and merge stack traces from a running application's parallel processes. The STAT tool can be useful when application seems to be deadlocked or stuck, i.e. they don't crash but they don't progress as expected, and it has been designed to scale to a very large number of processes. Full information on STAT, including use cases, is available at the `STAT website <https://hpc.llnl.gov/software/development-environment-software/stat-stack-trace-analysis-tool>`_.
-
-STAT will attach to a running program and query that program to find out where all the processes in that program currently are. It will then process that data and produce a graph displaying the unique process locations (i.e. where all the processes in the running program currently are). To make this easily understandable it collates together all processes that are in the same place providing only unique program locations for display. 
-
-Using STAT on ARCHER2
-~~~~~~~~~~~~~~~~~~~~~
-
-On the login node, load the ``cray-stat`` module:
-
-::
-
-    module load cray-stat
-    
-Then, launch your job using ``srun`` as a background task (by adding an ``&`` at the end of the command). For example, if you are running an executable called ``my_exe`` using 256 processes, you would run:
-
-::
-
-    srun -n=256 --nodes=2 --tasks-per-node=128 --cpus-per-task=1 --time=01:00:00  --export=ALL\
-                --account=[budget code] --partition=standard --qos=standard./my_exe &
-    
-Note that this example has set the job time limit to 1 hour -- if you need longer, change the ``--time`` command.
-
-You will need the Program ID (PID) of the job you have just launched -- the PID is printed to screen upon launch, or you can get it by running:
-
-::
-
-    ps -u $USER
-    
-This will present you with a set of text that looks like this:
-
-::
-
-       PID TTY          TIME CMD
-    154296 ?        00:00:00 systemd
-    154297 ?        00:00:00 (sd-pam)
-    154302 ?        00:00:00 sshd
-    154303 pts/8    00:00:00 bash
-    157150 pts/8    00:00:00 salloc
-    157152 pts/8    00:00:00 bash
-    157183 pts/8    00:00:00 srun
-    157185 pts/8    00:00:00 srun
-    157191 pts/8    00:00:00 ps
-
-Once your application has reached the point where it hangs, issue the following command (replacing PID with the ID of the **first** srun task -- in the above example, I would replace PID with 157183):
-
-::
-
-    stat-cl -i PID
-    
-You will get an output that looks like this:
-
-::
-
-    STAT started at 2020-07-22-13:31:35
-    Attaching to job launcher (null):157565 and launching tool daemons...
-    Tool daemons launched and connected!
-    Attaching to application...
-    Attached!
-    Application already paused... ignoring request to pause
-    Sampling traces...
-    Traces sampled!
-    Resuming the application...
-    Resumed!
-    Pausing the application...
-    Paused!
-    
-    ...
-    
-    Detaching from application...
-    Detached!
-    
-    Results written to $PATH_TO_RUN_DIRECTORY/stat_results/my_exe.0000
-
-Once STAT is finished, you can kill the srun job using ``scancel`` (replacing JID with the job ID of the job you just launched):
-
-::
-    
-    scancel JID
-    
-You can view the results that STAT has produced using the following command (note that "my_exe" will need to be replaced with the name of the executable you ran):
-
-::
-
-    stat-view stat_results/my_exe.0000/00_my_exe.0000.3D.dot
-    
-This produces a graph displaying all the different places within the program that the parallel processes were when you queried them.
-
+.. STAT
+.. ----
+.. 
+.. The Stack Trace Analysis Tool (STAT) is a cross-platform debugging tool from the University of Wisconsin-Madison. ATP is based on the same technology as STAT, both are designed to gather and merge stack traces from a running application's parallel processes. The STAT tool can be useful when application seems to be deadlocked or stuck, i.e. they don't crash but they don't progress as expected, and it has been designed to scale to a very large number of processes. Full information on STAT, including use cases, is available at the `STAT website <https://hpc.llnl.gov/software/development-environment-software/stat-stack-trace-analysis-tool>`_.
+.. 
+.. STAT will attach to a running program and query that program to find out where all the processes in that program currently are. It will then process that data and produce a graph displaying the unique process locations (i.e. where all the processes in the running program currently are). To make this easily understandable it collates together all processes that are in the same place providing only unique program locations for display. 
+..  
+.. Using STAT on ARCHER2
+.. ~~~~~~~~~~~~~~~~~~~~~
+.. 
+.. On the login node, load the ``cray-stat`` module:
+.. 
+.. ::
+.. 
+..     module load cray-stat
+..     
+.. Then, launch your job using ``srun`` as a background task (by adding an ``&`` at the end of the command). For example, if you are running an executable called ``my_exe`` using 256 processes, you would run:
+.. 
+.. ::
+.. 
+..     srun -n=256 --nodes=2 --tasks-per-node=128 --cpus-per-task=1 --time=01:00:00  --export=ALL\
+..                 --account=[budget code] --partition=standard --qos=standard./my_exe &
+..     
+.. Note that this example has set the job time limit to 1 hour -- if you need longer, change the ``--time`` command.
+.. 
+.. You will need the Program ID (PID) of the job you have just launched -- the PID is printed to screen upon launch, or you can get it by running:
+.. 
+.. ::
+.. 
+..     ps -u $USER
+..     
+.. This will present you with a set of text that looks like this:
+.. 
+.. ::
+.. 
+..        PID TTY          TIME CMD
+..     154296 ?        00:00:00 systemd
+..     154297 ?        00:00:00 (sd-pam)
+..     154302 ?        00:00:00 sshd
+..     154303 pts/8    00:00:00 bash
+..     157150 pts/8    00:00:00 salloc
+..     157152 pts/8    00:00:00 bash
+..     157183 pts/8    00:00:00 srun
+..     157185 pts/8    00:00:00 srun
+..     157191 pts/8    00:00:00 ps
+.. 
+.. Once your application has reached the point where it hangs, issue the following command (replacing PID with the ID of the **first** srun task -- in the above example, I would replace PID with 157183):
+.. 
+.. ::
+.. 
+..     stat-cl -i PID
+..     
+.. You will get an output that looks like this:
+.. 
+.. ::
+.. 
+..     STAT started at 2020-07-22-13:31:35
+..     Attaching to job launcher (null):157565 and launching tool daemons...
+..     Tool daemons launched and connected!
+..     Attaching to application...
+..     Attached!
+..     Application already paused... ignoring request to pause
+..     Sampling traces...
+..     Traces sampled!
+..     Resuming the application...
+..     Resumed!
+..     Pausing the application...
+..     Paused!
+..     
+..     ...
+..     
+..     Detaching from application...
+..     Detached!
+..     
+..     Results written to $PATH_TO_RUN_DIRECTORY/stat_results/my_exe.0000
+.. 
+.. Once STAT is finished, you can kill the srun job using ``scancel`` (replacing JID with the job ID of the job you just launched):
+.. 
+.. ::
+..     
+..     scancel JID
+..     
+.. You can view the results that STAT has produced using the following command (note that "my_exe" will need to be replaced with the name of the executable you ran):
+.. 
+.. ::
+.. 
+..     stat-view stat_results/my_exe.0000/00_my_exe.0000.3D.dot
+..     
+.. This produces a graph displaying all the different places within the program that the parallel processes were when you queried them.
+.. 
 .. note::
-
-  To see the graph, you will need to have exported your X display when logging in.
+.. 
+..   To see the graph, you will need to have exported your X display when logging in.
 
 ATP
 ---
