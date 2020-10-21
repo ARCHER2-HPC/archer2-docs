@@ -262,6 +262,25 @@ to the login node, the output should include:
 there could be a problem with your internet connection, or the login node could
 be unavailable.
 
+.. note ::
+
+  On ARCHER2 you will be asked to enter your password first, then your SSH key
+  passphrase.
+
+Password
+~~~~~~~~
+
+If you are having trouble entering your password consider using a password
+manager, from which you can copy and paste it. This will also help you generate
+a secure password. If you need to reset your password, instructions for doing so
+can be found `here
+<https://epcced.github.io/safe-docs/safe-for-users/#reset_machine>`__.
+
+Windows users please note that ``Ctrl+V`` does not work to paste in to PuTTY,
+MobaXterm, or PowerShell. Instead use ``Shift+Ins`` to paste. Alternatively,
+right-click and select 'Paste' in PuTTY and MobaXterm, or simply right-click to
+paste in PowerShell.
+
 SSH key
 ~~~~~~~
 
@@ -342,20 +361,6 @@ id_rsa_ARCHER2``.
   converting them to decimal. For example the permission string ``-rwx------``
   becomes ``111 000 000`` -> ``700``.
 
-Password
-~~~~~~~~
-
-If you are having trouble entering your password consider using a password
-manager, from which you can copy and paste it. This will also help you generate
-a secure password. If you need to reset your password, instructions for doing so
-can be found `here
-<https://epcced.github.io/safe-docs/safe-for-users/#reset_machine>`__.
-
-Windows users please note that ``Ctrl+V`` does not work to paste in to PuTTY,
-MobaXterm, or PowerShell. Instead use ``Shift+Ins`` to paste. Alternatively,
-right-click and select 'Paste' in PuTTY and MobaXterm, or simply right-click to
-paste in PowerShell.
-
 SSH verbose output
 ~~~~~~~~~~~~~~~~~~
 
@@ -373,31 +378,60 @@ the following:
 
 ::
 
+  debug1: Next authentication method: keyboard-interactive
+  debug2: userauth_kbdint
+  debug3: send packet: type 50
+  debug2: we sent a keyboard-interactive packet, wait for reply
+  debug3: receive packet: type 60
+  debug2: input_userauth_info_req
+  debug2: input_userauth_info_req: num_prompts 1
+  Password:
+  debug3: send packet: type 61
+  debug3: receive packet: type 60
+  debug2: input_userauth_info_req
+  debug2: input_userauth_info_req: num_prompts 0
+  debug3: send packet: type 61
+  debug3: receive packet: type 51
+  Authenticated with partial success.
+  debug1: Authentications that can continue: publickey,password
+
+If you do not see the ``Password:`` prompt you may have connection issues, or
+there could be a problem with the ARCHER2 login nodes. If you do not see
+``Authenticated with partial success`` it means your password was not accepted.
+You will be asked to re-enter your password, usually two more times before the
+connection will be rejected. Consider the suggestions under *Password* above. If
+you *do* see ``Authenticated with partial success``, it means your password was
+accepted, and your SSH key will now be checked.
+
+You should next see something similiar to:
+
+::
+
   debug1: Next authentication method: publickey
-  debug1: Offering public key: RSA SHA256:<key-hash> <path_to_private_key>
+  debug1: Offering public key: RSA SHA256:<key_hash> <path_to_private_key>
   debug3: send_pubkey_test
   debug3: send packet: type 50
   debug2: we sent a publickey packet, wait for reply
   debug3: receive packet: type 60
-  debug1: Server accepts key: pkalg ssh-rsa vlen 2071
-  debug2: input_userauth_pk_ok: fp SHA256:<key-hash>
-  debug3: sign_and_send_pubkey: RSA SHA256:<key-hash>
+  debug1: Server accepts key: pkalg rsa-sha2-512 blen 2071
+  debug2: input_userauth_pk_ok: fp SHA256:<key_hash>
+  debug3: sign_and_send_pubkey: RSA SHA256:<key_hash>
   Enter passphrase for key '<path_to_private_key>':
   debug3: send packet: type 50
-  debug3: receive packet: type 51
-  Authenticated with partial success.
+  debug3: receive packet: type 52
+  debug1: Authentication succeeded (publickey).
 
 Most importantly, you can see which files ssh has checked for private keys, and
-you can see if any key is accepted. The line ``Authenticated with partial
-success`` indicates that the SSH key has been accepted, and you will next be
-asked for your password. By default ssh will go through a list of standard
-private key files, as well as any you have specified with ``-i`` or a config
-file. This is fine, as long as one of the files mentioned is the one that
-matches the public key uploaded to SAFE.
+you can see if any key is accepted. The line ``Authenticated succeeded``
+indicates that the SSH key has been accepted. By default ssh will go through a
+list of standard private key files, as well as any you have specified with
+``-i`` or a config file. This is fine, as long as one of the files mentioned is
+the one that matches the public key uploaded to SAFE.
 
-If you do not see ``Authenticated with partial success`` anywhere in the verbose
-output, consider the suggestions under *SSH key* above. If you do, but are 
-unable to connect, consider the suggestions under *Password* above.
+If your SSH key passphrase is incorrect, you will be asked to try again up to
+three times in total, before being disconnected with ``Permission denied
+(publickey)``. If you enter your passphrase correctly, but still see this error
+message, please consider the advice under *SSH key* above.
 
 The equivalent information can be obtained in PuTTY or MobaXterm by enabling
 all logging in settings.

@@ -58,10 +58,10 @@ For example, the following script will run a QE ``pw.x`` job using 4 nodes
    #SBATCH --qos=standard
    
    # Load the relevant Quantum Espresso module
+   module restore /etc/cray-pe.d/PrgEnv-gnu
+   module load quantum-espresso
 
-   module load qe
-
-   srun ... pw.x < test_calc.in
+   srun pw.x < test_calc.in
 
 
 Hints and tips
