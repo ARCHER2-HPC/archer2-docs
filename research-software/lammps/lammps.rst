@@ -66,6 +66,7 @@ For example, the following script will run a LAMMPS MD job using 4 nodes
    #SBATCH --qos=standard
    
    # Load the relevant LAMMPS module
+   module restore /etc/cray-pe.d/PrgEnv-gnu
    module load lammps
 
    srun lmp -i in.test -o out.test
