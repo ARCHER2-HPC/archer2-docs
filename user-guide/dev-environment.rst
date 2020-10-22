@@ -350,6 +350,35 @@ environment:
 
   $ module restore PrgEnv-gnu
 
+
+
+Useful Gnu Fortran options
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+==============================  ===============================================
+  Option                                     Comment
+==============================  ===============================================
+``-std=<standard>``              Default is ``gnu``
+``-fallow-argument-mismatch``    Allow mismatched procedure arguments
+``-fbounds-check``               Use runtime checking of array indices
+``-fopenmp``                     Compile OpenMP (default is no OpenMP)
+``-v``                           Display verbose output from compiler stages
+==============================  ===============================================
+
+Notes:
+
+1. The ``standard`` in ``-std`` may be one of ``f95`` ``f2003``, ``f2008`` or
+``f2018``. The default option ``-std=gnu`` is the latest Fortran standard
+plus gnu extensions.
+
+2. Past versions of ``gfortran`` have allowed mismatched arguments to
+external producures (e.g., where an explicit interface is not available).
+This is often the case for MPI routines where arrays of different types
+are passed to ``MPI_Send()`` and so on. This will now generate an error
+as not standard conforming. Use ``-fallow-argument-mismatch`` to reduce
+the error to a warning. The same effect may be acheived via ``-std=legacy``.
+
+
 Reference material
 ^^^^^^^^^^^^^^^^^^
 
