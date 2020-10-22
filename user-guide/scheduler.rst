@@ -216,6 +216,16 @@ change the ``--cpus-per-task`` option.
   with you. Hence, the minimum amount of resource you can request for a parallel
   job is 1 node (or 128 cores).
 
+To prevent the behaviour of batch scripts being dependent on the user
+environment at the point of submission, the option
+
+  - ``--export=none`` prevents the user environment from being exported
+    to the batch system.
+
+Using the ``--export=none`` means that the behaviour of batch submissions
+should be repeatable. We strongly recommend its use.
+
+
 ``srun``: Launching parallel jobs
 ---------------------------------
 
@@ -258,6 +268,7 @@ nodes and 128 MPI ranks per node for 20 minutes would look like:
     #SBATCH --account=[budget code]             
     #SBATCH --partition=standard
     #SBATCH --qos=standard
+    #SBATCH --export=none
 
     # Set the number of threads to 1
     #   This prevents any threaded system libraries from automatically 
@@ -295,7 +306,7 @@ process. This results in all 128 physical cores per node being used.
 
    Note the use of the ``export OMP_PLACES=cores`` environment option and
    the ``--hint=nomultithread`` and ``--distribution=block:block``
-   options to ``srun``to generate the correct pinning.
+   options to ``srun`` to generate the correct pinning.
 
 ::
 
@@ -313,6 +324,7 @@ process. This results in all 128 physical cores per node being used.
   #SBATCH --account=[budget code] 
   #SBATCH --partition=standard
   #SBATCH --qos=standard
+  #SBATCH --export=none
 
   # Set the number of threads to 16 and specify placement
   #   There are 16 OpenMP threads per MPI process
@@ -367,6 +379,7 @@ process per core and specifies 4 hours maximum runtime per subjob:
     #SBATCH --account=[budget code]  
     #SBATCH --partition=standard
     #SBATCH --qos=standard
+    #SBATCH --export=none
 
     # Set the number of threads to 1
     #   This prevents any threaded system libraries from automatically 
