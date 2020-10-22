@@ -247,6 +247,25 @@ can also download these examples at:
 
 .. TODO: add links to job submission scripts
 
+Using modules in the batch system
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Batch jobs must be submitted in the work file system ``/work`` as the
+back end does not have access to the ``/home`` file system. This has
+a knock-on effect on the behaviour of module collections, which the
+module system expects to find in a users' home directory. In order
+that the module system work correctly, batch scripts should contain
+
+.. code-block:: console
+
+  module restore /etc/cray-pe.d/PrgEnv-cray
+
+to restore the default module collection before any other action.
+This will also ensure all relevant library paths are set correctly
+at run time. Note ``module -s`` can be used to suppress the associated
+messages if desired.
+
+
 Example: job submission script for MPI parallel job
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -269,7 +288,10 @@ nodes and 128 MPI ranks per node for 20 minutes would look like:
     #SBATCH --partition=standard
     #SBATCH --qos=standard
     #SBATCH --export=none
-
+    
+    # Restore default module collection PrgEnv-cray
+    module -s restore /etc/cray-pe.d/PrgEnv-cray
+    
     # Set the number of threads to 1
     #   This prevents any threaded system libraries from automatically 
     #   using threading.
@@ -277,7 +299,7 @@ nodes and 128 MPI ranks per node for 20 minutes would look like:
 
     # Launch the parallel job
     #   Using 1024 MPI processes and 128 MPI processes per node
-    #   srun picks up the distribution from the sbatch options
+    #   srun picks up the distribution from the sbatch options
     srun --cpu-bind=cores ./my_mpi_executable.x
 
 This will run your executable "my\_mpi\_executable.x" in parallel on 1024
@@ -325,7 +347,10 @@ process. This results in all 128 physical cores per node being used.
   #SBATCH --partition=standard
   #SBATCH --qos=standard
   #SBATCH --export=none
-
+  
+  # Restore default module collection PrgEnv-cray
+  module -s restore /etc/cray-pe.d/PrgEnv-cray
+  
   # Set the number of threads to 16 and specify placement
   #   There are 16 OpenMP threads per MPI process
   #   We want one thread per physical core
@@ -380,7 +405,10 @@ process per core and specifies 4 hours maximum runtime per subjob:
     #SBATCH --partition=standard
     #SBATCH --qos=standard
     #SBATCH --export=none
-
+    
+    # Restore default module collection PrgEnv-cray
+    module -s restore /etc/cray-pe.d/PrgEnv-cray
+    
     # Set the number of threads to 1
     #   This prevents any threaded system libraries from automatically 
     #   using threading.

@@ -61,14 +61,15 @@ and their versions you have presently loaded in your environment:
 
 .. code-block:: console
 
-    auser@uan01:~> module list
-Currently Loaded Modulefiles:
- 1) cpe-aocc                          7) cray-dsmml/0.1.2(default)                           
- 2) aocc/2.1.0.3(default)             8) perftools-base/20.09.0(default)                     
- 3) craype/2.7.0(default)             9) xpmem/2.2.35-7.0.1.0_1.3__gd50fabf.shasta(default)  
- 4) craype-x86-rome                  10) cray-mpich/8.0.15(default)                          
- 5) libfabric/1.11.0.0.233(default)  11) cray-libsci/20.08.1.2(default)                      
- 6) craype-network-ofi  
+  auser@uan01:~> module list
+  Currently Loaded Modulefiles:
+  1) cpe-aocc                          7) cray-dsmml/0.1.2(default)
+  2) aocc/2.1.0.3(default)             8) perftools-base/20.09.0(default)
+  3) craype/2.7.0(default)             9) xpmem/2.2.35-7.0.1.0_1.3__gd50fabf.shasta(default)
+  4) craype-x86-rome                  10) cray-mpich/8.0.15(default)
+  5) libfabric/1.11.0.0.233(default)  11) cray-libsci/20.08.1.2(default)
+  6) craype-network-ofi
+
 
 Finding out which software modules are available on the system is performed using the
 ``module avail`` command. To list all software modules available, use:
@@ -198,6 +199,7 @@ For example, for the default FFTW module:
   module-whatis   {FFTW 3.3.8.7 - Fastest Fourier Transform in the West}
     [...]
 
+
 Loading, removing and swapping modules
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -246,14 +248,50 @@ You did not need to specify the version of the loaded module in your
 current environment as this can be inferred as it will be the only one
 you have loaded.
 
+
+Changing Programming Environment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The three programming environments ``PrgEnv-aocc``, ``PrgEnv-cray``,
+``PrgEnv-gnu`` are implemented as module collections. The correct
+way to change programming environment, that is, change the collection
+of modules, is therefore via ``module restore``. For example:
+
+.. code-block:: console
+
+  auser@uan01:~> module restore PrgEnv-gnu
+
+Note there is only one argument, which is the collection to be restored.
+The command ``module restore`` will output a list of modules in the
+outgoing collection as they are unloaded, and the modules in the incoming
+collection as they are loaded. If you prefer not to have messages
+
+.. code-block:: console
+
+  auser@uan1:~> module -s restore PrgEnv-gnu
+
+will suppress the messages. An attempt to restore a collection which
+is already loaded will result in no operation.
+
+Module collections are stored in a user's home directory ``${HOME}/.module``.
+However, as the home directory is not available to the back end, ``module
+restore`` may fail for batch jobs. In this case, it is possible to restore
+one of the three standard programming environments via, e.g.,
+
+.. code-block:: console
+
+  module restore /etc/cray-pe.d/PrgEnv-gnu
+
+
+
 Capturing your environment for reuse
-------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. TODO Update section once Lmod is installed on ARCHER2
 
 Sometimes it is useful to save the module environment that you are using to
-compile a piece of code or execute a piece of software. This is known as a
-module *collection* You can save a collection from your current environment 
+compile a piece of code or execute a piece of software. This is saved as a
+module collection. You can save a collection from your current environment 
 by executing:
 
 .. code-block:: console
@@ -272,55 +310,13 @@ You can find the list of saved module environments by executing:
   Named collection list:
    1) default   2) PrgEnv-aocc   3) PrgEnv-cray   4) PrgEnv-gnu 
 
-.. note::
-
-  All users have three PrgEnv collections available. These are used
-  to setup the different programming environments for compiling 
-  software.
-
-You can load a saved module environment by executing:
+To list the modules in a collection, you can execute, e.g.,:
 
 .. code-block:: console
 
-  auser@uan01:~> module restore PrgEnv-gnu
-  Unloading cray-fftw/3.3.8.7
-  Unloading cray-libsci/20.08.1.2
-  Unloading cray-mpich/8.0.15
-  Unloading xpmem/2.2.35-7.0.1.0_1.3__gd50fabf.shasta
-
-  Unloading perftools-base/20.09.0
-    WARNING: Did not unuse /opt/cray/pe/perftools/20.09.0/modulefiles
-
-  Unloading cray-dsmml/0.1.2
-  Unloading craype-network-ofi
-  Unloading libfabric/1.11.0.0.233
-  Unloading craype-x86-rome
-
-  Unloading craype/2.7.0
-    WARNING: Did not unuse /opt/cray/pe/craype/2.7.0/modulefiles
-
-  Unloading aocc/2.1.0.3
-  Unloading cpe-aocc
-  Loading cpe-gnu
-  Loading gcc/10.1.0
-  Loading craype/2.7.0
-  Loading craype-x86-rome
-  Loading libfabric/1.11.0.0.233
-  Loading craype-network-ofi
-  Loading cray-dsmml/0.1.2
-  Loading perftools-base/20.09.0
-  Loading xpmem/2.2.35-7.0.1.0_1.3__gd50fabf.shasta
-  Loading cray-mpich/8.0.15
-  Loading cray-libsci/20.08.1.2
-
-To list the saved environment modules, you can execute:
-
-.. code-block:: console
-
-  auser@uan01:~> module saveshow
+  auser@uan01:~> module saveshow PrgEnv-gnu
   -------------------------------------------------------------------
-  /home/t01/t01/atuser/.module/default:
-
+  /home/t01/t01/auser/.module/default:
   module use --append /opt/cray/pe/perftools/20.09.0/modulefiles
   module use --append /opt/cray/pe/craype/2.7.0/modulefiles
   module use --append /usr/local/Modules/modulefiles
@@ -329,8 +325,8 @@ To list the saved environment modules, you can execute:
   module use --append /opt/cray/modulefiles
   module use --append /opt/cray/pe/modulefiles
   module use --append /opt/cray/pe/craype-targets/default/modulefiles
-  module load cpe-aocc
-  module load aocc
+  module load cpe-gnu
+  module load gcc
   module load craype
   module load craype-x86-rome
   module load --notuasked libfabric
@@ -340,9 +336,11 @@ To list the saved environment modules, you can execute:
   module load xpmem
   module load cray-mpich
   module load cray-libsci
-  module load cray-fftw
+  module load /work/y07/shared/archer2-modules/modulefiles-cse/epcc-setup-env
 
-To delete a module environment, you can execute:
+Note again that the details of the collection have been saved to the home
+directory (the first line of output above). To delete a module environment,
+you can execute:
 
 .. code-block:: console
 
