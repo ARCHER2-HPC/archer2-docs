@@ -250,7 +250,7 @@ you have loaded.
 
 
 Changing Programming Environment
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------
 
 The three programming environments ``PrgEnv-aocc``, ``PrgEnv-cray``,
 ``PrgEnv-gnu`` are implemented as module collections. The correct
@@ -339,8 +339,17 @@ To list the modules in a collection, you can execute, e.g.,:
   module load /work/y07/shared/archer2-modules/modulefiles-cse/epcc-setup-env
 
 Note again that the details of the collection have been saved to the home
-directory (the first line of output above). To delete a module environment,
-you can execute:
+directory (the first line of output above). It is possible to save a
+module collection with a fully qualified path, e.g.,
+
+.. code-block:: console
+
+  auser@uan1:~> module save /work/t01/z01/auser/.module/PrgEnv-gnu
+
+which would make it available from the batch system.
+
+
+To delete a module environment, you can execute:
 
 .. code-block:: console
 
