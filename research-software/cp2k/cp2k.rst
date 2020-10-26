@@ -81,11 +81,12 @@ For example, the following script will run a CP2K job using 4 nodes
    # Ensure that no libraries are inadvertently using threading
    # Launch the executable
 
+   module -s restore /etc/cray-pe.d/PrgEnv-gnu
    module load cp2k
 
    export OMP_NUM_THREADS=1
 
-   srun cp2k.popt MYINPUT.inp
+   srun cp2k.popt -i MYINPUT.inp
 
 
 MPI/OpenMP hybrid jobs
@@ -104,7 +105,7 @@ To run CP2K using MPI and OpenMP, load the ``cp2k`` module and use the
 
     #!/bin/bash
 
-    # Request 4 nodes with 32 MPI tasks per node each using 8 threads;
+    # Request 4 nodes with 16 MPI tasks per node each using 8 threads;
     # note this means 128 MPI tasks in total.
     # Remember to replace [budget code] below with your account code,
     # e.g. '--account=t01'.
@@ -112,7 +113,7 @@ To run CP2K using MPI and OpenMP, load the ``cp2k`` module and use the
     #SBATCH --job-name=CP2K_test
     #SBATCH --nodes=4
     #SBATCH --ntasks=128
-    #SBATCH --tasks-per-node=32
+    #SBATCH --tasks-per-node=16
     #SBATCH --cpus-per-task=8
     #SBATCH --time=00:20:00
 
@@ -124,11 +125,12 @@ To run CP2K using MPI and OpenMP, load the ``cp2k`` module and use the
     # Ensure OMP_NUM_THREADS is consistent with cpus-per-task above
     # Launch the executable
 
+    module -s restore /etc/cray-pe.d/PrgEnv-gnu
     module load cp2k
 
     export OMP_NUM_THREADS=8
 
-    srun cp2k.psmp MYINPUT.inp
+    srun cp2k.psmp -i MYINPUT.inp
 
 
 Hints and Tips
