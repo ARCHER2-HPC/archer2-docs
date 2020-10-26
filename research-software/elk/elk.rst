@@ -49,8 +49,7 @@ The following script will run an ELK job on 4 nodes (512 cores).
 
    # Request 512 MPI tasks (4 nodes at 128 tasks per node) with a
    # maximum wall clock time limit of 20 minutes.
-   # Replace [budget code] with your account code, e.g.,
-   # '--account=t01-brenda'
+   # Replace [budget code] with your account code.
 
    #SBATCH --job-name=elk_job
    #SBATCH --nodes=4
@@ -88,8 +87,7 @@ The following script will run an ELK job on 4 nodes, using 8 OpenMP threads and 
 
    # Request 512 MPI tasks (4 nodes at 128 tasks per node) with a
    # maximum wall clock time limit of 20 minutes.
-   # Replace [budget code] with your account code, e.g.,
-   # '--account=t01-brenda'
+   # Replace [budget code] with your account code.
 
    #SBATCH --job-name=elk_job
    #SBATCH --nodes=4
