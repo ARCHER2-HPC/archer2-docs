@@ -64,7 +64,7 @@ After the job finishes executing, CrayPat-lite output should be printed to stdou
 
 Further help
 ^^^^^^^^^^^^
-* `CrayPat-lite User Guide <https://pubs.cray.com/content/S-2376/7.0.0/cray-performance-measurement-and-analysis-tools-user-guide/craypat-lite>`__
+* `CrayPat-lite User Guide <https://pubs.cray.com/bundle/Cray_Performance_Measurement_and_Analysis_Tools_Installation_Guide_632_S-2474/page/Use_CrayPat_CrayPat-lite_Apprentice2_or_Reveal.html>`__
 
 
 
