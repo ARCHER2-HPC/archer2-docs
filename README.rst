@@ -96,5 +96,5 @@ The easiest way to learn what files should look like is to read the ``rst`` file
 A short list of style guidance:
 
 * Headings should be in sentance case
-
+* If using ``rst`` tables, use "simple" tables; "grid" tables (markup with ``+`` in corners) generate HTML with accessibility problems.
 
