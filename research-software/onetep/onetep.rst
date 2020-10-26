@@ -65,7 +65,7 @@ assumes that the input file is called ``text_calc.dat``.
   export OMP_NUM_THREADS=1
 
   # Launch the executable
-  srun -cpu-bind=cores onetep.archer2 test_calc > test_calc.out
+  srun --cpu-bind=cores onetep.archer2 test_calc > test_calc.out
 
 
 Hints and Tips
