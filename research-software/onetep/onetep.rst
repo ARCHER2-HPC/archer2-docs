@@ -32,7 +32,7 @@ Please have your license details to hand.
 Running parallel ONETEP jobs
 ----------------------------
 
-The following script will run a ONETEP job using 2 nodes (256 cores). it
+The following script will run a ONETEP job using 2 nodes (256 cores). It
 assumes that the input file is called ``text_calc.dat``.
 
 ::
@@ -48,9 +48,6 @@ assumes that the input file is called ``text_calc.dat``.
   #SBATCH --tasks-per-node=128
   #SBATCH --cpus-per-task=1
   #SBATCH --time=00:20:00
-
-  #SBATCH --partition=standard
-  #SBATCH --qos=standard
   
   #SBATCH --account=[budget code]
   #SBATCH --partition=standard
