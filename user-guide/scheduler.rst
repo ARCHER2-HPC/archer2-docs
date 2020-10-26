@@ -298,11 +298,12 @@ nodes and 128 MPI ranks per node for 20 minutes would look like:
     export OMP_NUM_THREADS=1
 
     # Launch the parallel job
-    #   Using 1024 MPI processes and 128 MPI processes per node
+    #   Using 512 MPI processes and 128 MPI processes per node
     #   srun picks up the distribution from the sbatch options
+
     srun --cpu-bind=cores ./my_mpi_executable.x
 
-This will run your executable "my\_mpi\_executable.x" in parallel on 1024
+This will run your executable "my\_mpi\_executable.x" in parallel on 512
 MPI processes using 4 nodes (128 cores per node, i.e. not using hyper-threading). Slurm will
 allocate 4 nodes to your job and srun will place 128 MPI processes on each node
 (one per physical core).
