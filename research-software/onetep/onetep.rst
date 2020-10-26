@@ -10,7 +10,6 @@ ONETEP
 ONETEP (Order-N Electronic Total Energy Package) is a linear-scaling code for
 quantum-mechanical calculations based on density-functional theory.
 
-
 Useful Links
 ------------
 
@@ -18,35 +17,70 @@ Useful Links
 * ONETEP tutorials      https://www.onetep.org/Main/Tutorials
 * ONETEP documentation  https://www.onetep.org/Main/Documentation
 
-
 Using ONETEP on ARCHER2
 -----------------------
 
-ONETEP is licensed software. Please see the ONETEP
-`license page <https://www.onetep.org/Main/License>`__ for details.
-Users who wish to access the ONETEP package should submit a request via SAFE.
+**ONETEP is only available to users who have a valid ONETEP licence.**
 
+If you have a ONETEP licence and wish to have access to ONETEP on ARCHER2,
+please make a request via the SAFE, see:
+
+  - `How to request access to package groups <https://epcced.github.io/safe-docs/safe-for-users/#how-to-request-access-to-a-package-group>`__
+
+Please have your license details to hand.
 
 Running parallel ONETEP jobs
 ----------------------------
 
+The following script will run a ONETEP job using 2 nodes (256 cores). it
+assumes that the input file is called ``text_calc.dat``.
 
-.. warning::
+::
 
-  ONETEP example scripts are pending
+  #!/bin/bash
+
+  # Request 2 nodes with 128 MPI tasks per node for 20 minutes
+  # Replace [budget code] below with your account code,
+  # e.g. '--account=t01'
+
+  #SBATCH --job-name=ONETEP
+  #SBATCH --nodes=2
+  #SBATCH --tasks-per-node=128
+  #SBATCH --cpus-per-task=1
+  #SBATCH --time=00:20:00
+
+  #SBATCH --partition=standard
+  #SBATCH --qos=standard
+  
+  #SBATCH --account=[budget code]
+  #SBATCH --partition=standard
+  #SBATCH --qos=standard
+
+  # Load the ONETEP module
+  module load onetep
+
+  # Make sure that the stack settings are correct
+  ulimit -s unlimited
+  export OMP_STACKSIZE=64M
+  export OMP_NUM_THREADS=1
+
+  # Launch the executable
+  srun -cpu-bind=cores onetep.archer2 test_calc > test_calc.out
 
 
-Hints and tips
+Hints and Tips
 --------------
 
-ONETEP supports hybrid OpenMP / MPI parallelism. While it is not necessary
-to use OpenMP for very small calculations, for anything over a few hundred
-atoms it is highly advisable [citation required].
+See the information in the ONETEP documentation, in particular the information on 
+stack sizes:
 
+* `<https://www.onetep.org/Main/RunningONETEP>`__
 
 Compiling ONETEP
 ----------------
 
-.. warning::
+The latest instructions for building CASTEP on ARCHER2 may be found
+in the GitHub repository of build instructions:
 
-  Relevant information on ONETEP compilation is pending 
+  - `Build instructions for ONETEP on GitHub <https://github.com/hpc-uk/build-instructions/tree/master/ONETEP>`__
+
