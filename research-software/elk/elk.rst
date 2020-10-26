@@ -85,7 +85,7 @@ The following script will run an ELK job on 4 nodes, using 8 OpenMP threads and 
 
    #!/bin/bash
 
-   # Request 512 MPI tasks (4 nodes at 128 tasks per node) with a
+   # Request 4 nodes (using 8 threads and 16 MPI tasks per node) with a
    # maximum wall clock time limit of 20 minutes.
    # Replace [budget code] with your account code.
 
