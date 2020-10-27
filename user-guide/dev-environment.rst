@@ -213,7 +213,7 @@ not provide an exhaustive description of all ``clang`` options.
 Dynamic Linking
 ~~~~~~~~~~~~~~~
 
-xecutables on ARCHER2 link dynamically, and the Cray Programming Environment
+Executables on ARCHER2 link dynamically, and the Cray Programming Environment
 does not currently support static linking. This is in contrast to ARCHER where
 the default was to build statically.
 
