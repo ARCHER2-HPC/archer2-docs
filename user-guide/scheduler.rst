@@ -531,7 +531,7 @@ what many people consider an 'interactive' job than the method using
 One can now issue shell commands in the usual way. A further invocation
 of ``srun`` is required to launch a parallel job in the allocation.
 
-When finshed, type ``exit`` to relinquish the allocation and control
+When finished, type ``exit`` to relinquish the allocation and control
 will be returned to the front end.
 
 By default, the interactive shell will retain the environment of the
