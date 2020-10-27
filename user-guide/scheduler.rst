@@ -479,7 +479,9 @@ issue the following qsub command from the command line:
 
 ::
 
-    salloc --nodes=8 --tasks-per-node=128 --cpus-per-task=1 --time=1:0:0 --account=[budget code]
+    auser@uan01:> salloc --nodes=8 --tasks-per-node=128 --cpus-per-task=1 \
+                  --time=01:00:00 --partition=standard --qos=standard \
+                  --account=[budget code]
     
 When you submit this job your terminal will display something like:
 
@@ -488,9 +490,11 @@ When you submit this job your terminal will display something like:
     salloc: Granted job allocation 24236
     salloc: Waiting for resource configuration
     salloc: Nodes nid000002 are ready for job
+    auser@uan01:>
 
 It may take some time for your interactive job to start. Once it
-runs you will enter a standard interactive terminal session.
+runs you will enter a standard interactive terminal session (a new shell).
+Note that this shell is still on the front end (the prompt has not change).
 Whilst the interactive session lasts you will be able to run parallel
 jobs on the compute nodes by issuing the ``srun --cpu-bind=cores``  command
 directly at your command prompt using the same syntax as you would inside
@@ -504,6 +508,34 @@ length of your working session, say a full day.
 Your session will end when you hit the requested walltime. If you
 wish to finish before this you should use the ``exit`` command - this will
 return you to your prompt before you issued the ``salloc`` command.
+
+Using ``srun`` directly
+~~~~~~~~~~~~~~~~~~~~~~~
+
+A second way to run an interactive job is to use ``srun`` directly in
+the following way
+
+::
+
+  auser@uan01:>  srun --nodes=1 --exclusive --time=00:20:00 --account=[] \
+                 --partition=standard --qos=standard --pty /bin/bash
+  auser@uan01:> hostname
+  nid001261
+
+The ``--pty /bin/bash`` will cause a new shell to be started on the first
+node of a new allocation (note that while the shell prompt has not
+changed, we are now on the compute node). This is perhaps closer to
+what many people consider an 'interactive' job than the method using
+``salloc`` appears.
+
+One can now issue shell commands in the usual way. A further invocation
+of ``srun`` is required to launch a parallel job in the allocation.
+
+When finshed, type ``exit`` to relinquish the allocation and control
+will be returned to the front end.
+
+By default, the interactive shell will retain the environment of the
+parent. If you want a clean shell, remember to specify ``--export=none``.
 
 Reservations
 ------------
