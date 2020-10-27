@@ -77,6 +77,12 @@ you would follow up with ``module swap gcc gcc/9.3.0``. At this point you may
 invoke the compiler wrappers and they will correctly use Cray's libraries and 
 tools in conjunction with GCC 9.3.0.
 
+.. warning::
+
+  The ``gcc/8.3.0`` module is available on ARCHER2 but cannot be used as the
+  supporting scientific and system libraries are not available. You should
+  **not** use this version of GCC.
+
 When choosing the programming environment, a big factor will likely be which
 compilers you have previously used for your code's development. The Cray Fortran
 compiler is similar to the compiler you may be familiar with from ARCHER, while
@@ -130,6 +136,12 @@ good starting point for reasonable performance:
 | GCC          | ``-O2 -ftree-vectorize -funroll-loops -ffast-math``               |
 +--------------+-------------------------------------------------------------------+
 
+.. warning::
+
+  If you want to use GCC version 10 or greater to compile Fortran code, you
+  **must** add the ``-fallow-argument-mismatch`` option when compiling
+  otherwise you will see compile errors associated with MPI functions.
+
 When you are happy with your code's performance you may wish to enable more
 aggressive optimisations; in this case you could start using the following
 flags. Please note, however, that these optimisations may lead to deviations
@@ -182,6 +194,14 @@ Linking on ARCHER2
 Executables on ARCHER2 link dynamically, and the Cray Programming Environment
 does not currently support static linking. This is in contrast to ARCHER where
 the default was to build statically.
+
+If you attempt to link statically, you will see errors similar to:
+
+::
+
+  /usr/bin/ld: cannot find -lpmi
+  /usr/bin/ld: cannot find -lpmi2
+  collect2: error: ld returned 1 exit status
 
 The compiler wrapper scripts on ARCHER link runtime libraries in using the
 ``runpath`` by default. This means that the paths to the runtime libraries

@@ -210,6 +210,25 @@ options with Cray-specific options marked "Cray". The ``craycc`` man page
 concentrates on these Cray extensions to the ``clang`` front end and does
 not provide an exhaustive description of all ``clang`` options.
 
+Dynamic Linking
+~~~~~~~~~~~~~~~
+
+Executables on ARCHER2 link dynamically, and the Cray Programming Environment
+does not currently support static linking. This is in contrast to ARCHER where
+the default was to build statically.
+
+If you attempt to link statically, you will see errors similar to:
+
+::
+
+  /usr/bin/ld: cannot find -lpmi
+  /usr/bin/ld: cannot find -lpmi2
+  collect2: error: ld returned 1 exit status
+
+The compiler wrapper scripts on ARCHER link runtime libraries in using the
+``runpath`` by default. This means that the paths to the runtime libraries
+are encoded into the executable so you do not need to load the compiler 
+environment in your job submission scripts.
 
 Which compiler environment?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -350,7 +369,17 @@ environment:
 
   $ module restore PrgEnv-gnu
 
+.. warning::
 
+  The ``gcc/8.3.0`` module is available on ARCHER2 but cannot be used as the
+  supporting scientific and system libraries are not available. You should
+  **not** use this version of GCC.
+
+.. warning::
+
+  If you want to use GCC version 10 or greater to compile Fortran code, you
+  **must** add the ``-fallow-argument-mismatch`` option when compiling
+  otherwise you will see compile errors associated with MPI functions.
 
 Useful Gnu Fortran options
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -359,7 +388,7 @@ Useful Gnu Fortran options
   Option                                     Comment
 ==============================  ===============================================
 ``-std=<standard>``              Default is ``gnu``
-``-fallow-argument-mismatch``    Allow mismatched procedure arguments
+``-fallow-argument-mismatch``    Allow mismatched procedure arguments. This argument is required for compiling MPI Fortran code with GCC version 10 or greater
 ``-fbounds-check``               Use runtime checking of array indices
 ``-fopenmp``                     Compile OpenMP (default is no OpenMP)
 ``-v``                           Display verbose output from compiler stages
@@ -372,7 +401,7 @@ Notes:
 plus gnu extensions.
 
 2. Past versions of ``gfortran`` have allowed mismatched arguments to
-external producures (e.g., where an explicit interface is not available).
+external procedures (e.g., where an explicit interface is not available).
 This is often the case for MPI routines where arrays of different types
 are passed to ``MPI_Send()`` and so on. This will now generate an error
 as not standard conforming. Use ``-fallow-argument-mismatch`` to reduce
