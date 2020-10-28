@@ -22,8 +22,8 @@ The recommended way to use Python on ARCHER2 is to use the HPE Cray Python distr
 The HPE Cray distribution provides Python 3 along with some of the most common packages used for
 scientific computation and data analysis. These include:
 
-* numpy and scipy - built against Cray LibSci
-* mpi4py - built against Cray MPT
+* numpy and scipy - built against HPE Cray LibSci
+* mpi4py - built against HPE Cray MPICH
 * dask
 
 The HPE Cray Python distribution can be loaded (either on the front-end or in a submission
@@ -41,7 +41,7 @@ script) using:
 Adding your own packages
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-If the packages you require are not included in the HPE Python distribution,
+If the packages you require are not included in the HPE Cray Python distribution,
 further packages can be added using ``pip``. However, as the /home file systems are 
 not available on the compute nodes, you will need to modify the default install
 location that ``pip`` uses to point to a location on the /work file systems
