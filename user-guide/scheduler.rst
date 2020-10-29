@@ -55,14 +55,13 @@ e.g.
 
   sinfo 
 
-  PARTITION       AVAIL  TIMELIMIT  NODES  STATE NODELIST
-  standard           up 2-00:00:00      1  fail* cn580
-  standard           up 2-00:00:00    128  down$ cn[96,579,793,814,1025-1044,1081-1088]
-  standard           up 2-00:00:00     26  maint cn[27,93-95,206,232,310,492,568,577-578,585-588,813,815-816,818,846,889,921-924,956]
-  standard           up 2-00:00:00      2   fail cn[274,871]
-  standard           up 2-00:00:00      4  down* cn[528,614,637,845]
-  standard           up 2-00:00:00   1034  alloc cn[1-26,28-38,40-58,62-86,88-92,97-174,176-205,207-231,233-273,275-309,311-333,335-341,344-371,373-376,378-413,415-452,454-489,493-513,515-527,529-532,535-539,541-550,554-561,563-567,569,572-576,581-584,589-595,598-601,603-613,615,617-620,623-631,633-636,638-647,651-659,661-678,680-687,690-695,697-716,718-736,738-775,777-790,792,794-812,817,819-844,847-852,854-870,872-888,890-920,925-955,957-977,980-1014,1016-1020,1023-1024,1045,1047-1070,1072-1080,1089-1105,1107-1152]
-  standard           up 2-00:00:00     26   idle cn[61,490-491,540,551-552,562,570,596,602,621,632,648-650,660,688-689,696,853,978-979,1015,1021-1022,1071]
+PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST 
+standard     up 1-00:00:00    105  down* nid[001006,001017,001033,001045-001047,001061,001068,001070,001074,001109,001111,001113,001125,001138,001144,001149,001159-001160,001163,001171-001174,001203,001227-001228,001241-001244,001250-001255,001262,001273,001287,001326,001336,001347,001350-001351,001366,001369,001384-001395,001435,001462,001478,001490,001505,001539,001546,001552,001581,001614,001642-001645,001647,001652,001664,001669,001709,001719,001722-001723,001729,001747,001751,001757,001782,001810-001811,001813-001817,001836-001837,001839,001891-001892,001903,001919,001932,001944,001950,001955,002014] 
+standard     up 1-00:00:00     12  drain nid[001016,001069,001092,001468,001520-001521,001812,001833-001835,001838,001969] 
+standard     up 1-00:00:00      5   resv nid[001000,001002-001004,001114] 
+standard     up 1-00:00:00    683  alloc nid[001001,001005,001007-001015,001018-001020,001024-001032,001034-001044,001048-001049,001051-001060,001062-001067,001071-001073,001075-001091,001093-001108,001110,001112,001115-001124,001126-001137,001139-001143,001145-001148,001150-001158,001161-001162,001164-001170,001176-001199,001246-001249,001256-001261,001288-001317,001319-001325,001327-001333,001339-001346,001348-001349,001367-001368,001416-001434,001436-001447,001463-001467,001469-001474,001501-001504,001512-001519,001522-001538,001540-001541,001543,001547-001551,001553-001580,001582-001613,001615-001639,001648-001651,001653-001663,001665-001668,001670-001688,001690-001707,001710-001718,001720-001721,001724-001728,001730-001746,001748-001750,001752-001756,001758-001781,001783-001809,001818-001824,001826-001831,001840-001890,001893-001902,001904-001918,001920-001931,001933-001942,001945-001949,001951-001954,001970-001991] 
+standard     up 1-00:00:00    214   idle nid[001022-001023,001175,001200-001202,001204-001226,001229-001240,001245,001263-001272,001274-001286,001334-001335,001337-001338,001352-001365,001370-001383,001396-001415,001448-001461,001475-001477,001479-001489,001491-001500,001506-001511,001542,001544-001545,001640-001641,001646,001708,001832,001943,001956-001968,001992-002013,002015-002023] 
+standard     up 1-00:00:00      2   down nid[001021,001050]
 
 ``sbatch``: submitting jobs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -287,10 +286,9 @@ nodes and 128 MPI ranks per node for 20 minutes would look like:
     #SBATCH --account=[budget code]             
     #SBATCH --partition=standard
     #SBATCH --qos=standard
-    #SBATCH --export=none
     
-    # Restore default module collection PrgEnv-cray
-    module -s restore /etc/cray-pe.d/PrgEnv-cray
+    # Setup the job environment (this module needs to be loaded before any other modules)
+    module load epcc-job-env
     
     # Set the number of threads to 1
     #   This prevents any threaded system libraries from automatically 
@@ -347,10 +345,9 @@ process. This results in all 128 physical cores per node being used.
   #SBATCH --account=[budget code] 
   #SBATCH --partition=standard
   #SBATCH --qos=standard
-  #SBATCH --export=none
   
-  # Restore default module collection PrgEnv-cray
-  module -s restore /etc/cray-pe.d/PrgEnv-cray
+  # Setup the job environment (this module needs to be loaded before any other modules)
+  module load epcc-job-env
   
   # Set the number of threads to 16 and specify placement
   #   There are 16 OpenMP threads per MPI process
@@ -396,7 +393,7 @@ process per core and specifies 4 hours maximum runtime per subjob:
     # Slurm job options (job-name, compute nodes, job time)
     #SBATCH --job-name=Example_Array_Job
     #SBATCH --time=0:20:0
-    #SBATCH --nodes=4
+    #SBATCH --nodes=1
     #SBATCH --tasks-per-node=128
     #SBATCH --cpus-per-task=1
     #SBATCH --array=0-55
@@ -405,17 +402,16 @@ process per core and specifies 4 hours maximum runtime per subjob:
     #SBATCH --account=[budget code]  
     #SBATCH --partition=standard
     #SBATCH --qos=standard
-    #SBATCH --export=none
     
-    # Restore default module collection PrgEnv-cray
-    module -s restore /etc/cray-pe.d/PrgEnv-cray
+    # Setup the job environment (this module needs to be loaded before any other modules)
+    module load epcc-job-env
     
     # Set the number of threads to 1
     #   This prevents any threaded system libraries from automatically 
     #   using threading.
     export OMP_NUM_THREADS=1
 
-    srun --cpu-bind=cores /path/to/exe $Slurm_ARRAY_TASK_ID
+    srun --cpu-bind=cores /path/to/exe $SLURM_ARRAY_TASK_ID
 
 
 Submitting a job array
