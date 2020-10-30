@@ -65,7 +65,7 @@ e.g.
 
 Here we see the number of nodes in different states. For example, 683 nodes
 are allocated (running jobs), and 214 are idle (available to run jobs). Note
-that long lists of node ids have been abbreviated with ``...``.
+that long lists of node IDs have been abbreviated with ``...``.
 
 ``sbatch``: submitting jobs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
