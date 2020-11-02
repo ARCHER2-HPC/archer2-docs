@@ -118,34 +118,19 @@ Resource Limits
 
 The ARCHER2 resource limits for any given job are covered by three separate attributes.
 
-* The amount of *primary resource* you require (i.e., CPU cores).
+* The amount of *primary resource* you require, i.e., number of compute nodes.
 * The *partition* that you want to use - this specifies the nodes that are eligible to run your job.
 * The *Quality of Service (QoS)* that you want to use - this specifies the job limits that apply.
 
-Each of these attributes is described in more detail below. 
+Primary resource
+~~~~~~~~~~~~~~~~
 
-The *primary resources* you request are *compute* resources: CPU cores on the compute nodes. Other node resources,
-such as memory, are assigned pro rata based on the primary resource that you request.
-
-.. warning::
-
-   On ARCHER2, you cannot specify the memory for a job using the ``--mem`` options to Slurm
-   (e.g. ``--mem``, ``--mem-per-cpu``, ``--mem-per-gpu``). The amount of memory you are 
-   assigned is calculated from the amount of primary resource you request.
-
-Primary resources on (CPU) compute nodes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The *primary resource* you request on compute nodes is the CPU core. The maximum amount of memory you are allocated is computed
-as the number of CPU cores you requested multiplied by 1/128th of the total memory available (as there are 128 CPU cores per node).
-So, if you request the full node (128 cores), then you will be allocated all of the memory (256 GB) available on a standard compute node;
-however, if you request 1 core, then you will be assigned a maximum of 256/128 = 2 GB of the memory available on the node
-(for high memory nodes the memory per core is 512/128 = 4 GB).
+The *primary resource* you can request for your job is the compute node.
 
 .. note::
 
-   Using the ``--exclusive`` option in jobs will give you access to the full node memory even
-   if you do not explicitly request all of the CPU cores on the node.
+   The ``--exclusive`` option is enforced on ARCHER2 which means you will always have access to all of the memory on the compute node
+   regardless of how many processes are actually running on the node.
 
 .. note::
 
@@ -156,7 +141,7 @@ Partitions
 ~~~~~~~~~~
 
 On ARCHER2, compute nodes are grouped into partitions. You will have to specify a partition
-using the ``--partition`` option in your submission script. The following table has a list 
+using the ``--partition`` option in your Slurm submission script. The following table has a list 
 of active partitions on ARCHER2.
 
 .. list-table:: ARCHER2 Partitions
@@ -165,10 +150,10 @@ of active partitions on ARCHER2.
 
    * - Partition
      - Description
-     - Total nodes available
+     - Max nodes available
    * - standard
      - CPU nodes with AMD EPYC 7742 64-core processor :math:`\times` 2
-     - 992
+     - 1024
    * - short
      - As with standard.
      - 32
@@ -186,7 +171,7 @@ The  following table lists the active QoS on ARCHER2.
    :header-rows: 1
 
    * - QoS
-     - Max Nodes
+     - Max Nodes Per Job
      - Max Walltime
      - Jobs Queued
      - Jobs Running
@@ -219,12 +204,12 @@ You can find out the QoS that you can use by running the following command:
 
 :: 
 
-  sacctmgr show assoc user=$USER cluster=archer2 format=cluster,account,user,qos%50
+  sacctmgr show assoc user=$USER cluster=archer2-es format=cluster,account,user,qos%50
 
 
 .. note::
 
-  If you have needs which do not fit within the current QoS, please contact the Service Desk and we can discuss how to accommodate your requirements. 
+  If you have needs which do not fit within the current QoS, please `contact the Service Desk <https://www.archer2.ac.uk/support-access/servicedesk.html>`_ and we can discuss how to accommodate your requirements. 
 
    
 Troubleshooting
