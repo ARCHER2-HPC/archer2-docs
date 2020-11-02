@@ -116,15 +116,117 @@ will cancel (if waiting) or stop (if running) the job with ID ``12345``.
 Resource Limits
 ---------------
 
-There are different resource limits on ARCHER2 for different purposes.
+The ARCHER2 resource limits for any given job are covered by three separate attributes.
+
+* The amount of *primary resource* you require (i.e., CPU cores).
+* The *partition* that you want to use - this specifies the nodes that are eligible to run your job.
+* The *Quality of Service (QoS)* that you want to use - this specifies the job limits that apply.
+
+Each of these attributes is described in more detail below. 
+
+The *primary resources* you request are *compute* resources: CPU cores on the compute nodes. Other node resources,
+such as memory, are assigned pro rata based on the primary resource that you request.
+
+.. warning::
+
+   On ARCHER2, you cannot specify the memory for a job using the ``--mem`` options to Slurm
+   (e.g. ``--mem``, ``--mem-per-cpu``, ``--mem-per-gpu``). The amount of memory you are 
+   assigned is calculated from the amount of primary resource you request.
+
+Primary resources on (CPU) compute nodes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The *primary resource* you request on compute nodes is the CPU core. The maximum amount of memory you are allocated is computed
+as the number of CPU cores you requested multiplied by 1/128th of the total memory available (as there are 128 CPU cores per node).
+So, if you request the full node (128 cores), then you will be allocated all of the memory (256 GB) available on a standard compute node;
+however, if you request 1 core, then you will be assigned a maximum of 256/128 = 2 GB of the memory available on the node
+(for high memory nodes the memory per core is 512/128 = 4 GB).
 
 .. note::
 
-   Details on the resource limits will be added when the ARCHER2 system
-   is available.
+   Using the ``--exclusive`` option in jobs will give you access to the full node memory even
+   if you do not explicitly request all of the CPU cores on the node.
 
-.. TODO: Add in partition and QOS limits once they are known
+.. note::
 
+   You will not generally have access to the full amount of memory resource on the the node as
+   some is retained for running the operating system and other system processes.
+
+Partitions
+~~~~~~~~~~
+
+On ARCHER2, compute nodes are grouped into partitions. You will have to specify a partition
+using the ``--partition`` option in your submission script. The following table has a list 
+of active partitions on ARCHER2.
+
+.. list-table:: ARCHER2 Partitions
+   :widths: 30 50 20
+   :header-rows: 1
+
+   * - Partition
+     - Description
+     - Total nodes available
+   * - standard
+     - CPU nodes with AMD EPYC 7742 64-core processor :math:`\times` 2
+     - 992
+   * - short
+     - As with standard.
+     - 32
+
+You can list the active partitions by running ``sinfo``.
+Note, you may not have access to all the available partitions.
+
+Quality of Service (QoS)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+On ARCHER2, job limits are defined by the requested Quality of Service (QoS), as specified by the ``--qos`` Slurm directive.
+The  following table lists the active QoS on ARCHER2.
+
+.. list-table:: ARCHER2 QoS
+   :header-rows: 1
+
+   * - QoS
+     - Max Nodes
+     - Max Walltime
+     - Jobs Queued
+     - Jobs Running
+     - Partition(s)
+   * - standard
+     - 940
+     - 24 hrs
+     - 64
+     - 16
+     - standard
+   * - short
+     - 8
+     - 20 mins
+     - 2
+     - 2
+     - short
+   * - long
+     - 16
+     - 48 hrs
+     - 16
+     - 16
+     - standard
+
+Please note, there are two other limits not covered by the above table.
+
+* The short QoS has restricted hours of service, 08:00-20:00 Mon-Fri.
+* Long jobs must have a minimum walltime of 24 hrs.
+
+You can find out the QoS that you can use by running the following command:
+
+:: 
+
+  sacctmgr show assoc user=$USER cluster=archer2 format=cluster,account,user,qos%50
+
+
+.. note::
+
+  If you have needs which do not fit within the current QoS, please contact the Service Desk and we can discuss how to accommodate your requirements. 
+
+   
 Troubleshooting
 ---------------
 
