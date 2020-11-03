@@ -276,8 +276,8 @@ Other common options that are used are:
 
   - ``--time=<hh:mm:ss>`` the maximum walltime for your job. *e.g.* For a 6.5 hour
     walltime, you would use ``--time=6:30:0``.
-  - ``--job-name=<jobjob-name>`` set a job-name for the job to help identify it in 
-    Slurm command output.
+
+  - ``--job-name=<jobname>`` set a name for the job to help identify it in 
 
 In addition, parallel jobs will also need to specify how many nodes,
 parallel processes and threads they require.
@@ -365,6 +365,7 @@ nodes and 128 MPI ranks per node for 20 minutes would look like:
 ::
 
     #!/bin/bash
+
 
     # Slurm job options (job-name, compute nodes, job time)
     #SBATCH --job-name=Example_MPI_Job
@@ -638,27 +639,6 @@ This guidance is adapted from
 `the advice provided by NERSC <https://docs.nersc.gov/jobs/best-practices/>`__
 
 .. TODO: update to match ARCHER2
-
-Do not run production jobs in /home
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. TODO: check - /home may not be available on compute nodes so this text may change
-
-As a general best practice, users should run production runs from the
-``/work`` file systems rather than the ``/home`` file systems.
-
-The ``/home`` file system is designed for permanent and relatively small
-storage. It is not tuned to perform well for parallel jobs and large amounts
-of I/O. Home is perfect for storing files such as source codes and shell scripts.
-Please note that while building software in /home is generally OK, it is best
-to install dynamic libraries and binaries that are used on compute nodes
-on the ``/work`` file systems for best performance.
-
-The ``/work`` file systems are designed for large, temporary storage, particularly
-for I/O from parallel jobs running on the compute nodes and large scale data analysis
-(although the solid state storage may provide better performance in particular
-scenarios). Running jobs on the ``/work`` file systems also helps
-to improve the responsiveness of the ``/home`` file systems for all users.
 
 Time Limits
 ~~~~~~~~~~~
