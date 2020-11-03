@@ -119,15 +119,102 @@ will cancel (if waiting) or stop (if running) the job with ID ``12345``.
 Resource Limits
 ---------------
 
-There are different resource limits on ARCHER2 for different purposes.
+The ARCHER2 resource limits for any given job are covered by three separate attributes.
+
+* The amount of *primary resource* you require, i.e., number of compute nodes.
+* The *partition* that you want to use - this specifies the nodes that are eligible to run your job.
+* The *Quality of Service (QoS)* that you want to use - this specifies the job limits that apply.
+
+Primary resource
+~~~~~~~~~~~~~~~~
+
+The *primary resource* you can request for your job is the compute node.
 
 .. note::
 
-   Details on the resource limits will be added when the ARCHER2 system
-   is available.
+   The ``--exclusive`` option is enforced on ARCHER2 which means you will always have access to all of the memory on the compute node
+   regardless of how many processes are actually running on the node.
 
-.. TODO: Add in partition and QOS limits once they are known
+.. note::
 
+   You will not generally have access to the full amount of memory resource on the the node as
+   some is retained for running the operating system and other system processes.
+
+Partitions
+~~~~~~~~~~
+
+On ARCHER2, compute nodes are grouped into partitions. You will have to specify a partition
+using the ``--partition`` option in your Slurm submission script. The following table has a list 
+of active partitions on ARCHER2.
+
+.. list-table:: ARCHER2 Partitions
+   :widths: 30 50 20
+   :header-rows: 1
+
+   * - Partition
+     - Description
+     - Max nodes available
+   * - standard
+     - CPU nodes with AMD EPYC 7742 64-core processor :math:`\times` 2
+     - 1024
+   * - short
+     - As with standard.
+     - 32
+
+You can list the active partitions by running ``sinfo``.
+Note, you may not have access to all the available partitions.
+
+Quality of Service (QoS)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+On ARCHER2, job limits are defined by the requested Quality of Service (QoS), as specified by the ``--qos`` Slurm directive.
+The  following table lists the active QoS on ARCHER2.
+
+.. list-table:: ARCHER2 QoS
+   :header-rows: 1
+
+   * - QoS
+     - Max Nodes Per Job
+     - Max Walltime
+     - Jobs Queued
+     - Jobs Running
+     - Partition(s)
+   * - standard
+     - 940
+     - 24 hrs
+     - 64
+     - 16
+     - standard
+   * - short
+     - 8
+     - 20 mins
+     - 2
+     - 2
+     - short
+   * - long
+     - 16
+     - 48 hrs
+     - 16
+     - 16
+     - standard
+
+Please note, there are two other limits not covered by the above table.
+
+* The short QoS has restricted hours of service, 08:00-20:00 Mon-Fri.
+* Long jobs must have a minimum walltime of 24 hrs.
+
+You can find out the QoS that you can use by running the following command:
+
+:: 
+
+  sacctmgr show assoc user=$USER cluster=archer2-es format=cluster,account,user,qos%50
+
+
+.. note::
+
+  If you have needs which do not fit within the current QoS, please `contact the Service Desk <https://www.archer2.ac.uk/support-access/servicedesk.html>`_ and we can discuss how to accommodate your requirements. 
+
+   
 Troubleshooting
 ---------------
 
