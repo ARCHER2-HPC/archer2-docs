@@ -20,13 +20,13 @@
 # -- Project information -----------------------------------------------------
 
 project = u'ARCHER2'
-copyright = u'2019, EPCC'
+copyright = u'2020, EPCC'
 author = u'EPCC'
 
 # The short X.Y version
-version = u'0.2'
+version = u'0.4'
 # The full version, including alpha/beta/rc tags
-release = u'0.2alpha'
+release = u'0.4beta'
 
 
 # -- General configuration ---------------------------------------------------
@@ -87,6 +87,9 @@ html_theme = 'sphinx_rtd_theme'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+html_css_files = [
+    'css/custom.css',
+]
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.

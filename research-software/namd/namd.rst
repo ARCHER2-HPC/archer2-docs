@@ -50,7 +50,7 @@ The following script will run a NAMD MD job using 4 nodes
    # Remember to replace [budget code] below with your account code,
    # e.g., '--account=t01-nell'
    
-   #SBATCH --name=namd_test
+   #SBATCH --job-name=namd_test
    #SBATCH --nodes=4
    #SBATCH --ntasks=512
    #SBATCH --tasks-per-node=128
@@ -58,6 +58,8 @@ The following script will run a NAMD MD job using 4 nodes
    #SBATCH --time=00:20:00
    
    #SBATCH --account=[budget code]
+   #SBATCH --partition=standard
+   #SBATCH --qos=standard
    
    # Load the relevant NAMD module
    # and launch the executable

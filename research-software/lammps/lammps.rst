@@ -26,7 +26,10 @@ Using LAMMPS on ARCHER2
 LAMMPS is freely available to all ARCHER2 users.
 
 The centrally installed version of LAMMPS is compiled with all the
-standard packages included: `ASPHERE`, `BODY`, ..
+standard packages included: `ASPHERE`, `BODY`, `CLASS2`, `COLLOID`, 
+`COMPRESS`, `CORESHELL`, `DIPOLE`, `GRANULAR`, `KSPACE`, `MANYBODY`,
+'MC`, `MISC`, `MOLECULE`, `OPT`, `PERI`, `QEQ`, `REPLICA`, `RIGID`, 
+`SHOCK`, `SNAP`, `SRD`.
 
 We do not install any `USER` packages. If you are interested in a `USER`
 package, we would encourage you to try to compile your own version
@@ -50,22 +53,23 @@ For example, the following script will run a LAMMPS MD job using 4 nodes
 
    #!/bin/bash --login
 
-   # Replace [budget code] below with your project code (e.g. t01)
-   
-   #SBATCH --name=lammps_test
-   #SBATCH --nodes-4
+   #SBATCH --job-name=lammps_test
+   #SBATCH --nodes=4
    #SBATCH --ntasks=512
    #SBATCH --tasks-per-node=128
    #SBATCH --cpus-per-task=1
    #SBATCH --time=00:20:00
    
+   # Replace [budget code] below with your project code (e.g. t01)
    #SBATCH --account=[budget code]
+   #SBATCH --partition=standard
+   #SBATCH --qos=standard
    
    # Load the relevant LAMMPS module
+   module restore /etc/cray-pe.d/PrgEnv-gnu
+   module load lammps
 
-   module load lammps/2019-12
-
-   srun lmp_mpi < in.test
+   srun lmp -i in.test -o out.test
 
 
 Hints and Tips
@@ -84,3 +88,4 @@ Compilation instructions for LAMMPS on ARCHER2 can be found on GitHub:
 https://github.com/hpc-uk/build-instructions/tree/master/LAMMPS
 
 If you get stuck, please contact the Service Desk.
+

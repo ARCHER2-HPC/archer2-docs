@@ -27,10 +27,10 @@ Using GROMACS on ARCHER2
 ------------------------
 
 GROMACS is Open Source software and is freely available to all users.
-Four versions are available:
+Two versions are available:
 
-* Serial/shared memory, single precision: gmx
 * Parallel MPI/OpenMP, single precision: gmx_mpi
+* Parallel MPI/OpenMP, double precision: gmx_mpi_d
 
 
 Running parallel GROMACS jobs
@@ -42,17 +42,13 @@ Running MPI only jobs
 The following script will run a GROMACS MD job using 4 nodes
 (128x4 cores) with pure MPI.
 
-.. warning:: 
-
-  The following SLURM script is provisional and requires verification
-
 ::
 
    #!/bin/bash
    
    # Replace [budget code] below with your project code (e.g. t01)
 
-   #SBATCH --name-mdrun_test
+   #SBATCH --job-name=mdrun_test
    #SBATCH --nodes=4
    #SBATCH --ntasks=512
    #SBATCH --tasks-per-node=128
@@ -61,10 +57,12 @@ The following script will run a GROMACS MD job using 4 nodes
    
    #SBATCH --account=[budget code]
    
+   #SBATCH --partition=standard
+   #SBATCH --qos=standard
    
    # Load the relevant GROMACS module
-
-   module load gromacs/2020.1.2.3
+   module restore /etc/cray-pe.d/PrgEnv-gnu
+   module load gromacs
 
    export OMP_NUM_THREADS=1 
    srun gmx_mpi mdrun -s test_calc.tpr
@@ -77,19 +75,13 @@ The following script will run a GROMACS MD job using 4 nodes
 (128x4 cores) with 6 MPI processes per node (24 MPI processes in
 total) and 6 OpenMP threads per MPI process.
 
-
-.. warning:: 
-
-  The following SLURM script is provisional and requires verification
-
-
 ::
 
    #!/bin/bash
    
    # Replace [budget code] below with your project code (e.g. t01)
 
-   #SBATCH --name-mdrun_test
+   #SBATCH --job-name=mdrun_test
    #SBATCH --nodes=4
    #SBATCH --ntasks=64
    #SBATCH --tasks-per-node=16
@@ -97,10 +89,12 @@ total) and 6 OpenMP threads per MPI process.
    #SBATCH --time=00:20:00
 
    #SBATCH --account=[budget code]
+   #SBATCH --partition=standard
+   #SBATCH --qos=standard
    
    # Load the relevant GROMACS module
-
-   module load gromacs/2020.1.2.3.4
+   module restore /etc/cray-pe.d/PrgEnv-gnu
+   module load gromacs
 
    export OMP_NUM_THREADS=8
    srun gmx_mpi mdrun -s test_calc.tpr
@@ -112,3 +106,9 @@ Hints and Tips
 
 Compiling Gromacs
 -----------------
+
+The latest instructions for building GROMACS on ARCHER2 may be found
+in the GitHub repository of build instructions:
+
+  - `Build instructions for GROMACS on GitHub <https://github.com/hpc-uk/build-instructions/blob/main/GROMACS/ARCHER2_2020.3_gcc10.md>`__
+

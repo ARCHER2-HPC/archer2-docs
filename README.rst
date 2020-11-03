@@ -59,23 +59,13 @@ To build the HTML documentation run::
 
     make html
 
-If you want to build the PDF documentation you will need:
-
-* `GNU Make <http://gnuwin32.sourceforge.net/packages/make.htm>`_
-* `MikTeX <http://miktex.org/download>`_
-
-Then from the command line, the following will build the .pdf file ::
-
-    make latexpdf
-
-On first run, MikTeX will prompt you to install various extra LaTeX packages.
 
 Building the documentation on a local Linux machine
 ###################################################
 
 Have
 
-* Python 2
+* Python 3
 * sphinx
 
 installed, then run ::
@@ -106,5 +96,5 @@ The easiest way to learn what files should look like is to read the ``rst`` file
 A short list of style guidance:
 
 * Headings should be in sentance case
-
+* If using ``rst`` tables, use "simple" tables; "grid" tables (markup with ``+`` in corners) generate HTML with accessibility problems.
 
