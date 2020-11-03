@@ -49,8 +49,6 @@ We cover each of these commands in more detail below.
 Without any options, ``sinfo`` lists the status of all resources and partitions,
 e.g.
 
-.. TODO: Add example of sinfo command without options
-
 ::
 
   sinfo 
@@ -337,22 +335,23 @@ can also download these examples at:
 
 .. TODO: add links to job submission scripts
 
-Using modules in the batch system
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Using modules in the batch system: the ``epcc-job-env`` module
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Batch jobs must be submitted in the work file system ``/work`` as the
-back end does not have access to the ``/home`` file system. This has
+compute nodes do not have access to the ``/home`` file system. This has
 a knock-on effect on the behaviour of module collections, which the
-module system expects to find in a users' home directory. In order
+module system expects to find in a user's home directory. In order
 that the module system work correctly, batch scripts should contain
 
 .. code-block:: console
 
-  module restore /etc/cray-pe.d/PrgEnv-cray
+  module load epcc-job-env
 
-to restore the default module collection before any other action.
-This will also ensure all relevant library paths are set correctly
-at run time. Note ``module -s`` can be used to suppress the associated
+**as the first module command in the script** to ensure that the
+environment is set correctly for the job. This will also ensure all
+relevant library paths are set correctly at run time. Note
+``module -s`` can be used to suppress the associated
 messages if desired.
 
 
