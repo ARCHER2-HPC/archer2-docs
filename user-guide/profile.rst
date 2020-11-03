@@ -38,9 +38,6 @@ How to use CrayPat-lite
 
 4. Run the generated executable normally submitting a job.
 
-.. warning::
-
-  The following SLURM script is provisional and should be verified
 
 ::
 
@@ -55,7 +52,11 @@ How to use CrayPat-lite
    #SBATCH --account=[budget code]
    #SBATCH --partition=standard
    #SBATCH --qos=standard
+
+   # Setup the batch environment
+   module load epcc-job-env
    
+   # Launch the parallel program
    srun mpi_test.x
 
 5. Analyse the data
@@ -316,8 +317,9 @@ then open the Cray Apprentice2 data (``.ap2``) generated during the instrumentat
 
    [user@archer2]$ app2 jacobi+pat+12265-1573s/datafile.ap2
 
-    
-   
 Hardware Performance Counters
 -----------------------------
 
+.. note::
+
+   Information on hardware counters will be added soon.
