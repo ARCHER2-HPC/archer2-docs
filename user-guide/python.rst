@@ -90,24 +90,27 @@ Example serial Python submission script
 
 ::
 
-    #!/bin/bash --login
+   #!/bin/bash --login
 
-    #SBATCH --name=python_test
-    #SBATCH --nodes=1
-    #SBATCH --tasks-per-node=1
-    #SBATCH --cpus-per-task=1
-    #SBATCH --time=00:10:00
+   #SBATCH --name=python_test
+   #SBATCH --nodes=1
+   #SBATCH --tasks-per-node=1
+   #SBATCH --cpus-per-task=1
+   #SBATCH --time=00:10:00
 
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code]
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
-    
-    # Load the Python module
-    module load cray-python
+   # Replace [budget code] below with your project code (e.g. t01)
+   #SBATCH --account=[budget code]
+   #SBATCH --partition=standard
+   #SBATCH --qos=standard
 
-    # Run your Python progamme
-    python python_test.py
+   # Setup the batch environment
+   module load epcc-job-env
+   
+   # Load the Python module
+   module load cray-python
+
+   # Run your Python progamme
+   python python_test.py
 
 mpi4py
 ~~~~~~
@@ -121,24 +124,27 @@ when it reaches the line ``from mpi4py import MPI``.
 
 ::
 
-    #!/bin/bash --login
-    # Slurm job options (job-name, compute nodes, job time)
-    #SBATCH --job-name=mpi4py_test
-    #SBATCH --nodes=1
-    #SBATCH --tasks-per-node=2
-    #SBATCH --cpus-per-task=1
-    #SBATCH --time=0:10:0
+   #!/bin/bash --login
+   # Slurm job options (job-name, compute nodes, job time)
+   #SBATCH --job-name=mpi4py_test
+   #SBATCH --nodes=1
+   #SBATCH --tasks-per-node=2
+   #SBATCH --cpus-per-task=1
+   #SBATCH --time=0:10:0
 
-    # Replace [budget code] below with your budget code (e.g. t01)
-    #SBATCH --account=[budget code]
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
+   # Replace [budget code] below with your budget code (e.g. t01)
+   #SBATCH --account=[budget code]
+   #SBATCH --partition=standard
+   #SBATCH --qos=standard
 
-    # Load the Python module
-    module load cray-python
+   # Setup the batch environment
+   module load epcc-job-env
 
-    # Run your Python programme
-    # Note that srun MUST be used to wrap the call to python, otherwise an error
-    # will occur
-    srun python mpi4py_test.py
+   # Load the Python module
+   module load cray-python
+
+   # Run your Python programme
+   # Note that srun MUST be used to wrap the call to python, otherwise an error
+   # will occur
+   srun python mpi4py_test.py
 

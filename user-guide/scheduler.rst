@@ -314,6 +314,25 @@ Using the ``--export=none`` means that the behaviour of batch submissions
 should be repeatable. We strongly recommend its use.
 
 
+Using modules in the batch system: the ``epcc-job-env`` module
+--------------------------------------------------------------
+
+Batch jobs must be submitted in the work file system ``/work`` as the
+compute nodes do not have access to the ``/home`` file system. This has
+a knock-on effect on the behaviour of module collections, which the
+module system expects to find in a user's home directory. In order
+that the module system work correctly, batch scripts should contain
+
+.. code-block:: console
+
+  module load epcc-job-env
+
+**as the first module command in the script** to ensure that the
+environment is set correctly for the job. This will also ensure all
+relevant library paths are set correctly at run time. Note
+``module -s`` can be used to suppress the associated
+messages if desired.
+
 ``srun``: Launching parallel jobs
 ---------------------------------
 
@@ -334,26 +353,6 @@ A subset of example job submission scripts are included in full below. You
 can also download these examples at:
 
 .. TODO: add links to job submission scripts
-
-Using modules in the batch system: the ``epcc-job-env`` module
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Batch jobs must be submitted in the work file system ``/work`` as the
-compute nodes do not have access to the ``/home`` file system. This has
-a knock-on effect on the behaviour of module collections, which the
-module system expects to find in a user's home directory. In order
-that the module system work correctly, batch scripts should contain
-
-.. code-block:: console
-
-  module load epcc-job-env
-
-**as the first module command in the script** to ensure that the
-environment is set correctly for the job. This will also ensure all
-relevant library paths are set correctly at run time. Note
-``module -s`` can be used to suppress the associated
-messages if desired.
-
 
 Example: job submission script for MPI parallel job
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -636,8 +635,6 @@ Best practices for job submission
 
 This guidance is adapted from
 `the advice provided by NERSC <https://docs.nersc.gov/jobs/best-practices/>`__
-
-.. TODO: update to match ARCHER2
 
 Time Limits
 ~~~~~~~~~~~

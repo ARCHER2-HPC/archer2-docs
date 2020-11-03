@@ -45,7 +45,7 @@ The following script will run a GROMACS MD job using 4 nodes
 ::
 
    #!/bin/bash
-   
+
    # Replace [budget code] below with your project code (e.g. t01)
 
    #SBATCH --job-name=mdrun_test
@@ -54,18 +54,19 @@ The following script will run a GROMACS MD job using 4 nodes
    #SBATCH --tasks-per-node=128
    #SBATCH --cpus-per-task=1
    #SBATCH --time=00:20:00
-   
+
+   # Replace [budget code] below with your project code (e.g. t01)
    #SBATCH --account=[budget code]
-   
    #SBATCH --partition=standard
    #SBATCH --qos=standard
-   
-   # Load the relevant GROMACS module
-   module restore /etc/cray-pe.d/PrgEnv-gnu
+
+   # Setup the batch environment
+   module load epcc-job-env
+
    module load gromacs
 
    export OMP_NUM_THREADS=1 
-   srun gmx_mpi mdrun -s test_calc.tpr
+   srun --cpu-bind=cores gmx_mpi mdrun -s test_calc.tpr
 
 
 Running hybrid MPI/OpenMP jobs
@@ -78,9 +79,6 @@ total) and 6 OpenMP threads per MPI process.
 ::
 
    #!/bin/bash
-   
-   # Replace [budget code] below with your project code (e.g. t01)
-
    #SBATCH --job-name=mdrun_test
    #SBATCH --nodes=4
    #SBATCH --ntasks=64
@@ -88,20 +86,18 @@ total) and 6 OpenMP threads per MPI process.
    #SBATCH --cpus-per-task=8
    #SBATCH --time=00:20:00
 
+   # Replace [budget code] below with your project code (e.g. t01)
    #SBATCH --account=[budget code]
    #SBATCH --partition=standard
    #SBATCH --qos=standard
-   
-   # Load the relevant GROMACS module
-   module restore /etc/cray-pe.d/PrgEnv-gnu
+
+   # Setup the batch environment
+   module load epcc-job-env
+
    module load gromacs
 
    export OMP_NUM_THREADS=8
-   srun gmx_mpi mdrun -s test_calc.tpr
-
-
-Hints and Tips
---------------
+   srun --hint=nomultithread --distribution=block:block gmx_mpi mdrun -s test_calc.tpr
 
 
 Compiling Gromacs

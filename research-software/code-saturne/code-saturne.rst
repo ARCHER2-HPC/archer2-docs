@@ -73,12 +73,14 @@ for a maximum of 20 minutes.
   #SBATCH --tasks-per-node=128
   #SBATCH --cpus-per-task=1
 
-  # Replace [budget code] below with your budget code (e.g. t01)
+  # Replace [budget code] below with your project code (e.g. t01)
   #SBATCH --account=[budget code]
   #SBATCH --partition=standard
   #SBATCH --qos=standard
 
-  module -s restore /etc/cray-pe.d/PrgEnv-gnu
+  # Setup the batch environment
+  module load epcc-job-env
+  
   module load code_saturne
 
   # Prevent threading.

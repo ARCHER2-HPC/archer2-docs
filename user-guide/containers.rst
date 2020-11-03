@@ -87,7 +87,6 @@ command to pull the image.
 
 ::
 
-   [user@cirrus-login1 ~]$ module load singularity
    [user@cirrus-login1 ~]$ singularity pull hello-world.sif shub://vsoch/hello-world
 
 The image located at the ``shub`` URI is written to a Singularity Image File (SIF) called ``hello-world.sif``.
@@ -100,7 +99,6 @@ you use the ``singularity shell`` command. Using the image we built in the examp
 
 ::
 
-   [user@archer2-login0 ~]$ module load singularity
    [user@archer2-login0 ~]$ singularity shell lolcow.simg
    Singularity: Invoking an interactive shell within container...
 
@@ -145,7 +143,6 @@ in the same way as on the login node.
 
 ::
 
-   [user@r1i2n13 ~]$ module load singularity
    [user@r1i2n13 ~]$ singularity shell lolcow.simg
    Singularity: Invoking an interactive shell within container...
 
@@ -170,106 +167,29 @@ An example job submission script to run a serial job that executes the runscript
 
 ::
 
-    #!/bin/bash --login
+   #!/bin/bash --login
 
-    # Slurm job options (name, compute nodes, job time)
-    
-    #SBATCH -J simgtest
-    #SBATCH -o simgtest.o%j
-    #SBATCH -e simgtest.o%j
-    #SBATCH --nodes=1
-    #SBATCH --ntasks=1
-    #SBATCH --time=00:10:00
+   # Slurm job options (name, compute nodes, job time)
+   
+   #SBATCH -J simgtest
+   #SBATCH -o simgtest.o%j
+   #SBATCH -e simgtest.o%j
+   #SBATCH --nodes=1
+   #SBATCH --ntasks=1
+   #SBATCH --time=00:10:00
 
-    #SBATCH --account= [budget code]
-    #SBATCH --partition= standard
-    #SBATCH --qos=standard
+   #SBATCH --account= [budget code]
+   #SBATCH --partition= standard
+   #SBATCH --qos=standard
 
-    # Change to the directory that the job was submitted from
-    cd $HOME
+   # Setup the batch environment
+   module load epcc-job-env
 
-    # Load any required modules
-    module load singularity
-
-    # Run the serial executable
-    singularity run $HOME/lolcow.simg
+   # Run the serial executable
+   singularity run $HOME/lolcow.simg
 
 You submit this in the usual way and the standard output and error should be written to ``simgtest.o...``,
 where the output filename ends with the job number.
-
-Parallel processes within a non-interactive batch script
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Running a Singularity image within a parallel batch script is somewhat more involved. Let's assume that the
-``lolcow`` image contains an executable of the same name whose path is ``/opt/apps/lolcow``. And we will
-also assume that the image contains an installation of a specific MPI library, openmpi v4.0.3 in this case.
-
-Please note, the MPI library contained in the image must match the MPI library on the host. In practice, the
-MPI library used on the host and within the container must have the same vendor (e.g., MPICH, openmpi, Intel MPI)
-and the same version number (although, in some situations it might be possible to have different minor version numbers). 
-
-Below is an example job submission script that runs a Singularity container over four nodes. 
-
-::
-
-    #!/bin/bash --login
-
-    # Slurm job options (name, compute nodes, job time)
-    
-    #SBATCH -J simgtest
-    #SBATCH -o simgtest.o%j
-    #SBATCH -e simgtest.o%j
-    #SBATCH --nodes=4
-    #SBATCH --ntasks=256
-    #SBATCH --time=01:10:00
-
-    #SBATCH --account=[budget code]
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
-    
-    # setup resource-related environment
-    NNODES=$SLURM_JOB_NUM_NODES
-    NCORESPN=$SLURM_CPUS_ON_NODE
-    NCORES=`expr ${NNODES} \* ${NCORESPN}`
-    export OMP_NUM_THREADS=1
-
-    # setup local openmpi installation (env.sh exports OPENMPI_ROOT)
-    . $HOME/opt/openmpi-4.0.3/dist/env.sh
-
-    # Change to the directory that contains lolcow.simg and lolcow.in
-    cd $HOME
-
-    # Load any required modules
-    module load singularity
-    
-    
-    RUN_START=$(date +%s.%N)
-
-    MPIRUN_PREFIX_OPT="--prefix ${OPENMPI_ROOT}"
-    MPIRUN_RES_OPTS="-N ${NCORESPN} -n ${NCORES} --hostfile ${HOME}/hosts --bind-to core"
-    MPIRUN_MCA_OPTS="--mca btl ^sm --mca btl_openib_allow_ib true"
-    MPIRUN_OPTS="${MPIRUN_PREFIX_OPT} ${MPIRUN_RES_OPTS} ${MPIRUN_MCA_OPTS}"
-    SINGULARITY_OPTS="exec -B /etc/libibverbs.d"
-
-    mpirun $MPIRUN_OPTS singularity $SINGULARITY_OPTS $HOME/lolcow.simg /opt/apps/lolcow $HOME/lolcow.in &> $HOME/lolcow.out
-
-    RUN_STOP=$(date +%s.%N)
-    RUN_TIME=$(echo "${RUN_STOP} - ${RUN_START}" | bc)
-    echo "mpirun time: ${RUN_TIME}" >> $HOME/lolcow.out
-
-
-The key line in the submission script above is the ``mpirun`` command; it can be thought of as three nested commands.
-
-The innermost command is the one that calls the ``lolcow`` executable, ``/opt/apps/lolcow $HOME/lolcow.in &> $HOME/lolcow.out``.
-Note how the ``lolcow`` exe is in the container whereas the input and output files are on the host.
-
-The ``lolcow`` command is passed to Singularity, e.g., ``singularity exec -B /etc/libibverbs.d ...``; use of the ``exec`` option allows us
-to run an arbitrary command within the container. The ``-B`` option creates an identical config directory within the container that is bound
-to the same path on the host. (The term "verbs" is used to denote the interface to the Infiniband hardware interconnect.)
-
-Lastly, the Singularity command is passed to the parallel job launcher, ``mpirun`` in this case. It's at this point that we specify
-the number of hardware resources used to run the container.
-
 
 .. _create_image_singularity:
 
@@ -351,7 +271,6 @@ shell, i.e.:
 
 ::
 
-   [user@archer2-login0 ~]$ module load singularity
    [user@archer2-login0 ~]$ singularity exec archer2-mods.simg /bin/bash --login
    Singularity> module avail intel-compilers
 

@@ -92,7 +92,7 @@ provides AMD Clang/Clang++ and AMD Flang.
 
 .. note::
 
-  Unlike ARCHER, the Intel compilers are not available on ARCHER2.
+  The Intel compilers are not available on ARCHER2.
 
 
 

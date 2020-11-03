@@ -44,21 +44,19 @@ assumes that the input files have the file stem ``text_calc``.
   #!/bin/bash
 
   # Request 2 nodes with 128 MPI tasks per node for 20 minutes
-  # Replace [budget code] below with your account code,
-  # e.g. '--account=t01'
-
   #SBATCH --job-name=CASTEP
   #SBATCH --nodes=2
   #SBATCH --tasks-per-node=128
   #SBATCH --cpus-per-task=1
   #SBATCH --time=00:20:00
-
-  #SBATCH --partition=standard
-  #SBATCH --qos=standard
   
+  # Replace [budget code] below with your project code (e.g. t01)
   #SBATCH --account=[budget code]
   #SBATCH --partition=standard
   #SBATCH --qos=standard
+
+  # Setup the batch environment
+  module load epcc-job-env
 
   # Load the CASTEP module, avoid any unintentional OpenMP threading by
   # setting OMP_NUM_THREADS, and launch the code.

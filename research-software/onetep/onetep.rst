@@ -49,9 +49,13 @@ assumes that the input file is called ``text_calc.dat``.
   #SBATCH --cpus-per-task=1
   #SBATCH --time=00:20:00
   
-  #SBATCH --account=[budget code]
+  # Replace [budget code] below with your project code (e.g. t01)
+  #SBATCH --account=[budget code] 
   #SBATCH --partition=standard
   #SBATCH --qos=standard
+  
+  # Setup the job environment (this module needs to be loaded before any other modules)
+  module load epcc-job-env
 
   # Load the ONETEP module
   module load onetep
