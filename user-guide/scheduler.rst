@@ -346,6 +346,95 @@ compute nodes.
    (or *pinned*) to cores, you should always specify `--cpu-bind=cores` option
    to `srun`.
 
+
+bolt: Job submission script creation tool
+-----------------------------------------
+
+The bolt job submission script creation tool has been written by EPCC to simplify
+the process of writing job submission scripts for modern multicore architectures.
+Based on the options you supply, bolt will generate a job submission script that
+uses ARCHER2 in a reasonable way.
+
+MPI, OpenMP and hybrid MPI/OpenMP jobs are supported. 
+
+.. warning::
+
+  The tool will allow you to generate scripts for jobs that use the ``long`` QoS
+  but you will need to manually modify the resulting script to change the QoS to
+  ``long``.
+
+If there are problems or errors in your job parameter specifications then bolt
+will print warnings or errors. However, bolt cannot detect all problems.
+
+Basic Usage
+~~~~~~~~~~~
+
+The basic syntax for using bolt is:
+
+::
+
+  bolt -n [parallel tasks] -N [parallel tasks per node] -d [number of threads per task] \
+       -t [wallclock time (h:m:s)] -o [script name] -j [job name] -A [project code]  [arguments...]
+
+
+Example 1: to generate a job script to run an executable called ``my_prog.x`` for 24 hours using
+8192 parallel (MPI) processes and 128 (MPI) processes per compute node you would use something
+like:
+
+::
+
+  bolt -n 8192 -N 128 -t 24:0:0 -o my_job.bolt -j my_job -A z01-budget my_prog.x arg1 arg2
+
+(remember to substitute ``z01-budget`` for your actual budget code.)
+
+Example 2: to generate a job script to run an executable called ``my_prog.x`` for 3 hours using
+2048 parallel (MPI) processes and 64 (MPI) processes per compute node (i.e. using half of the cores
+on a compute node), you would use:
+
+::
+
+  bolt -n 2048 -N 64 -t 3:0:0 -o my_job.bolt -j my_job -A z01-budget my_prog.x arg1 arg2
+
+These examples generate the job script ``my_job.bolt`` with the correct options to run ``my_prog.x``
+with command line arguments ``arg1`` and ``arg2``. The project code against which the job will be
+charged is specified with the ' -A ' option. As usual, the job script is submitted as follows:
+
+::
+
+  sbatch my_job.bolt
+
+.. note::
+
+  If you do not specify the script name with the '-o' option then your script will be a file called ``a.bolt``.
+
+.. note::
+
+  If you do not specify the number of parallel tasks then bolt will try to generate a serial job submission
+  script (and throw an error on the ARCHER2 4 cabinet system as serial jobs are not supported).
+
+.. note::
+
+  If you do not specify a project code, bolt will use your default project code (set by your login account).
+
+.. note::
+
+  If you do not specify a job name, bolt will use either ``bolt_ser_job`` (for serial jobs) or
+  ``bolt_par_job`` (for parallel jobs).
+
+Further help
+~~~~~~~~~~~~
+
+You can access further help on using bolt on ARCHER2 with the ' -h ' option:
+
+::
+
+  bolt -h
+
+A selection of other useful options are:
+
+  - ``-s`` Write and submit the job script rather than just writing the job script.
+  - ``-p`` Force the job to be parallel even if it only uses a single parallel task.
+
 Example job submission scripts
 -------------------------------
 
