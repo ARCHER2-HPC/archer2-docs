@@ -355,9 +355,14 @@ your budget code e.g. ``e99-ham``, ``ENTER_PARTITION_HERE`` with the partition y
   #SBATCH --tasks-per-node=128
   #SBATCH --cpus-per-task=1
   #SBATCH --time=0:5:0
-  #SBATCH --account=ENTER_YOUR_BUDGET_CODE_HERE
-  #SBATCH --partition=ENTER_PARTITION_HERE
-  #SBATCH --qos=ENTER_QOS_HERE
+
+  # Replace [budget code] below with your project code (e.g. t01)
+  #SBATCH --account=[budget code]
+  #SBATCH --partition=standard
+  #SBATCH --qos=standard
+
+  # Setup the batch environment
+  module load epcc-job-env
 
   # Load the xthi module to get access to the xthi program
   module load xthi
