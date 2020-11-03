@@ -451,24 +451,6 @@ This guidance is adapted from
 
 .. TODO: update to match ARCHER2
 
-Do not run production jobs in /home
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-As a general best practice, users should run production runs from the
-``/work`` file systems rather than the ``/home`` file systems.
-
-The ``/home`` file system is designed for permanent and relatively small
-storage. It is not tuned to perform well for parallel jobs and large amounts
-of I/O. Home is perfect for storing files such as source codes and shell scripts.
-Please note that while building software in /home is generally OK, it is best
-to install dynamic libraries and binaries that are used on compute nodes
-on the ``/work`` file systems for best performance.
-
-The ``/work`` file systems are designed for large, temporary storage, particularly
-for I/O from parallel jobs running on the compute nodes and large scale data analysis
-(although the solid state storage may provide better performance in particular
-scenarios). Running jobs on the ``/work`` file systems also helps
-to improve the responsiveness of the ``/home`` file systems for all users.
 
 Time Limits
 ~~~~~~~~~~~
