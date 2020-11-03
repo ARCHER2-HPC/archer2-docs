@@ -51,7 +51,7 @@ Py-ChemShell
 
 .. warning::
 
-  Example scripts are pending
+  Example scripts will be added soon.
 
 ::
 

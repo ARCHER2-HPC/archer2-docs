@@ -58,10 +58,13 @@ standard partition. It assumes that the input file is called `test_calc.nw`.
   #SBATCH --cpus-per-task=1
   #SBATCH --time=00:20:00
 
+  # Replace [budget code] below with your project code (e.g. t01)
+  #SBATCH --account=[budget code] 
   #SBATCH --partition=standard
   #SBATCH --qos=standard
   
-  #SBATCH --account=[budget code]
+  # Setup the job environment (this module needs to be loaded before any other modules)
+  module load epcc-job-env
 
   # Load the NWChem module, avoid any unintentional OpenMP threading by
   # setting OMP_NUM_THREADS, and launch the code.

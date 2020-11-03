@@ -25,43 +25,37 @@ Using QE on ARCHER2
 QE is released under a GPL v2 license and is freely available to all ARCHER2
 users.
 
-
-
 Running parallel QE jobs
 ------------------------
 
 For example, the following script will run a QE ``pw.x`` job using 4 nodes
 (128x4 cores).
 
-.. warning::
-
-  The following SLURM script is a draft and requires verification
-
 ::
 
-   #!/bin/bash
+  #!/bin/bash
 
-   # Request 4 nodes to run a 512 MPI task job with 128 MPI tasks per node.
-   # The maximum walltime limit is set to be 20 minutes.
-   # Remember to replace [budget code] below with your own account code,
-   # e.g. '--account=t01-queenie`
+  # Request 4 nodes to run a 512 MPI task job with 128 MPI tasks per node.
+  # The maximum walltime limit is set to be 20 minutes.
 
-   #SBATCH --job-name=qe_test
-   #SBATCH --nodes=4
-   #SBATCH --ntasks=512
-   #SBATCH --ntasks-per-node=128
-   #SBATCH --cpus-per-task=1
-   #SBATCH --time=00:20:00
-   
-   #SBATCH --account=[budget code]
-   #SBATCH --partition=standard
-   #SBATCH --qos=standard
-   
-   # Load the relevant Quantum Espresso module
-   module restore /etc/cray-pe.d/PrgEnv-gnu
-   module load quantum-espresso
+  #SBATCH --job-name=qe_test
+  #SBATCH --nodes=4
+  #SBATCH --ntasks-per-node=128
+  #SBATCH --cpus-per-task=1
+  #SBATCH --time=00:20:00
 
-   srun pw.x < test_calc.in
+  # Replace [budget code] below with your project code (e.g. t01)
+  #SBATCH --account=[budget code] 
+  #SBATCH --partition=standard
+  #SBATCH --qos=standard
+
+  # Setup the job environment (this module needs to be loaded before any other modules)
+  module load epcc-job-env
+
+  # Load the relevant Quantum Espresso module
+  module load quantum-espresso
+
+  srun pw.x < test_calc.in
 
 
 Hints and tips

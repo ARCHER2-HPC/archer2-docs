@@ -28,7 +28,7 @@ LAMMPS is freely available to all ARCHER2 users.
 The centrally installed version of LAMMPS is compiled with all the
 standard packages included: `ASPHERE`, `BODY`, `CLASS2`, `COLLOID`, 
 `COMPRESS`, `CORESHELL`, `DIPOLE`, `GRANULAR`, `KSPACE`, `MANYBODY`,
-'MC`, `MISC`, `MOLECULE`, `OPT`, `PERI`, `QEQ`, `REPLICA`, `RIGID`, 
+`MC`, `MISC`, `MOLECULE`, `OPT`, `PERI`, `QEQ`, `REPLICA`, `RIGID`, 
 `SHOCK`, `SNAP`, `SRD`.
 
 We do not install any `USER` packages. If you are interested in a `USER`
@@ -45,40 +45,33 @@ exclusive mode using more than one node.
 For example, the following script will run a LAMMPS MD job using 4 nodes
 (128x4 cores) with MPI only.
 
-.. warning::
-
-  The following script is provisional and needs to be verified
-
 ::
 
-   #!/bin/bash --login
+  #!/bin/bash
 
-   #SBATCH --job-name=lammps_test
-   #SBATCH --nodes=4
-   #SBATCH --ntasks=512
-   #SBATCH --tasks-per-node=128
-   #SBATCH --cpus-per-task=1
-   #SBATCH --time=00:20:00
-   
-   # Replace [budget code] below with your project code (e.g. t01)
-   #SBATCH --account=[budget code]
-   #SBATCH --partition=standard
-   #SBATCH --qos=standard
-   
-   # Load the relevant LAMMPS module
-   module restore /etc/cray-pe.d/PrgEnv-gnu
-   module load lammps
+  #SBATCH --job-name=lammps_test
+  #SBATCH --nodes=4
+  #SBATCH --ntasks=512
+  #SBATCH --tasks-per-node=128
+  #SBATCH --cpus-per-task=1
+  #SBATCH --time=00:20:00
 
-   srun lmp -i in.test -o out.test
+  # Replace [budget code] below with your project code (e.g. t01)
+  #SBATCH --account=[budget code] 
+  #SBATCH --partition=standard
+  #SBATCH --qos=standard
 
+  # Setup the job environment (this module needs to be loaded before any other modules)
+  module load epcc-job-env
 
-Hints and Tips
---------------
+  module load lammps
+
+  srun --cpu-bind=cores lmp -i in.test -o out.test
 
 Compiling LAMMPS
 ----------------
 
-The large range of optional packages availble for LAMMPS, and opportunity
+The large range of optional packages available for LAMMPS, and opportunity
 for extensibility,  may mean that it is convenient for users to compile
 their own copy. In practice, LAMMPS is relatively easy to compile, so we
 encourage users to have a go.

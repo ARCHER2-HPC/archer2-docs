@@ -60,33 +60,29 @@ For example, the following script will run a CP2K job using 4 nodes
 
 ::
 
-   #!/bin/bash --login
+  #!/bin/bash
 
-   # Request 4 nodes using 128 cores per node for 128 MPI tasks per node.
-   # Replace [budget code] below with your project code (e.g. t01)
+  # Request 4 nodes using 128 cores per node for 128 MPI tasks per node.
 
+  #SBATCH --job-name=CP2K_test
+  #SBATCH --nodes=4
+  #SBATCH --tasks-per-node=128
+  #SBATCH --cpus-per-task=1
+  #SBATCH --time=00:20:00
 
-   #SBATCH --job-name=CP2K_test
-   #SBATCH --nodes=4
-   #SBATCH --ntasks=512
-   #SBATCH --tasks-per-node=128
-   #SBATCH --cpus-per-task=1
-   #SBATCH --time=00:20:00
+  # Replace [budget code] below with your project code (e.g. t01)
+  #SBATCH --account=[budget code]
+  #SBATCH --partition=standard
+  #SBATCH --qos=standard
 
-   #SBATCH --account=[budget code]
-   #SBATCH --partition=standard
-   #SBATCH --qos=standard
+  # Setup the batch environment
+  module load epcc-job-env
 
-   # Load the relevant CP2K module
-   # Ensure that no libraries are inadvertently using threading
-   # Launch the executable
+  module load cp2k
 
-   module -s restore /etc/cray-pe.d/PrgEnv-gnu
-   module load cp2k
+  export OMP_NUM_THREADS=1
 
-   export OMP_NUM_THREADS=1
-
-   srun cp2k.popt -i MYINPUT.inp
+  srun cp2k.popt -i MYINPUT.inp
 
 
 MPI/OpenMP hybrid jobs

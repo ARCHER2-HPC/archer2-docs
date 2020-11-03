@@ -92,22 +92,20 @@ The following script will run a VASP job using 2 nodes (128x2, 256 total cores).
   #!/bin/bash
 
   # Request 2 nodes (256 MPI tasks at 128 tasks per node) for 20 minutes.   
-  # Remember to replace [budget code] below with your account code,
-  # e.g., '--account=t01-victoria'
 
   #SBATCH --job-name=VASP_test
   #SBATCH --nodes=4
-  #SBATCH --ntasks=512
   #SBATCH --tasks-per-node=128
   #SBATCH --cpus-per-task=1
   #SBATCH --time=00:20:00
 
+  # Replace [budget code] below with your project code (e.g. t01)
+  #SBATCH --account=[budget code] 
   #SBATCH --partition=standard
   #SBATCH --qos=standard
   
-  #SBATCH --account=[budget code]
-  #SBATCH --partition=standard
-  #SBATCH --qos=standard
+  # Setup the job environment (this module needs to be loaded before any other modules)
+  module load epcc-job-env
   
   # Load the VASP module, avoid any unintentional OpenMP threading by
   # setting OMP_NUM_THREADS, and launch the code.
@@ -152,22 +150,20 @@ only MPI ranks and no OpenMP threading.
   #!/bin/bash
 
   # Request 2 nodes (256 MPI tasks at 128 tasks per node) for 20 minutes.   
-  # Remember to replace [budget code] below with your account code,
-  # e.g., '--account=t01-victoria'
 
   #SBATCH --job-name=VASP_test
   #SBATCH --nodes=4
-  #SBATCH --ntasks=512
   #SBATCH --tasks-per-node=128
   #SBATCH --cpus-per-task=1
   #SBATCH --time=00:20:00
 
+  # Replace [budget code] below with your project code (e.g. t01)
+  #SBATCH --account=[budget code] 
   #SBATCH --partition=standard
   #SBATCH --qos=standard
   
-  #SBATCH --account=[budget code]
-  #SBATCH --partition=standard
-  #SBATCH --qos=standard
+  # Setup the job environment (this module needs to be loaded before any other modules)
+  module load epcc-job-env
   
   # Load the VASP module, avoid any unintentional OpenMP threading by
   # setting OMP_NUM_THREADS, and launch the code.

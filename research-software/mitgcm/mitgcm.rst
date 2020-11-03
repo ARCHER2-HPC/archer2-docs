@@ -93,14 +93,13 @@ a pure MPI MITgcm simulation over 2 nodes of 128 cores each for up to one hour.
   #SBATCH --tasks-per-node=128
   #SBATCH --cpus-per-task=1
 
-  # Replace [budget code] below with your budget code (e.g. t01)
-  #SBATCH --account=[budget code]
+  # Replace [budget code] below with your project code (e.g. t01)
+  #SBATCH --account=[budget code] 
   #SBATCH --partition=standard
   #SBATCH --qos=standard
-  #SBATCH --export=none
-
-  # Restore default module collection PrgEnv-cray
-  module -s restore /etc/cray-pe.d/PrgEnv-gnu
+  
+  # Setup the job environment (this module needs to be loaded before any other modules)
+  module load epcc-job-env
 
   # Set the number of threads to 1
   #   This prevents any threaded system libraries from automatically

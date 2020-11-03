@@ -45,31 +45,28 @@ The following script will run an ELK job on 4 nodes (512 cores).
 
 ::
 
-   #!/bin/bash
+  #!/bin/bash
 
-   # Request 512 MPI tasks (4 nodes at 128 tasks per node) with a
-   # maximum wall clock time limit of 20 minutes.
-   # Replace [budget code] with your account code.
+  # Request 512 MPI tasks (4 nodes at 128 tasks per node) with a
+  # maximum wall clock time limit of 20 minutes.
 
-   #SBATCH --job-name=elk_job
-   #SBATCH --nodes=4
-   #SBATCH --ntasks=512
-   #SBATCH --tasks-per-node=128
-   #SBATCH --cpus-per-task=1
-   #SBATCH --time=00:20:00
+  #SBATCH --job-name=elk_job
+  #SBATCH --nodes=4
+  #SBATCH --tasks-per-node=128
+  #SBATCH --cpus-per-task=1
+  #SBATCH --time=00:20:00
 
-   #SBATCH --account=[budget code]
-   #SBATCH --partition=standard
-   #SBATCH --qos=standard
+  # Replace [budget code] below with your project code (e.g. t01)
+  #SBATCH --account=[budget code]
+  #SBATCH --partition=standard
+  #SBATCH --qos=standard
 
-   # Load the elk module
-   # Launch the executable 
-   # Input filename elk.in
+  # Setup the batch environment
+  module load epcc-job-env
 
-   module -s restore /etc/cray-pe.d/PrgEnv-gnu
-   module load elk
+  module load elk
 
-   srun elk 
+  srun --cpu-bind=cores elk 
 
 
 Mixed MPI/OpenMP ELK jobs

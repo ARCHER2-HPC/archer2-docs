@@ -83,18 +83,20 @@ Each MPI task is allocated one core (``--cpus-per-task=1``).
 
 ::
 
-  #!/bin/bash --login
+  #!/bin/bash
   
   #SBATCH --nodes=4
-  #SBATCH --exclusive
   #SBATCH --tasks-per-node=128
   #SBATCH --cpus-per-task=1
   #SBATCH --time=00:10:00
   
+  # Replace [budget code] below with your project code (e.g. t01)
+  #SBATCH --account=[budget code] 
   #SBATCH --partition=standard
   #SBATCH --qos=standard
   
-  #SBATCH --export=none
+  # Setup the job environment (this module needs to be loaded before any other modules)
+  module load epcc-job-env
   
   # Load the appropriate modules and source the OpenFOAM bashrc file
   # The first line makes PrgEnv-gnu available on the back end nodes.
@@ -107,11 +109,6 @@ Each MPI task is allocated one core (``--cpus-per-task=1``).
   # Run OpenFOAM work
   
   srun --cpu-bind=cores interFoam -parallel
-
-
-Hints and tips
---------------
-
 
 Compiling OpenFOAM
 ------------------

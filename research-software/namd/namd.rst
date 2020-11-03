@@ -43,28 +43,26 @@ The following script will run a NAMD MD job using 4 nodes
 
 ::
 
-   #!/bin/bash
+  #!/bin/bash
 
-   # Request four nodes to run a job of 512 MPI tasks with 128 MPI
-   # tasks per node, here for maximum time 20 minutes.
-   # Remember to replace [budget code] below with your account code,
-   # e.g., '--account=t01-nell'
-   
-   #SBATCH --job-name=namd_test
-   #SBATCH --nodes=4
-   #SBATCH --ntasks=512
-   #SBATCH --tasks-per-node=128
-   #SBATCH --cpus-per-core=1
-   #SBATCH --time=00:20:00
-   
-   #SBATCH --account=[budget code]
-   #SBATCH --partition=standard
-   #SBATCH --qos=standard
-   
-   # Load the relevant NAMD module
-   # and launch the executable
+  # Request four nodes to run a job of 512 MPI tasks with 128 MPI
+  # tasks per node, here for maximum time 20 minutes.
 
-   module load namd/2020.1.2.3
+  #SBATCH --job-name=namd_test
+  #SBATCH --nodes=4
+  #SBATCH --tasks-per-node=128
+  #SBATCH --cpus-per-core=1
+  #SBATCH --time=00:20:00
 
-   srun ... namd2 input.namd
+  # Replace [budget code] below with your project code (e.g. t01)
+  #SBATCH --account=[budget code] 
+  #SBATCH --partition=standard
+  #SBATCH --qos=standard
+
+  # Setup the job environment (this module needs to be loaded before any other modules)
+  module load epcc-job-env
+
+  module load namd
+
+  srun ... namd2 input.namd
 
