@@ -12,6 +12,6 @@ deploy:
   target-branch: gh-pages
   local-dir: _build/html
   github_token: $ARCHER2DOC_TOKEN
-  cleanup: false
+  skip_cleanup: true
   on:
     branch: main
