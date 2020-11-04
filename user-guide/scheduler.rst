@@ -544,8 +544,17 @@ Example: job submission script for MPI+OpenMP (mixed mode) parallel job
 Mixed mode codes that use both MPI (or another distributed memory
 parallel model) and OpenMP should take care to ensure that the shared
 memory portion of the process/thread placement does not span more than
-one node. This means that the number of shared memory threads should be
-a factor of 128.
+one NUMA region. Nodes on ARCHER2 are made up of two sockets each 
+containing 4 NUMA regions of 16 cores, i.e. there are 8 NUMA regions in total.
+Therefore the total number of threads should ideally not be greater than 16, 
+and also needs to be a factor of 16.  Sensible choices for the number of 
+threads are therefore 1 (single-threaded), 2, 4, 8, and 16. More information 
+about using OpenMP and MPI+OpenMP can be found in the Tuning chapter.
+
+To ensure correct placement of MPI processes the number of cpus-per-task
+needs to match the number of OpenMP threads, and the number of 
+tasks-per-node should be set to ensure the entire node is filled with MPI
+tasks. 
 
 In the example below, we are using 4 nodes for 6 hours. There are 32 MPI
 processes in total (8 MPI processes per node) and 16 OpenMP threads per MPI
