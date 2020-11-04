@@ -435,6 +435,55 @@ A selection of other useful options are:
   - ``-s`` Write and submit the job script rather than just writing the job script.
   - ``-p`` Force the job to be parallel even if it only uses a single parallel task.
 
+checkScript job submission script validation tool
+-------------------------------------------------
+
+The checkScript tool has been written to allow users to validate their job submission
+scripts before submitting their jobs. The tool will read your job submission script and
+try to identify errors, problems or inconsistencies.
+
+An example of the sort of output the tool can give would be:
+
+::
+
+  auser@uan01:/work/t01/t01/auser> checkScript submit.slurm 
+
+  ===========================================================================
+  checkScript
+  ---------------------------------------------------------------------------
+  Copyright 2011-2020  EPCC, The University of Edinburgh
+  This program comes with ABSOLUTELY NO WARRANTY.
+  This is free software, and you are welcome to redistribute it
+  under certain conditions.
+  ===========================================================================
+
+  Script details
+  ---------------
+         User: auser
+  Script file: submit.slurm
+    Directory: /work/t01/t01/auser (ok)
+     Job name: test (ok)
+    Partition: standard (ok)
+          QoS: standard (ok)
+  Combination:          (ok)
+
+  Requested resources
+  -------------------
+           nodes =              3                     (ok)
+  tasks per node =             16
+   cpus per task =              8
+  cores per node =            128                     (ok)
+  OpenMP defined =           True                     (ok)
+        walltime =          1:0:0                     (ok)
+
+  CU Usage Estimate (if full job time used)
+  ------------------------------------------
+                        CU =          3.000
+
+
+
+  checkScript finished: 0 warning(s) and 0 error(s).
+
 Example job submission scripts
 -------------------------------
 
