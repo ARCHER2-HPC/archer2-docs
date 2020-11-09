@@ -32,9 +32,11 @@ markdown_extensions:
 nav:
   - "Documentation overview": index.md
   - "Quickstart":
-    - quick-start/quickstart-users.md
-    - quick-start/quickstart-developers.md
+    - "Overview": quick-start/index.md
+    - "Quickstart for users": quick-start/quickstart-users.md
+    - "Quickstart for developers": quick-start/quickstart-developers.md
   - "User and Best Practice Guide":
+    - "Overview": user-guide/index.md
     - "Connecting to ARCHER2": user-guide/connecting.md
     - "Data management and transfer": user-guide/data.md
     - "Software environment": user-guide/sw-environment.md
@@ -48,7 +50,7 @@ nav:
     - "Profiling": user-guide/profile.md
     - "Performance tuning": user-guide/tuning.md
   - "Research Software":
-    - "Overview": research-software/overview.md
+    - "Overview": research-software/index.md
     - "CASTEP": research-software/castep/castep.md
     - "Chemshell": research-software/chemshell/chemshell.md
     - "Code_Saturne": research-software/code-saturne/code-saturne.md
@@ -68,11 +70,12 @@ nav:
     - "Quantum Espresso": research-software/qe/qe.md
     - "VASP": research-software/vasp/vasp.md
   - "Software Libraries":
-    - "Overview": software-libraries/overview.md
+    - "Overview": software-libraries/index.md
     - "HPE Cray LibSci: BLAS, LAPACK, ScaLAPACK": software-libraries/libsci.md
     - "FFTW": software-libraries/fftw.md
     - "HDF5": software-libraries/hdf5.md
     - "NetCDF": software-libraries/netcdf.md
-  - "Data Analysis and Tools": data-tools/overview.md
+  - "Data Analysis and Tools": data-tools/index.md
+  - "Essential Skills": essentials/index.md
 
 

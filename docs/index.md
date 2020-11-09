@@ -21,29 +21,29 @@ Edinburgh](https://www.ed.ac.uk/).
 
 This is the documentation for the ARCHER2 service and includes:
 
-  - [Quick Start Guide](quick-start/)
+  - [Quick Start Guide](quick-start/index.md)
     The ARCHER2 quick start guide provides the minimum information for
     new users or users transferring from ARCHER.
 
-  - [ARCHER2 User and Best Practice Guide](user-guide/)
+  - [ARCHER2 User and Best Practice Guide](user-guide/index.md)
     Covers all aspects of use of the ARCHER2 supercomputing service.
     This includes fundamentals (required by all users to use the system
     effectively), best practice for getting the most out of ARCHER2, and
     more advanced technical topics.
 
-  - [Research Software](research-software/)
+  - [Research Software](research-software/index.md)
     Information on each of the centrally-installed research software
     packages.
 
-  - [Software Libraries](software-libraries/)
+  - [Software Libraries](software-libraries/index.md)
     Information on the centrally-installed software libraries. Most
     libraries work *as expected* so no additional notes are required
     however a small number require specific documentation
 
-  - [Data Analysis and Tools](data-tools/)
+  - [Data Analysis and Tools](data-tools/index.md)
     Information on data analysis tools and other useful utilities.
 
-  - [Essential Skills](essentials/)
+  - [Essential Skills](essentials/index.md)
     This section provides information and links on essential skills
     required to use ARCHER2 efficiently: *e.g.* using Linux command
     line, accessing help and documentation.

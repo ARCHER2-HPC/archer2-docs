@@ -1,8 +1,4 @@
-# Overview
-
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
+# Research Software
 
 Information on each of the centrally-installed Research Software
 packages, versions available, how to get access, example job submission
@@ -13,8 +9,8 @@ information.
 
 ## Centrally supported packages
 
-ARCHER2 provides a number of research software packages as \*centrally
-supported packages\*. Many of these packages are free to use, but others
+ARCHER2 provides a number of research software packages as *centrally
+supported packages*. Many of these packages are free to use, but others
 require a license (which you, or your research group, need to supply).
 
 The centrally supported package will usually be the current stable
