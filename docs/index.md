@@ -58,7 +58,7 @@ Contributions can be in the form of improvements or addtions to the
 content and/or addtion of Issues providing suggestions for how it can be
 improved.
 
-Full details of how to contribute can be found in the README.rst file of
+Full details of how to contribute can be found in the `README.md` file of
 the repository.
 
 ## Credits
@@ -69,6 +69,4 @@ Documentation](https://docs.hpc.shef.ac.uk/) and the [ARCHER National
 Supercomputing Service
 Documentation](http://www.archer.ac.uk/documentation/).
 
-We are also grateful to the Isambard Tier-2 HPC service for discussions
-on the combination of Github and Sphinx technologies.
 
