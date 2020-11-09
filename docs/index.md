@@ -21,7 +21,7 @@ Edinburgh](https://www.ed.ac.uk/).
 
 This is the documentation for the ARCHER2 service and includes:
 
-  - [Quick Start Guide](quick-start/index.md)
+  - [Quick Start Guide](quick-start/overview.md)
     The ARCHER2 quick start guide provides the minimum information for
     new users or users transferring from ARCHER.
 
