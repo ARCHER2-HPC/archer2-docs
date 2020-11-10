@@ -155,7 +155,9 @@ ARCHER2.
 | short    | 8                 | 20 mins      | 2           | 2            | short        |
 | long     | 16                | 48 hrs       | 16          | 16           | standard     |
 
-ARCHER2 QoS
+!!! warning
+    If you want to use the `short` QoS then you also need to add the
+    `--reservation=shortqos` to your job submission command.
 
 Please note, there are two other limits not covered by the above table.
 
