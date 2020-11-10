@@ -406,7 +406,7 @@ access to software libraries if available.
 
 !!! tip
     More information on the different software libraries on ARCHER2 can
-    be found in the [Software libraries](../software-libraries/overview.md)
+    be found in the [Software libraries](../software-libraries/)
     section of the user guide.
 
 ## Build instructions for software on ARCHER2
