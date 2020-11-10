@@ -8,7 +8,7 @@ white papers), links to instruction manuals and further information.
 
 !!! tip
     You may also find the [Data analysis section of the User and
-    Best Practice Guide](../user-guide/data.md) useful.
+    Best Practice Guide](../user-guide/data/) useful.
 
 !!! note
     Links to the different data analysis tools will be added as soon
