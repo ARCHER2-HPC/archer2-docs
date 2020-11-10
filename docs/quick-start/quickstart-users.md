@@ -165,7 +165,7 @@ credentials correctly to be able to access ARCHER2.
 
 !!! hint
     More information on connecting to ARCHER2 is available in
-    the [Connecting to ARCHER2](../user-guide/connecting/) section of
+    the [Connecting to ARCHER2](https://docs.archer2.ac.uk/user-guide/connecting/) section of
     the User Guide.
 
 ## File systems and manipulating data
@@ -204,7 +204,7 @@ Top tips for managing data on ARCHER2:
 
 !!! hint
     Information on best practice in managing you data is available in the
-    [Data management and transfer](../user-guide/data/) section of the
+    [Data management and transfer](https://docs.archer2.ac.uk/user-guide/data/) section of the
     User Guide.
 
 ## Accessing software
@@ -325,7 +325,7 @@ launch your parallel executable.
 !!! hint
     For a more details on the Slurm scheduler on ARCHER2 and writing job
     submission scripts see the
-    [Running jobs on ARCHER2](../user-guide/scheduler/) section of the User
+    [Running jobs on ARCHER2](https://docs.archer2.ac.uk/user-guide/scheduler/) section of the User
     and Best Practice Guide.
 
 !!! important
@@ -459,7 +459,7 @@ to look at `quickstart-developers`.
 
 Other documentation you may find useful:
 
-  - [ARCHER2 User and Best Practice Guide](../user-guide/):
+  - [ARCHER2 User and Best Practice Guide](https://docs.archer2.ac.uk/user-guide/):
     Covers all aspects of use of the ARCHER2 service. This includes
     fundamentals (required by all users to use the system effectively),
     best practice for getting the most out of ARCHER2, and more advanced
