@@ -152,7 +152,7 @@ ARCHER2.
 | QoS      | Max Nodes Per Job | Max Walltime | Jobs Queued | Jobs Running | Partition(s) |
 | -------- | ----------------- | ------------ | ----------- | ------------ | ------------ |
 | standard | 940               | 24 hrs       | 64          | 16           | standard     |
-| short    | 8                 | 20 mins      | 2           | 2            | short        |
+| short    | 8                 | 20 mins      | 2           | 1            | standard     |
 | long     | 16                | 48 hrs       | 16          | 16           | standard     |
 
 !!! warning
