@@ -42,7 +42,7 @@ use and which SSH client you use to connect to ARCHER2. We will not
 cover the details on generating an SSH key pair here, but detailed
 information on generating an SSH key pair is available in the [ARCHER2
 User and Best Practice
-Guide](https://docs.archer2.ac.uk/user-guide/connecting.html).
+Guide](https://docs.archer2.ac.uk/user-guide/connecting/).
 
 Once you have generated your SSH key pair, you should add the public
 part to your login account using SAFE:
@@ -459,7 +459,7 @@ to look at `quickstart-developers`.
 
 Other documentation you may find useful:
 
-  - [ARCHER2 User and Best Practice Guide](../user-guide/overview.md):
+  - [ARCHER2 User and Best Practice Guide](../user-guide/):
     Covers all aspects of use of the ARCHER2 service. This includes
     fundamentals (required by all users to use the system effectively),
     best practice for getting the most out of ARCHER2, and more advanced
