@@ -15,6 +15,7 @@ extra_css:
 site_name: ARCHER2 User Documentation
 repo_url: https://github.com/ARCHER2-HPC/archer2-docs
 repo_name: ARCHER2-HPC/archer2-docs
+edit_uri: edit/main/docs/
 extra:
   social:
     - icon: fontawesome/brands/github
