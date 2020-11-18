@@ -233,6 +233,60 @@ strategies:
 
 ![Screenshot](./orca2_tests.png)
 
+## Alternative placement strategies
+
+It is clear from the previous results that fully populating an ARCHER2 node is
+unlikely to provide the optimal performance for any codes with moderate memory
+bandwidth requirements. The regular packing strategy offered by mkslurm does not
+allow experimentation with less wasteful packing strategies than half-population
+though.
+
+There may be a case, for example, for just leaving every 1 in 4 cores idle, or
+every 1 in 8, or even fewer idle cores per node.  The mkslurm_alt script
+(/work/n01/shared/acc/mkslurm_alt) provides a method of generating cpu-bind maps
+for exploring these strategies.
+
+The script assumes no change in the packing strategy for the servers but the
+core spacing argument (-c) for the ocean cores is replaced by a -g option
+representing the frequency of a gap in the, otherwise tightly-packed, ocean
+cores. A -v option has also been introduced to provide a human-readable
+indication of the core usage. I.e.:
+
+```
+usage:  mkslurm_alt [-S num_servers] [-s server_spacing] [-m max_servers_per_node] 
+                    [-C num_clients] [-g client_gap_interval] [-t time_limit] 
+                    [-a account] [-j job_name] [-v]
+```
+
+
+![Screenshot](./gap_options.png)
+
+## Tests with alternative packing strategies
+
+Preliminary tests have been conducted with the ORCA2_ICE_PISCES SETTE test case.
+This is a relatively small test case that will fit onto  single node. It is also
+small enough to perform well in attached mode. First some baseline tests in
+attached mode. For 32 and 64 core tests, these are equivalent to running a
+mkslurm-generated script with -S 0 and -C 32 -c 4 and -C 64 -c 2, respectively:
+
+![Screenshot](./attached_baseline.png)
+
+Previous tests used 4 I/O servers each occupying a single NUMA. For this size
+model, 2 servers occupying half a NUMA each will suffice.  That leaves 112 cores
+with which to try different packing strategies.
+
+Is it possible to match or better this elapsed time on a single node including
+external I/O servers?  -Yes!  -but not with an obvious gap frequency:
+
+![Screenshot](./alt_packing_tests.png)
+
+And activating land suppression can reduce times further: 
+
+![Screenshot](./land_suppression_tests.png)
+
+The optimal two-node solution is also shown (this is quicker but the one node
+solution is cheaper).
+
 !!! note
     This information is based on experience during early user testing and
     is subject to change
