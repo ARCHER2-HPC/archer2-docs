@@ -409,32 +409,27 @@ All being well, we are now ready to transfer data directly between the
 two machines. We begin by combining our important research data in to a
 single archive file using the following command:
 
-    tar -czf cat_pictures.tar.gz Cally.jpg Oscar.jpg Marvin.jpg
-
-![](../images/cats.png)
-
- The three important research images. Cally, Oscar, and Marvin
- (clockwise left to bottom right).
+    tar -czf all_my_files.tar.gz file1.txt file2.txt file3.txt
 
 We then initiate the data transfer from ARCHER to ARCHER2, here using
 `rsync` to allow the transfer to be recommenced without needing to start
-again, in the event of a loss of connection or other
-    failure.
+again, in the event of a loss of connection or other failure.
 
-    rsync -Pv -e"ssh -i /home/z01/z01/otbz01/.ssh/id_RSA_A2" ./cat_pictures.tar.gz otbz19@login1.archer2.ac.uk:/work/z19/z19/otbz19/
+    rsync -Pv -e"ssh -c aes128-gcm@openssh.com -i /home/z01/z01/otbz01/.ssh/id_RSA_A2" ./all_my_files.tar.gz otbz19@login1.archer2.ac.uk:/work/z19/z19/otbz19/
 
 Note the use of the `-P` flag to allow partial transfer -- the same
 command could be used to restart the transfer after a loss of
 connection. The `-e` flag allows specification of the ssh command - we
-have used this to add the location of the identity file. Unfortunately
+have used this to add the location of the identity file. 
+The `-c` option specifies the cipher to be used as `aes128-gcm` which has been found to increase performance
+Unfortunately
 the `~` shortcut is not correctly expanded, so we have specified the
 full path. We move our research archive to our project work directory on
 ARCHER2.
 
 If we were unconcerned about being able to restart an interrupted
-transfer, we could instead use the `scp`
-    command,
+transfer, we could instead use the `scp` command,
 
-    scp -i ~/.ssh/id_RSA_A2 cat_pictures.tar.gz otbz19@login1.archer2.ac.uk:/work/z19/z19/otbz19/
+    scp -c aes128-gcm@openssh.com -i ~/.ssh/id_RSA_A2 all_my_files.tar.gz otbz19@login1.archer2.ac.uk:/work/z19/z19/otbz19/
 
 but `rsync` is recommended for larger transfers.
