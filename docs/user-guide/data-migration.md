@@ -29,7 +29,14 @@ Use a less heavyweight encryption cypher, e.g., via option
     scp -c aes128-gcm@openssh.com <archer home>  archer2_username@transfer.dyn.archer2.ac.uk:<path>
 
 where &lt;archer home&gt; is the /home/archer_username/files 
-and &lt;path&gt; is the path where you are placing the files.  
+and &lt;path&gt; is the path where you are placing the files.
+
+scp from /work
+
+    scp -c aes128-gcm@openssh.com <archer work> archer2_username@transfer.dyn.archer2.ac.uk:<path>
+
+where &lt;archer work&gt; is the /work/archer_username/files 
+and &lt;path&gt; is the path where you are placing the files.
 
 (Remember to replace **archer_username** and **archer2_username** with your ARCHER and ARCHER2 usernames in the example above.)
 
