@@ -1,10 +1,14 @@
 # Data migration from ARCHER to ARCHER2
 
+This short guide explains how to move data from the ARCHER service to the ARCHER2 service.
+
 ## Log on to ARCHER
 
 [Log on to ARCHER](http://www.archer.ac.uk/documentation/user-guide/connecting.php#sec-2.1) as usual
 
 ## Load up-to-date version of ssh on Archer
+
+This version of ssh has been identified through testing as offering superior performance.
  
     module load ssh
 
