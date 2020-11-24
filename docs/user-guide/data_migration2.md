@@ -22,11 +22,16 @@ This version of ssh has been identified through testing as offering superior per
 
 ## scp your file
 
+scp from /home
+
 Use a less heavyweight encryption cypher, e.g., via option
 
-    scp -c aes128-gcm@openssh.com <file> user@transfer.dyn.archer2.ac.uk:<path>
+    scp -c aes128-gcm@openssh.com <archer home>  archer2_username@transfer.dyn.archer2.ac.uk:<path>
 
-(Remember to replace **user** with your ARCHER2 username in the example above.)
+where <archer home> is the /home/archer_username/files 
+and <path> is the path where you are placing the files.  
+
+(Remember to replace **archer_username** and **archer2_username** with your ARCHER and ARCHER2 usernames in the example above.)
 
 Use the address **transfer.dyn.archer2.ac.uk** in preference to login.archer2.ac.uk. The former provides a route with a higher peak bandwidth. The same ssh key pair can be used for either.
 
