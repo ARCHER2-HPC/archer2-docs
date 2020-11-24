@@ -35,6 +35,8 @@ and &lt;path&gt; is the path where you are placing the files.
 
 Use the address **transfer.dyn.archer2.ac.uk** in preference to login.archer2.ac.uk. The former provides a route with a higher peak bandwidth. The same ssh key pair can be used for either.
 
+## Further information
+
 For full details of ARCHER to ARCHER2 transfers, please see  the [ssh data transfer example](../data#ssh-data-transfer-example).
 
 
