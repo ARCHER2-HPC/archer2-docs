@@ -6,6 +6,13 @@ This short guide explains how to move data from the ARCHER service to the ARCHER
 
 [Log on to ARCHER](http://www.archer.ac.uk/documentation/user-guide/connecting.php#sec-2.1) as usual
 
+
+## Use tar to combine small files 
+
+It is quicker to tar up large numbers of small files and transfer the single resultant large file, rather than copying each file separately
+
+    tar -czf all_my_files.tar.gz file1.txt file2.txt file3.txt
+
 ## Load up-to-date version of ssh on ARCHER
 
 This version of ssh has been identified through testing as offering superior performance.
