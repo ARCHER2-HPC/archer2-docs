@@ -161,7 +161,7 @@ ARCHER2.
 
 Please note, there are two other limits not covered by the above table.
 
-  - The short QoS has restricted hours of service, 08:00-20:00 Mon-Fri.
+  - The short QoS is only available Mon-Fri.
   - Long jobs must have a minimum walltime of 24 hrs.
 
 You can find out the QoS that you can use by running the following
