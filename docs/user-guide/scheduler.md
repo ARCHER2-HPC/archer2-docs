@@ -665,6 +665,269 @@ be returned to the front end.
 By default, the interactive shell will retain the environment of the
 parent. If you want a clean shell, remember to specify `--export=none`.
 
+
+## Heterogeneous jobs
+
+The SLURM submissions discussed above involve a single executable image.
+However, there are situtions where two or more distinct executables are
+coupled and need to be run at the same time. This is most easily handled
+via the SLURM heterogeneous job mechanism.
+
+The essential feature of a heterogeneous job is to create a single batch
+submission which specifies the resource requirements for the individual
+components. Schematically, we would use
+
+```
+#!/bin/bash
+
+# SLURM specifications for the first component
+
+#SBATCH --partition=standard
+
+...
+
+#SBATCH hetjob
+
+# SLURM specifications for the second component
+
+#SBATCH --partition=standard
+
+...
+
+```
+where new each component beyond the first is introduced by the special
+token `#SBATCH hetjob` (note this is not a normal option and is not
+`--hetjob`). Each component must specify a partition.
+
+Such a job will appear in the queue system as, e.g.,
+```
+           50098+0  standard qscript-    user  PD       0:00      1 (None) 
+           50098+1  standard qscript-    user  PD       0:00      2 (None) 
+```
+and counts as (in this case) two separate jobs from the point of
+QoS limits.
+
+Two common cases are discussed below: first, a client server model in
+which client and server each have a different `MPI_COMM_WORLD`, and second
+the case were two or more executables share `MPI_COMM_WORLD`.
+
+### Heterogeneous jobs for a client/server model
+
+Consider a case where we have two executables which may both be parallel (in
+that they use MPI), both run at the same time, and communicate with each
+other by some means other than MPI. In the following example, we run two
+different executables, both of which must finish before the jobs completes.
+
+```
+#!/bin/bash
+
+#SBATCH --time=00:20:00
+#SBATCH --exclusive
+#SBATCH --export=none
+
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=8
+
+#SBATCH hetjob
+
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=4
+
+
+# Run two execuatables with separate MPI_COMM_WORLD
+
+srun --cpu_bind=rank --het-group=0 ./xthi-a &
+srun --cpu_bind=rank --het-group=1 ./xthi-b &
+wait
+```
+In this case, each executable is launched with a separate call to
+`srun` but specifies a different heterogeneous group via the
+`--het-group` option. The first group is `--het-group=0`.
+Both are run in the background with `&` and the `wait` is required
+to ensure both executables have completed before the job submission
+exits.
+
+In this rather artificial example, where each component makes a
+simple report about its placement, the output might be
+```
+Node    0, hostname nid001028, mpi   4, omp   1, executable xthi-b
+Node    1, hostname nid001048, mpi   4, omp   1, executable xthi-b
+Node    0, rank    0, thread   0, (affinity =    0)
+Node    0, rank    1, thread   0, (affinity =    1)
+Node    0, rank    2, thread   0, (affinity =    2)
+Node    0, rank    3, thread   0, (affinity =    3)
+Node    1, rank    4, thread   0, (affinity =    0)
+Node    1, rank    5, thread   0, (affinity =    1)
+Node    1, rank    6, thread   0, (affinity =    2)
+Node    1, rank    7, thread   0, (affinity =    3)
+Node    0, hostname nid001027, mpi   8, omp   1, executable xthi-a
+Node    0, rank    0, thread   0, (affinity =    0)
+Node    0, rank    1, thread   0, (affinity =    1)
+Node    0, rank    2, thread   0, (affinity =    2)
+Node    0, rank    3, thread   0, (affinity =    3)
+Node    0, rank    4, thread   0, (affinity =    4)
+Node    0, rank    5, thread   0, (affinity =    5)
+Node    0, rank    6, thread   0, (affinity =    6)
+Node    0, rank    7, thread   0, (affinity =    7)
+```
+Here we have the first executable running on one node with
+a communicator size 8 (ranks 0-7). The second executable runs on
+two nodes also with communicator size 8 (ranks 0-7, 4 ranks per node).
+Further examples of placement for heterogenenous jobs are given below.
+
+
+### Heterogeneous jobs for a shared `MPI_COM_WORLD`
+
+If two or more heterogeneous components need to share a unique
+`MPI_COMM_WORLD`, a single `srun` invocation with the differrent
+components separated by a colon `:` should be used. For example,
+
+```
+#!/bin/bash
+
+#SBATCH --time=00:20:00
+#SBATCH --exclusive
+#SBATCH --export=none
+
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=8
+
+#SBATCH hetjob
+
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=4
+
+srun --cpu_bind=rank --het-group=0 ./xthi-a : \
+     --cpu_bind=rank --het-group=1 ./xthi-b
+```
+
+The output should confirm we have a single `MPI_COMM_WORLD` with
+ranks 0-15.
+```
+Node    0, hostname nid001027, mpi   8, omp   1, executable xthi-a
+Node    1, hostname nid001028, mpi   4, omp   1, executable xthi-b
+Node    2, hostname nid001048, mpi   4, omp   1, executable xthi-b
+Node    0, rank    0, thread   0, (affinity =    0)
+Node    0, rank    1, thread   0, (affinity =    1)
+Node    0, rank    2, thread   0, (affinity =    2)
+Node    0, rank    3, thread   0, (affinity =    3)
+Node    0, rank    4, thread   0, (affinity =    4)
+Node    0, rank    5, thread   0, (affinity =    5)
+Node    0, rank    6, thread   0, (affinity =    6)
+Node    0, rank    7, thread   0, (affinity =    7)
+Node    1, rank    8, thread   0, (affinity =    0)
+Node    1, rank    9, thread   0, (affinity =    1)
+Node    1, rank   10, thread   0, (affinity =    2)
+Node    1, rank   11, thread   0, (affinity =    3)
+Node    2, rank   12, thread   0, (affinity =    0)
+Node    2, rank   13, thread   0, (affinity =    1)
+Node    2, rank   14, thread   0, (affinity =    2)
+Node    2, rank   15, thread   0, (affinity =    3)
+```
+
+### Heterogeneous placement for mixed MPI/OpenMP work
+
+Some care may be required for placement of tasks/threads in heterogeneous
+jobs in which the number of threads needs to be specified differently
+for different components.
+
+In the following we have two components. The
+first component runs 8 MPI tasks each with 16 OpenMP threads.
+The second component runs 8 MPI tasks with
+one task per NUMA region on one node; each task has one thread.
+An appropriate SLURM submission might be:
+
+```
+#!/bin/bash
+
+#SBATCH --time=00:20:00
+#SBATCH --exclusive
+#SBATCH --export=none
+
+# First component 
+
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=8
+#SBATCH --cpus-per-task=16
+#SBATCH --hint=nomultithread
+
+# Second component
+
+#SBATCH hetjob
+
+#SBATCH --partition=standard
+
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=8
+#SBATCH --cpus-per-task=16
+
+# Do not set OMP_NUM_THREADS in the calling environment
+
+unset OMP_NUM_THREADS
+export OMP_PROC_BIND=spread
+
+srun --het-group=0 --export=all,OMP_NUM_THREADS=16 ./xthi-a : \
+     --het-group=1 --export=all,OMP_NUM_THREADS=1  ./xthi-b
+
+```
+The important point here is that `OMP_NUM_THREADS` must not be set
+in the environment that calls `srun` in order that the different
+specifications for the separate groups via `--export` on the `srun`
+command line take effect. If `OMP_NUM_THREADS` is set in the calling
+environment, then that value takes precedence, and each component will
+see the same value of `OMP_NUM_THREADS`.
+
+The output would be:
+```
+Node    0, hostname nid001111, mpi   8, omp  16, executable xthi-a
+Node    1, hostname nid001126, mpi   8, omp   1, executable xthi-b
+Node    0, rank    0, thread   0, (affinity =    0)
+Node    0, rank    0, thread   1, (affinity =    1)
+Node    0, rank    0, thread   2, (affinity =    2)
+Node    0, rank    0, thread   3, (affinity =    3)
+Node    0, rank    0, thread   4, (affinity =    4)
+Node    0, rank    0, thread   5, (affinity =    5)
+Node    0, rank    0, thread   6, (affinity =    6)
+Node    0, rank    0, thread   7, (affinity =    7)
+Node    0, rank    0, thread   8, (affinity =    8)
+Node    0, rank    0, thread   9, (affinity =    9)
+Node    0, rank    0, thread  10, (affinity =   10)
+Node    0, rank    0, thread  11, (affinity =   11)
+Node    0, rank    0, thread  12, (affinity =   12)
+Node    0, rank    0, thread  13, (affinity =   13)
+Node    0, rank    0, thread  14, (affinity =   14)
+Node    0, rank    0, thread  15, (affinity =   15)
+Node    0, rank    1, thread   0, (affinity =   16)
+Node    0, rank    1, thread   1, (affinity =   17)
+...
+Node    0, rank    7, thread  14, (affinity =  126)
+Node    0, rank    7, thread  15, (affinity =  127)
+Node    1, rank    8, thread   0, (affinity =    0)
+Node    1, rank    9, thread   0, (affinity =   16)
+Node    1, rank   10, thread   0, (affinity =   32)
+Node    1, rank   11, thread   0, (affinity =   48)
+Node    1, rank   12, thread   0, (affinity =   64)
+Node    1, rank   13, thread   0, (affinity =   80)
+Node    1, rank   14, thread   0, (affinity =   96)
+Node    1, rank   15, thread   0, (affinity =  112)
+```
+
+
 ## Reservations
 
 The mechanism for submitting reservations on ARCHER2 has yet to be
