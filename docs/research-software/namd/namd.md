@@ -25,12 +25,11 @@ NAMD is freely available to all ARCHER2 users.
 ## Running parallel NAMD jobs
 
 !!! note
-
-We currently recommend using the pure MPI version of NAMD
-(i.e. _nosmp_ mode) as we are still investigating the best way to
-configure NAMD runs using a mixture of MPI communication processes and
-worker threads (_smp_ mode). This involves loading the non-default
-NAMD module `namd/2.14-nosmp-gcc10`.
+    We currently recommend using the pure MPI version of NAMD
+    (i.e. _nosmp_ mode) as we are still investigating the best way to
+    configure NAMD runs using a mixture of MPI communication processes and
+    worker threads (_smp_ mode). This involves loading the non-default
+    NAMD module `namd/2.14-nosmp-gcc10`.
 
 The following script will run a pure MPI NAMD MD job using 4 nodes
 (128x4 cores) with MPI.
