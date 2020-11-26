@@ -7,9 +7,15 @@
 This section covers best practice and tools for data management on
 ARCHER2.
 
-!!! tip
+!!! information
     If you have any questions on data management and transfer please do not
     hesitate to contact the ARCHER2 service desk at <support@archer2.ac.uk>.
+    
+!!! tip
+    If you are interested in transferring data from ARCHER to ARCHER2, you
+    may want to skip straight to the
+    [SSH data transfer example: ARCHER to ARCHER2](#ssh-data-transfer-example-archer-to-archer2)
+    section.
 
 ## Useful resources and links
 
@@ -375,7 +381,7 @@ above.)
     (accessed via `man rsync` or at [man
     rsync](https://linux.die.net/man/1/rsync)).
 
-#### SSH data transfer example: ARCHER to ARCHER2
+## SSH data transfer example: ARCHER to ARCHER2
 
 Here we have a short example demonstrating transfer of data directly
 from ARCHER to ARCHER2.
