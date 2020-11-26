@@ -378,8 +378,21 @@ above.)
 #### SSH data transfer example: ARCHER to ARCHER2
 
 Here we have a short example demonstrating transfer of data directly
-from ARCHER to ARCHER2. The first step will be to set up an SSH key for
-access to ARCHER2 directly from ARCHER.
+from ARCHER to ARCHER2.
+
+Before we can transfer of data from ARCHER (or any
+other remote facility) to ARCHER2 there are a couple of steps required:
+
+1. Create an SSH key on the origin system (ARCHER in this case) to allow
+   the data transfer to happen.
+2. Add the public part of the SSH key you create to your ARCHER2 account 
+   in SAFE.
+   
+!!! tip
+    Remember that you will need to use both a key and your password to
+    transfer data to ARCHER2.
+    
+The first step will be to set up an SSH key for access to ARCHER2 directly from ARCHER.
 
 First log in to ARCHER, and generate a new SSH key. To do this we use
 the following
@@ -411,6 +424,15 @@ single archive file using the following command:
 
     tar -czf all_my_files.tar.gz file1.txt file2.txt file3.txt
 
+From ARCHER in particular, in order to get the best transfer performance,
+we need to access a newer version of the SSH program. We do this by loading
+the `openssh` module:
+
+    module load openssh
+    
+!!! note
+    You may not need to do this on a system other than ARCHER
+
 We then initiate the data transfer from ARCHER to ARCHER2, here using
 `rsync` to allow the transfer to be recommenced without needing to start
 again, in the event of a loss of connection or other failure.
@@ -426,6 +448,10 @@ Unfortunately
 the `~` shortcut is not correctly expanded, so we have specified the
 full path. We move our research archive to our project work directory on
 ARCHER2.
+
+!!! note
+    Remember to replace `otbz19` with your username on ARCHER2 and `otbz01`
+    with your username on ARCHER
 
 If we were unconcerned about being able to restart an interrupted
 transfer, we could instead use the `scp` command,
