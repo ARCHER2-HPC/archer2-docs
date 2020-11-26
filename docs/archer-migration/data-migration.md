@@ -19,10 +19,10 @@ First log in to ARCHER, and generate a new SSH key. To do this we use
 the following
     command:
 
-    ssh-keygen -b 4096 -C "otbz01@archer -> otbz19@archer2" -f ~/.ssh/id_RSA_A2
+    ssh-keygen -b 4096 -C "auser@archer -> a2user@archer2" -f ~/.ssh/id_RSA_A2
 
 This generates a new 4096 bit RSA SSH key with the comment
-`otbz01@archer -> otbz19archer2`, and stores the private key in the file
+`auser@archer -> a2userarcher2`, and stores the private key in the file
 `~/.ssh/id_RSA_A2`, and the public key in a corresponding `.pub` file.
 During key generation process we are asked to enter a passphrase. SSH
 keys should *always* be passphrase protected, but this is especially
@@ -51,30 +51,29 @@ the `openssh` module:
 
     module load openssh
     
-
 We then initiate the data transfer from ARCHER to ARCHER2, here using
 `rsync` to allow the transfer to be recommenced without needing to start
 again, in the event of a loss of connection or other failure.
 
-    rsync -Pv -e"ssh -c aes128-gcm@openssh.com -i /home/z01/z01/otbz01/.ssh/id_RSA_A2" ./all_my_files.tar.gz otbz19@transfer.dyn.archer2.ac.uk:/work/z19/z19/otbz19/
+    rsync -Pv -e"ssh -c aes128-gcm@openssh.com -i /home/t01/t01/auser/.ssh/id_RSA_A2" ./all_my_files.tar.gz a2user@transfer.dyn.archer2.ac.uk:/work/t01/t01/a2user
 
 Note the use of the `-P` flag to allow partial transfer -- the same
 command could be used to restart the transfer after a loss of
 connection. The `-e` flag allows specification of the ssh command - we
 have used this to add the location of the identity file. 
-The `-c` option specifies the cipher to be used as `aes128-gcm` which has been found to increase performance
+The `-c` option specifies the cipher to be used as `aes128-gcm` which has been found to increase performance.
 Unfortunately
 the `~` shortcut is not correctly expanded, so we have specified the
 full path. We move our research archive to our project work directory on
 ARCHER2.
 
 !!! note
-    Remember to replace `otbz19` with your username on ARCHER2 and `otbz01`
+    Remember to replace `a2user` with your username on ARCHER2 and `auser`
     with your username on ARCHER
 
 If we were unconcerned about being able to restart an interrupted
 transfer, we could instead use the `scp` command,
 
-    scp -c aes128-gcm@openssh.com -i ~/.ssh/id_RSA_A2 all_my_files.tar.gz otbz19@transfer.dyn.archer2.ac.uk:/work/z19/z19/otbz19/
+    scp -c aes128-gcm@openssh.com -i ~/.ssh/id_RSA_A2 all_my_files.tar.gz a2user@transfer.dyn.archer2.ac.uk:/work/t01/t01/a2user/
 
 but `rsync` is recommended for larger transfers.
