@@ -375,7 +375,7 @@ above.)
     (accessed via `man rsync` or at [man
     rsync](https://linux.die.net/man/1/rsync)).
 
-#### SSH data transfer example
+#### SSH data transfer example: ARCHER to ARCHER2
 
 Here we have a short example demonstrating transfer of data directly
 from ARCHER to ARCHER2. The first step will be to set up an SSH key for
@@ -400,8 +400,8 @@ Next we must add the new public key to ARCHER2 through SAFE. We can
 either open the `id_RSA_A2.pub` file in our preferred text editor on
 ARCHER, or use `cat id_RSA_A2.pub` to output the file contents to
 screen. Either way we should carefully copy the full SSH key and
-comment, and then in SAFE go to \*Login accounts - \<user\>@archer2 -
-Add Credential\* to add the new SSH key. Once the new key is active you
+comment, and then in SAFE go to *Login accounts - [username]@archer2 -
+Add Credential* to add the new SSH key. Once the new key is active you
 can test that this has worked by attempting to ssh to ARCHER2 from
 ARCHER.
 
