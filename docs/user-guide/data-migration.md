@@ -17,7 +17,7 @@ It is quicker to tar up large numbers of small files and transfer the single res
 
 This version of ssh has been identified through testing as offering superior performance.
  
-    module load ssh
+    module load openssh
 
 
 ## scp your file
