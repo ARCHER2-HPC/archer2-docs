@@ -36,7 +36,7 @@ nav:
     - "Overview": quick-start/overview.md
     - "Quickstart for users": quick-start/quickstart-users.md
     - "Quickstart for developers": quick-start/quickstart-developers.md
-  - "ARCHER to ARCHER2 Migration":
+  - "ARCHER > ARCHER2 Migration":
     - "Overview": archer-migration/index.md
     - "Migrating data from ARCHER to ARCHER2": archer-migration/data-migration.md
   - "User and Best Practice Guide":
