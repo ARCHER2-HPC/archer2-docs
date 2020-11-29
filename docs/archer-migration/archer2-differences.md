@@ -6,6 +6,8 @@ appropriate.
 
 ## For all users
 
+    - You use the [new SAFE](https://safe.epcc.ed.ac.uk) rather than the ARCHER SAFE
+    - You can add multiple SSH keys to your ARCHER2 account using SAFE
     - There are 128 cores on an ARCHER2 compute node rather than 24
     - ARCHER2 usage is charged in CUs (Compute Units) rather than kAU
       - Generally: 1.5156 kAU = 4.21 ARCHER node hour = 1 ARCHER2 node hour = 1 CU

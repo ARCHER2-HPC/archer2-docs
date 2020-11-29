@@ -87,6 +87,8 @@ steps before you can log into ARCHER2 for the first time:
       1. See: [How to request a machine account (SAFE documentation)](https://epcced.github.io/safe-docs/safe-for-users/#how-to-request-a-machine-account)
    2. (Optional) Create a new SSH key pair and add it to your ARCHER2 account in SAFE
       1. See: [SSH key pairs (ARCHER2 documentation)](https://docs.archer2.ac.uk/user-guide/connecting/#ssh-key-pairs)
+      2. If you do not add a new SSH key to your ARCHER2 account, then
+         your account will use the same key as your ARCHER account
    3. Collect your initial, one-shot password from SAFE
       1. See: [Intial passwords (ARCHER2 documentation)](https://docs.archer2.ac.uk/user-guide/connecting/#initial-passwords)
 
