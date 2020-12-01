@@ -60,8 +60,8 @@ srun --cpu-bind=cores namd2 input.namd
 
 If your jobs runs out of memory, then you can can run the _smp_
 version of NAMD which uses less memory. This involves launching a
-combinbation of MPI processes for communication and worker threads
-which perform compution.
+combination of MPI processes for communication and worker threads
+which perform computation.
 
 !!! note
     The optimal choice for the numbers of MPI processes and worker
