@@ -182,7 +182,7 @@ cause calculations to stop scaling well. This effect can be mitigated
 by running VASP with less than 128 MPI ranks per node (e.g. using
 64 MPI ranks per node instead). 
 
-For example, a 64 atom system with 8 k-points requires a reduction
+For example, a 65 atom system with 8 k-points requires a reduction
 of MPI ranks per node from 128 to 64 once you get to 16 nodes.
 
 An example job submission script to run a VASP 5 calculation on
@@ -217,4 +217,15 @@ export OMP_NUM_THREADS=1
 module load vasp/5
 srun --cpu-bind=rank vasp_std
 ```
+## VASP performance data on ARCHER2
+
+VASP performance data on ARCHER2 is currently available for two
+different benchmark systems:
+
+  - TiO_2 Supercell, pure DFT functional, Gamma-point, 1080 atoms
+    - Uses `vasp_gam`
+    - [TiO2 performance data](https://github.com/hpc-uk/archer-benchmarks/blob/main/others/VASP/analysis/VASP_TiO2_perf_analysis.ipynb)
+  - CdTe Supercell, hybrid DFT functional. 8 k-points, 65 atoms
+    - Uses `vasp_ncl`
+    - [CdTe performance data](https://github.com/hpc-uk/archer-benchmarks/blob/main/others/VASP/analysis/VASP_CdTe_perf_analysis.ipynb)
 
