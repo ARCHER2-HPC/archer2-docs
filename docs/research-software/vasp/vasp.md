@@ -98,9 +98,10 @@ module load epcc-job-env
 
 # Load the VASP module, avoid any unintentional OpenMP threading by
 # setting OMP_NUM_THREADS, and launch the code.
+# Note use of --cpu-bind=rank to improve performance
 export OMP_NUM_THREADS=1
 module load vasp/5
-srun --cpu-bind=cores vasp_std
+srun --cpu-bind=rank vasp_std
 ```
 
 ### VASP 6
@@ -149,9 +150,10 @@ module load epcc-job-env
 
 # Load the VASP module, avoid any unintentional OpenMP threading by
 # setting OMP_NUM_THREADS, and launch the code.
+# Note use of --cpu-bind=rank to improve performance
 export OMP_NUM_THREADS=1
 module load vasp/6
-srun --cpu-bind=cores vasp_std
+srun --cpu-bind=rank vasp_std
 ```
 
 ## Compiling VASP on ARCHER2
@@ -161,4 +163,69 @@ If you wish to compile your own version of VASP on ARCHER2 (either VASP
 versions in the build instructions GitHub repository. See:
 
    - [Build instructions for VASP on GitHub](https://github.com/hpc-uk/build-instructions/tree/main/VASP)
+
+## Tips for using VASP on ARCHER2
+
+### Set `--cpu-bind=rank`
+
+Benchmarking has shown that using the `srun` option `--cpu-bind=rank`
+(rather than the usual `--cpu-bind=cores`) can improve the performance
+of VASP on ARCHER2 by 10-20%.
+
+### Hybrid functional calculations: underpopulate MPI ranks per node at higher core counts 
+
+When running hybrid functional calculations the VASP software makes
+extensive use of MPI collective functions. At higher node counts, the
+fact that ARCHER2 compute nodes have a large number of cores per node
+means that collective operations can become extremely expensive and 
+cause calculations to stop scaling well. This effect can be mitigated 
+by running VASP with less than 128 MPI ranks per node (e.g. using
+64 MPI ranks per node instead). 
+
+For example, a 65 atom system with 8 k-points requires a reduction
+of MPI ranks per node from 128 to 64 once you get to 16 nodes.
+
+An example job submission script to run a VASP 5 calculation on
+16 nodes with 64 MPI ranks per node (1024 MPI ranks in total) would
+be:
+
+```
+#!/bin/bash
+
+# Request 16 nodes (1024 MPI tasks at 64 tasks per node) for 3 hours
+# Note setting --cpus-per-task=2 to distribute the MPI tasks evenly
+# across the NUMA regions on the node   
+
+#SBATCH --job-name=VASP_test
+#SBATCH --nodes=16
+#SBATCH --tasks-per-node=128
+#SBATCH --cpus-per-task=2
+#SBATCH --time=3:0:0
+
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code] 
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+# Setup the job environment (this module needs to be loaded before any other modules)
+module load epcc-job-env
+
+# Load the VASP module, avoid any unintentional OpenMP threading by
+# setting OMP_NUM_THREADS, and launch the code.
+# Note use of --cpu-bind=rank to improve performance
+export OMP_NUM_THREADS=1
+module load vasp/5
+srun --cpu-bind=rank vasp_std
+```
+## VASP performance data on ARCHER2
+
+VASP performance data on ARCHER2 is currently available for two
+different benchmark systems:
+
+  - TiO_2 Supercell, pure DFT functional, Gamma-point, 1080 atoms
+    - Uses `vasp_gam`
+    - [TiO2 performance data](https://github.com/hpc-uk/archer-benchmarks/blob/main/others/VASP/analysis/VASP_TiO2_perf_analysis.ipynb)
+  - CdTe Supercell, hybrid DFT functional. 8 k-points, 65 atoms
+    - Uses `vasp_ncl`
+    - [CdTe performance data](https://github.com/hpc-uk/archer-benchmarks/blob/main/others/VASP/analysis/VASP_CdTe_perf_analysis.ipynb)
 
