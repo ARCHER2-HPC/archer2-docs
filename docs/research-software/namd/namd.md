@@ -42,7 +42,7 @@ The following script will run a pure MPI NAMD MD job using 4 nodes (i.e.
 #SBATCH --job-name=namd_nosmp
 #SBATCH --nodes=4
 #SBATCH --tasks-per-node=128
-#SBATCH --cpus-per-core=1
+#SBATCH --cpus-per-task=1
 #SBATCH --time=00:20:00
 
 # Replace [budget code] below with your project code (e.g. t01)
