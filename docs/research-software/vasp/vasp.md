@@ -177,7 +177,7 @@ of VASP on ARCHER2 by 10-20%.
 When running hybrid functional calculations the VASP software makes
 extensive use of MPI collective functions. At higher node counts, the
 fact that ARCHER2 compute nodes have a large number of cores per node
-mean that collective operations can become extremely expensive and 
+means that collective operations can become extremely expensive and 
 cause calculations to stop scaling well. This effect can be mitigated 
 by running VASP with less than 128 MPI ranks per node (e.g. using
 64 MPI ranks per node instead). 
