@@ -35,26 +35,6 @@ password. (You can change your initial SAFE password whenever you want
 by selecting the *Change SAFE password*
 option from the *Your details* menu.)
 
-### Generating and adding an SSH key pair
-
-How you generate your SSH key pair depends on which operating system you
-use and which SSH client you use to connect to ARCHER2. We will not
-cover the details on generating an SSH key pair here, but detailed
-information on generating an SSH key pair is available in the [ARCHER2
-User and Best Practice
-Guide](https://docs.archer2.ac.uk/user-guide/connecting/).
-
-Once you have generated your SSH key pair, you should add the public
-part to your login account using SAFE:
-
-1.  [Log into SAFE](https://safe.epcc.ed.ac.uk)
-2.  Use the menu *Your details* and select *Update personal details*
-3.  Either copy and paste the public part of your SSH key into the SSH
-    Public key box or use the button to select the public key file on
-    your computer.
-4.  Click *Update* to associate the public SSH key part with your SAFE
-    account
-
 ### Request an ARCHER2 login account
 
 Once you have a SAFE account and an SSH key you will need to request a
@@ -68,7 +48,13 @@ the Project Code:
 3.  Select the correct project from the drop down list
 4.  Select the *ARCHER2* machine in the list of available machines
 5.  Click *Next*
-6.  Enter a username for the account
+6.  Enter a username for the account and (optionally) an SSH public
+    key
+    1.  If you do not specify an SSH key at this stage, your default
+        key will be used (if you have one). For users who had an ARCHER
+        account, the default key will be your ARCHER SSH key.
+    2.  You can always add an SSH key (or additional SSH keys) using
+        the process described below.
 7.  Click *Request*
 
 The PI or project manager of the project will be asked to approve your
