@@ -3,11 +3,15 @@
 This short guide explains how to move data from the ARCHER service to the ARCHER2 service.
 
 !!! note
-    This section assumes that you have an active ARCHER and ARCHER2 account, and that you 
-    have successfully logged in to both accounts.
+    This section assumes that you have an active ARCHER and ARCHER2 account, 
+    and that you have successfully logged in to both accounts.
+    
+!!! tip
+    Unlike normal access, ARCHER to ARCHER2 transfer has been set up to require 
+    only one form of authentication. You will not need to generate a new SSH key
+    pair to transfer data from ARCHER to ARCHER2 as your password will suffice.
 
-First, login to the ARCHER(1) data transfer node (making sure to change 
-`auser` to your username):
+First, login to the ARCHER(1) (making sure to change `auser` to your username):
 
     ssh auser@login.archer.ac.uk
 
