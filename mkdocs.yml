@@ -41,6 +41,7 @@ nav:
     - "Migrating your account from ARCHER to ARCHER2": archer-migration/account-migration.md
     - "Migrating data from ARCHER to ARCHER2": archer-migration/data-migration.md
     - "Main differences between ARCHER and ARCHER2": archer-migration/archer2-differences.md
+  - "ARCHER2 Known Issues": known-issues/index.md
   - "User and Best Practice Guide":
     - "Overview": user-guide/index.md
     - "Connecting to ARCHER2": user-guide/connecting.md
