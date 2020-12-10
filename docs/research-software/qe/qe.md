@@ -33,7 +33,7 @@ For example, the following script will run a QE `pw.x` job using 4 nodes
 
 #SBATCH --job-name=qe_test
 #SBATCH --nodes=4
-#SBATCH --ntasks-per-node=128
+#SBATCH --tasks-per-node=128
 #SBATCH --cpus-per-task=1
 #SBATCH --time=00:20:00
 
@@ -66,4 +66,4 @@ directory you wish. This can be done by adding the following line
 The latest instructions for building QE on ARCHER2 can be found in the
 GitHub repository of build instructions:
 
-   - [Build instructions for Quantum Espresso](https://github.com/hpc-uk/build-instructions/tree/main/QuantumEspressod)
+   - [Build instructions for Quantum Espresso](https://github.com/hpc-uk/build-instructions/tree/main/QuantumEspresso)
