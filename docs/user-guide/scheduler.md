@@ -153,7 +153,7 @@ ARCHER2.
 | -------- | ----------------- | ------------ | ----------- | ------------ | ------------ |
 | standard | 940               | 24 hrs       | 64          | 16           | standard     |
 | short    | 8                 | 20 mins      | 2           | 1            | standard     |
-| long     | 16                | 48 hrs       | 16          | 16           | standard     |
+| long     | 64                | 48 hrs       | 16          | 16           | standard     |
 
 !!! warning
     If you want to use the `short` QoS then you also need to add the
