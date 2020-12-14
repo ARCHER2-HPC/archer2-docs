@@ -114,6 +114,8 @@ The advice for tuning the performance of `MPI_Send` is
     correctness of your program (e.g. whether or not it deadlocks) then
     **you have an incorrect MPI program**.
 
+#### Setting the eager limit on ARCHER2
+
 On ARCHER2, things are a little more complicated. Although the eager
 limit defaults to 16K bytes, messages up to 256K are sent
 asynchronously because they are actually sent as a number of smaller
