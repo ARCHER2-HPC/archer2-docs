@@ -6,15 +6,15 @@
 
 ## MPI
 
-The vast majority of parallel scientific software uses the MPI library
-as the main way to implement parallelism; it is used so universally that
-the Cray compiler wrappers on ARCHER2 link to the Cray MPI library by
-default. Unlike other clusters you may have used, there is no choice of
-MPI library on ARCHER2: regardless of what compiler you are using, your
-program will use Cray MPI. This is because the Slingshot network on
-ARCHER2 is Cray-specific and significant effort has been put in by Cray
-software engineers to optimise the MPI performance on Cray Shasta
-systems.
+The vast majority of parallel scientific applications use the MPI
+library as the main way to implement parallelism; it is used so
+universally that the Cray compiler wrappers on ARCHER2 link to the
+Cray MPI library by default. Unlike other clusters you may have used,
+there is no choice of MPI library on ARCHER2: regardless of what
+compiler you are using, your program will use Cray MPI. This is
+because the Slingshot network on ARCHER2 is Cray-specific and
+significant effort has been put in by Cray software engineers to
+optimise the MPI performance on their Shasta systems.
 
 Here we list a number of suggestions for improving the performance of
 your MPI programs on ARCHER2. Although MPI programs are capable of
@@ -51,9 +51,9 @@ The rationale is that MPI, rather than the user, should decide how best
 to send a message.
 
 In practice, what typically happens is that MPI tries to use an
-asynchronous approach via the *eager* protocol -- the message is copied
+asynchronous approach via the *eager* protocol: the message is sent
 directly to a preallocated buffer *on the receiver* and the routine
-returns immediately afterward. Clearly there is a limit on how much
+returns immediately afterwards. Clearly there is a limit on how much
 space can be reserved for this, so:
 
   - **small messages** will be sent asynchronously;
@@ -73,8 +73,8 @@ varies from system to system, but might be around 8K bytes.
     the non-blocking variant `MPI_Isend` to guarantee that the send
     routine returns control to you immediately even if there is no
     matching receive.
-  - It is **not enough** to say \*deadlock is an issue in principle, but
-    it runs OK on my laptop so there is no problem in practice\*. The
+  - It is **not enough** to say *deadlock is an issue in principle, but
+    it runs OK on my laptop so there is no problem in practice*. The
     *eager limit* is system-dependent so the fact that a message happens
     to be buffered on your laptop is no guarantee it will be buffered on
     ARCHER2.
@@ -88,12 +88,7 @@ varies from system to system, but might be around 8K bytes.
 
 With most MPI libraries you should be able to alter the default value of
 the eager limit at runtime, perhaps via an environment variable or a
-command-line argument to `mpirun`. On ARCHER, the magic incantation is:
-
-    export MPICH_GNI_MAX_EAGER_MSG_SIZE=16382
-
-which would mean that messages below 16K bytes are sent asynchronously
-(there will be a similar, but different, incantation on ARCHER2).
+command-line argument to `mpirun`.
 
 The advice for tuning the performance of `MPI_Send` is
 
@@ -119,6 +114,25 @@ The advice for tuning the performance of `MPI_Send` is
     correctness of your program (e.g. whether or not it deadlocks) then
     **you have an incorrect MPI program**.
 
+#### Setting the eager limit on ARCHER2
+
+On ARCHER2, things are a little more complicated. Although the eager
+limit defaults to 16K bytes, messages up to 256K are sent
+asynchronously because they are actually sent as a number of smaller
+messages.
+
+To send even larger messages asynchronously, alter the value of
+`FI_OFI_RXM_SAR_LIMIT` in your SLURM script, e.g. to set to 512K:
+
+    export FI_OFI_RXM_SAR_LIMIT=524288
+
+A different protocol is used for messages between two processes on the
+same node. The default eager limit for these is 8K. Although the
+performance of on-node messages is unlikely to be a limiting factor
+for your program you can change this value, e.g. to set to 16K:
+
+    export MPICH_SMP_SINGLE_COPY_SIZE=16384
+
 ### Collective operations
 
 Many of the collective operations that are commonly required by parallel
@@ -131,9 +145,9 @@ best achieved by a *reduction operation*:
 
 This will be implemented using an efficient algorithm, for example based
 on a binary tree. Using such *divide-and-conquer* approaches typically
-results in an algorithm whose execution time on \(P\) processes scales
-as \(log_2(P)\); compare this to a naive approach where every process
-sends its input to rank 0 where the time will scale as \(P\). This might
+results in an algorithm whose execution time on *P* processes scales
+as *log_2(P)*; compare this to a naive approach where every process
+sends its input to rank 0 where the time will scale as *P*. This might
 not be significant on your laptop, but even on as few as 1000 processes
 the tree-based algorithm will already be around 100 times faster.
 
