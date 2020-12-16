@@ -99,3 +99,116 @@ each for up to one hour.
     #   Using 256 MPI processes and 128 MPI processes per node
     #   srun picks up the distribution from the sbatch options
     srun --cpu-bind=cores ./mitgcmuv
+    
+## Reproducing the ECCO version 4 (release 4) state estimate on ARCHER2
+
+The ECCO version 4 state estimate (ECCOv4-r4) is an observationally-constrained numerical solution produced by the ECCO group at JPL. If you would like to reproduce the state estimate on ARCHER2 in order to create customised runs and experiments, follow the instructions below. They have been slightly modified from the JPL instructions for ARCHER2. 
+
+For more information, see the ECCOv4-r4 website <https://ecco-group.org/products-ECCO-V4r4.htm>
+
+### Get the ECCOv4-r4 source code
+
+First, create a working directory, perhaps MYECCO. Navigate into this working directory:
+
+    mkdir MYECCO
+    cd MYECCO
+    
+In order to reproduce ECCOv4-r4, we need a specific checkpoint of the MITgcm source code. 
+
+    git clone https://github.com/MITgcm/MITgcm.git -b checkpoint66g
+    
+Next, get the ECCOv4-r4 specific code from GitHub:
+
+    cd MITgcm
+    mkdir -p ECCOV4/release4
+    cd ECCOV4/release4
+    git clone https://github.com/ECCO-GROUP/ECCO-v4-Configurations.git
+    mv ECCO-v4-Configurations/ECCOv4\ Release\ 4/code .
+    rm -rf ECCO-v4-Configurations
+    
+### Get the ECCOv4-r4 forcing files
+
+The surface forcing and other input files that are too large to be stored on GitHub are available via NASA data servers. In total, these files are about 200 GB in size. You must register for an Earthdata account and connect to a WebDAV server in order to access these files. For more detailed instructions, read the help page <https://ecco.jpl.nasa.gov/drive/help>.
+
+First, apply for an Earthdata account: <https://urs.earthdata.nasa.gov/users/new>
+
+Next, acquire your WebDAV credentials: <https://ecco.jpl.nasa.gov/drive> (second box from the top)
+
+Now, you can use wget to download the required forcing and input files:
+
+    wget -r --no-parent --user YOURUSERNAME --ask-password 
+      https://ecco.jpl.nasa.gov/drive/files/Version4/Release4/input_forcing
+
+    wget -r --no-parent --user YOURUSERNAME --ask-password 
+      https://ecco.jpl.nasa.gov/drive/files/Version4/Release4/input_init
+    
+    wget -r --no-parent --user YOURUSERNAME --ask-password
+      https://ecco.jpl.nasa.gov/drive/files/Version4/Release4/input_ecco
+
+### Compiling and running ECCOv4-r4
+
+Follow the instructions in the above section on building MITgcm on ARCHER2. These steps also work for ECCOv4-r4. You will need to create a build directory first:
+
+    cd MITgcm/ECCOV4/release4
+    mkdir build
+    cd build
+    
+Once you have compiled the model, you will have the mitgcmuv executable. 
+
+#### Issue with DOS formatting and end-of-namelist characters
+
+As of 16 December 2020, some of the ECCOv4-r4 files downloaded from the ECCO GitHub repository appear to be DOS formatted and/or have inconsistent end-of-namelist characters. This causes end-of-file runtime errors. The simplest solution appears to be running the dos2unix command in the namelist directory:
+
+  cd ../input_init/NAMELIST/
+  dos2unix data*
+  
+If you still get "end of file" runtime errors after running this command, you may need to manually replace the end-of-namelist "&" characters in some of the namelist files with "/". The files with "&" end-of-namelist characters are:
+
+    data.autodiff
+    data.salt_plume
+    data.layers
+    data.optim
+    data.ptracers
+    
+So far, this has only been tested with the gnu compiler. 
+
+#### Create run directory and link files
+
+In order to run the model, you need to create a run directory and link/copy the appropriate files. From the ``MITgcm/ECCOV4/release4`` directory:
+
+    mkdir run
+    cd run
+    
+    # link the data files
+    ln -s ../input_init/NAMELIST/* .
+    ln -s ../input_init/error_weight/ctrl_weight/* .
+    ln -s ../input_init/error_weight/data_error/* .
+    ln -s ../input_init/* .
+    ln -s ../input_init/tools/* .
+    ln -s ../input_ecco/*/* .
+    ln -s ../input_forcing/eccov4r4* .
+
+    python mkdir_subdir_diags.py
+    
+    # manually copy the mitgcmuv executable
+    cp -p ../build/mitgcmuv .
+
+For a short test run, edit the ``nTimeSteps`` variable in the file ``data``. Comment out the default value and uncomment the line reading ``nTimeSteps=8``. This is a useful test to make sure that the model can at least start up. 
+
+To run on ARCHER2, submit a batch script to the slurm scheduler. You can use the example slurm file from above, with the following modifications:
+
+    #SBATCH --job-name=ECCOv4r4-test
+    #SBATCH --time=1:0:0
+    #SBATCH --nodes=8
+    #SBATCH --tasks-per-node=12
+    #SBATCH --cpus-per-task=1
+
+This configuration uses 96 MPI processes at 12 MPI processes per node. Once the run has finished, in order to check that the run has successfully completed, check the end of one of the standard output files. 
+
+    tail STDOUT.0000
+    
+It should read 
+
+    PROGRAM MAIN: Execution ended Normally
+    
+(This document is still under revision. We will add details about examining model diagnostics in a future update.)
