@@ -2,6 +2,8 @@
 
 This short guide explains how to move data from the ARCHER service to the ARCHER2 service.
 
+We have also created a [walkthrough video](https://youtu.be/gDTJy1nrQZk  "YouTube video walkthrough") to guide you.
+
 !!! note
     This section assumes that you have an active ARCHER and ARCHER2 account, 
     and that you have successfully logged in to both accounts.
