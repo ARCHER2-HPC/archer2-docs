@@ -35,6 +35,11 @@ You should then copy the ARCHER2 optfile into the MITgcm
 
     cp /work/y07/shared/mitgcm/optfile/linux_amd64_gfortran_archer2 MITgcm/tools/build_options/
 
+For working with large executables (e.g. adjoint configurations), edit the build options file to include the lines:
+
+    FFLAGS="$FFLAGS -mcmodel=medium"
+    CFLAGS="$CFLAGS -mcmodel=medium"
+
 When you are building your code with this optfile, use the GNU
 environment with
 
@@ -159,8 +164,8 @@ Once you have compiled the model, you will have the mitgcmuv executable.
 
 As of 16 December 2020, some of the ECCOv4-r4 files downloaded from the ECCO GitHub repository appear to be DOS formatted and/or have inconsistent end-of-namelist characters. This causes end-of-file runtime errors. The simplest solution appears to be running the dos2unix command in the namelist directory:
 
-  cd ../input_init/NAMELIST/
-  dos2unix data*
+    cd ../input_init/NAMELIST/
+    dos2unix data*
   
 If you still get "end of file" runtime errors after running this command, you may need to manually replace the end-of-namelist "&" characters in some of the namelist files with "/". The files with "&" end-of-namelist characters are:
 
@@ -212,3 +217,50 @@ It should read
     PROGRAM MAIN: Execution ended Normally
     
 (This document is still under revision. We will add details about examining model diagnostics in a future update.)
+
+#### ECCOv4-r4 in adjoint mode
+
+If you have access to the commercial TAF software produced by <http://FastOpt.de>, then you can compile and run the ECCOv4-r4 instance of MITgcm in adjoint mode. This mode is useful for comprehensive sensitivity studies and for constructing state estimates. From the ``MITgcm/ECCOV4/release4`` directory, create a new code directory and a new build directory:
+
+    mkdir code_ad
+    cd code_ad
+    ln -s ../code/* .
+    cd ..
+    mkdir build_ad
+    cd build_ad
+    
+In this instance, the ``code_ad`` and ``code`` directories are identical, although this does not have to be the case. Make sure that you have the ``staf`` script in your path or in the ``build_ad`` directory itself. To make sure that you have the most up-to-date script, run:
+
+    ./staf -get staf
+    
+To test your connection to the FastOpt servers, try:
+
+    ./staf -test
+    
+You should receive the following message:
+
+    Your access to the TAF server is enabled.
+    
+The compilation commands are similar to those used to build the forward case.
+
+    # load relevant modules
+    module load cray-netcdf-hdf5parallel
+    module load cray-hdf5-parallel
+
+    # compile adjoint model
+    ../../../MITgcm/tools/genmake2 -ieee -mpi -mods=../code_ad -of=(PATH_TO_OPTFILE)
+    make depend
+    make adtaf
+    make adall
+    
+The source code will be packaged and forwarded to the FastOpt servers, where it will undergo source-to-source translation via the TAF algorithmic differentiation software. If the compilation is successful, you will have an executable named ``mitgcmuv_ad``. This will run the ECCOv4-r4 configuration of MITgcm in adjoint mode. As before, create a run directory and copy in the relevant files. The procedure is the same as for the forward model, with the following modifications:
+
+    cd ..
+    mkdir run_ad
+    cd run_ad
+    # manually copy the mitgcmuv executable
+    cp -p ../build_ad/mitgcmuv_ad .
+    
+To run the model, change the name of the executable in the slurm submission script; everything else should be the same as in the forward case. 
+    
+(More details on verification will be added in a future documentation update)
