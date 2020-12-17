@@ -113,7 +113,7 @@ For more information, see the ECCOv4-r4 website <https://ecco-group.org/products
 
 ### Get the ECCOv4-r4 source code
 
-First, create a working directory, perhaps MYECCO. Navigate into this working directory:
+First, navigate to your directory on the ``/work`` filesystem in order to get access to the compute nodes. Next, create a working directory, perhaps MYECCO, and navigate into this working directory:
 
     mkdir MYECCO
     cd MYECCO
@@ -162,12 +162,11 @@ Once you have compiled the model, you will have the mitgcmuv executable.
 
 #### Issue with DOS formatting and end-of-namelist characters
 
-As of 16 December 2020, some of the ECCOv4-r4 files downloaded from the ECCO GitHub repository appear to be DOS formatted and/or have inconsistent end-of-namelist characters. This causes end-of-file runtime errors. The simplest solution appears to be running the dos2unix command in the namelist directory:
+As of 16 December 2020, some of the ECCOv4-r4 files downloaded from the ECCO GitHub repository appear to be DOS formatted and/or have inconsistent end-of-namelist characters. This causes end-of-file runtime errors. You may need to manually replace the end-of-namelist "&" characters in some of the namelist files with "/". The namelists are found here:
 
-    cd ../input_init/NAMELIST/
-    dos2unix data*
+    cd MITgcm/ECCOV4/release4/input_init/NAMELIST/
   
-If you still get "end of file" runtime errors after running this command, you may need to manually replace the end-of-namelist "&" characters in some of the namelist files with "/". The files with "&" end-of-namelist characters are:
+The files with "&" end-of-namelist characters are:
 
     data.autodiff
     data.salt_plume
@@ -175,11 +174,11 @@ If you still get "end of file" runtime errors after running this command, you ma
     data.optim
     data.ptracers
     
-So far, this has only been tested with the gnu compiler. 
+So far, this has only been tested with the gnu compiler (gcc 10.1.0). 
 
 #### Create run directory and link files
 
-In order to run the model, you need to create a run directory and link/copy the appropriate files. From the ``MITgcm/ECCOV4/release4`` directory:
+In order to run the model, you need to create a run directory and link/copy the appropriate files. First, navigate to your directory on the ``work`` filesystem. From the ``MITgcm/ECCOV4/release4`` directory:
 
     mkdir run
     cd run
