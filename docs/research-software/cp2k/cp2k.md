@@ -118,4 +118,4 @@ The latest instructions for building CP2K on ARCHER2 may be found in
 the GitHub repository of build instructions:
 
    - [Build instructions for CP2K on
-     GitHub](https://github.com/hpc-uk/build-instructions/tree/master/CP2K)
+     GitHub](https://github.com/hpc-uk/build-instructions/tree/main/apps/CP2K/ARCHER2-CP2K-7.1)
