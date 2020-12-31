@@ -38,6 +38,13 @@ Begin the data transfer from ARCHER to ARCHER2 using `rsync`:
     rsync -Pv -e"ssh -c aes128-gcm@openssh.com" \
            ./all_my_files.tar.gz a2user@transfer.dyn.archer2.ac.uk:/work/t01/t01/a2user
 
+!!! important
+    Notice that the hostname for data transfer from ARCHER to ARCHER2
+    is not the usual login address. Instead, you use 
+    `transfer.dyn.archer2.ac.uk`. This address has been configured to 
+    allow higher performance data transfer and to allow access to 
+    ARCHER with password only with no SSH key required.
+
 When running this command, you will be prompted to enter your **ARCHER2**
 password. Enter it and the data transfer will begin. Also, remember to 
 replace `a2user` with your ARCHER2 username, and `t01` with the budget 
@@ -61,3 +68,10 @@ transfer, you could instead use the `scp` command,
         a2user@transfer.dyn.archer2.ac.uk:/work/t01/t01/a2user/
 
 but `rsync` is recommended for larger transfers.
+
+!!! important
+    Notice that the hostname for data transfer from ARCHER to ARCHER2
+    is not the usual login address. Instead, you use 
+    `transfer.dyn.archer2.ac.uk`. This address has been configured to 
+    allow higher performance data transfer and to allow access to 
+    ARCHER with password only with no SSH key required.
