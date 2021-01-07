@@ -55,7 +55,7 @@ module load epcc-job-env
 
 module load namd/2.14-nosmp-gcc10
 
-srun --cpu-bind=cores namd2 input.namd
+srun --distribution=block:block --hint=nomultithread namd2 input.namd
 ```
 
 If your jobs runs out of memory, then you can can run the _smp_
@@ -102,7 +102,7 @@ export OMP_PLACES=cores
 echo "Number of worker threads PPN = $PPN"
 
 # Run NAMD
-srun --hint=nomultithread --distribution=block:block namd2 +setcpuaffinity +ppn $PPN input.namd
+srun --distribution=block:block --hint=nomultithread namd2 +setcpuaffinity +ppn $PPN input.namd
 ```
 
 This is likely to be a reasonable first choice but you should

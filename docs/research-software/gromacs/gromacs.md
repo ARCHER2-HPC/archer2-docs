@@ -53,7 +53,7 @@ module load epcc-job-env
 module load gromacs
 
 export OMP_NUM_THREADS=1 
-srun --cpu-bind=cores gmx_mpi mdrun -s test_calc.tpr
+srun --distribution=block:block --hint=nomultithread gmx_mpi mdrun -s test_calc.tpr
 ```
 
 ### Running hybrid MPI/OpenMP jobs
@@ -81,7 +81,7 @@ module load epcc-job-env
 module load gromacs
 
 export OMP_NUM_THREADS=8
-srun --hint=nomultithread --distribution=block:block gmx_mpi mdrun -s test_calc.tpr
+srun --distribution=block:block --hint=nomultithread gmx_mpi mdrun -s test_calc.tpr
 ```
 
 ## Compiling Gromacs

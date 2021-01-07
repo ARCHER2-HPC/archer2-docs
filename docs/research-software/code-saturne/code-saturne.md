@@ -53,7 +53,7 @@ contents shown.
 If you wish to alter the existing *run\_solver* script you will need to
 add all the `#SBATCH` options shown to set the job name, size and so on.
 You should also add the two `module` commands, and
-`srun --cpu-bind=cores` as well as the `--mpi` option to the line executing
+`srun --distribution=block:block --hint=nomultithread` as well as the `--mpi` option to the line executing
 `./cs_solver` to ensure parallel execution on the compute nodes. The
 `export LD_LIBRARY_PATH=...` and `cd` commands are redundant and may be
 retained or removed.
@@ -84,7 +84,7 @@ module load code_saturne
 export OMP_NUM_THREADS=1
 
 # Run solver.
-srun --cpu-bind=cores ./cs_solver --mpi $@
+srun --distribution=block:block --hint=nomultithread ./cs_solver --mpi $@
 ```
 
 The script can then be submitted to the batch system with `sbatch`.

@@ -65,7 +65,7 @@ module load epcc-job-env
 # setting OMP_NUM_THREADS, and launch the code.
 module load nwchem
 export OMP_NUM_THREADS=1
-srun -cpu-bind=cores nwchem test_calc
+srun --distribution=block:block --hint=nomultithread nwchem test_calc
 ```
 
 ## Compiling NWChem
