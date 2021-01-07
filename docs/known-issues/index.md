@@ -10,6 +10,15 @@ Singularity containers. This fails because CMake 3.x, running within the
 container on a UAN, cannot find the MPI libraries (cray-mpich) on the host
 despite the correct paths having been provided.
 
+## Research Software
+There are several outstanding issues for the centrally installed Research Software:
+- **ChemShell and PyChemShell** is not yet available. We are working with the code developers to address this.
+- **Climate Data Operators (CDO) and NCAR Command Language (NCL)** are not yet available, due to issues with dependencies. An investigation is on-going.
+- **Paraview** is not yet available. We hope to provide a suitable installation in the near future.
+- **VMD** is not yet available. We hope to provide a suitable installation in the near future.
+- **PLUMED** is not yet available. Currently, we recommend affected users to install a local version of the software.
+Users should also check individual software pages, for known limitations/ caveats, for the use of software on the Cray EX platform and Cray Linux Environment.
+
 ## `stat-view` not working
 The `stat-view` utility from the `cray-stat` module does not currently
 work due to missing dependencies within the HPE Cray software stack. If you 
