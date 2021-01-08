@@ -97,7 +97,7 @@ source ${FOAM_INSTALL_DIR}/etc/bashrc
 
 # Run OpenFOAM work
 
-srun --cpu-bind=cores interFoam -parallel
+srun ---distribution=block:block --hint=nomultithread interFoam -parallel
 ```
 
 ## Compiling OpenFOAM

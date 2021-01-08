@@ -246,7 +246,7 @@ contacting the ARCHER2 service desk.
 Try the command `ping -c 3 login.archer2.ac.uk`. If you successfully
 connect to the login node, the output should include:
 
-    --- login.dyn.archer2.ac.uk ping statistics ---
+    --- login.archer2.ac.uk ping statistics ---
     3 packets transmitted, 3 received, 0% packet loss, time 38ms
 
 (the ping time '38ms' is not important). If not all packets are received

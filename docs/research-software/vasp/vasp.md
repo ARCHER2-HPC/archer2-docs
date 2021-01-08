@@ -98,10 +98,9 @@ module load epcc-job-env
 
 # Load the VASP module, avoid any unintentional OpenMP threading by
 # setting OMP_NUM_THREADS, and launch the code.
-# Note use of --cpu-bind=rank to improve performance
 export OMP_NUM_THREADS=1
 module load vasp/5
-srun --cpu-bind=rank vasp_std
+srun --distribution=block:block --hint=nomultithread vasp_std
 ```
 
 ### VASP 6
@@ -150,10 +149,9 @@ module load epcc-job-env
 
 # Load the VASP module, avoid any unintentional OpenMP threading by
 # setting OMP_NUM_THREADS, and launch the code.
-# Note use of --cpu-bind=rank to improve performance
 export OMP_NUM_THREADS=1
 module load vasp/6
-srun --cpu-bind=rank vasp_std
+srun --distribution=block:block --hint=nomultithread vasp_std
 ```
 
 ## Compiling VASP on ARCHER2
@@ -165,12 +163,6 @@ versions in the build instructions GitHub repository. See:
    - [Build instructions for VASP on GitHub](https://github.com/hpc-uk/build-instructions/tree/main/VASP)
 
 ## Tips for using VASP on ARCHER2
-
-### Set `--cpu-bind=rank`
-
-Benchmarking has shown that using the `srun` option `--cpu-bind=rank`
-(rather than the usual `--cpu-bind=cores`) can improve the performance
-of VASP on ARCHER2 by 10-20%.
 
 ### Hybrid functional calculations: underpopulate MPI ranks per node at higher core counts 
 
@@ -212,10 +204,9 @@ module load epcc-job-env
 
 # Load the VASP module, avoid any unintentional OpenMP threading by
 # setting OMP_NUM_THREADS, and launch the code.
-# Note use of --cpu-bind=rank to improve performance
 export OMP_NUM_THREADS=1
 module load vasp/5
-srun --cpu-bind=rank vasp_std
+srun --distribution=block:block --hint=nomultithread vasp_std
 ```
 ## VASP performance data on ARCHER2
 

@@ -46,7 +46,7 @@ module load epcc-job-env
 
 module load elk
 
-srun --cpu-bind=cores elk 
+srun --distribution=block:block --hint=nomultithread elk 
 ```
 
 ### Example mixed MPI/OpenMP ELK job

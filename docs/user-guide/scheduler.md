@@ -153,7 +153,7 @@ ARCHER2.
 | -------- | ----------------- | ------------ | ----------- | ------------ | ------------ |
 | standard | 940               | 24 hrs       | 64          | 16           | standard     |
 | short    | 8                 | 20 mins      | 2           | 1            | standard     |
-| long     | 16                | 48 hrs       | 16          | 16           | standard     |
+| long     | 64                | 48 hrs       | 16          | 16           | standard     |
 
 !!! warning
     If you want to use the `short` QoS then you also need to add the
@@ -202,7 +202,7 @@ the top of your job submission script using lines that start with the
 directive `#SBATCH`.
 
 !!! hint
-    Options provided using `#SBATCH` directives can also be specified as
+    Most options provided using `#SBATCH` directives can also be specified as
     command line options to `srun`.
 
 If you do not specify any options, then the default for each option will
@@ -278,12 +278,22 @@ relevant library paths are set correctly at run time.
 
 If you are running parallel jobs, your job submission script should
 contain one or more `srun` commands to launch the parallel executable
-across the compute nodes.
+across the compute nodes. In most cases you will want to add the options
+`--distribution=block:block` and `--hint=nomultithread` to your 
+`srun` command to ensure you get the correct pinning of processes to 
+cores on a compute node.
 
 !!! warning
-    To ensure that processes and threads are correctly mapped (or *pinned*)
-    to cores, you should always specify
-    `--cpu-bind=cores` option to `srun`.
+    If you do not add the `--distribution=block:block` and `--hint=nomultithread`
+    options to your `srun` command the default process placement 
+    may lead to a drop in performance for your jobs on ARCHER2.
+
+A brief explanation of these options:
+ - `--hint=nomultithread` - do not use hyperthreads/SMP
+ - `--distribution=block:block` - the first `block` means use a block distribution
+   of processes across nodes (i.e. fill nodes before moving onto the next one) and
+   the second `block` means use a block distribution of processes across NUMA regions
+   within a node (i.e. fill a NUMA region before moving on to the next one).
 
 ## bolt: Job submission script creation tool
 
@@ -447,7 +457,7 @@ and 128 MPI ranks per node for 20 minutes would look like:
     #   Using 512 MPI processes and 128 MPI processes per node
     #   srun picks up the distribution from the sbatch options
     
-    srun --cpu-bind=cores ./my_mpi_executable.x
+    srun --distribution=block:block --hint=nomultithread ./my_mpi_executable.x
 
 This will run your executable "my\_mpi\_executable.x" in parallel on 512
 MPI processes using 4 nodes (128 cores per node, i.e. not using
@@ -480,9 +490,8 @@ processes in total (8 MPI processes per node) and 16 OpenMP threads per
 MPI process. This results in all 128 physical cores per node being used.
 
 !!! hint
-    Note the use of the `export OMP_PLACES=cores` environment option and the
-    `--hint=nomultithread` and `--distribution=block:block` options to
-    `srun` to generate the correct pinning.
+    Note the use of the `export OMP_PLACES=cores` environment option to
+    generate the correct thread pinning.
 
 ```
 #!/bin/bash
@@ -561,14 +570,14 @@ per core and specifies 4 hours maximum runtime per subjob:
     #   using threading.
     export OMP_NUM_THREADS=1
     
-    srun --cpu-bind=cores /path/to/exe $SLURM_ARRAY_TASK_ID
+    srun --distribution=block:block --hint=nomultithread /path/to/exe $SLURM_ARRAY_TASK_ID
 
 ### Submitting a job array
 
 Job arrays are submitted using `sbatch` in the same way as for standard
 jobs:
 
-    sbatch job_script.pbs
+    sbatch job_script.pbs 
 
 ## Job chaining
 
@@ -628,9 +637,10 @@ you will enter a standard interactive terminal session (a new shell).
 Note that this shell is still on the front end (the prompt has not
 change). Whilst the interactive session lasts you will be able to run
 parallel jobs on the compute nodes by issuing the `srun
---cpu-bind=cores` command directly at your command prompt using the same
-syntax as you would inside a job script. The maximum number of nodes you
-can use is limited by resources requested in the `salloc` command.
+--distribution=block:block --hint=nomultithread` command directly at 
+your command prompt using the same syntax as you would inside a job
+script. The maximum number of nodes you can use is limited by resources
+requested in the `salloc` command.
 
 If you know you will be doing a lot of intensive debugging you may find
 it useful to request an interactive session lasting the expected length
@@ -664,7 +674,6 @@ be returned to the front end.
 
 By default, the interactive shell will retain the environment of the
 parent. If you want a clean shell, remember to specify `--export=none`.
-
 
 ## Heterogeneous jobs
 
@@ -742,8 +751,8 @@ different executables, both of which must finish before the jobs completes.
 
 # Run two execuatables with separate MPI_COMM_WORLD
 
-srun --cpu_bind=rank --het-group=0 ./xthi-a &
-srun --cpu_bind=rank --het-group=1 ./xthi-b &
+srun --distribution=block:block --hint=nomultithread --het-group=0 ./xthi-a &
+srun --distribution=block:block --hint=nomultithread --het-group=1 ./xthi-b &
 wait
 ```
 In this case, each executable is launched with a separate call to
@@ -809,8 +818,8 @@ components separated by a colon `:` should be used. For example,
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=4
 
-srun --cpu_bind=rank --het-group=0 ./xthi-a : \
-     --cpu_bind=rank --het-group=1 ./xthi-b
+srun --distribution=block:block --hint=nomultithread --het-group=0 ./xthi-a : \
+     --distribution=block:block --hint=nomultithread --het-group=1 ./xthi-b
 ```
 
 The output should confirm we have a single `MPI_COMM_WORLD` with
@@ -1000,7 +1009,7 @@ maximum number of tasks is reached:
     
     module load xthi
     export OMP_NUM_THREADS=1
-    srun --cpu-bind=cores xthi
+    srun --distribution=block:block --hint=nomultithread xthi
     
     Hello from rank 0, thread 0, on nid000001. (core affinity = 0,128)
     Hello from rank 1, thread 0, on nid000001. (core affinity = 16,144)
@@ -1034,7 +1043,7 @@ in a round-robin placement:
     module load xthi
     export OMP_NUM_THREADS=1
     export MPICH_RANK_REORDER_METHOD=0
-    srun --cpu-bind=cores xthi
+    srun xthi
     
     Hello from rank 0, thread 0, on nid000001. (core affinity = 0,128)
     Hello from rank 1, thread 0, on nid000002. (core affinity = 0,128)
