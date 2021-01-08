@@ -71,8 +71,8 @@ provided at the Archer2 repository.
 The current Archer2 supported version may be built via
 ```
 $ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
+$ cd pe-scripts
 $ git checkout cse-develop
-$ cd cse-develop
 $ ./sh/tpsl/superlu.sh --prefix=/path/to/install/location
 ```
 where the `--prefix` option controls the install destination.

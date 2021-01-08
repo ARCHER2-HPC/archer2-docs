@@ -59,8 +59,8 @@ The latest Scotch and PT-Scotch libraries are installed on Archer
 using the following mechanism:
 ```
 $ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
+$ cd pe-scripts
 $ git checkout cse-develop
-$ cd cse-develop
 $ ./sh/tpsl/scotch.sh --prefix=/path/to/install/location
 ```
 where the `--prefix` option defines the destination for the install.

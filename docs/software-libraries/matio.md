@@ -32,8 +32,8 @@ compiled using the script avaailable from the Archer2
 
 ```
 $ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
+$ cd pe-scripts
 $ git checkout cse-develop
-$ cd cse-develop
 $ ./sh/tpsl/matio.sh --prefix=/path/to/install/location
 ```
 where `--prefix` defines the location of the installation.

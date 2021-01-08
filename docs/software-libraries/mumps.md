@@ -39,8 +39,8 @@ The current supported version of MUMPS on Archer2 can be compiled using
 a script available from the Archer githug repository.
 ```
 $ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
+$ cd pe-scripts
 $ git checkout cse-develop
-$ cd cse-develop
 $ ./sh/tpsl/metis.sh --prefix=/path/to/install/location
 $ ./sh/tpsl/parmetis.sh --prefix=/path/to/install/location
 $ ./sh/tpsl/scotch.sh --prefix=/path/to/install/location

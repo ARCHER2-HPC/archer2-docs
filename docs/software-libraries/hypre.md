@@ -35,8 +35,8 @@ The current supported version on Archer2 can be built using the script
 from the Archer2 repository:
 ```
 $ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
+$ cd pe-scripts
 $ git checkout cse-develop
-$ cd cse-develop
 $ ./sh/tpsl/hypre.sh --prefix=/path/to/install/location
 ```
 where the `--prefix` option determines the install directory. See the
