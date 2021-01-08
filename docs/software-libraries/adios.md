@@ -43,8 +43,8 @@ The Archer2 github repository provides a script which can be used to
 build ADIOS as for the currently supported version, e.g.,:
 ```
 $ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
+$ cd pe-scripts
 $ git checkout cse-develop
-$ cd cse-develop
 $ module load cray-hdf5-parallel
 $ ./sh/adios.sh --prefix=/path/to/install/location
 ```

@@ -80,8 +80,8 @@ The latest Archer2 version of Metis can be installed
 
 ```
 $ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
+$ cd pe-scripts
 $ git checkout cse-develop
-$ cd cse-develop
 $ ./sh/tpsl/metis.sh --prefix=/path/to/install/location
 ```
 

@@ -37,8 +37,8 @@ on Archer2. These steps are codified at the Archer2
 and include a number of dependencies to be built in the correct order:
 ```
 $ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
+$ cd pe-scripts
 $ git checkout cse-develop
-$ cd cse-develop
 $ ./sh/tpsl/metis.sh --prefix=/path/to/install/location
 $ ./sh/tpsl/parmetis.sh --prefix=/path/to/install/location
 $ ./sh/tpsl/scotch.sh --prefix=/path/to/install/location
