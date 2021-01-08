@@ -61,7 +61,7 @@ export OMP_STACKSIZE=64M
 export OMP_NUM_THREADS=1
 
 # Launch the executable
-srun --cpu-bind=cores onetep.archer2 test_calc > test_calc.out
+srun --distribution=block:block --hint=nomultithread onetep.archer2 test_calc > test_calc.out
 ```
 
 ## Hints and Tips

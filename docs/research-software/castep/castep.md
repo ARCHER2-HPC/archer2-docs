@@ -58,7 +58,7 @@ module load epcc-job-env
 # setting OMP_NUM_THREADS, and launch the code.
 module load castep
 export OMP_NUM_THREADS=1
-srun -cpu-bind=cores castep.mpi test_calc
+srun --distribution=block:block --hint=nomultithread castep.mpi test_calc
 ```
 
 ## Compiling CASTEP

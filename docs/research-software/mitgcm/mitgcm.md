@@ -103,7 +103,7 @@ each for up to one hour.
     # Launch the parallel job
     #   Using 256 MPI processes and 128 MPI processes per node
     #   srun picks up the distribution from the sbatch options
-    srun --cpu-bind=cores ./mitgcmuv
+    srun --distribution=block:block --hint=nomultithread ./mitgcmuv
     
 ## Reproducing the ECCO version 4 (release 4) state estimate on ARCHER2
 
@@ -199,7 +199,7 @@ In order to run the model, you need to create a run directory and link/copy the 
 
 For a short test run, edit the ``nTimeSteps`` variable in the file ``data``. Comment out the default value and uncomment the line reading ``nTimeSteps=8``. This is a useful test to make sure that the model can at least start up. 
 
-To run on ARCHER2, submit a batch script to the slurm scheduler. You can use the example slurm file from above, with the following modifications:
+To run on ARCHER2, submit a batch script to the Slurm scheduler. You can use the example Slurm file from above, with the following modifications:
 
     #SBATCH --job-name=ECCOv4r4-test
     #SBATCH --time=1:0:0
@@ -260,6 +260,6 @@ The source code will be packaged and forwarded to the FastOpt servers, where it 
     # manually copy the mitgcmuv executable
     cp -p ../build_ad/mitgcmuv_ad .
     
-To run the model, change the name of the executable in the slurm submission script; everything else should be the same as in the forward case. 
+To run the model, change the name of the executable in the Slurm submission script; everything else should be the same as in the forward case. 
     
 (More details on verification will be added in a future documentation update)

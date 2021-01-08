@@ -73,7 +73,7 @@ module load epcc-job-env
 
 module load lammps
 
-srun --cpu-bind=cores lmp -i in.test -o out.test
+srun --distribution=block:block --hint=nomultithread lmp -i in.test -o out.test
 ```
 
 ## Compiling LAMMPS
