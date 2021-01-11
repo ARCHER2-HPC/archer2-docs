@@ -1,9 +1,5 @@
 # CASTEP
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 [CASTEP](http://www.castep.org) is a leading code for calculating the
 properties of materials from first principles. Using density functional
 theory, it can simulate a wide range of properties of materials

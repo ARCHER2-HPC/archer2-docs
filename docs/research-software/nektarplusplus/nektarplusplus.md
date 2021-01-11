@@ -1,9 +1,5 @@
 # NEKTAR++
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 Nektar++ is a tensor product based finite element package designed to
 allow one to construct efficient classical low polynomial order
 <span class="title-ref">h</span>-type solvers (where

@@ -1,9 +1,5 @@
 # GROMACS
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 [GROMACS](http://www.gromacs.org/) is a versatile package to perform
 molecular dynamics, i.e. simulate the Newtonian equations of motion for
 systems with hundreds to millions of particles. It is primarily designed
@@ -48,7 +44,7 @@ cores) with pure MPI.
 #SBATCH --qos=standard
 
 # Setup the batch environment
-module load epcc-job-env
+module restore /etc/cray-pe.d/PrgEnv-gnu
 
 module load gromacs
 
@@ -76,7 +72,7 @@ OpenMP threads per MPI process.
 #SBATCH --qos=standard
 
 # Setup the batch environment
-module load epcc-job-env
+module restore /etc/cray-pe.d/PrgEnv-gnu
 
 module load gromacs
 

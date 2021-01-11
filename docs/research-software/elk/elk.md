@@ -1,9 +1,5 @@
 # ELK
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 ELK is an all-electron full-potential linearised augmented-plane wave
 (FP-LAPW) code with many advanced features. It was written originally at
 Karl-Franzens-Universitt Graz as a milestone of the EXCITING EU Research

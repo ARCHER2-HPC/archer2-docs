@@ -1,10 +1,5 @@
 # Migrating your account from ARCHER to ARCHER2
 
-!!! warning
-    Access to ARCHER2 is not yet available for most users. We
-    are planning for user access to be enabled by
-    ** week beginning 11th January 2021**.
-
 This section covers the following questions:
 
   - When will I be able to access ARCHER2?

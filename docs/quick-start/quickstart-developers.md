@@ -1,9 +1,5 @@
 # Quickstart for developers
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 This guide aims to quickly enable developers to work on ARCHER2. It
 assumes that you are familiar with the material in the
 [Quickstart for users](quickstart-users.md) section.
