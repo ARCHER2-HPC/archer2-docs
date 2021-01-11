@@ -352,8 +352,8 @@ Paste the following text into your job submission script, replacing
     #SBATCH --partition=standard
     #SBATCH --qos=standard
     
-    # Setup the batch environment
-    module load epcc-job-env
+    # Setup the GNU programming environment
+    module restore /etc/cray-pe.d/PrgEnv-gnu
     
     # Load the xthi module to get access to the xthi program
     module load xthi
