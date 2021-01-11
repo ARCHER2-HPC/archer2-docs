@@ -1,9 +1,5 @@
 # Application development environment
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 ## What's available
 
 ARCHER2 runs on the Cray Linux Environment (a version of SUSE Linux),

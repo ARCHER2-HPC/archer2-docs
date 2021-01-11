@@ -1,9 +1,5 @@
 # Performance tuning
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 ## MPI
 
 The vast majority of parallel scientific applications use the MPI

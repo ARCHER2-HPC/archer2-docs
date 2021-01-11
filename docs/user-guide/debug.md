@@ -1,9 +1,5 @@
 # Debugging
 
-!!!warning
-   The ARCHER2 Service is not yet available. This documentation is in
-   development.
-
 The following debugging tools are available on ARCHER2:
 
   - [gdb4hpc](#gdb4hpc) is a command-line debugging tool provided by

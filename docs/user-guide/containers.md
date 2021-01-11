@@ -1,9 +1,5 @@
 # Containers
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 This page was originally based on the documentation at the
 [University of Sheffield HPC service](http://docs.hpc.shef.ac.uk/en/latest/sharc/software/apps/singularity.html)
 
