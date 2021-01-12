@@ -1,9 +1,5 @@
 # NEMO
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 NEMO (Nucleus for European Modelling of the Ocean) is a state-of-the-art
 framework for research activities and forecasting services in ocean and
 climate sciences, developed in a sustainable way by a European

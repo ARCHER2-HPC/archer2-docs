@@ -1,9 +1,5 @@
 # Running jobs on ARCHER2
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 As with most HPC services, ARCHER2 uses a scheduler to manage access to
 resources and ensure that the thousands of different users of system are
 able to share the system and all get access to the resources they

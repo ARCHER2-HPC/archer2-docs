@@ -1,9 +1,5 @@
 # Quantum Espresso
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 Quantum Espresso (QE) is an integrated suite of open-source computer
 codes for electronic-structure calculations and materials modeling at
 the nanoscale. It is based on density-functional theory, plane waves,

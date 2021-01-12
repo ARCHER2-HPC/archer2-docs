@@ -1,9 +1,5 @@
 # LAMMPS
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 [LAMMPS](http://lammps.sandia.gov/), is a classical molecular dynamics
 code, ("Large-scale Atomic/Molecular Massively Parallel Simulator").
 LAMMPS has potentials for solid-state materials (metals, semiconductors)

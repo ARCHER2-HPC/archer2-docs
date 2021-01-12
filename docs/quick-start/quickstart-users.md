@@ -1,9 +1,5 @@
 # Quickstart for users
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 This guide aims to quickly enable new users to get up and running on
 ARCHER2. It covers the process of getting an ARCHER2 account, logging in
 and running your first job.

@@ -1,9 +1,5 @@
 # Code\_Saturne
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 Code\_Saturne solves the Navier-Stokes equations for 2D, 2D-axisymmetric
 and 3D flows, steady or unsteady, laminar or turbulent, incompressible
 or weakly dilatable, isothermal or not, with scalar transport if

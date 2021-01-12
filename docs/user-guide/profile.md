@@ -1,10 +1,5 @@
 # Profiling
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
-
 ## CrayPat-lite
 
 CrayPat-lite is a simplified and easy-to-use version of the Cray

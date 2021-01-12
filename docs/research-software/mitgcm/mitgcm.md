@@ -1,9 +1,5 @@
 # MITgcm
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 The Massachusetts Institute of Technology General Circulation Model
 (MITgcm) is a numerical model designed for study of the atmosphere,
 ocean, and climate. MITgcm's flexible non-hydrostatic formulation

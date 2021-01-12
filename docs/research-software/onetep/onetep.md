@@ -1,9 +1,5 @@
 # ONETEP
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 ONETEP (Order-N Electronic Total Energy Package) is a linear-scaling
 code for quantum-mechanical calculations based on density-functional
 theory.

@@ -1,9 +1,5 @@
 # NAMD
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 [NAMD](http://www.ks.uiuc.edu/Research/namd/), recipient of a 2002
 Gordon Bell Award and a 2012 Sidney Fernbach Award, is a parallel
 molecular dynamics code designed for high-performance simulation of

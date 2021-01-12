@@ -1,9 +1,5 @@
 # VASP
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 The [Vienna Ab initio Simulation Package (VASP)](http://www.vasp.at) is
 a computer program for atomic scale materials modelling, e.g. electronic
 structure calculations and quantum-mechanical molecular dynamics, from

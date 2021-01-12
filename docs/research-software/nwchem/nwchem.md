@@ -1,9 +1,5 @@
 # NWChem
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 NWChem aims to provide its users with computational chemistry tools that
 are scalable both in their ability to treat large scientific
 computational chemistry problems efficiently, and in their use of
