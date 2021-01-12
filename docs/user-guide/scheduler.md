@@ -179,15 +179,103 @@ command:
 
 ### Slurm error messages
 
-!!! note
-    More information on common error messages will be added when the ARCHER2
-    system is available.
+An incorrect submission will cause Slurm to return an error.
+Some common problems are listed below, with a suggestion about
+the likely cause:
+
+* ``sbatch: unrecognized option <text>``
+  
+    One of your options is invalid or has a typo. ``man sbatch`` to help.
+
+
+* ``error: Batch job submission failed: No partition specified or system default partition``
+  
+    A ``--partition=`` option is missing. You must specify the partition
+    (see the list above). This is most often ``--partition=standard``.
+
+* ``error: invalid partition specified: <partition>``
+
+    ``error: Batch job submission failed: Invalid partition name specified``
+
+    Check the partition exists and check the spelling is correct.
+
+
+*  ``error: Batch job submission failed: Invalid account or account/partition combination specified``
+
+    This probably means an invalid account has been given. Check the
+    ``--account=`` options against valid accounts in SAFE.
+
+* ``error: Batch job submission failed: Invalid qos specification``
+
+    A QoS option is either missing or invalid. Check the script has a
+    ``--qos=`` option and that the option is a valid one from the
+    table above. (Check the spelling of the QoS is correct.)
+
+
+* ``error: Your job has no time specification (--time=)...``
+
+    Add an option of the form ``--time=hours:minutes:seconds`` to the
+    submission script. E.g., ``--time=01:30:00`` gives a time limit of
+    90 minutes.
+
+* ``error: QOSMaxWallDurationPerJobLimit``
+    ``error: Batch job submission failed: Job violates accounting/QOS policy``
+    ``(job submit limit, user's size and/or time limits)``
+  
+    The script has probably specified a time limit which is too long for
+    the corresponding QoS. E.g., the time limit for the short QoS
+    is 20 minutes.
+
 
 ### Slurm queued reasons
 
-!!! note
-    Explanations of the reasons for jobs being queued and not running will
-    be added when the ARCHER2 system is available.
+The ``squeue`` command allows users to view information for jobs managed by Slurm. Jobs
+typically go through the following states: PENDING, RUNNING, COMPLETING, and COMPLETED.
+The first table provides a description of some job state codes. The second table provides a description
+of the reasons that cause a job to be in a state.
+
+
+| Status        | Code | Description |
+|---------------|------|-------------|
+| PENDING       | PD   | Job is awaiting resource allocation. |
+| RUNNING       | R    | Job currently has an allocation. |
+| SUSPENDED     | S    | Job currently has an allocation. |
+| COMPLETING    | CG   | Job is in the process of completing. Some processes on some nodes may still be active. |
+| COMPLETED     | CD   | Job has terminated all processes on all nodes with an exit code of zero. |
+| TIMEOUT       | TO   | Job terminated upon reaching its time limit. |
+| STOPPED       | ST   | Job has an allocation, but execution has been stopped with SIGSTOP signal. CPUS have been retained by this job. |
+| OUT_OF_MEMORY | OOM  | Job experienced out of memory error. |
+| FAILED        | F    | Job terminated with non-zero exit code or other failure condition. |
+| NODE_FAIL     | NF   | Job terminated due to failure of one or more allocated nodes. |
+| CANCELLED     | CA   | Job was explicitly cancelled by the user or system administrator. The job may or may not have been initiated. |
+
+For a full list of see [Job State Codes](https://slurm.schedmd.com/squeue.html#lbAG).
+
+| Reason | Description |
+|--------|-------------|
+| Priority | One or more higher priority jobs exist for this partition or advanced reservation. |
+| Resources | The job is waiting for resources to become available. |
+| BadConstraints | The job's constraints can not be satisfied. |
+| BeginTime | The job's earliest start time has not yet been reached. |
+| Dependency | This job is waiting for a dependent job to complete. |
+| Licenses | The job is waiting for a license. |
+| WaitingForScheduling | No reason has been set for this job yet. Waiting for the scheduler to determine the appropriate reason. |
+| Prolog | Its PrologSlurmctld program is still running. |
+| JobHeldAdmin | The job is held by a system administrator. |
+| JobHeldUser | The job is held by the user. |
+| JobLaunchFailure | The job could not be launched. This may be due to a file system problem, invalid program name, etc. |
+| NonZeroExitCode | The job terminated with a non-zero exit code. |
+| InvalidAccount | The job's account is invalid. |
+| InvalidQOS | The job's QOS is invalid. |
+| QOSUsageThreshold | Required QOS threshold has been breached. |
+| QOSJobLimit | The job's QOS has reached its maximum job count. |
+| QOSResourceLimit | The job's QOS has reached some resource limit. |
+| QOSTimeLimit | The job's QOS has reached its time limit. |
+| NodeDown | A node required by the job is down. |
+| TimeLimit | The job exhausted its time limit. |
+| ReqNodeNotAvail | Some node specifically required by the job is not currently available. The node may currently be in use, reserved for another job, in an advanced reservation, DOWN, DRAINED, or not responding. Nodes which are DOWN, DRAINED, or not responding will be identified as part of the job's "reason" field as "UnavailableNodes". Such nodes will typically require the intervention of a system administrator to make available. |
+
+For a full list of see [Job Reasons](https://slurm.schedmd.com/squeue.html#lbAF).
 
 ## Output from Slurm jobs
 
