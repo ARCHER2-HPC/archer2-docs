@@ -241,6 +241,24 @@ you can try and diagnose the issue. Some of these are collected below -
 if you are having difficulties connecting we suggest trying these before
 contacting the ARCHER2 service desk.
 
+### Use the `user@login.archer2.ac.uk` syntax rather than `-l user login.archer2.ac.uk`
+
+We have seen a number of instances where people using the syntax
+
+```
+ssh -l user login.archer2.ac.uk
+```
+
+have not been able to connect properly and get prompted for a password many
+times. We have found that using the alternative syntax:
+
+```
+ssh user@login.archer2.ac.uk
+```
+
+works more reliably. If you are using the `-l user` option to connect and 
+are seeing issues, then try using `user@login.archer2.ac.uk` instead.
+
 ### Can you connect to the login node?
 
 Try the command `ping -c 3 login.archer2.ac.uk`. If you successfully
