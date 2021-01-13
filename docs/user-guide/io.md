@@ -246,7 +246,7 @@ applications, the following settings should be good in most cases:
   - If each process is writing to its own individual file then the default settings should give good performance.
 
   - If processes are writing to a single shared file (e.g. using
-    MPI-IO, HDF5 or NetDCF), set the appropriate
+    MPI-IO, HDF5 or NetCDF), set the appropriate
     directories to be fully striped: `lfs setstripe -c -1 directory/`
 
 ## I/O Profiling
