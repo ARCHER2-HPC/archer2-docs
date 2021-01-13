@@ -234,8 +234,20 @@ For example, to set a stripe size of 4 MiB for the existing directory
 
 ### Recommended ARCHER2 I/O settings
 
-!!! note
-    We will add advice on I/O settings soon.
+With the default settings, parallel I/O on multiple nodes can
+currently give poor perfomance. We recommend always setting the
+following environment variable in your SLURM batch script:
+
+    export FI_OFI_RXM_SAR_LIMIT=64K
+
+Although I/O requirements vary significantly between different
+applications, the following settings should be good in most cases:
+
+  - If each process is writing to its own individual file then the default settings should give good performance.
+
+  - If processes are writing to a single shared file (e.g. using
+    MPI-IO, HDF5 or NetDCF), set the appropriate
+    directories to be fully striped: `lfs setstripe -c -1 directory/`
 
 ## I/O Profiling
 
