@@ -77,7 +77,12 @@ The following libraries will also made available by the Archer service:
 
     ADIOS (Adaptable I/O System) provides library services for parallel I/O. 
 
-- **GLM** *...details pending...*
+- **Boost** [*...details for Boost on Archer2...*](boost.md)
+
+    Boost is a partable C++ library providing reference implementations
+    of many common containers, operations and algorithms.
+
+- **GLM** [*...details for GLM on Archer2...*](glm.md)
 
     GLM (GL Math library) is a C++ header-only library for performing
     operations commonly encountered in graphics applications.
@@ -88,15 +93,15 @@ The following libraries will also made available by the Archer service:
     HYPRE provides pre-conditioners and solvers for sparse linear algebra
     problems. See https://hypre.readthedocs.io/en/latest/ch-intro.html
 
-- **Metis** and **Parmetis** [*...details for Metis on Archer2...*](metis.md)
+- **Metis** and **Parmetis** [*...details for Metis and Parmetis...*](metis.md)
 
-    METIS is a set of (serial) routines for partitioning graphs and meshes,
-    and computing reduced-fill orderings of sparse matrices. It is
+    [METIS][500] is a set of (serial) routines for partitioning graphs and
+    meshes, and computing reduced-fill orderings of sparse matrices. It is
     commonly used e.g., to compute decompositions for finite element problems.
-    See http://glaros.dtc.umn.edu/gkhome/metis/metis.
+    [Parmetis][501] is the distributed memory counterpart.
 
-    Parmetis is the distributed memory counterpart.
-    http://glaros.dtc.umn.edu/gkhome/metis/parmetis/overview
+[500]: http://glaros.dtc.umn.edu/gkhome/metis/metis
+[501]: http://glaros.dtc.umn.edu/gkhome/metis/parmetis/overview
 
 - **Mumps** [*...details for MUMPS on Archer2...*](mumps.md)
 
@@ -105,9 +110,11 @@ The following libraries will also made available by the Archer service:
 
 - **PETSc** [*...details for PETSc on Archer2...*](petsc.md)
 
-    PETSc is a general package with functionality related to the solution
-    of a wide range of problems described by partial differential equations.
-    See https://www.mcs.anl.gov/petsc/
+    [PETSc][700] is a general package with functionality related to the
+    solution of a wide range of problems described by partial differential
+    equations.
+
+[700]:  https://www.mcs.anl.gov/petsc/
 
 - **Scotch** [*...details for Scotch and PT-Scotch on Archer2...*](scotch.md)
 
@@ -128,17 +135,17 @@ The following libraries will also made available by the Archer service:
 
 - **SuperLU** and **SuperLU_DIST** [*...details for SuperLU on Archer2...*](superlu.md)
 
-    SuperLU provides solutions to large non-symmetric sparse systems.
-    See https://portal.nersc.gov/project/sparse/superlu/
+    [SuperLU][800] provides solutions to large non-symmetric sparse systems.
+    [SuperLU_DIST][810] is the distributed memory version.
 
-    SuperLU_DIST is the distributed memory version.
-    See https://portal.nersc.gov/project/sparse/superlu/#superlu_dist
+[800]: https://portal.nersc.gov/project/sparse/superlu/
+[810]: https://portal.nersc.gov/project/sparse/superlu/#superlu_dist
 
-- **Trilinos** *...details pending...*
+- **Trilinos** [*...details for Trilinos on Archer2...*](trilinos.md)
 
     Trilinos is a large collection of packages for the solution of complex
     scientific and engineering problems.
-    See https://trilinos.github.io
+    See e.g., [https://trilinos.github.io/](https://trilinos.github.io/)
 
 
 ### Integration with compiler environment
