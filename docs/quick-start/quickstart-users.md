@@ -42,7 +42,7 @@ the Project Code:
 1.  [Log into SAFE](https://safe.epcc.ed.ac.uk)
 2.  Use the *Login accounts - Request new account* menu item
 3.  Select the correct project from the drop down list
-4.  Select the *ARCHER2* machine in the list of available machines
+4.  Select the *archer2-4c* machine in the list of available machines
 5.  Click *Next*
 6.  Enter a username for the account and (optionally) an SSH public
     key
