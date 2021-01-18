@@ -40,7 +40,7 @@ loaded.
 ## Compiling Trilinos
 
 A script which has details of the relevant configuration options
-for Trilinos is available at the Archer2 repository. The script
+for Trilinos is available at the ARCHER2 repository. The script
 will build a static-only version of the libraries.
 ```
 $ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
@@ -55,7 +55,7 @@ here are: `metis, parmetis, superlu, superlu-dist, scotch, mumps,
 glm, boost`. These packages should be built as described in their
 corresponding pages linked in the menu on the left.
 
-See the Archer2 [github repository][2] for further details.
+See the ARCHER2 [github repository][2] for further details.
 
 Note that Trilinos may take up to one hour to compile on its own, and
 so the compilation is best performed as a batch job.
