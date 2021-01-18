@@ -25,14 +25,14 @@ which carries the root of the installation, if needed.
 ## Install your own version
 
 One can follow the instructions used to install the current version
-on Archer2 via the Archer2 github repository:
+on ARCHER2 via the ARCHER2 github repository:
 ```
 $ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
 $ cd pe-scripts
 $ git checkout cse-develop
 $ ./sh/glm.sh --prefix=/path/to/install/location
 ```
-where the `--prefix` option sets the install location. See the Archer2
+where the `--prefix` option sets the install location. See the ARCHER2
 [github repository][1] for further details.
 
 [1]: https://github.com/ARCHER2-HPC/pe-scripts/tree/cse-develop
