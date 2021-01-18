@@ -37,7 +37,7 @@ if this information is needed.
 
 ## Compiling Boost
 
-The Arcer2 github repository contains a recipe for compiling Boost for
+The Archer2 github repository contains a recipe for compiling Boost for
 the different programming environments.
 ```
 $ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
