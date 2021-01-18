@@ -9,7 +9,7 @@ released under a BSD license (and some under LGPL).
 
 - `module load trilinos`
 
-Applications may be built against the module version od Trilinos by
+Applications may be built against the module version of Trilinos by
 using the using the compiler wrappers `CC` or `ftn` in the normal
 way. The appropriate include files and library paths will be
 inserted automatically.
@@ -33,14 +33,16 @@ loaded.
     ShyHU STK STKSearch STKTopology STKUtil Stratimikos Teko Teuchos Thyra
     Tpetra TrilinosCouplings Triutils Xpetra Zoltan Zoltan2`
 
-    Known issue: Trilinos is not available in `PrgEnv-aocc` at the moment.
+!!! warning "Known issue"
+    Trilinos is not available in `PrgEnv-aocc` at the moment.
 
-    Known issue: The `ForTrilinos` package is not available in this version.
+!!! warning "Known issue"
+    The `ForTrilinos` package is not available in this version.
 
 ## Compiling Trilinos
 
 A script which has details of the relevant configuration options
-for Trilinos is available at the ARCHER2 repository. The script
+for Trilinos is available at the [ARCHER2 Github repository][2]. The script
 will build a static-only version of the libraries.
 ```
 $ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
@@ -55,7 +57,7 @@ here are: `metis, parmetis, superlu, superlu-dist, scotch, mumps,
 glm, boost`. These packages should be built as described in their
 corresponding pages linked in the menu on the left.
 
-See the ARCHER2 [github repository][2] for further details.
+See the [ARCHER2 Github repository][2] for further details.
 
 Note that Trilinos may take up to one hour to compile on its own, and
 so the compilation is best performed as a batch job.
@@ -65,7 +67,7 @@ so the compilation is best performed as a batch job.
 
 ## Resources
 
+- [Trilinos home page](https://trilinos.github.io)
 
-Trilinos [home page](https://trilinos.github.io)
+- [Trilinos Github repository](https://github.com/trilinos/Trilinos)
 
-Trilinos [github repoistory](https://github.com/trilinos/Trilinos)
