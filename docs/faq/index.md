@@ -15,7 +15,7 @@ This section documents some of the questions raised to the Service Desk on ARCHE
 
 **Q.** What is happening to data on `/home` on ARCHER and how can I access it from ARCHER2?
 
-**A.**Once the ARCHER Service has disabled user access, the systems team will then complete a final copy of the ARCHER `/home` data.
+**A.** Once the ARCHER Service has disabled user access, the systems team will then complete a final copy of the ARCHER `/home` data.
 
 Once the final copy is complete, it will be made available on ARCHER2 and you will be able to access it. To access this data seamlessly from ARCHER2, you should have the same username that you had on ARCHER when the data was created. Further details on how to access this data will be provided once the data is available on ARCHER2.
 
@@ -27,7 +27,7 @@ Please ensure that you have transferred any data that you immediately require on
 
 ### ARCHER /work Data
 
-**Q.** What is happening to data on `/work` on ARCHER
+**Q.** What is happening to data on `/work` on ARCHER?
 
 **A.** The hardware is being dismantled. All users are responsible for the transfer of any ARCHER `/work` data that they wish to keep.
 
