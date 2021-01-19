@@ -4,6 +4,21 @@ This section highlights known issues on ARCHER2, their potential
 impacts and any known workarounds. Many of these issues are under
 active investigation by HPE Cray and the wider service.
 
+## Job failures with `MPI_Init` errors
+
+If you see failures with an error message similar to:
+
+```
+MPICH ERROR [Rank 7] [job id 65233.0] [Mon Jan 11 16:15:34 2021] [unknown] [nid001066] - Abort(1115279) (rank 7 in comm 0): Fatal error in PMPI_Init: Other MPI error, error stack:
+MPIR_Init_thread(632)......: 
+MPID_Init(516).............: 
+MPIDI_NM_mpi_init_hook(575): **ofid_getinfo ofi_init.h 575 MPIDI_NM_mpi_init_hook No data available
+...
+```
+
+this indicates an problem with the node. Please [contact the ARCHER2 Service Desk](mailto:support@archer2.ac.uk)
+with the job ID for your failed job.
+
 ## Singularity and CMake
 The issue concerns the building of a cmake-compiled code in bind mode in
 Singularity containers. This fails because CMake 3.x, running within the
