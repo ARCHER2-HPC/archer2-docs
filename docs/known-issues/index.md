@@ -93,7 +93,7 @@ submission script before loading any other module:
 ```
 module restore /etc/cray-pe.d/PrgEnv-gnu
 module switch cray-mpich/8.0.16 cray-mpich-ucx/8.0.16
-module swap craype-network-ofi craype-network-ucx
+module switch craype-network-ofi craype-network-ucx
 ```
 
 If your program was compiled in a different programming environment, make sure 
