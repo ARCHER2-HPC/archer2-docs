@@ -7,6 +7,17 @@ active investigation by HPE Cray and the wider service.
 ## Open Issues
 
 
+### Problem accessing Package Accounts from compute nodes
+
+We are aware of problems, since 16th January, for people who have requested access to Package Accounts or who are trying to access sub-project accounts. 
+
+The authorisation changes are not being picked up by the compute nodes. Affected users would see `Permission Denied` or equivalent errors, when attempting to access package accounts on the compute nodes or access files within a sub-project account. 
+
+We are working to resolve the issue with our colleagues in HPE Cray.
+
+(Raised on 20th Jan)
+
+
 ### Job failures with `MPI_Init` errors
 
 If you see failures with an error message similar to:
@@ -75,12 +86,4 @@ the binaries will use the default versions instead.
 
 ## Recently Resolved Issues
 
-### Problem accessing Package Accounts from compute nodes
 
-We were aware of problems, since 16th January, for people who have requested access to Package Accounts or who are trying to access sub-project accounts. 
-
-The authorisation changes were not being picked up by the compute nodes. Affected users would see `Permission Denied` or equivalent errors, when attempting to access package accounts on the compute nodes or access files within a sub-project account. 
-
-We resolved the issue with our colleagues in HPE Cray.
-
-(Raised on 20th Jan, resolved 21st Jan)
