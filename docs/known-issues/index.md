@@ -4,19 +4,10 @@ This section highlights known issues on ARCHER2, their potential
 impacts and any known workarounds. Many of these issues are under
 active investigation by HPE Cray and the wider service.
 
-## Problem accessing Package Accounts from compute nodes
-
-We are aware of problems, since 16th January, for people who have requested access to Package Accounts or who are trying to access sub-project accounts. 
-
-The authorisation changes are not being picked up by the compute nodes. Affected users will see `Permission Denied` or equivalent errors, when attempting to access package accounts on the compute nodes or access files within a sub-project account. 
-
-We are working to diagnose and resolve the issue with our colleagues in HPE Cray right now and will update this entry as soon as we have progress. 
-
-(Raised on 20th Jan)
+## Open Issues
 
 
-
-## Job failures with `MPI_Init` errors
+### Job failures with `MPI_Init` errors
 
 If you see failures with an error message similar to:
 
@@ -31,13 +22,13 @@ MPIDI_NM_mpi_init_hook(575): **ofid_getinfo ofi_init.h 575 MPIDI_NM_mpi_init_hoo
 this indicates an problem with the node. Please [contact the ARCHER2 Service Desk](mailto:support@archer2.ac.uk)
 with the job ID for your failed job.
 
-## Singularity and CMake
+### Singularity and CMake
 The issue concerns the building of a cmake-compiled code in bind mode in
 Singularity containers. This fails because CMake 3.x, running within the
 container on a UAN, cannot find the MPI libraries (cray-mpich) on the host
 despite the correct paths having been provided.
 
-## Research Software
+### Research Software
 There are several outstanding issues for the centrally installed Research Software:
 - **ChemShell and PyChemShell** are not yet available. We are working with the code developers to address this.
 - **Climate Data Operators (CDO) and NCAR Command Language (NCL)** are not yet available, due to issues with dependencies. An investigation is on-going.
@@ -47,7 +38,7 @@ There are several outstanding issues for the centrally installed Research Softwa
 
 Users should also check individual software pages, for known limitations/ caveats, for the use of software on the Cray EX platform and Cray Linux Environment.
 
-## `stat-view` not working
+### `stat-view` not working
 The `stat-view` utility from the `cray-stat` module does not currently
 work due to missing dependencies within the HPE Cray software stack. If you 
 try to use the tool, you will see errors similar too:
@@ -75,8 +66,21 @@ Exception: STATview requires xdot
 xdot can be downloaded from https://github.com/jrfonseca/xdot.py
 ```
 
-## Issues with RPATH for non-default library versions
+### Issues with RPATH for non-default library versions
 When you compile applications against non-default versions of libraries within the HPE
 Cray software stack and use the environment variable `CRAY_ADD_RPATH=yes` to try and encode
 the paths to these libraries within the binary this will not be respected at runtime and
 the binaries will use the default versions instead.
+
+
+## Recently Resolved Issues
+
+### Problem accessing Package Accounts from compute nodes
+
+We were aware of problems, since 16th January, for people who have requested access to Package Accounts or who are trying to access sub-project accounts. 
+
+The authorisation changes were not being picked up by the compute nodes. Affected users would see `Permission Denied` or equivalent errors, when attempting to access package accounts on the compute nodes or access files within a sub-project account. 
+
+We resolved the issue with our colleagues in HPE Cray.
+
+(Raised on 20th Jan, resolved 21st Jan)
