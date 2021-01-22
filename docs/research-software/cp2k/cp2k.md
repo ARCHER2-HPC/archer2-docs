@@ -74,7 +74,7 @@ module load cp2k
 
 export OMP_NUM_THREADS=1
 
-srun cp2k.popt -i MYINPUT.inp
+srun --hint=nomultithread --distribution=block:block cp2k.popt -i MYINPUT.inp
 ```
 
 ### MPI/OpenMP hybrid jobs
@@ -104,12 +104,32 @@ To run CP2K using MPI and OpenMP, load the `cp2k` module and use the
 # Ensure OMP_NUM_THREADS is consistent with cpus-per-task above
 # Launch the executable
 
-module -s restore /etc/cray-pe.d/PrgEnv-gnu
+module load epcc-job-env
 module load cp2k
 
 export OMP_NUM_THREADS=8
+export OMP_PLACES=cores
 
-srun cp2k.psmp -i MYINPUT.inp
+srun --hint=nomultithread --distribution=block:block cp2k.psmp -i MYINPUT.inp
+```
+
+## Out of memory errors
+
+There is a known issue with the default MPI collectives which is casuing 
+out of memory errors in some codes.
+
+For CP2K this can cause a job to terminate with an out of memory error after 
+it has been running for a while.
+
+Should you encounter this then the suggested work-around is to switch to the 
+mpich-ucx implementation. This can be done by loading the following modules
+in your job script:
+
+```
+module restore /etc/cray-pe.d/PrgEnv-gnu
+module swap cray-mpich/8.0.16 cray-mpich-ucx/8.0.16  
+module swap craype-network-ofi craype-network-ucx 
+module load cp2k
 ```
 
 ## Compiling CP2K
