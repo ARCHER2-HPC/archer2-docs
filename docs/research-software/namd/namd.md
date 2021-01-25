@@ -70,7 +70,7 @@ The following script will run an SMP NAMD MD job using 4 nodes (i.e.
 128x4 = 512 CPU-cores) with 32 MPI communication processes per node
 and 96 worker threads. The number of workers per communication process
 is specified by the `+ppn` argument to NAMD, which is set here to
-`tasks-per-node-1`, i.e `+ppn 3`, to leave a CPU-core free for the
+`cpus-per-task - 1`, i.e `+ppn 3`, to leave a CPU-core free for the
 associated MPI process.
 
 ```
@@ -108,4 +108,4 @@ should be 128.
 
 If you cannot run the pure MPI version of NAMD, then the optimal
 values of (`tasks-per-node`, `cpus-per-task`) are likely to be either
-(32,4), (16,8) or (8.16).
+(32,4), (16,8) or (8,16).
