@@ -39,7 +39,26 @@ There will be **no** access to `/work` after 0800 on Wednesday 27th January.
 
 **A.** Data on the RDF will persist beyond the lifetime of ARCHER. Although there are plans to make the RDF data directly available on ARCHER2 in the same way as they were on ARCHER, this functionality is not available yet. For the moment, you can transfer data from the RDF to ARCHER2 using scp/rsync as you would for any other remote host. You should use the host `login.rdf.ac.uk` to access the RDF data and use your ARCHER login credentials (you need to use both an SSH key and password as you do for ARCHER and ARCHER2). More information on transferring data to ARCHER2 using scp or rsync can be found [in the ARCHER2 User and Best Practice Guide](https://docs.archer2.ac.uk/user-guide/data/).
 
-## Commands
+## Running on ARCHER2
+
+### OOM error on ARCHER2
+
+**Q.** Why is my code, which worked fine on ARCHER, failing on ARCHER2 with an 
+out of memory (OOM) error?
+
+**A.** While each ARCHER2 node has more memory than an ARCHER node, the 
+large number of processor on ARCHER2 nodes means that there is slightly less 
+memory per processor. This can result in jobs that ran fine on ARCHER failing 
+because they use up all of the node memory. We recommend that you try running 
+the same job on underpopulated nodes. This can be done by editing reducing the 
+``--tasks-per-node`` in your Slurm submission script. Please lower it to half 
+of its value when it fails (so if you have ``--tasks-per-node=128``, reduce it 
+to ``--tasks-per-node=64``).
+
+If the problem persists on underpopulated node, this may be a result of a 
+known issue with the default version of MPICH. You can find more information 
+on this issue (including a temporary workaround) in the 
+[Known Issues](https://docs.archer2.ac.uk/known-issues/) section. 
 
 ### qstat, qsub 'Command not found'
 
@@ -49,4 +68,6 @@ There will be **no** access to `/work` after 0800 on Wednesday 27th January.
 
 ARCHER2 uses Slurm instead of PBS - you can do all the same kinds of things but the commands are different.
 
-The [Running jobs documentation](https://docs.archer2.ac.uk/user-guide/scheduler/) includes an [introduction to Slurm commands](https://docs.archer2.ac.uk/user-guide/scheduler/#basic-slurm-commands). 
+The [Running jobs documentation](https://docs.archer2.ac.uk/user-guide/scheduler/) includes an
+[introduction to Slurm commands](https://docs.archer2.ac.uk/user-guide/scheduler/#basic-slurm-commands). 
+

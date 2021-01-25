@@ -86,6 +86,37 @@ the paths to these libraries within the binary this will not be respected at run
 the binaries will use the default versions instead.
 
 
+### Memory leak leads to job fail by out of memory (OOM) error
+Your program compiles and seems to run fine, but after some time (at least 10 
+minutes), it crashes with an out-of-memory (OOM) error. The job crashes more 
+quickly when run on a smaller number of nodes.
+
+**Known workaround**
+This may be caused by a known problem with the default version of MPICH, 
+which is in the process of being resolved. In the meantime, you can get your 
+jobs to run by switching to UCF MPICH instead. In your Slurm submission 
+script, you will need to remove the following line:
+
+```
+module load epcc-job-env
+```
+
+Instead, you will need to load the programming environment used to 
+compile your program, and switch from the default (OFI) version of MPICH to 
+the UCX version of MPICH. So, if your program was compiled using the GNU 
+programming environment, you should include the following lines in your Slurm 
+submission script before loading any other module:
+
+```
+module restore /etc/cray-pe.d/PrgEnv-gnu
+module switch cray-mpich/8.0.16 cray-mpich-ucx/8.0.16
+module switch craype-network-ofi craype-network-ucx
+```
+
+If your program was compiled in a different programming environment, make sure 
+to change the first line to load the correct environment.
+
+
 ## Recently Resolved Issues
 
 
@@ -98,3 +129,4 @@ The authorisation changes were not being picked up by the compute nodes. Affecte
 We were able to resolve the issue with our colleagues in HPE Cray.
 
 (Raised on 20th Jan, closed on 22nd Jan)
+
