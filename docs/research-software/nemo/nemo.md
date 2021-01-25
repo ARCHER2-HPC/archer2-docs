@@ -99,7 +99,7 @@ It is not necessary for everyone to compile XIOS. A compiled version is availabl
 ```
 This was compiled with:
 ```
-./make_xios --prod --arch X86_ARCHER2-Cray --netcdf_lib netcdf4_par --job 16 -full
+./make_xios --prod --arch X86_ARCHER2-Cray --netcdf_lib netcdf4_par --job 16 --full
 ```
 using the:
 ```
