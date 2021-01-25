@@ -59,3 +59,15 @@ If the problem persists on underpopulated node, this may be a result of a
 known issue with the default version of MPICH. You can find more information 
 on this issue (including a temporary workaround) in the 
 [Known Issues](https://docs.archer2.ac.uk/known-issues/) section. 
+
+### qstat, qsub 'Command not found'
+
+**Q.** Commands such as `qstat` and `qsub` don't work - I get a "command not found" message - what am I doing wrong?
+
+**A.** `qstat` and `qsub` were commands to access the PBS queue management system on ARCHER.
+
+ARCHER2 uses Slurm instead of PBS - you can do all the same kinds of things but the commands are different.
+
+The [Running jobs documentation](https://docs.archer2.ac.uk/user-guide/scheduler/) includes an
+[introduction to Slurm commands](https://docs.archer2.ac.uk/user-guide/scheduler/#basic-slurm-commands). 
+
