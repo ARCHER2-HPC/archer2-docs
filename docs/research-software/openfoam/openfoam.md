@@ -100,4 +100,4 @@ srun --distribution=block:block --hint=nomultithread interFoam -parallel
 
 If you want to compile your own version of OpenFOAM, instructions are
 available for ARCHER2 at
-<https://github.com/hpc-uk/build-instructions/tree/main/OpenFOAM>
+<https://github.com/hpc-uk/build-instructions/tree/main/apps/OpenFOAM>
