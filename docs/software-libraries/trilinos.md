@@ -30,7 +30,7 @@ loaded.
     EpretExt FEI Galeri GlobiPack Ifpack Ifpack2 Intrepid
     Isorropia Kokkos Komplex Mesquite ML Moertel MueLu NOX
     OptiPack Pamgen Phalanx Piro Pliris ROL RTOp Rythmos Sacado Shards
-    ShyHU STK STKSearch STKTopology STKUtil Stratimikos Teko Teuchos Thyra
+    ShyLU STK STKSearch STKTopology STKUtil Stratimikos Teko Teuchos Thyra
     Tpetra TrilinosCouplings Triutils Xpetra Zoltan Zoltan2`
 
 !!! warning "Known issue"
