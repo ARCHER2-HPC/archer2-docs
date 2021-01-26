@@ -69,7 +69,7 @@ module load epcc-job-env
 
 module load lammps
 
-srun --distribution=block:block --hint=nomultithread lmp -i in.test -o out.test
+srun --distribution=block:block --hint=nomultithread lmp -i in.test -l out.test
 ```
 
 ## Compiling LAMMPS
@@ -82,5 +82,5 @@ compile, so we encourage users to have a go.
 Compilation instructions for LAMMPS on ARCHER2 can be found on GitHub:
 
    - [Build instructions for LAMMPS on
-     GitHub](https://github.com/hpc-uk/build-instructions/tree/master/LAMMPS)
+     GitHub](https://github.com/hpc-uk/build-instructions/tree/main/apps/LAMMPS)
 
