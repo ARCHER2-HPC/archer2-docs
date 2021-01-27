@@ -118,9 +118,11 @@ The following libraries will also made available by the ARCHER2 CSE team:
 
     [Scotch](https://www.labri.fr/perso/pelegrin/scotch/) (and its parallel partner PT-Scotch) is a graph partitioning library.
 
-- **SLEPc** *...details pending...*
+- **SLEPc** [*...details for SLEPc on ARCHER2...*](slepc.md)
 
-    [SLEPc](https://slepc.upv.es) is a package for large eigenvalue problems based on PETSc.
+    [SLEPc][760] is a package for large eigenvalue problems based on PETSc.
+
+[760]: https://slepc.upv.es
 
 - **SUNDIALS** *...details pending...*
 
