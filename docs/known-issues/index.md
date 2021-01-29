@@ -94,7 +94,7 @@ quickly when run on a smaller number of nodes.
 **Known workaround**
 This may be caused by a known problem with the default version of MPICH, 
 which is in the process of being resolved. In the meantime, you can get your 
-jobs to run by switching to UCF MPICH instead. In your Slurm submission 
+jobs to run by switching to UCX MPICH instead. In your Slurm submission 
 script, you will need to remove the following line:
 
 ```
