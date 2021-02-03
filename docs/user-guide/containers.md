@@ -76,7 +76,7 @@ then Singularity allows you to do this from ARCHER2 itself.
 For example, to retrieve an image from SingularityHub on Cirrus we can
 simply issue a Singularity command to pull the image.
 
-    [user@archer2-login0 ~]$ singularity pull hello-world.sif shub://vsoch/hello-world
+    [auser@uan01 ~]$ singularity pull hello-world.sif shub://vsoch/hello-world
 
 The image located at the `shub` URI is written to a Singularity Image
 File (SIF) called `hello-world.sif`.
