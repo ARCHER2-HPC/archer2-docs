@@ -76,6 +76,10 @@ module load epcc-job-env
 
 module load code_saturne
 
+# Switch to mpich-ucx implementation (see info note below)
+module switch cray-mpich/8.0.16 cray-mpich-ucx/8.0.16
+module switch craype-network-ofi craype-network-ucx
+
 # Prevent threading.
 export OMP_NUM_THREADS=1
 
@@ -84,6 +88,11 @@ srun --distribution=block:block --hint=nomultithread ./cs_solver --mpi $@
 ```
 
 The script can then be submitted to the batch system with `sbatch`.
+
+!!! info
+    There is a known issue with the default MPI collectives which is
+    causing performance issues on Code_Saturne. The suggested workaround is to
+    switch to the mpich-ucx implementation.
 
 ## Compiling Code\_Saturne
 
