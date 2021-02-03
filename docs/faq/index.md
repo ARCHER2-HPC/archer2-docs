@@ -15,15 +15,21 @@ This section documents some of the questions raised to the Service Desk on ARCHE
 
 **Q.** What is happening to data on `/home` on ARCHER and how can I access it from ARCHER2?
 
-**A.** Once the ARCHER Service has disabled user access, the systems team will then complete a final copy of the ARCHER `/home` data.
+**A.** Our systems team have completed the final copy of the ARCHER `/home` filesystem and this is now available on ARCHER2.
 
-Once the final copy is complete, it will be made available on ARCHER2 and you will be able to access it. To access this data seamlessly from ARCHER2, you should have the same username that you had on ARCHER when the data was created. Further details on how to access this data will be provided once the data is available on ARCHER2.
+If your home directory on ARCHER was: <br>&nbsp;&nbsp;&nbsp;&nbsp;
+      `/home/[project]/[group]/[username]`
 
-The systems team have taken an initial copy of the data and are performing regular top-ups. We request that only necessary changes to the `/home` directory structure are made at this time as this will reduce the duration of the final copy of the data.
+Then this data should be available on ARCHER2 at:<br>&nbsp;&nbsp;&nbsp;&nbsp;
+      `/home/archer-home-backup/[project]/[group]/[username]`
 
-We hope to have the ARCHER `/home` data available on ARCHER2 within a few days but this will depend on changes made to `/home` before the final copy.
+This data is read-only and cannot be edited.
 
-Please ensure that you have transferred any data that you immediately require on ARCHER2. More information is available in the [Data Migration guide](https://docs.archer2.ac.uk/archer-migration/data-migration/).
+You should be able to read the data provided you requested the same username and the same project when creating your ARCHER2 account.
+
+If this is not the case and you still need some of this data please contact the Service Desk, [support@archer2.ac.uk](mailto:support@archer2.ac.uk).
+
+This backup will not be retained indefinitely so please copy any files you need to your ARCHER2 home directory as soon as you can.
 
 ### ARCHER /work Data
 
