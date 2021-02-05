@@ -77,3 +77,27 @@ ARCHER2 uses Slurm instead of PBS - you can do all the same kinds of things but 
 The [Running jobs documentation](https://docs.archer2.ac.uk/user-guide/scheduler/) includes an
 [introduction to Slurm commands](https://docs.archer2.ac.uk/user-guide/scheduler/#basic-slurm-commands). 
 
+
+### Checking budgets
+
+**Q.**  How can I check which budget code(s) I can use?
+
+**A.**  You can check in [SAFE](https://safe.epcc.ed.ac.uk) by selecting `Login accounts` from the menu, select the login account you want to query.
+
+Under `Login account details` you will see each of the budget codes you have access to listed e.g.
+`e123 resources` and then under Resource Pool to the right of this, a note of the remaining budget. 
+
+When logged in to the machine you can also use the command 
+
+    sacctmgr show assoc where user=$LOGNAME format=account,user,maxtresmins
+
+This will list all the budget codes that you have access to e.g.
+
+
+       Account       User   MaxTRESMins
+    ---------- ---------- -------------
+          e123      userx         cpu=0
+     e123-test      userx
+
+This shows that `userx` is a member of budgets `e123` and `e123-test`.  However, the `cpu=0` indicates that the `e123` budget is empty or disabled.   This user can submit jobs using the `e123-test` budget.
+
