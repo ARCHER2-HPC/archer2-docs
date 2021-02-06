@@ -308,7 +308,7 @@ arguments `arg1` and `arg2` on two nodes and 256 processes, run:
 
 In particular, note the `--` separating the executable from the
 arguments (this is not necessary if your executable takes no arguments).
-The `--lancher-args="arguments"` allow you to set launcher flags for
+The `--launcher-args="arguments"` allow you to set launcher flags for
 `srun`.
 
 Valgrind4hpc only supports certain tools found in valgrind. These are:
