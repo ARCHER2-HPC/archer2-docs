@@ -632,30 +632,7 @@ index as the only argument to the executable. Each subjob requests a
 single node and uses all 128 cores on the node by placing 1 MPI process
 per core and specifies 4 hours maximum runtime per subjob:
 
-    #!/bin/bash
-    # Slurm job options (job-name, compute nodes, job time)
-    #SBATCH --job-name=Example_Array_Job
-    #SBATCH --time=04:00:00
-    #SBATCH --nodes=1
-    #SBATCH --tasks-per-node=128
-    #SBATCH --cpus-per-task=1
-    #SBATCH --array=0-55
-    
-    # Replace [budget code] below with your budget code (e.g. t01)
-    #SBATCH --account=[budget code]  
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
-    
-    # Setup the job environment (this module needs to be loaded before any other modules)
-    module load epcc-job-env
-    
-    # Set the number of threads to 1
-    #   This prevents any threaded system libraries from automatically 
-    #   using threading.
-    export OMP_NUM_THREADS=1
-    
-    srun --distribution=block:block --hint=nomultithread /path/to/exe $SLURM_ARRAY_TASK_ID
-
+    v
 ### Submitting a job array
 
 Job arrays are submitted using `sbatch` in the same way as for standard
@@ -684,6 +661,266 @@ or for a longer chain:
     jobid2=$(sbatch --parsable --dependency=afterok:$jobid1 second_job.sh)
     jobid3=$(sbatch --parsable --dependency=afterok:$jobid1 third_job.sh)
     sbatch --dependency=afterok:$jobid2,afterok:$jobid3 last_job.sh
+
+## Using multiple `srun` commands in a single job script
+
+You can use multiple `srun` commands within in a Slurm job submission script
+to allow you to use the resource requested more flexibly. For example, you 
+could run a collection of smaller jobs within the requested resources or
+you could even subdivide nodes if your individual calculations do not scale
+up to use all 128 cores on a node.
+
+In this guide we will cover two scenarios:
+
+ 1. Subdividing the job into multiple full-node or multi-node subjobs, e.g.
+    requesting 100 nodes and running 100, 1-node subjobs or 50, 2-node 
+    subjobs.
+ 2. Subdividing the job into multiple subjobs that each use a fraction of a
+    node, e.g. requesting 2 nodes and running 256, 1-core subjobs or 16,
+    16-core subjobs.
+
+### Running multiple, full-node subjobs within a larger job
+
+When subdivding a larger job into smaller subjobs you typically need to 
+overwrite the `--nodes` option to `srun` and add the `--ntasks` option
+to ensure that each subjob runs on the correct number of nodes and that
+subjobs are placed correctly onto separate nodes.
+
+For example, we will show how to request 100 nodes and then run 100
+separate 1-node jobs, each of which use 128 MPI processes and which
+run on a different compute node. We start by showing 
+the job script that would achieve this and then explain how this works
+and the options used. In our case, we will run 100 copies of the `xthi` 
+program that prints the process placement on the node it is running on.
+
+```slurm
+#!/bin/bash
+
+# Slurm job options (job-name, compute nodes, job time)
+#SBATCH --job-name=multi_xthi
+#SBATCH --time=0:20:0
+#SBATCH --nodes=100
+#SBATCH --tasks-per-node=128
+#SBATCH --cpus-per-task=1
+
+# Replace [budget code] below with your budget code (e.g. t01)
+#SBATCH --account=[budget code]             
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+# Setup the job environment (this module needs to be loaded before any other modules)
+module load epcc-job-env
+
+# Load the xthi module
+module load xthi
+
+# Set the number of threads to 1
+#   This prevents any threaded system libraries from automatically 
+#   using threading.
+export OMP_NUM_THREADS=1
+
+# Loop over 100 subjobs starting each of them on a separate node
+for i in $(seq 1 100)
+do
+   # Launch this subjob on 1 node, note nodes and ntasks options and & to place subjob in the background
+   srun --nodes=1 --ntasks=128 --distribution=block:block --hint=nomultithread xthi > placement${i}.txt &
+done
+# Wait for all background subjobs to finish
+wait
+```
+
+Key points from the example job script:
+ - The `#SBATCH` options select 100 full nodes in the usual way.
+ - Each subjob `srun` command sets the following:
+   - `--nodes=1` We need override this setting from the main job so that each subjob only uses 1 node
+   - `--ntasks=128` For normal jobs, the number of parallel tasks (MPI processes) is calculated from
+     the number of nodes you request and the number of tasks per node. We need to explicitly tell `srun`
+     how many we require for this subjob.
+   - `--distribution=block:block --hint=nomultithread` These options ensure correct placement of
+     processes within the compute nodes.
+   - `&` Each subjob `srun` command ends with an ampersand to place the process in the background
+     and move on to the next loop iteration (and subjob submission). Without this, the script would
+     wait for this subjob to complete before moving on to submit the next.
+ - Finally, there is the `wait` command to tell the script to wait for all the background subjobs
+   to complete before exiting. If we did not have this in place, the script would exit as soon as the
+   last subjob was submitted and kill all running subjobs.
+
+### Running multiple subjobs that each use a fraction of a node
+
+As the ARCHER2 nodes contain a large number of cores (128 per node) it
+may sometimes be useful to be able to run multiple executables on a single
+node. For example, you may want to run 128 copies of a serial executable or
+Python script; or, you may want to run multiple copies of parallel executables
+that use less than 128 cores each. This use model is possible using 
+multiple `srun` commands in a job script on ARCHER2
+
+!!! note
+    You can never share a compute node with another user. Although you can
+    use `srun` to place multiple copies of an executable or script on a 
+    compute node, you still have exclusive use of that node. The minimum
+    amount of use you can reserve for your use on ARCHER2 is a single node.
+
+When using `srun` to place multiple executables or scripts on a compute 
+node you must be aware of a few things:
+
+ - The `srun` command must specify any Slurm options that differ in value
+   from those specified to `sbatch`. This typically means that you need 
+   to specify the `--nodes`, `--ntasks` and `--tasks-per-node` options to `srun`.
+ - You will usually need to specify the task pinning to cores manually to 
+   prevent multiple executables/scripts running on the same core. We provide
+   a small utility (`genmaskcpu`) to assist with this.
+ - You will need to place each `srun` command into the background and 
+   then use the `wait` command at the end of the submission script to
+   make sure it does not exit before the commands are complete.
+
+Below, we briefly describe the `genmaskcpu` helper script and then provide
+two examples or running multiple subjobs in a node, one that runs 128
+serial processes across a single node and one that runs 8 subjobs each of
+which use 8 MPI processes with 2 OpenMP threads per MPI process.
+
+#### `genmaskcpu` helper script
+
+When running multiple copies of executables/scripts on a single node Slurm
+can often not pin processes or threads to cores in such a way to ensure
+efficient use of resources (for example, multiple copies may end up bound
+to the same core). For this reason, you often have to specify manual bindings
+when running multiple executables/scripts on a node.
+
+Writing CPU binding masks for use with Slurm by hand can be quite tedious,
+especially if you want to use fat bitmasks to allow for binding of threads
+to different cores. To assist with generating binding masks we provide a
+utility script: `genmaskcpu`, that generates the correct bindings for 
+each subjob based on a number of input arguments:
+
+ 1. Argument 1: The number of subjobs running *per node*
+ 2. Argument 2: The index of this subjob within the number running on a node (e.g. if
+    there are 4 subjobs running per node, is this the 1st, 2nd, 3rd, or 4th
+    subjob?)
+ 3. Argument 3: The number of parallel *processes* (MPI processes) per subjob (this must be the same
+    for all subjobs)
+ 4. Argument 4: The number of *threads* per MPI process for the subjob (this must be 
+    the same for all subjobs)
+
+!!! important
+    `genmaskcpu` only works for *homogeneous* subjobs, where every subjob
+    on the node has the same number of parallel processes and threads per
+    parallel process. If your subjobs do not have the same number of processes
+    and threads then you will need to generate the binding masks manually.
+
+For example, to generate the binding mask for the first subjob in a set of
+8 subjobs on a node each of which uses 16 MPI processes and 1 thread per
+MPI process, you would use:
+
+```
+mask=$(genmaskcpu 8 1 16 1)
+```
+
+The second subjob would use:
+
+```
+mask=$(genmaskcpu 8 2 16 1)
+```
+
+#### Example 1: 128 serial tasks running on a single node
+
+For our first example, we will run 128 single-core copies of the `xthi` program (which
+prints process/thread placement) on a single ARCHER2 compute node with each
+copy of `xthi` pinned to a different core. We will use `genmaskcpu` to generate the 
+correct binding mask for each subjob. The job submission script for
+this example would look like:
+
+```slurm
+#!/bin/bash
+# Slurm job options (job-name, compute nodes, job time)
+#SBATCH --job-name=MultiSerialOnCompute
+#SBATCH --time=0:10:0
+#SBATCH --nodes=1
+#SBATCH --tasks-per-node=128
+#SBATCH --cpus-per-task=1
+
+# Replace [budget code] below with your budget code (e.g. t01)
+#SBATCH --account=[budget code]  
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+# Setup the job environment (this module needs to be loaded before any other modules)
+module load epcc-job-env
+
+# Make xthi available
+module load xthi
+
+# Make the pinning helper script available
+module load cray-python
+module load genmaskcpu
+
+# Set the number of threads to 1
+#   This prevents any threaded system libraries from automatically 
+#   using threading.
+export OMP_NUM_THREADS=1
+
+# Loop over 128 subjobs pinning each to a different core
+for i in $(seq 1 128)
+do
+   # Generate mask: 128 subjobs per node, subjob number in sequence given by i,
+   # 1 process per subjob, 1 thread per process
+   maskcpu=$(genmaskcpu 128 ${i} 1 1)
+   # Launch subjob overriding job settings as required and in the background
+   srun --cpu-bind=mask_cpu:${maskcpu} --nodes=1 --ntasks=1 --tasks-per-node=1 xthi > placement${i}.txt &
+done
+
+# Wait for all subjobs to finish
+wait
+```
+
+#### Example 2: 8 subjobs on 1 node each with 8 MPI processes and 2 OpenMP threads per process
+
+For our second example, we will run 8 subjobs, each running the `xthi` program (which
+prints process/thread placement) across 1 node. Each subjob will use 8 MPI processes
+and 2 OpenMP threads per process. We will use `genmaskcpu` to generate the 
+correct binding mask for each subjob. The job submission script for
+this example would look like:
+
+```slurm
+#!/bin/bash
+# Slurm job options (job-name, compute nodes, job time)
+#SBATCH --job-name=MultiParallelOnCompute
+#SBATCH --time=0:10:0
+#SBATCH --nodes=1
+#SBATCH --tasks-per-node=64
+#SBATCH --cpus-per-task=2
+
+# Replace [budget code] below with your budget code (e.g. t01)
+#SBATCH --account=[budget code]  
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+# Setup the job environment (this module needs to be loaded before any other modules)
+module load epcc-job-env
+
+# Make xthi available
+module load xthi
+
+# Make the pinning helper script available
+module load cray-python
+module load genmaskcpu
+
+# Set the number of threads to 2 as required by all subjobs
+export OMP_NUM_THREADS=2
+
+# Loop over 8 subjobs
+for i in $(seq 1 8)
+do
+    echo $j $i
+    # Generate mask: 8 subjobs per node, subjob number in sequence given by i,
+    # 8 MPI processes per subjob, 2 OpenMP threads per process
+    maskcpu=$(genmaskcpu 8 ${i} 8 2)
+    # Launch subjob overriding job settings as required and in the background
+    srun --cpu-bind=mask_cpu:${maskcpu} --nodes=1 --ntasks=8 --tasks-per-node=8 --cpus-per-task=2 xthi > placement${i}.txt &
+done
+
+# Wait for all subjobs to finish
+wait
+```
 
 ## Interactive Jobs: `salloc`
 
