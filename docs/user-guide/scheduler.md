@@ -730,20 +730,21 @@ wait
 ```
 
 Key points from the example job script:
- - The `#SBATCH` options select 100 full nodes in the usual way.
- - Each subjob `srun` command sets the following:
-   - `--nodes=1` We need override this setting from the main job so that each subjob only uses 1 node
-   - `--ntasks=128` For normal jobs, the number of parallel tasks (MPI processes) is calculated from
-     the number of nodes you request and the number of tasks per node. We need to explicitly tell `srun`
-     how many we require for this subjob.
-   - `--distribution=block:block --hint=nomultithread` These options ensure correct placement of
-     processes within the compute nodes.
-   - `&` Each subjob `srun` command ends with an ampersand to place the process in the background
-     and move on to the next loop iteration (and subjob submission). Without this, the script would
-     wait for this subjob to complete before moving on to submit the next.
- - Finally, there is the `wait` command to tell the script to wait for all the background subjobs
-   to complete before exiting. If we did not have this in place, the script would exit as soon as the
-   last subjob was submitted and kill all running subjobs.
+
+- The `#SBATCH` options select 100 full nodes in the usual way.
+- Each subjob `srun` command sets the following:
+    - `--nodes=1` We need override this setting from the main job so that each subjob only uses 1 node
+    - `--ntasks=128` For normal jobs, the number of parallel tasks (MPI processes) is calculated from
+      the number of nodes you request and the number of tasks per node. We need to explicitly tell `srun`
+      how many we require for this subjob.
+    - `--distribution=block:block --hint=nomultithread` These options ensure correct placement of
+      processes within the compute nodes.
+    - `&` Each subjob `srun` command ends with an ampersand to place the process in the background
+      and move on to the next loop iteration (and subjob submission). Without this, the script would
+      wait for this subjob to complete before moving on to submit the next.
+- Finally, there is the `wait` command to tell the script to wait for all the background subjobs
+to complete before exiting. If we did not have this in place, the script would exit as soon as the
+last subjob was submitted and kill all running subjobs.
 
 ### Running multiple subjobs that each use a fraction of a node
 
