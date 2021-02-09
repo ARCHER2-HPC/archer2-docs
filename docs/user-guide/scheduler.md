@@ -794,7 +794,7 @@ each subjob based on a number of input arguments:
 
  1. Argument 1: The number of subjobs running *per node*
  2. Argument 2: The index of this subjob within the number running on a node (e.g. if
-    there are 4 subjobs running per node, is the 1st, 2nd, 3rd, or 4th
+    there are 4 subjobs running per node, is this the 1st, 2nd, 3rd, or 4th
     subjob?)
  3. Argument 3: The number of parallel *processes* (MPI processes) per subjob (this must be the same
     for all subjobs)
