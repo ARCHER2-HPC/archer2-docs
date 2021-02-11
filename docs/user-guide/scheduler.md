@@ -632,7 +632,30 @@ index as the only argument to the executable. Each subjob requests a
 single node and uses all 128 cores on the node by placing 1 MPI process
 per core and specifies 4 hours maximum runtime per subjob:
 
-    v
+    #!/bin/bash
+    # Slurm job options (job-name, compute nodes, job time)
+    #SBATCH --job-name=Example_Array_Job
+    #SBATCH --time=04:00:00
+    #SBATCH --nodes=1
+    #SBATCH --tasks-per-node=128
+    #SBATCH --cpus-per-task=1
+    #SBATCH --array=0-55
+
+    # Replace [budget code] below with your budget code (e.g. t01)
+    #SBATCH --account=[budget code]  
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+
+    # Setup the job environment (this module needs to be loaded before any other modules)
+    module load epcc-job-env
+
+    # Set the number of threads to 1
+    #   This prevents any threaded system libraries from automatically 
+    #   using threading.
+    export OMP_NUM_THREADS=1
+
+    srun --distribution=block:block --hint=nomultithread /path/to/exe $SLURM_ARRAY_TASK_ID
+
 ### Submitting a job array
 
 Job arrays are submitted using `sbatch` in the same way as for standard
