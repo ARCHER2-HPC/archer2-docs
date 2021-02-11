@@ -339,7 +339,9 @@ environment at the point of submission, the option
      to the batch system.
 
 Using the `--export=none` means that the behaviour of batch submissions
-should be repeatable. We strongly recommend its use.
+should be repeatable. We strongly recommend its use, although see
+[the following section](scheduler.md#using-modules-in-the-batch-system-the-epcc-job-env-module)
+to enable access to the usual modules.
 
 ## Using modules in the batch system: the `epcc-job-env` module
 
@@ -1019,6 +1021,10 @@ be returned to the front end.
 
 By default, the interactive shell will retain the environment of the
 parent. If you want a clean shell, remember to specify `--export=none`.
+If you need to
+[use modules within your job](scheduler.md#using-modules-in-the-batch-system-the-epcc-job-env-module),
+you will need to start a login shell by passing the `--login` argument
+to `bash`.
 
 ## Heterogeneous jobs
 
