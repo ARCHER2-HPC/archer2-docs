@@ -12,8 +12,7 @@ the environment variable `MKLROOT` which holds the location of the various MKL c
 !!! important
     The `cray-libsci` module is loaded by default for all users and this module 
     also contains definitions of BLAS, LAPACK and ScaLAPACK routines that conflict
-    with those in MKL. You should always use `module remove cray-libsci` before
-    loading and using the `mkl` module.
+    with those in MKL. The `mkl` module automatically unloads `cray-libsci`.
 
 !!! important
     The `mkl` module needs to be loaded both at compile time and at runtime
@@ -32,7 +31,6 @@ Swap modules:
 
 ```
 module restore PrgEnv-gnu
-module remove cray-libsci
 module load mkl
 ```
 
@@ -41,13 +39,12 @@ module load mkl
 | Fortran | `-m64  -I"${MKLROOT}/include"` | `-L${MKLROOT}/lib/intel64 -Wl,--no-as-needed -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl` |
 | C/C++ | ` -m64  -I"${MKLROOT}/include"` | `-L${MKLROOT}/lib/intel64 -Wl,--no-as-needed -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl` |
 
-## Threaded MLK with GCC
+## Threaded MKL with GCC
 
 Swap modules:
 
 ```
 module restore PrgEnv-gnu
-module remove cray-libsci
 module load mkl
 ```
 
@@ -62,7 +59,6 @@ Swap modules:
 
 ```
 module restore PrgEnv-gnu
-module remove cray-libsci
 module load mkl
 ```
 
