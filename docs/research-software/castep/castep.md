@@ -57,6 +57,16 @@ export OMP_NUM_THREADS=1
 srun --distribution=block:block --hint=nomultithread castep.mpi test_calc
 ```
 
+## Using serial CASTEP tools
+
+We also provide a set of CASTEP tools compiled for serial use on the login
+nodes or in job submission scripts. You can access these through the 
+`castep-tools` module:
+
+```
+module load castep-tools
+```
+
 ## Compiling CASTEP
 
 The latest instructions for building CASTEP on ARCHER2 may be found in
