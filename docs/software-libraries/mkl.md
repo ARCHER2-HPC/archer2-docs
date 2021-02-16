@@ -1,4 +1,4 @@
-# Intel Math Kernel Library (KML)
+# Intel Math Kernel Library (MKL)
 
 The Intel Maths Kernel Libraries (MKL) contain a variety of optimised numerical
 libraries including BLAS, LAPACK, ScaLAPACK and FFTW. In general, the exact commands
