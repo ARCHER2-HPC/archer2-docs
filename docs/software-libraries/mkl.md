@@ -19,7 +19,9 @@ the environment variable `MKLROOT` which holds the location of the various MKL c
     (usually in your job submission script).
 
 !!! tip
-    MKL will not work with the Cray compiler suite (CCE).
+    MKL only supports the GCC programming environment (`PrgEnv-gnu`).
+    Other programming environments may work but this is untested and unsupported
+    on ARCHER2.
 
 !!! note
     Loading the `mkl` module sets the environment variable `MKL_DEBUG_CPU_TYPE=5`
