@@ -6,20 +6,6 @@ active investigation by HPE Cray and the wider service.
 
 ## Open Issues
 
-### Issue with CASTEP calculations using `num_proc_in_smp` setting
-
-When using the `num_proc_in_smp` input option to CASTEP users will sometimes encounter an 
-error such as:
-
-```
-    Error comms_setup_smp: Failed to initialise IPC
-```
-
-This is beacuse shared memory segments from previous (failed) CASTEP calculations remain on
-the node using up resources. We are investigating with HPE Cray how this issue can be 
-addressed. The current workaround is to resubmit without the `num_proc_in_smp` option
-set though we are aware that this leads to reduced CASTEP performance.
-
 ### Job failures with `MPI_Init` errors
 
 If you see failures with an error message similar to:
