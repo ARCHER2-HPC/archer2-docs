@@ -32,9 +32,10 @@ assumes that the input file is tio2.d12
 
 ```slurm
 #!/bin/bash
-#SBATCH -n 256
-#SBATCH --time=0:20:00
+#SBATCH --nodes=2
 #SBATCH --ntasks-per-node=128
+#SBATCH --cpus-per-task=1
+#SBATCH --time=0:20:00
 
 # Replace [budget code] below with your project code (e.g. e05)
 #SBATCH --account=[budget code]
