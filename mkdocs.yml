@@ -98,5 +98,9 @@ nav:
     - "Trilinos": software-libraries/trilinos.md
   - "Data Analysis and Tools": data-tools/index.md
   - "Essential Skills": essentials/index.md
+  - "Other Software":
+    - "Overview": other-software/index.md  
+    - "CRYSTAL": other-software/crystal.md
+
 
 
