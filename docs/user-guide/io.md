@@ -208,7 +208,7 @@ created directory `res_dir`:
 
 !!! hint
     You cannot currently perform parallel IO to a striped file if the number
-    of MPI processes is larger than the stripe count. Although this is
+    of MPI processes is smaller than the stripe count. Although this is
     unlikely to be an issue in production runs, where the number of
     processes will normally be in the hundreds, it could cause an issue
     during development or benchmarking.
