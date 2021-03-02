@@ -279,6 +279,11 @@ Slurm places standard output (STDOUT) and standard error (STDERR) for
 each job in the file `slurm_<JobID>.out`. This file appears in the job's
 working directory once your job starts running.
 
+!!! hint
+    Output may be buffered - to enable live output, e.g. for monitoring
+	job status, add `--unbuffered` to the `srun` command in your SLURM
+	script.
+
 ## Specifying resources in job scripts
 
 You specify the resources you require for your job using directives at
