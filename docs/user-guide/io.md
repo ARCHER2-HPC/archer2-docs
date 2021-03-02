@@ -206,13 +206,6 @@ created directory `res_dir`:
 
 #### Setting Custom Striping Configurations
 
-!!! hint
-    You cannot currently perform parallel IO to a striped file if the number
-    of MPI processes is smaller than the stripe count. Although this is
-    unlikely to be an issue in production runs, where the number of
-    processes will normally be in the hundreds, it could cause an issue
-    during development or benchmarking.
-
 Users can set stripe settings for a directory (or file) using the
 `lfs setstripe` command. The options for `lfs setstripe` are:
 
