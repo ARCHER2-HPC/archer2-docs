@@ -19,7 +19,7 @@ then be loaded for further experimentation.
 
     `auser@uan01:/work/t01/t01/auser> module load perftools-base`
 
-2.  Load `perfotools-lite` module
+2.  Load `perftools-lite` module
 
     `auser@uan01:/work/t01/t01/auser> module load perftools-lite`
 
@@ -271,7 +271,7 @@ CrayPat allows you to profile un-instrumented, dynamically linked
 binaries with the `pat_run` utility. `pat_run` delivers profiling
 information for codes that cannot easily be rebuilt. To use `pat_run`:
 
-1.  Load the `perfotools-base` module if it is not already loaded
+1.  Load the `perftools-base` module if it is not already loaded
 
     `module load perftools-base`
 
