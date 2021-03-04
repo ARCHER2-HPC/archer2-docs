@@ -45,6 +45,16 @@ There will be **no** access to `/work` after 0800 on Wednesday 27th January.
 
 **A.** Data on the RDF will persist beyond the lifetime of ARCHER. Although there are plans to make the RDF data directly available on ARCHER2 in the same way as they were on ARCHER, this functionality is not available yet.
 
+### Undeleteable file .nfsXXXXXXXXXXX
+
+**Q.**  I have a file called .nfsXXXXXXXXXXX (where XXXXXXXXXXX is a long hexadecimal string) in my /home folder but I can't delete it.
+
+**A.** This file will have been created during a file copy which failed.  Trying to delete it will give an error "Device or resource busy", even though the copy has ended and no active task is locking it.
+
+`echo -n >.nfsXXXXXXXXXXX`
+
+will remove it.
+
 ## Running on ARCHER2
 
 ### OOM error on ARCHER2
