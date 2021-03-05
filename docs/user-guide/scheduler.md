@@ -953,7 +953,9 @@ done
 wait
 ```
 
-## Interactive Jobs: `salloc`
+## Interactive Jobs
+
+### Using `salloc` to reserve resources
 
 When you are developing or debugging code you often want to run many
 short jobs with a small amount of editing the code between runs. This
@@ -974,8 +976,8 @@ physical cores) for 1 hour you would issue the following qsub command
 from the command line:
 
     auser@uan01:> salloc --nodes=8 --tasks-per-node=128 --cpus-per-task=1 \
-                  --time=01:00:00 --partition=standard --qos=standard \
-                  --account=[budget code]
+                  --time=01:00:00 --partition=standard --qos=short \
+                  --reservation=shortqos --account=[budget code]
 
 When you submit this job your terminal will display something like:
 
