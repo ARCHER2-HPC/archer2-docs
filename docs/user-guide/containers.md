@@ -194,6 +194,7 @@ information on installing Singularity on Linux distribution at:
 !!! tip
     You should install Docker Desktop to allow you to build Singularity
     images using Docker. Instructions can be found at:
+    
      - [Installing Docker Desktop on Windows Professional](https://docs.docker.com/docker-for-windows/install/) 
      - [Installing Docker Desktop on Windows Home](https://docs.docker.com/docker-for-windows/install-windows-home/) 
      - [Installing Docker Desktop on macOS](https://docs.docker.com/docker-for-mac/install/)
