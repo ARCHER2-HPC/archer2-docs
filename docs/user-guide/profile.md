@@ -302,8 +302,7 @@ Some useful `pat_run` options are:
 
 Cray Apprentice2 is an optional GUI tool that is used to visualize and
 manipulate the performance analysis data captured during program
-execution. Cray Apprentice2 can be run either on the Cray system or,
-optionally, on a standalone Linux desktop machine. Cray Apprentice2 can
+execution. Cray Apprentice2 can
 display a wide variety of reports and graphs, depending on the type of
 program being analyzed, the way in which the program was instrumented
 for data capture, and the data that was collected during program
