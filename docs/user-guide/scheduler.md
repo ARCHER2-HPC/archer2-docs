@@ -972,11 +972,11 @@ You use the `salloc` command to reserve compute nodes for interactive
 jobs.
 
 To submit a request for an interactive job reserving 8 nodes (1024
-physical cores) for 1 hour you would issue the following qsub command
-from the command line:
+physical cores) for 20 minutes on the short queue you would issue the
+following command from the command line:
 
     auser@uan01:> salloc --nodes=8 --tasks-per-node=128 --cpus-per-task=1 \
-                  --time=01:00:00 --partition=standard --qos=short \
+                  --time=00:20:00 --partition=standard --qos=short \
                   --reservation=shortqos --account=[budget code]
 
 When you submit this job your terminal will display something like:
