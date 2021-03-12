@@ -15,7 +15,7 @@ found at:
 
 ### Linux 
 
-Linux distributions and MacOS each come installed with a terminal application that can be use for SSH access to the login nodes. Linux users will have different terminals depending on their distribution and window manager (e.g. GNOME Terminal in GNOME, Konsole in KDE). Consult your Linux distribution's documentation for details on how to load a terminal.
+Linux distributions and MacOS each come installed with a terminal application that can be used for SSH access to the login nodes. Linux users will have different terminals depending on their distribution and window manager (e.g. GNOME Terminal in GNOME, Konsole in KDE). Consult your Linux distribution's documentation for details on how to load a terminal.
 
 ### MacOS
 
