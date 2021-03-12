@@ -175,6 +175,12 @@ command:
     Desk](https://www.archer2.ac.uk/support-access/servicedesk.html) and we
     can discuss how to accommodate your requirements.
 
+### E-mail notifications
+
+E-mail notifications from the batch system are not currently available
+on ARCHER2.
+
+
 ## Troubleshooting
 
 ### Slurm error messages
