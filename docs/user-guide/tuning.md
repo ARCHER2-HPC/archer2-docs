@@ -118,12 +118,12 @@ asynchronously because they are actually sent as a number of smaller
 messages.
 
 To send even larger messages asynchronously, alter the value of
-`FI_OFI_RXM_SAR_LIMIT` in your job submission script script, e.g. to set to 512KiB:
+`FI_OFI_RXM_SAR_LIMIT` in your job submission script, e.g. to set to 512KiB:
 
     export FI_OFI_RXM_SAR_LIMIT=524288
 
-You can also change the size of the smaller messages that larger ones
-are broken up into by altering the value of `FI_OFI_RXM_BUFFER_SIZE`
+You can also control the size of the smaller messages by altering the value
+of `FI_OFI_RXM_BUFFER_SIZE`
 in your job submission script, e.g. to set to 128KiB:
 
     export FI_OFI_RXM_BUFFER_SIZE=131072
