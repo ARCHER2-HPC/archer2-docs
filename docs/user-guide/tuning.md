@@ -113,19 +113,25 @@ The advice for tuning the performance of `MPI_Send` is
 #### Setting the eager limit on ARCHER2
 
 On ARCHER2, things are a little more complicated. Although the eager
-limit defaults to 16K bytes, messages up to 256K are sent
+limit defaults to 16KiB, messages up to 256KiB are sent
 asynchronously because they are actually sent as a number of smaller
 messages.
 
 To send even larger messages asynchronously, alter the value of
-`FI_OFI_RXM_SAR_LIMIT` in your SLURM script, e.g. to set to 512K:
+`FI_OFI_RXM_SAR_LIMIT` in your job submission script, e.g. to set to 512KiB:
 
     export FI_OFI_RXM_SAR_LIMIT=524288
+
+You can also control the size of the smaller messages by altering the value
+of `FI_OFI_RXM_BUFFER_SIZE`
+in your job submission script, e.g. to set to 128KiB:
+
+    export FI_OFI_RXM_BUFFER_SIZE=131072
 
 A different protocol is used for messages between two processes on the
 same node. The default eager limit for these is 8K. Although the
 performance of on-node messages is unlikely to be a limiting factor
-for your program you can change this value, e.g. to set to 16K:
+for your program you can change this value, e.g. to set to 16KiB:
 
     export MPICH_SMP_SINGLE_COPY_SIZE=16384
 
