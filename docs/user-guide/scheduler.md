@@ -142,23 +142,27 @@ You can list the active partitions by running `sinfo`.
 
 On ARCHER2, job limits are defined by the requested Quality of Service
 (QoS), as specified by the `--qos` Slurm directive. The following table
-lists the active QoS on
-ARCHER2.
+lists the active QoS on ARCHER2.
 
-| QoS      | Max Nodes Per Job | Max Walltime | Jobs Queued | Jobs Running | Partition(s) |
-| -------- | ----------------- | ------------ | ----------- | ------------ | ------------ |
-| standard | 940               | 24 hrs       | 64          | 16           | standard     |
-| short    | 8                 | 20 mins      | 4           | 4            | standard     |
-| long     | 64                | 48 hrs       | 16          | 16           | standard     |
+| QoS        | Max Nodes Per Job | Max Walltime | Jobs Queued | Jobs Running | Partition(s) | Notes |
+| ---------- | ----------------- | ------------ | ----------- | ------------ | ------------ | ------|
+| standard   | 940               | 24 hrs       | 64          | 16           | standard     |       |
+| short      | 8                 | 20 mins      | 4           | 4            | standard     | Only available Mon-Fri UK Time |
+| long       | 64                | 48 hrs       | 16          | 16           | standard     | Minimum walltime of 24 hrs |
 
 !!! warning
     If you want to use the `short` QoS then you also need to add the
     `--reservation=shortqos` to your job submission command.
 
-Please note, there are two other limits not covered by the above table.
+!!! note
+    From Monday 15 Mar 2021 the QoS limits will change to the following:
 
-  - The short QoS is only available Mon-Fri.
-  - Long jobs must have a minimum walltime of 24 hrs.
+    | QoS        | Max Nodes Per Job | Max Walltime | Jobs Queued | Jobs Running | Partition(s) | Notes |
+    | ---------- | ----------------- | ------------ | ----------- | ------------ | ------------ | ------|
+    | standard   | 256               | 24 hrs       | 64          | 16           | standard     |       |
+    | short      | 8                 | 20 mins      | 4           | 4            | standard     | Only available Mon-Fri UK Time |
+    | long       | 64                | 48 hrs       | 16          | 16           | standard     | Minimum walltime of 24 hrs |
+    | largescale | 940               | 3 hrs        | 4           | 1            | standard     | Minimum job size of 257 nodes |
 
 You can find out the QoS that you can use by running the following
 command:
