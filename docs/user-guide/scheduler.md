@@ -955,7 +955,7 @@ wait
 
 #### Example 3: 256 serial tasks running across two nodes
 
-For our first example, we will run 256 single-core copies of the `xthi` program (which
+For our third example, we will run 256 single-core copies of the `xthi` program (which
 prints process/thread placement) across two ARCHER2 compute nodes with each
 copy of `xthi` pinned to a different core. We will use `genmaskcpu` to generate the 
 correct binding mask for each subjob. We will also illustrate a mechnism for getting the
