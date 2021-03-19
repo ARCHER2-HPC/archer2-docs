@@ -16,7 +16,7 @@ recommend that you use the `pip` command **after** loading the
     first will result in your using the operating system default Python
     which is likely not what you intend.
 
-## HPE Cray Python distribution
+## HPE Cray Python distribution
 
 The recommended way to use Python on ARCHER2 is to use the HPE Cray
 Python distribution.
@@ -25,8 +25,8 @@ The HPE Cray distribution provides Python 3 along with some of the most
 common packages used for scientific computation and data analysis. These
 include:
 
-  - numpy and scipy - built against HPE Cray LibSci
-  - mpi4py - built against HPE Cray MPICH
+  - numpy and scipy - built using GCC against HPE Cray LibSci
+  - mpi4py - built using GCC against HPE Cray MPICH
   - dask
 
 The HPE Cray Python distribution can be loaded (either on the front-end
@@ -37,6 +37,12 @@ or in a submission script) using:
 !!! tip
     The HPE Cray Python distribution provides Python 3. There is no Python 2
     version as Python 2 is now deprecated.
+    
+!!! tip
+    The HPE Cray Python distribution is built using GCC compilers. If you wish
+    to compile your own Python, C/C++ or Fortran code to use with HPE Cray
+    Python, you should ensure that you compile using `PrgEnv-gnu` to make sure
+    they are compatible.
 
 ## Adding your own packages
 
