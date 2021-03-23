@@ -1,9 +1,5 @@
 # Quickstart for users
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 This guide aims to quickly enable new users to get up and running on
 ARCHER2. It covers the process of getting an ARCHER2 account, logging in
 and running your first job.
@@ -46,7 +42,7 @@ the Project Code:
 1.  [Log into SAFE](https://safe.epcc.ed.ac.uk)
 2.  Use the *Login accounts - Request new account* menu item
 3.  Select the correct project from the drop down list
-4.  Select the *ARCHER2* machine in the list of available machines
+4.  Select the *archer2-4c* machine in the list of available machines
 5.  Click *Next*
 6.  Enter a username for the account and (optionally) an SSH public
     key
@@ -359,7 +355,7 @@ Paste the following text into your job submission script, replacing
     module load xthi
     
     # srun launches the parallel program based on the SBATCH options
-    srun --cpu-bind=cores xthi
+    srun --distribution=block:block --hint=nomultithread xthi
 
 ## Submit your job to the queue
 
@@ -388,42 +384,29 @@ The job submission script above should write the output to a file called
 looks something like:
 
     auser@eslogin01:/work/t01/t01/auser> cat slurm-23996.out
-    Hello from rank 20, thread 0, on nid00001. (core affinity = 20)
-    Hello from rank 27, thread 0, on nid00001. (core affinity = 27)
-    Hello from rank 23, thread 0, on nid00001. (core affinity = 23)
-    Hello from rank 34, thread 0, on nid00001. (core affinity = 34)
-    Hello from rank 18, thread 0, on nid00001. (core affinity = 18)
-    Hello from rank 33, thread 0, on nid00001. (core affinity = 33)
-    Hello from rank 19, thread 0, on nid00001. (core affinity = 19)
-    Hello from rank 22, thread 0, on nid00001. (core affinity = 22)
-    Hello from rank 6, thread 0, on nid00001. (core affinity = 6)
-    Hello from rank 26, thread 0, on nid00001. (core affinity = 26)
-    Hello from rank 31, thread 0, on nid00001. (core affinity = 31)
-    Hello from rank 21, thread 0, on nid00001. (core affinity = 21)
-    Hello from rank 35, thread 0, on nid00001. (core affinity = 35)
-    Hello from rank 32, thread 0, on nid00001. (core affinity = 32)
-    Hello from rank 28, thread 0, on nid00001. (core affinity = 28)
-    Hello from rank 25, thread 0, on nid00001. (core affinity = 25)
-    Hello from rank 24, thread 0, on nid00001. (core affinity = 24)
-    Hello from rank 30, thread 0, on nid00001. (core affinity = 30)
-    Hello from rank 29, thread 0, on nid00001. (core affinity = 29)
-    Hello from rank 10, thread 0, on nid00001. (core affinity = 10)
-    Hello from rank 2, thread 0, on nid00001. (core affinity = 2)
-    Hello from rank 11, thread 0, on nid00001. (core affinity = 11)
-    Hello from rank 0, thread 0, on nid00001. (core affinity = 0)
-    Hello from rank 1, thread 0, on nid00001. (core affinity = 1)
-    Hello from rank 7, thread 0, on nid00001. (core affinity = 7)
-    Hello from rank 4, thread 0, on nid00001. (core affinity = 4)
-    Hello from rank 3, thread 0, on nid00001. (core affinity = 3)
-    Hello from rank 5, thread 0, on nid00001. (core affinity = 5)
-    Hello from rank 8, thread 0, on nid00001. (core affinity = 8)
-    Hello from rank 9, thread 0, on nid00001. (core affinity = 9)
-    Hello from rank 12, thread 0, on nid00001. (core affinity = 12)
-    Hello from rank 13, thread 0, on nid00001. (core affinity = 13)
-    Hello from rank 14, thread 0, on nid00001. (core affinity = 14)
-    Hello from rank 15, thread 0, on nid00001. (core affinity = 15)
-    Hello from rank 16, thread 0, on nid00001. (core affinity = 16)
-    Hello from rank 17, thread 0, on nid00001. (core affinity = 17)
+    Node    0, hostname nid001020
+    Node    0, rank    0, thread   0, (affinity =    0)
+    Node    0, rank    1, thread   0, (affinity =    1)
+    Node    0, rank    2, thread   0, (affinity =    2)
+    Node    0, rank    3, thread   0, (affinity =    3)
+    Node    0, rank    4, thread   0, (affinity =    4)
+    Node    0, rank    5, thread   0, (affinity =    5)
+    Node    0, rank    6, thread   0, (affinity =    6)
+    Node    0, rank    7, thread   0, (affinity =    7)
+    Node    0, rank    8, thread   0, (affinity =    8)
+    Node    0, rank    9, thread   0, (affinity =    9)
+    Node    0, rank   10, thread   0, (affinity =   10)
+    Node    0, rank   11, thread   0, (affinity =   11)
+    Node    0, rank   12, thread   0, (affinity =   12)
+    Node    0, rank   13, thread   0, (affinity =   13)
+    Node    0, rank   14, thread   0, (affinity =   14)
+    Node    0, rank   15, thread   0, (affinity =   15)
+    Node    0, rank   16, thread   0, (affinity =   16)
+    Node    0, rank   17, thread   0, (affinity =   17)
+    Node    0, rank   18, thread   0, (affinity =   18)
+    Node    0, rank   19, thread   0, (affinity =   19)
+    Node    0, rank   20, thread   0, (affinity =   20)
+    Node    0, rank   21, thread   0, (affinity =   21)
     ... output trimmed ...
 
 If something has gone wrong, you will find any error messages in the

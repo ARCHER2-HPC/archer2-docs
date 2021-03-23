@@ -1,9 +1,5 @@
 # OpenFOAM
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 OpenFOAM is an open-source toolbox for computational fluid dynamics.
 OpenFOAM consists of generic tools to simulate complex physics for a
 variety of fields of interest, from fluid flows involving chemical
@@ -97,11 +93,11 @@ source ${FOAM_INSTALL_DIR}/etc/bashrc
 
 # Run OpenFOAM work
 
-srun --cpu-bind=cores interFoam -parallel
+srun --distribution=block:block --hint=nomultithread interFoam -parallel
 ```
 
 ## Compiling OpenFOAM
 
 If you want to compile your own version of OpenFOAM, instructions are
 available for ARCHER2 at
-<https://github.com/hpc-uk/build-instructions/tree/main/OpenFOAM>
+<https://github.com/hpc-uk/build-instructions/tree/main/apps/OpenFOAM>

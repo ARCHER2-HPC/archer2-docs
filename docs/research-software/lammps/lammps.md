@@ -1,9 +1,5 @@
 # LAMMPS
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 [LAMMPS](http://lammps.sandia.gov/), is a classical molecular dynamics
 code, ("Large-scale Atomic/Molecular Massively Parallel Simulator").
 LAMMPS has potentials for solid-state materials (metals, semiconductors)
@@ -73,7 +69,7 @@ module load epcc-job-env
 
 module load lammps
 
-srun --cpu-bind=cores lmp -i in.test -o out.test
+srun --distribution=block:block --hint=nomultithread lmp -i in.test -l out.test
 ```
 
 ## Compiling LAMMPS
@@ -86,5 +82,5 @@ compile, so we encourage users to have a go.
 Compilation instructions for LAMMPS on ARCHER2 can be found on GitHub:
 
    - [Build instructions for LAMMPS on
-     GitHub](https://github.com/hpc-uk/build-instructions/tree/master/LAMMPS)
+     GitHub](https://github.com/hpc-uk/build-instructions/tree/main/apps/LAMMPS)
 

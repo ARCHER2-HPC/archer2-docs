@@ -1,9 +1,5 @@
 # ChemShell
 
-!!! warning
-  The ARCHER2 Service is not yet available. This documentation is in
-  development.
-
 ChemShell is a script-based chemistry code focusing on hybrid QM/MM
 calculations with support for standard quantum chemical or force field
 calculations. There are two versions: an older Tcl-based version

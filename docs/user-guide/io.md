@@ -1,9 +1,5 @@
 # I/O and file systems
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 ## Using the ARCHER2 file systems
 
 Different file systems are configured for different purposes and
@@ -210,13 +206,6 @@ created directory `res_dir`:
 
 #### Setting Custom Striping Configurations
 
-!!! hint
-    You cannot currently perform parallel IO to a striped file if the number
-    of MPI processes is larger than the stripe count. Although this is
-    unlikely to be an issue in production runs, where the number of
-    processes will normally be in the hundreds, it could cause an issue
-    during development or benchmarking.
-
 Users can set stripe settings for a directory (or file) using the
 `lfs setstripe` command. The options for `lfs setstripe` are:
 
@@ -238,8 +227,20 @@ For example, to set a stripe size of 4 MiB for the existing directory
 
 ### Recommended ARCHER2 I/O settings
 
-!!! note
-    We will add advice on I/O settings soon.
+With the default settings, parallel I/O on multiple nodes can
+currently give poor perfomance. We recommend always setting the
+following environment variable in your SLURM batch script:
+
+    export FI_OFI_RXM_SAR_LIMIT=64K
+
+Although I/O requirements vary significantly between different
+applications, the following settings should be good in most cases:
+
+  - If each process is writing to its own individual file then the default settings should give good performance.
+
+  - If processes are writing to a single shared file (e.g. using
+    MPI-IO, HDF5 or NetCDF), set the appropriate
+    directories to be fully striped: `lfs setstripe -c -1 directory/`
 
 ## I/O Profiling
 

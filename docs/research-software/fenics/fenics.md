@@ -1,8 +1,5 @@
 # FEniCS
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
 
 FEniCS is an open-source (LGPLv3) computing platform for solving partial
 differential equations (PDEs). FEniCS enables users to translate

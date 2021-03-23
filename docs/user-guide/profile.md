@@ -1,10 +1,5 @@
 # Profiling
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
-
 ## CrayPat-lite
 
 CrayPat-lite is a simplified and easy-to-use version of the Cray
@@ -24,7 +19,7 @@ then be loaded for further experimentation.
 
     `auser@uan01:/work/t01/t01/auser> module load perftools-base`
 
-2.  Load `perfotools-lite` module
+2.  Load `perftools-lite` module
 
     `auser@uan01:/work/t01/t01/auser> module load perftools-lite`
 
@@ -276,7 +271,7 @@ CrayPat allows you to profile un-instrumented, dynamically linked
 binaries with the `pat_run` utility. `pat_run` delivers profiling
 information for codes that cannot easily be rebuilt. To use `pat_run`:
 
-1.  Load the `perfotools-base` module if it is not already loaded
+1.  Load the `perftools-base` module if it is not already loaded
 
     `module load perftools-base`
 
@@ -307,8 +302,7 @@ Some useful `pat_run` options are:
 
 Cray Apprentice2 is an optional GUI tool that is used to visualize and
 manipulate the performance analysis data captured during program
-execution. Cray Apprentice2 can be run either on the Cray system or,
-optionally, on a standalone Linux desktop machine. Cray Apprentice2 can
+execution. Cray Apprentice2 can
 display a wide variety of reports and graphs, depending on the type of
 program being analyzed, the way in which the program was instrumented
 for data capture, and the data that was collected during program

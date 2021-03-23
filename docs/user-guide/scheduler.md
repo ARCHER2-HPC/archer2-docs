@@ -1,9 +1,5 @@
 # Running jobs on ARCHER2
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 As with most HPC services, ARCHER2 uses a scheduler to manage access to
 resources and ensure that the thousands of different users of system are
 able to share the system and all get access to the resources they
@@ -146,23 +142,18 @@ You can list the active partitions by running `sinfo`.
 
 On ARCHER2, job limits are defined by the requested Quality of Service
 (QoS), as specified by the `--qos` Slurm directive. The following table
-lists the active QoS on
-ARCHER2.
+lists the active QoS on ARCHER2.
 
-| QoS      | Max Nodes Per Job | Max Walltime | Jobs Queued | Jobs Running | Partition(s) |
-| -------- | ----------------- | ------------ | ----------- | ------------ | ------------ |
-| standard | 940               | 24 hrs       | 64          | 16           | standard     |
-| short    | 8                 | 20 mins      | 2           | 1            | standard     |
-| long     | 64                | 48 hrs       | 16          | 16           | standard     |
+| QoS        | Max Nodes Per Job | Max Walltime | Jobs Queued | Jobs Running | Partition(s) | Notes |
+| ---------- | ----------------- | ------------ | ----------- | ------------ | ------------ | ------|
+| standard   | 256               | 24 hrs       | 64          | 16           | standard     |       |
+| short      | 8                 | 20 mins      | 4           | 4            | standard     | Only available Mon-Fri UK Time |
+| long       | 64                | 48 hrs       | 16          | 16           | standard     | Minimum walltime of 24 hrs |
+| largescale | 940               | 3 hrs        | 4           | 1            | standard     | Minimum job size of 257 nodes |
 
 !!! warning
     If you want to use the `short` QoS then you also need to add the
     `--reservation=shortqos` to your job submission command.
-
-Please note, there are two other limits not covered by the above table.
-
-  - The short QoS is only available Mon-Fri.
-  - Long jobs must have a minimum walltime of 24 hrs.
 
 You can find out the QoS that you can use by running the following
 command:
@@ -175,25 +166,124 @@ command:
     Desk](https://www.archer2.ac.uk/support-access/servicedesk.html) and we
     can discuss how to accommodate your requirements.
 
+### E-mail notifications
+
+E-mail notifications from the batch system are not currently available
+on ARCHER2.
+
+
 ## Troubleshooting
 
 ### Slurm error messages
 
-!!! note
-    More information on common error messages will be added when the ARCHER2
-    system is available.
+An incorrect submission will cause Slurm to return an error.
+Some common problems are listed below, with a suggestion about
+the likely cause:
+
+* ``sbatch: unrecognized option <text>``
+  
+    One of your options is invalid or has a typo. ``man sbatch`` to help.
+
+
+* ``error: Batch job submission failed: No partition specified or system default partition``
+  
+    A ``--partition=`` option is missing. You must specify the partition
+    (see the list above). This is most often ``--partition=standard``.
+
+* ``error: invalid partition specified: <partition>``
+
+    ``error: Batch job submission failed: Invalid partition name specified``
+
+    Check the partition exists and check the spelling is correct.
+
+
+*  ``error: Batch job submission failed: Invalid account or account/partition combination specified``
+
+    This probably means an invalid account has been given. Check the
+    ``--account=`` options against valid accounts in SAFE.
+
+* ``error: Batch job submission failed: Invalid qos specification``
+
+    A QoS option is either missing or invalid. Check the script has a
+    ``--qos=`` option and that the option is a valid one from the
+    table above. (Check the spelling of the QoS is correct.)
+
+
+* ``error: Your job has no time specification (--time=)...``
+
+    Add an option of the form ``--time=hours:minutes:seconds`` to the
+    submission script. E.g., ``--time=01:30:00`` gives a time limit of
+    90 minutes.
+
+* ``error: QOSMaxWallDurationPerJobLimit``
+    ``error: Batch job submission failed: Job violates accounting/QOS policy``
+    ``(job submit limit, user's size and/or time limits)``
+  
+    The script has probably specified a time limit which is too long for
+    the corresponding QoS. E.g., the time limit for the short QoS
+    is 20 minutes.
+
 
 ### Slurm queued reasons
 
-!!! note
-    Explanations of the reasons for jobs being queued and not running will
-    be added when the ARCHER2 system is available.
+The ``squeue`` command allows users to view information for jobs managed by Slurm. Jobs
+typically go through the following states: PENDING, RUNNING, COMPLETING, and COMPLETED.
+The first table provides a description of some job state codes. The second table provides a description
+of the reasons that cause a job to be in a state.
+
+
+| Status        | Code | Description |
+|---------------|------|-------------|
+| PENDING       | PD   | Job is awaiting resource allocation. |
+| RUNNING       | R    | Job currently has an allocation. |
+| SUSPENDED     | S    | Job currently has an allocation. |
+| COMPLETING    | CG   | Job is in the process of completing. Some processes on some nodes may still be active. |
+| COMPLETED     | CD   | Job has terminated all processes on all nodes with an exit code of zero. |
+| TIMEOUT       | TO   | Job terminated upon reaching its time limit. |
+| STOPPED       | ST   | Job has an allocation, but execution has been stopped with SIGSTOP signal. CPUS have been retained by this job. |
+| OUT_OF_MEMORY | OOM  | Job experienced out of memory error. |
+| FAILED        | F    | Job terminated with non-zero exit code or other failure condition. |
+| NODE_FAIL     | NF   | Job terminated due to failure of one or more allocated nodes. |
+| CANCELLED     | CA   | Job was explicitly cancelled by the user or system administrator. The job may or may not have been initiated. |
+
+For a full list of see [Job State Codes](https://slurm.schedmd.com/squeue.html#lbAG).
+
+| Reason | Description |
+|--------|-------------|
+| Priority | One or more higher priority jobs exist for this partition or advanced reservation. |
+| Resources | The job is waiting for resources to become available. |
+| BadConstraints | The job's constraints can not be satisfied. |
+| BeginTime | The job's earliest start time has not yet been reached. |
+| Dependency | This job is waiting for a dependent job to complete. |
+| Licenses | The job is waiting for a license. |
+| WaitingForScheduling | No reason has been set for this job yet. Waiting for the scheduler to determine the appropriate reason. |
+| Prolog | Its PrologSlurmctld program is still running. |
+| JobHeldAdmin | The job is held by a system administrator. |
+| JobHeldUser | The job is held by the user. |
+| JobLaunchFailure | The job could not be launched. This may be due to a file system problem, invalid program name, etc. |
+| NonZeroExitCode | The job terminated with a non-zero exit code. |
+| InvalidAccount | The job's account is invalid. |
+| InvalidQOS | The job's QOS is invalid. |
+| QOSUsageThreshold | Required QOS threshold has been breached. |
+| QOSJobLimit | The job's QOS has reached its maximum job count. |
+| QOSResourceLimit | The job's QOS has reached some resource limit. |
+| QOSTimeLimit | The job's QOS has reached its time limit. |
+| NodeDown | A node required by the job is down. |
+| TimeLimit | The job exhausted its time limit. |
+| ReqNodeNotAvail | Some node specifically required by the job is not currently available. The node may currently be in use, reserved for another job, in an advanced reservation, DOWN, DRAINED, or not responding. Nodes which are DOWN, DRAINED, or not responding will be identified as part of the job's "reason" field as "UnavailableNodes". Such nodes will typically require the intervention of a system administrator to make available. |
+
+For a full list of see [Job Reasons](https://slurm.schedmd.com/squeue.html#lbAF).
 
 ## Output from Slurm jobs
 
 Slurm places standard output (STDOUT) and standard error (STDERR) for
 each job in the file `slurm_<JobID>.out`. This file appears in the job's
 working directory once your job starts running.
+
+!!! hint
+    Output may be buffered - to enable live output, e.g. for monitoring
+	job status, add `--unbuffered` to the `srun` command in your SLURM
+	script.
 
 ## Specifying resources in job scripts
 
@@ -202,7 +292,7 @@ the top of your job submission script using lines that start with the
 directive `#SBATCH`.
 
 !!! hint
-    Options provided using `#SBATCH` directives can also be specified as
+    Most options provided using `#SBATCH` directives can also be specified as
     command line options to `srun`.
 
 If you do not specify any options, then the default for each option will
@@ -255,7 +345,9 @@ environment at the point of submission, the option
      to the batch system.
 
 Using the `--export=none` means that the behaviour of batch submissions
-should be repeatable. We strongly recommend its use.
+should be repeatable. We strongly recommend its use, although see
+[the following section](scheduler.md#using-modules-in-the-batch-system-the-epcc-job-env-module)
+to enable access to the usual modules.
 
 ## Using modules in the batch system: the `epcc-job-env` module
 
@@ -278,12 +370,22 @@ relevant library paths are set correctly at run time.
 
 If you are running parallel jobs, your job submission script should
 contain one or more `srun` commands to launch the parallel executable
-across the compute nodes.
+across the compute nodes. In most cases you will want to add the options
+`--distribution=block:block` and `--hint=nomultithread` to your 
+`srun` command to ensure you get the correct pinning of processes to 
+cores on a compute node.
 
 !!! warning
-    To ensure that processes and threads are correctly mapped (or *pinned*)
-    to cores, you should always specify
-    `--cpu-bind=cores` option to `srun`.
+    If you do not add the `--distribution=block:block` and `--hint=nomultithread`
+    options to your `srun` command the default process placement 
+    may lead to a drop in performance for your jobs on ARCHER2.
+
+A brief explanation of these options:
+ - `--hint=nomultithread` - do not use hyperthreads/SMP
+ - `--distribution=block:block` - the first `block` means use a block distribution
+   of processes across nodes (i.e. fill nodes before moving onto the next one) and
+   the second `block` means use a block distribution of processes across NUMA regions
+   within a node (i.e. fill a NUMA region before moving on to the next one).
 
 ## bolt: Job submission script creation tool
 
@@ -447,7 +549,7 @@ and 128 MPI ranks per node for 20 minutes would look like:
     #   Using 512 MPI processes and 128 MPI processes per node
     #   srun picks up the distribution from the sbatch options
     
-    srun --cpu-bind=cores ./my_mpi_executable.x
+    srun --distribution=block:block --hint=nomultithread ./my_mpi_executable.x
 
 This will run your executable "my\_mpi\_executable.x" in parallel on 512
 MPI processes using 4 nodes (128 cores per node, i.e. not using
@@ -480,9 +582,8 @@ processes in total (8 MPI processes per node) and 16 OpenMP threads per
 MPI process. This results in all 128 physical cores per node being used.
 
 !!! hint
-    Note the use of the `export OMP_PLACES=cores` environment option and the
-    `--hint=nomultithread` and `--distribution=block:block` options to
-    `srun` to generate the correct pinning.
+    Note the use of the `export OMP_PLACES=cores` environment option to
+    generate the correct thread pinning.
 
 ```
 #!/bin/bash
@@ -547,28 +648,28 @@ per core and specifies 4 hours maximum runtime per subjob:
     #SBATCH --tasks-per-node=128
     #SBATCH --cpus-per-task=1
     #SBATCH --array=0-55
-    
+
     # Replace [budget code] below with your budget code (e.g. t01)
     #SBATCH --account=[budget code]  
     #SBATCH --partition=standard
     #SBATCH --qos=standard
-    
+
     # Setup the job environment (this module needs to be loaded before any other modules)
     module load epcc-job-env
-    
+
     # Set the number of threads to 1
     #   This prevents any threaded system libraries from automatically 
     #   using threading.
     export OMP_NUM_THREADS=1
-    
-    srun --cpu-bind=cores /path/to/exe $SLURM_ARRAY_TASK_ID
+
+    srun --distribution=block:block --hint=nomultithread /path/to/exe $SLURM_ARRAY_TASK_ID
 
 ### Submitting a job array
 
 Job arrays are submitted using `sbatch` in the same way as for standard
 jobs:
 
-    sbatch job_script.pbs
+    sbatch job_script.pbs 
 
 ## Job chaining
 
@@ -592,7 +693,341 @@ or for a longer chain:
     jobid3=$(sbatch --parsable --dependency=afterok:$jobid1 third_job.sh)
     sbatch --dependency=afterok:$jobid2,afterok:$jobid3 last_job.sh
 
-## Interactive Jobs: `salloc`
+## Using multiple `srun` commands in a single job script
+
+You can use multiple `srun` commands within in a Slurm job submission script
+to allow you to use the resource requested more flexibly. For example, you 
+could run a collection of smaller jobs within the requested resources or
+you could even subdivide nodes if your individual calculations do not scale
+up to use all 128 cores on a node.
+
+In this guide we will cover two scenarios:
+
+ 1. Subdividing the job into multiple full-node or multi-node subjobs, e.g.
+    requesting 100 nodes and running 100, 1-node subjobs or 50, 2-node 
+    subjobs.
+ 2. Subdividing the job into multiple subjobs that each use a fraction of a
+    node, e.g. requesting 2 nodes and running 256, 1-core subjobs or 16,
+    16-core subjobs.
+
+### Running multiple, full-node subjobs within a larger job
+
+When subdivding a larger job into smaller subjobs you typically need to 
+overwrite the `--nodes` option to `srun` and add the `--ntasks` option
+to ensure that each subjob runs on the correct number of nodes and that
+subjobs are placed correctly onto separate nodes.
+
+For example, we will show how to request 100 nodes and then run 100
+separate 1-node jobs, each of which use 128 MPI processes and which
+run on a different compute node. We start by showing 
+the job script that would achieve this and then explain how this works
+and the options used. In our case, we will run 100 copies of the `xthi` 
+program that prints the process placement on the node it is running on.
+
+```slurm
+#!/bin/bash
+
+# Slurm job options (job-name, compute nodes, job time)
+#SBATCH --job-name=multi_xthi
+#SBATCH --time=0:20:0
+#SBATCH --nodes=100
+#SBATCH --tasks-per-node=128
+#SBATCH --cpus-per-task=1
+
+# Replace [budget code] below with your budget code (e.g. t01)
+#SBATCH --account=[budget code]             
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+# Setup the job environment (this module needs to be loaded before any other modules)
+module load epcc-job-env
+
+# Load the xthi module
+module load xthi
+
+# Set the number of threads to 1
+#   This prevents any threaded system libraries from automatically 
+#   using threading.
+export OMP_NUM_THREADS=1
+
+# Loop over 100 subjobs starting each of them on a separate node
+for i in $(seq 1 100)
+do
+   # Launch this subjob on 1 node, note nodes and ntasks options and & to place subjob in the background
+   srun --nodes=1 --ntasks=128 --distribution=block:block --hint=nomultithread xthi > placement${i}.txt &
+done
+# Wait for all background subjobs to finish
+wait
+```
+
+Key points from the example job script:
+
+- The `#SBATCH` options select 100 full nodes in the usual way.
+- Each subjob `srun` command sets the following:
+    - `--nodes=1` We need override this setting from the main job so that each subjob only uses 1 node
+    - `--ntasks=128` For normal jobs, the number of parallel tasks (MPI processes) is calculated from
+      the number of nodes you request and the number of tasks per node. We need to explicitly tell `srun`
+      how many we require for this subjob.
+    - `--distribution=block:block --hint=nomultithread` These options ensure correct placement of
+      processes within the compute nodes.
+    - `&` Each subjob `srun` command ends with an ampersand to place the process in the background
+      and move on to the next loop iteration (and subjob submission). Without this, the script would
+      wait for this subjob to complete before moving on to submit the next.
+- Finally, there is the `wait` command to tell the script to wait for all the background subjobs
+to complete before exiting. If we did not have this in place, the script would exit as soon as the
+last subjob was submitted and kill all running subjobs.
+
+### Running multiple subjobs that each use a fraction of a node
+
+As the ARCHER2 nodes contain a large number of cores (128 per node) it
+may sometimes be useful to be able to run multiple executables on a single
+node. For example, you may want to run 128 copies of a serial executable or
+Python script; or, you may want to run multiple copies of parallel executables
+that use less than 128 cores each. This use model is possible using 
+multiple `srun` commands in a job script on ARCHER2
+
+!!! note
+    You can never share a compute node with another user. Although you can
+    use `srun` to place multiple copies of an executable or script on a 
+    compute node, you still have exclusive use of that node. The minimum
+    amount of use you can reserve for your use on ARCHER2 is a single node.
+
+When using `srun` to place multiple executables or scripts on a compute 
+node you must be aware of a few things:
+
+ - The `srun` command must specify any Slurm options that differ in value
+   from those specified to `sbatch`. This typically means that you need 
+   to specify the `--nodes`, `--ntasks` and `--tasks-per-node` options to `srun`.
+ - You will usually need to specify the task pinning to cores manually to 
+   prevent multiple executables/scripts running on the same core. We provide
+   a small utility (`genmaskcpu`) to assist with this.
+ - You will need to place each `srun` command into the background and 
+   then use the `wait` command at the end of the submission script to
+   make sure it does not exit before the commands are complete.
+ - If you want to use more than one node in the job and use multiple `srun`
+   per node (e.g. 256 single core processes across 2 nodes) then you need
+   to pass the node ID to the `srun` commands otherwise Slurm will oversubscribe
+   cores on the first node.
+
+Below, we briefly describe the `genmaskcpu` helper script and then provide
+three examples or running multiple subjobs in a node, one that runs 128
+serial processes across a single node; one that runs 8 subjobs each of
+which use 8 MPI processes with 2 OpenMP threads per MPI process; and one
+that runs 256 serial processes across two nodes.
+
+#### `genmaskcpu` helper script
+
+When running multiple copies of executables/scripts on a single node Slurm
+can often not pin processes or threads to cores in such a way to ensure
+efficient use of resources (for example, multiple copies may end up bound
+to the same core). For this reason, you often have to specify manual bindings
+when running multiple executables/scripts on a node.
+
+Writing CPU binding masks for use with Slurm by hand can be quite tedious,
+especially if you want to use fat bitmasks to allow for binding of threads
+to different cores. To assist with generating binding masks we provide a
+utility script: `genmaskcpu`, that generates the correct bindings for 
+each subjob based on a number of input arguments:
+
+ 1. Argument 1: The number of subjobs running *per node*
+ 2. Argument 2: The index of this subjob within the number running on a node (e.g. if
+    there are 4 subjobs running per node, is this the 1st, 2nd, 3rd, or 4th
+    subjob?)
+ 3. Argument 3: The number of parallel *processes* (MPI processes) per subjob (this must be the same
+    for all subjobs)
+ 4. Argument 4: The number of *threads* per MPI process for the subjob (this must be 
+    the same for all subjobs)
+
+!!! important
+    `genmaskcpu` only works for *homogeneous* subjobs, where every subjob
+    on the node has the same number of parallel processes and threads per
+    parallel process. If your subjobs do not have the same number of processes
+    and threads then you will need to generate the binding masks manually.
+
+For example, to generate the binding mask for the first subjob in a set of
+8 subjobs on a node each of which uses 16 MPI processes and 1 thread per
+MPI process, you would use:
+
+```
+mask=$(genmaskcpu 8 1 16 1)
+```
+
+The second subjob would use:
+
+```
+mask=$(genmaskcpu 8 2 16 1)
+```
+
+#### Example 1: 128 serial tasks running on a single node
+
+For our first example, we will run 128 single-core copies of the `xthi` program (which
+prints process/thread placement) on a single ARCHER2 compute node with each
+copy of `xthi` pinned to a different core. We will use `genmaskcpu` to generate the 
+correct binding mask for each subjob. The job submission script for
+this example would look like:
+
+```slurm
+#!/bin/bash
+# Slurm job options (job-name, compute nodes, job time)
+#SBATCH --job-name=MultiSerialOnCompute
+#SBATCH --time=0:10:0
+#SBATCH --nodes=1
+#SBATCH --tasks-per-node=128
+#SBATCH --cpus-per-task=1
+
+# Replace [budget code] below with your budget code (e.g. t01)
+#SBATCH --account=[budget code]  
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+# Setup the job environment (this module needs to be loaded before any other modules)
+module load epcc-job-env
+
+# Make xthi available
+module load xthi
+
+# Make the pinning helper script available
+module load cray-python
+module load genmaskcpu
+
+# Set the number of threads to 1
+#   This prevents any threaded system libraries from automatically 
+#   using threading.
+export OMP_NUM_THREADS=1
+
+# Loop over 128 subjobs pinning each to a different core
+for i in $(seq 1 128)
+do
+   # Generate mask: 128 subjobs per node, subjob number in sequence given by i,
+   # 1 process per subjob, 1 thread per process
+   maskcpu=$(genmaskcpu 128 ${i} 1 1)
+   # Launch subjob overriding job settings as required and in the background
+   srun --cpu-bind=mask_cpu:${maskcpu} --nodes=1 --ntasks=1 --tasks-per-node=1 xthi > placement${i}.txt &
+done
+
+# Wait for all subjobs to finish
+wait
+```
+
+#### Example 2: 8 subjobs on 1 node each with 8 MPI processes and 2 OpenMP threads per process
+
+For our second example, we will run 8 subjobs, each running the `xthi` program (which
+prints process/thread placement) across 1 node. Each subjob will use 8 MPI processes
+and 2 OpenMP threads per process. We will use `genmaskcpu` to generate the 
+correct binding mask for each subjob. The job submission script for
+this example would look like:
+
+```slurm
+#!/bin/bash
+# Slurm job options (job-name, compute nodes, job time)
+#SBATCH --job-name=MultiParallelOnCompute
+#SBATCH --time=0:10:0
+#SBATCH --nodes=1
+#SBATCH --tasks-per-node=64
+#SBATCH --cpus-per-task=2
+
+# Replace [budget code] below with your budget code (e.g. t01)
+#SBATCH --account=[budget code]  
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+# Setup the job environment (this module needs to be loaded before any other modules)
+module load epcc-job-env
+
+# Make xthi available
+module load xthi
+
+# Make the pinning helper script available
+module load cray-python
+module load genmaskcpu
+
+# Set the number of threads to 2 as required by all subjobs
+export OMP_NUM_THREADS=2
+
+# Loop over 8 subjobs
+for i in $(seq 1 8)
+do
+    echo $j $i
+    # Generate mask: 8 subjobs per node, subjob number in sequence given by i,
+    # 8 MPI processes per subjob, 2 OpenMP threads per process
+    maskcpu=$(genmaskcpu 8 ${i} 8 2)
+    # Launch subjob overriding job settings as required and in the background
+    srun --cpu-bind=mask_cpu:${maskcpu} --nodes=1 --ntasks=8 --tasks-per-node=8 --cpus-per-task=2 xthi > placement${i}.txt &
+done
+
+# Wait for all subjobs to finish
+wait
+```
+
+#### Example 3: 256 serial tasks running across two nodes
+
+For our third example, we will run 256 single-core copies of the `xthi` program (which
+prints process/thread placement) across two ARCHER2 compute nodes with each
+copy of `xthi` pinned to a different core. We will use `genmaskcpu` to generate the 
+correct binding mask for each subjob. We will also illustrate a mechnism for getting the
+node IDs to pass to `srun` as this is required to ensure that the individual subjobs are
+assigned to the correct node. This mechanism uses the `scontrol` command to turn the 
+nodelist from `sbatch` into a format we can use as input to `srun`. The job submission
+script for this example would look like:
+
+```slurm
+#!/bin/bash
+# Slurm job options (job-name, compute nodes, job time)
+#SBATCH --job-name=MultiSerialOnComputes
+#SBATCH --time=0:10:0
+#SBATCH --nodes=2
+#SBATCH --tasks-per-node=128
+#SBATCH --cpus-per-task=1
+
+# Replace [budget code] below with your budget code (e.g. t01)
+#SBATCH --account=[budget code]  
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+# Setup the job environment (this module needs to be loaded before any other modules)
+module load epcc-job-env
+
+# Make xthi available
+module load xthi
+
+# Make the pinning helper script available
+module load cray-python
+module load genmaskcpu
+
+# Set the number of threads to 1
+#   This prevents any threaded system libraries from automatically 
+#   using threading.
+export OMP_NUM_THREADS=1
+
+# Get a list of the nodes assigned to this job in a format we can use.
+#   scontrol converts the condensed node IDs in the sbatch environment
+#   variable into a list of full node IDs that we can use with srun to
+#   ensure the subjobs are placed on the correct node. e.g. this converts
+#   "nid[001234,002345]" to "nid001234 nid002345"
+nodelist=$(scontrol show hostnames $SLURM_JOB_NODELIST)
+
+# Loop over the nodes assigned to the job
+for nodeid in $nodelist
+do
+    # Loop over 128 subjobs on each node pinning each to a different core
+    for i in $(seq 1 128)
+    do
+        # Generate mask: 128 subjobs per node, subjob number in sequence given by i,
+        # 1 process per subjob, 1 thread per process
+        maskcpu=$(genmaskcpu 128 ${i} 1 1)
+        # Launch subjob overriding job settings as required and in the background, note
+        # additional --nodelist option to specify the correct node to bind to
+        srun --cpu-bind=mask_cpu:${maskcpu} --nodelist=${nodeid} --nodes=1 --ntasks=1 --tasks-per-node=1 xthi > placement_${nodeid}_${i}.txt &
+    done
+done
+
+# Wait for all subjobs to finish
+wait
+```
+
+## Interactive Jobs
+
+### Using `salloc` to reserve resources
 
 When you are developing or debugging code you often want to run many
 short jobs with a small amount of editing the code between runs. This
@@ -609,12 +1044,12 @@ You use the `salloc` command to reserve compute nodes for interactive
 jobs.
 
 To submit a request for an interactive job reserving 8 nodes (1024
-physical cores) for 1 hour you would issue the following qsub command
-from the command line:
+physical cores) for 20 minutes on the short queue you would issue the
+following command from the command line:
 
     auser@uan01:> salloc --nodes=8 --tasks-per-node=128 --cpus-per-task=1 \
-                  --time=01:00:00 --partition=standard --qos=standard \
-                  --account=[budget code]
+                  --time=00:20:00 --partition=standard --qos=short \
+                  --reservation=shortqos --account=[budget code]
 
 When you submit this job your terminal will display something like:
 
@@ -628,9 +1063,10 @@ you will enter a standard interactive terminal session (a new shell).
 Note that this shell is still on the front end (the prompt has not
 change). Whilst the interactive session lasts you will be able to run
 parallel jobs on the compute nodes by issuing the `srun
---cpu-bind=cores` command directly at your command prompt using the same
-syntax as you would inside a job script. The maximum number of nodes you
-can use is limited by resources requested in the `salloc` command.
+--distribution=block:block --hint=nomultithread` command directly at 
+your command prompt using the same syntax as you would inside a job
+script. The maximum number of nodes you can use is limited by resources
+requested in the `salloc` command.
 
 If you know you will be doing a lot of intensive debugging you may find
 it useful to request an interactive session lasting the expected length
@@ -643,10 +1079,11 @@ return you to your prompt before you issued the `salloc` command.
 ### Using `srun` directly
 
 A second way to run an interactive job is to use `srun` directly in the
-following way:
+following way (here using the "short queue"):
 
-    auser@uan01:/work/t01/t01/auser> srun --nodes=1 --exclusive --time=00:20:00 --account=[] \
-                   --partition=standard --qos=standard --pty /bin/bash
+    auser@uan01:/work/t01/t01/auser> srun --nodes=1 --exclusive --time=00:20:00 \
+                   --partition=standard --qos=short --reservation=shortqos \
+                   --pty /bin/bash
     auser@uan01:/work/t01/t01/auser> hostname
     nid001261
 
@@ -664,7 +1101,10 @@ be returned to the front end.
 
 By default, the interactive shell will retain the environment of the
 parent. If you want a clean shell, remember to specify `--export=none`.
-
+If you need to
+[use modules within your job](scheduler.md#using-modules-in-the-batch-system-the-epcc-job-env-module),
+you will need to start a login shell by passing the `--login` argument
+to `bash`.
 
 ## Heterogeneous jobs
 
@@ -742,8 +1182,8 @@ different executables, both of which must finish before the jobs completes.
 
 # Run two execuatables with separate MPI_COMM_WORLD
 
-srun --cpu_bind=rank --het-group=0 ./xthi-a &
-srun --cpu_bind=rank --het-group=1 ./xthi-b &
+srun --distribution=block:block --hint=nomultithread --het-group=0 ./xthi-a &
+srun --distribution=block:block --hint=nomultithread --het-group=1 ./xthi-b &
 wait
 ```
 In this case, each executable is launched with a separate call to
@@ -809,8 +1249,8 @@ components separated by a colon `:` should be used. For example,
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=4
 
-srun --cpu_bind=rank --het-group=0 ./xthi-a : \
-     --cpu_bind=rank --het-group=1 ./xthi-b
+srun --distribution=block:block --hint=nomultithread --het-group=0 ./xthi-a : \
+     --distribution=block:block --hint=nomultithread --het-group=1 ./xthi-b
 ```
 
 The output should confirm we have a single `MPI_COMM_WORLD` with
@@ -1000,7 +1440,7 @@ maximum number of tasks is reached:
     
     module load xthi
     export OMP_NUM_THREADS=1
-    srun --cpu-bind=cores xthi
+    srun --distribution=block:block --hint=nomultithread xthi
     
     Hello from rank 0, thread 0, on nid000001. (core affinity = 0,128)
     Hello from rank 1, thread 0, on nid000001. (core affinity = 16,144)
@@ -1034,7 +1474,7 @@ in a round-robin placement:
     module load xthi
     export OMP_NUM_THREADS=1
     export MPICH_RANK_REORDER_METHOD=0
-    srun --cpu-bind=cores xthi
+    srun xthi
     
     Hello from rank 0, thread 0, on nid000001. (core affinity = 0,128)
     Hello from rank 1, thread 0, on nid000002. (core affinity = 0,128)

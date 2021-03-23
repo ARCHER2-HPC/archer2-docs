@@ -1,21 +1,11 @@
 # Data management and transfer
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 This section covers best practice and tools for data management on
 ARCHER2.
 
 !!! information
     If you have any questions on data management and transfer please do not
     hesitate to contact the ARCHER2 service desk at <support@archer2.ac.uk>.
-    
-!!! tip
-    If you are interested in transferring data from ARCHER to ARCHER2, you
-    may want to skip straight to the
-    [SSH data transfer example: ARCHER to ARCHER2](#ssh-data-transfer-example-archer-to-archer2)
-    section.
 
 ## Useful resources and links
 
@@ -32,9 +22,9 @@ various data storage facilities that are part of the ARCHER2 service.
 This will not only allow you to use the machine more effectively but
 also to ensure that your valuable data is protected.
 
-### ARCHER2 storage
+## ARCHER2 storage
 
-The ARCHER2 service, like many HPC systems has a complex structure.
+The ARCHER2 service, like many HPC systems, has a complex structure.
 There are a number of different data storage types available to users:
 
    - Home file systems
@@ -50,7 +40,7 @@ There are also two different types of node available to users:
 
 Each type of node sees a different combination of the storage types.
 
-#### Home file systems
+### Home file systems
 
 There are four independent home file-systems. Every project has an
 allocation on one of the four. You do not need to know which one your
@@ -79,7 +69,7 @@ enough to manipulate large datasets effectively.
     non-printable characters cannot be backed up using our automated process
     and so will be omitted from all backups.
 
-#### Work file systems
+### Work file systems
 
 There is one work file-systems:
 
@@ -381,69 +371,39 @@ above.)
     (accessed via `man rsync` or at [man
     rsync](https://linux.die.net/man/1/rsync)).
 
-## SSH data transfer example: ARCHER to ARCHER2
+## SSH data transfer example: laptop/workstation to ARCHER2
 
 Here we have a short example demonstrating transfer of data directly
-from ARCHER to ARCHER2.
+from a laptop/workstation to ARCHER2.
 
-Before we can transfer of data from ARCHER (or any
-other remote facility) to ARCHER2 there are a couple of steps required:
+!!! note
+    This guide assumes you are using a command line interface to transfer
+    data. This means the terminal on Linux or macOS, MobaXterm local terminal
+    on Windows or Powershell.
 
-1. Create an SSH key on the origin system (ARCHER in this case) to allow
-   the data transfer to happen.
-2. Add the public part of the SSH key you create to your ARCHER2 account 
-   in SAFE.
+Before we can transfer of data to ARCHER2 we need to make sure we have an
+SSH key setup to access ARCHER2 from the system we are transferring data
+from. If you are using the same system that you use to log into ARCHER2 then
+you should be all set. If you want to use a different system you will need
+to generate a new SSH key there (or use SSH key forwarding) to allow you to 
+connect to ARCHER2.
    
 !!! tip
     Remember that you will need to use both a key and your password to
     transfer data to ARCHER2.
-    
-The first step will be to set up an SSH key for access to ARCHER2 directly from ARCHER.
 
-First log in to ARCHER, and generate a new SSH key. To do this we use
-the following
-    command:
-
-    ssh-keygen -b 4096 -C "otbz01@archer -> otbz19@archer2" -f ~/.ssh/id_RSA_A2
-
-This generates a new 4096 bit RSA SSH key with the comment
-`otbz01@archer -> otbz19archer2`, and stores the private key in the file
-`~/.ssh/id_RSA_A2`, and the public key in a corresponding `.pub` file.
-During key generation process we are asked to enter a passphrase. SSH
-keys should *always* be passphrase protected, but this is especially
-important when they are kept on a publicly accessible machine such as
-ARCHER. Please *do not* leave the passphrase blank when setting up your
-SSH key.
-
-Next we must add the new public key to ARCHER2 through SAFE. We can
-either open the `id_RSA_A2.pub` file in our preferred text editor on
-ARCHER, or use `cat id_RSA_A2.pub` to output the file contents to
-screen. Either way we should carefully copy the full SSH key and
-comment, and then in SAFE go to *Login accounts - [username]@archer2 -
-Add Credential* to add the new SSH key. Once the new key is active you
-can test that this has worked by attempting to ssh to ARCHER2 from
-ARCHER.
-
-All being well, we are now ready to transfer data directly between the
+Once we know our keys are setup correctly, we are now ready to transfer data directly between the
 two machines. We begin by combining our important research data in to a
 single archive file using the following command:
 
     tar -czf all_my_files.tar.gz file1.txt file2.txt file3.txt
 
-From ARCHER in particular, in order to get the best transfer performance,
-we need to access a newer version of the SSH program. We do this by loading
-the `openssh` module:
-
-    module load openssh
-    
-!!! note
-    You may not need to do this on a system other than ARCHER
-
-We then initiate the data transfer from ARCHER to ARCHER2, here using
+We then initiate the data transfer from our system to ARCHER2, here using
 `rsync` to allow the transfer to be recommenced without needing to start
-again, in the event of a loss of connection or other failure.
+again, in the event of a loss of connection or other failure. For example, using
+the SSH key in the file `~/.ssh/id_RSA_A2` on our local system:
 
-    rsync -Pv -e"ssh -c aes128-gcm@openssh.com -i /home/z01/z01/otbz01/.ssh/id_RSA_A2" ./all_my_files.tar.gz otbz19@transfer.dyn.archer2.ac.uk:/work/z19/z19/otbz19/
+    rsync -Pv -e"ssh -c aes128-gcm@openssh.com -i $HOME/.ssh/id_RSA_A2" ./all_my_files.tar.gz otbz19@login.archer2.ac.uk:/work/z19/z19/otbz19/
 
 Note the use of the `-P` flag to allow partial transfer -- the same
 command could be used to restart the transfer after a loss of
@@ -456,8 +416,7 @@ full path. We move our research archive to our project work directory on
 ARCHER2.
 
 !!! note
-    Remember to replace `otbz19` with your username on ARCHER2 and `otbz01`
-    with your username on ARCHER
+    Remember to replace `otbz19` with your username on ARCHER2.
 
 If we were unconcerned about being able to restart an interrupted
 transfer, we could instead use the `scp` command,

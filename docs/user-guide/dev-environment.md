@@ -1,9 +1,5 @@
 # Application development environment
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 ## What's available
 
 ARCHER2 runs on the Cray Linux Environment (a version of SUSE Linux),
@@ -331,15 +327,30 @@ programming environment:
 
 !!! warning
     If you want to use GCC version 10 or greater to compile Fortran code,
-    you **must** add the `-fallow-argument-mismatch` option when compiling
+    with the old MPI interfaces (i.e. `use mpi` or `INCLUDE 'mpif.h'`) you
+    **must** add the `-fallow-argument-mismatch` option (or equivalent) when compiling
     otherwise you will see compile errors associated with MPI functions.
+    The reason for this is that past versions of `gfortran` have allowed
+    mismatched arguments to external procedures (e.g., where an explicit
+    interface is not available). This is often the case for MPI routines
+    using the old MPI interfaces where arrays of different types are passed
+    to, for example, `MPI_Send()`. This will now generate an error as not
+    standard conforming. The `-fallow-argument-mismatch` option is used
+    to reduce the error to a warning. The same effect may be achieved via
+    `-std=legacy`.
+
+    If you use the Fortran 2008 MPI interface (i.e. `use mpi_f08`) then you
+    should not need to add this option.
+
+    Fortran language MPI bindings are described in more detail at
+    in [the MPI Standard documentation](https://www.mpi-forum.org/docs/mpi-3.1/mpi31-report/node408.htm).
 
 #### Useful Gnu Fortran options
 
 | Option | Comment |  
 | ------ | ------- |
 | `-std=<standard>` |	Default is gnu |
-| `-fallow-argument-mismatch` | Allow mismatched procedure arguments. This argument is required for compiling MPI Fortran code with GCC version 10 or greater |
+| `-fallow-argument-mismatch` | Allow mismatched procedure arguments. This argument is required for compiling MPI Fortran code with GCC version 10 or greater if you are using the older MPI interfaces (see warning above) |
 | `-fbounds-check` | Use runtime checking of array indices |
 | `-fopenmp` | Compile OpenMP (default is no OpenMP) |
 | `-v` | Display verbose output from compiler stages |

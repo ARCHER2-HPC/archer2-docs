@@ -1,9 +1,5 @@
 # MITgcm
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 The Massachusetts Institute of Technology General Circulation Model
 (MITgcm) is a numerical model designed for study of the atmosphere,
 ocean, and climate. MITgcm's flexible non-hydrostatic formulation
@@ -34,6 +30,11 @@ You should then copy the ARCHER2 optfile into the MITgcm
     directories:
 
     cp /work/y07/shared/mitgcm/optfile/linux_amd64_gfortran_archer2 MITgcm/tools/build_options/
+
+For working with large executables (e.g. adjoint configurations), edit the build options file to include the lines:
+
+    FFLAGS="$FFLAGS -mcmodel=medium"
+    CFLAGS="$CFLAGS -mcmodel=medium"
 
 When you are building your code with this optfile, use the GNU
 environment with
@@ -98,4 +99,163 @@ each for up to one hour.
     # Launch the parallel job
     #   Using 256 MPI processes and 128 MPI processes per node
     #   srun picks up the distribution from the sbatch options
-    srun --cpu-bind=cores ./mitgcmuv
+    srun --distribution=block:block --hint=nomultithread ./mitgcmuv
+    
+## Reproducing the ECCO version 4 (release 4) state estimate on ARCHER2
+
+The ECCO version 4 state estimate (ECCOv4-r4) is an observationally-constrained numerical solution produced by the ECCO group at JPL. If you would like to reproduce the state estimate on ARCHER2 in order to create customised runs and experiments, follow the instructions below. They have been slightly modified from the JPL instructions for ARCHER2. 
+
+For more information, see the ECCOv4-r4 website <https://ecco-group.org/products-ECCO-V4r4.htm>
+
+### Get the ECCOv4-r4 source code
+
+First, navigate to your directory on the ``/work`` filesystem in order to get access to the compute nodes. Next, create a working directory, perhaps MYECCO, and navigate into this working directory:
+
+    mkdir MYECCO
+    cd MYECCO
+    
+In order to reproduce ECCOv4-r4, we need a specific checkpoint of the MITgcm source code. 
+
+    git clone https://github.com/MITgcm/MITgcm.git -b checkpoint66g
+    
+Next, get the ECCOv4-r4 specific code from GitHub:
+
+    cd MITgcm
+    mkdir -p ECCOV4/release4
+    cd ECCOV4/release4
+    git clone https://github.com/ECCO-GROUP/ECCO-v4-Configurations.git
+    mv ECCO-v4-Configurations/ECCOv4\ Release\ 4/code .
+    rm -rf ECCO-v4-Configurations
+    
+### Get the ECCOv4-r4 forcing files
+
+The surface forcing and other input files that are too large to be stored on GitHub are available via NASA data servers. In total, these files are about 200 GB in size. You must register for an Earthdata account and connect to a WebDAV server in order to access these files. For more detailed instructions, read the help page <https://ecco.jpl.nasa.gov/drive/help>.
+
+First, apply for an Earthdata account: <https://urs.earthdata.nasa.gov/users/new>
+
+Next, acquire your WebDAV credentials: <https://ecco.jpl.nasa.gov/drive> (second box from the top)
+
+Now, you can use wget to download the required forcing and input files:
+
+    wget -r --no-parent --user YOURUSERNAME --ask-password 
+      https://ecco.jpl.nasa.gov/drive/files/Version4/Release4/input_forcing
+
+    wget -r --no-parent --user YOURUSERNAME --ask-password 
+      https://ecco.jpl.nasa.gov/drive/files/Version4/Release4/input_init
+    
+    wget -r --no-parent --user YOURUSERNAME --ask-password
+      https://ecco.jpl.nasa.gov/drive/files/Version4/Release4/input_ecco
+
+### Compiling and running ECCOv4-r4
+
+Follow the instructions in the above section on building MITgcm on ARCHER2. These steps also work for ECCOv4-r4. You will need to create a build directory first:
+
+    cd MITgcm/ECCOV4/release4
+    mkdir build
+    cd build
+    
+Once you have compiled the model, you will have the mitgcmuv executable. 
+
+#### Issue with DOS formatting and end-of-namelist characters
+
+As of 16 December 2020, some of the ECCOv4-r4 files downloaded from the ECCO GitHub repository appear to be DOS formatted and/or have inconsistent end-of-namelist characters. This causes end-of-file runtime errors. You may need to manually replace the end-of-namelist "&" characters in some of the namelist files with "/". The namelists are found here:
+
+    cd MITgcm/ECCOV4/release4/input_init/NAMELIST/
+  
+The files with "&" end-of-namelist characters are:
+
+    data.autodiff
+    data.salt_plume
+    data.layers
+    data.optim
+    data.ptracers
+    
+So far, this has only been tested with the gnu compiler (gcc 10.1.0). 
+
+#### Create run directory and link files
+
+In order to run the model, you need to create a run directory and link/copy the appropriate files. First, navigate to your directory on the ``work`` filesystem. From the ``MITgcm/ECCOV4/release4`` directory:
+
+    mkdir run
+    cd run
+    
+    # link the data files
+    ln -s ../input_init/NAMELIST/* .
+    ln -s ../input_init/error_weight/ctrl_weight/* .
+    ln -s ../input_init/error_weight/data_error/* .
+    ln -s ../input_init/* .
+    ln -s ../input_init/tools/* .
+    ln -s ../input_ecco/*/* .
+    ln -s ../input_forcing/eccov4r4* .
+
+    python mkdir_subdir_diags.py
+    
+    # manually copy the mitgcmuv executable
+    cp -p ../build/mitgcmuv .
+
+For a short test run, edit the ``nTimeSteps`` variable in the file ``data``. Comment out the default value and uncomment the line reading ``nTimeSteps=8``. This is a useful test to make sure that the model can at least start up. 
+
+To run on ARCHER2, submit a batch script to the Slurm scheduler. You can use the example Slurm file from above, with the following modifications:
+
+    #SBATCH --job-name=ECCOv4r4-test
+    #SBATCH --time=1:0:0
+    #SBATCH --nodes=8
+    #SBATCH --tasks-per-node=12
+    #SBATCH --cpus-per-task=1
+
+This configuration uses 96 MPI processes at 12 MPI processes per node. Once the run has finished, in order to check that the run has successfully completed, check the end of one of the standard output files. 
+
+    tail STDOUT.0000
+    
+It should read 
+
+    PROGRAM MAIN: Execution ended Normally
+    
+(This document is still under revision. We will add details about examining model diagnostics in a future update.)
+
+#### ECCOv4-r4 in adjoint mode
+
+If you have access to the commercial TAF software produced by <http://FastOpt.de>, then you can compile and run the ECCOv4-r4 instance of MITgcm in adjoint mode. This mode is useful for comprehensive sensitivity studies and for constructing state estimates. From the ``MITgcm/ECCOV4/release4`` directory, create a new code directory and a new build directory:
+
+    mkdir code_ad
+    cd code_ad
+    ln -s ../code/* .
+    cd ..
+    mkdir build_ad
+    cd build_ad
+    
+In this instance, the ``code_ad`` and ``code`` directories are identical, although this does not have to be the case. Make sure that you have the ``staf`` script in your path or in the ``build_ad`` directory itself. To make sure that you have the most up-to-date script, run:
+
+    ./staf -get staf
+    
+To test your connection to the FastOpt servers, try:
+
+    ./staf -test
+    
+You should receive the following message:
+
+    Your access to the TAF server is enabled.
+    
+The compilation commands are similar to those used to build the forward case.
+
+    # load relevant modules
+    module load cray-netcdf-hdf5parallel
+    module load cray-hdf5-parallel
+
+    # compile adjoint model
+    ../../../MITgcm/tools/genmake2 -ieee -mpi -mods=../code_ad -of=(PATH_TO_OPTFILE)
+    make depend
+    make adtaf
+    make adall
+    
+The source code will be packaged and forwarded to the FastOpt servers, where it will undergo source-to-source translation via the TAF algorithmic differentiation software. If the compilation is successful, you will have an executable named ``mitgcmuv_ad``. This will run the ECCOv4-r4 configuration of MITgcm in adjoint mode. As before, create a run directory and copy in the relevant files. The procedure is the same as for the forward model, with the following modifications:
+
+    cd ..
+    mkdir run_ad
+    cd run_ad
+    # manually copy the mitgcmuv executable
+    cp -p ../build_ad/mitgcmuv_ad .
+    
+To run the model, change the name of the executable in the Slurm submission script; everything else should be the same as in the forward case. 
+    
+(More details on verification will be added in a future documentation update)

@@ -1,9 +1,5 @@
 # NWChem
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 NWChem aims to provide its users with computational chemistry tools that
 are scalable both in their ability to treat large scientific
 computational chemistry problems efficiently, and in their use of
@@ -44,10 +40,8 @@ the standard partition. It assumes that the input file is called
 #!/bin/bash
 
 # Request 2 nodes with 128 MPI tasks per node for 20 minutes
-# Replace [budget code] below with your account code,
-# e.g. '--account=t01'
 
-#SBATCH --job-name=CASTEP
+#SBATCH --job-name=NWChem_test
 #SBATCH --nodes=2
 #SBATCH --tasks-per-node=128
 #SBATCH --cpus-per-task=1
@@ -65,7 +59,7 @@ module load epcc-job-env
 # setting OMP_NUM_THREADS, and launch the code.
 module load nwchem
 export OMP_NUM_THREADS=1
-srun -cpu-bind=cores nwchem test_calc
+srun --distribution=block:block --hint=nomultithread nwchem test_calc
 ```
 
 ## Compiling NWChem

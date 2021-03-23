@@ -12,7 +12,7 @@ appropriate.
   - ARCHER2 usage is charged in CUs (Compute Units) rather than kAU
     - Generally: 1.5156 kAU = 4.21 ARCHER node hour = 1 ARCHER2 node hour = 1 CU
   - ARCHER2 uses the *Slurm* scheduler instead of PBS Pro
-    - See: [Running jobs on ARCHER2](../user-guid/scheduler.md)
+    - See: [Running jobs on ARCHER2](../user-guide/scheduler.md)
   - Parallel applications are launched using `srun` rather than `aprun`
   - You cannot currently query your budget on ARCHER2 itself, you can 
     view your budget using SAFE
@@ -21,7 +21,7 @@ appropriate.
 
   - The Intel compilers are not available on ARCHER2
     - ARCHER2 supports the Cray, Gnu and AMD compilers
-    - See: [Application development environment](../dev-environment.md)
+    - See: [Application development environment](../user-guide/dev-environment.md)
   - Intel MKL libraries are not available on ARCHER2
     - Use Cray LibSci for BLAS/LAPACK/ScaLAPACK
     - Use FFTW for FFTs

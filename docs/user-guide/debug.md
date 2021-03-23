@@ -1,9 +1,5 @@
 # Debugging
 
-!!!warning
-   The ARCHER2 Service is not yet available. This documentation is in
-   development.
-
 The following debugging tools are available on ARCHER2:
 
   - [gdb4hpc](#gdb4hpc) is a command-line debugging tool provided by
@@ -19,9 +15,9 @@ The following debugging tools are available on ARCHER2:
     that aids in detection of memory leaks and errors in parallel
     applications. It aggregates like errors across processes and threads
     to simply debugging of parallel applications.
-  - [STAT](#STAT) generate merged stack traces for parallel applications.
+  - [STAT](#stat) generate merged stack traces for parallel applications.
     Also has visualisation tools.
-  - [ATP](#ATP) provides scalable core file and backtrace analysis when parallel
+  - [ATP](#atp) provides scalable core file and backtrace analysis when parallel
     programs crash.
   - CCDB Cray Comparative Debugger. Compare two versions of code
     side-by-side to analyse differences. (Not currently described in this
@@ -312,7 +308,7 @@ arguments `arg1` and `arg2` on two nodes and 256 processes, run:
 
 In particular, note the `--` separating the executable from the
 arguments (this is not necessary if your executable takes no arguments).
-The `--lancher-args="arguments"` allow you to set launcher flags for
+The `--launcher-args="arguments"` allow you to set launcher flags for
 `srun`.
 
 Valgrind4hpc only supports certain tools found in valgrind. These are:

@@ -1,9 +1,5 @@
 # ELK
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 ELK is an all-electron full-potential linearised augmented-plane wave
 (FP-LAPW) code with many advanced features. It was written originally at
 Karl-Franzens-Universitt Graz as a milestone of the EXCITING EU Research
@@ -46,7 +42,7 @@ module load epcc-job-env
 
 module load elk
 
-srun --cpu-bind=cores elk 
+srun --distribution=block:block --hint=nomultithread elk 
 ```
 
 ### Example mixed MPI/OpenMP ELK job

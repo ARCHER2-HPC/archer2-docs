@@ -1,9 +1,5 @@
 # ONETEP
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 ONETEP (Order-N Electronic Total Energy Package) is a linear-scaling
 code for quantum-mechanical calculations based on density-functional
 theory.
@@ -61,7 +57,7 @@ export OMP_STACKSIZE=64M
 export OMP_NUM_THREADS=1
 
 # Launch the executable
-srun --cpu-bind=cores onetep.archer2 test_calc > test_calc.out
+srun --distribution=block:block --hint=nomultithread onetep.archer2 test_calc > test_calc.out
 ```
 
 ## Hints and Tips

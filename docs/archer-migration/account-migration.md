@@ -1,10 +1,5 @@
 # Migrating your account from ARCHER to ARCHER2
 
-!!! warning
-    Access to ARCHER2 is not yet available for most users. We
-    are planning for user access to be enabled by
-    **Friday 4th December 2020**.
-
 This section covers the following questions:
 
   - When will I be able to access ARCHER2?
@@ -19,9 +14,7 @@ This section covers the following questions:
 
 ## When will I be able to access ARCHER2?
 
-We anticipate that users will have access by Friday 4th December 2020. Notification
-of activation of ARCHER2 projects will be sent to the project leaders/PIs for
-them to contact the project users.
+We anticipate that users will have access during the week beginning 11th January 2021. Notification of activation of ARCHER2 projects will be sent to the project leaders/PIs and the project users. 
 
 ## Has my project been migrated to ARCHER2?
 

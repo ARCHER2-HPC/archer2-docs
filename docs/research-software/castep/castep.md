@@ -1,9 +1,5 @@
 # CASTEP
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 [CASTEP](http://www.castep.org) is a leading code for calculating the
 properties of materials from first principles. Using density functional
 theory, it can simulate a wide range of properties of materials
@@ -58,7 +54,17 @@ module load epcc-job-env
 # setting OMP_NUM_THREADS, and launch the code.
 module load castep
 export OMP_NUM_THREADS=1
-srun -cpu-bind=cores castep.mpi test_calc
+srun --distribution=block:block --hint=nomultithread castep.mpi test_calc
+```
+
+## Using serial CASTEP tools
+
+We also provide a set of CASTEP tools compiled for serial use on the login
+nodes or in job submission scripts. You can access these through the 
+`castep-tools` module:
+
+```
+module load castep-tools
 ```
 
 ## Compiling CASTEP

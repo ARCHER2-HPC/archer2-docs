@@ -1,31 +1,55 @@
 # Connecting to ARCHER2
 
-On the ARCHER2 system, interactive access can be achieved via SSH,
-either directly from a command line terminal or using an SSH client. In
-addition data can be transferred to and from the ARCHER2 system using
+On the ARCHER2 system, interactive access can be achieved via SSH, either directly from a command line terminal or using an SSH client. In addition data can be transferred to and from the ARCHER2 system using
 `scp` from the command line or by using a file transfer client.
 
 This section covers the basic connection methods.
 
-Before following the process below, we assume you have setup an account
-on ARCHER2 through the EPCC SAFE. Documentation on how to do this can be
+Before following the process below, we assume you have setup an account on ARCHER2 through the EPCC SAFE. Documentation on how to do this can be
 found at:
 
    - [SAFE Guide for Users](https://epcced.github.io/safe-docs/safe-for-users/)
 
+
+## Command line terminal
+
+### Linux 
+
+Linux distributions and MacOS each come installed with a terminal application that can be used for SSH access to the login nodes. Linux users will have different terminals depending on their distribution and window manager (e.g. GNOME Terminal in GNOME, Konsole in KDE). Consult your Linux distribution's documentation for details on how to load a terminal.
+
+### MacOS
+
+MacOS users can use the Terminal application, located in the Utilities folder within the Applications folder.
+
+### Windows
+
+A typical Windows installation will not include a terminal client, though there are various clients available. We recommend all our Windows users to download and install MobaXterm to access ARCHER2. It is very easy to use and includes an integrated X server with SSH client to run any graphical applications on ARCHER2.
+
+You can download MobaXterm Home Edition (Installer Edition) from the following link:
+
+  - [Install MobaXterm](http://mobaxterm.mobatek.net/download-home-edition.html)
+
+Double-click the downloaded Microsoft Installer file (.msi), and the Windows wizard will automatically guides you through the installation process. Note, you might need to have administrator rights to install on
+some Windows OS. Also make sure to check whether Windows Firewall hasn't blocked any features of this program after installation.
+
+Start MobaXterm and then click "Start local terminal"
+
+!!! tip
+    If this is your first time using MobaXterm, set up a permanent /home directory (or all saved info will be lost from session to session). Go to "Settings" -> "Configuration"-> set path to "Persistent home directory" and make sure path is "private" when prompted.
+
+!!! note
+    MobaXterm also allows you to set up ssh sessions with the username, login host and key details saved.  You are welcome to use this, rather than using the "Local terminal" but we are not able to assist with debugging connection issues if you choose this method.  We recommend sticking to command line terminal access.
+
+
 ## Access credentials
 
-To access ARCHER2, you need to use two credentials: your password
-**and** an SSH key pair protected by a passphrase. You can find more
-detailed instructions on how to set up your credentials to access
-ARCHER2 from Windows, macOS and Linux below.
+To access ARCHER2, you need to use two credentials: your password **and** an SSH key pair protected by a passphrase. You can find more detailed instructions on how to set up your credentials to access ARCHER2 from Windows, macOS and Linux below.
 
 ### SSH Key Pairs
 
-You will need to generate an SSH key pair protected by a passphrase to
-access ARCHER2.
+You will need to generate an SSH key pair protected by a passphrase to access ARCHER2.
 
-Using a terminal (the command line), set up a key pair that contains
+Using a [terminal](#command-line-terminal) (the command line), set up a key pair that contains
 your e-mail address and enter a passphrase you will use to unlock the
 key:
 
@@ -72,19 +96,14 @@ by following the instructions at:
      file on your computer.
  5.  Click *Add* to associate the public SSH key part with your account
 
-Once you have done this, your SSH key will be added to your ARCHER2
-account.
+Once you have done this, your SSH key will be added to your ARCHER2 account.
 
-Remember, you will need to use both an SSH key and password to log into
-ARCHER2 so you will also need to collect your initial password before
-you can log into ARCHER2. We cover this next.
+Remember, you will need to use both an SSH key and password to log into ARCHER2 so you will also need to collect your initial password before you can log into ARCHER2. We cover this next.
 
 ### Initial passwords
 
-The SAFE web interface is used to provide your initial password for
-logging onto ARCHER2 (see the [SAFE
-Documentation](https://epcced.github.io/safe-docs) for more details on
-requesting accounts and picking up passwords).
+The SAFE web interface is used to provide your initial password for logging onto ARCHER2 (see the [SAFE
+Documentation](https://epcced.github.io/safe-docs) for more details on requesting accounts and picking up passwords).
 
 !!! note
     You may now change your password on the ARCHER2 machine itself
@@ -101,27 +120,14 @@ you can run commands or use a command-line text editor to edit files.
 SSH can also be used to run graphical programs such as GUI text editors
 and debuggers when used in conjunction with an X client.
 
-### Logging in from Linux and MacOS
+### Logging in 
 
-Linux distributions and MacOS each come installed with a terminal
-application that can be use for SSH access to the login nodes. Linux
-users will have different terminals depending on their distribution and
-window manager (e.g. GNOME Terminal in GNOME, Konsole in KDE). Consult
-your Linux distribution's documentation for details on how to load a
-terminal.
-
-MacOS users can use the Terminal application, located in the Utilities
-folder within the Applications folder.
-
-You can use the following command from the terminal window to login into
+You can use the following command from the [terminal](#command-line-terminal) window to login into
 ARCHER2:
 
     ssh username@login.archer2.ac.uk
 
-You will first be prompted for your machine account password. Once you
-have entered your password successfully, you will then be prompted for
-the passphrase associated with your SSH key pair. You need to enter both
-credentials correctly to be able to access ARCHER2.
+You will first be prompted for your machine account password. Once you have entered your password successfully, you will then be prompted for the passphrase associated with your SSH key pair. You need to enter both credentials correctly to be able to access ARCHER2.
 
 !!! tip
     If your SSH key pair is not stored in the default location (usually
@@ -143,48 +149,17 @@ credentials correctly to be able to access ARCHER2.
 
     Your password has now been changed
 
-To allow remote programs, especially graphical applications to control
-your local display, such as being able to open up a new GUI window (such
-as for a debugger), use:
+To allow remote programs, especially graphical applications to control your local display, such as being able to open up a new GUI window (such as for a debugger), use:
 
     ssh -X username@login.archer2.ac.uk
 
 Some sites recommend using the `-Y` flag. While this can fix some
 compatibility issues, the `-X` flag is more secure.
 
-Current MacOS systems do not have an X window system. Users should
-install the XQuartz package to allow for SSH with X11 forwarding on
-MacOS systems:
+Current MacOS systems do not have an X window system. Users should install the XQuartz package to allow for SSH with X11 forwarding on MacOS systems:
 
   - [XQuartz website](http://www.xquartz.org/)
 
-### Logging in from Windows using MobaXterm
-
-A typical Windows installation will not include a terminal client,
-though there are various clients available. We recommend all our Windows
-users to download and install MobaXterm to access ARCHER2. It is very
-easy to use and includes an integrated X server with SSH client to run
-any graphical applications on ARCHER2.
-
-You can download MobaXterm Home Edition (Installer Edition) from the
-following link:
-
-  - [Install MobaXterm](http://mobaxterm.mobatek.net/download-home-edition.html)
-
-Double-click the downloaded Microsoft Installer file (.msi), and the
-Windows wizard will automatically guides you through the installation
-process. Note, you might need to have administrator rights to install on
-some Windows OS. Also make sure to check whether Windows Firewall hasn't
-blocked any features of this program after installation.
-
-Start MobaXterm using, for example, the icon added to the Start menu
-during the installation process. Use your ARCHER2 username, the login
-host should be set to `login.archer2.ac.uk`.
-
-If you would like to run any small remote GUI applications, then make
-sure to use -X option along with the ssh command (see above) to enable
-X11 forwarding, which allows you to run graphical clients on your local
-X server.
 
 ## Making access more convenient using the SSH configuration file
 
@@ -241,12 +216,30 @@ you can try and diagnose the issue. Some of these are collected below -
 if you are having difficulties connecting we suggest trying these before
 contacting the ARCHER2 service desk.
 
+### Use the `user@login.archer2.ac.uk` syntax rather than `-l user login.archer2.ac.uk`
+
+We have seen a number of instances where people using the syntax
+
+```
+ssh -l user login.archer2.ac.uk
+```
+
+have not been able to connect properly and get prompted for a password many
+times. We have found that using the alternative syntax:
+
+```
+ssh user@login.archer2.ac.uk
+```
+
+works more reliably. If you are using the `-l user` option to connect and 
+are seeing issues, then try using `user@login.archer2.ac.uk` instead.
+
 ### Can you connect to the login node?
 
 Try the command `ping -c 3 login.archer2.ac.uk`. If you successfully
 connect to the login node, the output should include:
 
-    --- login.dyn.archer2.ac.uk ping statistics ---
+    --- login.archer2.ac.uk ping statistics ---
     3 packets transmitted, 3 received, 0% packet loss, time 38ms
 
 (the ping time '38ms' is not important). If not all packets are received
@@ -416,5 +409,5 @@ denied (publickey)`. If you enter your passphrase correctly, but still
 see this error message, please consider the advice under *SSH key*
 above.
 
-The equivalent information can be obtained in PuTTY or MobaXterm by
+The equivalent information can be obtained in PuTTY by
 enabling all logging in settings.

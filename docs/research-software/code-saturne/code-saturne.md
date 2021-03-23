@@ -1,9 +1,5 @@
 # Code\_Saturne
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 Code\_Saturne solves the Navier-Stokes equations for 2D, 2D-axisymmetric
 and 3D flows, steady or unsteady, laminar or turbulent, incompressible
 or weakly dilatable, isothermal or not, with scalar transport if
@@ -53,7 +49,7 @@ contents shown.
 If you wish to alter the existing *run\_solver* script you will need to
 add all the `#SBATCH` options shown to set the job name, size and so on.
 You should also add the two `module` commands, and
-`srun --cpu-bind=cores` as well as the `--mpi` option to the line executing
+`srun --distribution=block:block --hint=nomultithread` as well as the `--mpi` option to the line executing
 `./cs_solver` to ensure parallel execution on the compute nodes. The
 `export LD_LIBRARY_PATH=...` and `cd` commands are redundant and may be
 retained or removed.
@@ -80,14 +76,23 @@ module load epcc-job-env
 
 module load code_saturne
 
+# Switch to mpich-ucx implementation (see info note below)
+module switch cray-mpich/8.0.16 cray-mpich-ucx/8.0.16
+module switch craype-network-ofi craype-network-ucx
+
 # Prevent threading.
 export OMP_NUM_THREADS=1
 
 # Run solver.
-srun --cpu-bind=cores ./cs_solver --mpi $@
+srun --distribution=block:block --hint=nomultithread ./cs_solver --mpi $@
 ```
 
 The script can then be submitted to the batch system with `sbatch`.
+
+!!! info
+    There is a known issue with the default MPI collectives which is
+    causing performance issues on Code_Saturne. The suggested workaround is to
+    switch to the mpich-ucx implementation.
 
 ## Compiling Code\_Saturne
 

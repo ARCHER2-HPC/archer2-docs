@@ -1,9 +1,5 @@
 # NEMO
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 NEMO (Nucleus for European Modelling of the Ocean) is a state-of-the-art
 framework for research activities and forecasting services in ocean and
 climate sciences, developed in a sustainable way by a European
@@ -103,7 +99,7 @@ It is not necessary for everyone to compile XIOS. A compiled version is availabl
 ```
 This was compiled with:
 ```
-./make_xios --prod --arch X86_ARCHER2-Cray --netcdf_lib netcdf4_par --job 16 -full
+./make_xios --prod --arch X86_ARCHER2-Cray --netcdf_lib netcdf4_par --job 16 --full
 ```
 using the:
 ```

@@ -1,9 +1,5 @@
 # NAMD
 
-!!! warning
-    The ARCHER2 Service is not yet available. This documentation is in
-    development.
-
 [NAMD](http://www.ks.uiuc.edu/Research/namd/), recipient of a 2002
 Gordon Bell Award and a 2012 Sidney Fernbach Award, is a parallel
 molecular dynamics code designed for high-performance simulation of
@@ -55,7 +51,7 @@ module load epcc-job-env
 
 module load namd/2.14-nosmp-gcc10
 
-srun --cpu-bind=cores namd2 input.namd
+srun --distribution=block:block --hint=nomultithread namd2 input.namd
 ```
 
 If your jobs runs out of memory, then you can can run the _smp_
@@ -74,7 +70,7 @@ The following script will run an SMP NAMD MD job using 4 nodes (i.e.
 128x4 = 512 CPU-cores) with 32 MPI communication processes per node
 and 96 worker threads. The number of workers per communication process
 is specified by the `+ppn` argument to NAMD, which is set here to
-`tasks-per-node-1`, i.e `+ppn 3`, to leave a CPU-core free for the
+`cpus-per-task - 1`, i.e `+ppn 3`, to leave a CPU-core free for the
 associated MPI process.
 
 ```
@@ -102,7 +98,7 @@ export OMP_PLACES=cores
 echo "Number of worker threads PPN = $PPN"
 
 # Run NAMD
-srun --hint=nomultithread --distribution=block:block namd2 +setcpuaffinity +ppn $PPN input.namd
+srun --distribution=block:block --hint=nomultithread namd2 +setcpuaffinity +ppn $PPN input.namd
 ```
 
 This is likely to be a reasonable first choice but you should
@@ -112,4 +108,4 @@ should be 128.
 
 If you cannot run the pure MPI version of NAMD, then the optimal
 values of (`tasks-per-node`, `cpus-per-task`) are likely to be either
-(32,4), (16,8) or (8.16).
+(32,4), (16,8) or (8,16).
