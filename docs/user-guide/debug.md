@@ -322,6 +322,9 @@ More information on valgrind4hpc can be found in the manual
 
 ## STAT
 
+!!! Warning
+    STAT is currently not working on ARCHER2 as highlighted in the [Known Issues](https://docs.archer2.ac.uk/known-issues/#stat-view-not-working)
+
 The Stack Trace Analysis Tool (STAT) is a cross-platform debugging tool
 from the University of Wisconsin-Madison. ATP is based on the same
 technology as STAT, both are designed to gather and merge stack traces
