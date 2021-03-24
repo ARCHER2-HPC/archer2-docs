@@ -322,9 +322,6 @@ More information on valgrind4hpc can be found in the manual
 
 ## STAT
 
-!!! Warning
-    STAT is currently not working on ARCHER2 as highlighted in the [Known Issues](https://docs.archer2.ac.uk/known-issues/#stat-view-not-working)
-
 The Stack Trace Analysis Tool (STAT) is a cross-platform debugging tool
 from the University of Wisconsin-Madison. ATP is based on the same
 technology as STAT, both are designed to gather and merge stack traces
@@ -416,9 +413,12 @@ You can view the results that STAT has produced using the following
 command (note that "my_exe" will need to be replaced with the name
 of the executable you  ran):
 
-    stat-view stat_results/my_exe.0000/00_my_exe.0000.3D.dot
+    /work/y02/shared/stat-view-workaround/stat-view stat_results/my_exe.0000/00_my_exe.0000.3D.dot
 
 This produces a graph displaying all the different places within the program that the parallel processes were when you queried them.
+
+!!! Warning
+    Please note that `stat-view` is currently not working on ARCHER2 as highlighted in the [Known Issues](https://docs.archer2.ac.uk/known-issues/#stat-view-not-working). The current workaround is to use `/work/y02/shared/stat-view-workaround/stat-view` instead.
 
 !!! note
     To see the graph, you will need to have exported your X display when logging in.
