@@ -146,7 +146,7 @@ lists the active QoS on ARCHER2.
 
 | QoS        | Max Nodes Per Job | Max Walltime | Jobs Queued | Jobs Running | Partition(s) | Notes |
 | ---------- | ----------------- | ------------ | ----------- | ------------ | ------------ | ------|
-| standard   | 256               | 24 hrs       | 64          | 16           | standard     |       |
+| standard   | 256               | 24 hrs       | 64          | 16           | standard     | Maximum of 256 nodes in use by any one user at any time |
 | short      | 8                 | 20 mins      | 4           | 4            | standard     | Only available Mon-Fri UK Time |
 | long       | 64                | 48 hrs       | 16          | 16           | standard     | Minimum walltime of 24 hrs |
 | largescale | 940               | 3 hrs        | 4           | 1            | standard     | Minimum job size of 257 nodes |
