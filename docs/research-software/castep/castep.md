@@ -27,6 +27,15 @@ ARCHER2, please make a request via the SAFE, see:
 
 Please have your license details to hand.
 
+## Relativistic J-dependent pseudopotentials
+
+These pseudopotentials cannot be generated on the fly by CASTEP and so are available in
+the following directory on ARCHER2:
+
+```
+/work/y07/shared/castep/pseudopotentials
+```
+
 ## Running parallel CASTEP jobs
 
 The following script will run a CASTEP job using 2 nodes (256 cores). it
