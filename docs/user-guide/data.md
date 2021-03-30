@@ -29,6 +29,7 @@ There are a number of different data storage types available to users:
 
    - Home file systems
    - Work file systems
+   - RDFaaS (RDF as a Service) file systems (`/epsrc` and `/general`)
 
 Each type of storage has different characteristics and policies, and is
 suitable for different types of use.
@@ -39,6 +40,14 @@ There are also two different types of node available to users:
    - Compute nodes
 
 Each type of node sees a different combination of the storage types.
+The following table shows which storage options are avalable on 
+different node types:
+
+| Storage | Login Nodes | Compute Nodes | Notes | 
+|---------|-------------|---------------|-------|
+| /home   | yes         | no            | Backed up |
+| /work   | yes         | yes           | Not backed up, high performance |
+| RDFaaS  | yes         | no            | Backed up, high performance |
 
 ### Home file systems
 
@@ -50,14 +59,19 @@ size and is implemented using standard Network Attached Storage (NAS)
 technology. This means that these disks are not particularly high
 performance but are well suited to standard operations like compilation
 and file editing. These file systems are visible from the ARCHER2 login
-nodes and the pre-/post-processing nodes.
+nodes.
 
 The home file systems **are fully backed up**. Full backups are taken
-weekly with incremental backups added every day in between. Backups are
-kept for disaster recovery purposes only. If you have accidentally lost
-data from a backed-up file-system and have no other way of recovering
-the data then contact us as quickly as possible but we may be unable to
-assist.
+weekly (for each of the past two weeks), daily (for each of the past
+two days) and hourly (for each of the last 6 hours). You can access the
+snapshots at the `/home1/.snapshot`, `/home2/.snapshot`, `/home3/.snapshot`
+and `/home4/.snapshot` depending on which of the file systems you have
+your home directories on. You can find out which file system your
+home directory is on with the command:
+
+```
+readlink -f $HOME
+```
 
 These file-systems are a good location to keep source-code, copies of
 scripts and compiled binaries. Small amounts of important data can also
@@ -71,7 +85,7 @@ enough to manipulate large datasets effectively.
 
 ### Work file systems
 
-There is one work file-systems:
+There is one work file-system:
 
    - /work 3.4 PB
 
@@ -106,6 +120,64 @@ ARCHER2 service entirely.
 
 If you have data on the work file system that you are not going to need
 in the future please delete it.
+
+### RDFaaS file system
+
+The data that was available on the RDF `/epsrc` and `/general` file systems
+is available on ARCHER2 via the RDFaaS (RDF as a Service) file system. If 
+you have requested the same username in the same project as you had on 
+ARCHER then you will be able to access your data at either:
+
+```
+/epsrc/<project-code>
+```
+
+or
+
+```
+/general/<project-code>
+```
+
+depending on which file system it was in on the RDF file systems. For example,
+if your username is `auser` and you are in the `e05` project, then your RDF data
+will be on the RDFaaS file system at:
+
+```
+/epsrc/e05/e05/auser
+```
+
+The RDFaaS file systems are only available on the ARCHER2 login nodes.
+
+!!! important
+    The data on the RDFaaS file system is currently available in **read-only
+    mode**. You need to transfer data from the RDFaaS file system to `/work`
+    (or `/home` if it is a small amount of data) if you wish to alter it or
+    use it on the compute nodes. You can, of course, also use `scp` to transfer
+    data from the RDFaaS file system to another system.
+
+!!! note
+    We plan to make the RDFaaS file system read/write once the full ARCHER2
+    service is available.
+
+!!! tip
+    If you are having issues accessing data on the RDFaaS file system then 
+    please [contact the ARCHER2 Service Desk](https://www.archer2.ac.uk/support-access/servicedesk.html)
+
+#### Copying data from RDFaaS to Work file systems
+
+You should use the standard Linux `cp` command to copy data from the RDFaaS file 
+system to other ARCHER2 file systems (usually `/work`). For example, to
+transfer the file `important-data.tar.gz` from the RDFaaS file system to
+`/work` you would use the following command (assuming you are user `auser`
+in project `e05`):
+
+```
+cp /epsrc/e05/e05/auser/important-data.tar.gz /work/e05/e05/auser/
+```
+
+(remember to replace the project code and username with your own username
+and project code. You may also need to use `/general` if your data was 
+there on the RDF file systems).
 
 ## Archiving and data transfer
 
