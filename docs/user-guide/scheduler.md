@@ -21,6 +21,45 @@ login nodes (to submit, check and cancel jobs), and by specifying Slurm
 directives that describe the resources required for your jobs in job
 submission scripts.
 
+## Resources
+
+### CUs
+
+Time used on ARCHER2 is measured in CUs.  
+1 CU = 1 Node Hour for a standard 128 core node.
+
+The [CU calculator](https://www.archer2.ac.uk/support-access/cu-calc.html) will help you to calculate the CU cost for your jobs.
+
+### Checking available budget
+
+You can check in [SAFE](https://safe.epcc.ed.ac.uk) by selecting `Login accounts` from the menu, select the login account you want to query.
+
+Under `Login account details` you will see each of the budget codes you have access to listed e.g.
+`e123 resources` and then under Resource Pool to the right of this, a note of the remaining budget in CUs. 
+
+When logged in to the machine you can also use the command 
+
+    sacctmgr show assoc where user=$LOGNAME format=account,user,maxtresmins
+
+This will list all the budget codes that you have access to e.g.
+
+
+       Account       User   MaxTRESMins
+    ---------- ---------- -------------
+          e123      userx         cpu=0
+     e123-test      userx
+
+This shows that `userx` is a member of budgets `e123` and `e123-test`.  However, the `cpu=0` indicates that the `e123` budget is empty or disabled.   This user can submit jobs using the `e123-test` budget.
+
+To see the number of CUs remaining you must check in [SAFE](https://safe.epcc.ed.ac.uk).
+
+### Charging
+
+Jobs run on ARCHER2 are charged for the time they use i.e. from the time the job begins to run until the time the job ends (not the full wall time requested).
+
+Jobs are charged for the full number of nodes which are requested, even if they are not all used.
+
+
 ## Basic Slurm commands
 
 There are three key commands used to interact with the Slurm on the
