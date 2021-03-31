@@ -165,6 +165,14 @@ Current MacOS systems do not have an X window system. Users should install the X
   - [XQuartz website](http://www.xquartz.org/)
 
 
+
+## Host Keys
+
+These are the entries in `~/.ssh/known_hosts`
+
+'AAAAB3NzaC1yc2EAAAADAQABAAABAQC/zGWlNKRmbGcH3j/+wQ/3vytRJnautfshhKNx6naoymVxmXSg9CvtsJQUCNsNMnYu7NvZwOu1SqouXUNbpXZbOxikPLooRmM6JmCiJ72Zz5ylsXaFaIPmU7nl40J8YP5xcmlW6+HP6/gcnrZeCGLOcCSGHIIAAPotL1hwF9ab0RFbHV1+IyNPc5LYwslwmtn1zU5BY6xKISL8cMy+tAxBExY07xKZ6k+7bNPc4Ia4GfoU+8U9/2ZpN6wpNZVCNOsQ92nyELKveO9PIzLPJvxkxnRYaEfYshnRPCauBEnhZbixqrlnyWQsShbjfxBac3XEgQlg0XIAvHfFLUQNL1bv'
+
+
 ## Making access more convenient using the SSH configuration file
 
 Typing in the full command to login or transfer data to ARCHER2 can
