@@ -29,9 +29,9 @@ The following text editors are available on ARCHER2
 
 | Name | Description | Examples |
 | ---  | ---         | ---      |
-| emacs | A widely used editor <br /> with a focus on extensibility. | emacs    -nw    sharpen.pbs <br /> CTRL+X CTRL+C quits  <br /> CTRL+X CTRL+S saves
-| nano | A small, free editor  <br />with a focus on user friendliness.|nano sharpen.pbs <br /> CTRL+X quits <br /> CTRL+O saves|
-| vi | A mode based editor <br /> with a focus on aiding code development. | vi cfd.f90  <br /> :q in command mode quits  <br /> :q! in command mode quits without saving  <br />:w in command mode saves  <br /> i in command mode switches to insert mode  <br /> ESC in insert mode switches to command mode |
+| emacs | A widely used editor <br /> with a focus on extensibility. | `emacs    -nw    sharpen.pbs` <br /> `CTRL+X CTRL+C` quits  <br /> `CTRL+X CTRL+S` saves
+| nano | A small, free editor  <br />with a focus on user friendliness.|`nano sharpen.pbs` <br /> `CTRL+X` quits <br /> `CTRL+O` saves|
+| vi | A mode based editor <br /> with a focus on aiding code development. | `vi cfd.f90`  <br /> `:q` in command mode quits  <br /> `:q!` in command mode quits without saving  <br />`:w` in command mode saves  <br /> `i` in command mode switches to insert mode  <br /> `ESC` in insert mode switches to command mode |
 
 If you are using MobaXterm on Windows you can use the inbuilt MobaTextEditor text file editor.
 

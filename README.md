@@ -1,7 +1,7 @@
 # ARCHER2 Documentation
 
-\*\* This documentation is in development. ARCHER2 is currently running as a small early access system while the full system is being commissioned. For more information on ARCHER,
-please visit the [ARCHER web site](http://www.archer.ac.uk).\*\*
+\*\* This documentation is in development. ARCHER2 is currently running as a small early access system while the full system is being commissioned. For more information on ARCHER2,
+please visit the [ARCHER2 web site](http://www.archer2.ac.uk).\*\*
 
 ARCHER2 is the next generation UK National Supercomputing Service. You
 can find more information on the service and the research it supports on

@@ -40,7 +40,7 @@ Start MobaXterm and then click "Start local terminal"
     - If you are using a "managed desktop" machine, so do not have admin rights, you can use the [Portable edition of MobaXterm](https://mobaxterm.mobatek.net/download-home-edition.html) which doesn't need install privilages.
 
     - If this is your first time using MobaXterm, check that a permanent /home directory has been set up (or all saved info will be lost from session to session). Go to "Settings" -> "Configuration"-> check path to "Persistent home directory" is set and make sure path is "private" if prompted.
-    - Any ssh key generated in MobaXterm will, by default, be stored in the permananet /home directory (see above) i.e. if your /home directory is `_MyDocuments_\MobaXterm\home` then within that folder you will find `_MyDocuments_\MobaXterm\home\.ssh` with your keys.  This folder will be 'hidden' by default so you may need to tick 'Hidden items' under 'View' in Windows Explorer to see it.
+    - Any ssh key generated in MobaXterm will, by default, be stored in the permanent /home directory (see above) i.e. if your /home directory is `_MyDocuments_\MobaXterm\home` then within that folder you will find `_MyDocuments_\MobaXterm\home\.ssh` with your keys.  This folder will be 'hidden' by default so you may need to tick 'Hidden items' under 'View' in Windows Explorer to see it.
 
     - MobaXterm also allows you to set up ssh sessions with the username, login host and key details saved.  You are welcome to use this, rather than using the "Local terminal" but we are not able to assist with debugging connection issues if you choose this method.  We recommend sticking to command line terminal access.
 
