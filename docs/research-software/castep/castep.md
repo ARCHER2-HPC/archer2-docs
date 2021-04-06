@@ -27,7 +27,7 @@ ARCHER2, please make a request via the SAFE, see:
 
 Please have your license details to hand.
 
-## Relativistic J-dependent pseudopotentials
+### Note on using Relativistic J-dependent pseudopotentials
 
 These pseudopotentials cannot be generated on the fly by CASTEP and so are available in
 the following directory on ARCHER2:
@@ -82,4 +82,4 @@ The latest instructions for building CASTEP on ARCHER2 may be found in
 the GitHub repository of build instructions:
 
    - [Build instructions for CASTEP on
-     GitHub](https://github.com/hpc-uk/build-instructions/tree/master/CASTEP)
+     GitHub](https://github.com/hpc-uk/build-instructions/tree/main/apps/CASTEP)
