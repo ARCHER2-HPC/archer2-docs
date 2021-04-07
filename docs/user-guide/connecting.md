@@ -34,11 +34,15 @@ some Windows OS. Also make sure to check whether Windows Firewall hasn't blocked
 
 Start MobaXterm and then click "Start local terminal"
 
-!!! tip
-    If this is your first time using MobaXterm, set up a permanent /home directory (or all saved info will be lost from session to session). Go to "Settings" -> "Configuration"-> set path to "Persistent home directory" and make sure path is "private" when prompted.
+!!! Tips
+    - If you download the .zip file rather than the .msi, make sure you unzip before attempting to run the installer.
 
-!!! note
-    MobaXterm also allows you to set up ssh sessions with the username, login host and key details saved.  You are welcome to use this, rather than using the "Local terminal" but we are not able to assist with debugging connection issues if you choose this method.  We recommend sticking to command line terminal access.
+    - If you are using a "managed desktop" machine, so do not have admin rights, you can use the [Portable edition of MobaXterm](https://mobaxterm.mobatek.net/download-home-edition.html) which doesn't need install privilages.
+
+    - If this is your first time using MobaXterm, check that a permanent /home directory has been set up (or all saved info will be lost from session to session). Go to "Settings" -> "Configuration"-> check path to "Persistent home directory" is set and make sure path is "private" if prompted.
+    - Any ssh key generated in MobaXterm will, by default, be stored in the permanent /home directory (see above) i.e. if your /home directory is `_MyDocuments_\MobaXterm\home` then within that folder you will find `_MyDocuments_\MobaXterm\home\.ssh` with your keys.  This folder will be 'hidden' by default so you may need to tick 'Hidden items' under 'View' in Windows Explorer to see it.
+
+    - MobaXterm also allows you to set up ssh sessions with the username, login host and key details saved.  You are welcome to use this, rather than using the "Local terminal" but we are not able to assist with debugging connection issues if you choose this method.  We recommend sticking to command line terminal access.
 
 
 ## Access credentials
@@ -159,6 +163,13 @@ compatibility issues, the `-X` flag is more secure.
 Current MacOS systems do not have an X window system. Users should install the XQuartz package to allow for SSH with X11 forwarding on MacOS systems:
 
   - [XQuartz website](http://www.xquartz.org/)
+
+
+## Host Keys
+
+These are the entries in `~/.ssh/known_hosts`
+
+    AAAAB3NzaC1yc2EAAAADAQABAAABAQC/zGWlNKRmbGcH3j/+wQ/3vytRJnautfshhKNx6naoymVxmXSg9CvtsJQUCNsNMnYu7NvZwOu1SqouXUNbpXZbOxikPLooRmM6JmCiJ72Zz5ylsXaFaIPmU7nl40J8YP5xcmlW6+HP6/gcnrZeCGLOcCSGHIIAAPotL1hwF9ab0RFbHV1+IyNPc5LYwslwmtn1zU5BY6xKISL8cMy+tAxBExY07xKZ6k+7bNPc4Ia4GfoU+8U9/2ZpN6wpNZVCNOsQ92nyELKveO9PIzLPJvxkxnRYaEfYshnRPCauBEnhZbixqrlnyWQsShbjfxBac3XEgQlg0XIAvHfFLUQNL1bv
 
 
 ## Making access more convenient using the SSH configuration file

@@ -76,10 +76,10 @@ cores).
 ```
 #!/bin/bash
 
-# Request 2 nodes (256 MPI tasks at 128 tasks per node) for 20 minutes.   
+# Request 16 nodes (2048 MPI tasks at 128 tasks per node) for 20 minutes.   
 
 #SBATCH --job-name=VASP_test
-#SBATCH --nodes=4
+#SBATCH --nodes=16
 #SBATCH --tasks-per-node=128
 #SBATCH --cpus-per-task=1
 #SBATCH --time=00:20:00
@@ -127,10 +127,10 @@ cores) using only MPI ranks and no OpenMP threading.
 ```
 #!/bin/bash
 
-# Request 2 nodes (256 MPI tasks at 128 tasks per node) for 20 minutes.   
+# Request 16 nodes (2048 MPI tasks at 128 tasks per node) for 20 minutes.   
 
 #SBATCH --job-name=VASP_test
-#SBATCH --nodes=4
+#SBATCH --nodes=16
 #SBATCH --tasks-per-node=128
 #SBATCH --cpus-per-task=1
 #SBATCH --time=00:20:00

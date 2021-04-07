@@ -21,6 +21,47 @@ login nodes (to submit, check and cancel jobs), and by specifying Slurm
 directives that describe the resources required for your jobs in job
 submission scripts.
 
+## Resources
+
+### CUs
+
+Time used on ARCHER2 is measured in CUs.  
+1 CU = 1 Node Hour for a standard 128 core node.
+
+The [CU calculator](https://www.archer2.ac.uk/support-access/cu-calc.html) will help you to calculate the CU cost for your jobs.
+
+### Checking available budget
+
+You can check in [SAFE](https://safe.epcc.ed.ac.uk) by selecting `Login accounts` from the menu, select the login account you want to query.
+
+Under `Login account details` you will see each of the budget codes you have access to listed e.g.
+`e123 resources` and then under Resource Pool to the right of this, a note of the remaining budget in CUs. 
+
+When logged in to the machine you can also use the command 
+
+    sacctmgr show assoc where user=$LOGNAME format=account,user,maxtresmins
+
+This will list all the budget codes that you have access to e.g.
+
+
+       Account       User   MaxTRESMins
+    ---------- ---------- -------------
+          e123      userx         cpu=0
+     e123-test      userx
+
+This shows that `userx` is a member of budgets `e123` and `e123-test`.  However, the `cpu=0` indicates that the `e123` budget is empty or disabled.   This user can submit jobs using the `e123-test` budget.
+
+To see the number of CUs remaining you must check in [SAFE](https://safe.epcc.ed.ac.uk).
+
+### Charging
+
+Jobs run on ARCHER2 are charged for the time they use i.e. from the time the job begins to run until the time the job ends (not the full wall time requested).
+
+Jobs are charged for the full number of nodes which are requested, even if they are not all used.
+
+Charging takes place at the time the job ends, and the job is charged in full to the budget which is live at the end time.
+
+
 ## Basic Slurm commands
 
 There are three key commands used to interact with the Slurm on the
@@ -146,7 +187,7 @@ lists the active QoS on ARCHER2.
 
 | QoS        | Max Nodes Per Job | Max Walltime | Jobs Queued | Jobs Running | Partition(s) | Notes |
 | ---------- | ----------------- | ------------ | ----------- | ------------ | ------------ | ------|
-| standard   | 256               | 24 hrs       | 64          | 16           | standard     |       |
+| standard   | 256               | 24 hrs       | 64          | 16           | standard     | Maximum of 256 nodes in use by any one user at any time |
 | short      | 8                 | 20 mins      | 4           | 4            | standard     | Only available Mon-Fri UK Time |
 | long       | 64                | 48 hrs       | 16          | 16           | standard     | Minimum walltime of 24 hrs |
 | largescale | 940               | 3 hrs        | 4           | 1            | standard     | Minimum job size of 257 nodes |
@@ -165,6 +206,12 @@ command:
     [contact the Service
     Desk](https://www.archer2.ac.uk/support-access/servicedesk.html) and we
     can discuss how to accommodate your requirements.
+
+### E-mail notifications
+
+E-mail notifications from the batch system are not currently available
+on ARCHER2.
+
 
 ## Troubleshooting
 
@@ -798,11 +845,16 @@ node you must be aware of a few things:
  - You will need to place each `srun` command into the background and 
    then use the `wait` command at the end of the submission script to
    make sure it does not exit before the commands are complete.
+ - If you want to use more than one node in the job and use multiple `srun`
+   per node (e.g. 256 single core processes across 2 nodes) then you need
+   to pass the node ID to the `srun` commands otherwise Slurm will oversubscribe
+   cores on the first node.
 
 Below, we briefly describe the `genmaskcpu` helper script and then provide
-two examples or running multiple subjobs in a node, one that runs 128
-serial processes across a single node and one that runs 8 subjobs each of
-which use 8 MPI processes with 2 OpenMP threads per MPI process.
+three examples or running multiple subjobs in a node, one that runs 128
+serial processes across a single node; one that runs 8 subjobs each of
+which use 8 MPI processes with 2 OpenMP threads per MPI process; and one
+that runs 256 serial processes across two nodes.
 
 #### `genmaskcpu` helper script
 
@@ -942,6 +994,72 @@ do
     maskcpu=$(genmaskcpu 8 ${i} 8 2)
     # Launch subjob overriding job settings as required and in the background
     srun --cpu-bind=mask_cpu:${maskcpu} --nodes=1 --ntasks=8 --tasks-per-node=8 --cpus-per-task=2 xthi > placement${i}.txt &
+done
+
+# Wait for all subjobs to finish
+wait
+```
+
+#### Example 3: 256 serial tasks running across two nodes
+
+For our third example, we will run 256 single-core copies of the `xthi` program (which
+prints process/thread placement) across two ARCHER2 compute nodes with each
+copy of `xthi` pinned to a different core. We will use `genmaskcpu` to generate the 
+correct binding mask for each subjob. We will also illustrate a mechnism for getting the
+node IDs to pass to `srun` as this is required to ensure that the individual subjobs are
+assigned to the correct node. This mechanism uses the `scontrol` command to turn the 
+nodelist from `sbatch` into a format we can use as input to `srun`. The job submission
+script for this example would look like:
+
+```slurm
+#!/bin/bash
+# Slurm job options (job-name, compute nodes, job time)
+#SBATCH --job-name=MultiSerialOnComputes
+#SBATCH --time=0:10:0
+#SBATCH --nodes=2
+#SBATCH --tasks-per-node=128
+#SBATCH --cpus-per-task=1
+
+# Replace [budget code] below with your budget code (e.g. t01)
+#SBATCH --account=[budget code]  
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+# Setup the job environment (this module needs to be loaded before any other modules)
+module load epcc-job-env
+
+# Make xthi available
+module load xthi
+
+# Make the pinning helper script available
+module load cray-python
+module load genmaskcpu
+
+# Set the number of threads to 1
+#   This prevents any threaded system libraries from automatically 
+#   using threading.
+export OMP_NUM_THREADS=1
+
+# Get a list of the nodes assigned to this job in a format we can use.
+#   scontrol converts the condensed node IDs in the sbatch environment
+#   variable into a list of full node IDs that we can use with srun to
+#   ensure the subjobs are placed on the correct node. e.g. this converts
+#   "nid[001234,002345]" to "nid001234 nid002345"
+nodelist=$(scontrol show hostnames $SLURM_JOB_NODELIST)
+
+# Loop over the nodes assigned to the job
+for nodeid in $nodelist
+do
+    # Loop over 128 subjobs on each node pinning each to a different core
+    for i in $(seq 1 128)
+    do
+        # Generate mask: 128 subjobs per node, subjob number in sequence given by i,
+        # 1 process per subjob, 1 thread per process
+        maskcpu=$(genmaskcpu 128 ${i} 1 1)
+        # Launch subjob overriding job settings as required and in the background, note
+        # additional --nodelist option to specify the correct node to bind to
+        srun --cpu-bind=mask_cpu:${maskcpu} --nodelist=${nodeid} --nodes=1 --ntasks=1 --tasks-per-node=1 xthi > placement_${nodeid}_${i}.txt &
+    done
 done
 
 # Wait for all subjobs to finish

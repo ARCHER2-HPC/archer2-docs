@@ -59,10 +59,9 @@ including:
   - As serial processes within a non-interactive batch script
   - As parallel processes within a non-interactive batch script
 
-We provide information on each of these scenarios (apart from the
-parallel use where we are still preparing the documentation) below.
-First, we describe briefly how to get existing images onto ARCHER2 so
-you can use them.
+We provide information on each of these scenarios below. First,
+we describe briefly how to get existing images onto ARCHER2 so
+that you can use them.
 
 ### Getting existing images onto ARCHER2
 
