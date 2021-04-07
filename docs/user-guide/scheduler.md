@@ -59,6 +59,8 @@ Jobs run on ARCHER2 are charged for the time they use i.e. from the time the job
 
 Jobs are charged for the full number of nodes which are requested, even if they are not all used.
 
+Charging takes place at the time the job ends, and the job is charged in full to the budget which is live at the end time.
+
 
 ## Basic Slurm commands
 
