@@ -420,6 +420,135 @@ access to software libraries if available.
     be found in the [Software libraries](../software-libraries/)
     section of the user guide.
 
+## Switching to a different HPE Cray Programming Environment release
+
+!!! important
+    See the section below on using non-default versions of HPE Cray libraries
+    below as this process will generally need to be followed when using software
+    from non-default PE installs.
+
+Access to non-default PE environments is controlled by the use of the `cpe` modules.
+These modules are typically loaded *after* you have restored a PrgEnv and will 
+set your compile environment to match that in the other PE release. This means:
+
+- The compiler version will be switched to the one from the selected PE
+- Libraries (or modules) that are loaded by default will have their verison
+  switched to the ones from the selected PE. Typically, this means that
+  `cray-libsci` and `cray-mpich` are switched
+
+Some things are not changed on loading the `cpe` module. In particular:
+
+- The default version of modules accessed by the `module` command are not
+  updated to those in the specified PE. If you wish to use other modules
+  in the PE release (e.g. `cray-fftw`, `cray-netcdf`) then you need to manually
+  specify the version you want.
+
+As noted above, you will also need to setup your environment to use non-default
+versions of HPE Cray libraries (including those changed by the `cpe` module) as
+described in the section below.
+
+## Using non-default versions of HPE Cray libraries on ARCHER2
+
+If you wish to make use of non-default versions of libraries provided by HPE
+Cray (usually because they are part of a non-default PE release: either old
+or new) then you need to make changes at *both* compile and runtime. In summary,
+you need to load the correct module and also make changes to the `LD_LIBRARY_PATH`
+environment variable.
+
+**At compile time** you need to load the version of the library module before you compile
+*and* set the LD_LIBRARY_PATH environment variable to include the contencts of
+`$CRAY_LD_LIBRARY_PATH` as the first entry. For example, to use the, non-default, 20.08.1.2
+version of HPE Cray LibSci in the default programming environment (Cray Compiler Environment,
+CCE) you would first setup the environment to compile with:
+
+```
+auser@uan01:~/test/libsci> module swap cray-libsci cray-libsci/20.08.1.2 
+auser@uan01:~/test/libsci> export LD_LIBRARY_PATH=$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH
+```
+
+The order is important here: every time you change a module, you will need to reset
+the value of `LD_LIBRARY_PATH` for the process to work (it will not be updated
+automatically).
+
+Now you can compile your code. You can check that the executable is using the correct version 
+of LibSci with the `ldd` command and look for the line beginning `libsci_cray.so.5`, you
+should see the version in the path to the library file:
+
+```
+aturner@uan01:~/test/libsci> ldd dgemv.x 
+	linux-vdso.so.1 (0x00007ffe4a7d2000)
+	libsci_cray.so.5 => /opt/cray/pe/libsci/20.08.1.2/CRAY/9.0/x86_64/lib/libsci_cray.so.5 (0x00007fafd6a43000)
+	libdl.so.2 => /lib64/libdl.so.2 (0x00007fafd683f000)
+	libxpmem.so.0 => /opt/cray/xpmem/default/lib64/libxpmem.so.0 (0x00007fafd663c000)
+	libquadmath.so.0 => /opt/cray/pe/cce/10.0.4/cce/x86_64/lib/libquadmath.so.0 (0x00007fafd63fc000)
+	libmodules.so.1 => /opt/cray/pe/cce/10.0.4/cce/x86_64/lib/libmodules.so.1 (0x00007fafd61e0000)
+	libfi.so.1 => /opt/cray/pe/cce/10.0.4/cce/x86_64/lib/libfi.so.1 (0x00007fafd5abe000)
+	libcraymath.so.1 => /opt/cray/pe/cce/10.0.4/cce/x86_64/lib/libcraymath.so.1 (0x00007fafd57e2000)
+	libf.so.1 => /opt/cray/pe/cce/10.0.4/cce/x86_64/lib/libf.so.1 (0x00007fafd554f000)
+	libu.so.1 => /opt/cray/pe/cce/10.0.4/cce/x86_64/lib/libu.so.1 (0x00007fafd523b000)
+	libcsup.so.1 => /opt/cray/pe/cce/10.0.4/cce/x86_64/lib/libcsup.so.1 (0x00007fafd5035000)
+	libstdc++.so.6 => /opt/cray/pe/gcc-libs/libstdc++.so.6 (0x00007fafd4c62000)
+	libpthread.so.0 => /lib64/libpthread.so.0 (0x00007fafd4a43000)
+	libc.so.6 => /lib64/libc.so.6 (0x00007fafd4688000)
+	libm.so.6 => /lib64/libm.so.6 (0x00007fafd4350000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007fafda988000)
+	librt.so.1 => /lib64/librt.so.1 (0x00007fafd4148000)
+	libgfortran.so.5 => /opt/cray/pe/gcc-libs/libgfortran.so.5 (0x00007fafd3c92000)
+	libgcc_s.so.1 => /opt/cray/pe/gcc-libs/libgcc_s.so.1 (0x00007fafd3a7a000)
+```
+
+!!! tip
+    If any of the libraries point to versions in the `/opt/cray/pe/lib64` directory
+    then these are using the default versions of the libraries rather than the 
+    specific versions. This happens at compile time if you have forgotton to load 
+    the right module and set `$LD_LIBRARY_PATH` afterwards.
+
+**At run time** (typically in your job script) you need to repeat the environment
+setup steps (you can also use the `ldd` command in your job submission script to 
+check the library is pointing to the correct version). For example, a job submission
+script to run our `dgemv.x` executable with the non-default version of LibSci could
+look like:
+
+```
+#!/bin/bash
+#SBATCH --job-name=dgemv
+#SBATCH --time=0:20:0
+#SBATCH --nodes=1
+#SBATCH --tasks-per-node=1
+#SBATCH --cpus-per-task=1
+
+# Replace the account code, partition and QoS with those you wish to use
+#SBATCH --account=t01        
+#SBATCH --partition=standard
+#SBATCH --qos=short
+#SBATCH --reservation=shortqos
+
+# Load the standard environment module
+module load epcc-job-env
+
+# Setup up the environment to use the non-default version of LibSci
+#   We use "module swap" as the "cray-libsci" is loaded by default.
+#   This must be done after loading the "epcc-job-env" module
+module swap cray-libsci cray-libsci/20.08.1.2
+export LD_LIBRARY_PATH=$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH
+
+# Check which library versions the executable is pointing too
+ldd dgemv.x
+
+export OMP_NUM_THREADS=1
+
+srun --hint=nomultithread --distribution=block:block dgemv.x
+```
+
+!!! tip
+    As when compiling, the order of commands matters. Setting the value of
+    `LD_LIBRARY_PATH` must happen after you have finished all your `module`
+    commands for it to have the correct effect.
+
+!!! important
+    You must setup the environment at both compile and run time otherwise
+    you will end up using the default version of the library.
+
 ## Build instructions for software on ARCHER2
 
 The ARCHER2 CSE team at [EPCC](https://www.epcc.ed.ac.uk) and other contributors
