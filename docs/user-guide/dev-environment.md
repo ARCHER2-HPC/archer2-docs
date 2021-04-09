@@ -428,20 +428,20 @@ access to software libraries if available.
     from non-default PE installs.
 
 Access to non-default PE environments is controlled by the use of the `cpe` modules.
-These modules are typically loaded *after* you have restored a PrgEnv and will 
+These modules are typically loaded *after* you have restored a PrgEnv and loaded all
+the other modules you need and will 
 set your compile environment to match that in the other PE release. This means:
 
 - The compiler version will be switched to the one from the selected PE
-- Libraries (or modules) that are loaded by default will have their verison
-  switched to the ones from the selected PE. Typically, this means that
-  `cray-libsci` and `cray-mpich` are switched
+- Libraries (or modules) that are loaded will have their verison
+  switched to the ones from the selected PE.
 
 Some things are not changed on loading the `cpe` module. In particular:
 
 - The default version of modules accessed by the `module` command are not
-  updated to those in the specified PE. If you wish to use other modules
-  in the PE release (e.g. `cray-fftw`, `cray-netcdf`) then you need to manually
-  specify the version you want.
+  updated to those in the specified PE. You should ensure all modules are
+  loaded *before* you load the `cpe` module to ensure all modules get switched
+  to new versions.
 
 As noted above, you will also need to setup your environment to use non-default
 versions of HPE Cray libraries (including those changed by the `cpe` module) as
