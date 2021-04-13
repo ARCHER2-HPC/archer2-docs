@@ -107,6 +107,15 @@ ARCHER2 service entirely.
 If you have data on the work file system that you are not going to need
 in the future please delete it.
 
+### Subprojects
+
+Some large projects may choose to split their resources into multiple subprojects. These subprojects will have identifiers prepended with the main project ID. For example, the `rse` subgroup of the `z19` project would have the ID `z19-rse`. If the main project has allocated storage quotas to the subproject the directories for this storage will be found at, for example:
+```
+/home/z19/z19-rse/auser
+```
+
+Your Linux home directory will generally not be changed when you are made a member of a subproject so you must change directories manually (or change the ownership of files) to make use of this different storage quota allocation.
+
 ## Archiving and data transfer
 
 Data transfer speed may be limited by many different factors so the best
