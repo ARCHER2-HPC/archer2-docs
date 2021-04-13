@@ -43,7 +43,17 @@ There will be **no** access to `/work` after 0800 on Wednesday 27th January.
 ### RDF Data
 **Q.** What is happening to data on the RDF (`/epsrc` and `/general`) and how can I access data on the RDF from ARCHER2?
 
-**A.** Data on the RDF will persist beyond the lifetime of ARCHER. Although there are plans to make the RDF data directly available on ARCHER2 in the same way as they were on ARCHER, this functionality is not available yet.
+**A.** The RDF data is now available on RDF as a Service (RDFaaS).  
+ARCHER2 users can access the data from the ARCHER2 User Access Nodes (UANs) using 
+
+`cd /epsrc/your_project_code ` <br />
+`cd /general/your_project_code `
+
+The data is currently read-only so you are able to access the data and make a copy if needed but you are not able to write to the space during the ARCHER2 4Cabinet service. 
+
+**Note**: as previously notified, `/nerc` is no longer available
+
+If the data you wish to access is from an old ARCHER project which is not on ARCHER2, then please contact the Service Desk ([support@archer2.ac.uk](mailto:support@archer2.ac.uk)) and we can make arrangements so that you are able to access the data.  
 
 ### Undeleteable file .nfsXXXXXXXXXXX
 
