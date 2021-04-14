@@ -557,7 +557,6 @@ An example of the sort of output the tool can give would be:
 ## Example job submission scripts
 
 A subset of example job submission scripts are included in full below.
-You can also download these examples at:
 
 ### Example: job submission script for MPI parallel job
 
