@@ -109,7 +109,7 @@ in the future please delete it.
 
 ### Subprojects
 
-Some large projects may choose to split their resources into multiple subprojects. These subprojects will have identifiers prepended with the main project ID. For example, the `rse` subgroup of the `z19` project would have the ID `z19-rse`. If the main project has allocated storage quotas to the subproject the directories for this storage will be found at, for example:
+Some large projects may choose to split their resources into multiple subprojects. These subprojects will have identifiers appended to the main project ID. For example, the `rse` subgroup of the `z19` project would have the ID `z19-rse`. If the main project has allocated storage quotas to the subproject the directories for this storage will be found at, for example:
 ```
 /home/z19/z19-rse/auser
 ```
