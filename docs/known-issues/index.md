@@ -52,6 +52,8 @@ Exception: STATview requires xdot
 xdot can be downloaded from https://github.com/jrfonseca/xdot.py
 ```
 
+The current workaround is to use `/work/y02/shared/stat-view-workaround/stat-view` instead.
+
 ### Issues with RPATH for non-default library versions
 When you compile applications against non-default versions of libraries within the HPE
 Cray software stack and use the environment variable `CRAY_ADD_RPATH=yes` to try and encode
