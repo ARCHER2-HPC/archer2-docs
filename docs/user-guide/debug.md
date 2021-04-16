@@ -345,6 +345,9 @@ locations for display.
 
 ### Using STAT on ARCHER2
 
+!!! Warning
+    STAT is currently not working on ARCHER2 as highlighted in the [Known Issues](https://docs.archer2.ac.uk/known-issues/#stat-view-not-working)
+
 On the login node, load the `cray-stat` module:
 
     module load cray-stat
