@@ -47,7 +47,7 @@ different node types:
 |---------|-------------|---------------|-------|
 | /home   | yes         | no            | Backed up |
 | /work   | yes         | yes           | Not backed up, high performance |
-| RDFaaS  | yes         | no            | Backed up, high performance |
+| RDFaaS  | yes         | no            | Backed up, high performance. Only currently available for projects that moved from ARCHER to ARCHER2. Currently read-only. |
 
 ### Home file systems
 
