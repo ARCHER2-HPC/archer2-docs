@@ -557,7 +557,6 @@ An example of the sort of output the tool can give would be:
 ## Example job submission scripts
 
 A subset of example job submission scripts are included in full below.
-You can also download these examples at:
 
 ### Example: job submission script for MPI parallel job
 
@@ -1411,8 +1410,33 @@ Node    1, rank   15, thread   0, (affinity =  112)
 
 ## Reservations
 
-The mechanism for submitting reservations on ARCHER2 has yet to be
-specified.
+Reservations are available on ARCHER2. These allow users to reserve a number of nodes for a specified length of time starting at a particular time on the system.
+
+Reservations require justification. They will only be approved if the request could not be fulfilled with the standard queues. For instance, you require a job/jobs to run at a particular time e.g. for a demonstration or course.
+
+!!! note
+    Reservation requests must be submitted at least 60 hours in advance of the reservation start time. If requesting a reservation for a Monday at 18:00, please ensure this is received by the Friday at 12:00 the latest. The same applies over Service Holidays.
+
+!!! Note
+    Reservations are only valid for standard compute nodes, high memory compute nodes and/or PP nodes cannot be included in reservations.
+
+Reservations will be charged at 1.5 times the usual CU rate and you will be charged the full rate for the entire reservation at the time of booking, whether or not you use the nodes for the full time. In addition, you will not be refunded the CUs if you fail to use them due to a job crash unless this crash is due to a system failure.
+
+To request a reservation please contact the ARCHER2 Service Desk. You need to provide the following:
+
+ - The start time and date of the reservation.
+ - The end time and date of the reservation.
+ - The project code for the reservation.
+ - The number of nodes required.
+ - Your justification for the reservation -- this must be provided or the request will be rejected.
+
+Your request will be checked by the ARCHER2 User Administration team and, if approved, you will be provided a reservation ID which can be used on the system. To submit jobs to a reservation, you need to add `--reservation=<reservation ID>` to your job submission script or command.
+
+!!! Note:
+
+You must have at least 1 CU in the budget to submit a job on ARCHER2, even to a pre-paid reservation.
+
+You can submit jobs to a reservation as soon as the reservation has been set up; jobs will remain queued until the reservation starts.
 
 ## Best practices for job submission
 
