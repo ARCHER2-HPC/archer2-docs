@@ -109,15 +109,19 @@ Under `Login account details` you will see each of the budget codes you have acc
 
 When logged in to the machine you can also use the command 
 
-    sacctmgr show assoc where user=$LOGNAME format=account,user,maxtresmins
+    sacctmgr show assoc where user=$LOGNAME format=user,Account%12,MaxCPUMins,QOS%40,MaxJobs
 
-This will list all the budget codes that you have access to e.g.
+This will list all the budget codes that you have access to (but not the amount of budget available) e.g.
+
+        User      Account  MaxCPUMins                                 QOS MaxJobs
+    -------- ------------ ----------- ----------------------------------- -------
+       userx    e123-test                  largescale,long,short,standard
+       userx         e123       cpu=0      largescale,long,short,standard
+
+  
 
 
-       Account       User   MaxTRESMins
-    ---------- ---------- -------------
-          e123      userx         cpu=0
-     e123-test      userx
+This shows that `userx` is a member of budgets `e123-test` and `e123`.  However, the `cpu=0` indicates that the `e123` budget is empty or disabled.   This user can submit jobs using the `e123-test` budget.
 
-This shows that `userx` is a member of budgets `e123` and `e123-test`.  However, the `cpu=0` indicates that the `e123` budget is empty or disabled.   This user can submit jobs using the `e123-test` budget.
+You can only check the amount of available budget via SAFE - [see above](#checking-budgets).
 
