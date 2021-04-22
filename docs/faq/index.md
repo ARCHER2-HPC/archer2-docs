@@ -109,12 +109,12 @@ Under `Login account details` you will see each of the budget codes you have acc
 
 When logged in to the machine you can also use the command 
 
-    sacctmgr show assoc where user=$LOGNAME format=user,Account%12,MaxTRESMins,QOS%40,MaxJobs
+    sacctmgr show assoc where user=$LOGNAME format=user,Account%12,MaxTRESMins,QOS%40
 
 This will list all the budget codes that you have access to (but not the amount of budget available) e.g.
 
-        User      Account  MaxTRESMins                                 QOS MaxJobs
-    -------- ------------ ------------ ----------------------------------- -------
+        User      Account  MaxTRESMins                                 QOS 
+    -------- ------------ ------------ ----------------------------------- 
        userx    e123-test                   largescale,long,short,standard
        userx         e123        cpu=0      largescale,long,short,standard
 
