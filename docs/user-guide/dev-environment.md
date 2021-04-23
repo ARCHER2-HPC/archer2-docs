@@ -432,20 +432,83 @@ These modules are typically loaded *after* you have restored a PrgEnv and will
 set your compile environment to match that in the other PE release. This means:
 
 - The compiler version will be switched to the one from the selected PE
-- Libraries (or modules) that are loaded by default will have their verison
-  switched to the ones from the selected PE. Typically, this means that
-  `cray-libsci` and `cray-mpich` are switched
+- HPE Cray provided libraries (or modules) that are loaded before you switch
+  to the new programming environment are switched to those from the programming
+  environment that you select.
 
-Some things are not changed on loading the `cpe` module. In particular:
+For example, if you have a code that uses the Gnu programming environment, FFTW
+and NetCDF parallel libraries and you want to compile in the (non-default) 21.03
+programming environment, you would do the following:
 
-- The default version of modules accessed by the `module` command are not
-  updated to those in the specified PE. If you wish to use other modules
-  in the PE release (e.g. `cray-fftw`, `cray-netcdf`) then you need to manually
-  specify the version you want.
+First, restore the Gnu programming environment and load the required library
+modules (FFTW and NetCDF HDF5 parallel). The loaded module list shows they 
+are the versions from the default (20.10) programming environment):
 
-As noted above, you will also need to setup your environment to use non-default
-versions of HPE Cray libraries (including those changed by the `cpe` module) as
-described in the section below.
+```
+auser@uan02:/work/t01/t01/auser> module restore -s PrgEnv-gnu
+auser@uan02:/work/t01/t01/auser> module load cray-fftw
+auser@uan02:/work/t01/t01/auser> module load cray-netcdf
+auser@uan02:/work/t01/t01/auser> module load cray-netcdf-hdf5parallel
+auser@uan02:/work/t01/t01/auser> module list
+Currently Loaded Modulefiles:
+ 1) cpe-gnu                           9) xpmem/2.2.35-7.0.1.0_1.9__gd50fabf.shasta(default)               
+ 2) gcc/10.1.0(default)              10) cray-mpich/8.0.16(default)                                       
+ 3) craype/2.7.2(default)            11) cray-libsci/20.10.1.2(default)                                   
+ 4) craype-x86-rome                  12) bolt/0.7                                                         
+ 5) libfabric/1.11.0.0.233(default)  13) /work/y07/shared/archer2-modules/modulefiles-cse/epcc-setup-env  
+ 6) craype-network-ofi               14) /usr/local/share/epcc-module/epcc-module-loader                  
+ 7) cray-dsmml/0.1.2(default)        15) cray-fftw/3.3.8.8(default)                                       
+ 8) perftools-base/20.10.0(default)  16) cray-netcdf-hdf5parallel/4.7.4.2(default) 
+```
+
+Now, load the `cpe/21.03` programming environment module to switch all
+the currently loaded HPE Cray modules from the default (20.10) programming
+environment version to the 21.03 programming environment versions:
+
+```
+auser@uan02:/work/t01/t01/auser> module load cpe/21.03
+Switching to cray-dsmml/0.1.3.
+Switching to cray-fftw/3.3.8.9.
+Switching to cray-libsci/21.03.1.1.
+Switching to cray-mpich/8.1.3.
+Switching to cray-netcdf-hdf5parallel/4.7.4.3.
+Switching to craype/2.7.5.
+Switching to gcc/9.3.0.
+Switching to perftools-base/21.02.0.
+
+Loading cpe/21.03
+  Unloading conflict: cray-dsmml/0.1.2 cray-fftw/3.3.8.8 cray-libsci/20.10.1.2 cray-mpich/8.0.16 cray-netcdf-hdf5parallel/4.7.4.2
+    craype/2.7.2 gcc/10.1.0 perftools-base/20.10.0
+  Loading requirement: cray-dsmml/0.1.3 cray-fftw/3.3.8.9 cray-libsci/21.03.1.1 cray-mpich/8.1.3 cray-netcdf-hdf5parallel/4.7.4.3
+    craype/2.7.5 gcc/9.3.0 perftools-base/21.02.0
+auser@uan02:/work/t01/t01/auser> module list
+Currently Loaded Modulefiles:
+ 1) cpe-gnu                                                           9) cray-dsmml/0.1.3                  17) cpe/21.03(default)  
+ 2) craype-x86-rome                                                  10) cray-fftw/3.3.8.9                 
+ 3) libfabric/1.11.0.0.233(default)                                  11) cray-libsci/21.03.1.1             
+ 4) craype-network-ofi                                               12) cray-mpich/8.1.3                  
+ 5) xpmem/2.2.35-7.0.1.0_1.9__gd50fabf.shasta(default)               13) cray-netcdf-hdf5parallel/4.7.4.3  
+ 6) bolt/0.7                                                         14) craype/2.7.5                      
+ 7) /work/y07/shared/archer2-modules/modulefiles-cse/epcc-setup-env  15) gcc/9.3.0                         
+ 8) /usr/local/share/epcc-module/epcc-module-loader                  16) perftools-base/21.02.0   
+```
+
+Finally (as noted above), you will need to modify the value of
+`LD_LIBRARY_PATH` before you compile your software to ensure it picks up the
+non-default versions of libraries:
+
+```
+auser@uan02:/work/t01/t01/auser> export LD_LIBRARY_PATH=$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH
+```
+
+Now you can go ahead and compile your software with the new programming
+environment.
+
+!!! important
+    The `cpe` modules only change the versions of software modules provided
+    as part of the HPE Cray programming environments. Any modules provided
+    by the ARCHER2 service will need to be loaded manually after you have
+    completed the process described above.
 
 ## Using non-default versions of HPE Cray libraries on ARCHER2
 
@@ -475,7 +538,7 @@ of LibSci with the `ldd` command and look for the line beginning `libsci_cray.so
 should see the version in the path to the library file:
 
 ```
-aturner@uan01:~/test/libsci> ldd dgemv.x 
+auser@uan01:~/test/libsci> ldd dgemv.x 
 	linux-vdso.so.1 (0x00007ffe4a7d2000)
 	libsci_cray.so.5 => /opt/cray/pe/libsci/20.08.1.2/CRAY/9.0/x86_64/lib/libsci_cray.so.5 (0x00007fafd6a43000)
 	libdl.so.2 => /lib64/libdl.so.2 (0x00007fafd683f000)
