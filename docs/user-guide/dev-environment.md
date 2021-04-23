@@ -428,13 +428,15 @@ access to software libraries if available.
     from non-default PE installs.
 
 Access to non-default PE environments is controlled by the use of the `cpe` modules.
-These modules are typically loaded *after* you have restored a PrgEnv and will 
+These modules are typically loaded *after* you have restored a PrgEnv and loaded all
+the other modules you need and will 
 set your compile environment to match that in the other PE release. This means:
 
 - The compiler version will be switched to the one from the selected PE
 - HPE Cray provided libraries (or modules) that are loaded before you switch
   to the new programming environment are switched to those from the programming
   environment that you select.
+
 
 For example, if you have a code that uses the Gnu programming environment, FFTW
 and NetCDF parallel libraries and you want to compile in the (non-default) 21.03
@@ -443,6 +445,7 @@ programming environment, you would do the following:
 First, restore the Gnu programming environment and load the required library
 modules (FFTW and NetCDF HDF5 parallel). The loaded module list shows they 
 are the versions from the default (20.10) programming environment):
+
 
 ```
 auser@uan02:/work/t01/t01/auser> module restore -s PrgEnv-gnu
