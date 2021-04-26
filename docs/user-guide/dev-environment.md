@@ -512,6 +512,38 @@ environment.
     as part of the HPE Cray programming environments. Any modules provided
     by the ARCHER2 service will need to be loaded manually after you have
     completed the process described above.
+    
+!!! note
+    Unloading the `cpe` module does not restore the original programming environment
+    release. To restore the default programming environment release you should log 
+    out and then log back in to ARCHER2.
+    
+!!! bug
+    The `cpe/21.03` module has a known issue with `PrgEnv-gnu` where it loads an old version
+    of GCC (9.3.0) rather than the correct, newer version (10.2.0). You can resolve this by
+    using the sequence:
+    ```
+    module restore -s PrgEnv-gnu
+    ...load any other modules you need...
+    module load cpe/21.03
+    module unload cpe/21.03
+    module swap gcc gcc/10.2.0
+    ```
+    
+### Available HPE Cray Programming Environment releases on ARCHER2
+
+ARCHER2 currently has the following HPE Cray Programming Environment releases available:
+
+- 20.08: not available via `cpe` module
+- **20.10: Current default**
+- 21.03: available via `cpe/21.03` module
+
+!!! tip
+    You can see which programming environment release you currently have loaded 
+    by using `module list` and looking at the version number of the `cray-libsci`
+    module you have loaded. The first two numbers indicate the version of the
+    PE you have loaded. For example, if you have `cray-libsci/20.10.1.2` loaded
+    then you are using the 20.10 PE release.
 
 ## Using non-default versions of HPE Cray libraries on ARCHER2
 
