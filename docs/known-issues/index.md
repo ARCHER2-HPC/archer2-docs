@@ -48,12 +48,6 @@ This would make the `perftools` modules available. More information on
 using different PE releases [is available in the User and Best Practice Guide](../user-guide/dev-environment.md#switching-to-a-different-hpe-cray-programming-environment-release)
 
 
-### Singularity and CMake
-The issue concerns the building of a cmake-compiled code in bind mode in
-Singularity containers. This fails because CMake 3.x, running within the
-container on a UAN, cannot find the MPI libraries (cray-mpich) on the host
-despite the correct paths having been provided.
-
 ### Research Software
 There are several outstanding issues for the centrally installed Research Software:
 
@@ -121,7 +115,19 @@ The workaround for this issue is to use the newer HPE Cray Programming Environme
 release 21.03. Instructions on using a non-default programming environment release
 [are available in the User and Best Practice Guide](../user-guide/dev-environment.md#switching-to-a-different-hpe-cray-programming-environment-release)
 
+
 ## Recently Resolved Issues
 
-None recently resolved.
+### Singularity and CMake 3.x
+Certain cmake variables need to be set before a containerised cmake can find
+MPI libraries located on the host.
 
+```
+MPI_ROOT=/opt/cray/pe/mpich/8.0.16/ofi/gnu/9.1
+
+cmake ...
+    -DMPI_C_HEADER_DIR="${MPI_ROOT}/include" -DMPI_CXX_HEADER_DIR="${MPI_ROOT}/include" \
+    -DMPI_C_LIB_NAMES=mpi -DMPI_CXX_LIB_NAMES=mpi \
+    -DMPI_mpi_LIBRARY="${MPI_ROOT}/lib/libmpi.so" \
+    ...
+```
