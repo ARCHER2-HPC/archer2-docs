@@ -6,6 +6,47 @@ active investigation by HPE Cray and the wider service.
 
 ## Open Issues
 
+### HPE Cray `perftools` modules not available by default (Added: 2021-04-27)
+
+The HPE Cray `perftools` modules are no longer available by default on login to
+ARCHER2 or on the compute nodes when you run a job. This is being investigated
+and we hope to fix the issue soon.
+
+**Workarounds** You can access the `perftools` modules by restoring a different
+compiler environment or by switching to a different Programming Environment 
+release.
+
+*Option 1: Restoring a different compiler environment*
+
+On an ARCHER2 login node you can make the `perftools` modules available with
+a command such as:
+
+```
+module restore -s PrgEnv-gnu
+```
+
+If you need to use the `perftools` modules with the default Cray compilers then
+you must first switch to a different compiler suite and then back to the Cray
+compiler suite:
+
+```
+module restore -s PrgEnv-gnu
+module restore -s PrgEnv-cray
+```
+
+*Option 2: Switch to a different Programming Environment (PE) release*
+
+You can also restore the `perftools` modules by switching to a different PE
+release. For example, if you want to use the Cray compiler suite with the
+21.03 PE release, you would use:
+
+```
+module load cpe/21.03
+```
+
+This would make the `perftools` modules available. More information on
+using different PE releases [is available in the User and Best Practice Guide](../user-guide/dev-environment.md#switching-to-a-different-hpe-cray-programming-environment-release)
+
 
 ### Singularity and CMake
 The issue concerns the building of a cmake-compiled code in bind mode in
@@ -70,7 +111,8 @@ at both compile and runtime. For more details on using non-default versions of l
 see [the description in the User and Best Practice Guide](../user-guide/dev-environment.md#using-non-default-versions-of-hpe-cray-libraries-on-archer2)
 
 
-### Memory leak leads to job fail by out of memory (OOM) error
+### Memory leak leads to job fail by out of memory (OOM) error (Updated: 2021-04-26)
+
 Your program compiles and seems to run fine, but after some time (at least 10 
 minutes), it crashes with an out-of-memory (OOM) error. The job crashes more 
 quickly when run on a smaller number of nodes.
