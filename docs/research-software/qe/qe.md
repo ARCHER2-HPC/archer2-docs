@@ -62,4 +62,4 @@ directory you wish. This can be done by adding the following line
 The latest instructions for building QE on ARCHER2 can be found in the
 GitHub repository of build instructions:
 
-   - [Build instructions for Quantum Espresso](https://github.com/hpc-uk/build-instructions/tree/main/QuantumEspresso)
+   - [Build instructions for Quantum Espresso](https://github.com/hpc-uk/build-instructions/tree/main/apps/QuantumEspresso)

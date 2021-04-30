@@ -68,4 +68,4 @@ The latest instructions for building NWChem on ARCHER2 may be found in
 the GitHub repository of build instructions:
 
    - [Build instructions for NWChem on
-     GitHub](https://github.com/hpc-uk/build-instructions/tree/master/NWChem)
+     GitHub](https://github.com/hpc-uk/build-instructions/tree/main/apps/NWChem)

@@ -156,7 +156,7 @@ If you wish to compile your own version of VASP on ARCHER2 (either VASP
 5 or VASP 6) you can find information on how we compiled the central
 versions in the build instructions GitHub repository. See:
 
-   - [Build instructions for VASP on GitHub](https://github.com/hpc-uk/build-instructions/tree/main/VASP)
+   - [Build instructions for VASP on GitHub](https://github.com/hpc-uk/build-instructions/tree/main/apps/VASP)
 
 ## Tips for using VASP on ARCHER2
 

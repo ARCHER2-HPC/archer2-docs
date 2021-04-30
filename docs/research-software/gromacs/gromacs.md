@@ -86,4 +86,4 @@ The latest instructions for building GROMACS on ARCHER2 may be found in
 the GitHub repository of build instructions:
 
    - [Build instructions for GROMACS on
-     GitHub](https://github.com/hpc-uk/build-instructions/tree/master/GROMACS)
+     GitHub](https://github.com/hpc-uk/build-instructions/tree/main/apps/GROMACS)

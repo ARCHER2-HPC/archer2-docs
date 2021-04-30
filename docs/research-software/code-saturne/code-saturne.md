@@ -100,5 +100,5 @@ The latest instructions for building Code\_Saturne on ARCHER2 may be found in
 the GitHub repository of build instructions:
 
    - [Build instructions for Code\_Saturne on
-     GitHub](https://github.com/hpc-uk/build-instructions/tree/main/Code_Saturne)
+     GitHub](https://github.com/hpc-uk/build-instructions/tree/main/apps/Code_Saturne)
 

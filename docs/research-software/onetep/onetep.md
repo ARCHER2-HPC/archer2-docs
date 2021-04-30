@@ -73,4 +73,4 @@ The latest instructions for building CASTEP on ARCHER2 may be found in
 the GitHub repository of build instructions:
 
    - [Build instructions for ONETEP on
-     GitHub](https://github.com/hpc-uk/build-instructions/tree/master/ONETEP)
+     GitHub](https://github.com/hpc-uk/build-instructions/tree/main/apps/ONETEP)
