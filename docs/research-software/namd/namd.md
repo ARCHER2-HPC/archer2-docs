@@ -109,3 +109,11 @@ should be 128.
 If you cannot run the pure MPI version of NAMD, then the optimal
 values of (`tasks-per-node`, `cpus-per-task`) are likely to be either
 (32,4), (16,8) or (8,16).
+
+## Compiling NAMD
+
+The latest instructions for building NAMD on ARCHER2 may be found in
+the GitHub repository of build instructions:
+
+   - [Build instructions for CASTEP on
+     GitHub](https://github.com/hpc-uk/build-instructions/tree/main/apps/NAMD)
