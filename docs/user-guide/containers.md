@@ -72,7 +72,7 @@ any other file.
 If you wish to get a file from one of the container image repositories
 then Singularity allows you to do this from ARCHER2 itself.
 
-For example, to retrieve an image from SingularityHub on Cirrus we can
+For example, to retrieve an image from SingularityHub on ARCHER2 we can
 simply issue a Singularity command to pull the image.
 
     [auser@uan01 ~]$ singularity pull hello-world.sif shub://vsoch/hello-world
