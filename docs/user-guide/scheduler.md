@@ -191,6 +191,7 @@ lists the active QoS on ARCHER2.
 | short      | 8                 | 20 mins      | 4           | 4            | standard     | Only available Mon-Fri UK Time |
 | long       | 64                | 48 hrs       | 16          | 16           | standard     | Minimum walltime of 24 hrs |
 | largescale | 940               | 3 hrs        | 4           | 1            | standard     | Minimum job size of 257 nodes |
+| lowpriority | 256               | 3 hrs        | 4           | 1            | standard     | Maximum of 256 nodes in use by any one user at any time. Jobs not charged but requires at least 1 CU in budget to use. |
 
 !!! warning
     If you want to use the `short` QoS then you also need to add the
@@ -1407,6 +1408,30 @@ Node    1, rank   14, thread   0, (affinity =   96)
 Node    1, rank   15, thread   0, (affinity =  112)
 ```
 
+## Low priority access
+
+Low priority jobs are not charged against your allocation but will only run when
+other, higher-priority, jobs cannot be run or there are no higher-priority jobs in
+the queue. Although low priority jobs are not charged, you do need a valid, positive
+budget to be able to submit and run low priority jobs, i.e. you need at least 1 CU
+in your budget.
+
+Low priority access is always available and has the following limits:
+
+- 256 node maximum job size
+- 256 nodes maximum in use by any one user
+- 512 nodes maximum in use by low priority at any one time
+- Maximum 4 low priority jobs in the queue per user
+- Maximum 1 low priority job running per user (of the 4 queued)
+- Maximum runtime of 3 hours
+
+You submit a low priority job on ARCHER2 by using the `lowpriority` QoS. For example,
+you would usually have the following line in your job submission script sbatch 
+options:
+
+```
+#SBATCH --qos=lowpriority
+```
 
 ## Reservations
 
@@ -1422,7 +1447,8 @@ Reservations require justification. They will only be approved if the request co
 
 Reservations will be charged at 1.5 times the usual CU rate and you will be charged the full rate for the entire reservation at the time of booking, whether or not you use the nodes for the full time. In addition, you will not be refunded the CUs if you fail to use them due to a job crash unless this crash is due to a system failure.
 
-To request a reservation please contact the ARCHER2 Service Desk. You need to provide the following:
+To request a reservation please [contact the ARCHER2 Service Desk](mailto:support@archer2.ac.uk).
+You need to provide the following:
 
  - The start time and date of the reservation.
  - The end time and date of the reservation.
