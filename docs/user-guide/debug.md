@@ -425,6 +425,44 @@ This produces a graph displaying all the different places within the program tha
 
 !!! note
     To see the graph, you will need to have exported your X display when logging in.
+    
+Larger jobs may spend significant time queueing, requiring
+submission as a batch job. In this case the above can be adapted for
+batch submission as follows:
+
+    #!/bin/bash --login
+
+    #SBATCH --job-name=test_job
+    #SBATCH --nodes=1
+    #SBATCH --tasks-per-node=128
+    #SBATCH --cpus-per-task=1
+    #SBATCH --time=2:0:0
+
+    # Replace [budget code] below with your project code (e.g. t01)
+    #SBATCH --account=[budget code]
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+
+    # Setup the batch environment
+    module load epcc-job-env
+    
+    # Load additional modules
+    module load cray-stat
+    
+    # Launch job in background
+    srun ./my_exe &
+    
+    sleep 3600 # Wait a sufficient time for job to hang, e.g. 1 hour
+    
+    # Find PID and run STAT
+    pid=$(ps -u ${USER} | \  # Get all USER PIDs
+          grep srun     | \  # Find all the sruns
+          head -n 1     | \  # We want the first one
+          awk '{print $1;}') # The PID is the first "word" in the line
+    stat-cl -i $pid
+    
+If the job is hanging it will continue to run until the wall clock
+exceeds the requested time.
 
 ## ATP
 
