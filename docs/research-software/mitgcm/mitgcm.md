@@ -137,24 +137,54 @@ Next, acquire your WebDAV credentials: <https://ecco.jpl.nasa.gov/drive> (second
 
 Now, you can use wget to download the required forcing and input files:
 
-    wget -r --no-parent --user YOURUSERNAME --ask-password 
-      https://ecco.jpl.nasa.gov/drive/files/Version4/Release4/input_forcing
+    wget -r --no-parent --user YOURUSERNAME --ask-password https://ecco.jpl.nasa.gov/drive/files/Version4/Release4/input_forcing
+    wget -r --no-parent --user YOURUSERNAME --ask-password https://ecco.jpl.nasa.gov/drive/files/Version4/Release4/input_init 
+    wget -r --no-parent --user YOURUSERNAME --ask-password https://ecco.jpl.nasa.gov/drive/files/Version4/Release4/input_ecco
+      
+After using `wget`, you will notice that the `input*` directories are, by default, several levels deep in the directory structure. Use the `mv` command to move the `input*` directories to the directory where you executed the `wget` command. Specifically,
 
-    wget -r --no-parent --user YOURUSERNAME --ask-password 
-      https://ecco.jpl.nasa.gov/drive/files/Version4/Release4/input_init
-    
-    wget -r --no-parent --user YOURUSERNAME --ask-password
-      https://ecco.jpl.nasa.gov/drive/files/Version4/Release4/input_ecco
+```
+mv ecco.jpl.nasa.gov/drive/files/Version4/Release4/input_forcing/ .
+mv ecco.jpl.nasa.gov/drive/files/Version4/Release4/input_init/ .
+mv ecco.jpl.nasa.gov/drive/files/Version4/Release4/input_ecco/ .
+rm -rf ecco.jpl.nasa.gov
+```
 
 ### Compiling and running ECCOv4-r4
 
-Follow the instructions in the above section on building MITgcm on ARCHER2. These steps also work for ECCOv4-r4. You will need to create a build directory first:
+The steps for building the ECCOv4-r4 instance of MITgcm are very similar to those for other build cases. First, wou will need to create a build directory:
 
     cd MITgcm/ECCOV4/release4
     mkdir build
     cd build
+
+If you haven't already, copy the ARCHER2 optfile into the MITgcm directories:
+
+    cp /work/y07/shared/mitgcm/optfile/linux_amd64_gfortran_archer2 MITgcm/tools/build_options/ 
+
+For working with large executables like ECCOv4-r4, edit the build options file to include the lines:
+
+    FFLAGS="$FFLAGS -mcmodel=large"
+    CFLAGS="$CFLAGS -mcmodel=large"
+
+You can also use `-mcmodel=medium` for a lower-memory options. When you are building your code with this optfile, use the GNU
+environment with
+
+    module restore PrgEnv-gnu
+
+If you haven't already, set your environment variables:
+
+    export MITGCM_ROOTDIR=/path/to/MITgcm
+    export PATH=$MITGCM_ROOTDIR/tools:$PATH
+    export MITGCM_OPT=$MITGCM_ROOTDIR/tools/build_options/linux_amd64_gfortran_archer2
     
-Once you have compiled the model, you will have the mitgcmuv executable. 
+Next, compile the executable:
+
+    genmake2 -mods /path/to/additional/source -mpi -optfile $MITGCM_OPT
+    make depend
+    make
+    
+Once you have compiled the model, you will have the mitgcmuv executable for ECCOv4-r4. 
 
 #### Issue with DOS formatting and end-of-namelist characters
 
@@ -169,6 +199,7 @@ The files with "&" end-of-namelist characters are:
     data.layers
     data.optim
     data.ptracers
+    data.grdchk
     
 So far, this has only been tested with the gnu compiler (gcc 10.1.0). 
 
