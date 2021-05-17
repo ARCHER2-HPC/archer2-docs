@@ -182,13 +182,13 @@ The performance of VASP depends on the performance of MPI collective operations
 and the choice of VASP parallelisation parameters (`NCORE`/`NPAR` and `KPAR`).
 
 **MPI collective performance:** To ensure that the MPI collective operations give the best performance, you should
-ensure that consequetive MPI rank IDs are pinned to consequetive cores on a node
+ensure that consecutive MPI rank IDs are pinned to consecutive cores on a node
 to maximise shared memory optimisations in NUMA regions. In practice, the recommended
 options to the `srun` command: `--hint=nomultithread` and `--distribution=block:block`
 should always be specified when running VASP on ARCHER2.
 
 **KPAR:** You should always use the maximum value of `KPAR` that is possible for
-your calculation within the memeory limits of what is possible.
+your calculation within the memory limits of what is possible.
 
 **NCORE/NPAR:** We have found that the optimal values of `NCORE` (and hence `NPAR`)
 depend on both the type of calculation you are performing (e.g. pure DFT, hybrid functional,
