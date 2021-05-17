@@ -26,12 +26,11 @@ from the GitHub repository with the command
 
     git clone https://github.com/MITgcm/MITgcm.git
 
-You should then copy the ARCHER2 optfile into the MITgcm
-    directories:
+You should then copy the ARCHER2 optfile into the MITgcm directories:
 
-    cp /work/y07/shared/mitgcm/optfile/linux_amd64_gfortran_archer2 MITgcm/tools/build_options/
+    cp /work/n02/shared/MITgcm/optfiles/dev_linux_amd64_gnu_archer2 MITgcm/tools/build_options/
 
-For working with large executables (e.g. adjoint configurations), edit the build options file to include the lines:
+Note that this build options file is still being tested for optimisation purposes. For working with large executables (e.g. adjoint configurations), edit the build options file to include the lines:
 
     FFLAGS="$FFLAGS -mcmodel=large"
     CFLAGS="$CFLAGS -mcmodel=large"
@@ -160,7 +159,7 @@ The steps for building the ECCOv4-r4 instance of MITgcm are very similar to thos
 
 If you haven't already, copy the ARCHER2 optfile into the MITgcm directories:
 
-    cp /work/y07/shared/mitgcm/optfile/linux_amd64_gfortran_archer2 MITgcm/tools/build_options/ 
+    cp /work/n02/shared/MITgcm/optfiles/dev_linux_amd64_gnu_archer2 MITgcm/tools/build_options/
 
 For working with large executables like ECCOv4-r4, edit the build options file to include the lines:
 
