@@ -70,6 +70,24 @@ pseudopotentials for VASP on ARCHER2 at:
 
     $VASP_PSPOT_DIR
 
+#### VASP Transition State Tools (VTST)
+
+As well as the standard VASP 5 modules, we provide versions of VASP 5 with the
+[VASP Transition State Tools (VTST)](http://theory.cm.utexas.edu/vtsttools/) from
+the University of Texas added. The VTST version adds various functionality to VASP
+and provides additional scripts to use with VASP. Additional functionality includes:
+
+- Climbing Image NEB: method for finding reaction pathways between two stable states.
+- Dimer: method for finding reaction pathways when only one state is known.
+- Lanczos: provides an alternative way to find the lowest mode and find saddle points.
+- Optimisers: provides an alternative way to find the lowest mode and find saddle points.
+- Dynamical Matrix: uses finite difference to find normal modes and reaction prefactors.
+
+Full details of these methods and the provided scripts can be found on
+[the VTST website](http://theory.cm.utexas.edu/vtsttools/).
+
+#### Example VASP 5 job submission script
+
 The following script will run a VASP job using 2 nodes (128x2, 256 total
 cores).
 
@@ -160,59 +178,68 @@ versions in the build instructions GitHub repository. See:
 
 ## Tips for using VASP on ARCHER2
 
-### Hybrid functional calculations: underpopulate MPI ranks per node at higher core counts 
+The performance of VASP depends on the performance of MPI collective operations 
+and the choice of VASP parallelisation parameters (`NCORE`/`NPAR` and `KPAR`).
 
-When running hybrid functional calculations the VASP software makes
-extensive use of MPI collective functions. At higher node counts, the
-fact that ARCHER2 compute nodes have a large number of cores per node
-means that collective operations can become extremely expensive and 
-cause calculations to stop scaling well. This effect can be mitigated 
-by running VASP with less than 128 MPI ranks per node (e.g. using
-64 MPI ranks per node instead). 
+**MPI collective performance:** To ensure that the MPI collective operations give the best performance, you should
+ensure that consequetive MPI rank IDs are pinned to consequetive cores on a node
+to maximise shared memory optimisations in NUMA regions. In practice, the recommended
+options to the `srun` command: `--hint=nomultithread` and `--distribution=block:block`
+should always be specified when running VASP on ARCHER2.
 
-For example, a 65 atom system with 8 k-points requires a reduction
-of MPI ranks per node from 128 to 64 once you get to 16 nodes.
+**KPAR:** You should always use the maximum value of `KPAR` that is possible for
+your calculation within the memeory limits of what is possible.
 
-An example job submission script to run a VASP 5 calculation on
-16 nodes with 64 MPI ranks per node (1024 MPI ranks in total) would
-be:
+**NCORE/NPAR:** We have found that the optimal values of `NCORE` (and hence `NPAR`)
+depend on both the type of calculation you are performing (e.g. pure DFT, hybrid functional,
+&Gamma;-point, non-collinear) and the number of nodes/cores you are using for your 
+calculation. In practice, this means that you should experiment with different values
+to find the best choice for your calculation. There is information below on the best 
+choices for the benchmarks we have run on ARCHER2 that may serve as a useful starting
+point. The performance difference from choosing different values can vary by up to
+100% so it is worth spending time investigating this.
 
-```
-#!/bin/bash
-
-# Request 16 nodes (1024 MPI tasks at 64 tasks per node) for 3 hours
-# Note setting --cpus-per-task=2 to distribute the MPI tasks evenly
-# across the NUMA regions on the node   
-
-#SBATCH --job-name=VASP_test
-#SBATCH --nodes=16
-#SBATCH --tasks-per-node=128
-#SBATCH --cpus-per-task=2
-#SBATCH --time=3:0:0
-
-# Replace [budget code] below with your project code (e.g. t01)
-#SBATCH --account=[budget code] 
-#SBATCH --partition=standard
-#SBATCH --qos=standard
-
-# Setup the job environment (this module needs to be loaded before any other modules)
-module load epcc-job-env
-
-# Load the VASP module, avoid any unintentional OpenMP threading by
-# setting OMP_NUM_THREADS, and launch the code.
-export OMP_NUM_THREADS=1
-module load vasp/5
-srun --distribution=block:block --hint=nomultithread vasp_std
-```
 ## VASP performance data on ARCHER2
 
 VASP performance data on ARCHER2 is currently available for two
 different benchmark systems:
 
-  - TiO_2 Supercell, pure DFT functional, Gamma-point, 1080 atoms
-    - Uses `vasp_gam`
-    - [TiO2 performance data](https://github.com/hpc-uk/archer-benchmarks/blob/main/others/VASP/analysis/VASP_TiO2_perf_analysis.ipynb)
-  - CdTe Supercell, hybrid DFT functional. 8 k-points, 65 atoms
-    - Uses `vasp_ncl`
-    - [CdTe performance data](https://github.com/hpc-uk/archer-benchmarks/blob/main/others/VASP/analysis/VASP_CdTe_perf_analysis.ipynb)
+- TiO_2 Supercell, pure DFT functional, &Gamma;-point, 1080 atoms
+- CdTe Supercell, hybrid DFT functional. 8 k-points, 65 atoms
 
+### TiO_2 Supercell, pure DFT functional, Gamma-point, 1080 atoms
+
+Basic information:
+- Uses `vasp_gam`
+- [Full TiO2 performance data](https://github.com/hpc-uk/archer-benchmarks/blob/main/others/VASP/analysis/VASP_TiO2_perf_analysis.ipynb)
+
+Performance summary (best choices of NCORE at different node counts). All tests with
+`vasp/5/5.4.4.pl2-gcc10-cpe2103` module on ARCHER2.
+
+| Nodes | MPI processes per node | Total MPI processes | NCORE | Maximum LOOP time (s) |
+|------:|-----------------------:|--------------------:|------:|----------------------:|
+|     1 |                    128 |                 128 |    32 |                   387 |
+|     2 |                    128 |                 256 |   128 |                   170 |
+|     4 |                    128 |                 512 |   128 |                    88 |
+|     8 |                    128 |                1024 |   128 |                    47 |
+|    16 |                    128 |                2046 |   128 |                    28 |
+|    32 |                    128 |                4096 |   128 |                    16 |
+
+### CdTe Supercell, hybrid DFT functional. 8 k-points, 65 atoms
+
+Basic information:
+  - Uses `vasp_ncl`
+  - [CdTe performance data](https://github.com/hpc-uk/archer-benchmarks/blob/main/others/VASP/analysis/VASP_CdTe_perf_analysis.ipynb)
+
+  Performance summary (best choices of NCORE and KPAR at different node counts). All tests with
+`vasp/5/5.4.4.pl2-gcc10-cpe2103` module on ARCHER2.
+
+| Nodes | MPI processes per node | Total MPI processes | NCORE | KPAR | Maximum LOOP time (s) |
+|------:|-----------------------:|--------------------:|------:|-----:|----------------------:|
+|     1 |                    128 |                 128 |     2 |    2 |                 13956 |
+|     2 |                    128 |                 256 |     4 |    2 |                  6494 |
+|     4 |                    128 |                 512 |     4 |    2 |                  3061 |
+|     8 |                    128 |                1024 |     4 |    2 |                  1695 |
+|    16 |                    128 |                2046 |    16 |    2 |                  1132 |
+|    32 |                    128 |                4096 |    16 |    2 |                   593 |
+|    64 |                    128 |                8192 |    16 |    2 |                   459 |
