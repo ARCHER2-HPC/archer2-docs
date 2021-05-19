@@ -647,6 +647,44 @@ srun --hint=nomultithread --distribution=block:block dgemv.x
     You must setup the environment at both compile and run time otherwise
     you will end up using the default version of the library.
 
+## Compiling in compute nodes
+
+Sometimes you may wish to compile in a batch job. For example, the compile process may take a long time or the compile process is part of the research workflow and can be coupled to the production job. Unlike login nodes, the `/home` file system is not available.
+
+An example job submission script for a compile job using `make` (assuming the Makefile is in the same directory as the job submission script) would be:
+
+```
+#!/bin/bash
+
+#SBATCH --job-name=compile
+#SBATCH --time=00:20:00
+#SBATCH --nodes=1
+#SBATCH --tasks-per-node=1
+#SBATCH --cpus-per-task=1
+
+# Replace the account code, partition and QoS with those you wish to use
+#SBATCH --account=t01        
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+# Load the compilation environment (cray, gnu or aocc)
+module restore /etc/cray-pe.d/PrgEnv-cray
+
+make clean
+
+make
+```
+
+!!! warning
+    Do not forget to include the full path when the
+    compilation environment is restored. For instance:
+    
+    `module restore /etc/cray-pe.d/PrgEnv-cray`
+
+You can also use a compute node in an interactive way using `salloc`. Please see
+Section [Using salloc to reserve resources](../scheduler/#using-salloc-to-reserve-resources)
+for further details. Once your interactive session is ready, you can load the compilation environment and compile the code.
+
 ## Build instructions for software on ARCHER2
 
 The ARCHER2 CSE team at [EPCC](https://www.epcc.ed.ac.uk) and other contributors
