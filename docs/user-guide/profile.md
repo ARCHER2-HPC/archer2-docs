@@ -6,11 +6,11 @@ CrayPat-lite is a simplified and easy-to-use version of the Cray
 Performance Measurement and Analysis Tool (CrayPat) set. CrayPat-lite
 provides basic performance analysis information automatically, with a
 minimum of user interaction, and yet offers information useful to users
-wishing to explore a program's behavior further using the full CrayPat
+wishing to explore a program's behaviour further using the full CrayPat
 tool set.
 
 To use CrayPat-lite you only need to make sure that the base CrayPat
-perftools-base module has been loaded, an instrumentation module can
+`perftools-base` module has been loaded, an instrumentation module can
 then be loaded for further experimentation.
 
 ### How to use CrayPat-lite
@@ -27,7 +27,7 @@ then be loaded for further experimentation.
     CrayPat-lite will appear indicating that the executable has been
     instrumented.
 
-    ``` 
+    ```
     auser@uan01:/work/t01/t01/auser> cc -h std=c99  -o myapplication.x myapplication.c
     INFO: creating the CrayPat-instrumented executable 'myapplication.x' (lite-samples) ...OK  
     ```
@@ -36,20 +36,20 @@ then be loaded for further experimentation.
 
     ```
     #!/bin/bash
-    
+
     #SBATCH --job-name=craypat_test
     #SBATCH --nodes=4
     #SBATCH --tasks-per-node=128
     #SBATCH --cpus-per-task=1
     #SBATCH --time=00:20:00
-    
+
     #SBATCH --account=[budget code]
     #SBATCH --partition=standard
     #SBATCH --qos=standard
-    
+
     # Setup the batch environment
     module load epcc-job-env
-    
+
     # Launch the parallel program
     srun mpi_test.x
     ```
@@ -104,7 +104,7 @@ profiling for a representative length of time.
 
     ```
     auser@uan01:/work/t01/t01/auser> cc -h std=c99 -c jacobi.c
-    auser@uan01:/work/t01/t01/auser> cc jacobi.o -o jacobi 
+    auser@uan01:/work/t01/t01/auser> cc jacobi.o -o jacobi
     ```
 
 4.  Instrument your application To instrument then the binary, run the
@@ -172,7 +172,7 @@ predefined report types are
     tracing experiments.
 
 Example output:
-
+    ```
     auser@uan01:/work/t01/t01/auser> pat_report -O ca+src,load_balance  jacobi+pat+12265-1573s
 
     Table 1:  Profile by Function and Callers, with Line Numbers (limited entries shown)
@@ -207,7 +207,7 @@ Example output:
     ||  13.4% | 113.9 | __cray_memcpy_SNB
     3|        |       |  __cray_memcpy_SNB
     |======================================
-
+    ```
 
 ### Tracing analysis
 
@@ -224,6 +224,7 @@ should once again be run on the compute nodes and the name of the
 executable changed to `jacobi+apa`. As with the sampling analysis, a
 report can be produced using `pat_report`. For example:
 
+    ```
     auser@uan01:/work/t01/t01/auser> pat_report jacobi+apa+13955-1573t
 
     Table 1:  Profile by Function Group and Function (limited entries shown)
@@ -248,6 +249,7 @@ report can be produced using `pat_report`. For example:
     ||   3.7% |  0.486714 | 0.882654 | 65.0% |   199,108.0 | MPI_Waitall
     ||   3.3% |  0.428731 | 0.557342 | 57.0% |   395,104.9 | MPI_Isend
     |=========================================================================
+    ```
 
 #### Manual Program Analysis
 
@@ -257,7 +259,9 @@ requirements.
 
 The entire program can be traced as a whole using `-w`:
 
+    ```
     auser@uan01:/work/t01/t01/auser> pat_build -w jacobi
+    ```
 
 Using `-g` a program can be instrumented to trace all function entry
 point references belonging to the trace function group tracegroup (mpi,
@@ -273,9 +277,11 @@ information for codes that cannot easily be rebuilt. To use `pat_run`:
 
 1.  Load the `perftools-base` module if it is not already loaded
 
+    ```
     `module load perftools-base`
+    ```
 
-2.  Run your application normally including the `pat_run` command rigth
+2.  Run your application normally including the `pat_run` command right
     after your `srun`
     options
 
@@ -321,20 +327,55 @@ PAT\_RT\_SUMMARY environment variable to 0 before executing the
 instrumented program nearly doubles the number of reports available when
 analyzing the resulting data in Cray Apprentice2.
 
+    ```
     export PAT_RT_SUMMARY=0
+    ```
 
 To use Cray Apprentice2 (`app2`), load `perftools-base` module if it is
 not already loaded
 
+    ```
     module load perftools-base
+    ```
 
 then open the Cray Apprentice2 data (`.ap2`) generated during the
 instrumentation phase
 
+    ```
     auser@uan01:/work/t01/t01/auser> app2 jacobi+pat+12265-1573s/datafile.ap2
+    ```
 
 ## Hardware Performance Counters
 
 !!! note
     Information on hardware counters will be added soon.
 
+## Performance and profiling data in Slurm
+
+Slurm commands on the login nodes can be used to quickly and simply retrieve information about memory usage for currently running and completed jobs.
+
+The command `sstat` is used to display status information of a running job or job step and the command `saact` is used to display accounting data for all jobs and job steps within the Slurm job database.
+
+### Examples
+
+To display the current memory use of a user's running job with the ID 123456:
+
+    ```
+    auser@uan01:/work/t01/t01/auser> sstat --format=JobID,AveCPU,AveRSS,MaxRSS,MaxRSSTask,AveVMSize,MaxVMSize -j 123456
+    ```
+
+To display the memory use of a completed job with the ID 123456:
+
+    ```
+    auser@uan01:/work/t01/t01/auser> sacct --format=JobID,JobName,AveRSS,MaxRSS,MaxRSSTask,AveVMSizes,MaxVMSize -j 123456
+    ```
+
+Another usage of `sacct` is to display when a job was submitted, started running and ended for a particular user:
+
+    ```
+    auser@uan01:/work/t01/t01/auser> sacct --format=JobID,Submit,Start,End -u auser
+    ```
+
+### Further help
+
+The definitions of any variables discussed here and more usage information can be found on the man pages of `sstat` and `sacct`.
