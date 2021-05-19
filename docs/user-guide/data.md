@@ -249,18 +249,18 @@ The `-R` option ensures that the read permission is enabled recursively and
 the `+X` guarantees that the user(s) you're sharing the folder with can access
 the subdirectories below `my-shared-folder`.
 
-### Project Groups
+### Sharing data between projects and subprojects
 
 Every file has an *owner* group that specifies access permissions for users
 belonging to that group. It's usually the case that the group id is synonymous
 with the project code. Somewhat confusingly however, projects can contain
-groups of their own which can be assigned disk space quotas distinct from
-the project.
+groups of their own, called subprojects, which can be assigned disk space
+quotas distinct from the project.
 
-    chown -R my-shared-folder:x01-group /work/x01/x01-group/$USER/my-folder 
+    chown -R my-shared-folder:x01-subproject /work/x01/x01-subproject/$USER/my-folder 
 
 The `chown` command above changes the owning group for all the files within
-`my-folder` to the `x01-group` group. This might be necessary if previously
+`my-folder` to the `x01-subproject` group. This might be necessary if previously
 those files were *owned* by the x01 group and thereby using some of the x01
 disk quota.
 
