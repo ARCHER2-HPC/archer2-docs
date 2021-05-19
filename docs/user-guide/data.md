@@ -195,6 +195,41 @@ Your Linux home directory will generally not be changed when you are made a memb
 of a subproject so you must change directories manually (or change the ownership of
 files) to make use of this different storage quota allocation.
 
+## Sharing data with other ARCHER2 users
+
+How you share data with other ARCHER2 users depends on whether they
+belong to the same project as you or not. Each project has two levels of
+shared directories that can be used for sharing data.
+
+### Sharing data with ARCHER2 users in your project
+
+Each project has a directory called:
+
+    /work/[project code]/[project code]/shared
+
+that has read/write permissions for all project members. You can place
+any data you wish to share with other project members in this directory.
+
+For example, if your project code is x01 the shared project directory
+would be located at:
+
+    /work/x01/x01/shared
+
+### Sharing data with all ARCHER2 users
+
+Each project also has a higher level directory called:
+
+    /work/[project code]/shared
+
+that is writable by all project members and readable by any user on the
+system. You can place any data you wish to share with other ARCHER2
+users who are not members of your project in this directory.
+
+For example, if your project code is x01 the sharing directory would be
+located at:
+
+    /work/x01/shared
+
 ## Archiving and data transfer
 
 Data transfer speed may be limited by many different factors so the best
