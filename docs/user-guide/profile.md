@@ -1,5 +1,10 @@
 # Profiling
 
+There are a number of different ways to access profiling data on 
+ARCHER2. In this section we discuss the HPE Cray profiling tools:
+CrayPAT-lite and CrayPAT and also discuss how to get usage data
+on currently running jobs from Slurm itself.
+
 ## CrayPat-lite
 
 CrayPat-lite is a simplified and easy-to-use version of the Cray
@@ -352,30 +357,80 @@ instrumentation phase
 
 ## Performance and profiling data in Slurm
 
-Slurm commands on the login nodes can be used to quickly and simply retrieve information about memory usage for currently running and completed jobs.
+Slurm commands on the login nodes can be used to quickly and simply retrieve
+information about memory usage for currently running and completed jobs.
 
-The command `sstat` is used to display status information of a running job or job step and the command `saact` is used to display accounting data for all jobs and job steps within the Slurm job database.
+There are three commands you can use on ARCHER2 to query job data from 
+Slurm, two are standard Slurm commands and one is a script that provides
+information on running jobs:
 
-### Examples
+- The `sstat` command is used to display status information of a running
+  job or job step
+- The `sacct` command is used to display accounting data for all finished
+  jobs and job steps within the Slurm job database.
+- The `archer2jobload` command is used to show CPU and memory usage information
+  for running jobs. (This script is based on one originally written for ht
+  [COSMA HPC facility](https://www.dur.ac.uk/icc/cosma/) at the University of
+  Durham.)
 
-To display the current memory use of a user's running job with the ID 123456:
+We provide examples of the use of these three commands below.
 
-    
-    auser@uan01:/work/t01/t01/auser> sstat --format=JobID,AveCPU,AveRSS,MaxRSS,MaxRSSTask,AveVMSize,MaxVMSize -j 123456
-    
+### Example 1: `sstat` for running jobs
+
+To display the current memory use of a running job with the ID 123456:
+
+```
+auser@uan01:/work/t01/t01/auser> sstat --format=JobID,AveCPU,AveRSS,MaxRSS,MaxRSSTask,AveVMSize,MaxVMSize -j 123456
+```
+
+### Example 2: `sacct` for finished jobs
 
 To display the memory use of a completed job with the ID 123456:
 
-    
-    auser@uan01:/work/t01/t01/auser> sacct --format=JobID,JobName,AveRSS,MaxRSS,MaxRSSTask,AveVMSizes,MaxVMSize -j 123456
-    
+```
+auser@uan01:/work/t01/t01/auser> sacct --format=JobID,JobName,AveRSS,MaxRSS,MaxRSSTask,AveVMSizes,MaxVMSize -j 123456
+```    
 
 Another usage of `sacct` is to display when a job was submitted, started running and ended for a particular user:
 
-    
-    auser@uan01:/work/t01/t01/auser> sacct --format=JobID,Submit,Start,End -u auser
-    
+```
+auser@uan01:/work/t01/t01/auser> sacct --format=JobID,Submit,Start,End -u auser
+```
 
-### Further help
+### Example 3: `archer2jobload` for running jobs
+
+Using the `archer2jobload` command on its own with no options will show the current
+CPU and memory use across compute nodes for all running jobs.
+
+More usefully, you can provide a job ID to `archer2jobload` and it will show a summary
+of the CPU and memory use for a specific job. For example, to get the usage data for job
+123456, you would use:
+
+```
+auser@uan01:~> archer2jobload 123456
+# JOB: 123456
+CPU_LOAD            MEMORY              ALLOCMEM            FREE_MEM            TMP_DISK            NODELIST            
+127.35-127.86       256000              239872              169686-208172       0                   nid[001481,001638-00
+```
+
+This shows the minimum CPU load on a compute node is 126.04 (close to the limit of 128 cores) with the maximum load 127.41 (indicating all the nodes are being used evenly). The minimum free memory is 171893 MB and the maximum free memory is 177224 MB.
+
+If you add the `-l` option, you will see a breakdown per node:
+
+```
+auser@uan01:~> archer2jobload -l 276236
+# JOB: 123456
+NODELIST            CPU_LOAD            MEMORY              ALLOCMEM            FREE_MEM            TMP_DISK            
+nid001481           127.86              256000              239872              169686              0                   
+nid001638           127.60              256000              239872              171060              0                   
+nid001639           127.64              256000              239872              171253              0                   
+nid001677           127.85              256000              239872              173820              0                   
+nid001678           127.75              256000              239872              173170              0                   
+nid001891           127.63              256000              239872              173316              0                   
+nid001921           127.65              256000              239872              207562              0                   
+nid001922           127.35              256000              239872              208172              0 
+```
+
+### Further help with Slurm
 
 The definitions of any variables discussed here and more usage information can be found on the man pages of `sstat` and `sacct`.
