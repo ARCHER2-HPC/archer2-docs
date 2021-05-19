@@ -38,6 +38,9 @@ the following directory on ARCHER2:
 
 ## Running parallel CASTEP jobs
 
+We recommend that users use the `castep/20.1.1-gcc10-mkl-cpe2103` module as it 
+fixes a number of potential MPI bugs.
+
 The following script will run a CASTEP job using 2 nodes (256 cores). it
 assumes that the input files have the file stem `text_calc`.
 
