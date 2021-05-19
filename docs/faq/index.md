@@ -49,11 +49,11 @@ ARCHER2 users can access the data from the ARCHER2 User Access Nodes (UANs) usin
 `cd /epsrc/your_project_code ` <br />
 `cd /general/your_project_code `
 
-The data is currently read-only so you are able to access the data and make a copy if needed but you are not able to write to the space during the ARCHER2 4Cabinet service. 
+The data was initially read-only but RDFaaS is now available for read and write access. 
 
 **Note**: as previously notified, `/nerc` is no longer available
 
-If the data you wish to access is from an old ARCHER project which is not on ARCHER2, then please contact the Service Desk ([support@archer2.ac.uk](mailto:support@archer2.ac.uk)) and we will be able to make arrangements so that you will be able to access the data, once the full system is live and the read-only restriction is lifted.  
+If the data you wish to access is from an old ARCHER project which is not on ARCHER2, then please contact the Service Desk ([support@archer2.ac.uk](mailto:support@archer2.ac.uk)) and we can make arrangements so that you are able to access the data.  
 
 ### Undeleteable file .nfsXXXXXXXXXXX
 
