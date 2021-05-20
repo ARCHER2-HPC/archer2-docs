@@ -73,7 +73,7 @@ tools                   Tools for Package Development
 utils                   The R Utils Package
 ```
 
-## Running Python on the compute nodes
+## Running R on the compute nodes
 
 In this section, we provide an example R job submission scripts for
 using R on the ARCHER2 compute nodes.
@@ -97,10 +97,10 @@ using R on the ARCHER2 compute nodes.
 # Setup the batch environment
 module load epcc-job-env
 
-# Load the Python module
+# Load the R module
 module load cray-R
 
-# Run your Python progamme
+# Run your R progamme
 Rscript serial_test.R
 ```
 
