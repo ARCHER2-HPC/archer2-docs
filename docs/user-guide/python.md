@@ -89,7 +89,7 @@ variety of scenarios of using Python on the ARCHER2 compute nodes.
 
     #!/bin/bash --login
     
-    #SBATCH --name=python_test
+    #SBATCH --job-name=python_test
     #SBATCH --nodes=1
     #SBATCH --tasks-per-node=1
     #SBATCH --cpus-per-task=1
