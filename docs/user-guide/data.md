@@ -12,8 +12,7 @@ ARCHER2.
    - Harry Mangalam's guide on [How to transfer large amounts of data
      via
      network](https://hjmangalam.wordpress.com/2009/09/14/how-to-transfer-large-amounts-of-data-via-network/).
-     This provides lots of useful advice on transferring data though we
-     now recommend using Globus Online, rather than GridFTP directly.
+     This provides lots of useful advice on transferring data.
 
 ## Data management
 
@@ -194,6 +193,76 @@ storage will be found at, for example:
 Your Linux home directory will generally not be changed when you are made a member
 of a subproject so you must change directories manually (or change the ownership of
 files) to make use of this different storage quota allocation.
+
+## Sharing data with other ARCHER2 users
+
+How you share data with other ARCHER2 users depends on whether or not
+they belong to the same project as you. Each project has two shared
+folders that can be used for sharing data.
+
+### Sharing data with ARCHER2 users in your project
+
+Each project has an *inner* shared folder.
+
+    /work/[project code]/[project code]/shared
+
+This folder has read/write permissions for all project members. You can
+place any data you wish to share with other project members in this
+directory. For example, if your project code is x01 the inner shared
+folder would be located at `/work/x01/x01/shared`.
+
+### Sharing data with all ARCHER2 users
+
+Each project also has an *outer* shared folder.:
+
+    /work/[project code]/shared
+
+It is writable by all project members and readable by any user on the
+system. You can place any data you wish to share with other ARCHER2
+users who are not members of your project in this directory. For example,
+if your project code is x01 the outer shared folder would be located
+at `/work/x01/shared`.
+
+### Permissions
+
+You should check the permissions of any files that you place in the shared area,
+especially if those files were created in your own ARCHER2 account. Files of the
+latter type are likely to be readable by you only.
+
+The `chmod` command below shows how to make sure that a file placed in the outer
+shared folder is also readable by all ARCHER2 users.
+
+    chmod a+r /work/x01/shared/your-shared-file.txt
+
+Similarly, for the inner shared folder, `chmod` can be called such that read
+permission is granted to all users within the x01 project.
+
+    chmod g+r /work/x01/x01/shared/your-shared-file.txt
+
+If you're sharing a set of files stored within a folder hierarchy the `chmod`
+is slightly more complicated.
+
+    chmod -R a+Xr /work/x01/shared/my-shared-folder
+    chmod -R g+Xr /work/x01/x01/shared/my-shared-folder
+
+The `-R` option ensures that the read permission is enabled recursively and
+the `+X` guarantees that the user(s) you're sharing the folder with can access
+the subdirectories below `my-shared-folder`.
+
+### Sharing data between projects and subprojects
+
+Every file has an *owner* group that specifies access permissions for users
+belonging to that group. It's usually the case that the group id is synonymous
+with the project code. Somewhat confusingly however, projects can contain
+groups of their own, called subprojects, which can be assigned disk space
+quotas distinct from the project.
+
+    chown -R my-shared-folder:x01-subproject /work/x01/x01-subproject/$USER/my-folder 
+
+The `chown` command above changes the owning group for all the files within
+`my-folder` to the `x01-subproject` group. This might be necessary if previously
+those files were *owned* by the x01 group and thereby using some of the x01
+disk quota.
 
 ## Archiving and data transfer
 

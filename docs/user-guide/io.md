@@ -47,7 +47,7 @@ results.
     accidently deletes essential data, it will not be possible to recover
     the lost files.
 
-High-performance Lustre file system mounted on the compute nodes. All
+A high-performance Lustre file system is mounted on the compute nodes. All
 parallel calculations must be run from directories on the `/work` file
 system and all files required by the calculation (apart from the
 executable) must reside on `/work`. Each project will be assigned space
@@ -70,41 +70,6 @@ are strongly discouraged. If links are used, executables and data files
 on `/work` to be used by applications on the compute nodes (i.e. those
 executed via the `aprun` command) should be referenced directly on
 `/work`.
-
-## Sharing data with other ARCHER2 users
-
-How you share data with other ARCHER2 users depends on whether they
-belong to the same project as you or not. Each project has two levels of
-shared directories that can be used for sharing data.
-
-### Sharing data with users in your project
-
-Each project has a directory called:
-
-    /work/[project code]/[project code]/shared
-
-that has read/write permissions for all project members. You can place
-any data you wish to share with other project members in this directory.
-
-For example, if your project code is x01 the shared project directory
-would be located at:
-
-    /work/x01/x01/shared
-
-### Sharing data with all users
-
-Each project also has a higher level directory called:
-
-    /work/[project code]/shared
-
-that is writable by all project members and readable by any user on the
-system. You can place any data you wish to share with other ARCHER2
-users who are not members of your project in this directory.
-
-For example, if your project code is x01 the sharing directory would be
-located at:
-
-    /work/x01/shared
 
 ## Common I/O patterns
 
