@@ -23,7 +23,7 @@ module load visidata
 
 Once the module has been loaded, VisiData is available via the `vd` command.
 
-Visidata can also be used in scripts by saving a command log an replaying it. See
+Visidata can also be used in scripts by saving a command log and replaying it. See
 the [VisiData documentation](https://www.visidata.org/docs/save-restore/) on saving
 and restoring VisiData sessions.
 
