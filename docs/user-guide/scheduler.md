@@ -633,7 +633,6 @@ MPI process. This results in all 128 physical cores per node being used.
 #SBATCH --job-name=Example_MPI_Job
 #SBATCH --time=0:20:0
 #SBATCH --nodes=4
-#SBATCH --ntasks=32
 #SBATCH --tasks-per-node=8
 #SBATCH --cpus-per-task=16
 
