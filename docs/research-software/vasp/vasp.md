@@ -86,6 +86,13 @@ and provides additional scripts to use with VASP. Additional functionality inclu
 Full details of these methods and the provided scripts can be found on
 [the VTST website](http://theory.cm.utexas.edu/vtsttools/).
 
+On ARCHER2, the VTST version of VASP 5 can be accessed by loading the modules with
+`VTST` in the module name, for example:
+
+```
+module load vasp/5/5.4.4-VTST-gcc10-cpe2103
+```
+
 #### Example VASP 5 job submission script
 
 The following script will run a VASP job using 2 nodes (128x2, 256 total
