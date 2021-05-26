@@ -30,6 +30,10 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.superfences
 
+google_analytics:
+  - UA-165933823-2
+  - auto
+
 nav:
   - "Documentation overview": index.md
   - "Quickstart":
