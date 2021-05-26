@@ -257,7 +257,7 @@ with the project code. Somewhat confusingly however, projects can contain
 groups of their own, called subprojects, which can be assigned disk space
 quotas distinct from the project.
 
-    chown -R my-shared-folder:x01-subproject /work/x01/x01-subproject/$USER/my-folder 
+    chown -R $USER:x01-subproject /work/x01/x01-subproject/$USER/my-folder 
 
 The `chown` command above changes the owning group for all the files within
 `my-folder` to the `x01-subproject` group. This might be necessary if previously
