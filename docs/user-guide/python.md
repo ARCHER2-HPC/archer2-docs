@@ -163,7 +163,7 @@ Please follow these steps:
    pip install --user jupyterlab
    ```
 
-1. To run your Jupyter notebook on a compute node, you can run an interactive 
+2. To run your Jupyter notebook on a compute node, you can run an interactive 
    session:
    ```
    srun --nodes=1 --exclusive --time=00:20:00 --account=<your_budget> 
@@ -184,7 +184,7 @@ Please follow these steps:
    ```
    You can skip this step if you want to test JupyterLab on the login node.
 
-1. Run JupyterLab:
+3. Run JupyterLab:
    ```
    export JUPYTER_RUNTIME_DIR=$(pwd)
    jupyter lab --ip=0.0.0.0 --no-browser
@@ -193,7 +193,7 @@ Please follow these steps:
    the form `http://127.0.0.1:8888?token=<string>`; we'll need this URL in
    step 5.
 
-1. Open a new terminal window on your laptop, and run the following command:
+4. Open a new terminal window on your laptop, and run the following command:
    ```
    ssh <username>@login.archer2.ac.uk -L8888:<node_id>:8888
    ```
@@ -203,7 +203,7 @@ Please follow these steps:
    is `nid001015`. Note, please use the same port number as the URL of step 3. 
    Sometimes, the port may be another number like 8889.
 
-1. Now, if you open a browser window locally, you should now be able to 
+5. Now, if you open a browser window locally, you should now be able to 
    navigate to the URL from step 3, and this should display the Jupyter Lab 
    server. If you haven't selected the correct node id, you will get a
    connection error. If you are on a compute node, the notebook will be
