@@ -115,8 +115,8 @@ Programmes that have been parallelised with mpi4py can be run on
 multiple processors on ARCHER2. A sample submission script is given
 below. The primary difference from the Python submission script in the
 previous section is that we must run the programme using
-`srun python my_prog.py` instead of `python my_prog,py`. Failing to do so will cause
-a segmentation fault in your programme when it reaches the line
+`srun python my_prog.py` instead of `python my_prog,py`. Failing to do so will 
+cause a segmentation fault in your programme when it reaches the line
 `from mpi4py import MPI`.
 
     #!/bin/bash --login
@@ -142,3 +142,69 @@ a segmentation fault in your programme when it reaches the line
     # Note that srun MUST be used to wrap the call to python, otherwise an error
     # will occur
     srun python mpi4py_test.py
+
+## Using JupyterLab on ARCHER2
+
+It is possible to view and run Jupyter notebooks that are on both login nodes 
+and compute nodes of ARCHER2.
+
+!!! note
+    You can test these on the login nodes, but please do not attempt to run any 
+    computationally intensive jobs on them. Jobs may get killed once they hit a
+    CPU limit on login nodes.
+
+Please follow these steps:
+
+1. Install JupyterLab in your work directory:
+   ```
+   module load cray-python
+   export PYTHONUSERBASE=/work/t01/t01/auser/.local
+   export PATH=$PYTHONUSERBASE/bin:$PATH
+   pip install --user jupyterlab
+   ```
+
+2. To run your Jupyter notebook on a compute node, you can run an interactive 
+   session:
+   ```
+   srun --nodes=1 --exclusive --time=00:20:00 --account=<your_budget> 
+   --partition=standard --qos=short --reservation=shortqos --pty /bin/bash
+   ```
+   Your prompt will change to something like this:
+   ```
+   auser@nid001015:/tmp>
+   ```
+   In this case, the node id is `nid001015`. Execute the following on the
+   compute node:
+   ```
+   cd /work/t01/t01/auser # Update the path to your work directory
+   export PYTHONUSERBASE=$(pwd)/.local
+   export PATH=$PYTHONUSERBASE/bin:$PATH
+   export HOME=$(pwd)
+   module load cray-python
+   ```
+   You can skip this step if you want to test JupyterLab on the login node.
+
+3. Run JupyterLab:
+   ```
+   export JUPYTER_RUNTIME_DIR=$(pwd)
+   jupyter lab --ip=0.0.0.0 --no-browser
+   ```
+   Once it's started, you will see a URL printed in the terminal window of 
+   the form `http://127.0.0.1:8888?token=<string>`; we'll need this URL in
+   step 5.
+
+4. Open a new terminal window on your laptop, and run the following command:
+   ```
+   ssh <username>@login.archer2.ac.uk -L8888:<node_id>:8888
+   ```
+   where `<username>` is your username, and `<node_id>` is the node id we're 
+   currently on (on a login node, this will be `uan01`, or similar; on a compute 
+   node, it will be a mix of numbers and letters). In our example, `<node_id>`
+   is `nid001015`. Note, please use the same port number as the URL of step 3. 
+   Sometimes, the port may be another number like 8889.
+
+5. Now, if you open a browser window locally, you should now be able to 
+   navigate to the URL from step 3, and this should display the Jupyter Lab 
+   server. If you haven't selected the correct node id, you will get a
+   connection error. If you are on a compute node, the notebook will be
+   available for the length of the interactive session you have requested.
