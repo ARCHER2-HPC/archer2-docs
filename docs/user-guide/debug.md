@@ -303,7 +303,7 @@ profiles. To test an executable called `my_executable` that requires two
 arguments `arg1` and `arg2` on two nodes and 256 processes, run:
 
     valgrind4hpc --tool=memcheck --num-ranks=256 --launcher-args="--account=[budget code] --nodes=2 \
-                 --partition=standard --qos=standard --export=ALL -ntasks-per-node=128 --cpus-per-task=1" \
+                 --partition=standard --qos=standard --export=ALL --ntasks-per-node=128 --cpus-per-task=1" \
                  my_executable -- arg1 arg2
 
 In particular, note the `--` separating the executable from the
