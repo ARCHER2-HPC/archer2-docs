@@ -16,7 +16,7 @@ This is the documentation for the ARCHER2 service and includes:
 
   - [Quick Start Guide](quick-start/overview.md)
     The ARCHER2 quick start guide provides the minimum information for
-    new users or users transferring from ARCHER.
+    new users.
 
   - [ARCHER2 User and Best Practice Guide](user-guide/index.md)
     Covers all aspects of use of the ARCHER2 supercomputing service.
