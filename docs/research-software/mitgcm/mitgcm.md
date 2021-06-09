@@ -49,7 +49,7 @@ refer to pass the optfile to genmake2.
 
     export MITGCM_ROOTDIR=/path/to/MITgcm
     export PATH=$MITGCM_ROOTDIR/tools:$PATH
-    export MITGCM_OPT=$MITGCM_ROOTDIR/tools/build_options/linux_amd64_gfortran_archer2
+    export MITGCM_OPT=$MITGCM_ROOTDIR/tools/build_options/dev_linux_amd64_gnu_archer2
 
 When using genmake2 to create the Makefile, you will need to specify the
 optfile to use. Other commonly used options might be to use extra source
