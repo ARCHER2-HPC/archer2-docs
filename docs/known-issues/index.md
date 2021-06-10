@@ -115,6 +115,38 @@ The workaround for this issue is to use the newer HPE Cray Programming Environme
 release 21.03. Instructions on using a non-default programming environment release
 [are available in the User and Best Practice Guide](../user-guide/dev-environment.md#switching-to-a-different-hpe-cray-programming-environment-release)
 
+### MPI `UCX ERROR: ivb_reg_mr`
+
+If you are using the UCX layer for MPI communication you may see an error such as:
+
+```
+[1613401128.440695] [nid001192:11838:0] ib_md.c:325 UCX ERROR ibv_reg_mr(address=0xabcf12c0, length=26400, access=0xf) failed: Cannot allocate memory
+[1613401128.440768] [nid001192:11838:0] ucp_mm.c:137 UCX ERROR failed to register address 0xabcf12c0 mem_type bit 0x1 length 26400 on md[4]=mlx5_0: Input/output error (md reg_mem_types 0x15)
+[1613401128.440773] [nid001192:11838:0] ucp_request.c:269 UCX ERROR failed to register user buffer datatype 0x8 address 0xabcf12c0 len 26400: Input/output error
+MPICH ERROR [Rank 1534] [job id 114930.0] [Mon Feb 15 14:58:48 2021] [unknown] [nid001192] - Abort(672797967) (rank 1534 in comm 0): Fatal error in PMPI_Isend: Other MPI error, error stack:
+PMPI_Isend(160)......: MPI_Isend(buf=0xabcf12c0, count=3300, MPI_DOUBLE_PRECISION, dest=1612, tag=4, comm=0x84000004, request=0x7fffb38fa0fc) failed
+MPID_Isend(416)......:
+MPID_isend_unsafe(92):
+MPIDI_UCX_send(95)...: returned failed request in UCX netmod(ucx_send.h 95 MPIDI_UCX_send Input/output error)
+aborting job:
+Fatal error in PMPI_Isend: Other MPI error, error stack:
+PMPI_Isend(160)......: MPI_Isend(buf=0xabcf12c0, count=3300, MPI_DOUBLE_PRECISION, dest=1612, tag=4, comm=0x84000004, request=0x7fffb38fa0fc) failed
+MPID_Isend(416)......:
+MPID_isend_unsafe(92):
+MPIDI_UCX_send(95)...: returned failed request in UCX netmod(ucx_send.h 95 MPIDI_UCX_send Input/output error)
+[1613401128.457254] [nid001192:11838:0] mm_xpmem.c:82 UCX WARN remote segment id 200002e09 apid 200002e3e is not released, refcount 1
+[1613401128.457261] [nid001192:11838:0] mm_xpmem.c:82 UCX WARN remote segment id 200002e08 apid 100002e3e is not released, refcount 1
+```
+
+You can add the following line to your job submission script before the `srun` command
+to try and workaround this error:
+
+```
+export UCX_IB_REG_METHODS=direct
+```
+
+!!! note
+    Setting this flag may have an impact on code performance.
 
 ## Recently Resolved Issues
 
