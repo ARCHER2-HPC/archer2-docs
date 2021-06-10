@@ -1,18 +1,11 @@
 # ARCHER2 Documentation
 
-\*\* This documentation is in development. ARCHER2 is currently running as a small early access system while the full system is being commissioned. For more information on ARCHER2,
-please visit the [ARCHER2 web site](http://www.archer2.ac.uk).\*\*
-
 ARCHER2 is the next generation UK National Supercomputing Service. You
 can find more information on the service and the research it supports on
 the [ARCHER2 website](https://www.archer2.ac.uk).
 
 This repository contains the documentation for the service and is linked
 to a rendered version currently hosted on Github pages.
-
-For a guide on the rst file format see
-[this](http://thomas-cokelaer.info/tutorials/sphinx/rest_syntax.html)
-document.
 
 This documentation is drawn from the [Cirrus
 documentation](https://github.com/EPCCed/cirrus-docs), [Sheffield
@@ -25,14 +18,15 @@ and the [ARCHER](http://www.archer.ac.uk) documentation.
 
 ## How to contribute
 
-We welcome contributions that improve the documentation from the ARCHER2
-community and the wider HPC world. Contributions can take the form of
-improved or additional content and/or Issues that identify problems or
-opportunities for improvement.
+We welcome contributions from the ARCHER2 community and beyond. Contributions can take many different
+forms, some examples are:
 
-**Note:** All interactions on the ARCHER2 documentation repository
-should follow the [ARCHER2 Code of
-Conduct](https://www.archer2.ac.uk/training/code-of-conduct/) so that
+- Raising Issues if you spot a mistake or something that could be improved
+- Adding/updating material via a Pull Request
+- Adding your thoughts and ideas to any open issues
+
+All people who contribute and interact via this Github repository undertake to abide by the
+[ARCHER2 Code of Conduct](https://www.archer2.ac.uk/about/policies/code-of-conduct.html) so that
 we, as a community, provide a welcoming and supportive environment for
 all people, regardless of background or identity.
 
@@ -42,7 +36,8 @@ Repo](https://help.github.com/articles/fork-a-repo/) for the GitHub
 documentation on this process.
 
 Once you have the git repository locally on your computer, you will need
-to [install Material for mkdocs](https://squidfunk.github.io/mkdocs-material/getting-started/) to be able to build the documentation. This can be done using a local installation
+to [install Material for mkdocs](https://squidfunk.github.io/mkdocs-material/getting-started/)
+to be able to build the documentation. This can be done using a local installation
 or using a Docker container.
 
 Once you have made your changes and updated your Fork on GitHub you will
