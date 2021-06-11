@@ -27,6 +27,7 @@ root of the installation if this is required.
 - Module `petsc/3.13.3` installed January 2021
 
     Known issues: PETSc is not currently available for `PrgEnv-aocc`.
+    There is no HYPRE support in this version.
 
 
 ## Compile your own version
@@ -45,6 +46,8 @@ $ ./sh/tpsl/scotch.sh --prefix=/path/to/install/location
 $ ./sh/tpsl/mumps.sh --prefix=/path/to/install/location
 $ ./sh/tpsl/superlu.sh --prefix=/path/to/install/location
 $ ./sh/tpsl/superlu-dist.sh --prefix=/path/to/install/location
+
+$ module load cray-hdf5
 $ ./sh/petsc.sh --prefix=/path/to/install/location
 ```
 The `--prefix` option indicating the install directory should be the
