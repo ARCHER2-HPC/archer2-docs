@@ -1293,7 +1293,8 @@ root of the installation if this is required.</p>
 <ul>
 <li>
 <p>Module <code>petsc/3.13.3</code> installed January 2021</p>
-<p>Known issues: PETSc is not currently available for <code>PrgEnv-aocc</code>.</p>
+<p>Known issues: PETSc is not currently available for <code>PrgEnv-aocc</code>.
+There is no HYPRE support in this version.</p>
 </li>
 </ul>
 <h2 id="compile-your-own-version">Compile your own version</h2>
@@ -1310,6 +1311,8 @@ $ ./sh/tpsl/scotch.sh --prefix=/path/to/install/location
 $ ./sh/tpsl/mumps.sh --prefix=/path/to/install/location
 $ ./sh/tpsl/superlu.sh --prefix=/path/to/install/location
 $ ./sh/tpsl/superlu-dist.sh --prefix=/path/to/install/location
+
+$ module load cray-hdf5
 $ ./sh/petsc.sh --prefix=/path/to/install/location
 </code></pre></div>
 The <code>--prefix</code> option indicating the install directory should be the
