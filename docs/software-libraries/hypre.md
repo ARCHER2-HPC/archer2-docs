@@ -8,7 +8,7 @@ either the MIT license or the Apache license.
 
 ## Compiling and linking with HYPRE
 
-- `module load hype`
+- `module load hypre`
 
 To compile and link an application with the HYPRE libraries, load the
 `hypre` module and use the compiler wrappers `cc`, `CC`, or `ftn` in
