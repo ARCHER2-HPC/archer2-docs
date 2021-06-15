@@ -10,7 +10,7 @@
       
       
       <link rel="icon" href="../favicon.ico">
-      <meta name="generator" content="mkdocs-1.2.1, mkdocs-material-7.1.7">
+      <meta name="generator" content="mkdocs-1.2.1, mkdocs-material-7.1.8">
     
     
       
@@ -40,10 +40,19 @@
     
     
       
-        
-<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-165933823-2","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
-<script async src="https://www.google-analytics.com/analytics.js"></script>
-      
+  
+
+
+
+  
+  
+
+
+
+  <script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-165933823-2","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+  <script async src="https://www.google-analytics.com/analytics.js"></script>
+
+
     
     
   </head>
@@ -564,6 +573,13 @@
         
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-transfer-via-gridftp" class="md-nav__link">
+    Data transfer via GridFTP
+  </a>
   
 </li>
         
@@ -1555,6 +1571,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#data-transfer-via-gridftp" class="md-nav__link">
+    Data transfer via GridFTP
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1862,6 +1885,8 @@ guide are:</p>
      transferring data and can be used up to moderate amounts of data.
      If you are transferring data to your workstation/laptop then this
      is the method you will use.</li>
+<li><strong>GridFTP</strong> - It is sometimes more convenient to transfer large
+     amounts of data (&gt; 100 GBs) using GridFTP servers.</li>
 </ul>
 <p>Before discussing specific data transfer methods, we cover <em>archiving</em>
 which is an essential process for transferring data efficiently.</p>
@@ -2052,6 +2077,16 @@ above.)</p>
 (accessed via <code>man rsync</code> or at <a href="https://linux.die.net/man/1/rsync">man
 rsync</a>).</p>
 </div>
+<h3 id="data-transfer-via-gridftp">Data transfer via GridFTP</h3>
+<p>ARCHER2 provides a module for grid computing, <code>gct/6.2</code>, otherwise known
+as the Globus Grid Community Toolkit v6.2.20201212. This toolkit provides
+a command line interface for moving data to and from GridFTP servers. </p>
+<p>Data transfers are managed by the <code>globus-url-copy</code> command. Full details
+concerning this command's use can be found in the <a href="https://gridcf.org/gct-docs/6.2/gridftp/user/index.html">GCT 6.2 GridFTP User's Guide</a>.</p>
+<p>Please note, the GCT module does <em>not</em> yet support parallel streams.
+We anticipate having this feature available soon. Please consult the
+module help (<code>module help gct/6.2</code>) for confirmation of when this work
+has been completed.</p>
 <h2 id="ssh-data-transfer-example-laptopworkstation-to-archer2">SSH data transfer example: laptop/workstation to ARCHER2</h2>
 <p>Here we have a short example demonstrating transfer of data directly
 from a laptop/workstation to ARCHER2.</p>
