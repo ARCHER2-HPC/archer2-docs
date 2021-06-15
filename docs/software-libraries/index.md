@@ -82,6 +82,11 @@ The following libraries will also made available by the ARCHER2 CSE team:
     Boost is a portable C++ library providing reference implementations
     of many common containers, operations and algorithms.
 
+- **Eigen** [*...details for Eigen on ARCHER2...*](eigen.md)
+
+    Eigen is a C++ template library for linear algebra: matrices,
+    vectors, numerical solvers, and related algorithms.
+
 - **GLM** [*...details for GLM on ARCHER2...*](glm.md)
 
     GLM (GL Math library) is a C++ header-only library for performing
