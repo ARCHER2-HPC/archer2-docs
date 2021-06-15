@@ -305,6 +305,8 @@ guide are:
      transferring data and can be used up to moderate amounts of data.
      If you are transferring data to your workstation/laptop then this
      is the method you will use.
+   - **GridFTP** - It is sometimes more convenient to transfer large
+     amounts of data (> 100 GBs) using GridFTP servers.
 
 Before discussing specific data transfer methods, we cover *archiving*
 which is an essential process for transferring data efficiently.
@@ -527,6 +529,20 @@ above.)
     Further information on using `rsync` can be found in the `rsync` manual
     (accessed via `man rsync` or at [man
     rsync](https://linux.die.net/man/1/rsync)).
+
+### Data transfer via GridFTP
+
+ARCHER2 provides a module for grid computing, `gct/6.2`, otherwise known
+as the Globus Grid Community Toolkit v6.2.20201212. This toolkit provides
+a command line interface for moving data to and from GridFTP servers. 
+
+Data transfers are managed by the `globus-url-copy` command. Full details
+concerning this command's use can be found in the [GCT 6.2 GridFTP User's Guide](https://gridcf.org/gct-docs/6.2/gridftp/user/index.html).
+
+Please note, the GCT module does *not* yet support parallel streams.
+We anticipate having this feature available soon. Please consult the
+module help (`module help gct/6.2`) for confirmation of when this work
+has been completed.
 
 ## SSH data transfer example: laptop/workstation to ARCHER2
 
