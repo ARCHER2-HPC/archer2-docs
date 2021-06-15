@@ -14,7 +14,7 @@
     
     
       
-        <title>Overview - ARCHER2 User Documentation</title>
+        <title>Eigen - ARCHER2 User Documentation</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#software-libraries" class="md-skip">
+        <a href="#eigen" class="md-skip">
           Skip to content
         </a>
       
@@ -103,7 +103,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Overview
+              Eigen
             
           </span>
         </div>
@@ -761,14 +761,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
       
       <label class="md-nav__link" for="__nav_7">
         Software Libraries
@@ -784,91 +782,11 @@
             
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Overview
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="index.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
         Overview
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#libraries-via-modules-cray-" class="md-nav__link">
-    Libraries via modules cray-*
-  </a>
-  
-    <nav class="md-nav" aria-label="Libraries via modules cray-*">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#integration-with-compiler-environment" class="md-nav__link">
-    Integration with compiler environment
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#libraries-supported-by-archer2-cse-team" class="md-nav__link">
-    Libraries supported by ARCHER2 CSE team
-  </a>
-  
-    <nav class="md-nav" aria-label="Libraries supported by ARCHER2 CSE team">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#integration-with-compiler-environment_1" class="md-nav__link">
-    Integration with compiler environment
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#building-your-own-library-versions" class="md-nav__link">
-    Building your own library versions
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1244,16 +1162,16 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#libraries-via-modules-cray-" class="md-nav__link">
-    Libraries via modules cray-*
+  <a href="#compiling-with-eigen" class="md-nav__link">
+    Compiling with Eigen
   </a>
   
-    <nav class="md-nav" aria-label="Libraries via modules cray-*">
+    <nav class="md-nav" aria-label="Compiling with Eigen">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#integration-with-compiler-environment" class="md-nav__link">
-    Integration with compiler environment
+  <a href="#version-history" class="md-nav__link">
+    Version history
   </a>
   
 </li>
@@ -1264,29 +1182,16 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#libraries-supported-by-archer2-cse-team" class="md-nav__link">
-    Libraries supported by ARCHER2 CSE team
-  </a>
-  
-    <nav class="md-nav" aria-label="Libraries supported by ARCHER2 CSE team">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#integration-with-compiler-environment_1" class="md-nav__link">
-    Integration with compiler environment
+  <a href="#compiling-your-own-version" class="md-nav__link">
+    Compiling your own version
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#building-your-own-library-versions" class="md-nav__link">
-    Building your own library versions
+      
+        <li class="md-nav__item">
+  <a href="#resources" class="md-nav__link">
+    Resources
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1302,153 +1207,43 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/ARCHER2-HPC/archer2-docs/edit/main/docs/software-libraries/index.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/ARCHER2-HPC/archer2-docs/edit/main/docs/software-libraries/eigen.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="software-libraries">Software Libraries</h1>
-<p>This section provides information on centrally-installed software
-libraries and library-based packages. These provide significant
-functionality that is of interest to both users and developers of
-applications.</p>
-<p>Libraries are made available via the module system, and fall into
-a number of distinct groups.</p>
-<h2 id="libraries-via-modules-cray-">Libraries via modules <code>cray-*</code></h2>
-<p>The following libraries are available as modules prefixed by <code>cray-</code>
-and may be of direct interest to developers and users. The modules are
-provided by HPE Cray to be optimised for performance on the ARCHER2
-hardware, and should be used where possible. The relevant
-modules are:</p>
-<ul>
-<li>
-<p><strong>cray-fftw</strong> <a href="fftw.html"><em>...details for module load cray-fttw...</em></a></p>
-<p>FFTW (Fastest Fourier Transform in the West) is a standard package for
-discrete Fourier transforms. See the
-<a href="https://hpc.pnl.gov/globalarrays/index.shtml">FFTW home page</a></p>
-</li>
-<li>
-<p><strong>cray-ga</strong></p>
-<p>Global Arrays (GA) provides a partitioned global address space (PGAS)
-programming model used by a number of applications. See the
-<a href="http://www.fftw.org/">GA home page</a></p>
-</li>
-<li>
-<p><strong>cray-hdf5</strong> and <strong>cray-hdf5-parallel</strong> <a href="hdf5.html"><em>...details for hdf5...</em></a></p>
-<p>Hierarchical Data Format (HDF5) is a high-performance and portable data
-format and data model. These modules provide serial and parallel
-variants of HDF5. See the
-<a href="https://portal.hdfgroup.org/display/HDF5/HDF5">HDF5 home page</a></p>
-</li>
-<li>
-<p><strong>cray-libsci</strong> <a href="libsci.html"><em>...details for cray-libsci...</em></a></p>
-<p>BLAS, LAPACK, BLACS, and SCALAPACK provide basic linear algebra
- functionality such as vector-vector, matrix-vector, and
- matrix-matrix multiplication.
- Module <code>cray-libsci</code> is loaded by default in all programming
- environments.</p>
-</li>
-<li>
-<p><strong>cray-netcdf</strong> <a href="netcdf.html"><em>...details for NetCDF...</em></a></p>
-<p>Serial version of Network Common Data Form (NetCDF), a widely used
-and portable data format.
-See the <a href="https://www.unidata.ucar.edu/software/netcdf/">NETCDF website</a></p>
-</li>
-<li>
-<p><strong>cray-netcdf-hdf5parallel</strong></p>
-<p>A serial NetCDF built against parallel HDF5.</p>
-</li>
-<li>
-<p><strong>cray-parallel-netcdf</strong></p>
-<p>A parallel NetCDF implementation (sometimes referred to as "Pnetcdf").</p>
-</li>
-</ul>
-<h3 id="integration-with-compiler-environment">Integration with compiler environment</h3>
-<p>All libraries provided by  modules prefixed <code>cray-</code> integrate with the
-compiler environment, and so appropriate compiler and link stage options
-are injected when using the standard compiler wrappers <code>cc</code>, <code>CC</code> and <code>ftn</code>.</p>
-<h2 id="libraries-supported-by-archer2-cse-team">Libraries supported by ARCHER2 CSE team</h2>
-<p>The following libraries will also made available by the ARCHER2 CSE team:</p>
-<ul>
-<li>
-<p><strong>ADIOS</strong> <a href="adios.html"><em>...details for ADIOS on ARCHER2...</em></a></p>
-<p>ADIOS (Adaptable I/O System) provides library services for parallel I/O. </p>
-</li>
-<li>
-<p><strong>Boost</strong> <a href="boost.html"><em>...details for Boost on ARCHER2...</em></a></p>
-<p>Boost is a portable C++ library providing reference implementations
-of many common containers, operations and algorithms.</p>
-</li>
-<li>
-<p><strong>Eigen</strong> <a href="eigen.html"><em>...details for Eigen on ARCHER2...</em></a></p>
+                <h1 id="eigen">Eigen</h1>
 <p>Eigen is a C++ template library for linear algebra: matrices,
 vectors, numerical solvers, and related algorithms.</p>
-</li>
-<li>
-<p><strong>GLM</strong> <a href="glm.html"><em>...details for GLM on ARCHER2...</em></a></p>
-<p>GLM (GL Math library) is a C++ header-only library for performing
-operations commonly encountered in graphics applications.</p>
-</li>
-<li>
-<p><strong>Hypre</strong> <a href="hypre.html"><em>...details for HYPRE on ARCHER2...</em></a></p>
-<p><a href="https://hypre.readthedocs.io/en/latest/ch-intro.html">HYPRE</a>
-provides pre-conditioners and solvers for sparse linear algebra problems.</p>
-</li>
-<li>
-<p><strong>Metis</strong> and <strong>Parmetis</strong> <a href="metis.html"><em>...details for Metis and Parmetis...</em></a></p>
-<p><a href="http://glaros.dtc.umn.edu/gkhome/metis/metis">METIS</a> is a set of (serial) routines for partitioning graphs and
-meshes, and computing reduced-fill orderings of sparse matrices. It is
-commonly used e.g., to compute decompositions for finite element problems.
-<a href="http://glaros.dtc.umn.edu/gkhome/metis/parmetis/overview">Parmetis</a> is the distributed memory counterpart.</p>
-</li>
-<li>
-<p><strong>Mumps</strong> <a href="mumps.html"><em>...details for MUMPS on ARCHER2...</em></a></p>
-<p><a href="http://mumps.enseeiht.fr">MUMPS</a> provides parallel direct solution of large sparse matrix problems.</p>
-</li>
-<li>
-<p><strong>PETSc</strong> <a href="petsc.html"><em>...details for PETSc on ARCHER2...</em></a></p>
-<p><a href="https://www.mcs.anl.gov/petsc/">PETSc</a> is a general package with functionality related to the
-solution of a wide range of problems described by partial differential
-equations.</p>
-</li>
-<li>
-<p><strong>Scotch</strong> <a href="scotch.html"><em>...details for Scotch and PT-Scotch on ARCHER2...</em></a></p>
-<p><a href="https://www.labri.fr/perso/pelegrin/scotch/">Scotch</a> (and its parallel partner PT-Scotch) is a graph partitioning library.</p>
-</li>
-<li>
-<p><strong>SLEPc</strong> <a href="slepc.html"><em>...details for SLEPc on ARCHER2...</em></a></p>
-<p><a href="https://slepc.upv.es">SLEPc</a> is a package for large eigenvalue problems based on PETSc.</p>
-</li>
-<li>
-<p><strong>SUNDIALS</strong> <em>...details pending...</em></p>
-<p><a href="https://computing.llnl.gov/projects/sundials">Sundials</a> is a suite of libraries which address problems including
-ordinary differential equation integration, initial value problems,
-and non-linear algebraic equations.
-See </p>
-</li>
-<li>
-<p><strong>SuperLU</strong> and <strong>SuperLU_DIST</strong> <a href="superlu.html"><em>...details for SuperLU on ARCHER2...</em></a></p>
-<p><a href="https://portal.nersc.gov/project/sparse/superlu/">SuperLU</a> provides solutions to large non-symmetric sparse systems.
-<a href="https://portal.nersc.gov/project/sparse/superlu/#superlu_dist">SuperLU_DIST</a> is the distributed memory version.</p>
-</li>
-<li>
-<p><strong>Trilinos</strong> <a href="trilinos.html"><em>...details for Trilinos on ARCHER2...</em></a></p>
-<p><a href="https://trilinos.github.io/">Trilinos</a> is a large collection of packages
-for the solution of complex scientific and engineering problems.</p>
-</li>
+<h2 id="compiling-with-eigen">Compiling with Eigen</h2>
+<ul>
+<li><code>module load eigen</code></li>
 </ul>
-<h3 id="integration-with-compiler-environment_1">Integration with compiler environment</h3>
-<p>Again, all the libraries listed above are supported by all programming
-environments via the module system. Additional compile and link time
-flags should not be required.</p>
-<h3 id="building-your-own-library-versions">Building your own library versions</h3>
-<p>For the libraries listed in this section, a set of build and installation
-scripts are available at the <a href="https://github.com/ARCHER2-HPC/pe-scripts/tree/cse-develop">ARCHER2 Github repository</a>.</p>
-<p>Follow the instructions to build the relevant package (note this
-is the <code>cse-develop</code> branch of the repository). See also individual
-libraries pages in the list above for further details.</p>
-<p>The scripts available from this repository should work in all three
-programming environments.</p>
+<p>To compile an application with the Eigen header files, load the
+<code>eigen</code> module and use the compiler wrappers <code>cc</code>, <code>CC</code>, or <code>ftn</code> in
+the usual way. The relevant header files will be introduced
+automatically.</p>
+<p>The header files are located in <code>/work/y07/shared/libs/eigen/3.3.8/</code>,
+and can be included manually at compilation without loading the module
+if required.</p>
+<h3 id="version-history">Version history</h3>
+<ul>
+<li>Module <code>eigen/3.3.8</code> installed June 2021</li>
+</ul>
+<h2 id="compiling-your-own-version">Compiling your own version</h2>
+<p>The current supported version on Archer2 can be built using the
+following script
+<div class="highlight"><pre><span></span><code>$ wget https://gitlab.com/libeigen/eigen/-/archive/3.3.8/eigen-3.3.8.tar.gz
+$ tar xvf eigen-3.3.8.tar.gz
+$ cmake eigen-3.3.8/ -DCMAKE_INSTALL_PREFIX=/path/to/install/location
+$ make install
+</code></pre></div>
+where the <code>-DCMAKE_INSTALL_PREFIX</code> option determines the install
+directory. Installing in this way will also build the Eigen
+documentation and unit-tests.</p>
+<h2 id="resources">Resources</h2>
+<p>Eigen <a href="https://eigen.tuxfamily.org/index.php?title=Main_Page">home page</a></p>
+<p><a href="https://eigen.tuxfamily.org/dox/GettingStarted.html">Getting Started guide</a></p>
                 
               
               
@@ -1464,41 +1259,6 @@ programming environments.</p>
       
         
 <footer class="md-footer">
-  
-    <nav class="md-footer__inner md-grid" aria-label="Footer">
-      
-        
-        <a href="../research-software/vasp/vasp.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: VASP" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              VASP
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="libsci.html" class="md-footer__link md-footer__link--next" aria-label="Next: HPE Cray LibSci: BLAS, LAPACK, ScaLAPACK" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              HPE Cray LibSci: BLAS, LAPACK, ScaLAPACK
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
