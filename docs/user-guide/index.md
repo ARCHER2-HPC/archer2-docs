@@ -19,3 +19,6 @@ The User and Best Practice Guide contains the following sections:
   - [Debugging](debug.md)
   - [Profiling](profile.md)
   - [Performance tuning](tuning.md)
+  - [ARCHER2 hardware](hardware.md)
+  
+
