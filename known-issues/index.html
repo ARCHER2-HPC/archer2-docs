@@ -330,6 +330,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#petsc-fails-when-used-on-more-than-one-node-added-2021-06-21" class="md-nav__link">
+    PETSc fails when used on more than one node (Added: 2021-06-21)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#hpe-cray-perftools-modules-not-available-by-default-added-2021-04-27" class="md-nav__link">
     HPE Cray perftools modules not available by default (Added: 2021-04-27)
   </a>
@@ -1278,6 +1285,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#petsc-fails-when-used-on-more-than-one-node-added-2021-06-21" class="md-nav__link">
+    PETSc fails when used on more than one node (Added: 2021-06-21)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#hpe-cray-perftools-modules-not-available-by-default-added-2021-04-27" class="md-nav__link">
     HPE Cray perftools modules not available by default (Added: 2021-04-27)
   </a>
@@ -1366,6 +1380,15 @@
 impacts and any known workarounds. Many of these issues are under
 active investigation by HPE Cray and the wider service.</p>
 <h2 id="open-issues">Open Issues</h2>
+<h3 id="petsc-fails-when-used-on-more-than-one-node-added-2021-06-21">PETSc fails when used on more than one node (Added: 2021-06-21)</h3>
+<p>There is a bug in the default HPE Cray MPICH which leades to failures from PETSc
+when running on more than one node.</p>
+<p><strong>Workaround:</strong> switch to a newer version of HPE Cray MPICH. To do this, modify
+your job submission script to add the following lines after all your other
+<code>module</code> commands but before you use <code>srun</code> to run the executable:</p>
+<div class="highlight"><pre><span></span><code>module swap cray-mpich cray-mpich/8.1.3
+export LD_LIBRARY_PATH=${CRAY_LD_LIBRARY_PATH}:${LD_LIBRARY_PATH}
+</code></pre></div>
 <h3 id="hpe-cray-perftools-modules-not-available-by-default-added-2021-04-27">HPE Cray <code>perftools</code> modules not available by default (Added: 2021-04-27)</h3>
 <p>The HPE Cray <code>perftools</code> modules are no longer available by default on login to
 ARCHER2 or on the compute nodes when you run a job. This is being investigated
