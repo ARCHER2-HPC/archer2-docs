@@ -6,6 +6,20 @@ active investigation by HPE Cray and the wider service.
 
 ## Open Issues
 
+### PETSc fails when used on more than one node (Added: 2021-06-21)
+
+There is a bug in the default HPE Cray MPICH which leades to failures from PETSc
+when running on more than one node.
+
+**Workaround:** switch to a newer version of HPE Cray MPICH. To do this, modify
+your job submission script to add the following lines after all your other
+`module` commands but before you use `srun` to run the executable:
+
+```
+module swap cray-mpich cray-mpich/8.1.3
+export LD_LIBRARY_PATH=${CRAY_LD_LIBRARY_PATH}:${LD_LIBRARY_PATH}
+```
+
 ### HPE Cray `perftools` modules not available by default (Added: 2021-04-27)
 
 The HPE Cray `perftools` modules are no longer available by default on login to
