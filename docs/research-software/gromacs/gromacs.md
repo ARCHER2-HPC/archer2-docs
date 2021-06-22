@@ -17,10 +17,11 @@ non-biological systems, e.g. polymers.
 ## Using GROMACS on ARCHER2
 
 GROMACS is Open Source software and is freely available to all users.
-Two versions are available:
+Three versions are available:
 
   - Parallel MPI/OpenMP, single precision: `gmx_mpi`
   - Parallel MPI/OpenMP, double precision: `gmx_mpi_d`
+  - Serial, single precision: `gmx`
 
 ## Running parallel GROMACS jobs
 
@@ -44,8 +45,7 @@ cores) with pure MPI.
 #SBATCH --qos=standard
 
 # Setup the batch environment
-module restore /etc/cray-pe.d/PrgEnv-gnu
-
+module load epcc-job-env
 module load gromacs
 
 export OMP_NUM_THREADS=1 
@@ -72,8 +72,7 @@ OpenMP threads per MPI process.
 #SBATCH --qos=standard
 
 # Setup the batch environment
-module restore /etc/cray-pe.d/PrgEnv-gnu
-
+module load epcc-job-env
 module load gromacs
 
 export OMP_NUM_THREADS=8
