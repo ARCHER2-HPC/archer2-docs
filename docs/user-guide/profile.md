@@ -5,6 +5,9 @@ ARCHER2. In this section we discuss the HPE Cray profiling tools:
 CrayPAT-lite and CrayPAT and also discuss how to get usage data
 on currently running jobs from Slurm itself.
 
+!!! warning
+    See [current known issues.](../known-issues/index.md)
+
 ## CrayPat-lite
 
 CrayPat-lite is a simplified and easy-to-use version of the Cray
