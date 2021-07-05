@@ -780,6 +780,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#module-version-history" class="md-nav__link">
+    Module version history
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1252,6 +1259,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#module-version-history" class="md-nav__link">
+    Module version history
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1294,7 +1308,7 @@ most common are distributed by openfoam.org and openfoam.com.</p>
 all users on ARCHER2.</p>
 <div class="highlight"><pre><span></span><code>auser@uan01:&gt; module avail openfoam
 --------------- /work/y07/shared/archer2-modules/modulefiles-cse ----------
-openfoam/com/v2006  openfoam/org/v8.20200901  
+openfoam/com/v2006  openfoam/com/v2106  openfoam/org/v8.20200901
 </code></pre></div>
 <p>Versions from openfoam.org are typically v8.0 etc and there is typically
 one release per year (in June; with a patch release in September).
@@ -1315,6 +1329,9 @@ need to source the <code>etc/bashrc</code> file provided by OpenFOAM, e.g.,:</p>
 need to be added to any job/batch submission scripts you want to use to
 run OpenFOAM. Note that all the centrally installed versions of OpenFOAM
 are compiled under <code>PrgEnv-gnu</code>.</p>
+<p>Note there are no default module versions specificied. It is recommended to
+use a fully qualified module name (with the exact version, as in the
+example above).</p>
 <h2 id="running-parallel-openfoam-jobs">Running parallel OpenFOAM jobs</h2>
 <p>While it is possible to run limited OpenFOAM pre-processing and
 post-processing activities on the front end, we request all significant
@@ -1354,6 +1371,25 @@ srun --distribution=block:block --hint=nomultithread interFoam -parallel
 <p>If you want to compile your own version of OpenFOAM, instructions are
 available for ARCHER2 at
 <a href="https://github.com/hpc-uk/build-instructions/tree/main/apps/OpenFOAM">https://github.com/hpc-uk/build-instructions/tree/main/apps/OpenFOAM</a></p>
+<h2 id="module-version-history">Module version history</h2>
+<p>The following centrally installed versions are available.</p>
+<ul>
+<li>
+<p>Module <code>openfoam/com/v2106</code> installed July 2021 (Cray PE 20.10)</p>
+<p>Version v2106 (June 2021).
+See <a href="https://www.openfoam.com/news/main-news/openfoam-v2106">OpenFOAM.com website</a></p>
+</li>
+<li>
+<p>Module <code>openfoam/com/v2006</code> installed October 2020 (Cray PE 20.10)</p>
+<p>Version v2006 (June 2020).
+See <a href="https://www.openfoam.com/releases/openfoam-v2006/">OpenFOAM.com website</a></p>
+</li>
+<li>
+<p>Module <code>openfoam/org/v8.20200901</code> installed October 2020 (Cray PE 20.10)</p>
+<p>Version 8 patch release 1st September 2020.
+See <a href="https://openfoam.org/news/v8-patch/">OpenFOAM.org website</a></p>
+</li>
+</ul>
                 
               
               
