@@ -56,7 +56,7 @@ need to be added to any job/batch submission scripts you want to use to
 run OpenFOAM. Note that all the centrally installed versions of OpenFOAM
 are compiled under `PrgEnv-gnu`.
 
-Note there are no default versions specificied. It is recommended to
+Note there are no default module versions specificied. It is recommended to
 use a fully qualified module name (with the exact version, as in the
 example above).
 
