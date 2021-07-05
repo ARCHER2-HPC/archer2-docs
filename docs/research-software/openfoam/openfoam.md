@@ -30,7 +30,7 @@ all users on ARCHER2.
 ``` 
 auser@uan01:> module avail openfoam
 --------------- /work/y07/shared/archer2-modules/modulefiles-cse ----------
-openfoam/com/v2006  openfoam/org/v8.20200901  
+openfoam/com/v2006  openfoam/com/v2106  openfoam/org/v8.20200901
 ```
 
 Versions from openfoam.org are typically v8.0 etc and there is typically
@@ -55,6 +55,10 @@ You should then be able to use OpenFOAM. The above commands will also
 need to be added to any job/batch submission scripts you want to use to
 run OpenFOAM. Note that all the centrally installed versions of OpenFOAM
 are compiled under `PrgEnv-gnu`.
+
+Note there are no default module versions specificied. It is recommended to
+use a fully qualified module name (with the exact version, as in the
+example above).
 
 ## Running parallel OpenFOAM jobs
 
@@ -101,3 +105,23 @@ srun --distribution=block:block --hint=nomultithread interFoam -parallel
 If you want to compile your own version of OpenFOAM, instructions are
 available for ARCHER2 at
 <https://github.com/hpc-uk/build-instructions/tree/main/apps/OpenFOAM>
+
+## Module version history
+
+The following centrally installed versions are available.
+
+* Module `openfoam/com/v2106` installed July 2021 (Cray PE 20.10)
+
+    Version v2106 (June 2021).
+    See [OpenFOAM.com website](https://www.openfoam.com/news/main-news/openfoam-v2106)
+
+* Module `openfoam/com/v2006` installed October 2020 (Cray PE 20.10)
+
+    Version v2006 (June 2020).
+    See [OpenFOAM.com website](https://www.openfoam.com/releases/openfoam-v2006/)
+
+* Module `openfoam/org/v8.20200901` installed October 2020 (Cray PE 20.10)
+
+    Version 8 patch release 1st September 2020.
+    See [OpenFOAM.org website](https://openfoam.org/news/v8-patch/)
+
