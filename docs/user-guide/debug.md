@@ -298,6 +298,25 @@ First, load `valgrind4hpc`:
 
     module load valgrind4hpc
 
+To run valgrind4hpc, first reserve the resources you will use with `salloc`. 
+The following reservation request is for 2 nodes (256 physical cores) for 20 
+minutes on the short queue:
+
+    auser@uan01:> salloc --nodes=2 --tasks-per-node=128 --cpus-per-task=1 \
+                  --time=00:20:00 --partition=standard --qos=short \
+                  --reservation=shortqos --hint=nomultithread \
+                  --distribution=block:block --account=[budget code]
+
+Once your allocation is ready, Use valgrind4hpc to run and profile your 
+executable. To test an executable called `my_executable` that requires two 
+arguments `arg1` and `arg2` on 2 nodes and 256 processes, run:
+
+    valgrind4hpc --tool=memcheck --num-ranks=256 my_executable -- arg1 arg2
+
+In particular, note the `--` separating the executable from the
+arguments (this is not necessary if your executable takes no arguments).
+
+<!---
 Valgrind4hpc will launch an srun job to run the executable while it
 profiles. To test an executable called `my_executable` that requires two
 arguments `arg1` and `arg2` on two nodes and 256 processes, run:
@@ -310,6 +329,7 @@ In particular, note the `--` separating the executable from the
 arguments (this is not necessary if your executable takes no arguments).
 The `--launcher-args="arguments"` allow you to set launcher flags for
 `srun`.
+--->
 
 Valgrind4hpc only supports certain tools found in valgrind. These are:
 memcheck, helgrind, exp-sgcheck, or drd. The
