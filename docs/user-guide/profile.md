@@ -68,8 +68,8 @@ then be loaded for further experimentation.
     to stdout i.e. at the end of the job's output file generated. A new
     directory will also be created in the directory the run occurred in with
     `.rpt` and `.ap2` files. The `.rpt` files are text files that contain
-    the same information printed in the job's output file, the `.ap2` files
-    can be used to obtained more detailed information and can be visualized
+    the same information printed in the job's output file and the `.ap2` files
+    can be used to obtain more detailed information and can be visualized
     with the Cray Apprentice2 tool (for information on using this, please
     take a look at [Cray Apprentice2](#cray-apprentice2)).
 
@@ -122,14 +122,18 @@ profiling for a representative length of time.
     `auser@uan01:/work/t01/t01/auser> pat_build jacobi`
 
 5.  Run the new executable with `+pat` appended as you would with the
-    regular executable. This will generate performance data files with
-    the suffix `.xf` (e.g. `jacobi+pat+12265-1573s/xf-files`).
-6.  Generate report data
+    regular executable. Each run will produce its own 'experiment
+    directory' directory containing the performance data as `.xf` files
+    inside a subdirectory called `xf-files` (e.g. running the 
+    `jacobi+pat` instrumented executable might produce
+    `jacobi+pat+12265-1573s/xf-files`).
+6.  Generate report data with `pat_report`.
 
-This `.xt` file contains the raw sampling data from the run and needs to
+This `.xf` file contains the raw sampling data from the run and needs to
 be post processed to produce useful results. This is done using the
 `pat_report` tool which converts all the raw data into a summarised and
-readable form.
+readable form. You should provide the name of the experiment directory as
+the argument:
 
     [user@archer2]$ pat_report jacobi+pat+12265-1573s
 
@@ -155,14 +159,14 @@ readable form.
     ||  13.4% | 113.9 |  26.1 | 18.8% | __cray_memcpy_SNB
     |==================================================
 
-This report will generate two more files, one with the extension `.ap2`
-which holds the same data as the `.xf` but in the post processed form.
-The other file has a `.apa` extension and is a text file with a
-suggested configuration for generating a traced experiment. The `.ap2`
-file generated is used to view performance data graphically with the
-Cray Apprentice2 tool (for information on using this, please take a look
-at [Cray Apprentice2](#cray-apprentice2)), and the latter is used for
-more detailed tracing experiments.
+This report will generate more files with the extension `.ap2` in the
+experiment directory. These hold the same data as the `.xf` file but
+in the post-processed form. Another new file has a `.apa` extension
+and is a text file with a suggested configuration for generating a
+traced experiment. The `.ap2` files generated are used to view performance
+data graphically with the Cray Apprentice2 tool (for information on using
+this, please take a look at [Cray Apprentice2](#cray-apprentice2)), and
+the latter is used for more detailed tracing experiments.
 
 The `pat_report` command is able to produce many different profile
 reports from the profile data. You can select a predefined report with
@@ -322,9 +326,10 @@ program being analyzed, the way in which the program was instrumented
 for data capture, and the data that was collected during program
 execution.
 
-You will need to use CrayPat first, to instrument your program and
-capture performance analysis data, and then use Cray Apprentice2 to
-visualize and explore the resulting data files.
+You will need to use CrayPat first to instrument your program and
+capture performance analysis data, and then `pat_report` to generate
+the `.ap2` files from the results. You may then use Cray Apprentice2 to
+visualize and explore those files.
 
 The number and appearance of the reports that can be generated using
 Cray Apprentice2 is determined by the kind and quantity of data captured
@@ -346,11 +351,11 @@ not already loaded
     module load perftools-base
     
 
-then open the Cray Apprentice2 data (`.ap2`) generated during the
-instrumentation phase
+then open the experiment directory generated during the instrumentation
+phase with Apprentice2:
 
     
-    auser@uan01:/work/t01/t01/auser> app2 jacobi+pat+12265-1573s/datafile.ap2
+    auser@uan01:/work/t01/t01/auser> app2 jacobi+pat+12265-1573s
     
 
 ## Hardware Performance Counters
