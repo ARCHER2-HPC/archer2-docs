@@ -37,7 +37,7 @@ This backup will not be retained indefinitely so please copy any files you need 
 
 **A.** The hardware is being dismantled. All users are responsible for the transfer of any ARCHER `/work` data that they wish to keep.
 
-There will be **no** access to `/work` after 0800 on Wednesday 27th January.
+There will be **no** access to `/work` after 0800 on Wednesday 27th January 2021.
 
 
 ### RDF Data
