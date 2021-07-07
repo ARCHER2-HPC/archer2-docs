@@ -354,7 +354,7 @@ not already loaded
 then open the experiment directory generated during the instrumentation
 phase with Apprentice2:
 
-    
+
     auser@uan01:/work/t01/t01/auser> app2 jacobi+pat+12265-1573s
     
 
@@ -396,7 +396,7 @@ auser@uan01:/work/t01/t01/auser> sstat --format=JobID,AveCPU,AveRSS,MaxRSS,MaxRS
 To display the memory use of a completed job with the ID 123456:
 
 ```
-auser@uan01:/work/t01/t01/auser> sacct --format=JobID,JobName,AveRSS,MaxRSS,MaxRSSTask,AveVMSizes,MaxVMSize -j 123456
+auser@uan01:/work/t01/t01/auser> sacct --format=JobID,JobName,AveRSS,MaxRSS,MaxRSSTask,AveVMSize,MaxVMSize -j 123456
 ```    
 
 Another usage of `sacct` is to display when a job was submitted, started running and ended for a particular user:
