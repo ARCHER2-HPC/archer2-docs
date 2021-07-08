@@ -92,6 +92,9 @@ Remember, you will need to use both an SSH key and password to log into
 ARCHER2 so you will also need to collect your initial password before
 you can log into ARCHER2 for the first time. We cover this next.
 
+!!! note
+    If you want to connect to ARCHER2 from more than one machine, e.g. from your home laptop as well as your work laptop, you should generate an ssh key on each machine, and add each of the public keys into SAFE.  
+
 ### Collecting your ARCHER2 password
 
 You should now collect your ARCHER2 password:
