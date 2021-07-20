@@ -67,6 +67,18 @@ will remove it.
 
 ## Running on ARCHER2
 
+### No space left on device - job failure message
+
+**Q.**  Why does my job fail with error  "No space left on device". 
+
+**A.** This issue was caused during the problems with the lustre filesystem. The error occurs when trying to overwrite an existing file on the system but Lustre still has open client requests to to the file from the failure, so does not think it can write to it.
+
+Whilst we are working to resolve this issue, you can get around it by either:
+
+* creating a new directory (where the file in question does not exist yet) to write to 
+* deleting the problematic file
+
+
 ### OOM error on ARCHER2
 
 **Q.** Why is my code, which worked fine on ARCHER, failing on ARCHER2 with an 
