@@ -56,23 +56,30 @@ variable to point to a location on /work, for example:
 
     export PYTHONUSERBASE=/work/t01/t01/auser/.local
 
-You will also need to ensure that the location of commands installed by
-`pip` are available on the command line by modifying the `PATH`
-environment variable. Once you have set `PYTHONUSERBASE` as described
-above, you can do this with the command:
+You will also need to ensure that:
+
+1. the location of commands installed by `pip` are available on the command
+   line by modifying the `PATH` environment variable; and
+2. any packages you install are available to Python by modifying the 
+   `PYTHONPATH` environment variable.
+   
+You can do this in the following way (once you have set `PYTHONUSERBASE` as described
+above):
 
     export PATH=$PYTHONUSERBASE/bin:$PATH
+    export PYTHONPATH=$PYTHONUSERBASE/lib/python3.8/site-packages:$PYTHONPATH
 
-We would recommend adding both of these commands to your `$HOME/.bashrc`
+We would recommend adding all three of these commands to your `$HOME/.bashrc`
 file to ensure they are set by default when you log in to ARCHER2.
 
-Once, you have done this, you can use `pip` to add packages. This can be
-done using:
+Once, you have done this, you can use `pip` to add packages on top of the HPE 
+Cray Python environment. This can be done using:
 
+    module load cray-python
     pip install --user <package_name>
 
 This uses the `--user` flag to ensure the packages are installed in
-your user directory.
+the directory specified by `PYTHONUSERBASE`.
 
 We recommend that you use the `pipenv` and/or `virtualenv` packages to
 manage your Python environments. For information on how to do this see:
@@ -108,6 +115,11 @@ variety of scenarios of using Python on the ARCHER2 compute nodes.
     
     # Run your Python progamme
     python python_test.py
+
+!!! tip
+    If you have installed your own packages as decribed above then you will
+    need to set `PATH` and `PYTHONPATH` as described above within your job
+    submission script to accesss the commands and packages you have installed.
 
 ### Example mpi4py job submission script
 
