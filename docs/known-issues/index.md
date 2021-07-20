@@ -6,6 +6,23 @@ active investigation by HPE Cray and the wider service.
 
 ## Open Issues
 
+### Error message: `No space left on device` (Added: 2021-07-20)
+
+Following an issue with te Lustre file system, there may be a number of files on the
+system that have stale active file handles on the Lustre server. Attempts to overwrite
+or append to these files may lead to error messages such as:
+
+```
+No space left on device
+```
+
+even though there are no issues with storage quotas. There are two potential workarounds
+for this issue:
+
+1. Remove the offending file(s) (e.g. using the `rm` command)
+2. Work in a different directory or write to a different file name so you are not trying
+   to overwrite or append to the offending file(s)
+
 ### PETSc fails when used on more than one node (Added: 2021-06-21)
 
 There is a bug in the default HPE Cray MPICH which leades to failures from PETSc
@@ -66,7 +83,6 @@ using different PE releases [is available in the User and Best Practice Guide](.
 There are several outstanding issues for the centrally installed Research Software:
 
 - **ChemShell and PyChemShell** are not yet available. We are working with the code developers to address this.
-- **Climate Data Operators (CDO) and NCAR Command Language (NCL)** are not yet available, due to issues with dependencies. An investigation is on-going.
 - **Paraview** is not yet available. We hope to provide a suitable installation in the near future.
 - **VMD** is not yet available. We hope to provide a suitable installation in the near future.
 - **PLUMED** is not yet available. Currently, we recommend affected users to install a local version of the software.
