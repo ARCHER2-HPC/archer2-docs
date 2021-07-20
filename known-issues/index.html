@@ -330,6 +330,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#error-message-no-space-left-on-device-added-2021-07-20" class="md-nav__link">
+    Error message: No space left on device (Added: 2021-07-20)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#petsc-fails-when-used-on-more-than-one-node-added-2021-06-21" class="md-nav__link">
     PETSc fails when used on more than one node (Added: 2021-06-21)
   </a>
@@ -1285,6 +1292,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#error-message-no-space-left-on-device-added-2021-07-20" class="md-nav__link">
+    Error message: No space left on device (Added: 2021-07-20)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#petsc-fails-when-used-on-more-than-one-node-added-2021-06-21" class="md-nav__link">
     PETSc fails when used on more than one node (Added: 2021-06-21)
   </a>
@@ -1380,6 +1394,19 @@
 impacts and any known workarounds. Many of these issues are under
 active investigation by HPE Cray and the wider service.</p>
 <h2 id="open-issues">Open Issues</h2>
+<h3 id="error-message-no-space-left-on-device-added-2021-07-20">Error message: <code>No space left on device</code> (Added: 2021-07-20)</h3>
+<p>Following an issue with te Lustre file system, there may be a number of files on the
+system that have stale active file handles on the Lustre server. Attempts to overwrite
+or append to these files may lead to error messages such as:</p>
+<div class="highlight"><pre><span></span><code>No space left on device
+</code></pre></div>
+<p>even though there are no issues with storage quotas. There are two potential workarounds
+for this issue:</p>
+<ol>
+<li>Remove the offending file(s) (e.g. using the <code>rm</code> command)</li>
+<li>Work in a different directory or write to a different file name so you are not trying
+   to overwrite or append to the offending file(s)</li>
+</ol>
 <h3 id="petsc-fails-when-used-on-more-than-one-node-added-2021-06-21">PETSc fails when used on more than one node (Added: 2021-06-21)</h3>
 <p>There is a bug in the default HPE Cray MPICH which leades to failures from PETSc
 when running on more than one node.</p>
@@ -1419,7 +1446,6 @@ using different PE releases <a href="../user-guide/dev-environment/#switching-to
 <p>There are several outstanding issues for the centrally installed Research Software:</p>
 <ul>
 <li><strong>ChemShell and PyChemShell</strong> are not yet available. We are working with the code developers to address this.</li>
-<li><strong>Climate Data Operators (CDO) and NCAR Command Language (NCL)</strong> are not yet available, due to issues with dependencies. An investigation is on-going.</li>
 <li><strong>Paraview</strong> is not yet available. We hope to provide a suitable installation in the near future.</li>
 <li><strong>VMD</strong> is not yet available. We hope to provide a suitable installation in the near future.</li>
 <li><strong>PLUMED</strong> is not yet available. Currently, we recommend affected users to install a local version of the software.</li>
