@@ -166,6 +166,12 @@ with the job number.
 
 ## Creating Your Own Singularity Images
 
+!!! note
+    This information is based on that in the [Introduction to Singularity](https://carpentries-incubator.github.io/singularity-introduction/)
+    lesson from the [Carpentries Incubator](https://carpentries.org/community-lessons/#the-carpentries-incubator). Citation
+    J. Cohen and A. Turner. "Reproducible computational environments using containers: Introduction to Singularity". Version 2020.08a, 
+    August 2020. Carpentries Incubator. https://github.com/carpentries-incubator/singularity-introduction
+
 As we saw above, you can create Singularity images by importing from
 DockerHub or Singularity Hub on ARCHER2 itself. If you wish to create
 your own custom image using Singularity then you must install Singularity on a system
@@ -220,6 +226,12 @@ For information on how to write Singularity image definition files, see the
     using Singularity on ARCHER2.
 
 ## Using Singularity with MPI on ARCHER2
+
+!!! note
+    This information is based on that in the [Introduction to Singularity](https://carpentries-incubator.github.io/singularity-introduction/)
+    lesson from the [Carpentries Incubator](https://carpentries.org/community-lessons/#the-carpentries-incubator). Citation
+    J. Cohen and A. Turner. "Reproducible computational environments using containers: Introduction to Singularity". Version 2020.08a, 
+    August 2020. Carpentries Incubator. https://github.com/carpentries-incubator/singularity-introduction
 
 MPI on ARCHER2 is provided by the Cray MPICH libraries with the interface
 to the high-performance Slingshot interconnect provided via the OFI interface.
