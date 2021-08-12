@@ -17,15 +17,11 @@ minimum of user interaction, and yet offers information useful to users
 wishing to explore a program's behaviour further using the full CrayPat
 tool set.
 
-To use CrayPat-lite you only need to make sure that the base CrayPat
-`perftools-base` module has been loaded, an instrumentation module can
-then be loaded for further experimentation.
-
 ### How to use CrayPat-lite
 
 1.  Ensure the `perftools-base` module is loaded
 
-    `auser@uan01:/work/t01/t01/auser> module load perftools-base`
+    `auser@uan01:/work/t01/t01/auser> module list`
 
 2.  Load `perftools-lite` module
 
@@ -98,7 +94,7 @@ profiling for a representative length of time.
 
 1.  Ensure the `perftools-base` module is loaded
 
-    `module load perftools-base`
+    `module list`
 
 2.  Load `perftools` module
 
