@@ -75,6 +75,7 @@ nav:
     - "NWChem": research-software/nwchem/nwchem.md
     - "ONETEP": research-software/onetep/onetep.md
     - "OpenFOAM": research-software/openfoam/openfoam.md
+    - "ParaView": research-software/paraview/paraview.md
     - "Quantum Espresso": research-software/qe/qe.md
     - "VASP": research-software/vasp/vasp.md
   - "Software Libraries":

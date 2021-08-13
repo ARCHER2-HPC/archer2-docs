@@ -37,6 +37,7 @@ centrally supported packages:
   - [NWChem](nwchem/nwchem.md)
   - [ONETEP](onetep/onetep.md)
   - [OpenFOAM](openfoam/openfoam.md)
+  - [ParaView](paraview/paraview.md)
   - [Quantum Espresso](qe/qe.md)
   - [VASP](vasp/vasp.md)
 
