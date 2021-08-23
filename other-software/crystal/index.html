@@ -1194,6 +1194,26 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#known-issues" class="md-nav__link">
+    Known Issues
+  </a>
+  
+    <nav class="md-nav" aria-label="Known Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#out-of-memory-errors" class="md-nav__link">
+    Out-of-memory errors
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1251,6 +1271,26 @@
   <a href="#running-parallel-crystal-jobs" class="md-nav__link">
     Running parallel CRYSTAL jobs
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-issues" class="md-nav__link">
+    Known Issues
+  </a>
+  
+    <nav class="md-nav" aria-label="Known Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#out-of-memory-errors" class="md-nav__link">
+    Out-of-memory errors
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1318,6 +1358,17 @@ cp tio2.d12 INPUT
 
 <span class="nb">srun</span> --hint<span class="o">=</span>nomultithread --distribution<span class="o">=</span>block:block MPPcrystal
 </code></pre></div>
+<h2 id="known-issues">Known Issues</h2>
+<h3 id="out-of-memory-errors">Out-of-memory errors</h3>
+<p>Long-running jobs may encounter unexpected errors of the form
+<div class="highlight"><pre><span></span><code>slurmstepd: error: Detected 1 oom-kill event(s) in step 411502.0 cgroup.
+</code></pre></div>
+These are related to a memory leak in the underlying libfabric communication
+layer, which will be fixed in a future release. In the meantime, it should
+be possible to work around the problem by adding
+<div class="highlight"><pre><span></span><code>export FI_MR_CACHE_MAX_COUNT=0 
+</code></pre></div>
+to the SLURM submission script.</p>
                 
               
               
