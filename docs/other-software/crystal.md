@@ -52,3 +52,19 @@ cp tio2.d12 INPUT
 
 srun --hint=nomultithread --distribution=block:block MPPcrystal
 ```
+
+## Known Issues
+
+### Out-of-memory errors
+
+Long-running jobs may encounter unexpected errors of the form
+```
+slurmstepd: error: Detected 1 oom-kill event(s) in step 411502.0 cgroup.
+```
+These are related to a memory leak in the underlying libfabric communication
+layer, which will be fixed in a future release. In the meantime, it should
+be possible to work around the problem by adding
+```
+export FI_MR_CACHE_MAX_COUNT=0 
+```
+to the SLURM submission script.
