@@ -12,6 +12,7 @@ white papers), links to instruction manuals and further information.
 
 The tools currently available in this section are:
 
+- [ParaView](paraview.md): A data visualisation and analysis package 
 - [R](cray-r.md): The R statistical language
 - [VisiData](visidata.md): An interactive multitool for tabular data
 

@@ -75,7 +75,6 @@ nav:
     - "NWChem": research-software/nwchem/nwchem.md
     - "ONETEP": research-software/onetep/onetep.md
     - "OpenFOAM": research-software/openfoam/openfoam.md
-    - "ParaView": research-software/paraview/paraview.md
     - "Quantum Espresso": research-software/qe/qe.md
     - "VASP": research-software/vasp/vasp.md
   - "Software Libraries":
@@ -99,6 +98,7 @@ nav:
     - "Trilinos": software-libraries/trilinos.md
   - "Data Analysis and Tools": 
     - "Overview": data-tools/index.md
+    - "ParaView": data-tools/paraview.md
     - "R": data-tools/cray-r.md
     - "VisiData": data-tools/visidata.md
   - "Essential Skills": essentials/index.md

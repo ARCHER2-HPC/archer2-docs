@@ -50,16 +50,7 @@ on the compute node e.g.
 auser@nid001023:/work/t01/t01/auser> 
 ```
 
-In a separate terminal you can now set up an ssh tunnel with the node
-ID which the interactive job is running on
-
-```
-ssh -L 11111:nid001023:11111 auser@login.archer2.ac.uk 
-```
-
-enter your password and phasephrase as usual.
-
-In the interactive job load the ParaView module and start pvserver with the srun command,
+Then load the ParaView module and start pvserver with the srun command,
 
 ```
 auser@nid001023:/work/t01/t01/auser> module load paraview
@@ -70,6 +61,16 @@ Accepting connection(s): nid001023:11111
  
 ```
 
+In a separate terminal you can now set up an ssh tunnel with the node
+ID and port number which the pvserver is using, e.g.
+
+```
+ssh -L 11111:nid001023:11111 auser@login.archer2.ac.uk 
+```
+
+enter your password and phasephrase as usual.
+
+
 You can then connect from your local client using the following connection
 settings:
 
@@ -79,6 +80,11 @@ Server Type:    Client/Server
 Host:           localhost 
 Port:           11111
 ```
+
+!!! note 
+    The Host from the local client should be set to "localhost" when using the
+    ssh tunnel. The "Name" field can be set to a name of your choosing. 
+    11111 is the default port for pvserver.
 
 If it has connected correctly you should see the following:
 
@@ -122,4 +128,4 @@ The latest instructions for building ParaView on ARCHER2 may be found in
 the GitHub repository of build instructions:
 
    - [Build instructions for Paraview on
-     GitHub](https://github.com/hpc-uk/build-instructions/tree/main/apps/paraview)
+     GitHub](https://github.com/hpc-uk/build-instructions/tree/main/apps/ParaView)
