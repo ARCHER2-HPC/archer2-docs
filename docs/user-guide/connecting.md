@@ -425,3 +425,17 @@ above.
 
 The equivalent information can be obtained in PuTTY by
 enabling all logging in settings.
+
+## Related Software 
+
+### tmux
+
+[tmux](https://github.com/tmux/tmux/wiki) is a multiplexer application 
+available on the ARCHER2 login nodes. It allows for multiple sessions to 
+be open concurrently and these sessions can be detached and run in the 
+background. Furthermore, sessions will continue to run after a user logs 
+off and can be reattached to upon logging in again. It is particularly 
+useful if you are connecting to ARCHER2 on an unstable Internet connection 
+or if you wish to keep an arrangement of terminal applications running 
+while you disconnect your client from the Internet -- for example, when 
+moving between your home and workplace. 
