@@ -44,6 +44,7 @@ nav:
   - "ARCHER2 Frequently Asked Questions": faq/index.md
   - "User and Best Practice Guide":
     - "Overview": user-guide/index.md
+    - "Hardware": user-guide/hardware.md
     - "Connecting to ARCHER2": user-guide/connecting.md
     - "Data management and transfer": user-guide/data.md
     - "Software environment": user-guide/sw-environment.md
@@ -98,6 +99,7 @@ nav:
     - "Trilinos": software-libraries/trilinos.md
   - "Data Analysis and Tools": 
     - "Overview": data-tools/index.md
+    - "ParaView": data-tools/paraview.md
     - "R": data-tools/cray-r.md
     - "VisiData": data-tools/visidata.md
   - "Essential Skills": essentials/index.md
