@@ -136,7 +136,7 @@ ARCHER2:
 
 You will first be prompted for your machine account password. Once you have entered your password successfully, you will then be prompted for the passphrase associated with your SSH key pair. You need to enter both credentials correctly to be able to access ARCHER2.
 
-!!! tip
+!!! warning
     If your SSH key pair is not stored in the default location (usually
     `~/.ssh/id_rsa`) on your local system, you may need to specify the path
     to the private part of the key wih the `-i` option to `ssh`. For
