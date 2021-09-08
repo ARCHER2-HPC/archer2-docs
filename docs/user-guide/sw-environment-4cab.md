@@ -1,9 +1,9 @@
-# Software environment: full system
+# Software environment: 4-cabinet system
 
 !!! important
-    This section covers the software environment on the full
+    This section covers the software environment on the initial, 4-cabinet
     ARCHER2 system. For docmentation on the software environment on the
-    initial, 4-cabinet ARCHER2 system, please see [Software environment: 4-cabinet system](sw-environment-4cab.md).
+    full ARCHER2 system, please see [Software environment: full system](sw-environment.md).
 
 The software environment on ARCHER2 is primarily controlled through the
 `module` command. By loading and switching software modules you control

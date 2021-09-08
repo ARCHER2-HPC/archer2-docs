@@ -1,9 +1,9 @@
-# Application development environment: full system
+# Application development environment: 4-cabinet system
 
 !!! important
-    This section covers the application development environment on the full
+    This section covers the application development environment on the initial, 4-cabinet
     ARCHER2 system. For docmentation on the application development environment on the
-    initial, 4-cabinet ARCHER2 system, please see [Application development environment: 4-cabinet system](dev-environment-4cab.md).
+    full ARCHER2 system, please see [Application development environment: full system](sw-environment.md).
 
 ## What's available
 
