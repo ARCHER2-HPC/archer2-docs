@@ -5,7 +5,9 @@
     ARCHER2 system. For docmentation on the software environment on the
     initial, 4-cabinet ARCHER2 system, please see [Software environment: 4-cabinet system](sw-environment-4cab.md).
 
-The software environment on ARCHER2 is primarily controlled through the
+The software environment on ARCHER2 is managed using the 
+[Lmod](https://lmod.readthedocs.io/) software. Selecting which software
+is available in your environment is primarily controlled through the
 `module` command. By loading and switching software modules you control
 which software and versions are available to you.
 
@@ -17,8 +19,8 @@ which software and versions are available to you.
 By default, all users on ARCHER2 start with the default software
 environment loaded.
 
-Software modules on ARCHER2 are provided by both HPE Cray (usually known
-as the *Cray Development Environment, CDE*) and by EPCC, who provide the
+Software modules on ARCHER2 are provided by both HPE (usually known
+as the *HPE Cray Programming Environment, CPE*) and by EPCC, who provide the
 Service Provision, and Computational Science and Engineering services.
 
 In this section, we provide:
@@ -29,9 +31,8 @@ In this section, we provide:
 
 ## Using the `module` command
 
-We only cover basic usage of the `module` command here. For full
-documentation please see the [Linux manual page on
-modules](http://linux.die.net/man/1/module)
+We only cover basic usage of the Lmod `module` command here. For full
+documentation please see the [Lmod documentation](https://lmod.readthedocs.io/en/latest/010_user.html)
 
 The `module` command takes a subcommand to indicate what operation you
 wish to perform. Common subcommands are:
@@ -40,10 +41,8 @@ wish to perform. Common subcommands are:
      environment, optionally filtered by `[name]`
    - `module avail [name]` - List modules available, optionally
      filtered by `[name]`
-   - `module savelist` - List module collections available (usually
-     used for accessing different programming environments)
-   - `module restore name` - Restore the module collection called
-     `name` (usually used for setting up a programming environment)
+   - `module spider [name][/version]` - Search available modules (including hidden
+      modules) and provide information on modules
    - `module load name` - Load the module called `name` into your
      environment
    - `module remove name` - Remove the module called `name` from your
@@ -56,7 +55,29 @@ wish to perform. Common subcommands are:
 
 These are described in more detail below.
 
+!!! tip
+    Lmod allows you to use the `ml` command. Without any arguments, `ml`
+    behaves like `module list`; when a module name is speciied to `ml`,
+    `ml` behaves like `module load`.
+
+!!! note
+    You will often have to include `module` commands in any job submission
+    scripts to setup the software to use in your jobs. Generally, if you
+    load modules in interactive sessions, these loaded modules do not
+    carry over into any job submission scripts.
+
 ### Information on the available modules
+
+The key commands for getting information on modules are covered in more
+detail below. They are:
+
+ - `module list`
+ - `module avail`
+ - `module spider`
+ - `module help`
+ - `module show`
+
+#### `module list`
 
 The `module list` command will give the names of the modules and their
 versions you have presently loaded in your environment:
@@ -72,9 +93,17 @@ Currently Loaded Modulefiles:
 6) craype-network-ofi
 ```
 
-Finding out which software modules are available on the system is
+All users start with a default set of modules loaded corresponding to:
+
+ - The HPE Cray Compiling Environment (CCE): includes the HPE Cray clang and Fortran compilers
+ - HPE Cray MPICH: The HPE Cray MPI library
+ - HPE Cray LibSci: The HPE Cray numerical libraries (including BLAS/LAPACK and ScaLAPACK)
+
+#### `module avail`
+
+Finding out which software modules are currently available to load on the system is
 performed using the `module avail` command. To list all software modules
-available, use:
+currently available to load, use:
 
 ```
 auser@uan01:~> module avail
@@ -111,8 +140,14 @@ cray-hdf5/1.12.0.0              cray-pmi/6.0.6(default)
 cray-libsci/20.08.1.2(default)  cray-python/3.8.5.0(default)    
 ```
 
-This will list all the names and versions of the modules available on
-the service. Not all of them may work in your account though due to, for
+This will list all the names and versions of the modules that you can currently
+load. Note that other modules may be available but not visible to you as they depend
+on modules you do not have loaded. Lmod only shows modules that you can currently
+load, not all those that are possibly available. You can search for modules
+that are not currently visble to you using the `module spider` command - we 
+cover this in more detail below.
+
+Note also, that not all modules may work in your account though due to, for
 example, licencing restrictions. You will notice that for many modules
 we have more than one version, each of which is identified by a version
 number. One of these versions is the default. As the service develops
@@ -129,6 +164,10 @@ auser@uan01:~> module avail cray-fftw
 ---------------------------------------- /opt/cray/pe/modulefiles -----------------------------------------
 cray-fftw/3.3.8.7(default) 
 ```
+
+#### `module spider`
+
+#### `module help`
 
 If you want more info on any of the modules, you can use the `module
 help` command:
@@ -159,6 +198,8 @@ FFTW 3.3.8.7
 
 [...]
 ```
+
+#### `module show`
 
 The `module show` command reveals what operations the module actually
 performs to change your environment when it is loaded. We provide a
@@ -203,6 +244,15 @@ module-whatis   {FFTW 3.3.8.7 - Fastest Fourier Transform in the West}
 
 ### Loading, removing and swapping modules
 
+To change your environment and make different software available you use the
+following commands which we cover in more detail below.
+
+ - `module load`
+ - `module remove`
+ - `module swap`
+
+#### `module load`
+
 To load a module to use the `module load` command. For example, to load
 the default version of HPE Cray FFTW into your environment, use:
 
@@ -222,6 +272,8 @@ auser@uan01:~> module load cray-fftw/3.3.8.7
 will load HPE Cray FFTW version 3.3.8.7 into your environment,
 regardless of the default.
 
+#### `module remove`
+
 If you want to remove software from your environment, `module remove`
 will remove a loaded module:
 
@@ -231,6 +283,8 @@ auser@uan01:~> module remove cray-fftw
 
 will unload what ever version of `cray-fftw` (even if it is not the
 default) you might have loaded.
+
+#### `module swap`
 
 There are many situations in which you might want to change the
 presently loaded version to a different one, such as trying the latest
