@@ -56,7 +56,7 @@ wish to perform. Common subcommands are:
 These are described in more detail below.
 
 !!! tip
-    Lmod allows you to use the `ml` command. Without any arguments, `ml`
+    Lmod allows you to use the `ml` shortcut command. Without any arguments, `ml`
     behaves like `module list`; when a module name is speciied to `ml`,
     `ml` behaves like `module load`.
 
@@ -98,6 +98,7 @@ All users start with a default set of modules loaded corresponding to:
  - The HPE Cray Compiling Environment (CCE): includes the HPE Cray clang and Fortran compilers
  - HPE Cray MPICH: The HPE Cray MPI library
  - HPE Cray LibSci: The HPE Cray numerical libraries (including BLAS/LAPACK and ScaLAPACK)
+
 
 #### `module avail`
 
@@ -141,9 +142,9 @@ cray-libsci/20.08.1.2(default)  cray-python/3.8.5.0(default)
 ```
 
 This will list all the names and versions of the modules that you can currently
-load. Note that other modules may be available but not visible to you as they depend
+load. Note that other modules may be defined but not available to you as they depend
 on modules you do not have loaded. Lmod only shows modules that you can currently
-load, not all those that are possibly available. You can search for modules
+load, not all those that are defined. You can search for modules
 that are not currently visble to you using the `module spider` command - we 
 cover this in more detail below.
 
@@ -166,6 +167,26 @@ cray-fftw/3.3.8.7(default)
 ```
 
 #### `module spider`
+
+The `module spider` command is used to find out which modules are defined on
+the system. Unlike `module avail`, this includes modules that are not currently
+able to be loaded due to the fact you have not yet loaded dependencies to make
+them directly available.
+
+`module spider` takes 3 forms:
+
+ - `module spider` without any arguments lists all modules defined on the system
+ - `module spider <module>` shows information on which versions of `<module>` are
+   defined on the system
+ - `module spider <module>/<version>` shows information on the specific version of 
+   the module defined on the system, including dependencies that must be loaded 
+   before this module can be loaded (if any)
+
+If you cannot find a module that you expect to be on the system using `module avail`
+then you can use `module spider` to find out which dependencies you need to load
+to make the module available.
+
+<!-- TODO add example of using module spider to inspect netcdf-hdf5-parallel -->
 
 #### `module help`
 
@@ -202,9 +223,8 @@ FFTW 3.3.8.7
 #### `module show`
 
 The `module show` command reveals what operations the module actually
-performs to change your environment when it is loaded. We provide a
-brief overview of what the significance of these different settings mean
-below. For example, for the default FFTW module:
+performs to change your environment when it is loaded. For example, for
+the default FFTW module:
 
 ```
 auser@uan01:~> module show cray-fftw
@@ -303,105 +323,13 @@ You did not need to specify the version of the loaded module in your
 current environment as this can be inferred as it will be the only one
 you have loaded.
 
-## Changing Programming Environment
-
-The three programming environments `PrgEnv-aocc`, `PrgEnv-cray`,
-`PrgEnv-gnu` are implemented as module collections. The correct way to
-change programming environment, that is, change the collection of
-modules, is therefore via `module restore`. For example:
-
-```
-auser@uan01:~> module restore PrgEnv-gnu
-```
-
-!!! note there is only one argument, which is the collection to be restored.
-The command `module restore` will output a list of modules in the
-outgoing collection as they are unloaded, and the modules in the
-incoming collection as they are loaded. If you prefer not to have
-messages
-
-```
-auser@uan1:~> module -s restore PrgEnv-gnu
-```
-
-will suppress the messages. An attempt to restore a collection which is
-already loaded will result in no operation.
-
-Module collections are stored in a user's home directory
-`${HOME}/.module`. However, as the home directory is not available to
-the back end, `module restore` may fail for batch jobs. In this case, it
-is possible to restore one of the three standard programming
-environments via, e.g.,
-
-```
-module restore /etc/cray-pe.d/PrgEnv-gnu
-```
-
-### Capturing your environment for reuse
-
-Sometimes it is useful to save the module environment that you are using
-to compile a piece of code or execute a piece of software. This is saved
-as a module collection. You can save a collection from your current
-environment by executing:
-
-```
-auser@uan01:~> module save [collection_name]
-```
-
-!!! note
-    If you do not specify the environment name, it is called `default`.
-
-You can find the list of saved module environments by executing:
-
-```
-auser@uan01:~> module savelist
-Named collection list:
- 1) default   2) PrgEnv-aocc   3) PrgEnv-cray   4) PrgEnv-gnu 
-```
-
-To list the modules in a collection, you can execute, e.g.,:
-
-```
-auser@uan01:~> module saveshow PrgEnv-gnu
--------------------------------------------------------------------
-/home/t01/t01/auser/.module/default:
-module use --append /opt/cray/pe/perftools/20.09.0/modulefiles
-module use --append /opt/cray/pe/craype/2.7.0/modulefiles
-module use --append /usr/local/Modules/modulefiles
-module use --append /opt/cray/pe/cpe-prgenv/7.0.0
-module use --append /opt/modulefiles
-module use --append /opt/cray/modulefiles
-module use --append /opt/cray/pe/modulefiles
-module use --append /opt/cray/pe/craype-targets/default/modulefiles
-module load cpe-gnu
-module load gcc
-module load craype
-module load craype-x86-rome
-module load --notuasked libfabric
-module load craype-network-ofi
-module load cray-dsmml
-module load perftools-base
-module load xpmem
-module load cray-mpich
-module load cray-libsci
-module load /work/y07/shared/archer2-modules/modulefiles-cse/epcc-setup-env
-```
-
-Note again that the details of the collection have been saved to the
-home directory (the first line of output above). It is possible to save
-a module collection with a fully qualified path, e.g.,
-
-```
-auser@uan1:~> module save /work/t01/z01/auser/.module/PrgEnv-gnu
-```
-
-which would make it available from the batch system.
-
-To delete a module environment, you can execute:
-
-```
-auser@uan01:~> module saverm <environment_name>
-```
+!!! tip
+    `module swap` is most commonly used on ARCHER2 to switch between
+    different compiler environments, for example, switching from 
+    the HPE Cray Compiler Environment (CCE, PrgEnv-cray) to the
+    Gnu compilers (GCC, PrgEnv-gnu). The available compiler environments
+    are discussed in more detail in the [Application Development Environment](dev-environment.md)
+    section.
 
 ## Shell environment overview
 
@@ -436,3 +364,5 @@ execute:
 ```
 unset OMP_NUM_THREADS
 ```
+
+Note that the dollar symbol is not included when you use the `unset` command.
