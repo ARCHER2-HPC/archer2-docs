@@ -7,7 +7,7 @@
 
 ## What's available
 
-ARCHER2 runs on the Cray Linux Environment (a version of SUSE Linux),
+ARCHER2 runs the HPE Cray Linux Environment (a version of SUSE Linux),
 and provides a development environment which includes:
 
   - Software modules via a standard module framework
@@ -18,21 +18,22 @@ and provides a development environment which includes:
   - Parallel debugging and profiling
   - Singularity containers
 
-Access to particular software, and particular versions, is managed by a
-standard TCL module framework. Most software is available via standard
-software modules and the different programming environments are
-available via module collections.
+Access to particular software, and particular versions, is managed by an 
+Lmod module framework. Most software is available by loading modules,
+including the different compiler environments
 
-You can see what programming environments are available with:
+You can see what compiler environments are available with:
 
-    auser@uan01:~> module savelist
-    Named collection list:
-     1) PrgEnv-aocc   2) PrgEnv-cray   3) PrgEnv-gnu 
+```
+auser@uan01:~> module avail PrgEnv
+Named collection list:
+    1) PrgEnv-aocc   2) PrgEnv-cray   3) PrgEnv-gnu 
+```
 
-Other software modules can be listed with
+Other software modules can be searched using the `module spider` command:
 
 ``` 
-auser@uan01:~> module avail
+auser@uan01:~> module spider
 ------------------------------- /opt/cray/pe/perftools/20.09.0/modulefiles --------------------------------
 perftools       perftools-lite-events  perftools-lite-hbm    perftools-nwpc     
 perftools-lite  perftools-lite-gpu     perftools-lite-loops  perftools-preload  
@@ -74,36 +75,28 @@ A consistent set of modules is loaded on login to the machine (currently
 and loading the appropriate set of modules before starting work.
 
 This section is aimed at code developers and will concentrate on the
-compilation environment and building libraries and executables, and
+compilation environment, building libraries and executables,
 specifically parallel executables. Other topics such as [Python](python.md) and
 [Containers](containers.md) are covered in more detail in separate sections of the
 documentation.
 
-## Managing development
-
-ARCHER2 supports common revision control software such as `git`.
-
-Standard GNU autoconf tools are available, along with `make` (which is
-GNU Make). Versions of `cmake` are available.
-
-!!! note
-    Some of these tools are part of the system software, and
-    typically reside in `/usr/bin`, while others are provided as part of the
-    module system. Some tools may be available in different versions via
-    both `/usr/bin` and via the module system.
-
-## Compilation environment
+## Compiler environments
 
 There are three different compiler environments available on ARCHER2:
-AMD (AOCC), Cray (CCE), and GNU (GCC). The current compiler suite is selected via the
-programming environment, while the specific compiler versions are
+
+- AMD Compiler Collection (AOCC)
+- GNU Compiler Collection (GCC)
+- HPE Cray Compiler Collection (CCE) (current default compiler environment)
+
+The current compiler suite is selected via the
+`PrgEnv` module , while the specific compiler versions are
 determined by the relevant compiler module. A summary is:
 
-| Suite name | Module | Programming environment collection |
-| ---------- | ------ | ---------------------------------- |
-| CCE        | `cce`  | `PrgEnv-cray`                      |
-| GCC        | `gcc`  | `PrgEnv-gnu`                       |
-| AOCC       | `aocc` | `PrgEnv-aocc`                      |
+| Suite name | Compiler Environment Module | Compiler Version Module |
+| ---------- | --------------------------- | ----------------------- |
+| CCE        | `PrgEnv-cray`               | `cce`                   |
+| GCC        | `PrgEnv-gnu`                | `gcc`                   |
+| AOCC       | `PrgEnv-aocc`               | `aocc`                  |
 
 For example, at login, the default set of modules are:
 
@@ -117,15 +110,52 @@ Currently Loaded Modulefiles:
 6) craype-network-ofi  
 ```
 
-from which we see the default programming environment is Cray (indicated
+from which we see the default compiler environment is Cray (indicated
 by `cpe-cray` (at 1 in the list above) and the default compiler module
-is `cce/10.0.3` (at 2 in the list above). The programming environment
+is `cce/10.0.3` (at 2 in the list above). The compiler environment
 will give access to a consistent set of compiler, MPI library via
 `cray-mpich` (at 10), and other libraries e.g., `cray-libsci` (at 11 in
 the list above) infrastructure.
 
-Within a given programming environment, it is possible to swap to a
+### Switching between compiler environments
+
+Switching between different compiler environments is achieved using the
+`module swap` command. For example, to switch from the default HPE Cray
+(CCE) compiler environemnt to the GCC environment, you would use:
+
+```
+auser@uan01:~> module swap PrgEnv-cray PrgEnv-gnu
+```
+
+If you then use the `module list` command, you will see that your environment
+has been changed to the GCC environment:
+
+```
+auser@uan01:~> module list
+```
+
+### Switching between compiler versions
+
+Within a given compiler environment, it is possible to swap to a
 different compiler version by swapping the relevant compiler module.
+To switch to the GNU compiler environment from the default HPE Cray compiler
+environment and than swap the version of GCC from the 11.2.0 default to 
+the older 10.2.0 verion, you would use
+
+```
+auser@uan01:~> module swap PrgEnv-cray PrgEnv-gnu
+auser@uan01:~> module swap gcc gcc/10.2.0
+```
+
+The first swap command moves to the GNU compiler environment and the second
+swap command moves to the older version of GCC. As before, `module list`
+will show that your environment has been changed:
+
+```
+auser@uan01:~> module list
+```
+
+### Compiler wrapper scripts: `cc`, `CC`, `ftn`
 
 To ensure consistent behaviour, compilation of C, C++, and Fortran
 source code should then take place using the appropriate compiler
@@ -144,9 +174,10 @@ libraries](#linking-and-libraries).
 Users should not, in general, invoke specific compilers at compile/link
 stages. In particular, `gcc`, which may default to `/usr/bin/gcc`,
 should not be used. The compiler wrappers `cc`, `CC`, and `ftn` should
-be used via the appropriate module. Other common MPI compiler wrappers
-e.g., `mpicc` should also be replaced by the relevant wrapper `cc`
-(`mpicc` etc are not available).
+be used (with the underlying compiler type and version set by the
+module system). Other common MPI compiler wrappers
+e.g., `mpicc`, should also be replaced by the relevant wrapper, e.g. `cc`
+(commands such as `mpicc` are not available on ARCHER2).
 
 !!! important
     Always use the compiler wrappers `cc`, `CC`, and/or `ftn` and not a
@@ -190,19 +221,22 @@ compiler and compile options:
 ### Dynamic Linking
 
 Executables on ARCHER2 link dynamically, and the Cray Programming
-Environment does not currently support static linking. This is in
-contrast to ARCHER where the default was to build statically.
+Environment does not currently support static linking.
 
 If you attempt to link statically, you will see errors similar to:
 
-    /usr/bin/ld: cannot find -lpmi
-    /usr/bin/ld: cannot find -lpmi2
-    collect2: error: ld returned 1 exit status
+```
+/usr/bin/ld: cannot find -lpmi
+/usr/bin/ld: cannot find -lpmi2
+collect2: error: ld returned 1 exit status
+```
 
 The compiler wrapper scripts on ARCHER link runtime libraries in using
-the `runpath` by default. This means that the paths to the runtime
+the `RUNPATH` by default. This means that the paths to the runtime
 libraries are encoded into the executable so you do not need to load the
-compiler environment in your job submission scripts.
+compiler environment in your job submission scripts unless you are using
+non-default versions of libraries.
+
 
 ### Which compiler environment?
 
@@ -399,13 +433,29 @@ MPI standard documents: <https://www.mpi-forum.org/docs/>
 
 ## Linking and libraries
 
-Linking to libraries is performed dynamically on ARCHER2. One can use
-the `-craype-verbose` flag to the compiler wrapper to check exactly what
+Linking to libraries is performed dynamically on ARCHER2.
+
+!!! important
+    Static linking is not supported on ARCHER2. If you attempt to link statically,
+    you will see errors similar to:
+    ```
+    /usr/bin/ld: cannot find -lpmi
+    /usr/bin/ld: cannot find -lpmi2
+    collect2: error: ld returned 1 exit status
+    ```
+
+One can use the `-craype-verbose` flag to the compiler wrapper to check exactly what
 linker arguments are invoked. The compiler wrapper scripts encode the
 paths to the programming environment system libraries using RUNPATH.
 This ensures that the executable can find the correct runtime
 libraries without the matching software modules loaded.
 
+!!! tip
+    The RUNPATH setting in the executable only works for default versions
+    of libraries. If you want to use non-default versions then you need
+    to add some additional commands at compile time and in your job submission
+    scripts. See the [Using non-default versions of HPE Cray libraries on ARCHER2](#using-non-default-versions-of-hpe-cray-libraries-on-archer2).
+    
 The library RUNPATH associated with an executable can be inspected via,
 e.g.,
 
@@ -433,27 +483,26 @@ access to software libraries if available.
     from non-default PE installs.
 
 Access to non-default PE environments is controlled by the use of the `cpe` modules.
-These modules are typically loaded *after* you have restored a PrgEnv and loaded all
-the other modules you need and will 
-set your compile environment to match that in the other PE release. This means:
+These modules are typically loaded *after* you have switched to your choice of PrgEnv
+and loaded all the other modules you need and will 
+set your compile environment to match that in the selected PE release. This means:
 
 - The compiler version will be switched to the one from the selected PE
 - HPE Cray provided libraries (or modules) that are loaded before you switch
   to the new programming environment are switched to those from the programming
   environment that you select.
 
-
-For example, if you have a code that uses the Gnu programming environment, FFTW
+For example, if you have a code that uses the Gnu compiler environment, FFTW
 and NetCDF parallel libraries and you want to compile in the (non-default) 21.03
 programming environment, you would do the following:
 
-First, restore the Gnu programming environment and load the required library
+First, load the Gnu compiler environment and load the required library
 modules (FFTW and NetCDF HDF5 parallel). The loaded module list shows they 
 are the versions from the default (20.10) programming environment):
 
 
 ```
-auser@uan02:/work/t01/t01/auser> module restore -s PrgEnv-gnu
+auser@uan02:/work/t01/t01/auser> module swap PrgEnv-cray PrgEnv-gnu
 auser@uan02:/work/t01/t01/auser> module load cray-fftw
 auser@uan02:/work/t01/t01/auser> module load cray-netcdf
 auser@uan02:/work/t01/t01/auser> module load cray-netcdf-hdf5parallel
@@ -501,7 +550,7 @@ Currently Loaded Modulefiles:
  8) /usr/local/share/epcc-module/epcc-module-loader                  16) perftools-base/21.02.0   
 ```
 
-Finally (as noted above), you will need to modify the value of
+Finally, you will need to modify the value of
 `LD_LIBRARY_PATH` before you compile your software to ensure it picks up the
 non-default versions of libraries:
 
@@ -522,18 +571,6 @@ environment.
     Unloading the `cpe` module does not restore the original programming environment
     release. To restore the default programming environment release you should log 
     out and then log back in to ARCHER2.
-    
-!!! bug
-    The `cpe/21.03` module has a known issue with `PrgEnv-gnu` where it loads an old version
-    of GCC (9.3.0) rather than the correct, newer version (10.2.0). You can resolve this by
-    using the sequence:
-    ```
-    module restore -s PrgEnv-gnu
-    ...load any other modules you need...
-    module load cpe/21.03
-    module unload cpe/21.03
-    module swap gcc gcc/10.2.0
-    ```
     
 ### Available HPE Cray Programming Environment releases on ARCHER2
 
@@ -652,11 +689,14 @@ srun --hint=nomultithread --distribution=block:block dgemv.x
     You must setup the environment at both compile and run time otherwise
     you will end up using the default version of the library.
 
-## Compiling in compute nodes
+## Compiling on compute nodes
 
-Sometimes you may wish to compile in a batch job. For example, the compile process may take a long time or the compile process is part of the research workflow and can be coupled to the production job. Unlike login nodes, the `/home` file system is not available.
+Sometimes you may wish to compile in a batch job. For example, the compile process may take a long
+time or the compile process is part of the research workflow and can be coupled to the production job.
+Unlike login nodes, the `/home` file system is not available.
 
-An example job submission script for a compile job using `make` (assuming the Makefile is in the same directory as the job submission script) would be:
+An example job submission script for a compile job using `make` (assuming the Makefile is in the same
+directory as the job submission script) would be:
 
 ```
 #!/bin/bash
@@ -672,23 +712,39 @@ An example job submission script for a compile job using `make` (assuming the Ma
 #SBATCH --partition=standard
 #SBATCH --qos=standard
 
-# Load the compilation environment (cray, gnu or aocc)
-module restore /etc/cray-pe.d/PrgEnv-cray
 
 make clean
 
 make
 ```
 
-!!! warning
-    Do not forget to include the full path when the
-    compilation environment is restored. For instance:
+!!! note
+    If you want to use a compiler environment other than the default then
+    you will need to add the `module swap` command before the `make` command.
+    e.g. to use the Gnu compiler environemnt:
     
-    `module restore /etc/cray-pe.d/PrgEnv-cray`
+    ```
+    module swap PrgEnv-cray PrgEnv-gnu
+    ```
 
 You can also use a compute node in an interactive way using `salloc`. Please see
 Section [Using salloc to reserve resources](../scheduler/#using-salloc-to-reserve-resources)
 for further details. Once your interactive session is ready, you can load the compilation environment and compile the code.
+
+## Managing development
+
+ARCHER2 supports common revision control software such as `git`.
+
+Standard GNU autoconf tools are available, along with `make` (which is
+GNU Make). Versions of `cmake` are available.
+
+!!! tip
+    Some of these tools are part of the system software, and
+    typically reside in `/usr/bin`, while others are provided as part of the
+    module system. Some tools may be available in different versions via
+    both `/usr/bin` and via the module system. If you find the default
+    version is too old, then look in the module system for a more recent
+    version.
 
 ## Build instructions for software on ARCHER2
 
