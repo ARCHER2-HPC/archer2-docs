@@ -83,14 +83,15 @@ The `module list` command will give the names of the modules and their
 versions you have presently loaded in your environment:
 
 ```
-auser@uan01:~> module list
-Currently Loaded Modulefiles:
-1) cpe-aocc                          7) cray-dsmml/0.1.2(default)
-2) aocc/2.1.0.3(default)             8) perftools-base/20.09.0(default)
-3) craype/2.7.0(default)             9) xpmem/2.2.35-7.0.1.0_1.3__gd50fabf.shasta(default)
-4) craype-x86-rome                  10) cray-mpich/8.0.15(default)
-5) libfabric/1.11.0.0.233(default)  11) cray-libsci/20.08.1.2(default)
-6) craype-network-ofi
+auser@ln03:~> module list
+
+Currently Loaded Modules:
+  1) cce/11.0.4              6) perftools-base/21.02.0
+  2) craype/2.7.6            7) xpmem/2.2.40-7.0.1.0_2.7__g1d7a24d.shasta
+  3) craype-x86-rome         8) cray-mpich/8.1.4
+  4) libfabric/1.11.0.4.71   9) cray-libsci/21.04.1.1
+  5) craype-network-ofi     10) PrgEnv-cray/8.0.0
+
 ```
 
 All users start with a default set of modules loaded corresponding to:
@@ -108,37 +109,113 @@ currently available to load, use:
 
 ```
 auser@uan01:~> module avail
-------------------------------- /opt/cray/pe/perftools/20.09.0/modulefiles --------------------------------
-perftools       perftools-lite-events  perftools-lite-hbm    perftools-nwpc     
-perftools-lite  perftools-lite-gpu     perftools-lite-loops  perftools-preload  
 
----------------------------------- /opt/cray/pe/craype/2.7.0/modulefiles ----------------------------------
-craype-hugepages1G  craype-hugepages8M   craype-hugepages128M  craype-network-ofi          
-craype-hugepages2G  craype-hugepages16M  craype-hugepages256M  craype-network-slingshot10  
-craype-hugepages2M  craype-hugepages32M  craype-hugepages512M  craype-x86-rome             
-craype-hugepages4M  craype-hugepages64M  craype-network-none   
+------------- /opt/cray/pe/lmod/modulefiles/mpi/crayclang/10.0/ofi/1.0/cray-mpich/8.0 -------------
+   cray-hdf5-parallel/1.12.0.3 (D)    cray-parallel-netcdf/1.12.1.3 (D)
+   cray-hdf5-parallel/1.12.0.7        cray-parallel-netcdf/1.12.1.7
 
-------------------------------------- /usr/local/Modules/modulefiles --------------------------------------
-dot  module-git  module-info  modules  null  use.own  
+------------------------- /opt/cray/pe/lmod/modulefiles/perftools/21.02.0 -------------------------
+   perftools         perftools-lite-events    perftools-lite-hbm      perftools-preload
+   perftools-lite    perftools-lite-gpu       perftools-lite-loops
 
--------------------------------------- /opt/cray/pe/cpe-prgenv/7.0.0 --------------------------------------
-cpe-aocc  cpe-cray  cpe-gnu  
+------------------- /opt/cray/pe/lmod/modulefiles/comnet/crayclang/10.0/ofi/1.0 -------------------
+   cray-mpich-abi/8.1.4 (D)    cray-mpich-abi/8.1.9    cray-mpich/8.1.4 (L,D)    cray-mpich/8.1.9
 
--------------------------------------------- /opt/modulefiles ---------------------------------------------
-aocc/2.1.0.3(default)  cray-R/4.0.2.0(default)  gcc/8.1.0  gcc/9.3.0  gcc/10.1.0(default)  
+---------------------------- /opt/cray/pe/lmod/modulefiles/net/ofi/1.0 ----------------------------
+   cray-openshmemx/11.2.0 (D)    cray-openshmemx/11.3.3
 
+------------------------- /opt/cray/pe/lmod/modulefiles/cpu/x86-rome/1.0 --------------------------
+   cray-fftw/3.3.8.9 (D)    cray-fftw/3.3.8.11
 
----------------------------------------- /opt/cray/pe/modulefiles -----------------------------------------
-atp/3.7.4(default)              cray-mpich-abi/8.0.15             craype-dl-plugin-py3/20.06.1(default)  
-cce/10.0.3(default)             cray-mpich-ucx/8.0.15             craype/2.7.0(default)                  
-cray-ccdb/4.7.1(default)        cray-mpich/8.0.15(default)        craypkg-gen/1.3.10(default)            
-cray-cti/2.7.3(default)         cray-netcdf-hdf5parallel/4.7.4.0  gdb4hpc/4.7.3(default)                 
-cray-dsmml/0.1.2(default)       cray-netcdf/4.7.4.0               iobuf/2.0.10(default)                  
-cray-fftw/3.3.8.7(default)      cray-openshmemx/11.1.1(default)   papi/6.0.0.2(default)                  
-cray-ga/5.7.0.3                 cray-parallel-netcdf/1.12.1.0     perftools-base/20.09.0(default)        
-cray-hdf5-parallel/1.12.0.0     cray-pmi-lib/6.0.6(default)       valgrind4hpc/2.7.2(default)            
-cray-hdf5/1.12.0.0              cray-pmi/6.0.6(default)           
-cray-libsci/20.08.1.2(default)  cray-python/3.8.5.0(default)    
+---------------------- /opt/cray/pe/lmod/modulefiles/compiler/crayclang/10.0 ----------------------
+   cray-hdf5/1.12.0.3 (D)    cray-hdf5/1.12.0.7
+
+---------------- /opt/cray/pe/lmod/modulefiles/mpi/aocc/2.2/ofi/1.0/cray-mpich/8.0 ----------------
+   cray-hdf5-parallel/1.12.0.3    cray-parallel-netcdf/1.12.1.3
+
+------------------------------ /usr/share/lmod/lmod/modulefiles/Core ------------------------------
+   lmod    settarg
+
+------------------------------- /opt/cray/pe/lmod/modulefiles/core --------------------------------
+   PrgEnv-aocc/8.0.0 (D)      cray-ccdb/4.12.4               craype/2.7.6           (L,D)
+   PrgEnv-aocc/8.1.0          cray-cti/2.13.6       (D)      craype/2.7.10
+   PrgEnv-cray/8.0.0 (L,D)    cray-cti/2.15.5                craypkg-gen/1.3.14     (D)
+   PrgEnv-cray/8.1.0          cray-dsmml/0.1.4      (D)      craypkg-gen/1.3.18
+aturner@ln03:~> module avail
+
+------------- /opt/cray/pe/lmod/modulefiles/mpi/crayclang/10.0/ofi/1.0/cray-mpich/8.0 -------------
+   cray-hdf5-parallel/1.12.0.3 (D)    cray-parallel-netcdf/1.12.1.3 (D)
+   cray-hdf5-parallel/1.12.0.7        cray-parallel-netcdf/1.12.1.7
+
+------------------------- /opt/cray/pe/lmod/modulefiles/perftools/21.02.0 -------------------------
+   perftools         perftools-lite-events    perftools-lite-hbm      perftools-preload
+   perftools-lite    perftools-lite-gpu       perftools-lite-loops
+
+------------------- /opt/cray/pe/lmod/modulefiles/comnet/crayclang/10.0/ofi/1.0 -------------------
+   cray-mpich-abi/8.1.4 (D)    cray-mpich-abi/8.1.9    cray-mpich/8.1.4 (L,D)    cray-mpich/8.1.9
+
+---------------------------- /opt/cray/pe/lmod/modulefiles/net/ofi/1.0 ----------------------------
+   cray-openshmemx/11.2.0 (D)    cray-openshmemx/11.3.3
+
+------------------------- /opt/cray/pe/lmod/modulefiles/cpu/x86-rome/1.0 --------------------------
+   cray-fftw/3.3.8.9 (D)    cray-fftw/3.3.8.11
+
+---------------------- /opt/cray/pe/lmod/modulefiles/compiler/crayclang/10.0 ----------------------
+   cray-hdf5/1.12.0.3 (D)    cray-hdf5/1.12.0.7
+
+---------------- /opt/cray/pe/lmod/modulefiles/mpi/aocc/2.2/ofi/1.0/cray-mpich/8.0 ----------------
+   cray-hdf5-parallel/1.12.0.3    cray-parallel-netcdf/1.12.1.3
+
+------------------------------ /usr/share/lmod/lmod/modulefiles/Core ------------------------------
+   lmod    settarg
+
+------------------------------- /opt/cray/pe/lmod/modulefiles/core --------------------------------
+   PrgEnv-aocc/8.0.0 (D)      cray-ccdb/4.12.4               craype/2.7.6           (L,D)
+   PrgEnv-aocc/8.1.0          cray-cti/2.13.6       (D)      craype/2.7.10
+   PrgEnv-cray/8.0.0 (L,D)    cray-cti/2.15.5                craypkg-gen/1.3.14     (D)
+   PrgEnv-cray/8.1.0          cray-dsmml/0.1.4      (D)      craypkg-gen/1.3.18
+   PrgEnv-gnu/8.0.0  (D)      cray-dsmml/0.2.1               gcc/9.3.0
+   PrgEnv-gnu/8.1.0           cray-jemalloc/5.1.0.4          gcc/10.2.0             (D)
+   aocc/2.2.0.1      (D)      cray-libpals/1.0.17            gcc/10.3.0
+   aocc/3.0.0                 cray-libsci/21.04.1.1 (L,D)    gcc/11.2.0
+   atp/3.13.1        (D)      cray-libsci/21.08.1.2          gdb4hpc/4.12.5         (D)
+   atp/3.14.5                 cray-pals/1.0.17               gdb4hpc/4.13.5
+   cce/11.0.4        (L,D)    cray-pmi-lib/6.0.10   (D)      iobuf/2.0.10
+   cce/12.0.3                 cray-pmi-lib/6.0.13            papi/6.0.0.6           (D)
+   cpe-cuda/21.09             cray-pmi/6.0.10       (D)      papi/6.0.0.9
+   cpe/21.04         (D)      cray-pmi/6.0.13                perftools-base/21.02.0 (L,D)
+   cpe/21.09                  cray-python/3.8.5.0   (D)      perftools-base/21.09.0
+   cray-R/4.0.3.0    (D)      cray-python/3.9.4.1            valgrind4hpc/2.11.1    (D)
+   cray-R/4.1.1.0             cray-stat/4.10.1      (D)      valgrind4hpc/2.12.4
+   cray-ccdb/4.11.1  (D)      cray-stat/4.11.5
+
+---------------------- /opt/cray/pe/lmod/modulefiles/craype-targets/default -----------------------
+   craype-accel-amd-gfx908    craype-hugepages256M    craype-network-none
+   craype-accel-amd-gfx90a    craype-hugepages2G      craype-network-ofi  (L)
+   craype-accel-host          craype-hugepages2M      craype-network-ucx
+   craype-accel-nvidia70      craype-hugepages32M     craype-x86-milan
+   craype-accel-nvidia80      craype-hugepages4M      craype-x86-rome     (L)
+   craype-hugepages128M       craype-hugepages512M    craype-x86-trento
+   craype-hugepages16M        craype-hugepages64M
+   craype-hugepages1G         craype-hugepages8M
+
+-------------------------------------- /opt/cray/modulefiles --------------------------------------
+   cray-lustre-client/2.12.4.2_cray_63_g79cd827-7.0.1.0_8.1__g79cd827237.shasta
+   cray-shasta-mlnx-firmware/1.0.8
+   dvs/2.12_4.0.112-7.0.1.0_15.1__ga97f35d9
+   libfabric/1.11.0.4.71                                                        (L)
+   xpmem/2.2.40-7.0.1.0_2.7__g1d7a24d.shasta                                    (L)
+
+---------------------------------------- /opt/modulefiles -----------------------------------------
+   aocc/2.2.0.1    aocc/3.0.0    cray-R/4.0.3.0    gcc/8.1.0    gcc/9.3.0    gcc/10.2.0
+
+  Where:
+   L:  Module is loaded
+   D:  Default Module
+
+Use "module spider" to find all possible modules and extensions.
+Use "module keyword key1 key2 ..." to search for all possible modules matching any of the "keys".
+
 ```
 
 This will list all the names and versions of the modules that you can currently
@@ -160,10 +237,18 @@ argument to the `module avail` command. For example, to list all
 available versions of the HPE Cray FFTW library, use:
 
 ```
-auser@uan01:~> module avail cray-fftw
+auser@ln03:~>  module avail cray-fftw
 
----------------------------------------- /opt/cray/pe/modulefiles -----------------------------------------
-cray-fftw/3.3.8.7(default) 
+------------------------- /opt/cray/pe/lmod/modulefiles/cpu/x86-rome/1.0 --------------------------
+   cray-fftw/3.3.8.9 (D)    cray-fftw/3.3.8.11
+
+  Where:
+   D:  Default Module
+
+Use "module spider" to find all possible modules and extensions.
+Use "module keyword key1 key2 ..." to search for all possible modules matching any of the "keys".
+
+
 ```
 
 #### `module spider`
@@ -186,7 +271,126 @@ If you cannot find a module that you expect to be on the system using `module av
 then you can use `module spider` to find out which dependencies you need to load
 to make the module available.
 
-<!-- TODO add example of using module spider to inspect netcdf-hdf5-parallel -->
+For example, the module `cray-netcdf-hdf5parallel` is onstalled on ARCHER2 but it
+will not be found by `module avail`:
+
+```
+auser@ln03:~> module avail cray-netcdf-hdf5parallel
+No module(s) or extension(s) found!
+Use "module spider" to find all possible modules and extensions.
+Use "module keyword key1 key2 ..." to search for all possible modules matching any of the "keys".
+```
+
+We can use `module spider` without any arguments to verify it exists and list
+the versions available:
+
+```
+auser@ln03:~> module spider
+
+-----------------------------------------------------------------------------------------------
+The following is a list of the modules and extensions currently available:
+-----------------------------------------------------------------------------------------------
+
+...output trimmed...
+
+  cray-mpich-abi: cray-mpich-abi/8.1.4, cray-mpich-abi/8.1.9
+
+  cray-netcdf: cray-netcdf/4.7.4.3, cray-netcdf/4.7.4.7
+
+  cray-netcdf-hdf5parallel: cray-netcdf-hdf5parallel/4.7.4.3, cray-netcdf-hdf5parallel/4.7.4.7
+
+  cray-openshmemx: cray-openshmemx/11.2.0, cray-openshmemx/11.3.3
+
+...output trimmed...
+
+```
+
+Now we know which versions are available, we can use
+`module spider cray-netcdf-hdf5parallel/4.7.4.7` to find out how we can make
+it available:
+
+```
+auser@ln03:~> module spider cray-netcdf-hdf5parallel/4.7.4.3
+
+-----------------------------------------------------------------------------------------------
+  cray-netcdf-hdf5parallel: cray-netcdf-hdf5parallel/4.7.4.3
+-----------------------------------------------------------------------------------------------
+
+    You will need to load all module(s) on any one of the lines below before the "cray-netcdf-hdf5parallel/4.7.4.3" module is available to load.
+
+      aocc/2.2.0.1  cray-mpich/8.1.4  cray-hdf5-parallel/1.12.0.3
+      aocc/2.2.0.1  cray-mpich/8.1.4  cray-hdf5-parallel/1.12.0.7
+      aocc/2.2.0.1  cray-mpich/8.1.9  cray-hdf5-parallel/1.12.0.3
+      aocc/2.2.0.1  cray-mpich/8.1.9  cray-hdf5-parallel/1.12.0.7
+      aocc/3.0.0  cray-mpich/8.1.4  cray-hdf5-parallel/1.12.0.3
+      aocc/3.0.0  cray-mpich/8.1.4  cray-hdf5-parallel/1.12.0.7
+      aocc/3.0.0  cray-mpich/8.1.9  cray-hdf5-parallel/1.12.0.3
+      aocc/3.0.0  cray-mpich/8.1.9  cray-hdf5-parallel/1.12.0.7
+      cce/11.0.4  cray-mpich/8.1.4  cray-hdf5-parallel/1.12.0.3
+      cce/11.0.4  cray-mpich/8.1.4  cray-hdf5-parallel/1.12.0.7
+      cce/11.0.4  cray-mpich/8.1.9  cray-hdf5-parallel/1.12.0.3
+      cce/11.0.4  cray-mpich/8.1.9  cray-hdf5-parallel/1.12.0.7
+      cce/12.0.3  cray-mpich/8.1.4  cray-hdf5-parallel/1.12.0.3
+      cce/12.0.3  cray-mpich/8.1.4  cray-hdf5-parallel/1.12.0.7
+      cce/12.0.3  cray-mpich/8.1.9  cray-hdf5-parallel/1.12.0.3
+      cce/12.0.3  cray-mpich/8.1.9  cray-hdf5-parallel/1.12.0.7
+      craype-network-none  cray-mpich/8.1.4  cray-hdf5-parallel/1.12.0.3
+      craype-network-none  cray-mpich/8.1.4  cray-hdf5-parallel/1.12.0.7
+      craype-network-none  cray-mpich/8.1.9  cray-hdf5-parallel/1.12.0.3
+      craype-network-none  cray-mpich/8.1.9  cray-hdf5-parallel/1.12.0.7
+      craype-network-ofi  cray-mpich/8.1.4  cray-hdf5-parallel/1.12.0.3
+      craype-network-ofi  cray-mpich/8.1.4  cray-hdf5-parallel/1.12.0.7
+      craype-network-ofi  cray-mpich/8.1.9  cray-hdf5-parallel/1.12.0.3
+      craype-network-ofi  cray-mpich/8.1.9  cray-hdf5-parallel/1.12.0.7
+      craype-network-ucx  cray-mpich/8.1.4  cray-hdf5-parallel/1.12.0.3
+      craype-network-ucx  cray-mpich/8.1.4  cray-hdf5-parallel/1.12.0.7
+      craype-network-ucx  cray-mpich/8.1.9  cray-hdf5-parallel/1.12.0.3
+      craype-network-ucx  cray-mpich/8.1.9  cray-hdf5-parallel/1.12.0.7
+      gcc/10.2.0  cray-mpich/8.1.4  cray-hdf5-parallel/1.12.0.3
+      gcc/10.2.0  cray-mpich/8.1.4  cray-hdf5-parallel/1.12.0.7
+      gcc/10.2.0  cray-mpich/8.1.9  cray-hdf5-parallel/1.12.0.3
+      gcc/10.2.0  cray-mpich/8.1.9  cray-hdf5-parallel/1.12.0.7
+      gcc/10.3.0  cray-mpich/8.1.4  cray-hdf5-parallel/1.12.0.3
+      gcc/10.3.0  cray-mpich/8.1.4  cray-hdf5-parallel/1.12.0.7
+      gcc/10.3.0  cray-mpich/8.1.9  cray-hdf5-parallel/1.12.0.3
+      gcc/10.3.0  cray-mpich/8.1.9  cray-hdf5-parallel/1.12.0.7
+      gcc/11.2.0  cray-mpich/8.1.4  cray-hdf5-parallel/1.12.0.3
+      gcc/11.2.0  cray-mpich/8.1.4  cray-hdf5-parallel/1.12.0.7
+      gcc/11.2.0  cray-mpich/8.1.9  cray-hdf5-parallel/1.12.0.3
+      gcc/11.2.0  cray-mpich/8.1.9  cray-hdf5-parallel/1.12.0.7
+      gcc/9.3.0  cray-mpich/8.1.4  cray-hdf5-parallel/1.12.0.3
+      gcc/9.3.0  cray-mpich/8.1.4  cray-hdf5-parallel/1.12.0.7
+      gcc/9.3.0  cray-mpich/8.1.9  cray-hdf5-parallel/1.12.0.3
+      gcc/9.3.0  cray-mpich/8.1.9  cray-hdf5-parallel/1.12.0.7
+ 
+    Help:
+      Release info:  /opt/cray/pe/netcdf-hdf5parallel/4.7.4.7/release_info
+
+```
+
+There is a lot of information here, but what the output is essentailly telling
+us is that in order to have `cray-netcdf-hdf5parallel/4.7.4.3` available to 
+load we need to have loaded a compiler (any version of CCE, GCC or AOCC), 
+an MPI library (any version of cray-mpich) and `cray-hdf5-parallel` loaded.
+As we always have a compiler and MPI library loaded, we can satisfy all of the
+dependencies by loading `cray-hdf5-parallel`, and then we can use
+`module avail cray-netcdf-hdf5parallel` again to show that the module is now
+available to load:
+
+```
+auser@ln03:~> module load cray-hdf5-parallel
+auser@ln03:~> module avail cray-netcdf-hdf5parallel
+
+----- /opt/cray/pe/lmod/modulefiles/hdf5-parallel/crayclang/10.0/ofi/1.0/cray-mpich/8.0/cray-hdf5-parallel/1.12.0 ------
+   cray-netcdf-hdf5parallel/4.7.4.3 (D)    cray-netcdf-hdf5parallel/4.7.4.7
+
+  Where:
+   D:  Default Module
+
+Use "module spider" to find all possible modules and extensions.
+Use "module keyword key1 key2 ..." to search for all possible modules matching any of the "keys".
+
+```
 
 #### `module help`
 
@@ -194,30 +398,9 @@ If you want more info on any of the modules, you can use the `module
 help` command:
 
 ```
-auser@uan01:~> module help cray-fftw
-
--------------------------------------------------------------------
-Module Specific Help for /opt/cray/pe/modulefiles/cray-fftw/3.3.8.7:
+auser@ln03:~> module help gromacs
 
 
-===================================================================
-FFTW 3.3.8.7
-============
-  Release Date:
-  -------------
-    June 2020
-
-
-  Purpose:
-  --------
-    This Cray FFTW 3.3.8.7 release is supported on Cray Shasta Systems. 
-    FFTW is supported on the host CPU but not on the accelerator of Cray systems.
-
-    The Cray FFTW 3.3.8.7 release provides the following:
-      - Optimizations for AMD Rome CPUs.
-    See the Product and OS Dependencies section for details
-
-[...]
 ```
 
 #### `module show`
@@ -227,38 +410,8 @@ performs to change your environment when it is loaded. For example, for
 the default FFTW module:
 
 ```
-auser@uan01:~> module show cray-fftw
--------------------------------------------------------------------
-/opt/cray/pe/modulefiles/cray-fftw/3.3.8.7:
+auser@ln03:~> module show gromacs
 
-conflict        cray-fftw
-conflict        fftw
-setenv          FFTW_VERSION 3.3.8.7
-setenv          CRAY_FFTW_VERSION 3.3.8.7
-setenv          CRAY_FFTW_PREFIX /opt/cray/pe/fftw/3.3.8.7/x86_rome
-setenv          FFTW_ROOT /opt/cray/pe/fftw/3.3.8.7/x86_rome
-setenv          FFTW_DIR /opt/cray/pe/fftw/3.3.8.7/x86_rome/lib
-setenv          FFTW_INC /opt/cray/pe/fftw/3.3.8.7/x86_rome/include
-prepend-path    PATH /opt/cray/pe/fftw/3.3.8.7/x86_rome/bin
-prepend-path    MANPATH /opt/cray/pe/fftw/3.3.8.7/share/man
-prepend-path    CRAY_LD_LIBRARY_PATH /opt/cray/pe/fftw/3.3.8.7/x86_rome/lib
-prepend-path    PE_PKGCONFIG_PRODUCTS PE_FFTW
-setenv          PE_FFTW_TARGET_x86_skylake x86_skylake
-setenv          PE_FFTW_TARGET_x86_rome x86_rome
-setenv          PE_FFTW_TARGET_x86_cascadelake x86_cascadelake
-setenv          PE_FFTW_TARGET_x86_64 x86_64
-setenv          PE_FFTW_TARGET_share share
-setenv          PE_FFTW_TARGET_sandybridge sandybridge
-setenv          PE_FFTW_TARGET_mic_knl mic_knl
-setenv          PE_FFTW_TARGET_ivybridge ivybridge
-setenv          PE_FFTW_TARGET_haswell haswell
-setenv          PE_FFTW_TARGET_broadwell broadwell
-setenv          PE_FFTW_VOLATILE_PKGCONFIG_PATH /opt/cray/pe/fftw/3.3.8.7/@PE_FFTW_TARGET@/lib/pkgconfig
-setenv          PE_FFTW_PKGCONFIG_VARIABLES PE_FFTW_OMP_REQUIRES_@openmp@
-setenv          PE_FFTW_OMP_REQUIRES { }
-setenv          PE_FFTW_OMP_REQUIRES_openmp _mp
-setenv          PE_FFTW_PKGCONFIG_LIBS fftw3_mpi:libfftw3_threads:fftw3:fftw3f_mpi:libfftw3f_threads:fftw3f
-module-whatis   {FFTW 3.3.8.7 - Fastest Fourier Transform in the West}
   [...]
 ```
 
@@ -274,22 +427,21 @@ following commands which we cover in more detail below.
 #### `module load`
 
 To load a module to use the `module load` command. For example, to load
-the default version of HPE Cray FFTW into your environment, use:
+the default version of GROMACS into your environment, use:
 
 ```
-auser@uan01:~> module load cray-fftw
+auser@ln03:~> module load gromacs
 ```
 
-Once you have done this, your environment will be setup to use the HPE
-Cray FFTW library. The above command will load the default version of
-HPE Cray FFTW. If you need a specific version of the software, you can
-add more information:
+Once you have done this, your environment will be setup to use GROMACS.
+The above command will load the default version of GROMACS. If you need
+a specific version of the software, you can add more information:
 
 ```
-auser@uan01:~> module load cray-fftw/3.3.8.7
+auser@uan01:~> module load gromacs/2021.2
 ```
 
-will load HPE Cray FFTW version 3.3.8.7 into your environment,
+will load GROMACS version 2021.2 into your environment,
 regardless of the default.
 
 #### `module remove`
@@ -298,11 +450,11 @@ If you want to remove software from your environment, `module remove`
 will remove a loaded module:
 
 ```
-auser@uan01:~> module remove cray-fftw
+auser@uan01:~> module remove gromacs
 ```
 
-will unload what ever version of `cray-fftw` (even if it is not the
-default) you might have loaded.
+will unload what ever version of `gromacs` you might have loaded (even
+if it is not the default).
 
 #### `module swap`
 
@@ -312,11 +464,11 @@ version which is not yet the default or using a legacy version to keep
 compatibility with old data. This can be achieved most easily by using
 `module swap oldmodule newmodule`.
 
-Suppose you have loaded version 3.3.8.7 of `cray-fftw`, the following
-command will change to version 3.3.8.5:
+For example, to swap from the default CCE (cray) compiler environment
+to the GCC (gnu) compiler environment, you would use:
 
 ```
-auser@uan01:~> module swap cray-fftw cray-fftw/3.3.8.5
+auser@ln03:~> module swap PrgEnv-cray PrgEnv-gnu
 ```
 
 You did not need to specify the version of the loaded module in your
