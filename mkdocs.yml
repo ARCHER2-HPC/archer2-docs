@@ -40,6 +40,11 @@ nav:
     - "Overview": quick-start/overview.md
     - "Quickstart for users": quick-start/quickstart-users.md
     - "Quickstart for developers": quick-start/quickstart-developers.md
+  - "ARCHER2 4-cabinet to full ARCHER2 migration guide":
+    - "Overview": archer2-migration/index.md
+    - "Account migration": archer2-migration/account-migration.md
+    - "Data migration": archer2-migration/data-migration.md
+    - "Differences between ARCHER2 4-cab and full ARCHER2": archer2-migration/archer2-differences.md
   - "ARCHER2 Known Issues": known-issues/index.md
   - "ARCHER2 Frequently Asked Questions": faq/index.md
   - "User and Best Practice Guide":
