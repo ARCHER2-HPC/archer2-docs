@@ -6,9 +6,6 @@ active investigation by HPE Cray and the wider service.
 
 ## Open Issues
 
-### Slow running large jobs (Added: 2021-09-29)
-
-We are aware of intermittent degraded performance on the High-speed Network, at present, which will lead to intermittent slow running of jobs (especially jobs with large node counts), This problem should be resolved during a maintenance session, which is scheduled for morning of Thursday 30th September.
 
 ### Error message: `No space left on device` (Added: 2021-07-20)
 
