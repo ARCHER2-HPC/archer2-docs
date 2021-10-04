@@ -107,6 +107,15 @@ specifically parallel executables. Other topics such as [Python](python.md) and
 [Containers](containers.md) are covered in more detail in separate sections of the
 documentation.
 
+!!! tip
+    If you want to get back to the login module state without having to logout
+    and back in again, you can just use:
+    ```
+    module restore
+    ```
+    This is also handy for build scripts to ensure you are starting from a known
+    state.
+
 ## Compiler environments
 
 There are three different compiler environments available on ARCHER2:
@@ -150,7 +159,7 @@ the list above) infrastructure.
 
 Switching between different compiler environments is achieved using the
 `module swap` command. For example, to switch from the default HPE Cray
-(CCE) compiler environemnt to the GCC environment, you would use:
+(CCE) compiler environment to the GCC environment, you would use:
 
 ```
 auser@ln03:~> module swap PrgEnv-cray PrgEnv-gnu
@@ -182,7 +191,7 @@ Within a given compiler environment, it is possible to swap to a
 different compiler version by swapping the relevant compiler module.
 To switch to the GNU compiler environment from the default HPE Cray compiler
 environment and than swap the version of GCC from the 11.2.0 default to 
-the older 10.2.0 verion, you would use
+the older 10.2.0 version, you would use
 
 ```
 auser@ln03:~> module swap PrgEnv-cray PrgEnv-gnu
@@ -243,8 +252,8 @@ e.g., `mpicc`, should also be replaced by the relevant wrapper, e.g. `cc`
 
 
 !!! tip
-    If oyu are using a build system such as Make or CMake then you 
-    will need to replace all occurances of `mpicc` with `cc`,
+    If you are using a build system such as Make or CMake then you 
+    will need to replace all occurrences of `mpicc` with `cc`,
     `mpicxx`/`mpic++` with `CC` and `mpif90` with `ftn`.
 
 ### Compiler man pages and help
@@ -280,25 +289,6 @@ compiler and compile options:
     Cray Fortran **is not** based on Flang and so takes different options
     from flang/gfortran.
 
-### Dynamic Linking
-
-Executables on ARCHER2 link dynamically, and the Cray Programming
-Environment does not currently support static linking.
-
-If you attempt to link statically, you will see errors similar to:
-
-```
-/usr/bin/ld: cannot find -lpmi
-/usr/bin/ld: cannot find -lpmi2
-collect2: error: ld returned 1 exit status
-```
-
-The compiler wrapper scripts on ARCHER link runtime libraries in using
-the `RUNPATH` by default. This means that the paths to the runtime
-libraries are encoded into the executable so you do not need to load the
-compiler environment in your job submission scripts unless you are using
-non-default versions of libraries.
-
 ### Which compiler environment?
 
 If you are unsure which compiler you should choose, we suggest the
@@ -316,29 +306,79 @@ environments.
 !!! warning
     Intel compilers are not currently available on ARCHER2.
 
-### AMD Optimizing Compiler Collection (AOCC)
 
-The AMD Optimizing Compiler Collection (AOCC) is a clang-based optimising
-compiler. AOCC also includes a flang-based Fortran compiler.
+### GNU compiler collection (GCC)
 
-Switch the the AOCC compiler environment from the default CCE (cray)
+The commonly used open source GNU compiler collection is available and
+provides C/C++ and Fortran compilers.
+
+Switch the the GCC compiler environment from the default CCE (cray)
 compiler environment via:
 
 ```
-auser@ln03:~> module swap PrgEnv-cray PrgEnv-aocc
+auser@ln03:~> module swap PrgEnv-cray PrgEnv-gcc
 
 Due to MODULEPATH changes, the following have been reloaded:
   1) cray-mpich/8.1.4
 
 ```
 
-!!! note
-    Further details on AOCC will appear here as they become available.
+!!! bug
+    The `gcc/8.1.0` module is available on ARCHER2 but cannot be used as the
+    supporting scientific and system libraries are not available. You should
+    **not** use this version of GCC.
 
-#### AOCC reference material
+!!! warning
+    If you want to use GCC version 10 or greater to compile Fortran code,
+    with the old MPI interfaces (i.e. `use mpi` or `INCLUDE 'mpif.h'`) you
+    **must** add the `-fallow-argument-mismatch` option (or equivalent) when compiling
+    otherwise you will see compile errors associated with MPI functions.
+    The reason for this is that past versions of `gfortran` have allowed
+    mismatched arguments to external procedures (e.g., where an explicit
+    interface is not available). This is often the case for MPI routines
+    using the old MPI interfaces where arrays of different types are passed
+    to, for example, `MPI_Send()`. This will now generate an error as not
+    standard conforming. The `-fallow-argument-mismatch` option is used
+    to reduce the error to a warning. The same effect may be achieved via
+    `-std=legacy`.
 
-  - AMD website  
-    <https://developer.amd.com/amd-aocc/>
+    If you use the Fortran 2008 MPI interface (i.e. `use mpi_f08`) then you
+    should not need to add this option.
+
+    Fortran language MPI bindings are described in more detail at
+    in [the MPI Standard documentation](https://www.mpi-forum.org/docs/mpi-3.1/mpi31-report/node408.htm).
+
+#### Useful Gnu Fortran options
+
+| Option | Comment |  
+| ------ | ------- |
+| `-std=<standard>` |	Default is gnu |
+| `-fallow-argument-mismatch` | Allow mismatched procedure arguments. This argument is required for compiling MPI Fortran code with GCC version 10 or greater if you are using the older MPI interfaces (see warning above) |
+| `-fbounds-check` | Use runtime checking of array indices |
+| `-fopenmp` | Compile OpenMP (default is no OpenMP) |
+| `-v` | Display verbose output from compiler stages |
+
+!!! tip
+    The `standard` in `-std` may be one of `f95` `f2003`, `f2008` or
+    `f2018`. The default option `-std=gnu` is the latest Fortran standard
+    plus gnu extensions.
+
+!!! warning
+    Past versions of `gfortran` have allowed mismatched arguments to
+    external procedures (e.g., where an explicit interface is not
+    available). This is often the case for MPI routines where arrays of
+    different types are passed to `MPI_Send()` and so on. This will now
+    generate an error as not standard conforming. Use
+    `-fallow-argument-mismatch` to reduce the error to a warning. The same
+    effect may be achieved via `-std=legacy`.
+
+#### Reference material
+
+  - C/C++ documentation  
+    <https://gcc.gnu.org/onlinedocs/gcc-9.3.0/gcc/>
+
+  - Fortran documentation  
+    <https://gcc.gnu.org/onlinedocs/gcc-9.3.0/gfortran/>
 
 ### Cray Compiling Environment (CCE)
 
@@ -422,78 +462,30 @@ Miscellaneous options:
 | `-h omp` | Compile OpenMP (default is `-hnoomp`)                  |
 | `-v` | Display verbose output from compiler stages                |
 
-### GNU compiler collection (GCC)
+### AMD Optimizing Compiler Collection (AOCC)
 
-The commonly used open source GNU compiler collection is available and
-provides C/C++ and Fortran compilers.
+The AMD Optimizing Compiler Collection (AOCC) is a clang-based optimising
+compiler. AOCC also includes a flang-based Fortran compiler.
 
-Switch the the GCC compiler environment from the default CCE (cray)
+Switch the the AOCC compiler environment from the default CCE (cray)
 compiler environment via:
 
 ```
-auser@ln03:~> module swap PrgEnv-cray PrgEnv-gcc
+auser@ln03:~> module swap PrgEnv-cray PrgEnv-aocc
 
 Due to MODULEPATH changes, the following have been reloaded:
   1) cray-mpich/8.1.4
 
 ```
 
-!!! bug
-    The `gcc/8.1.0` module is available on ARCHER2 but cannot be used as the
-    supporting scientific and system libraries are not available. You should
-    **not** use this version of GCC.
+!!! note
+    Further details on AOCC will appear here as they become available.
 
-!!! warning
-    If you want to use GCC version 10 or greater to compile Fortran code,
-    with the old MPI interfaces (i.e. `use mpi` or `INCLUDE 'mpif.h'`) you
-    **must** add the `-fallow-argument-mismatch` option (or equivalent) when compiling
-    otherwise you will see compile errors associated with MPI functions.
-    The reason for this is that past versions of `gfortran` have allowed
-    mismatched arguments to external procedures (e.g., where an explicit
-    interface is not available). This is often the case for MPI routines
-    using the old MPI interfaces where arrays of different types are passed
-    to, for example, `MPI_Send()`. This will now generate an error as not
-    standard conforming. The `-fallow-argument-mismatch` option is used
-    to reduce the error to a warning. The same effect may be achieved via
-    `-std=legacy`.
+#### AOCC reference material
 
-    If you use the Fortran 2008 MPI interface (i.e. `use mpi_f08`) then you
-    should not need to add this option.
+  - AMD website  
+    <https://developer.amd.com/amd-aocc/>
 
-    Fortran language MPI bindings are described in more detail at
-    in [the MPI Standard documentation](https://www.mpi-forum.org/docs/mpi-3.1/mpi31-report/node408.htm).
-
-#### Useful Gnu Fortran options
-
-| Option | Comment |  
-| ------ | ------- |
-| `-std=<standard>` |	Default is gnu |
-| `-fallow-argument-mismatch` | Allow mismatched procedure arguments. This argument is required for compiling MPI Fortran code with GCC version 10 or greater if you are using the older MPI interfaces (see warning above) |
-| `-fbounds-check` | Use runtime checking of array indices |
-| `-fopenmp` | Compile OpenMP (default is no OpenMP) |
-| `-v` | Display verbose output from compiler stages |
-
-!!! tip
-    The `standard` in `-std` may be one of `f95` `f2003`, `f2008` or
-    `f2018`. The default option `-std=gnu` is the latest Fortran standard
-    plus gnu extensions.
-
-!!! warning
-    Past versions of `gfortran` have allowed mismatched arguments to
-    external procedures (e.g., where an explicit interface is not
-    available). This is often the case for MPI routines where arrays of
-    different types are passed to `MPI_Send()` and so on. This will now
-    generate an error as not standard conforming. Use
-    `-fallow-argument-mismatch` to reduce the error to a warning. The same
-    effect may be achieved via `-std=legacy`.
-
-#### Reference material
-
-  - C/C++ documentation  
-    <https://gcc.gnu.org/onlinedocs/gcc-9.3.0/gcc/>
-
-  - Fortran documentation  
-    <https://gcc.gnu.org/onlinedocs/gcc-9.3.0/gfortran/>
 
 ## Message passing interface (MPI)
 
@@ -505,6 +497,9 @@ network. The current implementation supports MPI standard version 3.1.
 
 The HPE Cray MPICH implementation is linked into software by default when
 compiling using the standard wrapper scripts: `cc`, `CC` and `ftn`.
+
+You do not need to do anything to make HPE Cray MPICH available when you
+log into ArCHER2, it is available by default to all users.
 
 #### MPI reference material
 
@@ -561,71 +556,45 @@ first choice for access to software libraries if available.
     from non-default PE installs.
 
 Access to non-default PE environments is controlled by the use of the `cpe` modules.
-These modules are typically loaded *after* you have switched to your choice of PrgEnv
-and loaded all the other modules you need and will 
-set your compile environment to match that in the selected PE release. This means:
+Loading a `cpe` module will do the following:
 
 - The compiler version will be switched to the one from the selected PE
-- HPE Cray provided libraries (or modules) that are loaded before you switch
-  to the new programming environment are switched to those from the programming
-  environment that you select.
+- All HPE Cray PE modules will be updated so their default version is the
+  one from the PE you have selected
 
 For example, if you have a code that uses the Gnu compiler environment, FFTW
 and NetCDF parallel libraries and you want to compile in the (non-default) 21.09
 programming environment, you would do the following:
 
-First, load the Gnu compiler environment and load the required library
+First, load the `cpe/21.09` module to switch all the defaults to the versions from
+the 21.09 PE. Then, swap to the Gnu compiler environment and load the required library
 modules (FFTW, hdf5-parallel and NetCDF HDF5 parallel). The loaded module list shows they 
-are the versions from the default (20.10) programming environment):
+are the versions from the 21.09 PE:
 
 
 ```
+auser@uan02:/work/t01/t01/auser> module load cpe/21.09
+
+The following have been reloaded with a version change:
+  1) PrgEnv-cray/8.0.0 => PrgEnv-cray/8.1.0     2) cce/11.0.4 => cce/12.0.3     3) cray-libsci/21.04.1.1 => cray-libsci/21.08.1.2     4) cray-mpich/8.1.4 => cray-mpich/8.1.9     5) craype/2.7.6 => craype/2.7.10
+
 auser@uan02:/work/t01/t01/auser> module swap PrgEnv-cray PrgEnv-gnu
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) cray-mpich/8.1.9
+
 auser@uan02:/work/t01/t01/auser> module load cray-fftw
 auser@uan02:/work/t01/t01/auser> module load cray-hdf5-parallel
 auser@uan02:/work/t01/t01/auser> module load cray-netcdf-hdf5parallel
 auser@uan02:/work/t01/t01/auser> module list
-Currently Loaded Modulefiles:
- 1) cpe-gnu                           9) xpmem/2.2.35-7.0.1.0_1.9__gd50fabf.shasta(default)               
- 2) gcc/10.1.0(default)              10) cray-mpich/8.0.16(default)                                       
- 3) craype/2.7.2(default)            11) cray-libsci/20.10.1.2(default)                                   
- 4) craype-x86-rome                  12) bolt/0.7                                                         
- 5) libfabric/1.11.0.0.233(default)  13) /work/y07/shared/archer2-modules/modulefiles-cse/epcc-setup-env  
- 6) craype-network-ofi               14) /usr/local/share/epcc-module/epcc-module-loader                  
- 7) cray-dsmml/0.1.2(default)        15) cray-fftw/3.3.8.8(default)                                       
- 8) perftools-base/20.10.0(default)  16) cray-netcdf-hdf5parallel/4.7.4.2(default) 
-```
 
-Now, load the `cpe/21.09` programming environment module to switch all
-the currently loaded HPE Cray modules from the default (21,04) programming
-environment version to the 21.09 programming environment versions:
+Currently Loaded Modules:
+  1) cpe/21.09         5) libfabric/1.11.0.4.71   9) cray-libsci/21.08.1.2  13) PrgEnv-gnu/8.1.0
+  2) gcc/11.2.0        6) craype-network-ofi     10) bolt/0.7               14) cray-fftw/3.3.8.11
+  3) craype/2.7.10     7) cray-dsmml/0.2.1       11) epcc-setup-env         15) cray-hdf5-parallel/1.12.0.7
+  4) craype-x86-rome   8) cray-mpich/8.1.9       12) load-epcc-module       16) cray-netcdf-hdf5parallel/4.7.4.7
 
-```
-auser@uan02:/work/t01/t01/auser> module load cpe/21.09
-Switching to cray-dsmml/0.1.3.
-Switching to cray-fftw/3.3.8.9.
-Switching to cray-libsci/21.03.1.1.
-Switching to cray-mpich/8.1.3.
-Switching to cray-netcdf-hdf5parallel/4.7.4.3.
-Switching to craype/2.7.5.
-Switching to gcc/9.3.0.
-Switching to perftools-base/21.02.0.
 
-Loading cpe/21.03
-  Unloading conflict: cray-dsmml/0.1.2 cray-fftw/3.3.8.8 cray-libsci/20.10.1.2 cray-mpich/8.0.16 cray-netcdf-hdf5parallel/4.7.4.2
-    craype/2.7.2 gcc/10.1.0 perftools-base/20.10.0
-  Loading requirement: cray-dsmml/0.1.3 cray-fftw/3.3.8.9 cray-libsci/21.03.1.1 cray-mpich/8.1.3 cray-netcdf-hdf5parallel/4.7.4.3
-    craype/2.7.5 gcc/9.3.0 perftools-base/21.02.0
-auser@uan02:/work/t01/t01/auser> module list
-Currently Loaded Modulefiles:
- 1) cpe-gnu                                                           9) cray-dsmml/0.1.3                  17) cpe/21.03(default)  
- 2) craype-x86-rome                                                  10) cray-fftw/3.3.8.9                 
- 3) libfabric/1.11.0.0.233(default)                                  11) cray-libsci/21.03.1.1             
- 4) craype-network-ofi                                               12) cray-mpich/8.1.3                  
- 5) xpmem/2.2.35-7.0.1.0_1.9__gd50fabf.shasta(default)               13) cray-netcdf-hdf5parallel/4.7.4.3  
- 6) bolt/0.7                                                         14) craype/2.7.5                      
- 7) /work/y07/shared/archer2-modules/modulefiles-cse/epcc-setup-env  15) gcc/9.3.0                         
- 8) /usr/local/share/epcc-module/epcc-module-loader                  16) perftools-base/21.02.0   
 ```
 
 Finally, you will need to modify the value of
@@ -657,13 +626,6 @@ ARCHER2 currently has the following HPE Cray Programming Environment releases av
 - **21.04: Current default**
 - 21.09: available via `cpe/21.09` module
 
-!!! tip
-    You can see which programming environment release you currently have loaded 
-    by using `module list` and looking at the version number of the `cray-libsci`
-    module you have loaded. The first two numbers indicate the version of the
-    PE you have loaded. For example, if you have `cray-libsci/21.09.1.2` loaded
-    then you are using the 21.09 PE release.
-
 ## Using non-default versions of HPE Cray libraries on ARCHER2
 
 If you wish to make use of non-default versions of libraries provided by HPE
@@ -679,7 +641,7 @@ version of HPE Cray LibSci in the default programming environment (Cray Compiler
 CCE) you would first setup the environment to compile with:
 
 ```
-auser@uan01:~/test/libsci> module swap cray-libsci cray-libsci/21.09.1.2 
+auser@uan01:~/test/libsci> module swap cray-libsci cray-libsci/21.08.1.2
 auser@uan01:~/test/libsci> export LD_LIBRARY_PATH=$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH
 ```
 
@@ -693,25 +655,25 @@ should see the version in the path to the library file:
 
 ```
 auser@uan01:~/test/libsci> ldd dgemv.x 
-	linux-vdso.so.1 (0x00007ffe4a7d2000)
-	libsci_cray.so.5 => /opt/cray/pe/libsci/20.08.1.2/CRAY/9.0/x86_64/lib/libsci_cray.so.5 (0x00007fafd6a43000)
-	libdl.so.2 => /lib64/libdl.so.2 (0x00007fafd683f000)
-	libxpmem.so.0 => /opt/cray/xpmem/default/lib64/libxpmem.so.0 (0x00007fafd663c000)
-	libquadmath.so.0 => /opt/cray/pe/cce/10.0.4/cce/x86_64/lib/libquadmath.so.0 (0x00007fafd63fc000)
-	libmodules.so.1 => /opt/cray/pe/cce/10.0.4/cce/x86_64/lib/libmodules.so.1 (0x00007fafd61e0000)
-	libfi.so.1 => /opt/cray/pe/cce/10.0.4/cce/x86_64/lib/libfi.so.1 (0x00007fafd5abe000)
-	libcraymath.so.1 => /opt/cray/pe/cce/10.0.4/cce/x86_64/lib/libcraymath.so.1 (0x00007fafd57e2000)
-	libf.so.1 => /opt/cray/pe/cce/10.0.4/cce/x86_64/lib/libf.so.1 (0x00007fafd554f000)
-	libu.so.1 => /opt/cray/pe/cce/10.0.4/cce/x86_64/lib/libu.so.1 (0x00007fafd523b000)
-	libcsup.so.1 => /opt/cray/pe/cce/10.0.4/cce/x86_64/lib/libcsup.so.1 (0x00007fafd5035000)
-	libstdc++.so.6 => /opt/cray/pe/gcc-libs/libstdc++.so.6 (0x00007fafd4c62000)
-	libpthread.so.0 => /lib64/libpthread.so.0 (0x00007fafd4a43000)
-	libc.so.6 => /lib64/libc.so.6 (0x00007fafd4688000)
-	libm.so.6 => /lib64/libm.so.6 (0x00007fafd4350000)
-	/lib64/ld-linux-x86-64.so.2 (0x00007fafda988000)
-	librt.so.1 => /lib64/librt.so.1 (0x00007fafd4148000)
-	libgfortran.so.5 => /opt/cray/pe/gcc-libs/libgfortran.so.5 (0x00007fafd3c92000)
-	libgcc_s.so.1 => /opt/cray/pe/gcc-libs/libgcc_s.so.1 (0x00007fafd3a7a000)
+	linux-vdso.so.1 (0x00007fffd33dd000)
+	libm.so.6 => /lib64/libm.so.6 (0x00007fbd6e7ed000)
+	libsci_cray.so.5 => /opt/cray/pe/libsci/21.08.1.2/CRAY/9.0/x86_64/lib/libsci_cray.so.5 (0x00007fbd6a8a7000)
+	libdl.so.2 => /lib64/libdl.so.2 (0x00007fbd6a6a3000)
+	libxpmem.so.0 => /opt/cray/xpmem/default/lib64/libxpmem.so.0 (0x00007fbd6a4a0000)
+	libquadmath.so.0 => /opt/cray/pe/cce/11.0.4/cce/x86_64/lib/libquadmath.so.0 (0x00007fbd6a260000)
+	libmodules.so.1 => /opt/cray/pe/cce/11.0.4/cce/x86_64/lib/libmodules.so.1 (0x00007fbd6a044000)
+	libfi.so.1 => /opt/cray/pe/cce/11.0.4/cce/x86_64/lib/libfi.so.1 (0x00007fbd69921000)
+	libcraymath.so.1 => /opt/cray/pe/cce/11.0.4/cce/x86_64/lib/libcraymath.so.1 (0x00007fbd69640000)
+	libf.so.1 => /opt/cray/pe/cce/11.0.4/cce/x86_64/lib/libf.so.1 (0x00007fbd693ac000)
+	libu.so.1 => /opt/cray/pe/cce/11.0.4/cce/x86_64/lib/libu.so.1 (0x00007fbd69098000)
+	libcsup.so.1 => /opt/cray/pe/cce/11.0.4/cce/x86_64/lib/libcsup.so.1 (0x00007fbd68e92000)
+	libc.so.6 => /lib64/libc.so.6 (0x00007fbd68ad7000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007fbd6eb25000)
+	libpthread.so.0 => /lib64/libpthread.so.0 (0x00007fbd688b8000)
+	librt.so.1 => /lib64/librt.so.1 (0x00007fbd686b0000)
+	libgfortran.so.5 => /opt/cray/pe/gcc-libs/libgfortran.so.5 (0x00007fbd681f9000)
+	libstdc++.so.6 => /opt/cray/pe/gcc-libs/libstdc++.so.6 (0x00007fbd67e26000)
+	libgcc_s.so.1 => /opt/cray/pe/gcc-libs/libgcc_s.so.1 (0x00007fbd67c0e000
 ```
 
 !!! tip
@@ -739,9 +701,6 @@ look like:
 #SBATCH --partition=standard
 #SBATCH --qos=short
 #SBATCH --reservation=shortqos
-
-# Load the standard environment module
-module load epcc-job-env
 
 # Setup up the environment to use the non-default version of LibSci
 #   We use "module swap" as the "cray-libsci" is loaded by default.
