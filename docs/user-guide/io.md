@@ -1,5 +1,12 @@
 # I/O and file systems
 
+This section describes common IO patterns and how to get good performance
+on the ARCHER2 storage. 
+
+Information on the file systems, directory layouts, quotas,
+archiving and transferring data can be found in the
+[Data management and transfer section](data.md).
+
 ## Using the ARCHER2 file systems
 
 Different file systems are configured for different purposes and
@@ -11,65 +18,7 @@ performance. ARCHER2 has three file systems available to users:
 | Compute   | /work                  |
 
 !!! warning
-    Any data used in a parallel jobs should be located on `/work` (Lustre).
-
-### Home file systems
-
-Home directories provide a convenient means for a user to have access to
-files such as source files, input files or configuration files. This
-file system is only mounted on the login nodes. The home directory for
-each user is located at:
-
-    /home/[project code]/[group code]/[username]
-
-where
-
-   - `[project code]` is the code for your project (e.g., x01);
-   - `[group code]` is the code for your project group, if your project has
-     groups, (e.g. x01-a) or the same as the project code, if not;
-   - `[username]` is your login name.
-
-Each project is allocated a portion of the total storage available, and
-the project PI will be able to sub-divide this quota among the groups
-and users within the project. As is standard practice on UNIX and Linux
-systems, the environment variable `$HOME` is automatically set to point
-to your home directory.
-
-It should be noted that the home file system is not designed, and does
-not have the capacity, to act as a long term archive for large sets of
-results.
-
-### Work file system
-
-!!! warning
-    There is no backup of data on any of the work file systems,
-    which means that in the event of a major hardware failure, or if a user
-    accidently deletes essential data, it will not be possible to recover
-    the lost files.
-
-A high-performance Lustre file system is mounted on the compute nodes. All
-parallel calculations must be run from directories on the `/work` file
-system and all files required by the calculation (apart from the
-executable) must reside on `/work`. Each project will be assigned space
-on a particular Lustre partition with the assignments chosen to balance
-the load across the available infrastructure.
-
-The work directory for each user is located at:
-
-    /work/[project code]/[group code]/[username]
-
-where
-
-   - `[project code]` is the code for your project (e.g., x01);
-   - `[group code]` is the code for your project group, if your project has
-     groups, (e.g. x01-a) or the same as the project code, if not;
-   - `[username]` is your login name.
-
-Links from the `/home` file system to directories or files on `/work`
-are strongly discouraged. If links are used, executables and data files
-on `/work` to be used by applications on the compute nodes (i.e. those
-executed via the `aprun` command) should be referenced directly on
-`/work`.
+    Any data used in parallel jobs should be located on `/work` (Lustre).
 
 ## Common I/O patterns
 
