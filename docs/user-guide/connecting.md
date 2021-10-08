@@ -146,7 +146,7 @@ ARCHER2:
     ssh username@login-4c.archer2.ac.uk
     ```
 
-You will first be prompted for your machine account password. Once you have entered your password successfully, you will then be prompted for the passphrase associated with your SSH key pair. You need to enter both credentials correctly to be able to access ARCHER2.
+You will first be prompted for the passphrase associated with your SSH key pair. Once you have entered your password successfully, you will then be prompted for your machine account password. You need to enter both credentials correctly to be able to access ARCHER2.
 
 !!! warning
     If your SSH key pair is not stored in the default location (usually
