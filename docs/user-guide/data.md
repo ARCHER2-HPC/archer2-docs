@@ -1,7 +1,12 @@
 # Data management and transfer
 
 This section covers best practice and tools for data management on
-ARCHER2.
+ARCHER2 along with a description of the different storage available
+on the service.
+
+The [IO section](io.md) has information on achieving good performance
+for reading and writing data to the ARCHER2 storage along with information
+and advice on different IO patterns.
 
 !!! information
     If you have any questions on data management and transfer please do not
@@ -70,19 +75,21 @@ different node types:
 |---------|-------------|---------------|-------|
 | /home   | yes         | no            | Backed up |
 | /work   | yes         | yes           | Not backed up, high performance |
-| RDFaaS  | yes         | no            | Backed up, high performance. Only currently available for projects that moved from ARCHER to ARCHER2. Currently read-only. |
+| RDFaaS  | yes         | no            | Backed up, high performance. Only available for projects that moved from ARCHER to ARCHER2. |
 
 ### Home file systems
 
 There are four independent home file-systems. Every project has an
 allocation on one of the four. You do not need to know which one your
 project uses as your projects space can always be accessed via the path
-`/home/project-code`. Each home file-system is approximately 60TB in
+`/home/project-code`. Each home file-system is approximately 100 TB in
 size and is implemented using standard Network Attached Storage (NAS)
 technology. This means that these disks are not particularly high
 performance but are well suited to standard operations like compilation
 and file editing. These file systems are visible from the ARCHER2 login
 nodes.
+
+#### Accessing backups of home file systems
 
 The home file systems **are fully backed up**. Full backups are taken
 weekly (for each of the past two weeks), daily (for each of the past
@@ -101,48 +108,122 @@ scripts and compiled binaries. Small amounts of important data can also
 be copied here for safe keeping though the file systems are not fast
 enough to manipulate large datasets effectively.
 
-!!! warning
-    Files with filenames that contain non-ascii characters and/or
-    non-printable characters cannot be backed up using our automated process
-    and so will be omitted from all backups.
+#### Quotas on home file systems
+
+All projects are assigned a quota on the home file systems. The project
+PI or manager can split this quota up between users or groups of users
+if they wish.
+
+You can view any home file system quotas that apply to your account by
+logging into SAFE and navigating to the page for your ARCHER2 login 
+account.
+
+1. [Log into SAFE](https://safe.epcc.ed.ac.uk)
+2. Use the "Login accounts" menu and select your ARCHER2 login account
+3. The "Login account details" table lists any user or group quotas that
+   are linked with your account. (If there is no quota shown for a row
+   then you have an unlimited quota for that item, but you may still may
+   be limited by another quota.)
+
+!!! tip
+   Quota and usage data on SAFE is updated twice daily so may not be
+   exactly up to date with the situation on the systems themselves.
 
 ### Work file systems
 
-There is one work file-system:
+There are currently three work file systems on the full ARCHER2 service.
+Each of these file systems is 3.4 PB and a portion of one of these file
+systems is available to each project.
 
-   - /work 3.4 PB
+There is one 3.4 PB work file system on the ARCHER2 4-cabinet system. Every
+project on the 4-cabinet system has quota on this file system.
 
-Every project has an allocation on the file system.
-
-This is a high-performance, Lustre parallel file system. It is
+All of these are high-performance, Lustre parallel file systems. They are
 designed to support data in large files. The performance for data stored
 in large numbers of small files is probably not going to be as good.
 
-This is the only file system that is available on the compute nodes
+These are the only file systems that are available on the compute nodes
 so all data read or written by jobs running on the compute nodes has to
 be hosted here.
 
 !!! warning
-    There are no backups of any data on the work file system. You should
+    There are no backups of any data on the work file systems. You should
     not rely on these file systems for long term storage.
 
-Ideally, this file system should only contain data that is:
+Ideally, these file systems should only contain data that is:
 
    - actively in use;
    - recently generated and in the process of being saved elsewhere; or
    - being made ready for up-coming work.
 
 In practice it may be convenient to keep copies of datasets on the work
-file system that you know will be needed at a later date. However, make
+file systems that you know will be needed at a later date. However, make
 sure that important data is always backed up elsewhere and that your
 work would not be significantly impacted if the data on the work file
-system was lost.
+systems was lost.
 
 Large data sets can be moved to the RDF storage or transferred off the
 ARCHER2 service entirely.
 
-If you have data on the work file system that you are not going to need
+If you have data on the work file systems that you are not going to need
 in the future please delete it.
+
+#### Quotas on the work file systems
+
+As for the homefile systems, all projects are assigned a quota on the
+work file systems. The project PI or manager can split this quota up
+between users or groups of users if they wish.
+
+You can view any work file system quotas that apply to your account by
+logging into SAFE and navigating to the page for your ARCHER2 login 
+account.
+
+1. [Log into SAFE](https://safe.epcc.ed.ac.uk)
+2. Use the "Login accounts" menu and select your ARCHER2 login account
+3. The "Login account details" table lists any user or group quotas that
+   are linked with your account. (If there is no quota shown for a row
+   then you have an unlimited quota for that item, but you may still may
+   be limited by another quota.)
+
+!!! tip
+   Quota and usage data on SAFE is updated twice daily so may not be
+   exactly up to date with the situation on the systems themselves.
+
+You can also examine up to date quotas and usage on the ARCHER2 systems
+themselves using the `lfs quota` command. To do this:
+
+- Change directory to the work directory where you want to check the
+   quota. For example, if I wanted to check the quota for user `auser` in
+   project `t01` then I would:
+
+   ```
+   cd /work/t01/t01/auser
+   ```
+
+- To check your user quota, you would use the command:
+
+   ```
+   lfs quota -hu auser .
+   Disk quotas for usr auser (uid 5496):
+     Filesystem    used   quota   limit   grace   files   quota   limit   grace
+              .  1.366G      0k      0k       -    5486       0       0       -
+   uid 5496 is using default block quota setting
+   uid 5496 is using default file quota setting
+   ```
+
+   the `quota` and `limit` of `0k` here indicate that no user quota is set for this
+   user
+
+- To check your project quota, you would use the command:
+
+   ```
+   lfs quota -hp $(id -g) .
+   Disk quotas for prj 1009 (pid 1009):
+     Filesystem    used   quota   limit   grace   files   quota   limit   grace
+              .  2.905G      0k      0k       -   25300       0       0       -
+   pid 1009 is using default block quota setting
+   pid 1009 is using default file quota setting
+   ```
 
 
 ### RDFaaS file system
