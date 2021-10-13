@@ -65,9 +65,15 @@ after the change of compiler version.
 
 ### Module version history
 
-  - module `metis/5.1.0` installed January 2021
-  - module `parmetis/4.0.3` installed January 2021
-
+=== "Full system"
+    
+    - module `metis/5.1.0` installed October 2021 (PE21.04)
+    - module `parmetis/4.0.3` installed January 2021 (PE21.04)
+    
+=== "4-cabinet system"
+    
+    - module `metis/5.1.0` installed January 2021
+    - module `parmetis/4.0.3` installed January 2021
 
 ## Compile your own version
 
@@ -81,7 +87,7 @@ The latest Archer2 version of Metis can be installed
 ```
 $ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
 $ cd pe-scripts
-$ git checkout cse-develop
+$ git checkout modules-2021-10
 $ ./sh/tpsl/metis.sh --prefix=/path/to/install/location
 ```
 
