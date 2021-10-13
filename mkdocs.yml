@@ -93,6 +93,7 @@ nav:
     - "HDF5": software-libraries/hdf5.md
     - "NetCDF": software-libraries/netcdf.md
     - "ADIOS": software-libraries/adios.md
+    - "ARPACK": software-libraries/arpack.md
     - "Boost": software-libraries/boost.md
     - "GLM":   software-libraries/glm.md
     - "HYPRE": software-libraries/hypre.md

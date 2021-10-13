@@ -77,6 +77,11 @@ The following libraries will also made available by the ARCHER2 CSE team:
 
     ADIOS (Adaptable I/O System) provides library services for parallel I/O. 
 
+- **ARPACK-NG** [*...details for ARPACK-NG on ARCHER2...*](arpack.md)
+
+    ARPACK-NG (Arnodli Package) computes eigenvalues and eigenvectors
+    of large sparse matrics.
+
 - **Boost** [*...details for Boost on ARCHER2...*](boost.md)
 
     Boost is a portable C++ library providing reference implementations
