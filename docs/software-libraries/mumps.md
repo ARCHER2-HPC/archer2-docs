@@ -27,8 +27,14 @@ installation for the current programming environment.
 
 ### Version history
 
-- Module `mumps/5.2.1` installed January 2021
-
+=== "Full system"
+    
+    - Module `mumps/5.3.5` installed October 2021 (PE 21.04)
+    
+=== "4-cabinet system"
+    
+    - Module `mumps/5.2.1` installed January 2021
+    
     Known issues:
     The OpenMP version in `PrgEnv-aocc` is not available at the moment.
 
@@ -40,7 +46,7 @@ a script available from the Archer githug repository.
 ```
 $ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
 $ cd pe-scripts
-$ git checkout cse-develop
+$ git checkout modules-2021-10
 $ ./sh/tpsl/metis.sh --prefix=/path/to/install/location
 $ ./sh/tpsl/parmetis.sh --prefix=/path/to/install/location
 $ ./sh/tpsl/scotch.sh --prefix=/path/to/install/location
