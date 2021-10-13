@@ -119,9 +119,9 @@ Policy](https://www.archer2.ac.uk/about/policies/passwords_usernames.html).
 
 ## Login to ARCHER2
 
-To log into ARCHER2 you should use the `login.archer2.ac.uk` address:
+To log into ARCHER2 you should use the `login-4c.archer2.ac.uk` address:
 
-    ssh [userID]@login.archer2.ac.uk
+    ssh [userID]@login-4c.archer2.ac.uk
 
 You will first be prompted for your machine account password. Once you
 have entered your password successfully, you will then be prompted for
@@ -134,7 +134,7 @@ credentials correctly to be able to access ARCHER2.
     to the private part of the key wih the `-i` option to `ssh`. For
     example, if your key is in a file called `keys/id_rsa_archer2` you would
     use the command `ssh -i keys/id_rsa_archer2
-    username@login.archer2.ac.uk` to log in.
+    username@login-4c.archer2.ac.uk` to log in.
 
 !!! tip
     When you first log into ARCHER2, you will be prompted to change your
