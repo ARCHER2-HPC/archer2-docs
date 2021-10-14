@@ -147,7 +147,7 @@ ARCHER2:
     ```
 
 === "Full system"
-    You will first be prompted for the passphrase associated with your SSH key pair. Once you have entered your password successfully, you will then be prompted for your machine account password. You need to enter both credentials correctly to be able to access ARCHER2.
+    You will first be prompted for the passphrase associated with your SSH key pair. Once you have entered this passphrase successfully, you will then be prompted for your machine account password. You need to enter both credentials correctly to be able to access ARCHER2.
 === "4-cabinet system"
     You will first be prompted for your machine account password. Once you have entered your password successfully, you will then be prompted for the passphrase associated with your SSH key pair. You need to enter both credentials correctly to be able to access the ARCHER2 4-cabinet system.
 
