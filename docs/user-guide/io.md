@@ -201,7 +201,15 @@ data, which in turn can improve collective file I/O. An alternative is
 to use the non-default UCX implementation of the MPI library as an
 alternative to the default OFI version.
 
-To switch library version see *insert link to appropriate section elsewhere*
+To switch library version see [the Application Development Environment section of the User Guide](../user-guide/dev-environment.md).
+
+!!! note
+    This will affect all your MPI calls, not just those related to
+    I/O, so you should check the overall performance of your program
+    before and after the switch. It is possible that other functions
+    may run slower even if the I/O performance improves.
+
+
 
 ## I/O Profiling
 
