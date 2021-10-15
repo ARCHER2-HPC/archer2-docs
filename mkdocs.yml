@@ -65,7 +65,6 @@ nav:
     - "Debugging": user-guide/debug.md
     - "Profiling": user-guide/profile.md
     - "Performance tuning": user-guide/tuning.md
-    - "Hardware": user-guide/hardware.md
   - "Research Software":
     - "Overview": research-software/index.md
     - "CASTEP": research-software/castep/castep.md
