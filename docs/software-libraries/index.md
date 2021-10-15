@@ -109,7 +109,7 @@ The following libraries will also made available by the ARCHER2 CSE team:
     commonly used e.g., to compute decompositions for finite element problems.
     [Parmetis][501] is the distributed memory counterpart.
 
-[500]: http://glaros.dtc.umn.edu/gkhome/metis/metis
+[500]: http://glaros.dtc.umn.edu/gkhome/metis/metis/overview
 [501]: http://glaros.dtc.umn.edu/gkhome/metis/parmetis/overview
 
 - **Mumps** [*...details for MUMPS on ARCHER2...*](mumps.md)

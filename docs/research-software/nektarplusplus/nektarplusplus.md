@@ -1,4 +1,4 @@
-# NEKTAR++
+# Nektar++
 
 Nektar++ is a tensor product based finite element package designed to
 allow one to construct efficient classical low polynomial order
@@ -14,9 +14,9 @@ functionality.
 
 ## Useful Links
 
-  - Nektar++ home page <https://www.nektar.info>
-  - Nektar++ tutorials <https://www.nektar.info/community/tutorials/>
-  - Nektar gitlab repository <https://gitlab.nektar.info/nektar>
+  - [Nektar++ home page](https://www.nektar.info)
+  - [Nektar++ tutorials](https://www.nektar.info/community/tutorials/)
+  - [Nektar GitLab repository](https://gitlab.nektar.info/nektar)
 
 ## Using Nektar++ on ARCHER2
 
@@ -30,10 +30,9 @@ on ARCHER2.
 
 Specific issues with Nektar++ itself might be submitted to the issue
 tracker at the Nektar++ gitlab repository (see link above). More general
-questions might also be directed to the Nektar-users mailing list
-<https://mailman.ic.ac.uk/mailman/listinfo/nektar-users>. Issues
-specific to the use or behaviour of Netkar++ on ARCHER2 should be sent
-to the Service Desk.
+questions might also be directed to the [Nektar-users mailing list](https://mailman.ic.ac.uk/mailman/listinfo/nektar-users). Issues
+specific to the use or behaviour of Nektar++ on ARCHER2 should be sent to the
+[Service Desk](https://www.archer2.ac.uk/support-access/servicedesk.html).
 
 ## Running parallel Nektar++ jobs
 

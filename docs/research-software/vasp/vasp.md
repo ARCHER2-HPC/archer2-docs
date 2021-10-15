@@ -29,9 +29,9 @@ self-consistency cycle.
 
 ## Useful Links
 
-   - [VASP Manual](http://cms.mpi.univie.ac.at/vasp/vasp/vasp.html)
+   - [VASP Manual](https://www.vasp.at/wiki/index.php/The_VASP_Manual)
    - [VASP wiki](https://www.vasp.at/wiki/index.php/The_VASP_Manual)
-   - [VASP Licensing](http://www.vasp.at/index.php/faqs/71-how-can-i-purchase-a-vasp-license)
+   - [VASP FAQs](https://www.vasp.at/faqs/)
 
 ## Using VASP on ARCHER2
 

@@ -42,12 +42,16 @@ all your research software installed for local development will also run
 on ARCHER2.
 
 Pre-built images (such as those on [DockerHub](http://hub.docker.com) or
-[SingularityHub](https://singularity-hub.org/)) can simply be downloaded
+[SingularityHub archive](https://datasets.datalad.org/?dir=/shub/) can simply be downloaded
 and used on ARCHER2 (or anywhere else Singularity is installed).
 
 Creating and modifying images requires root permission and so must be
 done on a system where you have such access (in practice, this is
 usually within a virtual machine on your laptop/workstation).
+
+!!! Note SingularityHub now read-only
+    SingularityHub was a publicly available cloud service for Singularity Containers active from 2016 to 2021. It built container recipes from Github repositories on Google Cloud, and containers were available via the command line Singularity or sregistry software. These containers are still available now in the [SingularityHub Archive](https://datasets.datalad.org/?dir=/shub/)
+
 
 ## Using Singularity Images on ARCHER2
 

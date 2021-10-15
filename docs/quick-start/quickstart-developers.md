@@ -290,7 +290,7 @@ The available `perftools-lite` modules are:
 
 Links to other documentation you may find useful:
 
-  - [ARCHER2 User and Best Practice Guide](../user-guide/) -
+  - [ARCHER2 User and Best Practice Guide](../../user-guide/) -
     Covers all aspects of use of the ARCHER2 service. This includes
     fundamentals (required by all users to use the system effectively),
     best practice for getting the most out of ARCHER2, and more advanced
