@@ -175,7 +175,7 @@ For example, to set a stripe size of 4 MiB for the existing directory
 As mentioned above, it is very important to use collective calls when
 doing parallel I/O to a single shared file.
 
-However, with the default settings parallel I/O on multiple nodes can
+However, with the default settings, parallel I/O on multiple nodes can
 currently give poor performance. We recommend always setting the
 following environment variable in your SLURM batch script:
 

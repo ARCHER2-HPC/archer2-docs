@@ -115,5 +115,6 @@ values of (`tasks-per-node`, `cpus-per-task`) are likely to be either
 The latest instructions for building NAMD on ARCHER2 may be found in
 the GitHub repository of build instructions:
 
-   - [Build instructions for CASTEP on
+   - [Build instructions for NAMD on
      GitHub](https://github.com/hpc-uk/build-instructions/tree/main/apps/NAMD)
+
