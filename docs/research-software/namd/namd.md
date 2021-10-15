@@ -12,7 +12,7 @@ is also file-compatible with AMBER, CHARMM, and X-PLOR.
 ## Useful Links
 
   - [NAMD User Guide](http://www.ks.uiuc.edu/Research/namd/2.13/ug/)
-  - [NAMD Tutorials](http://www.ks.uiuc.edu/Training/Tutorials/index-all.html#namd)
+  - [NAMD Tutorials](http://www.ks.uiuc.edu/Training/Tutorials/namd-index.html)
 
 ## Using NAMD on ARCHER2
 

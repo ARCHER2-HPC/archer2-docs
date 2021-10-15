@@ -17,10 +17,10 @@ most common are distributed by openfoam.org and openfoam.com.
 
 ## Useful Links
 
-  - OpenFOAM website (.org) <https://openfoam.org>
-  - OpenFOAM documentation <https://cfd.direct/openfoam/user-guide/>
-  - OpenFOAM website (.com) <https://www.openfoam.com>
-  - OpenFOAM documentation <https://www.openfoam.com/documentation/>
+  - [OpenFOAM website (.org)](https://openfoam.org)
+  - [OpenFOAM documentation](https://cfd.direct/openfoam/user-guide/)
+  - [OpenFOAM website (.com)](https://www.openfoam.com)
+  - [OpenFOAM documentation](https://www.openfoam.com/documentation/)
 
 ## Using OpenFOAM on ARCHER2
 
@@ -48,7 +48,7 @@ there are typically two releases a year (one in June, and one in
 December).
 
 To use OpenFOAM on ARCHER2 you should first load the OpenFOAM module,
-e.g.,:
+e.g.
 
 === "Full system"
     ```
@@ -62,7 +62,7 @@ e.g.,:
     ```
 The module defines only the base installation directory via the
 environment variable `FOAM_INSTALL_DIR`. After loading the module you
-need to source the `etc/bashrc` file provided by OpenFOAM, e.g.,:
+need to source the `etc/bashrc` file provided by OpenFOAM, e.g.
 
     user@uan01:> source ${FOAM_INSTALL_DIR}/etc/bashrc
 
@@ -146,8 +146,9 @@ MPI tasks). Each MPI task is allocated one core (`--cpus-per-task=1`).
 ## Compiling OpenFOAM
 
 If you want to compile your own version of OpenFOAM, instructions are
-available for ARCHER2 at
-<https://github.com/hpc-uk/build-instructions/tree/main/apps/OpenFOAM>
+available for ARCHER2 at:
+
+ - [Build instructions for OpenFOAM on GitHub](https://github.com/hpc-uk/build-instructions/tree/main/apps/OpenFOAM)
 
 ## Module version history
 

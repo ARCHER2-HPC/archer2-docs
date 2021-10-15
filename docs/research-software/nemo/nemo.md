@@ -7,11 +7,9 @@ consortium.
 
 ## Useful Links
 
-  - The NEMO home page <https://www.nemo-ocean.eu>
-  - NEMO documentation
-    <https://forge.ipsl.jussieu.fr/nemo/chrome/site/doc/NEMO/guide/html/NEMO_guide.html>
-  - NEMO users' area <http://forge.ipsl.jussieu.fr/nemo/wiki/Users> which includes information on
-    obtaining and downloading the latest source code releases. 
+  - [NEMO home page](https://www.nemo-ocean.eu)
+  - [NEMO documentation](https://forge.ipsl.jussieu.fr/nemo/chrome/site/doc/NEMO/guide/html/guide.html)
+  - [NEMO users' area](http://forge.ipsl.jussieu.fr/nemo/wiki/Users), which includes information on obtaining and downloading the latest source code releases. 
 
 NEMO is released under a CeCILL license and if freely available to all
 users on ARCHER2.

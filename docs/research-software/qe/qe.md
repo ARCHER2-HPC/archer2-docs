@@ -8,8 +8,8 @@ and pseudopotentials.
 ## Useful Links
 
   - [Quantum Espresso home page](http://www.quantum-espresso.org/)
-  - [Quantum Espresso User Guides](http://www.quantum-espresso.org/users-manual/)
-  - [Quantum Espresso Tutorials](http://www.quantum-espresso.org/tutorials/)
+  - [Quantum Espresso User Guides](http://www.quantum-espresso.org/resources/users-manual)
+  - [Quantum Espresso Tutorials](http://www.quantum-espresso.org/resources/tutorials)
 
 ## Using QE on ARCHER2
 

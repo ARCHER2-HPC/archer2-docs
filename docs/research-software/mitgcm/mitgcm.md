@@ -11,14 +11,14 @@ flow of both the atmosphere and ocean.
 
 ## Useful Links
 
-  - MITgcm home page <http://mitgcm.org>
-  - MITgcm documentation <https://mitgcm.readthedocs.io/en/latest/>
+  - [MITgcm home page](http://mitgcm.org)
+  - [MITgcm documentation](https://mitgcm.readthedocs.io/en/latest/)
 
 ## Building MITgcm on ARCHER2
 
 MITgcm is not available via a module on ARCHER2 as users will build
 their own executables specific to the problem they are working on.
-However, we do provide an optfile which will allow genmake2 to create
+However, we do provide an optfile which will allow `genmake2` to create
 Makefiles which will work on ARCHER2.
 
 You can obtain the MITgcm source code from the developers by cloning
@@ -44,21 +44,21 @@ You should also set the following environment variables.
 `MITGCM_ROOTDIR` is used to locate the source code and should point to
 the top MITgcm directory. Optionally, adding the MITgcm tools directory
 to your `PATH` environment variable makes it easier to use tools such as
-genmake2, and the `MITGCM_OPT` environment variable makes it easier to
-refer to pass the optfile to genmake2.
+`genmake2`, and the `MITGCM_OPT` environment variable makes it easier to
+refer to pass the optfile to `genmake2`.
 
     export MITGCM_ROOTDIR=/path/to/MITgcm
     export PATH=$MITGCM_ROOTDIR/tools:$PATH
     export MITGCM_OPT=$MITGCM_ROOTDIR/tools/build_options/dev_linux_amd64_gnu_archer2
 
-When using genmake2 to create the Makefile, you will need to specify the
+When using `genmake2` to create the Makefile, you will need to specify the
 optfile to use. Other commonly used options might be to use extra source
 code with the `-mods` option, and to enable MPI with `-mpi`. You might
 then run a command that resembles the following:
 
     genmake2 -mods /path/to/additional/source -mpi -optfile $MITGCM_OPT
 
-You can read about the full set of options available to genmake2 by
+You can read about the full set of options available to `genmake2` by
 running
 
     genmake2 -help

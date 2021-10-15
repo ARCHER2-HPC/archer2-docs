@@ -6,9 +6,9 @@ theory.
 
 ## Useful Links
 
-  - ONETEP home page <https://www.onetep.org>
-  - ONETEP tutorials <https://www.onetep.org/Main/Tutorials>
-  - ONETEP documentation <https://www.onetep.org/Main/Documentation>
+  - [ONETEP home page](https://www.onetep.org)
+  - [ONETEP tutorials](https://www.onetep.org/Main/Tutorials)
+  - [ONETEP documentation](https://www.onetep.org/Main/Documentation)
 
 ## Using ONETEP on ARCHER2
 
@@ -62,14 +62,11 @@ srun --distribution=block:block --hint=nomultithread onetep.archer2 test_calc > 
 
 ## Hints and Tips
 
-See the information in the ONETEP documentation, in particular the
-information on stack sizes:
-
-  - <https://www.onetep.org/Main/RunningONETEP>
+See the information in the [ONETEP documentation](https://www.onetep.org/Main/RunningONETEP), in particular the information on stack sizes.
 
 ## Compiling ONETEP
 
-The latest instructions for building CASTEP on ARCHER2 may be found in
+The latest instructions for building ONETEP on ARCHER2 may be found in
 the GitHub repository of build instructions:
 
    - [Build instructions for ONETEP on
