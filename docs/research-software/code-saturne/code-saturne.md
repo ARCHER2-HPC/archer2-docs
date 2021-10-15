@@ -13,9 +13,9 @@ rotor/stator interaction for hydraulic machines.
 
 ## Useful Links
 
-  - Code\_Saturne home page <https://www.code-saturne.org/cms/>
+  - Code\_Saturne home page <https://www.code-saturne.org/cms/web/>
   - Code\_Saturne user guides
-    <https://www.code-saturne.org/cms/documentation/guides>
+    <https://www.code-saturne.org/cms/web/Documentation>
   - Code\_Saturne users' forum <https://www.code-saturne.org/forum/>
 
 ## Using Code\_Saturne on ARCHER2
