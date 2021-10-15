@@ -57,7 +57,7 @@ These are described in more detail below.
 
 !!! tip
     Lmod allows you to use the `ml` shortcut command. Without any arguments, `ml`
-    behaves like `module list`; when a module name is speciied to `ml`,
+    behaves like `module list`; when a module name is specified to `ml`,
     `ml` behaves like `module load`.
 
 !!! note
@@ -271,7 +271,7 @@ If you cannot find a module that you expect to be on the system using `module av
 then you can use `module spider` to find out which dependencies you need to load
 to make the module available.
 
-For example, the module `cray-netcdf-hdf5parallel` is onstalled on ARCHER2 but it
+For example, the module `cray-netcdf-hdf5parallel` is installed on ARCHER2 but it
 will not be found by `module avail`:
 
 ```
@@ -486,7 +486,7 @@ you have loaded.
 ## Shell environment overview
 
 When you log in to ARCHER2, you are using the *bash* shell by default.
-As any other software, the *bash* shell has loaded a set of environment
+As with any software, the *bash* shell has loaded a set of environment
 variables that can be listed by executing `printenv` or `export`.
 
 The environment variables listed before are useful to define the
