@@ -62,4 +62,4 @@ for further options and details.
 
 The MUMPS [home page](http://mumps.enseeiht.fr)
 
-MUMPS [user manual](http://mumps.enseeiht.fr/doc/userguide_5.3.5.pdf) (pdf)
+MUMPS [user manual](http://mumps.enseeiht.fr/doc/userguide_5.4.1.pdf) (pdf)
