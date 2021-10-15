@@ -501,6 +501,31 @@ compiling using the standard wrapper scripts: `cc`, `CC` and `ftn`.
 You do not need to do anything to make HPE Cray MPICH available when you
 log into ArCHER2, it is available by default to all users.
 
+#### Switching to alternative UCX MPI implementation
+
+HPE Cray MPICH can use two different low-level protocols to transfer
+data across the network. The default is the Open Fabrics Interface
+(OFI), but you can switch to the UCX protocol from Mellanox.
+
+Which performs better will be application-dependent, but our
+experience is that UCX is often faster for programs that send a lot of
+data collectively between many processes, e.g. all-to-all
+communications patterns such as occur in parallel FFTs.
+
+
+!!! note
+       You do not need to recompile your program - you simply load
+       different modules in your Slurm script.
+
+```
+module swap craype-network-ofi craype-network-ucx
+module swap cray-mpich cray-mpich-ucx
+```
+
+The performance benefits will also vary depending on the number of
+processes, so it is important to benchmark your application at the
+scale used in full production runs.
+
 #### MPI reference material
 
 MPI standard documents: <https://www.mpi-forum.org/docs/>
