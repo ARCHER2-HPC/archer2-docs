@@ -545,7 +545,7 @@ first choice for access to software libraries if available.
 
 !!! tip
     More information on the different software libraries on ARCHER2 can
-    be found in the [Software libraries](../software-libraries/)
+    be found in the [Software libraries](../../software-libraries/)
     section of the user guide.
 
 ## Switching to a different HPE Cray Programming Environment release
