@@ -518,9 +518,7 @@ communications patterns such as occur in parallel FFTs.
        different modules in your Slurm script.
 
 ```
-module swap craype-network-ofi craype-network-ucx
-module swap cray-mpich cray-mpich-ucx
-```
+module swap craype-network-ofi craype-network-ucx module swap cray-mpich cray-mpich-ucx ```
 
 The performance benefits will also vary depending on the number of
 processes, so it is important to benchmark your application at the
