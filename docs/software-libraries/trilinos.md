@@ -12,7 +12,7 @@ released under a BSD license (and some under LGPL).
 Applications may be built against the module version of Trilinos by
 using the using the compiler wrappers `CC` or `ftn` in the normal
 way. The appropriate include files and library paths will be
-inserted automatically.
+inserted automatically. Trilinos is build with OpenPM enabled.
 
 The `trilinos` module defines the environment variable `TRILINOS_DIR`
 as the root of the installation for the current programming environment.
@@ -24,20 +24,28 @@ loaded.
 
 ### Version history
 
-- `module trilinos/12.18.1` installed January 2021
+=== "Full system"
+    
+    - Module `trilinos/12.18.1` installed October 2021 (PE 21.04)
+    
+    If using AMD compilers, module version `aocc/3.0.0` is required.
+    
+=== "4-cabinet system"
+    
+    - `module trilinos/12.18.1` installed January 2021
 
-    Packages enabled are: `Amesos, Amesos2, Anasazi, AztecOO Belos Epetra
-    EpretExt FEI Galeri GlobiPack Ifpack Ifpack2 Intrepid
-    Isorropia Kokkos Komplex Mesquite ML Moertel MueLu NOX
-    OptiPack Pamgen Phalanx Piro Pliris ROL RTOp Rythmos Sacado Shards
-    ShyLU STK STKSearch STKTopology STKUtil Stratimikos Teko Teuchos Thyra
-    Tpetra TrilinosCouplings Triutils Xpetra Zoltan Zoltan2`
+    !!! warning "Known issue"
+        Trilinos is not available in `PrgEnv-aocc` at the moment.
+    
+    !!! warning "Known issue"
+        The `ForTrilinos` package is not available in this version.
 
-!!! warning "Known issue"
-    Trilinos is not available in `PrgEnv-aocc` at the moment.
-
-!!! warning "Known issue"
-    The `ForTrilinos` package is not available in this version.
+Packages enabled are: `Amesos, Amesos2, Anasazi, AztecOO Belos Epetra
+EpretExt FEI Galeri GlobiPack Ifpack Ifpack2 Intrepid
+Isorropia Kokkos Komplex Mesquite ML Moertel MueLu NOX
+OptiPack Pamgen Phalanx Piro Pliris ROL RTOp Rythmos Sacado Shards
+ShyLU STK STKSearch STKTopology STKUtil Stratimikos Teko Teuchos Thyra
+Tpetra TrilinosCouplings Triutils Xpetra Zoltan Zoltan2`
 
 ## Compiling Trilinos
 
@@ -47,7 +55,7 @@ will build a static-only version of the libraries.
 ```
 $ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
 $ cd pe-scripts
-$ git checkout cse-develop
+$ git checkout modules-2021-10
 $ ...
 $ ./sh/trilinos.sh --prefix=/path/to/install/location
 ```

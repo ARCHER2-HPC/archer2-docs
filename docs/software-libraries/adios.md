@@ -34,7 +34,13 @@ when the `adios` module is loaded.
 
 ### Version history
 
-- Module `adios/1.13.1` installed January 2021
+=== "Full system"
+    
+    - Module `adios/1.13.1` installed October 2021 (PE 21.04)
+    
+=== "4-cabinet system"
+    
+    - Module `adios/1.13.1` installed January 2021
 
 
 ## Compile your own version
@@ -44,7 +50,7 @@ build ADIOS as for the currently supported version, e.g.,:
 ```
 $ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
 $ cd pe-scripts
-$ git checkout cse-develop
+$ git checkout modules-2021-10
 $ module load cray-hdf5-parallel
 $ ./sh/adios.sh --prefix=/path/to/install/location
 ```

@@ -44,15 +44,16 @@ modules are:
      Module `cray-libsci` is loaded by default in all programming
      environments.
 
-- **cray-netcdf** [*...details for NetCDF...*](netcdf.md)
+- **cray-netcdf**
 
     Serial version of Network Common Data Form (NetCDF), a widely used
-    and portable data format.
+    and portable data format. Load module `cray-hdf5` first.
     See the [NETCDF website](https://www.unidata.ucar.edu/software/netcdf/)
 
 - **cray-netcdf-hdf5parallel**
 
-    A serial NetCDF built against parallel HDF5.
+    A serial NetCDF built against parallel HDF5. Load module
+    `cray-hdf5-parallel` first.
  
 - **cray-parallel-netcdf**
 
