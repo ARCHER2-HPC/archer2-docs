@@ -78,10 +78,12 @@ which would have an adverse impact on the operation of the login nodes if
 they were run interactively.
 
 Unlike compute nodes, the data analysis nodes are able to access the `/home`, 
-`/work`, and `/rdfaas` directories. They can also be used to transfer data 
-from a remote system to ARCHER2 and vice versa (using e.g. `scp` or `rsync`).
-This can be useful when transferring large amounts of data that might take 
-hours to complete.
+`/work`, and the RDFaaS `/general` and `/epsrc`  directories. They can also 
+be used to transfer data from a remote system to ARCHER2 and vice versa 
+(using e.g. `scp` or `rsync`). This can be useful when transferring large 
+amounts of data that might take hours to complete.
+
+### Requesting resources on the data analysis nodes using Slurm
 
 The ARCHER2 data analysis nodes can be reached by using the `serial` 
 partition and the `serial` queue. Unlike other nodes on ARCHER2, you may 
@@ -94,7 +96,9 @@ want for your job (up to 128 GB). You can have multiple jobs running on the
 data analysis nodes at the same time, but the total number of cores used by 
 jobs currently running can not exceed 32 cores, and the total memory used 
 by jobs currently running cannot exceed 128 GB -- any jobs above this limit 
-will remain pending until your previous jobs are finished.
+will remain pending until your previous jobs are finished. By default, you 
+will get 2 GB of memory per core when defining cores only, and 1 core when 
+defining the memory only.
 
 !!! note:
     When running on the data analysis nodes, you must always specify either 
@@ -103,7 +107,7 @@ will remain pending until your previous jobs are finished.
     flag and the memory with the `--mem` flag. If you are only wanting to 
     specify one of the two, please remember to delete the other one.
 
-#### Example: Running an MPI batch script on the data analysis nodes
+#### Example: Running a serial batch script on the data analysis nodes
 
 A Slurm batch script for the data analysis nodes looks very similar to 
 one for the compute nodes. The main differences are that you need to use 
@@ -112,9 +116,10 @@ one for the compute nodes. The main differences are that you need to use
     ```slurm
     #!/bin/bash
 
-    # Slurm job options (job-name, compute nodes, job time)
+    # Slurm job options (job-name, job time)
     #SBATCH --job-name=Example_MPI_Job
     #SBATCH --time=0:20:0
+    #SBATCH --ntasks=1
 
     # Replace [budget code] below with your budget code (e.g. t01)
     #SBATCH --account=[budget code]             
@@ -122,10 +127,8 @@ one for the compute nodes. The main differences are that you need to use
     #SBATCH --qos=serial
     #SBATCH --hint=nomultithread
     
-    # Define number of cores and memory for this jobs. You 
-    # only need to define one of these two values, but should 
-    # delete any you do not define.
-    #SBATCH --ntasks=[number of cores]
+    # Define memory required for this jobs. By default, you will 
+    # get 2 GB, but you can ask for up to 128 GB.
     #SBATCH --mem=[memory in MB]
 
     # Set the number of threads to 1
@@ -133,7 +136,7 @@ one for the compute nodes. The main differences are that you need to use
     #   using threading.
     export OMP_NUM_THREADS=1
 
-    srun --distribution=block:block ./my_mpi_executable.x
+    srun ./my_mpi_executable.x
     ```
 
 ### Interactive session on the data analysis nodes
@@ -170,7 +173,7 @@ It may take some time for your interactive job to start. Once it runs
 you will enter a standard interactive terminal session (a new shell).
 Note that this shell is still on the front end (the prompt has not
 change). Whilst the interactive session lasts you will be able to run
-parallel jobs on the compute nodes by issuing the `srun
+parallel jobs on the data analysis nodes by issuing the `srun
 --distribution=block:block --hint=nomultithread` command directly at 
 your command prompt using the same syntax as you would inside a job
 script. The maximum number of cores you can use is limited by resources
