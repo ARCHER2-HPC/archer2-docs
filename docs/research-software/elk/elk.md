@@ -37,8 +37,6 @@ The following script will run an ELK job on 4 nodes (512 cores).
 #SBATCH --partition=standard
 #SBATCH --qos=standard
 
-# Setup the batch environment
-module load epcc-job-env
 
 module load elk
 
@@ -68,14 +66,10 @@ threads and 16 MPI tasks per node.
 #SBATCH --qos=standard
 
 export OMP_NUM_THREADS=8
-# Load the elk module
-# Launch the executable 
-# Input filename elk.in
 
-module -s restore /etc/cray-pe.d/PrgEnv-gnu
 module load elk
 
-srun elk 
+srun --distribution=block:block --hint=nomultithread elk 
 ```
 
 ## Compiling ELK
