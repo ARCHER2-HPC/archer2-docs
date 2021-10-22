@@ -86,9 +86,6 @@ each for up to one hour.
     #SBATCH --partition=standard
     #SBATCH --qos=standard
     
-    # Setup the job environment (this module needs to be loaded before any other modules)
-    module load epcc-job-env
-    
     # Set the number of threads to 1
     #   This prevents any threaded system libraries from automatically
     #   using threading.
@@ -239,9 +236,6 @@ To run on ARCHER2, submit a batch script to the Slurm scheduler. Here is an exam
     #SBATCH --account=[budget code] 
     #SBATCH --partition=standard
     #SBATCH --qos=standard
-    
-    # Setup the job environment (this module needs to be loaded before any other modules)
-    module load epcc-job-env
     
     # Set the number of threads to 1
     #   This prevents any threaded system libraries from automatically
