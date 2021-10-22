@@ -1468,10 +1468,17 @@ However, there are situtions where two or more distinct executables are
 coupled and need to be run at the same time. This is most easily handled
 via the Slurm heterogeneous job mechanism.
 
-The essential feature of a heterogeneous job is to create a single batch
+Two common cases are discussed below: first, a client server model in
+which client and server each have a different `MPI_COMM_WORLD`, and second
+the case were two or more executables share `MPI_COMM_WORLD`.
+
+
+### Heterogeneous jobs for a client/server model: distinct `MPI_COMM_WORLDs`
+
+The essential feature of a heterogeneous job here is to create a single batch
 submission which specifies the resource requirements for the individual
 components. Schematically, we would use
-
+    
 ```
 #!/bin/bash
 
@@ -1501,12 +1508,6 @@ Such a job will appear in the queue system as, e.g.,
 ```
 and counts as (in this case) two separate jobs from the point of
 QoS limits.
-
-Two common cases are discussed below: first, a client server model in
-which client and server each have a different `MPI_COMM_WORLD`, and second
-the case were two or more executables share `MPI_COMM_WORLD`.
-
-### Heterogeneous jobs for a client/server model
 
 Consider a case where we have two executables which may both be parallel (in
 that they use MPI), both run at the same time, and communicate with each
@@ -1579,58 +1580,117 @@ Further examples of placement for heterogenenous jobs are given below.
 
 ### Heterogeneous jobs for a shared `MPI_COM_WORLD`
 
-If two or more heterogeneous components need to share a unique
-`MPI_COMM_WORLD`, a single `srun` invocation with the differrent
-components separated by a colon `:` should be used. For example,
-
-```
-#!/bin/bash
-
-#SBATCH --time=00:20:00
-#SBATCH --exclusive
-#SBATCH --export=none
-
-#SBATCH --partition=standard
-#SBATCH --qos=standard
-
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=8
-
-#SBATCH hetjob
-
-#SBATCH --partition=standard
-#SBATCH --qos=standard
-
-#SBATCH --nodes=2
-#SBATCH --ntasks-per-node=4
-
-srun --distribution=block:block --hint=nomultithread --het-group=0 ./xthi-a : \
-     --distribution=block:block --hint=nomultithread --het-group=1 ./xthi-b
-```
-
-The output should confirm we have a single `MPI_COMM_WORLD` with
-ranks 0-15.
-```
-Node    0, hostname nid001027, mpi   8, omp   1, executable xthi-a
-Node    1, hostname nid001028, mpi   4, omp   1, executable xthi-b
-Node    2, hostname nid001048, mpi   4, omp   1, executable xthi-b
-Node    0, rank    0, thread   0, (affinity =    0)
-Node    0, rank    1, thread   0, (affinity =    1)
-Node    0, rank    2, thread   0, (affinity =    2)
-Node    0, rank    3, thread   0, (affinity =    3)
-Node    0, rank    4, thread   0, (affinity =    4)
-Node    0, rank    5, thread   0, (affinity =    5)
-Node    0, rank    6, thread   0, (affinity =    6)
-Node    0, rank    7, thread   0, (affinity =    7)
-Node    1, rank    8, thread   0, (affinity =    0)
-Node    1, rank    9, thread   0, (affinity =    1)
-Node    1, rank   10, thread   0, (affinity =    2)
-Node    1, rank   11, thread   0, (affinity =    3)
-Node    2, rank   12, thread   0, (affinity =    0)
-Node    2, rank   13, thread   0, (affinity =    1)
-Node    2, rank   14, thread   0, (affinity =    2)
-Node    2, rank   15, thread   0, (affinity =    3)
-```
+=== "Full system"
+    !!! note
+        The directive `SBATCH hetjob` can no longer be used for jobs requiring
+        a shared `MPI_COMM_WORLD`
+    
+    If two or more heterogeneous components need to share a unique
+    `MPI_COMM_WORLD`, a single `srun` invocation with the differrent
+    components separated by a colon `:` should be used. Arguements
+    to the individual components of the `srun` control the placement of
+    the tasks and threads for each component. For example:
+    
+    ```
+    #!/bin/bash
+    
+    #SBATCH --time=00:20:00
+    #SBATCH --exclusive
+    #SBATCH --export=none
+    #SBATCH --account=[...]
+    
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+    
+    # We must specify correctly the total number of nodes required.
+    #SBATCH --nodes=3
+    
+    SHARED_ARGS="--distribution=block:block --hint=nomultithread"
+    
+    srun --het-group=0 --nodes=1 --tasks-per-node=8 ${SHARED_ARGS} ./xthi-a : \
+         --het-group=1 --nodes=2 --tasks-per-node=4 ${SHARED_ARGS} ./xthi-b
+    ```
+    
+    The output should confirm we have a single `MPI_COMM_WORLD` with
+    a total of three nodes, and ranks 0-15.
+    ```
+    Node summary for    3 nodes:
+    Node    0, hostname nid002668, mpi   8, omp   1, executable xthi-a
+    Node    1, hostname nid002669, mpi   4, omp   1, executable xthi-b
+    Node    2, hostname nid002670, mpi   4, omp   1, executable xthi-b
+    MPI summary: 16 ranks 
+    Node    0, rank    0, thread   0, (affinity =    0) 
+    Node    0, rank    1, thread   0, (affinity =    1) 
+    Node    0, rank    2, thread   0, (affinity =    2) 
+    Node    0, rank    3, thread   0, (affinity =    3) 
+    Node    0, rank    4, thread   0, (affinity =    4) 
+    Node    0, rank    5, thread   0, (affinity =    5) 
+    Node    0, rank    6, thread   0, (affinity =    6) 
+    Node    0, rank    7, thread   0, (affinity =    7) 
+    Node    1, rank    8, thread   0, (affinity =    0) 
+    Node    1, rank    9, thread   0, (affinity =    1) 
+    Node    1, rank   10, thread   0, (affinity =    2) 
+    Node    1, rank   11, thread   0, (affinity =    3) 
+    Node    2, rank   12, thread   0, (affinity =    0) 
+    Node    2, rank   13, thread   0, (affinity =    1) 
+    Node    2, rank   14, thread   0, (affinity =    2) 
+    Node    2, rank   15, thread   0, (affinity =    3) 
+    
+    ```
+=== "4-cabinet system"
+    
+    If two or more heterogeneous components need to share a unique
+    `MPI_COMM_WORLD`, a single `srun` invocation with the differrent
+    components separated by a colon `:` should be used. For example,
+    
+    ```
+    #!/bin/bash
+    
+    #SBATCH --time=00:20:00
+    #SBATCH --exclusive
+    #SBATCH --export=none
+    
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+    
+    #SBATCH --nodes=1
+    #SBATCH --ntasks-per-node=8
+    
+    #SBATCH hetjob
+    
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+    
+    #SBATCH --nodes=2
+    #SBATCH --ntasks-per-node=4
+    
+    srun --distribution=block:block --hint=nomultithread --het-group=0 ./xthi-a : \
+         --distribution=block:block --hint=nomultithread --het-group=1 ./xthi-b
+    ```
+    
+    The output should confirm we have a single `MPI_COMM_WORLD` with
+    ranks 0-15.
+    ```
+    Node    0, hostname nid001027, mpi   8, omp   1, executable xthi-a
+    Node    1, hostname nid001028, mpi   4, omp   1, executable xthi-b
+    Node    2, hostname nid001048, mpi   4, omp   1, executable xthi-b
+    Node    0, rank    0, thread   0, (affinity =    0)
+    Node    0, rank    1, thread   0, (affinity =    1)
+    Node    0, rank    2, thread   0, (affinity =    2)
+    Node    0, rank    3, thread   0, (affinity =    3)
+    Node    0, rank    4, thread   0, (affinity =    4)
+    Node    0, rank    5, thread   0, (affinity =    5)
+    Node    0, rank    6, thread   0, (affinity =    6)
+    Node    0, rank    7, thread   0, (affinity =    7)
+    Node    1, rank    8, thread   0, (affinity =    0)
+    Node    1, rank    9, thread   0, (affinity =    1)
+    Node    1, rank   10, thread   0, (affinity =    2)
+    Node    1, rank   11, thread   0, (affinity =    3)
+    Node    2, rank   12, thread   0, (affinity =    0)
+    Node    2, rank   13, thread   0, (affinity =    1)
+    Node    2, rank   14, thread   0, (affinity =    2)
+    Node    2, rank   15, thread   0, (affinity =    3)
+    ```
 
 ### Heterogeneous placement for mixed MPI/OpenMP work
 
@@ -1644,42 +1704,73 @@ The second component runs 8 MPI tasks with
 one task per NUMA region on one node; each task has one thread.
 An appropriate Slurm submission might be:
 
-```
-#!/bin/bash
+=== "Full system"
+       
+    ```
+    #!/bin/bash
+    
+    #SBATCH --time=00:20:00
+    #SBATCH --exclusive
+    #SBATCH --export=none
+    #SBATCH --account=[...]
 
-#SBATCH --time=00:20:00
-#SBATCH --exclusive
-#SBATCH --export=none
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+    
+    #SBATCH --nodes=2
 
-# First component 
+    SHARED_ARGS="--distribution=block:block --hint=nomultithread \
+                 --nodes=1 --tasks-per-node=8 --cpus-per-task=16"
 
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+    # Do not set OMP_NUM_THREADS in the calling environment
+    
+    unset OMP_NUM_THREADS
+    export OMP_PROC_BIND=spread
 
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=8
-#SBATCH --cpus-per-task=16
-#SBATCH --hint=nomultithread
+    srun --het-group=0 ${SHARED_ARGS} --export=all,OMP_NUM_THREADS=16 ./xthi-a : \
+         --het-group=1 ${SHARED_ARGS} --export=all,OMP_NUM_THREADS=1  ./xthi-b
+    
+    ```
+    
+=== "4-cabinet system"
+       
+    ```
+    #!/bin/bash
+    
+    #SBATCH --time=00:20:00
+    #SBATCH --exclusive
+    #SBATCH --export=none
+    
+    # First component 
+    
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+    
+    #SBATCH --nodes=1
+    #SBATCH --ntasks-per-node=8
+    #SBATCH --cpus-per-task=16
+    #SBATCH --hint=nomultithread
+    
+    # Second component
+    
+    #SBATCH hetjob
+    
+    #SBATCH --partition=standard
+    
+    #SBATCH --nodes=1
+    #SBATCH --ntasks-per-node=8
+    #SBATCH --cpus-per-task=16
+    
+    # Do not set OMP_NUM_THREADS in the calling environment
+    
+    unset OMP_NUM_THREADS
+    export OMP_PROC_BIND=spread
+    
+    srun --het-group=0 --export=all,OMP_NUM_THREADS=16 ./xthi-a : \
+         --het-group=1 --export=all,OMP_NUM_THREADS=1  ./xthi-b
+    
+    ```
 
-# Second component
-
-#SBATCH hetjob
-
-#SBATCH --partition=standard
-
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=8
-#SBATCH --cpus-per-task=16
-
-# Do not set OMP_NUM_THREADS in the calling environment
-
-unset OMP_NUM_THREADS
-export OMP_PROC_BIND=spread
-
-srun --het-group=0 --export=all,OMP_NUM_THREADS=16 ./xthi-a : \
-     --het-group=1 --export=all,OMP_NUM_THREADS=1  ./xthi-b
-
-```
 The important point here is that `OMP_NUM_THREADS` must not be set
 in the environment that calls `srun` in order that the different
 specifications for the separate groups via `--export` on the `srun`
@@ -1721,6 +1812,7 @@ Node    1, rank   13, thread   0, (affinity =   80)
 Node    1, rank   14, thread   0, (affinity =   96)
 Node    1, rank   15, thread   0, (affinity =  112)
 ```
+
 
 ## Low priority access
 

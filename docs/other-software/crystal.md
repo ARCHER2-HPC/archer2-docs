@@ -14,7 +14,7 @@ with effective core pseudo-potentials. The current release is CRYSTAL17.
 
 - [CRYSTAL home site](https://www.crystal.unito.it)
 - [CRYSTAL tutorials](http://tutorials.crystalsolutions.eu)
-- [CRYSTAL licensing](http://www.crystalsolutions.eu")
+- [CRYSTAL licensing](http://www.crystalsolutions.eu)
 
 ## Using CRYSTAL on ARCHER2
 

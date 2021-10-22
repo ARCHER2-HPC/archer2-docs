@@ -12,9 +12,9 @@ relativity.
 
 ## Useful Links
 
-  - NWChem home page <https://nwchemgit.github.io/>
-  - NWChem documentation <https://nwchemgit.github.io/Home.html>
-  - NWChem forum <https://nwchemgit.github.io/Forum.html>
+  - [NWChem home page](https://nwchemgit.github.io/)
+  - [NWChem documentation](https://nwchemgit.github.io/Home.html)
+  - [NWChem forum][1]
 
 ## Using NWChem on ARCHER2
 
@@ -25,10 +25,10 @@ is freely available to all users on ARCHER2.
 
 If you have problems accessing or running NWChem on ARCHER2, please
 contact the Service Desk. General questions on the use of NWChem might
-also be directed to the NWChem forum (see link above). More experienced
+also be directed to the [NWChem forum][1]. More experienced
 users with detailed technical issues on NWChem should consider
-submitting them to the NWChem github issue tracker
-<https://github.com/nwchemgit/nwchem/issues>.
+submitting them to the
+[NWChem GitHub issue tracker](https://github.com/nwchemgit/nwchem/issues).
 
 ## Running NWChem jobs
 
@@ -69,3 +69,6 @@ the GitHub repository of build instructions:
 
    - [Build instructions for NWChem on
      GitHub](https://github.com/hpc-uk/build-instructions/tree/main/apps/NWChem)
+
+<!--- NWChem forum URL -->
+[1]: https://nwchemgit.github.io/Forum.html

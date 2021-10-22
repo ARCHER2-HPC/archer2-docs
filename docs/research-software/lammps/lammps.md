@@ -1,17 +1,17 @@
 # LAMMPS
 
-[LAMMPS](http://lammps.sandia.gov/), is a classical molecular dynamics
-code, ("Large-scale Atomic/Molecular Massively Parallel Simulator").
+[LAMMPS](http://lammps.sandia.gov/) (Large-scale Atomic/Molecular Massively
+Parallel Simulator) is a classical molecular dynamics code.
 LAMMPS has potentials for solid-state materials (metals, semiconductors)
-and soft matter (biomolecules, polymers) and coarse-grained or
+and soft matter (biomolecules, polymers), and coarse-grained or
 mesoscopic systems. It can be used to model atoms or, more generically,
 as a parallel particle simulator at the atomic, mesoscopic, or continuum
 scale.
 
 ## Useful Links
 
-  - LAMMPS Documentation <https://lammps.sandia.gov/doc/Manual.html>
-  - LAMMPS Mailing list details <https://lammps.sandia.gov/mail.html>
+  - [LAMMPS Documentation](https://lammps.sandia.gov/doc/Manual.html)
+  - [LAMMPS Mailing list details](https://lammps.sandia.gov/mail.html)
 
 ## Using LAMMPS on ARCHER2
 

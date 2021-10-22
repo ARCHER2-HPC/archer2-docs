@@ -21,7 +21,13 @@ which gives the root of the installation if this is needed.
 
 ### Version history
 
-- Module `matio/1.5.18` installed January 2021
+=== "Full system"
+    
+    - Module `matio/1.5.18` installed October 2021 (PE 21.04)
+    
+=== "4-cabinet system"
+    
+    - Module `matio/1.5.18` installed January 2021
 
 
 ## Compiling your own version
@@ -33,7 +39,7 @@ compiled using the script avaailable from the Archer2
 ```
 $ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
 $ cd pe-scripts
-$ git checkout cse-develop
+$ git checkout modules-2021-10
 $ ./sh/tpsl/matio.sh --prefix=/path/to/install/location
 ```
 where `--prefix` defines the location of the installation.

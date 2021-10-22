@@ -34,8 +34,9 @@ exchange-correlation functionals, ELPA for improved performance of
 matrix diagonalisation, PLUMED to allow enhanced sampling methods, and
 SIRIUS for plane wave computations.
 
-See [CP2K compile instructions](https://www.cp2k.org/howto:compile) for a full list of optional
-features.
+See
+[CP2K compile instructions](https://github.com/cp2k/cp2k/blob/master/INSTALL.md)
+for a full list of optional features.
 
 If there is an optional feature not available, and which you would like,
 please [contact the Service Desk](https://www.archer2.ac.uk/support-access/servicedesk.html).

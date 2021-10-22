@@ -44,15 +44,16 @@ modules are:
      Module `cray-libsci` is loaded by default in all programming
      environments.
 
-- **cray-netcdf** [*...details for NetCDF...*](netcdf.md)
+- **cray-netcdf**
 
     Serial version of Network Common Data Form (NetCDF), a widely used
-    and portable data format.
+    and portable data format. Load module `cray-hdf5` first.
     See the [NETCDF website](https://www.unidata.ucar.edu/software/netcdf/)
 
 - **cray-netcdf-hdf5parallel**
 
-    A serial NetCDF built against parallel HDF5.
+    A serial NetCDF built against parallel HDF5. Load module
+    `cray-hdf5-parallel` first.
  
 - **cray-parallel-netcdf**
 
@@ -76,6 +77,11 @@ The following libraries will also made available by the ARCHER2 CSE team:
 - **ADIOS** [*...details for ADIOS on ARCHER2...*](adios.md)
 
     ADIOS (Adaptable I/O System) provides library services for parallel I/O. 
+
+- **ARPACK-NG** [*...details for ARPACK-NG on ARCHER2...*](arpack.md)
+
+    ARPACK-NG (Arnodli Package) computes eigenvalues and eigenvectors
+    of large sparse matrics.
 
 - **Boost** [*...details for Boost on ARCHER2...*](boost.md)
 
@@ -104,7 +110,7 @@ The following libraries will also made available by the ARCHER2 CSE team:
     commonly used e.g., to compute decompositions for finite element problems.
     [Parmetis][501] is the distributed memory counterpart.
 
-[500]: http://glaros.dtc.umn.edu/gkhome/metis/metis
+[500]: http://glaros.dtc.umn.edu/gkhome/metis/metis/overview
 [501]: http://glaros.dtc.umn.edu/gkhome/metis/parmetis/overview
 
 - **Mumps** [*...details for MUMPS on ARCHER2...*](mumps.md)

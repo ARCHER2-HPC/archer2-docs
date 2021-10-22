@@ -12,7 +12,7 @@ is also file-compatible with AMBER, CHARMM, and X-PLOR.
 ## Useful Links
 
   - [NAMD User Guide](http://www.ks.uiuc.edu/Research/namd/2.13/ug/)
-  - [NAMD Tutorials](http://www.ks.uiuc.edu/Training/Tutorials/index-all.html#namd)
+  - [NAMD Tutorials](https://www.ks.uiuc.edu/Training/Tutorials/#namd)
 
 ## Using NAMD on ARCHER2
 
@@ -115,5 +115,11 @@ values of (`tasks-per-node`, `cpus-per-task`) are likely to be either
 The latest instructions for building NAMD on ARCHER2 may be found in
 the GitHub repository of build instructions:
 
+<<<<<<< HEAD
+   - [Build instructions for NAMD on
+     GitHub](https://github.com/hpc-uk/build-instructions/tree/main/apps/NAMD)
+
+=======
    - [Build instructions for CASTEP on
      GitHub](https://github.com/hpc-uk/build-instructions/tree/main/apps/NAMD)
+>>>>>>> e203392c882899ae7b4a44e37f74912fd935fcf2

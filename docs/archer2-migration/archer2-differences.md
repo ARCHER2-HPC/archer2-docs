@@ -1,31 +1,52 @@
-# Main differences between ARCHER and ARCHER2
+# Main differences between ARCHER2 4-cabinet system and ARCHER2 full system
 
 This section provides an overview of the main differences between
-ARCHER and ARCHER2 along with links to more information where 
+the ARCHER2 4-cabinet system that all users have been using up until
+now and the full ARCHER2 system along with links to more information where 
 appropriate.
 
 ## For all users
 
-  - You use the [new SAFE](https://safe.epcc.ed.ac.uk) rather than the ARCHER SAFE
-  - You can add multiple SSH keys to your ARCHER2 account using SAFE
-  - There are 128 cores on an ARCHER2 compute node rather than 24
-  - ARCHER2 usage is charged in CUs (Compute Units) rather than kAU
-    - Generally: 1.5156 kAU = 4.21 ARCHER node hour = 1 ARCHER2 node hour = 1 CU
-  - ARCHER2 uses the *Slurm* scheduler instead of PBS Pro
-    - See: [Running jobs on ARCHER2](../user-guide/scheduler.md)
-  - Parallel applications are launched using `srun` rather than `aprun`
-  - You cannot currently query your budget on ARCHER2 itself, you can 
-    view your budget using SAFE
+- There are 5860 compute nodes in total on the full ARCHER2 system rather 
+  than just the 1024 on the 4-cabinet ARCHER2 system.
+- Of the 5860 compute nodes, 494 are *high memory nodes*, these nodes have
+  512 GiB of memory rather than the 256 GiB available on standard memory
+  nodes.
+- There are two data analysis nodes available and these are shared by multiple
+  users. When using these nodes, users typically request the number of cores
+  and the amount of memory they require (unlike compute nodes where you always
+  have access to all the cores and all the memory on a node and do not share
+  with any other users).
+- Software is provided by the [Lmod](https://lmod.readthedocs.io/) module
+  system (on the 4-cabinet system, TCL environment modules are used instead). Many
+  commands are similar but there are some differences, see 
+  [the Software Environment section of the User Guide](../user-guide/sw-environment.md)
+  for more information.
+- Not all versions of all software have been ported over to the full system from
+  the 4-cabinet system, some older versions of software have not been installed.
+- The scheduler layout has been expanded to provide more functionality and 
+  flexibility. You can find details of the new QoS available in
+  [the Submitting Jobs on ARCHER2 section of the User Guide](../user-guide/scheduler.md).
+- You no longer need to specify `--reservation=shortqos` when using the 
+  "short" QoS.
+- Resevations can now run for longer than the maximum wall time available in
+  any of the QoS defined in the scheduler.
+- You should no longer add the `module load epcc-job-env` command to job submission
+  scripts.
 
 ## For users compiling and developing software on ARCHER2
 
-  - The Intel compilers are not available on ARCHER2
-    - ARCHER2 supports the Cray, Gnu and AMD compilers
-    - See: [Application development environment](../user-guide/dev-environment.md)
-  - Intel MKL libraries are not available on ARCHER2
-    - Use Cray LibSci for BLAS/LAPACK/ScaLAPACK
-    - Use FFTW for FFTs
-  - All binaries on ARCHER2 are dynamically linked
-    - Static linking is currently not possible on ARCHER2
-    - This means that all binaries must be installed on the /work file systems
-      as these are the only file systems available on the compute nodes
+- The HPE Programming Environment (PE) version has been updated to the
+  21.04 release with the 21.09 release also available. These releases make
+  newer versions of compilers and MPI libraries available.
+- The change to Lmod modules means that some modules are hidden by default
+  until dependencies have been loaded (for example, you will not be able
+  to load the `cray-netcdf` or `cray-netcdf-hdf5parallel` modules until
+  you have loaded the appropriate `cray-hdf5` or `cray-hdf5-parallel` modules).
+  You can use the `module spider` command to see all available modules, including
+  hidden ones.
+- There are two MPI transport layers available: OpenFabrics (OFI) and UCX.
+  In some cases, you may see performance and/or scaling improvements by switching
+  to UCX rather than the default OFI transport layer. For more information on
+  when to switch and how to switch, see
+  [the Application Development Environment section of the User Guide](../user-guide/dev-environment.md)

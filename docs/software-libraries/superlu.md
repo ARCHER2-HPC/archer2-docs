@@ -30,8 +30,13 @@ location of the installation for a given programming environment.
 
 ### Version history
 
-- Module `superlu/5.2.1` installed January 2021
-
+=== "Full system"
+    
+    - Module `superlu/5.2.2` installed October 2021 (PE 21.04)
+    
+=== "4-cabinet system"
+    
+    - Module `superle/5.2.1` installed January 2021
 
 ## SuperLU_DIST
 
@@ -58,7 +63,13 @@ as the root of the installation for the current programming environment.
 
 ### Version history
 
-- Module `superlu-dist/6.1.1` installed January 2021
+=== "Full system"
+    
+    - Module `superlu-dist/6.4.0` installed October 2021 (PE 21.04)
+    
+=== "4-cabinet system"
+    
+    - Module `superlu-dist/6.1.1` installed January 2021
 
 
 ## Compiling your own version
@@ -72,7 +83,7 @@ The current Archer2 supported version may be built via
 ```
 $ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
 $ cd pe-scripts
-$ git checkout cse-develop
+$ git checkout modules-2021-10
 $ ./sh/tpsl/superlu.sh --prefix=/path/to/install/location
 ```
 where the `--prefix` option controls the install destination.
