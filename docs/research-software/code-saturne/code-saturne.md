@@ -22,12 +22,14 @@ rotor/stator interaction for hydraulic machines.
 Code\_Saturne is released under the GNU General Public Licence v2 and so
 is freely available to all users on ARCHER2.
 
-You can load Code\_Saturne 6.0.5 for use by running the following
+You can load a GCC build of Code\_Saturne 7.0.1 for use by running the following
 command:
 
 ```
-module load code_saturne/6.0.5-gcc10
+module load code_saturne/7.0.1-gcc11
 ```
+
+The above module is the default and so will be loaded by running `module load code_saturne`. An installation built using the CCE compilers, `code_saturne/7.0.1-cce12`, has also been made optionally available to users as testing indicates that this may provide improved performance over the GCC build.
 
 ## Running parallel Code\_Saturne jobs
 
@@ -53,8 +55,8 @@ You should also add the two `module` commands, and
 `export LD_LIBRARY_PATH=...` and `cd` commands are redundant and may be
 retained or removed.
 
-This script will run an MPI-only Code\_Saturne job over 4 nodes (128 x 4
-= 512 cores) for a maximum of 20 minutes.
+This script will run an MPI-only Code\_Saturne job using the GCC build and UCX
+over 4 nodes (128 x 4 = 512 cores) for a maximum of 20 minutes.
 
 ```slurm
 #!/bin/bash
@@ -70,14 +72,14 @@ This script will run an MPI-only Code\_Saturne job over 4 nodes (128 x 4
 #SBATCH --partition=standard
 #SBATCH --qos=standard
 
-# Setup the batch environment
-module load epcc-job-env
-
-module load code_saturne
+# Load the GCC build of Code_Saturne 7.0.1
+module load cpe/21.09
+module load PrgEnv-gnu
+module load code_saturne/7.0.1-gcc11
 
 # Switch to mpich-ucx implementation (see info note below)
-module switch cray-mpich/8.0.16 cray-mpich-ucx/8.0.16
-module switch craype-network-ofi craype-network-ucx
+module swap craype-network-ofi craype-network-ucx
+module swap cray-mpich cray-mpich-ucx
 
 # Prevent threading.
 export OMP_NUM_THREADS=1
@@ -91,7 +93,8 @@ The script can then be submitted to the batch system with `sbatch`.
 !!! info
     There is a known issue with the default MPI collectives which is
     causing performance issues on Code_Saturne. The suggested workaround is to
-    switch to the mpich-ucx implementation.
+    switch to the mpich-ucx implementation. For this to link correctly, the extra
+    `cpe/21.09` and `PrgEnv-gnu` modules also have to be explicitly loaded.
 
 ## Compiling Code\_Saturne
 
