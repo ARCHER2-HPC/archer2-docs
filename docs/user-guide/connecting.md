@@ -134,7 +134,7 @@ ARCHER2:
 
     ssh username@login.archer2.ac.uk
 
-You will first be prompted for your machine account password. Once you have entered your password successfully, you will then be prompted for the passphrase associated with your SSH key pair. You need to enter both credentials correctly to be able to access ARCHER2.
+You will first be prompted for the passphrase associated with your SSH key pair. Once you have entered this passphrase successfully, you will then be prompted for your machine account password. You need to enter both credentials correctly to be able to access ARCHER2.
 
 !!! tip
     If your SSH key pair is not stored in the default location (usually
@@ -298,7 +298,7 @@ indicate a problem with your SSH key. Some things to check:
      one uploaded to SAFE.
  
    - Are permissions correct on the ssh key? One common issue is that
-     the permissions are incorrect on the either the key file, or the
+     the permissions are incorrect on either the key file, or the
      directory it's contained in. On Linux/MacOS for example, if your
      private keys are held in `~/.ssh/` you can check this with `ls -al
      ~/.ssh`. This should give something similar to the following
@@ -336,24 +336,6 @@ way: `chmod <code> <target>`. So for example to set correct permissions
 on the private key file `id_rsa_ARCHER2` one would use the command
 `chmod 600 id_rsa_ARCHER2`.
 
-!!! tip
-    Unix file permissions can be understood in the following way. There are
-    three groups that can have file permissions: (owning) *users*, (owning)
-    *groups*, and *others*. The available permissions are *read*, *write*,
-    and *execute*. The first character indicates whether the target is a
-    file `-`, or directory `d`. The next three characters indicate the
-    owning user's permissions. The first character is `r` if they have read
-    permission, `-` if they don't, the second character is `w` if they have
-    write permission, `-` if they don't, the third character is `x` if they
-    have execute permission, `-` if they don't. This pattern is then
-    repeated for *group*, and *other* permissions. For example the pattern
-    `-rw-r--r--` indicates that the owning user can read and write the file,
-    members of the owning group can read it, and anyone else can also read
-    it. The `chmod` codes are constructed by treating the user, group, and
-    owner permission strings as binary numbers, then converting them to
-    decimal. For example the permission string `-rwx------` becomes
-    `111 000 000` -\> `700`.
-
 ### SSH verbose output
 
 Verbose debugging output from `ssh` can be very useful for diagnosing
@@ -366,6 +348,37 @@ example:
 
 The output is lengthy, but somewhere in there you should see lines
 similar to the following:
+
+    debug1: Next authentication method: publickey
+    debug1: Offering public key: RSA SHA256:<key_hash> <path_to_private_key>
+    debug3: send_pubkey_test
+    debug3: send packet: type 50
+    debug2: we sent a publickey packet, wait for reply
+    debug3: receive packet: type 60
+    debug1: Server accepts key: pkalg rsa-sha2-512 blen 2071
+    debug2: input_userauth_pk_ok: fp SHA256:<key_hash>
+    debug3: sign_and_send_pubkey: RSA SHA256:<key_hash>
+    Enter passphrase for key '<path_to_private_key>':
+    debug3: send packet: type 50
+    debug3: receive packet: type 51
+    Authenticated with partial success.
+    debug1: Authentications that can continue: password, keyboard-interactive
+
+In the text above, you can see which files ssh has checked for private
+keys, and you can see if any key is accepted. The line `Authenticated
+succeeded` indicates that the SSH key has been accepted. By default ssh
+will go through a list of standard private key files, as well as any you
+have specified with `-i` or a config file. This is fine, as long as one
+of the files mentioned is the one that matches the public key uploaded
+to SAFE.
+
+If your SSH key passphrase is incorrect, you will be asked to try again
+up to three times in total, before being disconnected with `Permission
+denied (publickey)`. If you enter your passphrase correctly, but still
+see this error message, please consider the advice under *SSH key*
+above.
+
+You should next see something similiar to:
 
     debug1: Next authentication method: keyboard-interactive
     debug2: userauth_kbdint
@@ -380,9 +393,8 @@ similar to the following:
     debug2: input_userauth_info_req
     debug2: input_userauth_info_req: num_prompts 0
     debug3: send packet: type 61
-    debug3: receive packet: type 51
-    Authenticated with partial success.
-    debug1: Authentications that can continue: publickey,password
+    debug3: receive packet: type 52
+    debug1: Authentication succeeded (keyboard-interactive).
 
 If you do not see the `Password:` prompt you may have connection issues,
 or there could be a problem with the ARCHER2 login nodes. If you do not
@@ -392,36 +404,6 @@ times before the connection will be rejected. Consider the suggestions
 under *Password* above. If you *do* see `Authenticated with partial
 success`, it means your password was accepted, and your SSH key will now
 be checked.
-
-You should next see something similiar to:
-
-    debug1: Next authentication method: publickey
-    debug1: Offering public key: RSA SHA256:<key_hash> <path_to_private_key>
-    debug3: send_pubkey_test
-    debug3: send packet: type 50
-    debug2: we sent a publickey packet, wait for reply
-    debug3: receive packet: type 60
-    debug1: Server accepts key: pkalg rsa-sha2-512 blen 2071
-    debug2: input_userauth_pk_ok: fp SHA256:<key_hash>
-    debug3: sign_and_send_pubkey: RSA SHA256:<key_hash>
-    Enter passphrase for key '<path_to_private_key>':
-    debug3: send packet: type 50
-    debug3: receive packet: type 52
-    debug1: Authentication succeeded (publickey).
-
-Most importantly, you can see which files ssh has checked for private
-keys, and you can see if any key is accepted. The line `Authenticated
-succeeded` indicates that the SSH key has been accepted. By default ssh
-will go through a list of standard private key files, as well as any you
-have specified with `-i` or a config file. This is fine, as long as one
-of the files mentioned is the one that matches the public key uploaded
-to SAFE.
-
-If your SSH key passphrase is incorrect, you will be asked to try again
-up to three times in total, before being disconnected with `Permission
-denied (publickey)`. If you enter your passphrase correctly, but still
-see this error message, please consider the advice under *SSH key*
-above.
 
 The equivalent information can be obtained in PuTTY by
 enabling all logging in settings.
