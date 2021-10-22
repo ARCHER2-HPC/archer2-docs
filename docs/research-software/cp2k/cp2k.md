@@ -68,9 +68,6 @@ For example, the following script will run a CP2K job using 4 nodes
 #SBATCH --partition=standard
 #SBATCH --qos=standard
 
-# Setup the batch environment
-module load epcc-job-env
-
 module load cp2k
 
 export OMP_NUM_THREADS=1
@@ -105,7 +102,6 @@ To run CP2K using MPI and OpenMP, load the `cp2k` module and use the
 # Ensure OMP_NUM_THREADS is consistent with cpus-per-task above
 # Launch the executable
 
-module load epcc-job-env
 module load cp2k
 
 export OMP_NUM_THREADS=8
