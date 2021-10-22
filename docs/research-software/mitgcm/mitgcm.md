@@ -28,17 +28,16 @@ from the GitHub repository with the command
 
 You should then copy the ARCHER2 optfile into the MITgcm directories:
 
-    cp /work/n02/shared/MITgcm/optfiles/dev_linux_amd64_gnu_archer2 MITgcm/tools/build_options/
+    cp /work/y07/shared/apps/core/mitgcm/optfiles/linux_amd64_gnu_archer2 MITgcm/tools/build_options/
 
 Note that this build options file is still being tested for optimisation purposes. For working with large executables (e.g. adjoint configurations), edit the build options file to include the lines:
 
     FFLAGS="$FFLAGS -mcmodel=large"
     CFLAGS="$CFLAGS -mcmodel=large"
 
-You can also use `-mcmodel=medium` for a lower-memory options. When you are building your code with this optfile, use the GNU
-environment with
+You can also use `-mcmodel=medium` for a lower-memory options. When you are building your code with this optfile, use the GNU environment with
 
-    module restore PrgEnv-gnu
+    module load PrgEnv-gnu
 
 You should also set the following environment variables.
 `MITGCM_ROOTDIR` is used to locate the source code and should point to
@@ -49,7 +48,7 @@ refer to pass the optfile to `genmake2`.
 
     export MITGCM_ROOTDIR=/path/to/MITgcm
     export PATH=$MITGCM_ROOTDIR/tools:$PATH
-    export MITGCM_OPT=$MITGCM_ROOTDIR/tools/build_options/dev_linux_amd64_gnu_archer2
+    export MITGCM_OPT=$MITGCM_ROOTDIR/tools/build_options/linux_amd64_gnu_archer2
 
 When using `genmake2` to create the Makefile, you will need to specify the
 optfile to use. Other commonly used options might be to use extra source
