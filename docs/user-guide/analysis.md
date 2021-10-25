@@ -136,7 +136,7 @@ one for the compute nodes. The main differences are that you need to use
     #   using threading.
     export OMP_NUM_THREADS=1
 
-    srun ./my_mpi_executable.x
+    ./my_executable.x
     ```
 
 ### Interactive session on the data analysis nodes
