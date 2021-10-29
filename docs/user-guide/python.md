@@ -59,7 +59,7 @@ variable to point to a location on /work, for example:
 You will also need to ensure that:
 
 1. the location of commands installed by `pip` are available on the command
-   line by modifying the `PATH` environment variable; and
+   line by modifying the `PATH` environment variable;
 2. any packages you install are available to Python by modifying the 
    `PYTHONPATH` environment variable.
    
@@ -94,6 +94,30 @@ variety of scenarios of using Python on the ARCHER2 compute nodes.
 
 ### Example serial Python submission script
 
+=== "Full system"
+    ```
+    #!/bin/bash --login
+    
+    #SBATCH --job-name=python_test
+    #SBATCH --nodes=1
+    #SBATCH --tasks-per-node=1
+    #SBATCH --cpus-per-task=1
+    #SBATCH --time=00:10:00
+    
+    # Replace [budget code] below with your project code (e.g. t01)
+    #SBATCH --account=[budget code]
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+    
+    # Load the Python module
+    module load cray-python
+    
+    # Run your Python progamme
+    python python_test.py
+    ```
+
+=== "4-cabinet system"
+    ```
     #!/bin/bash --login
     
     #SBATCH --job-name=python_test
@@ -115,22 +139,49 @@ variety of scenarios of using Python on the ARCHER2 compute nodes.
     
     # Run your Python progamme
     python python_test.py
+    ```
 
 !!! tip
-    If you have installed your own packages as decribed above then you will
-    need to set `PATH` and `PYTHONPATH` as described above within your job
-    submission script to accesss the commands and packages you have installed.
+    If you have installed your own packages you will need to set `PATH` and
+    `PYTHONPATH` as described above within your job submission script in order
+    to accesss the commands and packages you have installed.
 
 ### Example mpi4py job submission script
 
-Programmes that have been parallelised with mpi4py can be run on
+Programs that have been parallelised with mpi4py can be run on
 multiple processors on ARCHER2. A sample submission script is given
 below. The primary difference from the Python submission script in the
-previous section is that we must run the programme using
+previous section is that we must run the program using
 `srun python my_prog.py` instead of `python my_prog,py`. Failing to do so will 
-cause a segmentation fault in your programme when it reaches the line
-`from mpi4py import MPI`.
+cause a segmentation fault in your program when it reaches the line
+"`from mpi4py import MPI`".
 
+=== "Full system"
+    ```
+    #!/bin/bash --login
+    # Slurm job options (job-name, compute nodes, job time)
+    #SBATCH --job-name=mpi4py_test
+    #SBATCH --nodes=1
+    #SBATCH --tasks-per-node=2
+    #SBATCH --cpus-per-task=1
+    #SBATCH --time=0:10:0
+    
+    # Replace [budget code] below with your budget code (e.g. t01)
+    #SBATCH --account=[budget code]
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+    
+    # Load the Python module
+    module load cray-python
+    
+    # Run your Python programme
+    # Note that srun MUST be used to wrap the call to python, otherwise an error
+    # will occur
+    srun python mpi4py_test.py
+    ```
+
+=== "4-cabinet system"
+    ```
     #!/bin/bash --login
     # Slurm job options (job-name, compute nodes, job time)
     #SBATCH --job-name=mpi4py_test
@@ -154,15 +205,16 @@ cause a segmentation fault in your programme when it reaches the line
     # Note that srun MUST be used to wrap the call to python, otherwise an error
     # will occur
     srun python mpi4py_test.py
+    ```
 
 ## Using JupyterLab on ARCHER2
 
-It is possible to view and run Jupyter notebooks that are on both login nodes 
+It is possible to view and run Jupyter notebooks from both login nodes 
 and compute nodes of ARCHER2.
 
 !!! note
-    You can test these on the login nodes, but please do not attempt to run any 
-    computationally intensive jobs on them. Jobs may get killed once they hit a
+    You can test such notebooks on the login nodes, but please do not attempt to
+    run any computationally intensive work. Jobs may get killed once they hit a
     CPU limit on login nodes.
 
 Please follow these steps:
@@ -206,9 +258,17 @@ Please follow these steps:
    step 5.
 
 4. Open a new terminal window on your laptop, and run the following command:
-   ```
-   ssh <username>@login.archer2.ac.uk -L8888:<node_id>:8888
-   ```
+
+=== "Full system"
+    ```
+    ssh <username>@login.archer2.ac.uk -L8888:<node_id>:8888
+    ```
+
+=== "4-cabinet system"
+    ```
+    ssh <username>@login-4c.archer2.ac.uk -L8888:<node_id>:8888
+    ```
+
    where `<username>` is your username, and `<node_id>` is the node id we're 
    currently on (on a login node, this will be `uan01`, or similar; on a compute 
    node, it will be a mix of numbers and letters). In our example, `<node_id>`
