@@ -254,8 +254,13 @@ Please follow these steps:
    jupyter lab --ip=0.0.0.0 --no-browser
    ```
    Once it's started, you will see a URL printed in the terminal window of 
-   the form `http://127.0.0.1:8888?token=<string>`; we'll need this URL in
+   the form `http://127.0.0.1:8888/lab?token=<string>`; we'll need this URL in
    step 5.
+
+!!! warning
+    Please do not use the other http address given by the JupyterLab output,
+    the one formatted `http://<node_id>:8888/lab?token=<string>`. Your local
+    browser will not recognise the <br>`<node_id>` part of the address.
 
 4. Open a new terminal window on your laptop, and run the following command:
 
