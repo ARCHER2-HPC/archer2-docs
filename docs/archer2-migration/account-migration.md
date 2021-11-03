@@ -16,7 +16,7 @@ This section covers the following questions:
 
 We anticipate that users will have access from mid-late November. Users will have access to both the ARCHER2-4Cabinet and ARCHER2 full service for at least 30 days. UKRI will confirm the dates and these will be communicated to you as they are confirmed. There will be at least 14 days notice before access to the ARCHER2-4Cabinet system is removed. 
 
-!!! important Dates (tbc with UKRI)
+!!! important "Dates (tbc with UKRI)"
     mid-late November: Access to ARCHER2 full service
     30 days later tbc: with 14 days notice, access to ARCHER2-4C and the archer2-work filesystem removed 
     
@@ -47,10 +47,10 @@ The URL for the unified SAFE is:
    - [https://safe.epcc.ed.ac.uk](https://safe.epcc.ed.ac.uk)
 
 !!! important
-    To check that your account has been enabled on the ARCHER2 full system, 
-    log into SAFE:
-   1. Select the login account from the pulldown menu, Login Accounts 
-   2. You will see the list of Machines which the account is enabled on: archer2-4c and archer2 should both be listed
+    To check that your account has been enabled on the ARCHER2 full system, <br>
+    log into [SAFE](https://safe.epcc.ed.ac.uk):<br>
+    Select the login account from the pulldown menu, Login Accounts <br>
+    You will see the list of Machines which the account is enabled on: archer2-4c and archer2 should both be listed
       
 ## How do I log into ARCHER2 for the first time?
 
@@ -59,12 +59,12 @@ The ARCHER2 documentation covers logging in to ARCHER2 from a variety of operati
    - [Logging in to ARCHER2 from Windows](https://docs.archer2.ac.uk/user-guide/connecting/#logging-in-from-windows-using-mobaxterm)
 
 !!! tip
-    The ordering of the two factors for conencting to the full service is the reverse than that on ARCHER2-4Cabinet: 
-    archer2-4c: machine password, passphrase for SSH key pair
+    The ordering of the two factors for conencting to the full service is the reverse than that on ARCHER2-4Cabinet: <br>
+    archer2-4c: machine password, passphrase for SSH key pair<br>
     archer2: passphrase for SSH key pair, machine password
 
-!!! important   
-    ARCHER2 4Cabinet: login-4c.archer2.ac.uk
+!!! important "login address for the system"  
+    ARCHER2 4Cabinet: login-4c.archer2.ac.uk<br>
     ARCHER2 full service : login.archer2.ac.uk
 
 
