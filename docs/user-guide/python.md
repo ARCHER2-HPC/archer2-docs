@@ -210,16 +210,16 @@ cause a segmentation fault in your program when it reaches the line
 ## Using JupyterLab on ARCHER2
 
 It is possible to view and run Jupyter notebooks from both login nodes 
-and compute nodes of ARCHER2.
+and compute nodes on ARCHER2.
 
 !!! note
     You can test such notebooks on the login nodes, but please do not attempt to
     run any computationally intensive work. Jobs may get killed once they hit a
     CPU limit on login nodes.
 
-Please follow these steps:
+Please follow these steps.
 
-1. Install JupyterLab in your work directory:
+1. Install JupyterLab in your work directory.
    ```
    module load cray-python
    export PYTHONUSERBASE=/work/t01/t01/auser/.local
@@ -227,18 +227,18 @@ Please follow these steps:
    pip install --user jupyterlab
    ```
 
-2. To run your Jupyter notebook on a compute node, you can run an interactive 
-   session:
+2. If you want to test JupyterLab on the login node please go straight to step 3.
+   To run your Jupyter notebook on a compute node, you first need to run an interactive session.
    ```
-   srun --nodes=1 --exclusive --time=00:20:00 --account=<your_budget> 
-   --partition=standard --qos=short --reservation=shortqos --pty /bin/bash
+   srun --nodes=1 --exclusive --time=00:20:00 --account=<your_budget> \
+        --partition=standard --qos=short --reservation=shortqos \
+        --pty /bin/bash
    ```
-   Your prompt will change to something like this:
+   Your prompt will change to something like below.
    ```
    auser@nid001015:/tmp>
    ```
-   In this case, the node id is `nid001015`. Execute the following on the
-   compute node:
+   In this case, the node id is `nid001015`. Now execute the following on the compute node.
    ```
    cd /work/t01/t01/auser # Update the path to your work directory
    export PYTHONUSERBASE=$(pwd)/.local
@@ -246,37 +246,48 @@ Please follow these steps:
    export HOME=$(pwd)
    module load cray-python
    ```
-   You can skip this step if you want to test JupyterLab on the login node.
 
-3. Run JupyterLab:
+3. Run the JupyterLab server.
    ```
    export JUPYTER_RUNTIME_DIR=$(pwd)
    jupyter lab --ip=0.0.0.0 --no-browser
    ```
    Once it's started, you will see a URL printed in the terminal window of 
-   the form `http://127.0.0.1:8888?token=<string>`; we'll need this URL in
-   step 5.
+   the form `http://127.0.0.1:<port_number>/lab?token=<string>`; we'll need this URL for
+   step 6.
 
-4. Open a new terminal window on your laptop, and run the following command:
-
-=== "Full system"
-    ```
-    ssh <username>@login.archer2.ac.uk -L8888:<node_id>:8888
-    ```
-
-=== "4-cabinet system"
-    ```
-    ssh <username>@login-4c.archer2.ac.uk -L8888:<node_id>:8888
-    ```
-
-   where `<username>` is your username, and `<node_id>` is the node id we're 
-   currently on (on a login node, this will be `uan01`, or similar; on a compute 
+4. Please skip this step if you are connecting from a machine running Windows.
+   Open a new terminal window on your laptop and run the following command.
+   ```
+   ssh <username>@login.archer2.ac.uk -L<port_number>:<node_id>:<port_number>
+   ```   
+   where `<username>` is your username, and `<node_id>` is the id of the node you're 
+   currently on (for a login node, this will be `uan01`, or similar; on a compute 
    node, it will be a mix of numbers and letters). In our example, `<node_id>`
-   is `nid001015`. Note, please use the same port number as the URL of step 3. 
-   Sometimes, the port may be another number like 8889.
+   is `nid001015`. Note, please use the same port number as that shown in the URL of
+   step 3. This number may vary, likely values are 8888 or 8889.
 
-5. Now, if you open a browser window locally, you should now be able to 
-   navigate to the URL from step 3, and this should display the Jupyter Lab 
-   server. If you haven't selected the correct node id, you will get a
-   connection error. If you are on a compute node, the notebook will be
-   available for the length of the interactive session you have requested.
+5. Please skip this step if you are connecting from Linux or macOS. If you are connecting from Windows, you should use MobaXterm to configure an SSH tunnel as follows.
+    - Click on the `Tunnelling` button above the MobaXterm terminal. Create a new tunnel by clicking on `New SSH tunnel` in the window that opens.
+    - In the new window that opens, make sure the `Local port forwarding` radio button is selected.
+    - In the `forwarded port` text box on the left under `My computer with MobaXterm`, enter the port number indicated in the JupyterLab server output (e.g., 8888 or 8890).
+    - In the three text boxes on the bottom right under `SSH server` enter `login.archer2.ac.uk`, your ARCHER2 username and then `22`.
+    - At the top right, under `Remote server`, enter the id of the login or compute node running the JupyterLab server and the associated port number.
+    - Click on the `Save` button.
+    - In the tunnelling window, you will now see a new row for the settings you just entered. If you like, you can give a name to the tunnel in the leftmost column to identify it.
+    - Click on the small key icon close to the right for the new connection to tell MobaXterm which SSH private key to use when connecting to ARCHER2. You should tell it to use the same `.ppk` private key that you normally use when connecting to ARCHER2.
+    - The tunnel should now be configured. Click on the small start button (like a play '>' icon) for the new tunnel to open it. You'll be asked to enter your ARCHER2 account password -- please do so.
+
+6. Now, if you open a browser window locally, you should be able to navigate to the URL
+   from step 3, and this should display the JupyterLab server. If JupyterLab is running
+   on a compute node, the notebook will be available for the length of the interactive
+   session you have requested.
+
+!!! warning
+    Please do not use the other http address given by the JupyterLab output,
+    the one formatted `http://<node_id>:<port_number>/lab?token=<string>`. Your local
+    browser will not recognise the `<node_id>` part of the address.
+
+!!! note
+    You willl of course need to use a different hostname for the SSH tunnel if you're running on the
+    ARCHER2 4-cabinet system, `login-4c.archer2.ac.uk`.   
