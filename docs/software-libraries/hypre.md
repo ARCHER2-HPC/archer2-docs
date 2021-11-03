@@ -26,8 +26,13 @@ environment if required.
 
 ### Version history
 
-- Module `hypre/2.18.0` installed January 2021
-
+=== "Full system"
+    
+    - Module `hypre/2.18.0` installed October 2021 (PE 21.04)
+    
+=== "4-cabinet system"
+    
+    - Module `hypre/2.18.0` installed January 2021
 
 ## Compiling your own version
 
@@ -36,7 +41,7 @@ from the Archer2 repository:
 ```
 $ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
 $ cd pe-scripts
-$ git checkout cse-develop
+$ git checkout modules-2021-10
 $ ./sh/tpsl/hypre.sh --prefix=/path/to/install/location
 ```
 where the `--prefix` option determines the install directory. See the

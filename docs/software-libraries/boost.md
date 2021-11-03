@@ -27,13 +27,20 @@ if this information is needed.
 
 ### Version history
 
-- Module `boost/1.72.0` installed January 2021
+=== "Full system"
+    
+    - Module `boost/1.72` installed October 2021 (PE 21.04)
+    
+=== "4-cabinet system"
+    
+    - Module `boost/1.72.0` installed January 2021
 
-    The following libraries are installed: `atomic chrono container context
-    contract coroutine date_time exception fiber filesystem graph_parallel
-    graph iostreams locale log math mpi program_options random
-    regex serialization stacktrace system test thread timer type_erasure
-    wave`
+
+The following libraries are installed: `atomic chrono container context
+contract coroutine date_time exception fiber filesystem graph_parallel
+graph iostreams locale log math mpi program_options random
+regex serialization stacktrace system test thread timer type_erasure
+wave`
 
 ## Compiling Boost
 

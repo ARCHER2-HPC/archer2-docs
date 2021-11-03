@@ -19,7 +19,13 @@ which carries the root of the installation, if needed.
 
 ### Version history
 
-- Module `glm/0.9.9.6` installed January 2021
+=== "Full system"
+    
+    - Module `glm/0.9.9.6` installed October 2021 (PE 21.04)
+    
+=== "4-cabinet system"
+    
+    - Module `glm/0.9.9.6` installed January 2021
 
 
 ## Install your own version
@@ -29,7 +35,7 @@ on ARCHER2 via the [ARCHER2 Github repository][1]:
 ```
 $ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
 $ cd pe-scripts
-$ git checkout cse-develop
+$ git checkout modules-2021-10
 $ ./sh/glm.sh --prefix=/path/to/install/location
 ```
 where the `--prefix` option sets the install location. See the [ARCHER2

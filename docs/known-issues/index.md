@@ -6,6 +6,7 @@ active investigation by HPE Cray and the wider service.
 
 ## Open Issues
 
+
 ### Error message: `No space left on device` (Added: 2021-07-20)
 
 Following an issue with te Lustre file system, there may be a number of files on the
@@ -82,7 +83,7 @@ using different PE releases [is available in the User and Best Practice Guide](.
 ### Research Software
 There are several outstanding issues for the centrally installed Research Software:
 
-- **ChemShell and PyChemShell** are not yet available. We are working with the code developers to address this.
+- **PyChemShell** is not yet available. We are working with the code developers to address this.
 - **VMD** is not yet available. We hope to provide a suitable installation in the near future.
 - **PLUMED** is not yet available. Currently, we recommend affected users to install a local version of the software.
 

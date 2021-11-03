@@ -42,7 +42,7 @@ the Project Code:
 1.  [Log into SAFE](https://safe.epcc.ed.ac.uk)
 2.  Use the *Login accounts - Request new account* menu item
 3.  Select the correct project from the drop down list
-4.  Select the *archer2-4c* machine in the list of available machines
+4.  Select the *archer2* machine in the list of available machines
 5.  Click *Next*
 6.  Enter a username for the account and (optionally) an SSH public
     key
@@ -276,7 +276,7 @@ use it (for example, VASP). Although you will be able to load this
 software on ARCHER2, you will be barred from actually using it until
 your licence has been verified.
 
-You request access to licensed software through the EPCC SAFE (the web
+You request access to licensed software through the [SAFE](http://safe.epcc.ed.ac.uk) (the web
 administration tool you used to apply for your account and retrieve your
 initial password) by being added to the appropriate *Package Group*. To
 request access to licensed software:
@@ -371,12 +371,11 @@ You submit your job to the queues using the `sbatch` command:
 
 ## Monitoring your job
 
-You use the `squeue` command to examine jobs in the queue. Use:
+You use the `squeue` command to examine jobs in the queue. To list all the jobs **you** have in the queue, use:
 
     auser@uan01:/work/t01/t01/auser> squeue -u $USER
 
-To list all the jobs **you** have in the queue. `squeue` on its own
-lists all jobs in the queue from all users.
+`squeue` on its own lists all jobs in the queue from all users.
 
 ## Checking the output from the job
 
@@ -427,7 +426,7 @@ You should also tag outputs with the keyword ARCHER2 whenever possible.
 ## Useful Links
 
 If you plan to compile your own programs on ARCHER2, you may also want
-to look at `quickstart-developers`.
+to look at [Quickstart for developers](../quickstart-developers).
 
 Other documentation you may find useful:
 

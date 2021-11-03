@@ -20,63 +20,116 @@ ELK is freely available to all users on ARCHER2.
 
 The following script will run an ELK job on 4 nodes (512 cores).
 
-```
-#!/bin/bash
+=== "Full system"
+    ```
+    #!/bin/bash
 
-# Request 512 MPI tasks (4 nodes at 128 tasks per node) with a
-# maximum wall clock time limit of 20 minutes.
+    # Request 512 MPI tasks (4 nodes at 128 tasks per node) with a
 
-#SBATCH --job-name=elk_job
-#SBATCH --nodes=4
-#SBATCH --tasks-per-node=128
-#SBATCH --cpus-per-task=1
-#SBATCH --time=00:20:00
+    #SBATCH --job-name=elk_job
+    #SBATCH --nodes=4
+    #SBATCH --tasks-per-node=128
+    #SBATCH --cpus-per-task=1
+    #SBATCH --time=00:20:00
 
-# Replace [budget code] below with your project code (e.g. t01)
-#SBATCH --account=[budget code]
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+    # Replace [budget code] below with your project code (e.g. t01)
+    #SBATCH --account=[budget code]
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
 
-# Setup the batch environment
-module load epcc-job-env
+    # Load the relevant elk module
+    module load elk
 
-module load elk
+    srun --distribution=block:block --hint=nomultithread elk 
+    ```
 
-srun --distribution=block:block --hint=nomultithread elk 
-```
+=== "4-cabinet system"
+    ```
+    #!/bin/bash
+
+    # Request 512 MPI tasks (4 nodes at 128 tasks per node) with a
+
+    #SBATCH --job-name=elk_job
+    #SBATCH --nodes=4
+    #SBATCH --tasks-per-node=128
+    #SBATCH --cpus-per-task=1
+    #SBATCH --time=00:20:00
+
+    # Replace [budget code] below with your project code (e.g. t01)
+    #SBATCH --account=[budget code]
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+
+    # Setup the job environment (this module needs to be loaded before any other modules)
+    module load epcc-job-env
+    # Load the relevant elk module
+    module load elk
+
+    srun --distribution=block:block --hint=nomultithread elk 
+    ```
+
 
 ### Example mixed MPI/OpenMP ELK job
 
 The following script will run an ELK job on 4 nodes, using 8 OpenMP
 threads and 16 MPI tasks per node.
 
-```
-#!/bin/bash
+=== "Full system"
+    ```
+    #!/bin/bash
 
-# Request 4 nodes (using 8 threads and 16 MPI tasks per node) with a
-# maximum wall clock time limit of 20 minutes.
-# Replace [budget code] with your account code.
+    # Request 4 nodes (using 8 threads and 16 MPI tasks per node) with a
+    # maximum wall clock time limit of 20 minutes.
+    # Replace [budget code] with your account code.
 
-#SBATCH --job-name=elk_job
-#SBATCH --nodes=4
-#SBATCH --tasks-per-node=16
-#SBATCH --cpus-per-task=8
-#SBATCH --time=00:20:00
+    #SBATCH --job-name=elk_job
+    #SBATCH --nodes=4
+    #SBATCH --tasks-per-node=16
+    #SBATCH --cpus-per-task=8
+    #SBATCH --time=00:20:00
 
-#SBATCH --account=[budget code]
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+    #SBATCH --account=[budget code]
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
 
-export OMP_NUM_THREADS=8
-# Load the elk module
-# Launch the executable 
-# Input filename elk.in
+    # Ensure OMP_NUM_THREADS is consistent with cpus-per-task above
+    export OMP_NUM_THREADS=8
 
-module -s restore /etc/cray-pe.d/PrgEnv-gnu
-module load elk
+    # Load the relevant elk module
+    module load elk
 
-srun elk 
-```
+    srun --distribution=block:block --hint=nomultithread elk 
+    ```
+
+=== "4-cabinet system"
+    ```
+    #!/bin/bash
+
+    # Request 4 nodes (using 8 threads and 16 MPI tasks per node) with a
+    # maximum wall clock time limit of 20 minutes.
+    # Replace [budget code] with your account code.
+
+    #SBATCH --job-name=elk_job
+    #SBATCH --nodes=4
+    #SBATCH --tasks-per-node=16
+    #SBATCH --cpus-per-task=8
+    #SBATCH --time=00:20:00
+
+    #SBATCH --account=[budget code]
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+
+    # Ensure OMP_NUM_THREADS is consistent with cpus-per-task above
+    export OMP_NUM_THREADS=8
+
+    # Setup the job environment (this module needs to be loaded before any other modules)
+    module load epcc-job-env
+    # Load the relevant elk module
+    module load elk
+
+    srun --distribution=block:block --hint=nomultithread elk 
+    ```
+
 
 ## Compiling ELK
 
