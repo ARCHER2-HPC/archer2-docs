@@ -10,7 +10,7 @@
       
       
       <link rel="icon" href="../../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.3">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.6">
     
     
       
@@ -18,7 +18,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.5143246d.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.a57b2b03.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.3f5d1f46.min.css">
@@ -853,6 +853,8 @@
       </a>
       
         
+
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -897,6 +899,13 @@
         <li class="md-nav__item">
   <a href="#module-version-history" class="md-nav__link">
     Module version history
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-issues" class="md-nav__link">
+    Known Issues
   </a>
   
 </li>
@@ -1409,6 +1418,8 @@
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
+
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -1453,6 +1464,13 @@
         <li class="md-nav__item">
   <a href="#module-version-history" class="md-nav__link">
     Module version history
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-issues" class="md-nav__link">
+    Known Issues
   </a>
   
 </li>
@@ -1581,6 +1599,25 @@ See <a href="https://www.openfoam.com/releases/openfoam-v2006/">OpenFOAM.com web
 See <a href="https://openfoam.org/news/v8-patch/">OpenFOAM.org website</a></p>
 </li>
 </ul>
+<h2 id="known-issues">Known Issues</h2>
+<p>Some users have experienced memory leaks associated with the default
+MPI implementation resulting in "out-of-memory" errors, where the
+program unexpectedly crashes.</p>
+<p>A work-around for this problem is to make the following addition to
+the submission script, e.g.,:
+<div class="highlight"><pre><span></span><code>...
+module -s restore /etc/cray-pe.d/PrgEnv-gnu
+
+module unload craype-network-ofi 
+module unload cray-mpich 
+module load craype-network-ucx 
+module load cray-mpich-ucx/8.0.16 
+
+module load openfoam/org/v8.20200901
+...
+</code></pre></div>
+This replaces the default MPI implementation with an alternative without
+the problem.</p>
                 
               
               
@@ -1684,10 +1721,10 @@ See <a href="https://openfoam.org/news/v8-patch/">OpenFOAM.org website</a></p>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["tabs"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.8397ff9e.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["tabs"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.f89c2efe.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.b1047164.min.js"></script>
       
     
   </body>
