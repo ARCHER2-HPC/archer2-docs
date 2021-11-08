@@ -185,3 +185,26 @@ The following centrally installed versions are available.
         Version 8 patch release 1st September 2020.
         See [OpenFOAM.org website](https://openfoam.org/news/v8-patch/)
 
+
+## Known Issues
+
+Some users have experienced memory leaks associated with the default
+MPI implementation resulting in "out-of-memory" errors, where the
+program unexpectedly crashes.
+
+A work-around for this problem is to make the following addition to
+the submission script, e.g.,:
+```
+...
+module -s restore /etc/cray-pe.d/PrgEnv-gnu
+
+module unload craype-network-ofi 
+module unload cray-mpich 
+module load craype-network-ucx 
+module load cray-mpich-ucx/8.0.16 
+
+module load openfoam/org/v8.20200901
+...
+```
+This replaces the default MPI implementation with an alternative without
+the problem.
