@@ -45,6 +45,7 @@ nav:
     - "Overview": archer2-migration/index.md
     - "Account migration": archer2-migration/account-migration.md
     - "Data migration": archer2-migration/data-migration.md
+    - "Porting applications": archer2-migration/porting.md
     - "Differences between ARCHER2 4-cab and full ARCHER2": archer2-migration/archer2-differences.md
   - "ARCHER2 Known Issues": known-issues/index.md
   - "ARCHER2 Frequently Asked Questions": faq/index.md
