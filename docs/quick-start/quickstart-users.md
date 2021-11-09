@@ -439,3 +439,5 @@ Other documentation you may find useful:
     fundamentals (required by all users to use the system effectively),
     best practice for getting the most out of ARCHER2, and more advanced
     technical topics.
+  - [HPE Cray Programming Environment User
+    Guide](https://internal.support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&docId=a00115304en_us)
