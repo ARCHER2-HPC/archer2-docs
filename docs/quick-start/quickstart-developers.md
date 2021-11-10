@@ -225,7 +225,7 @@ crashes. Debugging jobs will end when you exit gdb4hpc, or you can end
 them yourself by running, in this example, `release $my_prog`.
 
 For more information on debugging parallel codes, see the documentation
-in the [Debugging section](./user-guide/debug.md) of the ARCHER2 User and Best Practice Guide.
+in the [Debugging section](../user-guide/debug.md) of the ARCHER2 User and Best Practice Guide.
 
 ## Profiling tools
 
