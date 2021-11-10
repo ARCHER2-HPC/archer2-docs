@@ -22,12 +22,6 @@ modules are:
     discrete Fourier transforms. See the
     [FFTW home page][1]
 
-- **cray-ga**
-
-    Global Arrays (GA) provides a partitioned global address space (PGAS)
-    programming model used by a number of applications. See the
-    [GA home page][2]
-
 - **cray-hdf5** and **cray-hdf5-parallel** [*...details for hdf5...*](hdf5.md)
 
     Hierarchical Data Format (HDF5) is a high-performance and portable data
