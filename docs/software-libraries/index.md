@@ -22,12 +22,6 @@ modules are:
     discrete Fourier transforms. See the
     [FFTW home page][1]
 
-- **cray-ga**
-
-    Global Arrays (GA) provides a partitioned global address space (PGAS)
-    programming model used by a number of applications. See the
-    [GA home page][2]
-
 - **cray-hdf5** and **cray-hdf5-parallel** [*...details for hdf5...*](hdf5.md)
 
     Hierarchical Data Format (HDF5) is a high-performance and portable data
@@ -44,7 +38,7 @@ modules are:
      Module `cray-libsci` is loaded by default in all programming
      environments.
 
-- **cray-netcdf** [*...details for NetCDF...*](netcdf.md)
+- **cray-netcdf** [*...details for cray-netcdf...*](netcdf.md)
 
     Serial version of Network Common Data Form (NetCDF), a widely used
     and portable data format.
@@ -52,9 +46,10 @@ modules are:
 
 - **cray-netcdf-hdf5parallel**
 
-    A serial NetCDF built against parallel HDF5.
+    A serial NetCDF built against parallel HDF5. Load module
+    `cray-hdf5-parallel` first.
  
-- **cray-parallel-netcdf**
+- **cray-parallel-netcdf** [*...deatils for Parallel NetCDF...*](netcdf.md)
 
     A parallel NetCDF implementation (sometimes referred to as "Pnetcdf").
 
@@ -76,6 +71,11 @@ The following libraries will also made available by the ARCHER2 CSE team:
 - **ADIOS** [*...details for ADIOS on ARCHER2...*](adios.md)
 
     ADIOS (Adaptable I/O System) provides library services for parallel I/O. 
+
+- **ARPACK-NG** [*...details for ARPACK-NG on ARCHER2...*](arpack.md)
+
+    ARPACK-NG (Arnodli Package) computes eigenvalues and eigenvectors
+    of large sparse matrics.
 
 - **Boost** [*...details for Boost on ARCHER2...*](boost.md)
 
@@ -104,7 +104,7 @@ The following libraries will also made available by the ARCHER2 CSE team:
     commonly used e.g., to compute decompositions for finite element problems.
     [Parmetis][501] is the distributed memory counterpart.
 
-[500]: http://glaros.dtc.umn.edu/gkhome/metis/metis
+[500]: http://glaros.dtc.umn.edu/gkhome/metis/metis/overview
 [501]: http://glaros.dtc.umn.edu/gkhome/metis/parmetis/overview
 
 - **Mumps** [*...details for MUMPS on ARCHER2...*](mumps.md)

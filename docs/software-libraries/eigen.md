@@ -12,14 +12,14 @@ To compile an application with the Eigen header files, load the
 the usual way. The relevant header files will be introduced
 automatically.
 
-The header files are located in `/work/y07/shared/libs/eigen/3.3.8/`,
+The header files are located in `/work/y07/shared/libs/core/eigen/3.4.0/`,
 and can be included manually at compilation without loading the module
 if required.
 
 
 ### Version history
 
-- Module `eigen/3.3.8` installed June 2021
+- Module `eigen/3.4.0` installed October 2021
 
 
 ## Compiling your own version
@@ -27,9 +27,9 @@ if required.
 The current supported version on Archer2 can be built using the
 following script
 ```
-$ wget https://gitlab.com/libeigen/eigen/-/archive/3.3.8/eigen-3.3.8.tar.gz
-$ tar xvf eigen-3.3.8.tar.gz
-$ cmake eigen-3.3.8/ -DCMAKE_INSTALL_PREFIX=/path/to/install/location
+$ wget https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz
+$ tar xvf eigen-3.4.0.tar.gz
+$ cmake eigen-3.4.0/ -DCMAKE_INSTALL_PREFIX=/path/to/install/location
 $ make install
 ```
 where the `-DCMAKE_INSTALL_PREFIX` option determines the install

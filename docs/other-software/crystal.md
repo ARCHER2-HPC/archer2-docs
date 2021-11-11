@@ -14,7 +14,7 @@ with effective core pseudo-potentials. The current release is CRYSTAL17.
 
 - [CRYSTAL home site](https://www.crystal.unito.it)
 - [CRYSTAL tutorials](http://tutorials.crystalsolutions.eu)
-- [CRYSTAL licensing](http://www.crystalsolutions.eu")
+- [CRYSTAL licensing](http://www.crystalsolutions.eu)
 
 ## Using CRYSTAL on ARCHER2
 
@@ -27,8 +27,13 @@ Please have your license details to hand.
 
 ## Running parallel CRYSTAL jobs
 
-The following script will run a CRYSTAL job using 256 cores (2 nodes). it
-assumes that the input file is tio2.d12
+!!! important
+    CRYSTAL is not yet available on the full ARCHER2 system. We are 
+    working with the CRYSTAL developers to get the software 
+    deployed as soon as possible.
+
+The following script will run a CRYSTAL job on the ARCHER2 4-cabinet
+system using 256 cores (2 nodes). It assumes that the input file is tio2.d12
 
 ```slurm
 #!/bin/bash

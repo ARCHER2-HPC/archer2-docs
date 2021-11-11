@@ -2,7 +2,7 @@
 
 There are a number of different ways to access profiling data on 
 ARCHER2. In this section we discuss the HPE Cray profiling tools:
-CrayPAT-lite and CrayPAT and also discuss how to get usage data
+CrayPAT-lite and CrayPAT, as well as discuss how to get usage data
 on currently running jobs from Slurm itself.
 
 !!! warning
@@ -23,11 +23,11 @@ tool set.
 
     `auser@uan01:/work/t01/t01/auser> module list`
 
-2.  Load `perftools-lite` module
+2.  Load the `perftools-lite` module
 
     `auser@uan01:/work/t01/t01/auser> module load perftools-lite`
 
-3.  Compile your application normally. An information message from
+3.  Compile your application normally. An informational message from
     CrayPat-lite will appear indicating that the executable has been
     instrumented.
 
@@ -36,7 +36,7 @@ tool set.
     INFO: creating the CrayPat-instrumented executable 'myapplication.x' (lite-samples) ...OK  
     ```
 
-4.  Run the generated executable normally submitting a job.
+4.  Run the generated executable normally by submitting a job.
 
     ```
     #!/bin/bash
@@ -61,11 +61,11 @@ tool set.
 5.  Analyse the data
 
     After the job finishes executing, CrayPat-lite output should be printed
-    to stdout i.e. at the end of the job's output file generated. A new
+    to stdout (i.e. at the end of the job's output file generated). A new
     directory will also be created in the directory the run occurred in with
     `.rpt` and `.ap2` files. The `.rpt` files are text files that contain
     the same information printed in the job's output file and the `.ap2` files
-    can be used to obtain more detailed information and can be visualized
+    can be used to obtain more detailed information and can also be visualized
     with the Cray Apprentice2 tool (for information on using this, please
     take a look at [Cray Apprentice2](#cray-apprentice2)).
 
@@ -77,7 +77,7 @@ tool set.
 
 The Cray Performance Analysis Tool (CrayPAT) is a powerful framework for
 analysing a parallel application’s performance on Cray supercomputers.
-It can provide very detailed information on the timing and performance
+It can provide very detailed information about the timing and performance
 of individual application procedures.
 
 CrayPat can perform two types of performance analysis: *sampling*
@@ -111,9 +111,8 @@ profiling for a representative length of time.
     auser@uan01:/work/t01/t01/auser> cc jacobi.o -o jacobi
     ```
 
-4.  Instrument your application To instrument then the binary, run the
-    `pat_build` command. This will generate a new binary with `+pat`
-    appended to the end (e.g. `jacobi+pat`)
+4.  To instrument the binary, run the `pat_build` command. This will 
+    generate a new binary with `+pat` appended to the end (e.g. `jacobi+pat`)
 
     `auser@uan01:/work/t01/t01/auser> pat_build jacobi`
 
@@ -125,8 +124,8 @@ profiling for a representative length of time.
     `jacobi+pat+12265-1573s/xf-files`).
 6.  Generate report data with `pat_report`.
 
-This `.xf` file contains the raw sampling data from the run and needs to
-be post processed to produce useful results. This is done using the
+These `.xf` files contain the raw sampling data from the run and need to
+be post-processed to produce useful results. This is done using the
 `pat_report` tool which converts all the raw data into a summarised and
 readable form. You should provide the name of the experiment directory as
 the argument:
@@ -157,17 +156,19 @@ the argument:
 
 This report will generate more files with the extension `.ap2` in the
 experiment directory. These hold the same data as the `.xf` file but
-in the post-processed form. Another new file has a `.apa` extension
+in the post-processed form. Another file produced has an `.apa` extension
 and is a text file with a suggested configuration for generating a
-traced experiment. The `.ap2` files generated are used to view performance
+traced experiment. 
+
+The `.ap2` files generated are used to view performance
 data graphically with the Cray Apprentice2 tool (for information on using
 this, please take a look at [Cray Apprentice2](#cray-apprentice2)), and
 the latter is used for more detailed tracing experiments.
 
 The `pat_report` command is able to produce many different profile
-reports from the profile data. You can select a predefined report with
+reports from the profiling data. You can select a predefined report with
 the `-O` flag to `pat_report`. A selection of the most generally useful
-predefined report types are
+predefined report types are:
 
   - **ca+src** - Show the callers (bottom-up view) leading to the
     routines that have a high use in the report and include source code
@@ -273,7 +274,7 @@ The entire program can be traced as a whole using `-w`:
 
 Using `-g` a program can be instrumented to trace all function entry
 point references belonging to the trace function group tracegroup (mpi,
-libsci, lapack, scalapack, heap, etc)
+libsci, lapack, scalapack, heap, etc):
 
     auser@uan01:/work/t01/t01/auser> pat_build -w -g mpi jacobi
 
@@ -309,8 +310,7 @@ Some useful `pat_run` options are:
 
 ### Further help
 
-  - [CrayPat User
-    Guide](https://pubs.cray.com/content/S-2376/7.0.0/cray-performance-measurement-and-analysis-tools-user-guide/craypat)
+  - [CrayPat User Guide](https://pubs.cray.com/content/S-2376/7.0.0/cray-performance-measurement-and-analysis-tools-user-guide/craypat)
 
 ## Cray Apprentice2
 
@@ -322,7 +322,7 @@ program being analyzed, the way in which the program was instrumented
 for data capture, and the data that was collected during program
 execution.
 
-You will need to use CrayPat first to instrument your program and
+You will need to use CrayPat to first instrument your program and
 capture performance analysis data, and then `pat_report` to generate
 the `.ap2` files from the results. You may then use Cray Apprentice2 to
 visualize and explore those files.
@@ -373,7 +373,7 @@ information on running jobs:
 - The `sacct` command is used to display accounting data for all finished
   jobs and job steps within the Slurm job database.
 - The `archer2jobload` command is used to show CPU and memory usage information
-  for running jobs. (This script is based on one originally written for ht
+  for running jobs. (This script is based on one originally written for the
   [COSMA HPC facility](https://www.dur.ac.uk/icc/cosma/) at the University of
   Durham.)
 
@@ -437,4 +437,4 @@ nid001922           127.35              256000              239872              
 
 ### Further help with Slurm
 
-The definitions of any variables discussed here and more usage information can be found on the man pages of `sstat` and `sacct`.
+The definitions of any variables discussed here and more usage information can be found in the man pages of `sstat` and `sacct`.

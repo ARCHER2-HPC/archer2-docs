@@ -29,9 +29,9 @@ self-consistency cycle.
 
 ## Useful Links
 
-   - [VASP Manual](http://cms.mpi.univie.ac.at/vasp/vasp/vasp.html)
+   - [VASP Manual](https://www.vasp.at/wiki/index.php/The_VASP_Manual)
    - [VASP wiki](https://www.vasp.at/wiki/index.php/The_VASP_Manual)
-   - [VASP Licensing](http://www.vasp.at/index.php/faqs/71-how-can-i-purchase-a-vasp-license)
+   - [VASP FAQs](https://www.vasp.at/faqs/)
 
 ## Using VASP on ARCHER2
 
@@ -89,40 +89,76 @@ Full details of these methods and the provided scripts can be found on
 On ARCHER2, the VTST version of VASP 5 can be accessed by loading the modules with
 `VTST` in the module name, for example:
 
-```
-module load vasp/5/5.4.4-VTST-gcc10-cpe2103
-```
+=== "Full system"
+    ```
+    module load vasp/5/5.4.4.pl2-vtst
+    ```
+=== "4-cabinet system'
+    ```
+    module load vasp/5/5.4.4-VTST-gcc10-cpe2103
+    ```
 
 #### Example VASP 5 job submission script
 
 The following script will run a VASP job using 2 nodes (128x2, 256 total
 cores).
 
-```
-#!/bin/bash
+=== "Full system"
+    ```
+    #!/bin/bash
 
-# Request 16 nodes (2048 MPI tasks at 128 tasks per node) for 20 minutes.   
+    # Request 16 nodes (2048 MPI tasks at 128 tasks per node) for 20 minutes.   
 
-#SBATCH --job-name=VASP_test
-#SBATCH --nodes=16
-#SBATCH --tasks-per-node=128
-#SBATCH --cpus-per-task=1
-#SBATCH --time=00:20:00
+    #SBATCH --job-name=VASP_test
+    #SBATCH --nodes=16
+    #SBATCH --tasks-per-node=128
+    #SBATCH --cpus-per-task=1
+    #SBATCH --time=00:20:00
 
-# Replace [budget code] below with your project code (e.g. t01)
-#SBATCH --account=[budget code] 
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+    # Replace [budget code] below with your project code (e.g. t01)
+    #SBATCH --account=[budget code] 
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
 
-# Setup the job environment (this module needs to be loaded before any other modules)
-module load epcc-job-env
+    # Load the VASP module
+    module load vasp/5
 
-# Load the VASP module, avoid any unintentional OpenMP threading by
-# setting OMP_NUM_THREADS, and launch the code.
-export OMP_NUM_THREADS=1
-module load vasp/5
-srun --distribution=block:block --hint=nomultithread vasp_std
-```
+    # Avoid any unintentional OpenMP threading by setting OMP_NUM_THREADS
+    export OMP_NUM_THREADS=1
+
+    # Launch the code.
+    srun --distribution=block:block --hint=nomultithread vasp_std
+    ```
+
+=== "4-cabinet system"
+    ```
+    #!/bin/bash
+    
+    # Request 16 nodes (2048 MPI tasks at 128 tasks per node) for 20 minutes.   
+    
+    #SBATCH --job-name=VASP_test
+    #SBATCH --nodes=16
+    #SBATCH --tasks-per-node=128
+    #SBATCH --cpus-per-task=1
+    #SBATCH --time=00:20:00
+    
+    # Replace [budget code] below with your project code (e.g. t01)
+    #SBATCH --account=[budget code] 
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+    
+    # Setup the job environment (this module needs to be loaded before any other modules)
+    module load epcc-job-env
+    
+    # Load the VASP module
+    module load vasp/5
+
+    # Avoid any unintentional OpenMP threading by setting OMP_NUM_THREADS
+    export OMP_NUM_THREADS=1
+
+    # Launch the code.
+    srun --distribution=block:block --hint=nomultithread vasp_std
+    ```
 
 ### VASP 6
 
@@ -149,31 +185,64 @@ cores) using only MPI ranks and no OpenMP threading.
     MPI. We will add notes on performance and use of threading in VASP as
     information becomes available.
 
-```
-#!/bin/bash
+=== "Full system"
 
-# Request 16 nodes (2048 MPI tasks at 128 tasks per node) for 20 minutes.   
+    ```
+    #!/bin/bash
 
-#SBATCH --job-name=VASP_test
-#SBATCH --nodes=16
-#SBATCH --tasks-per-node=128
-#SBATCH --cpus-per-task=1
-#SBATCH --time=00:20:00
+    # Request 16 nodes (2048 MPI tasks at 128 tasks per node) for 20 minutes.   
 
-# Replace [budget code] below with your project code (e.g. t01)
-#SBATCH --account=[budget code] 
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+    #SBATCH --job-name=VASP_test
+    #SBATCH --nodes=16
+    #SBATCH --tasks-per-node=128
+    #SBATCH --cpus-per-task=1
+    #SBATCH --time=00:20:00
 
-# Setup the job environment (this module needs to be loaded before any other modules)
-module load epcc-job-env
+    # Replace [budget code] below with your project code (e.g. t01)
+    #SBATCH --account=[budget code] 
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
 
-# Load the VASP module, avoid any unintentional OpenMP threading by
-# setting OMP_NUM_THREADS, and launch the code.
-export OMP_NUM_THREADS=1
-module load vasp/6
-srun --distribution=block:block --hint=nomultithread vasp_std
-```
+    # Load the VASP module
+    module load vasp/6
+
+    # Avoid any unintentional OpenMP threading by setting OMP_NUM_THREADS
+    export OMP_NUM_THREADS=1
+
+    # Launch the code.
+    srun --distribution=block:block --hint=nomultithread vasp_std
+    ```
+
+=== "4-cabinet system"
+
+    ```
+    #!/bin/bash
+
+    # Request 16 nodes (2048 MPI tasks at 128 tasks per node) for 20 minutes.   
+
+    #SBATCH --job-name=VASP_test
+    #SBATCH --nodes=16
+    #SBATCH --tasks-per-node=128
+    #SBATCH --cpus-per-task=1
+    #SBATCH --time=00:20:00
+
+    # Replace [budget code] below with your project code (e.g. t01)
+    #SBATCH --account=[budget code] 
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+
+    # Setup the job environment (this module needs to be loaded before any other modules)
+    module load epcc-job-env
+
+    # Load the VASP module
+    module load vasp/6
+
+    # Avoid any unintentional OpenMP threading by setting OMP_NUM_THREADS
+    export OMP_NUM_THREADS=1
+
+    # Launch the code.
+    srun --distribution=block:block --hint=nomultithread vasp_std
+    ```
 
 ## Compiling VASP on ARCHER2
 
@@ -221,7 +290,7 @@ Basic information:
 - [Full TiO2 performance data](https://github.com/hpc-uk/archer-benchmarks/blob/main/others/VASP/analysis/VASP_TiO2_perf_analysis.ipynb)
 
 Performance summary (best choices of NCORE at different node counts). All tests with
-`vasp/5/5.4.4.pl2-gcc10-cpe2103` module on ARCHER2.
+`vasp/5/5.4.4.pl2-gcc10-cpe2103` module on the ARCHER2 4-cabinet system.
 
 | Nodes | MPI processes per node | Total MPI processes | NCORE | Maximum LOOP time (s) |
 |------:|-----------------------:|--------------------:|------:|----------------------:|
@@ -239,7 +308,7 @@ Basic information:
   - [CdTe performance data](https://github.com/hpc-uk/archer-benchmarks/blob/main/others/VASP/analysis/VASP_CdTe_perf_analysis.ipynb)
 
   Performance summary (best choices of NCORE and KPAR at different node counts). All tests with
-`vasp/5/5.4.4.pl2-gcc10-cpe2103` module on ARCHER2.
+`vasp/5/5.4.4.pl2-gcc10-cpe2103` module on ARCHER2 4-cabinet system.
 
 | Nodes | MPI processes per node | Total MPI processes | NCORE | KPAR | Maximum LOOP time (s) |
 |------:|-----------------------:|--------------------:|------:|-----:|----------------------:|

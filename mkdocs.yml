@@ -29,6 +29,7 @@ markdown_extensions:
   - admonition
   - pymdownx.details
   - pymdownx.superfences
+  - pymdownx.tabbed
 
 google_analytics:
   - UA-165933823-2
@@ -40,6 +41,12 @@ nav:
     - "Overview": quick-start/overview.md
     - "Quickstart for users": quick-start/quickstart-users.md
     - "Quickstart for developers": quick-start/quickstart-developers.md
+  - "ARCHER2 4-cabinet to full ARCHER2 migration guide":
+    - "Overview": archer2-migration/index.md
+    - "Account migration": archer2-migration/account-migration.md
+    - "Data migration": archer2-migration/data-migration.md
+    - "Porting applications": archer2-migration/porting.md
+    - "Differences between ARCHER2 4-cab and full ARCHER2": archer2-migration/archer2-differences.md
   - "ARCHER2 Known Issues": known-issues/index.md
   - "ARCHER2 Frequently Asked Questions": faq/index.md
   - "User and Best Practice Guide":
@@ -47,17 +54,18 @@ nav:
     - "Hardware": user-guide/hardware.md
     - "Connecting to ARCHER2": user-guide/connecting.md
     - "Data management and transfer": user-guide/data.md
-    - "Software environment": user-guide/sw-environment.md
-    - "Running jobs on ARCHER2": user-guide/scheduler.md
+    - "Software environment: full system": user-guide/sw-environment.md
+    - "Software environment: 4-cabinet system": user-guide/sw-environment-4cab.md
+    - "Running jobs": user-guide/scheduler.md
     - "I/O and file systems": user-guide/io.md
-    - "Application development environment": user-guide/dev-environment.md
+    - "Application development environment; full system": user-guide/dev-environment.md
+    - "Application development environment; 4-cabinet system": user-guide/dev-environment-4cab.md
     - "Containers": user-guide/containers.md
     - "Using Python": user-guide/python.md
     - "Data analysis": user-guide/analysis.md
     - "Debugging": user-guide/debug.md
     - "Profiling": user-guide/profile.md
     - "Performance tuning": user-guide/tuning.md
-    - "Hardware": user-guide/hardware.md
   - "Research Software":
     - "Overview": research-software/index.md
     - "CASTEP": research-software/castep/castep.md
@@ -85,7 +93,9 @@ nav:
     - "HDF5": software-libraries/hdf5.md
     - "NetCDF": software-libraries/netcdf.md
     - "ADIOS": software-libraries/adios.md
+    - "ARPACK": software-libraries/arpack.md
     - "Boost": software-libraries/boost.md
+    - "Eigen": software-libraries/eigen.md
     - "GLM":   software-libraries/glm.md
     - "HYPRE": software-libraries/hypre.md
     - "Matio": software-libraries/matio.md

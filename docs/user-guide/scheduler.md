@@ -64,7 +64,7 @@ Charging takes place at the time the job ends, and the job is charged in full to
 
 ## Basic Slurm commands
 
-There are three key commands used to interact with the Slurm on the
+There are four key commands used to interact with the Slurm on the
 command line:
 
   - `sinfo` - Get information on the partitions and resources available
@@ -128,12 +128,23 @@ output to just your jobs by adding the `-u $USER` option:
 
 `scancel` is used to delete a jobs from the scheduler. If the job is
 waiting to run it is simply cancelled, if it is a running job then it is
-stopped immediately. You need to provide the job ID of the job you wish
-to cancel/stop. For example:
+stopped immediately.
+
+`scancel` on its own will delete all jobs belonging to you. If you only
+want to cancel a specific job you need to provide the job ID of the job
+you wish to cancel/stop. For example:
 
     scancel 12345
 
 will cancel (if waiting) or stop (if running) the job with ID `12345`.
+
+`scancel` can take other options. For example, if you want ot cancel all
+your pending (queued) jobs but leave the running jobs running, you could
+use:
+
+```
+scancel --state=PENDING
+```
 
 ## Resource Limits
 
@@ -168,13 +179,17 @@ specify a partition using the `--partition` option in your Slurm
 submission script. The following table has a list of active partitions
 on ARCHER2.
 
-| Partition | Description                                                 | Max nodes available |
-| --------- | ----------------------------------------------------------- | ------------------- |
-| standard  | CPU nodes with AMD EPYC 7742 64-core processor &times; 2    | 1024                |
 
-ARCHER2 Partitions
+=== "Full system"
+    | Partition | Description                                                 | Max nodes available |
+    | --------- | ----------------------------------------------------------- | ------------------- |
+    | standard  | CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 256 GB memory | 5366                |
+    | highmem  | CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 512 GB memory | 292                |
 
-You can list the active partitions by running `sinfo`.
+=== "4-cabinet system"
+    | Partition | Description                                                 | Max nodes available |
+    | --------- | ----------------------------------------------------------- | ------------------- |
+    | standard  | CPU nodes with AMD EPYC 7742 64-core processor &times; 2    | 1024                |
 
 !!! tip
     You may not have access to all the available partitions.
@@ -185,17 +200,25 @@ On ARCHER2, job limits are defined by the requested Quality of Service
 (QoS), as specified by the `--qos` Slurm directive. The following table
 lists the active QoS on ARCHER2.
 
-| QoS        | Max Nodes Per Job | Max Walltime | Jobs Queued | Jobs Running | Partition(s) | Notes |
-| ---------- | ----------------- | ------------ | ----------- | ------------ | ------------ | ------|
-| standard   | 256               | 24 hrs       | 64          | 16           | standard     | Maximum of 256 nodes in use by any one user at any time |
-| short      | 8                 | 20 mins      | 16           | 4            | standard     | |
-| long       | 64                | 48 hrs       | 16          | 16           | standard     | Minimum walltime of 24 hrs |
-| largescale | 940               | 3 hrs        | 4           | 1            | standard     | Minimum job size of 257 nodes |
-| lowpriority | 256               | 3 hrs        | 4           | 1            | standard     | Maximum of 256 nodes in use by any one user at any time. Jobs not charged but requires at least 1 CU in budget to use. |
+=== "Full system"
+    | QoS        | Max Nodes Per Job | Max Walltime | Jobs Queued | Jobs Running | Partition(s) | Notes |
+    | ---------- | ----------------- | ------------ | ----------- | ------------ | ------------ | ------|
+    | standard   | 2048               | 24 hrs       | 64          | 16           | standard     | Maximum of 2048 nodes in use by any one user at any time |
+    | highmem   | 256               | 24 hrs       | 16          | 16           | standard     | Maximum of 512 nodes in use by any one user at any time |
+    | taskfarm   | 16               | 24 hrs       | 128          | 32           | highmem     | Maximum of 256 nodes in use by any one user at any time |
+    | short      | 32                 | 20 mins      | 16           | 4            | standard     | |
+    | long       | 64                | 48 hrs       | 16          | 16           | standard     | Minimum walltime of 24 hrs, maximum 512 nodes in use by any one user at any time, maximum of 2048 nodes in use by QoS |
+    | largescale | 5860               | 12 hrs        | 8           | 1            | standard     | Minimum job size of 2049 nodes |
+    | lowpriority | 5860               | 6 hrs        | 16           | 16            | standard, highmem     | Jobs not charged but requires at least 1 CU in budget to use. |
 
-!!! warning
-    If you want to use the `short` QoS then you also need to add the
-    `--reservation=shortqos` to your job submission command.
+=== "4-cabinet system"
+    | QoS        | Max Nodes Per Job | Max Walltime | Jobs Queued | Jobs Running | Partition(s) | Notes |
+    | ---------- | ----------------- | ------------ | ----------- | ------------ | ------------ | ------|
+    | standard   | 256               | 24 hrs       | 64          | 16           | standard     | Maximum of 256 nodes in use by any one user at any time |
+    | short      | 8                 | 20 mins      | 16           | 4            | standard     | As well as specifying `--qos=short` you must always add the `--reservation=shortqos` option. |
+    | long       | 64                | 48 hrs       | 16          | 16           | standard     | Minimum walltime of 24 hrs |
+    | largescale | 940               | 3 hrs        | 4           | 1            | standard     | Minimum job size of 257 nodes |
+    | lowpriority | 256               | 3 hrs        | 4           | 1            | standard     | Maximum of 256 nodes in use by any one user at any time. Jobs not charged but requires at least 1 CU in budget to use. |
 
 You can find out the QoS that you can use by running the following
 command:
@@ -210,9 +233,8 @@ command:
 
 ### E-mail notifications
 
-E-mail notifications from the batch system are not currently available
+E-mail notifications from the scheduler are not currently available
 on ARCHER2.
-
 
 ## Troubleshooting
 
@@ -324,7 +346,7 @@ working directory once your job starts running.
 
 !!! hint
     Output may be buffered - to enable live output, e.g. for monitoring
-	job status, add `--unbuffered` to the `srun` command in your SLURM
+	job status, add `--unbuffered` to the `srun` command in your Slurm
 	script.
 
 ## Specifying resources in job scripts
@@ -387,11 +409,14 @@ environment at the point of submission, the option
      to the batch system.
 
 Using the `--export=none` means that the behaviour of batch submissions
-should be repeatable. We strongly recommend its use, although see
-[the following section](scheduler.md#using-modules-in-the-batch-system-the-epcc-job-env-module)
-to enable access to the usual modules.
+should be repeatable. We strongly recommend its use.
 
-## Using modules in the batch system: the `epcc-job-env` module
+## Using modules in the batch system: the `epcc-job-env` module: 4-cabinet system only
+
+!!! note
+    The `epcc-job-env` module is only required on the 4-cabinet system.
+    You do not need this on the full ARCHER2 system as the Lmod module
+    software works in a different way.
 
 Batch jobs must be submitted in the work file system `/work` as the
 compute nodes do not have access to the `/home` file system. This has a
@@ -558,39 +583,71 @@ An example of the sort of output the tool can give would be:
 ## Example job submission scripts
 
 A subset of example job submission scripts are included in full below.
+Examples are provided for both the full system and the 4-cabinet system.
 
 ### Example: job submission script for MPI parallel job
 
 A simple MPI job submission script to submit a job using 4 compute nodes
 and 128 MPI ranks per node for 20 minutes would look like:
 
+=== "Full system"
+    ```slurm
     #!/bin/bash
-    
+
     # Slurm job options (job-name, compute nodes, job time)
     #SBATCH --job-name=Example_MPI_Job
     #SBATCH --time=0:20:0
     #SBATCH --nodes=4
     #SBATCH --tasks-per-node=128
     #SBATCH --cpus-per-task=1
-    
+
     # Replace [budget code] below with your budget code (e.g. t01)
     #SBATCH --account=[budget code]             
     #SBATCH --partition=standard
     #SBATCH --qos=standard
-    
-    # Setup the job environment (this module needs to be loaded before any other modules)
-    module load epcc-job-env
-    
+
     # Set the number of threads to 1
     #   This prevents any threaded system libraries from automatically 
     #   using threading.
     export OMP_NUM_THREADS=1
-    
+
     # Launch the parallel job
     #   Using 512 MPI processes and 128 MPI processes per node
     #   srun picks up the distribution from the sbatch options
-    
+
     srun --distribution=block:block --hint=nomultithread ./my_mpi_executable.x
+    ```
+
+=== "4-cabinet system"
+    ```slurm
+    #!/bin/bash
+
+    # Slurm job options (job-name, compute nodes, job time)
+    #SBATCH --job-name=Example_MPI_Job
+    #SBATCH --time=0:20:0
+    #SBATCH --nodes=4
+    #SBATCH --tasks-per-node=128
+    #SBATCH --cpus-per-task=1
+
+    # Replace [budget code] below with your budget code (e.g. t01)
+    #SBATCH --account=[budget code]             
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+
+    # Setup the job environment (this module needs to be loaded before any other modules)
+    module load epcc-job-env
+
+    # Set the number of threads to 1
+    #   This prevents any threaded system libraries from automatically 
+    #   using threading.
+    export OMP_NUM_THREADS=1
+
+    # Launch the parallel job
+    #   Using 512 MPI processes and 128 MPI processes per node
+    #   srun picks up the distribution from the sbatch options
+
+    srun --distribution=block:block --hint=nomultithread ./my_mpi_executable.x
+    ```
 
 This will run your executable "my\_mpi\_executable.x" in parallel on 512
 MPI processes using 4 nodes (128 cores per node, i.e. not using
@@ -626,37 +683,69 @@ MPI process. This results in all 128 physical cores per node being used.
     Note the use of the `export OMP_PLACES=cores` environment option to
     generate the correct thread pinning.
 
-```
-#!/bin/bash
+=== "Full system"
+    ```slurm
+    #!/bin/bash
 
-# Slurm job options (job-name, compute nodes, job time)
-#SBATCH --job-name=Example_MPI_Job
-#SBATCH --time=0:20:0
-#SBATCH --nodes=4
-#SBATCH --tasks-per-node=8
-#SBATCH --cpus-per-task=16
+    # Slurm job options (job-name, compute nodes, job time)
+    #SBATCH --job-name=Example_MPI_Job
+    #SBATCH --time=0:20:0
+    #SBATCH --nodes=4
+    #SBATCH --tasks-per-node=8
+    #SBATCH --cpus-per-task=16
 
-# Replace [budget code] below with your project code (e.g. t01)
-#SBATCH --account=[budget code] 
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+    # Replace [budget code] below with your project code (e.g. t01)
+    #SBATCH --account=[budget code] 
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
 
-# Setup the job environment (this module needs to be loaded before any other modules)
-module load epcc-job-env
 
-# Set the number of threads to 16 and specify placement
-#   There are 16 OpenMP threads per MPI process
-#   We want one thread per physical core
-export OMP_NUM_THREADS=16
-export OMP_PLACES=cores
+    # Set the number of threads to 16 and specify placement
+    #   There are 16 OpenMP threads per MPI process
+    #   We want one thread per physical core
+    export OMP_NUM_THREADS=16
+    export OMP_PLACES=cores
 
-# Launch the parallel job
-#   Using 32 MPI processes
-#   8 MPI processes per node
-#   16 OpenMP threads per MPI process
-#   Additional srun options to pin one thread per physical core
-srun --hint=nomultithread --distribution=block:block ./my_mixed_executable.x arg1 arg2
-```
+    # Launch the parallel job
+    #   Using 32 MPI processes
+    #   8 MPI processes per node
+    #   16 OpenMP threads per MPI process
+    #   Additional srun options to pin one thread per physical core
+    srun --hint=nomultithread --distribution=block:block ./my_mixed_executable.x arg1 arg2
+    ```
+
+=== "4-cabinet system"
+    ```slurm
+    #!/bin/bash
+
+    # Slurm job options (job-name, compute nodes, job time)
+    #SBATCH --job-name=Example_MPI_Job
+    #SBATCH --time=0:20:0
+    #SBATCH --nodes=4
+    #SBATCH --tasks-per-node=8
+    #SBATCH --cpus-per-task=16
+
+    # Replace [budget code] below with your project code (e.g. t01)
+    #SBATCH --account=[budget code] 
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+
+    # Setup the job environment (this module needs to be loaded before any other modules)
+    module load epcc-job-env
+
+    # Set the number of threads to 16 and specify placement
+    #   There are 16 OpenMP threads per MPI process
+    #   We want one thread per physical core
+    export OMP_NUM_THREADS=16
+    export OMP_PLACES=cores
+
+    # Launch the parallel job
+    #   Using 32 MPI processes
+    #   8 MPI processes per node
+    #   16 OpenMP threads per MPI process
+    #   Additional srun options to pin one thread per physical core
+    srun --hint=nomultithread --distribution=block:block ./my_mixed_executable.x arg1 arg2
+    ```
 
 ## Job arrays
 
@@ -680,6 +769,32 @@ index as the only argument to the executable. Each subjob requests a
 single node and uses all 128 cores on the node by placing 1 MPI process
 per core and specifies 4 hours maximum runtime per subjob:
 
+=== "Full system"
+    ```slurm
+    #!/bin/bash
+    # Slurm job options (job-name, compute nodes, job time)
+    #SBATCH --job-name=Example_Array_Job
+    #SBATCH --time=04:00:00
+    #SBATCH --nodes=1
+    #SBATCH --tasks-per-node=128
+    #SBATCH --cpus-per-task=1
+    #SBATCH --array=0-55
+
+    # Replace [budget code] below with your budget code (e.g. t01)
+    #SBATCH --account=[budget code]  
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+
+    # Set the number of threads to 1
+    #   This prevents any threaded system libraries from automatically 
+    #   using threading.
+    export OMP_NUM_THREADS=1
+
+    srun --distribution=block:block --hint=nomultithread /path/to/exe $SLURM_ARRAY_TASK_ID
+    ```
+
+=== "4-cabinet system"
+    ```slurm
     #!/bin/bash
     # Slurm job options (job-name, compute nodes, job time)
     #SBATCH --job-name=Example_Array_Job
@@ -703,13 +818,16 @@ per core and specifies 4 hours maximum runtime per subjob:
     export OMP_NUM_THREADS=1
 
     srun --distribution=block:block --hint=nomultithread /path/to/exe $SLURM_ARRAY_TASK_ID
+    ```
 
 ### Submitting a job array
 
 Job arrays are submitted using `sbatch` in the same way as for standard
 jobs:
 
-    sbatch job_script.pbs 
+```
+sbatch job_script.pbs 
+```
 
 ## Job chaining
 
@@ -723,15 +841,19 @@ together long simulations requiring multiple steps.
 
 For example:
 
-    jobid=$(sbatch --parsable first_job.sh)
-    sbatch --dependency=afterok:$jobid second_job.sh
+```
+jobid=$(sbatch --parsable first_job.sh)
+sbatch --dependency=afterok:$jobid second_job.sh
+```
 
 or for a longer chain:
 
-    jobid1=$(sbatch --parsable first_job.sh)
-    jobid2=$(sbatch --parsable --dependency=afterok:$jobid1 second_job.sh)
-    jobid3=$(sbatch --parsable --dependency=afterok:$jobid1 third_job.sh)
-    sbatch --dependency=afterok:$jobid2,afterok:$jobid3 last_job.sh
+```
+jobid1=$(sbatch --parsable first_job.sh)
+jobid2=$(sbatch --parsable --dependency=afterok:$jobid1 second_job.sh)
+jobid3=$(sbatch --parsable --dependency=afterok:$jobid1 third_job.sh)
+sbatch --dependency=afterok:$jobid2,afterok:$jobid3 last_job.sh
+```
 
 ## Using multiple `srun` commands in a single job script
 
@@ -764,41 +886,76 @@ the job script that would achieve this and then explain how this works
 and the options used. In our case, we will run 100 copies of the `xthi` 
 program that prints the process placement on the node it is running on.
 
-```slurm
-#!/bin/bash
+=== "Full system"
+    ```slurm
+    #!/bin/bash
 
-# Slurm job options (job-name, compute nodes, job time)
-#SBATCH --job-name=multi_xthi
-#SBATCH --time=0:20:0
-#SBATCH --nodes=100
-#SBATCH --tasks-per-node=128
-#SBATCH --cpus-per-task=1
+    # Slurm job options (job-name, compute nodes, job time)
+    #SBATCH --job-name=multi_xthi
+    #SBATCH --time=0:20:0
+    #SBATCH --nodes=100
+    #SBATCH --tasks-per-node=128
+    #SBATCH --cpus-per-task=1
 
-# Replace [budget code] below with your budget code (e.g. t01)
-#SBATCH --account=[budget code]             
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+    # Replace [budget code] below with your budget code (e.g. t01)
+    #SBATCH --account=[budget code]             
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
 
-# Setup the job environment (this module needs to be loaded before any other modules)
-module load epcc-job-env
+    # Load the xthi module
+    module load xthi
 
-# Load the xthi module
-module load xthi
+    # Set the number of threads to 1
+    #   This prevents any threaded system libraries from automatically 
+    #   using threading.
+    export OMP_NUM_THREADS=1
 
-# Set the number of threads to 1
-#   This prevents any threaded system libraries from automatically 
-#   using threading.
-export OMP_NUM_THREADS=1
+    # Loop over 100 subjobs starting each of them on a separate node
+    for i in $(seq 1 100)
+    do
+    # Launch this subjob on 1 node, note nodes and ntasks options and & to place subjob in the background
+        srun --nodes=1 --ntasks=128 --distribution=block:block --hint=nomultithread xthi > placement${i}.txt &
+    done
+    # Wait for all background subjobs to finish
+    wait
+    ```
 
-# Loop over 100 subjobs starting each of them on a separate node
-for i in $(seq 1 100)
-do
-   # Launch this subjob on 1 node, note nodes and ntasks options and & to place subjob in the background
-   srun --nodes=1 --ntasks=128 --distribution=block:block --hint=nomultithread xthi > placement${i}.txt &
-done
-# Wait for all background subjobs to finish
-wait
-```
+=== "4-cabinet system"
+    ```slurm
+    #!/bin/bash
+
+    # Slurm job options (job-name, compute nodes, job time)
+    #SBATCH --job-name=multi_xthi
+    #SBATCH --time=0:20:0
+    #SBATCH --nodes=100
+    #SBATCH --tasks-per-node=128
+    #SBATCH --cpus-per-task=1
+
+    # Replace [budget code] below with your budget code (e.g. t01)
+    #SBATCH --account=[budget code]             
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+
+    # Setup the job environment (this module needs to be loaded before any other modules)
+    module load epcc-job-env
+
+    # Load the xthi module
+    module load xthi
+
+    # Set the number of threads to 1
+    #   This prevents any threaded system libraries from automatically 
+    #   using threading.
+    export OMP_NUM_THREADS=1
+
+    # Loop over 100 subjobs starting each of them on a separate node
+    for i in $(seq 1 100)
+    do
+    # Launch this subjob on 1 node, note nodes and ntasks options and & to place subjob in the background
+        srun --nodes=1 --ntasks=128 --distribution=block:block --hint=nomultithread xthi > placement${i}.txt &
+    done
+    # Wait for all background subjobs to finish
+    wait
+    ```
 
 Key points from the example job script:
 
@@ -906,48 +1063,89 @@ copy of `xthi` pinned to a different core. We will use `genmaskcpu` to generate 
 correct binding mask for each subjob. The job submission script for
 this example would look like:
 
-```slurm
-#!/bin/bash
-# Slurm job options (job-name, compute nodes, job time)
-#SBATCH --job-name=MultiSerialOnCompute
-#SBATCH --time=0:10:0
-#SBATCH --nodes=1
-#SBATCH --tasks-per-node=128
-#SBATCH --cpus-per-task=1
+=== "Full system"
+    ```slurm
+    #!/bin/bash
+    # Slurm job options (job-name, compute nodes, job time)
+    #SBATCH --job-name=MultiSerialOnCompute
+    #SBATCH --time=0:10:0
+    #SBATCH --nodes=1
+    #SBATCH --tasks-per-node=128
+    #SBATCH --cpus-per-task=1
 
-# Replace [budget code] below with your budget code (e.g. t01)
-#SBATCH --account=[budget code]  
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+    # Replace [budget code] below with your budget code (e.g. t01)
+    #SBATCH --account=[budget code]  
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
 
-# Setup the job environment (this module needs to be loaded before any other modules)
-module load epcc-job-env
+    # Make xthi available
+    module load xthi
 
-# Make xthi available
-module load xthi
+    # Make the pinning helper script available
+    module load cray-python
+    module load genmaskcpu
 
-# Make the pinning helper script available
-module load cray-python
-module load genmaskcpu
+    # Set the number of threads to 1
+    #   This prevents any threaded system libraries from automatically 
+    #   using threading.
+    export OMP_NUM_THREADS=1
 
-# Set the number of threads to 1
-#   This prevents any threaded system libraries from automatically 
-#   using threading.
-export OMP_NUM_THREADS=1
+    # Loop over 128 subjobs pinning each to a different core
+    for i in $(seq 1 128)
+    do
+    # Generate mask: 128 subjobs per node, subjob number in sequence given by i,
+    # 1 process per subjob, 1 thread per process
+    maskcpu=$(genmaskcpu 128 ${i} 1 1)
+    # Launch subjob overriding job settings as required and in the background
+    srun --cpu-bind=mask_cpu:${maskcpu} --nodes=1 --ntasks=1 --tasks-per-node=1 xthi > placement${i}.txt &
+    done
 
-# Loop over 128 subjobs pinning each to a different core
-for i in $(seq 1 128)
-do
-   # Generate mask: 128 subjobs per node, subjob number in sequence given by i,
-   # 1 process per subjob, 1 thread per process
-   maskcpu=$(genmaskcpu 128 ${i} 1 1)
-   # Launch subjob overriding job settings as required and in the background
-   srun --cpu-bind=mask_cpu:${maskcpu} --nodes=1 --ntasks=1 --tasks-per-node=1 xthi > placement${i}.txt &
-done
+    # Wait for all subjobs to finish
+    wait
+    ```
+=== "4-cabinet system"
+    ```slurm
+    #!/bin/bash
+    # Slurm job options (job-name, compute nodes, job time)
+    #SBATCH --job-name=MultiSerialOnCompute
+    #SBATCH --time=0:10:0
+    #SBATCH --nodes=1
+    #SBATCH --tasks-per-node=128
+    #SBATCH --cpus-per-task=1
 
-# Wait for all subjobs to finish
-wait
-```
+    # Replace [budget code] below with your budget code (e.g. t01)
+    #SBATCH --account=[budget code]  
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+
+    # Setup the job environment (this module needs to be loaded before any other modules)
+    module load epcc-job-env
+
+    # Make xthi available
+    module load xthi
+
+    # Make the pinning helper script available
+    module load cray-python
+    module load genmaskcpu
+
+    # Set the number of threads to 1
+    #   This prevents any threaded system libraries from automatically 
+    #   using threading.
+    export OMP_NUM_THREADS=1
+
+    # Loop over 128 subjobs pinning each to a different core
+    for i in $(seq 1 128)
+    do
+    # Generate mask: 128 subjobs per node, subjob number in sequence given by i,
+    # 1 process per subjob, 1 thread per process
+    maskcpu=$(genmaskcpu 128 ${i} 1 1)
+    # Launch subjob overriding job settings as required and in the background
+    srun --cpu-bind=mask_cpu:${maskcpu} --nodes=1 --ntasks=1 --tasks-per-node=1 xthi > placement${i}.txt &
+    done
+
+    # Wait for all subjobs to finish
+    wait
+    ```
 
 #### Example 2: 8 subjobs on 1 node each with 8 MPI processes and 2 OpenMP threads per process
 
@@ -957,47 +1155,87 @@ and 2 OpenMP threads per process. We will use `genmaskcpu` to generate the
 correct binding mask for each subjob. The job submission script for
 this example would look like:
 
-```slurm
-#!/bin/bash
-# Slurm job options (job-name, compute nodes, job time)
-#SBATCH --job-name=MultiParallelOnCompute
-#SBATCH --time=0:10:0
-#SBATCH --nodes=1
-#SBATCH --tasks-per-node=64
-#SBATCH --cpus-per-task=2
+=== "Full system"
+    ```slurm
+    #!/bin/bash
+    # Slurm job options (job-name, compute nodes, job time)
+    #SBATCH --job-name=MultiParallelOnCompute
+    #SBATCH --time=0:10:0
+    #SBATCH --nodes=1
+    #SBATCH --tasks-per-node=64
+    #SBATCH --cpus-per-task=2
 
-# Replace [budget code] below with your budget code (e.g. t01)
-#SBATCH --account=[budget code]  
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+    # Replace [budget code] below with your budget code (e.g. t01)
+    #SBATCH --account=[budget code]  
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
 
-# Setup the job environment (this module needs to be loaded before any other modules)
-module load epcc-job-env
+    # Make xthi available
+    module load xthi
 
-# Make xthi available
-module load xthi
+    # Make the pinning helper script available
+    module load cray-python
+    module load genmaskcpu
 
-# Make the pinning helper script available
-module load cray-python
-module load genmaskcpu
+    # Set the number of threads to 2 as required by all subjobs
+    export OMP_NUM_THREADS=2
 
-# Set the number of threads to 2 as required by all subjobs
-export OMP_NUM_THREADS=2
+    # Loop over 8 subjobs
+    for i in $(seq 1 8)
+    do
+        echo $j $i
+        # Generate mask: 8 subjobs per node, subjob number in sequence given by i,
+        # 8 MPI processes per subjob, 2 OpenMP threads per process
+        maskcpu=$(genmaskcpu 8 ${i} 8 2)
+        # Launch subjob overriding job settings as required and in the background
+        srun --cpu-bind=mask_cpu:${maskcpu} --nodes=1 --ntasks=8 --tasks-per-node=8 --cpus-per-task=2 xthi > placement${i}.txt &
+    done
 
-# Loop over 8 subjobs
-for i in $(seq 1 8)
-do
-    echo $j $i
-    # Generate mask: 8 subjobs per node, subjob number in sequence given by i,
-    # 8 MPI processes per subjob, 2 OpenMP threads per process
-    maskcpu=$(genmaskcpu 8 ${i} 8 2)
-    # Launch subjob overriding job settings as required and in the background
-    srun --cpu-bind=mask_cpu:${maskcpu} --nodes=1 --ntasks=8 --tasks-per-node=8 --cpus-per-task=2 xthi > placement${i}.txt &
-done
+    # Wait for all subjobs to finish
+    wait
+    ```
+=== "4-cabinet system"
+    ```slurm
+    #!/bin/bash
+    # Slurm job options (job-name, compute nodes, job time)
+    #SBATCH --job-name=MultiParallelOnCompute
+    #SBATCH --time=0:10:0
+    #SBATCH --nodes=1
+    #SBATCH --tasks-per-node=64
+    #SBATCH --cpus-per-task=2
 
-# Wait for all subjobs to finish
-wait
-```
+    # Replace [budget code] below with your budget code (e.g. t01)
+    #SBATCH --account=[budget code]  
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+
+    # Setup the job environment (this module needs to be loaded before any other modules)
+    module load epcc-job-env
+
+    # Make xthi available
+    module load xthi
+
+    # Make the pinning helper script available
+    module load cray-python
+    module load genmaskcpu
+
+    # Set the number of threads to 2 as required by all subjobs
+    export OMP_NUM_THREADS=2
+
+    # Loop over 8 subjobs
+    for i in $(seq 1 8)
+    do
+        echo $j $i
+        # Generate mask: 8 subjobs per node, subjob number in sequence given by i,
+        # 8 MPI processes per subjob, 2 OpenMP threads per process
+        maskcpu=$(genmaskcpu 8 ${i} 8 2)
+        # Launch subjob overriding job settings as required and in the background
+        srun --cpu-bind=mask_cpu:${maskcpu} --nodes=1 --ntasks=8 --tasks-per-node=8 --cpus-per-task=2 xthi > placement${i}.txt &
+    done
+
+    # Wait for all subjobs to finish
+    wait
+    ```
 
 #### Example 3: 256 serial tasks running across two nodes
 
@@ -1010,60 +1248,113 @@ assigned to the correct node. This mechanism uses the `scontrol` command to turn
 nodelist from `sbatch` into a format we can use as input to `srun`. The job submission
 script for this example would look like:
 
-```slurm
-#!/bin/bash
-# Slurm job options (job-name, compute nodes, job time)
-#SBATCH --job-name=MultiSerialOnComputes
-#SBATCH --time=0:10:0
-#SBATCH --nodes=2
-#SBATCH --tasks-per-node=128
-#SBATCH --cpus-per-task=1
+=== "Full system"
+    ```slurm
+    #!/bin/bash
+    # Slurm job options (job-name, compute nodes, job time)
+    #SBATCH --job-name=MultiSerialOnComputes
+    #SBATCH --time=0:10:0
+    #SBATCH --nodes=2
+    #SBATCH --tasks-per-node=128
+    #SBATCH --cpus-per-task=1
 
-# Replace [budget code] below with your budget code (e.g. t01)
-#SBATCH --account=[budget code]  
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+    # Replace [budget code] below with your budget code (e.g. t01)
+    #SBATCH --account=[budget code]  
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
 
-# Setup the job environment (this module needs to be loaded before any other modules)
-module load epcc-job-env
+    # Make xthi available
+    module load xthi
 
-# Make xthi available
-module load xthi
+    # Make the pinning helper script available
+    module load cray-python
+    module load genmaskcpu
 
-# Make the pinning helper script available
-module load cray-python
-module load genmaskcpu
+    # Set the number of threads to 1
+    #   This prevents any threaded system libraries from automatically 
+    #   using threading.
+    export OMP_NUM_THREADS=1
 
-# Set the number of threads to 1
-#   This prevents any threaded system libraries from automatically 
-#   using threading.
-export OMP_NUM_THREADS=1
+    # Get a list of the nodes assigned to this job in a format we can use.
+    #   scontrol converts the condensed node IDs in the sbatch environment
+    #   variable into a list of full node IDs that we can use with srun to
+    #   ensure the subjobs are placed on the correct node. e.g. this converts
+    #   "nid[001234,002345]" to "nid001234 nid002345"
+    nodelist=$(scontrol show hostnames $SLURM_JOB_NODELIST)
 
-# Get a list of the nodes assigned to this job in a format we can use.
-#   scontrol converts the condensed node IDs in the sbatch environment
-#   variable into a list of full node IDs that we can use with srun to
-#   ensure the subjobs are placed on the correct node. e.g. this converts
-#   "nid[001234,002345]" to "nid001234 nid002345"
-nodelist=$(scontrol show hostnames $SLURM_JOB_NODELIST)
-
-# Loop over the nodes assigned to the job
-for nodeid in $nodelist
-do
-    # Loop over 128 subjobs on each node pinning each to a different core
-    for i in $(seq 1 128)
+    # Loop over the nodes assigned to the job
+    for nodeid in $nodelist
     do
-        # Generate mask: 128 subjobs per node, subjob number in sequence given by i,
-        # 1 process per subjob, 1 thread per process
-        maskcpu=$(genmaskcpu 128 ${i} 1 1)
-        # Launch subjob overriding job settings as required and in the background, note
-        # additional --nodelist option to specify the correct node to bind to
-        srun --cpu-bind=mask_cpu:${maskcpu} --nodelist=${nodeid} --nodes=1 --ntasks=1 --tasks-per-node=1 xthi > placement_${nodeid}_${i}.txt &
+        # Loop over 128 subjobs on each node pinning each to a different core
+        for i in $(seq 1 128)
+        do
+            # Generate mask: 128 subjobs per node, subjob number in sequence given by i,
+            # 1 process per subjob, 1 thread per process
+            maskcpu=$(genmaskcpu 128 ${i} 1 1)
+            # Launch subjob overriding job settings as required and in the background, note
+            # additional --nodelist option to specify the correct node to bind to
+            srun --cpu-bind=mask_cpu:${maskcpu} --nodelist=${nodeid} --nodes=1 --ntasks=1 --tasks-per-node=1 xthi > placement_${nodeid}_${i}.txt &
+        done
     done
-done
 
-# Wait for all subjobs to finish
-wait
-```
+    # Wait for all subjobs to finish
+    wait
+    ```
+=== "4-cabinet system"
+    ```slurm
+    #!/bin/bash
+    # Slurm job options (job-name, compute nodes, job time)
+    #SBATCH --job-name=MultiSerialOnComputes
+    #SBATCH --time=0:10:0
+    #SBATCH --nodes=2
+    #SBATCH --tasks-per-node=128
+    #SBATCH --cpus-per-task=1
+
+    # Replace [budget code] below with your budget code (e.g. t01)
+    #SBATCH --account=[budget code]  
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+
+    # Setup the job environment (this module needs to be loaded before any other modules)
+    module load epcc-job-env
+
+    # Make xthi available
+    module load xthi
+
+    # Make the pinning helper script available
+    module load cray-python
+    module load genmaskcpu
+
+    # Set the number of threads to 1
+    #   This prevents any threaded system libraries from automatically 
+    #   using threading.
+    export OMP_NUM_THREADS=1
+
+    # Get a list of the nodes assigned to this job in a format we can use.
+    #   scontrol converts the condensed node IDs in the sbatch environment
+    #   variable into a list of full node IDs that we can use with srun to
+    #   ensure the subjobs are placed on the correct node. e.g. this converts
+    #   "nid[001234,002345]" to "nid001234 nid002345"
+    nodelist=$(scontrol show hostnames $SLURM_JOB_NODELIST)
+
+    # Loop over the nodes assigned to the job
+    for nodeid in $nodelist
+    do
+        # Loop over 128 subjobs on each node pinning each to a different core
+        for i in $(seq 1 128)
+        do
+            # Generate mask: 128 subjobs per node, subjob number in sequence given by i,
+            # 1 process per subjob, 1 thread per process
+            maskcpu=$(genmaskcpu 128 ${i} 1 1)
+            # Launch subjob overriding job settings as required and in the background, note
+            # additional --nodelist option to specify the correct node to bind to
+            srun --cpu-bind=mask_cpu:${maskcpu} --nodelist=${nodeid} --nodes=1 --ntasks=1 --tasks-per-node=1 xthi > placement_${nodeid}_${i}.txt &
+        done
+    done
+
+    # Wait for all subjobs to finish
+    wait
+    ```
 
 ## Interactive Jobs
 
@@ -1087,16 +1378,35 @@ To submit a request for an interactive job reserving 8 nodes (1024
 physical cores) for 20 minutes on the short queue you would issue the
 following command from the command line:
 
+=== "Full system"
+    ```bash
+    auser@ln01:> salloc --nodes=8 --tasks-per-node=128 --cpus-per-task=1 \
+                    --time=00:20:00 --partition=standard --qos=short \
+                    --account=[budget code]
+    ```
+=== "4-cabinet system"
+    ```bash
     auser@uan01:> salloc --nodes=8 --tasks-per-node=128 --cpus-per-task=1 \
-                  --time=00:20:00 --partition=standard --qos=short \
-                  --reservation=shortqos --account=[budget code]
+                    --time=00:20:00 --partition=standard --qos=short \
+                    --reservation=shortqos --account=[budget code]
+    ```
 
 When you submit this job your terminal will display something like:
 
+=== "Full system"
+    ```
+    salloc: Granted job allocation 24236
+    salloc: Waiting for resource configuration
+    salloc: Nodes nid000002 are ready for job
+    auser@ln01:>
+    ```
+=== "4-cabinet system"
+    ```
     salloc: Granted job allocation 24236
     salloc: Waiting for resource configuration
     salloc: Nodes nid000002 are ready for job
     auser@uan01:>
+    ```
 
 It may take some time for your interactive job to start. Once it runs
 you will enter a standard interactive terminal session (a new shell).
@@ -1121,46 +1431,82 @@ return you to your prompt before you issued the `salloc` command.
 A second way to run an interactive job is to use `srun` directly in the
 following way (here using the "short queue"):
 
+=== "Full system"
+    ```
+    auser@ln01:/work/t01/t01/auser> srun --nodes=1 --exclusive --time=00:20:00 \
+                   --partition=standard --qos=short --reservation=shortqos \
+		   --pty /bin/bash
+    auser@nid001261:/work/t01/t01/auser> hostname
+    nid001261
+    ```
+    
+    The `--pty /bin/bash` will cause a new shell to be started on the first
+    node of a new allocation . This is perhaps closer to what
+    many people consider an 'interactive' job than the method using `salloc`
+    appears.
+
+    One can now issue shell commands in the usual way. A further invocation
+    of `srun` is required to launch a parallel job in the allocation.
+    
+    !!! note
+        When using `srun` within an interactive `srun` session, you will need to 
+        include the `--oversubscribe` flag and specify the number of cores you want 
+        to use:
+        ```
+        auser@nid001261:/work/t01/t01/auser> srun --oversubscribe --distribution=block:block \
+                       --hint=nomultithread --ntasks=128 ./my_mpi_executable.x
+        ```
+    
+    When finished, type `exit` to relinquish the allocation and control will
+    be returned to the front end.
+    
+    By default, the interactive shell will retain the environment of the
+    parent. If you want a clean shell, remember to specify `--export=none`.
+=== "4-cabinet system"
+    ```
     auser@uan01:/work/t01/t01/auser> srun --nodes=1 --exclusive --time=00:20:00 \
                    --partition=standard --qos=short --reservation=shortqos \
                    --pty /bin/bash
-    auser@uan01:/work/t01/t01/auser> hostname
+    auser@nid001261:/work/t01/t01/auser> hostname
     nid001261
-
-The `--pty /bin/bash` will cause a new shell to be started on the first
-node of a new allocation (note that while the shell prompt has not
-changed, we are now on the compute node). This is perhaps closer to what
-many people consider an 'interactive' job than the method using `salloc`
-appears.
-
-One can now issue shell commands in the usual way. A further invocation
-of `srun` is required to launch a parallel job in the allocation.
-
-When finished, type `exit` to relinquish the allocation and control will
-be returned to the front end.
-
-By default, the interactive shell will retain the environment of the
-parent. If you want a clean shell, remember to specify `--export=none`.
-If you need to
-[use modules within your job](scheduler.md#using-modules-in-the-batch-system-the-epcc-job-env-module),
-you will need to start a login shell by passing the `--login` argument
-to `bash`.
+    ```
+    
+    The `--pty /bin/bash` will cause a new shell to be started on the first
+    node of a new allocation . This is perhaps closer to what
+    many people consider an 'interactive' job than the method using `salloc`
+    appears.
+    
+    One can now issue shell commands in the usual way. A further invocation
+    of `srun` is required to launch a parallel job in the allocation.
+    
+    When finished, type `exit` to relinquish the allocation and control will
+    be returned to the front end.
+    
+    By default, the interactive shell will retain the environment of the
+    parent. If you want a clean shell, remember to specify `--export=none`.
 
 ## Heterogeneous jobs
 
-The SLURM submissions discussed above involve a single executable image.
+The Slurm submissions discussed above involve a single executable image.
 However, there are situtions where two or more distinct executables are
 coupled and need to be run at the same time. This is most easily handled
-via the SLURM heterogeneous job mechanism.
+via the Slurm heterogeneous job mechanism.
 
-The essential feature of a heterogeneous job is to create a single batch
+Two common cases are discussed below: first, a client server model in
+which client and server each have a different `MPI_COMM_WORLD`, and second
+the case were two or more executables share `MPI_COMM_WORLD`.
+
+
+### Heterogeneous jobs for a client/server model: distinct `MPI_COMM_WORLDs`
+
+The essential feature of a heterogeneous job here is to create a single batch
 submission which specifies the resource requirements for the individual
 components. Schematically, we would use
-
+    
 ```
 #!/bin/bash
 
-# SLURM specifications for the first component
+# Slurm specifications for the first component
 
 #SBATCH --partition=standard
 
@@ -1168,7 +1514,7 @@ components. Schematically, we would use
 
 #SBATCH hetjob
 
-# SLURM specifications for the second component
+# Slurm specifications for the second component
 
 #SBATCH --partition=standard
 
@@ -1186,12 +1532,6 @@ Such a job will appear in the queue system as, e.g.,
 ```
 and counts as (in this case) two separate jobs from the point of
 QoS limits.
-
-Two common cases are discussed below: first, a client server model in
-which client and server each have a different `MPI_COMM_WORLD`, and second
-the case were two or more executables share `MPI_COMM_WORLD`.
-
-### Heterogeneous jobs for a client/server model
 
 Consider a case where we have two executables which may both be parallel (in
 that they use MPI), both run at the same time, and communicate with each
@@ -1264,58 +1604,117 @@ Further examples of placement for heterogenenous jobs are given below.
 
 ### Heterogeneous jobs for a shared `MPI_COM_WORLD`
 
-If two or more heterogeneous components need to share a unique
-`MPI_COMM_WORLD`, a single `srun` invocation with the differrent
-components separated by a colon `:` should be used. For example,
-
-```
-#!/bin/bash
-
-#SBATCH --time=00:20:00
-#SBATCH --exclusive
-#SBATCH --export=none
-
-#SBATCH --partition=standard
-#SBATCH --qos=standard
-
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=8
-
-#SBATCH hetjob
-
-#SBATCH --partition=standard
-#SBATCH --qos=standard
-
-#SBATCH --nodes=2
-#SBATCH --ntasks-per-node=4
-
-srun --distribution=block:block --hint=nomultithread --het-group=0 ./xthi-a : \
-     --distribution=block:block --hint=nomultithread --het-group=1 ./xthi-b
-```
-
-The output should confirm we have a single `MPI_COMM_WORLD` with
-ranks 0-15.
-```
-Node    0, hostname nid001027, mpi   8, omp   1, executable xthi-a
-Node    1, hostname nid001028, mpi   4, omp   1, executable xthi-b
-Node    2, hostname nid001048, mpi   4, omp   1, executable xthi-b
-Node    0, rank    0, thread   0, (affinity =    0)
-Node    0, rank    1, thread   0, (affinity =    1)
-Node    0, rank    2, thread   0, (affinity =    2)
-Node    0, rank    3, thread   0, (affinity =    3)
-Node    0, rank    4, thread   0, (affinity =    4)
-Node    0, rank    5, thread   0, (affinity =    5)
-Node    0, rank    6, thread   0, (affinity =    6)
-Node    0, rank    7, thread   0, (affinity =    7)
-Node    1, rank    8, thread   0, (affinity =    0)
-Node    1, rank    9, thread   0, (affinity =    1)
-Node    1, rank   10, thread   0, (affinity =    2)
-Node    1, rank   11, thread   0, (affinity =    3)
-Node    2, rank   12, thread   0, (affinity =    0)
-Node    2, rank   13, thread   0, (affinity =    1)
-Node    2, rank   14, thread   0, (affinity =    2)
-Node    2, rank   15, thread   0, (affinity =    3)
-```
+=== "Full system"
+    !!! note
+        The directive `SBATCH hetjob` can no longer be used for jobs requiring
+        a shared `MPI_COMM_WORLD`
+    
+    If two or more heterogeneous components need to share a unique
+    `MPI_COMM_WORLD`, a single `srun` invocation with the differrent
+    components separated by a colon `:` should be used. Arguements
+    to the individual components of the `srun` control the placement of
+    the tasks and threads for each component. For example:
+    
+    ```
+    #!/bin/bash
+    
+    #SBATCH --time=00:20:00
+    #SBATCH --exclusive
+    #SBATCH --export=none
+    #SBATCH --account=[...]
+    
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+    
+    # We must specify correctly the total number of nodes required.
+    #SBATCH --nodes=3
+    
+    SHARED_ARGS="--distribution=block:block --hint=nomultithread"
+    
+    srun --het-group=0 --nodes=1 --tasks-per-node=8 ${SHARED_ARGS} ./xthi-a : \
+         --het-group=1 --nodes=2 --tasks-per-node=4 ${SHARED_ARGS} ./xthi-b
+    ```
+    
+    The output should confirm we have a single `MPI_COMM_WORLD` with
+    a total of three nodes, and ranks 0-15.
+    ```
+    Node summary for    3 nodes:
+    Node    0, hostname nid002668, mpi   8, omp   1, executable xthi-a
+    Node    1, hostname nid002669, mpi   4, omp   1, executable xthi-b
+    Node    2, hostname nid002670, mpi   4, omp   1, executable xthi-b
+    MPI summary: 16 ranks 
+    Node    0, rank    0, thread   0, (affinity =    0) 
+    Node    0, rank    1, thread   0, (affinity =    1) 
+    Node    0, rank    2, thread   0, (affinity =    2) 
+    Node    0, rank    3, thread   0, (affinity =    3) 
+    Node    0, rank    4, thread   0, (affinity =    4) 
+    Node    0, rank    5, thread   0, (affinity =    5) 
+    Node    0, rank    6, thread   0, (affinity =    6) 
+    Node    0, rank    7, thread   0, (affinity =    7) 
+    Node    1, rank    8, thread   0, (affinity =    0) 
+    Node    1, rank    9, thread   0, (affinity =    1) 
+    Node    1, rank   10, thread   0, (affinity =    2) 
+    Node    1, rank   11, thread   0, (affinity =    3) 
+    Node    2, rank   12, thread   0, (affinity =    0) 
+    Node    2, rank   13, thread   0, (affinity =    1) 
+    Node    2, rank   14, thread   0, (affinity =    2) 
+    Node    2, rank   15, thread   0, (affinity =    3) 
+    
+    ```
+=== "4-cabinet system"
+    
+    If two or more heterogeneous components need to share a unique
+    `MPI_COMM_WORLD`, a single `srun` invocation with the differrent
+    components separated by a colon `:` should be used. For example,
+    
+    ```
+    #!/bin/bash
+    
+    #SBATCH --time=00:20:00
+    #SBATCH --exclusive
+    #SBATCH --export=none
+    
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+    
+    #SBATCH --nodes=1
+    #SBATCH --ntasks-per-node=8
+    
+    #SBATCH hetjob
+    
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+    
+    #SBATCH --nodes=2
+    #SBATCH --ntasks-per-node=4
+    
+    srun --distribution=block:block --hint=nomultithread --het-group=0 ./xthi-a : \
+         --distribution=block:block --hint=nomultithread --het-group=1 ./xthi-b
+    ```
+    
+    The output should confirm we have a single `MPI_COMM_WORLD` with
+    ranks 0-15.
+    ```
+    Node    0, hostname nid001027, mpi   8, omp   1, executable xthi-a
+    Node    1, hostname nid001028, mpi   4, omp   1, executable xthi-b
+    Node    2, hostname nid001048, mpi   4, omp   1, executable xthi-b
+    Node    0, rank    0, thread   0, (affinity =    0)
+    Node    0, rank    1, thread   0, (affinity =    1)
+    Node    0, rank    2, thread   0, (affinity =    2)
+    Node    0, rank    3, thread   0, (affinity =    3)
+    Node    0, rank    4, thread   0, (affinity =    4)
+    Node    0, rank    5, thread   0, (affinity =    5)
+    Node    0, rank    6, thread   0, (affinity =    6)
+    Node    0, rank    7, thread   0, (affinity =    7)
+    Node    1, rank    8, thread   0, (affinity =    0)
+    Node    1, rank    9, thread   0, (affinity =    1)
+    Node    1, rank   10, thread   0, (affinity =    2)
+    Node    1, rank   11, thread   0, (affinity =    3)
+    Node    2, rank   12, thread   0, (affinity =    0)
+    Node    2, rank   13, thread   0, (affinity =    1)
+    Node    2, rank   14, thread   0, (affinity =    2)
+    Node    2, rank   15, thread   0, (affinity =    3)
+    ```
 
 ### Heterogeneous placement for mixed MPI/OpenMP work
 
@@ -1327,44 +1726,75 @@ In the following we have two components. The
 first component runs 8 MPI tasks each with 16 OpenMP threads.
 The second component runs 8 MPI tasks with
 one task per NUMA region on one node; each task has one thread.
-An appropriate SLURM submission might be:
+An appropriate Slurm submission might be:
 
-```
-#!/bin/bash
+=== "Full system"
+       
+    ```
+    #!/bin/bash
+    
+    #SBATCH --time=00:20:00
+    #SBATCH --exclusive
+    #SBATCH --export=none
+    #SBATCH --account=[...]
 
-#SBATCH --time=00:20:00
-#SBATCH --exclusive
-#SBATCH --export=none
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+    
+    #SBATCH --nodes=2
 
-# First component 
+    SHARED_ARGS="--distribution=block:block --hint=nomultithread \
+                 --nodes=1 --tasks-per-node=8 --cpus-per-task=16"
 
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+    # Do not set OMP_NUM_THREADS in the calling environment
+    
+    unset OMP_NUM_THREADS
+    export OMP_PROC_BIND=spread
 
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=8
-#SBATCH --cpus-per-task=16
-#SBATCH --hint=nomultithread
+    srun --het-group=0 ${SHARED_ARGS} --export=all,OMP_NUM_THREADS=16 ./xthi-a : \
+         --het-group=1 ${SHARED_ARGS} --export=all,OMP_NUM_THREADS=1  ./xthi-b
+    
+    ```
+    
+=== "4-cabinet system"
+       
+    ```
+    #!/bin/bash
+    
+    #SBATCH --time=00:20:00
+    #SBATCH --exclusive
+    #SBATCH --export=none
+    
+    # First component 
+    
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+    
+    #SBATCH --nodes=1
+    #SBATCH --ntasks-per-node=8
+    #SBATCH --cpus-per-task=16
+    #SBATCH --hint=nomultithread
+    
+    # Second component
+    
+    #SBATCH hetjob
+    
+    #SBATCH --partition=standard
+    
+    #SBATCH --nodes=1
+    #SBATCH --ntasks-per-node=8
+    #SBATCH --cpus-per-task=16
+    
+    # Do not set OMP_NUM_THREADS in the calling environment
+    
+    unset OMP_NUM_THREADS
+    export OMP_PROC_BIND=spread
+    
+    srun --het-group=0 --export=all,OMP_NUM_THREADS=16 ./xthi-a : \
+         --het-group=1 --export=all,OMP_NUM_THREADS=1  ./xthi-b
+    
+    ```
 
-# Second component
-
-#SBATCH hetjob
-
-#SBATCH --partition=standard
-
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=8
-#SBATCH --cpus-per-task=16
-
-# Do not set OMP_NUM_THREADS in the calling environment
-
-unset OMP_NUM_THREADS
-export OMP_PROC_BIND=spread
-
-srun --het-group=0 --export=all,OMP_NUM_THREADS=16 ./xthi-a : \
-     --het-group=1 --export=all,OMP_NUM_THREADS=1  ./xthi-b
-
-```
 The important point here is that `OMP_NUM_THREADS` must not be set
 in the environment that calls `srun` in order that the different
 specifications for the separate groups via `--export` on the `srun`
@@ -1407,6 +1837,7 @@ Node    1, rank   14, thread   0, (affinity =   96)
 Node    1, rank   15, thread   0, (affinity =  112)
 ```
 
+
 ## Low priority access
 
 Low priority jobs are not charged against your allocation but will only run when
@@ -1417,12 +1848,19 @@ in your budget.
 
 Low priority access is always available and has the following limits:
 
-- 256 node maximum job size
-- 256 nodes maximum in use by any one user
-- 512 nodes maximum in use by low priority at any one time
-- Maximum 4 low priority jobs in the queue per user
-- Maximum 1 low priority job running per user (of the 4 queued)
-- Maximum runtime of 3 hours
+=== "Full system"
+    - No maximum job size
+    - 512 nodes maximum in use by low priority at any one time
+    - Maximum 16 low priority jobs in the queue per user
+    - Maximum 16 low priority job running per user (of the 4 queued)
+    - Maximum runtime of 6 hours
+=== "4-cabinet system"
+    - 256 node maximum job size
+    - 256 nodes maximum in use by any one user
+    - 512 nodes maximum in use by low priority at any one time
+    - Maximum 4 low priority jobs in the queue per user
+    - Maximum 1 low priority job running per user (of the 4 queued)
+    - Maximum runtime of 3 hours
 
 You submit a low priority job on ARCHER2 by using the `lowpriority` QoS. For example,
 you would usually have the following line in your job submission script sbatch 
@@ -1534,33 +1972,35 @@ the communication pattern and other computational characteristics.
 The default is to place MPI tasks sequentially on nodes until the
 maximum number of tasks is reached:
 
-    salloc --nodes=8 --tasks-per-node=2 --cpus-per-task=1 --time=0:10:0 \
-           --account=[account code] --partition=partition code] --qos=standard
-    
-    salloc: Granted job allocation 24236
-    salloc: Waiting for resource configuration
-    salloc: Nodes cn13 are ready for job
-    
-    module load xthi
-    export OMP_NUM_THREADS=1
-    srun --distribution=block:block --hint=nomultithread xthi
-    
-    Hello from rank 0, thread 0, on nid000001. (core affinity = 0,128)
-    Hello from rank 1, thread 0, on nid000001. (core affinity = 16,144)
-    Hello from rank 2, thread 0, on nid000002. (core affinity = 0,128)
-    Hello from rank 3, thread 0, on nid000002. (core affinity = 16,144)
-    Hello from rank 4, thread 0, on nid000003. (core affinity = 0,128)
-    Hello from rank 5, thread 0, on nid000003. (core affinity = 16,144)
-    Hello from rank 6, thread 0, on nid000004. (core affinity = 0,128)
-    Hello from rank 7, thread 0, on nid000004. (core affinity = 16,144)
-    Hello from rank 8, thread 0, on nid000005. (core affinity = 0,128)
-    Hello from rank 9, thread 0, on nid000005. (core affinity = 16,144)
-    Hello from rank 10, thread 0, on nid000006. (core affinity = 0,128)
-    Hello from rank 11, thread 0, on nid000006. (core affinity = 16,144)
-    Hello from rank 12, thread 0, on nid000007. (core affinity = 0,128)
-    Hello from rank 13, thread 0, on nid000007. (core affinity = 16,144)
-    Hello from rank 14, thread 0, on nid000008. (core affinity = 0,128)
-    Hello from rank 15, thread 0, on nid000008. (core affinity = 16,144)
+```
+salloc --nodes=8 --tasks-per-node=2 --cpus-per-task=1 --time=0:10:0 \
+        --account=[account code] --partition=standard --qos=standard
+
+salloc: Granted job allocation 24236
+salloc: Waiting for resource configuration
+salloc: Nodes cn13 are ready for job
+
+module load xthi
+export OMP_NUM_THREADS=1
+srun --distribution=block:block --hint=nomultithread xthi
+
+Hello from rank 0, thread 0, on nid000001. (core affinity = 0,128)
+Hello from rank 1, thread 0, on nid000001. (core affinity = 16,144)
+Hello from rank 2, thread 0, on nid000002. (core affinity = 0,128)
+Hello from rank 3, thread 0, on nid000002. (core affinity = 16,144)
+Hello from rank 4, thread 0, on nid000003. (core affinity = 0,128)
+Hello from rank 5, thread 0, on nid000003. (core affinity = 16,144)
+Hello from rank 6, thread 0, on nid000004. (core affinity = 0,128)
+Hello from rank 7, thread 0, on nid000004. (core affinity = 16,144)
+Hello from rank 8, thread 0, on nid000005. (core affinity = 0,128)
+Hello from rank 9, thread 0, on nid000005. (core affinity = 16,144)
+Hello from rank 10, thread 0, on nid000006. (core affinity = 0,128)
+Hello from rank 11, thread 0, on nid000006. (core affinity = 16,144)
+Hello from rank 12, thread 0, on nid000007. (core affinity = 0,128)
+Hello from rank 13, thread 0, on nid000007. (core affinity = 16,144)
+Hello from rank 14, thread 0, on nid000008. (core affinity = 0,128)
+Hello from rank 15, thread 0, on nid000008. (core affinity = 16,144)
+```
 
 #### `MPICH_RANK_REORDER_METHOD`
 
@@ -1568,33 +2008,35 @@ The `MPICH_RANK_REORDER_METHOD` environment variable is used to specify
 other types of MPI task placement. For example, setting it to 0 results
 in a round-robin placement:
 
-    salloc --nodes=8 --tasks-per-node=2 --cpus-per-task=1 --time=0:10:0 --account=t01
-    
-    salloc: Granted job allocation 24236
-    salloc: Waiting for resource configuration
-    salloc: Nodes cn13 are ready for job
-    
-    module load xthi
-    export OMP_NUM_THREADS=1
-    export MPICH_RANK_REORDER_METHOD=0
-    srun xthi
-    
-    Hello from rank 0, thread 0, on nid000001. (core affinity = 0,128)
-    Hello from rank 1, thread 0, on nid000002. (core affinity = 0,128)
-    Hello from rank 2, thread 0, on nid000003. (core affinity = 0,128)
-    Hello from rank 3, thread 0, on nid000004. (core affinity = 0,128)
-    Hello from rank 4, thread 0, on nid000005. (core affinity = 0,128)
-    Hello from rank 5, thread 0, on nid000006. (core affinity = 0,128)
-    Hello from rank 6, thread 0, on nid000007. (core affinity = 0,128)
-    Hello from rank 7, thread 0, on nid000008. (core affinity = 0,128)
-    Hello from rank 8, thread 0, on nid000001. (core affinity = 16,144)
-    Hello from rank 9, thread 0, on nid000002. (core affinity = 16,144)
-    Hello from rank 10, thread 0, on nid000003. (core affinity = 16,144)
-    Hello from rank 11, thread 0, on nid000004. (core affinity = 16,144)
-    Hello from rank 12, thread 0, on nid000005. (core affinity = 16,144)
-    Hello from rank 13, thread 0, on nid000006. (core affinity = 16,144)
-    Hello from rank 14, thread 0, on nid000007. (core affinity = 16,144)
-    Hello from rank 15, thread 0, on nid000008. (core affinity = 16,144)
+```
+salloc --nodes=8 --tasks-per-node=2 --cpus-per-task=1 --time=0:10:0 --account=t01
+
+salloc: Granted job allocation 24236
+salloc: Waiting for resource configuration
+salloc: Nodes cn13 are ready for job
+
+module load xthi
+export OMP_NUM_THREADS=1
+export MPICH_RANK_REORDER_METHOD=0
+srun xthi
+
+Hello from rank 0, thread 0, on nid000001. (core affinity = 0,128)
+Hello from rank 1, thread 0, on nid000002. (core affinity = 0,128)
+Hello from rank 2, thread 0, on nid000003. (core affinity = 0,128)
+Hello from rank 3, thread 0, on nid000004. (core affinity = 0,128)
+Hello from rank 4, thread 0, on nid000005. (core affinity = 0,128)
+Hello from rank 5, thread 0, on nid000006. (core affinity = 0,128)
+Hello from rank 6, thread 0, on nid000007. (core affinity = 0,128)
+Hello from rank 7, thread 0, on nid000008. (core affinity = 0,128)
+Hello from rank 8, thread 0, on nid000001. (core affinity = 16,144)
+Hello from rank 9, thread 0, on nid000002. (core affinity = 16,144)
+Hello from rank 10, thread 0, on nid000003. (core affinity = 16,144)
+Hello from rank 11, thread 0, on nid000004. (core affinity = 16,144)
+Hello from rank 12, thread 0, on nid000005. (core affinity = 16,144)
+Hello from rank 13, thread 0, on nid000006. (core affinity = 16,144)
+Hello from rank 14, thread 0, on nid000007. (core affinity = 16,144)
+Hello from rank 15, thread 0, on nid000008. (core affinity = 16,144)
+```
 
 There are other modes available with the `MPICH_RANK_REORDER_METHOD`
 environment variable, including one which lets the user provide a file
@@ -1612,13 +2054,15 @@ parameters the dimensions of the grid, core count, etc. For example, to
 place MPI tasks in row-major order on a Cartesian grid of size $(4, 4,
 4)$, using 32 tasks per node:
 
-    module load perftools-base
-    grid_order -R -c 32 -g 4,4,4
-    
-    # grid_order -R -Z -c 32 -g 4,4,4
-    # Region 3: 0,0,1 (0..63)
-    0,1,2,3,16,17,18,19,32,33,34,35,48,49,50,51,4,5,6,7,20,21,22,23,36,37,38,39,52,53,54,55
-    8,9,10,11,24,25,26,27,40,41,42,43,56,57,58,59,12,13,14,15,28,29,30,31,44,45,46,47,60,61,62,63
+```
+module load perftools-base
+grid_order -R -c 32 -g 4,4,4
+
+# grid_order -R -Z -c 32 -g 4,4,4
+# Region 3: 0,0,1 (0..63)
+0,1,2,3,16,17,18,19,32,33,34,35,48,49,50,51,4,5,6,7,20,21,22,23,36,37,38,39,52,53,54,55
+8,9,10,11,24,25,26,27,40,41,42,43,56,57,58,59,12,13,14,15,28,29,30,31,44,45,46,47,60,61,62,63
+```
 
 One can then save this output to a file called `MPICH_RANK_ORDER` and
 then set `MPICH_RANK_REORDER_METHOD=3` before running the job, which
@@ -1637,8 +2081,10 @@ using the default 4KB.
 To use huge pages for an application (with the 2 MB huge pages as an
 example):
 
-    module load craype-hugepages2M
-    cc -o mycode.exe mycode.c
+```
+module load craype-hugepages2M
+cc -o mycode.exe mycode.c
+```
 
 And also load the same huge pages module at runtime.
 

@@ -18,7 +18,13 @@ installation.
 
 ### Version history
 
-- Module `slepc/3.13.2` installed January 2021
+=== "Full system"
+    
+    - Module `slepc/3.14.1` installed October 2021 (PE 21.04)
+    
+=== "4-cabinet system"
+    
+    - Module `slepc/3.13.2` installed January 2021
 
 
 ## Compiling your own version
@@ -28,7 +34,7 @@ using a script available from the ARCHER2 github repository:
 ```
 $ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
 $ cd pe-scripts
-$ git checkout cse-develop
+$ git checkout modules-2021-10
 $ ./sh/slepc.sh --prefix=/path/to/install/location
 ```
 The dependencies (including PETSc) can be built in the same way,

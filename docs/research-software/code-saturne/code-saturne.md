@@ -13,22 +13,23 @@ rotor/stator interaction for hydraulic machines.
 
 ## Useful Links
 
-  - Code\_Saturne home page <https://www.code-saturne.org/cms/>
-  - Code\_Saturne user guides
-    <https://www.code-saturne.org/cms/documentation/guides>
-  - Code\_Saturne users' forum <https://www.code-saturne.org/forum/>
+  - [Code\_Saturne home page](https://www.code-saturne.org/cms/web/)
+  - [Code\_Saturne user guides](https://www.code-saturne.org/cms/web/Documentation)
+  - [Code\_Saturne users' forum](https://www.code-saturne.org/forum/)
 
 ## Using Code\_Saturne on ARCHER2
 
 Code\_Saturne is released under the GNU General Public Licence v2 and so
 is freely available to all users on ARCHER2.
 
-You can load Code\_Saturne 6.0.5 for use by running the following
+You can load the default GCC build of Code\_Saturne for use by running the following
 command:
 
 ```
-module load code_saturne/6.0.5-gcc10
+module load code_saturne
 ```
+
+On the 4-cabinet system this will load the default `code_saturne/6.0.5-gcc10` module. On the 23-cabinet system the default `code_saturne/7.0.1-gcc11` module will be loaded. A build using the CCE compilers, `code_saturne/7.0.1-cce12`, has also been made optionally available to users on the full ARCHER2 system as testing indicates that this may provide improved performance over the GCC build.
 
 ## Running parallel Code\_Saturne jobs
 
@@ -54,45 +55,79 @@ You should also add the two `module` commands, and
 `export LD_LIBRARY_PATH=...` and `cd` commands are redundant and may be
 retained or removed.
 
-This script will run an MPI-only Code\_Saturne job over 4 nodes (128 x 4
-= 512 cores) for a maximum of 20 minutes.
+This script will run an MPI-only Code\_Saturne job using the default GCC build and UCX
+over 4 nodes (128 x 4 = 512 cores) for a maximum of 20 minutes.
 
-```slurm
-#!/bin/bash
-#SBATCH --export=none
-#SBATCH --job-name=CSExample
-#SBATCH --time=0:20:0
-#SBATCH --nodes=4
-#SBATCH --tasks-per-node=128
-#SBATCH --cpus-per-task=1
+=== "Full system"
+    ```
+    #!/bin/bash
+    #SBATCH --export=none
+    #SBATCH --job-name=CSExample
+    #SBATCH --time=0:20:0
+    #SBATCH --nodes=4
+    #SBATCH --tasks-per-node=128
+    #SBATCH --cpus-per-task=1
 
-# Replace [budget code] below with your project code (e.g. t01)
-#SBATCH --account=[budget code]
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+    # Replace [budget code] below with your project code (e.g. t01)
+    #SBATCH --account=[budget code]
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
 
-# Setup the batch environment
-module load epcc-job-env
+    # Load the GCC build of Code_Saturne 7.0.1
+    module load cpe/21.09
+    module load PrgEnv-gnu
+    module load code_saturne
 
-module load code_saturne
+    # Switch to mpich-ucx implementation (see info note below)
+    module swap craype-network-ofi craype-network-ucx
+    module swap cray-mpich cray-mpich-ucx
 
-# Switch to mpich-ucx implementation (see info note below)
-module switch cray-mpich/8.0.16 cray-mpich-ucx/8.0.16
-module switch craype-network-ofi craype-network-ucx
+    # Prevent threading.
+    export OMP_NUM_THREADS=1
 
-# Prevent threading.
-export OMP_NUM_THREADS=1
+    # Run solver.
+    srun --distribution=block:block --hint=nomultithread ./cs_solver --mpi $@
+    ```
 
-# Run solver.
-srun --distribution=block:block --hint=nomultithread ./cs_solver --mpi $@
-```
+=== "4-cabinet system"
+    ```
+    #!/bin/bash
+    #SBATCH --export=none
+    #SBATCH --job-name=CSExample
+    #SBATCH --time=0:20:0
+    #SBATCH --nodes=4
+    #SBATCH --tasks-per-node=128
+    #SBATCH --cpus-per-task=1
+
+    # Replace [budget code] below with your project code (e.g. t01)
+    #SBATCH --account=[budget code]
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+
+    # Setup the batch environment
+    module load epcc-job-env
+
+    # Load the GCC build of Code_Saturne 6.0.5
+    module load code_saturne
+
+    # Switch to mpich-ucx implementation (see info note below)
+    module switch cray-mpich/8.0.16 cray-mpich-ucx/8.0.16
+    module switch craype-network-ofi craype-network-ucx
+
+    # Prevent threading.
+    export OMP_NUM_THREADS=1
+
+    # Run solver.
+    srun --distribution=block:block --hint=nomultithread ./cs_solver --mpi $@
+    ```
 
 The script can then be submitted to the batch system with `sbatch`.
 
 !!! info
     There is a known issue with the default MPI collectives which is
     causing performance issues on Code_Saturne. The suggested workaround is to
-    switch to the mpich-ucx implementation.
+    switch to the mpich-ucx implementation. For this to link correctly on the full system, the extra
+    `cpe/21.09` and `PrgEnv-gnu` modules also have to be explicitly loaded.
 
 ## Compiling Code\_Saturne
 

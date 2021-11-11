@@ -42,7 +42,7 @@ the Project Code:
 1.  [Log into SAFE](https://safe.epcc.ed.ac.uk)
 2.  Use the *Login accounts - Request new account* menu item
 3.  Select the correct project from the drop down list
-4.  Select the *archer2-4c* machine in the list of available machines
+4.  Select the *archer2* machine in the list of available machines
 5.  Click *Next*
 6.  Enter a username for the account and (optionally) an SSH public
     key
@@ -119,9 +119,9 @@ Policy](https://www.archer2.ac.uk/about/policies/passwords_usernames.html).
 
 ## Login to ARCHER2
 
-To log into ARCHER2 you should use the `login-4c.archer2.ac.uk` address:
+To log into ARCHER2 you should use the `login.archer2.ac.uk` address:
 
-    ssh [userID]@login-4c.archer2.ac.uk
+    ssh [userID]@login.archer2.ac.uk
 
 You will first be prompted for your machine account password. Once you
 have entered your password successfully, you will then be prompted for
@@ -134,7 +134,7 @@ credentials correctly to be able to access ARCHER2.
     to the private part of the key wih the `-i` option to `ssh`. For
     example, if your key is in a file called `keys/id_rsa_archer2` you would
     use the command `ssh -i keys/id_rsa_archer2
-    username@login-4c.archer2.ac.uk` to log in.
+    username@login.archer2.ac.uk` to log in.
 
 !!! tip
     When you first log into ARCHER2, you will be prompted to change your
@@ -162,11 +162,15 @@ in advance to ensure that the data is secure and in a useful form.
 
 ARCHER2 file systems are:
 
-  - **/home**: backed up for disaster recovery purposes only, data
-    recovery for accidental deletion is not supported. NFS is available
-    on login and service nodes.
-  - **/work**: not backed-up. Lustre is available on login, service and
+  - **home** file systems: backed up. Available on login and data analysis nodes.
+  - **work** file systems: not backed-up. Available on login, data analysis and
     compute nodes.
+
+All users have a directory on one of the home file systems and on
+one of the work file systems. The directories are located at:
+
+- `/home/[project ID]/[project ID]/[user ID]` (this is also set as your home directory)
+- `/work/[project ID]/[project ID]/[user ID]`
 
 Top tips for managing data on ARCHER2:
 
@@ -188,14 +192,14 @@ Top tips for managing data on ARCHER2:
     automatically verify the integrity of an archive.
 
 !!! hint
-    Information on best practice in managing you data is available in the
-    [Data management and transfer](https://docs.archer2.ac.uk/user-guide/data/) section of the
-    User Guide.
+    Information on the file systems and best practice in managing you
+    data is available in the
+    [Data management and transfer](https://docs.archer2.ac.uk/user-guide/data/) section of the User and Best Practice Guide.
 
 ## Accessing software
 
-Software on ARCHER2 is principally accessed through environment modules.
-These load and unload the desired compilers, tools and libraries through
+Software on ARCHER2 is principally accessed through *modules*.
+These load and unload the desired applications, compilers, tools and libraries through
 the `module` command and its subcommands. Some modules will be loaded by
 default on login, providing a default working environment; many more
 will be available for use but initially unloaded, allowing you to set up
@@ -217,7 +221,7 @@ available versions and variants of VASP may be found by running
     module avail vasp
 
 You will see that different versions are available for many modules. For
-example, `vasp/5/5.4.4` and `vasp/6/6.1.0` are two available versions of
+example, `vasp/5/5.4.4.pl2` and `vasp/6/6.1.0` are two available versions of
 VASP. Furthermore, a default version may be specified; this is used if
 no version is provided by the user.
 
@@ -226,18 +230,16 @@ no version is provided by the user.
     You must have a valid licence to use licensed software on ARCHER2. Often
     you will need to request access through the SAFE. More on this below.
 
-The `module load` and `module add` commands perform the same action,
-loading a module for use. Following the above,
+The `module load` command loads a module for use. Following the above,
 
     module load vasp/5
 
 would load the default version of VASP 5, while
 
-    module load vasp/5/5.4.4
+    module load vasp/5/5.4.4.pl2
 
-would specifically load version `5.4.4`. A loaded module may be unloaded
-through the identical `module unload`, `module remove` or `module
-delete` commands, e.g.
+would specifically load version `5.4.4.pl2`. A loaded module may be unloaded
+through the identical `module remove` command, e.g.
 
     module unload vasp
 
@@ -245,7 +247,7 @@ The above unloads whichever version of VASP is currently in the
 environment. Rather than issuing separate unload and load commands,
 versions of a module may be swapped as follows:
 
-    module swap vasp vasp/5/5.4.4
+    module swap vasp vasp/5/5.4.4.pl2
 
 Other helpful commands are:
 
@@ -268,6 +270,10 @@ Points to be aware of include:
     suspect that two modules may be interfering with one another, you
     can examine their contents with `module show`.
 
+More information on modules and the software environment on 
+ARCHER2 can be found in the [Software environment](../user-guide/sw-environment.md)
+section of the User and Best Practice Guide.
+
 ### Requesting access to licensed software
 
 Some of the software installed on ARCHER2 requires a user to have a
@@ -276,10 +282,10 @@ use it (for example, VASP). Although you will be able to load this
 software on ARCHER2, you will be barred from actually using it until
 your licence has been verified.
 
-You request access to licensed software through the EPCC SAFE (the web
-administration tool you used to apply for your account and retrieve your
-initial password) by being added to the appropriate *Package Group*. To
-request access to licensed software:
+You request access to licensed software through the [SAFE](http://safe.epcc.ed.ac.uk) 
+(the web administration tool you used to apply for your account and
+retrieve your initial password) by being added to the appropriate
+*Package Group*. To request access to licensed software:
 
 1.  Log in to [SAFE](https://safe.epcc.ed.ac.uk)
 2.  Go to the Menu *Login accounts* and select the login account which
@@ -314,17 +320,18 @@ launch your parallel executable.
     and Best Practice Guide.
 
 !!! important
-    Parallel jobs on ARCHER2 should be run from the /work file system as
-    /home is not available on the compute nodes - you will see a `chdir` or
-    *file not found* error if you try to run a job from the /home file
-    system.
+    Parallel jobs on ARCHER2 should be run from the work file systems as
+    the home file systems are not available on the compute nodes - you
+    will see a `chdir` or
+    *file not found* error if you try to access data on the home file
+    system within a parallel job running on the compute nodes.
 
 Create a job submission script called `submit.slurm` in your space on
-the work file system using your favourite text editor. For example,
+the work file systems using your favourite text editor. For example,
 using `vim`:
 
-    auser@uan01:~> cd /work/t01/t01/auser
-    auser@uan01:/work/t01/t01/auser> vim submit.slurm
+    auser@ln01:~> cd /work/t01/t01/auser
+    auser@ln01:/work/t01/t01/auser> vim submit.slurm
 
 !!! tip
     You will need to use your project code and username to get to the
@@ -351,9 +358,6 @@ Paste the following text into your job submission script, replacing
     #SBATCH --partition=standard
     #SBATCH --qos=standard
     
-    # Setup the batch environment
-    module load epcc-job-env
-    
     # Load the xthi module to get access to the xthi program
     module load xthi
     
@@ -364,19 +368,18 @@ Paste the following text into your job submission script, replacing
 
 You submit your job to the queues using the `sbatch` command:
 
-    auser@uan01:/work/t01/t01/auser> sbatch submit.slurm
+    auser@ln01:/work/t01/t01/auser> sbatch submit.slurm
     Submitted batch job 23996
     
     The value returned is your *Job ID*.
 
 ## Monitoring your job
 
-You use the `squeue` command to examine jobs in the queue. Use:
+You use the `squeue` command to examine jobs in the queue. To list all the jobs **you** have in the queue, use:
 
-    auser@uan01:/work/t01/t01/auser> squeue -u $USER
+    auser@ln01:/work/t01/t01/auser> squeue -u $USER
 
-To list all the jobs **you** have in the queue. `squeue` on its own
-lists all jobs in the queue from all users.
+`squeue` on its own lists all jobs in the queue from all users.
 
 ## Checking the output from the job
 
@@ -386,7 +389,7 @@ The job submission script above should write the output to a file called
 `cat` command. If the job was successful you should see output that
 looks something like:
 
-    auser@eslogin01:/work/t01/t01/auser> cat slurm-23996.out
+    auser@ln01:/work/t01/t01/auser> cat slurm-23996.out
     Node    0, hostname nid001020
     Node    0, rank    0, thread   0, (affinity =    0)
     Node    0, rank    1, thread   0, (affinity =    1)
@@ -422,12 +425,12 @@ research outputs that were generated using the ARCHER2 service:
 
 > This work used the ARCHER2 UK National Supercomputing Service (https://www.archer2.ac.uk).
 
-You should also tag outputs with the keyword ARCHER2 whenever possible.
+You should also tag outputs with the keyword "ARCHER2" whenever possible.
 
 ## Useful Links
 
 If you plan to compile your own programs on ARCHER2, you may also want
-to look at `quickstart-developers`.
+to look at [Quickstart for developers](../quickstart-developers).
 
 Other documentation you may find useful:
 
@@ -436,5 +439,5 @@ Other documentation you may find useful:
     fundamentals (required by all users to use the system effectively),
     best practice for getting the most out of ARCHER2, and more advanced
     technical topics.
-  - [Cray Programming Environment User
-    Guide](https://pubs.cray.com/content/S-2529/17.05/xctm-series-programming-environment-user-guide-1705-s-2529/introduction)
+  - [HPE Cray Programming Environment User
+    Guide](https://internal.support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&docId=a00115304en_us)

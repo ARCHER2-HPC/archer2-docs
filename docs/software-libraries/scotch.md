@@ -41,12 +41,21 @@ user manuals for further details.
 
 ### Module version history
 
-* Module `scotch/6.0.10` installed January 2021
+=== "Full system"
+    
+    * Module `scotch/6.1.0 installed October 2021 (PE 21.04)
+        
+        Known issue: a small number of the standard PT-Scotch tests are
+        failing (all programming environments). Symptoms include truncated
+        `MPI_Recvs`. This is currently being investigated.
+    
+=== "4-cabinet system"
 
-    Known issue: a small number of the standard PT-Scotch tests are
-    failing (all programming environments). Symptoms include truncated
-    `MPI_Recvs`. This is currently being investigated.
-
+    * Module `scotch/6.0.10` installed January 2021
+        
+        Known issue: a small number of the standard PT-Scotch tests are
+        failing (all programming environments). Symptoms include truncated
+        `MPI_Recvs`. This is currently being investigated.
 
 ## Compiling your own version
 
@@ -60,7 +69,7 @@ using the following mechanism:
 ```
 $ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
 $ cd pe-scripts
-$ git checkout cse-develop
+$ git checkout modules-2021-10
 $ ./sh/tpsl/scotch.sh --prefix=/path/to/install/location
 ```
 where the `--prefix` option defines the destination for the install.
@@ -69,7 +78,7 @@ This script will download, compile and install the librairies.
 
 ## Resources
 
-The [Scotch home page](https://github.com/ARCHER2-HPC/pe-scripts.git)
+The [Scotch home page](https://www.labri.fr/perso/pelegrin/scotch/)
 
 Scotch [user manual](https://gforge.inria.fr/docman/view.php/248/8260/scotch_user6.0.pdf) (pdf)
 
