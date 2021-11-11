@@ -2,95 +2,82 @@
 
 This section covers the following questions:
 
-  - When will I be able to access ARCHER2 full service? 
-  - Has my project been enabled on ARCHER2 full service?
-  - How much resource will my project have on ARCHER2 full service?
-  - How do I set up an ARCHER2 account?
-  - How do I log into ARCHER2 for the first time?
+  - When will I be able to access ARCHER2 full system? 
+  - Has my project been enabled on ARCHER2 full system?
+  - How much resource will my project have on ARCHER2 full system?
+  - How do I set up an account on the full system?
+  - How do I log into the different ARCHER2 systems?
 
 !!! tip
     If you need help or have questions on using ARCHER2 4-cabinet system and ARCHER2 full system
     please [contact the ARCHER2 service desk](https://www.archer2.ac.uk/support-access/servicedesk.html)
 
-## When will I be able to access ARCHER2 full service?
+## When will I be able to access ARCHER2 full system? 
 
-We anticipate that users will have access from mid-late November. Users will have access to both the ARCHER2-4Cabinet and ARCHER2 full service for at least 30 days. UKRI will confirm the dates and these will be communicated to you as they are confirmed. There will be at least 14 days notice before access to the ARCHER2-4Cabinet system is removed. 
+We anticipate that users will have access from mid-late November. Users will have access to both the ARCHER2 4-cabinet system and ARCHER2 full system for at least 30 days. UKRI will confirm the dates and these will be communicated to you as they are confirmed. There will be at least 14 days notice before access to the ARCHER2 4-Cabinet system is removed. 
 
-!!! important "Dates (tbc with UKRI)"
-    mid-late November: Access to ARCHER2 full service
-    30 days later tbc: with 14 days notice, access to ARCHER2-4C and the archer2-work filesystem removed 
-    
-## Has my project been enabled on ARCHER2 full service?
+## Has my project been enabled on ARCHER2 full system?
 
-If you have an active ARCHER2-4Cabinet allocation on 1st October 2021 then your project will be enabled on the ARCHER2 full service. The project code is the same on the full service as it is on ARCHER2-4Cabinet service. 
+If you have an active ARCHER2 4-cabinet system allocation on 1st October 2021 then your project will be enabled on the ARCHER2 full system. The project code is the same on the full service as it is on ARCHER2 4-cabinet system. 
 
 Some further information that may be useful:
 
-   - If you are a member of the EPSRC or NERC consortia on ARCHER2 then all of these consortia *have* been enabled on ARCHER2 full service.
-     [A list of the consortia and their ARCHER2 codes can be found on the ARCHER2 website.](https://www.archer2.ac.uk/research/consortia/)
+   - If you are a member of the EPSRC or NERC consortia on ARCHER2 then all of these consortia *have* been enabled on ARCHER2 full system. [A list of the consortia and their ARCHER2 codes can be found on the ARCHER2 website.](https://www.archer2.ac.uk/research/consortia/)
    
-## How much resource will my project have on ARCHER2 full service?
+## How much resource will my project have on ARCHER2 full system?
 
-The unit of allocation on ARCHER2 is called the ARCHER2 Compute Unit (CU) and, in general, 1 CU will be worth 1 ARCHER2 node hour.
-The same allocation unit and resource pool is used on both the ARCHER2-4Cabinet and ARCHER2 full service. 
+The unit of allocation on ARCHER2 is called the ARCHER2 Compute Unit (CU) and 1 CU is equivalent to 1 ARCHER2 node hour.
+Your time budget will be shared on both systems. This means that any existing allocation available to your project on the 4-cabinet system will also be available on the full system. 
 
-There will be an initial no-charging period on the ARCHER2 full service but projects will need to have a positive budget to use this. Users will be notified before the no-charging period ends.
+There will be a period of at least 30 days where users will have access to both the 4-cabinet system and the full system. During this time, use on the full system will be uncharged and use on the 4-cabinet system will be a charged in the usual way.  Users will be notified before the no-charging period ends.
 
 
-## How do I set up an ARCHER2 full service account?
+## How do I set up an account on the full system?
 
-Users will keep the same username and SSH keys that they use on archer2-4c and these will be enabled for the archer2 full service.
-Your archer2 machine account will be enabled for the ARCHER2 full service without you having to do anything. 
+You will keep the same usernames, passwords and SSH keys that you use on the 4-cabinet system on the full system.
 
-Once you have been notified that the ARCHER2 full service is open, you will be able to check that your account has been enabled by logging into the unified SAFE. 
-The URL for the unified SAFE is:
-   - [https://safe.epcc.ed.ac.uk](https://safe.epcc.ed.ac.uk)
+You do not need to do anything to enable your account, these will be made available automatically once access to the full system is avaiable. 
+ 
+You will connect to the full system in the same way as you connect to the 4-cabinet system except for switching the ordering of the credentials: 
 
-!!! important
-    To check that your account has been enabled on the ARCHER2 full system, <br>
-    log into [SAFE](https://safe.epcc.ed.ac.uk):<br>
-    Select the login account from the pulldown menu, Login Accounts <br>
-    You will see the list of Machines which the account is enabled on: archer2-4c and archer2 should both be listed
-      
-## How do I log into ARCHER2 for the first time?
+* 4-cabinet system: enter machine account password then passphrase for SSH key pair
+* Full system: enter passphrase for SSH key pair then machine account password
+ 
+## How do I log into the different ARCHER2 systems?
 
 The ARCHER2 documentation covers logging in to ARCHER2 from a variety of operating systems:
    - [Logging in to ARCHER2 from macOS/Linux](https://docs.archer2.ac.uk/user-guide/connecting/#logging-in-from-linux-and-macos)
    - [Logging in to ARCHER2 from Windows](https://docs.archer2.ac.uk/user-guide/connecting/#logging-in-from-windows-using-mobaxterm)
 
-!!! tip
-    The ordering of the two factors for conencting to the full service is the reverse than that on ARCHER2-4Cabinet: <br>
-    archer2-4c: machine password, passphrase for SSH key pair<br>
-    archer2: passphrase for SSH key pair, machine password
-
-!!! important "login address for the system"  
-    ARCHER2 4Cabinet: login-4c.archer2.ac.uk<br>
-    ARCHER2 full service : login.archer2.ac.uk
+Login addresses:
+ 
+* ARCHER2 4-cabinet system: login-4c.archer2.ac.uk
+* ARCHER2 full system: login.archer2.ac.uk
 
 
 ## What will happen to ARCHER2 data? 
 
-There are three filsystems associated with the ARCHER2 Service: 
+There are three file systems associated with the ARCHER2 Service: 
+ 
+### home file systems
 
-/home: 
-Users /home directory will be mounted on both the ARCHER2-4C service and the ARCHER2 full service. Users will be able to access the /home filesystem from both services and no action is required to move data. The /home filesystem will be read and writeable on both services during the transition period.  
+The home file systems will be mounted on both the 4-cabinet system and the full system; so users’ directories are shared across the two systems. Users will be able to access the home file systems from both systems and no action is required to move data. The home file systems will be read and writeable on both services during the transition period. 
+ 
+### work file systems
 
-/work:
-The work filesystem on archer2-4c (archer2-4c-work) will remain available on the 4cabinet service. There will be a new /work filesystem on the ARCHER2 full service. 
-Users will have a new allocation on this new /work filesystem on the ARCHER2 full service (a2fs-work1, a2fs-work2, a2fs-work3).  The initial quota will typically be double the quota of ARCHER2-4C /work (archer2-4c-work).
+There are different work file systems for the 4-cabinet system and the full system. 
+ 
+The work file system on the 4-cabinet system (labelled “archer2-4c-work” in SAFE) will remain available on the 4-cabinet system during the transition period.
 
-!!! important
-Users are responsible for transferring their /work data from archer2-4c-work to their new archer2 /work filesystem (a2fs-work1, a2fs-work2, a2fs-work3).
-archer2-4c-work will be available for the users to transfer their work from for at least 30 days and 14 days notice will be given before archer2-4c is removed.
-There is a data migration guide which can be found at: <link to Julien's guide>. 
- 
-RDFaaS: 
-The RDFaaS filesystems (/epsrc and /general) are read and writeable from both archer2-4c and archer2 full system.  
+There will be a new work file systems on the full system and you will have new directories on the new work file systems. Your initial quotas will typically be double your quotas for the 4-cabinet work file system.
+ 
+Important: you are responsible for transferring any required data from the 4-cabinet work file systems  to your new directories on the work file systems on the full system.
 
+The work file system on the 4-cabinet system will be available for you to transfer your data from for at least 30 days from the start of the ARCHER2 full system access and 14 days notice will be given before the 4-cabinet work file system is removed.
 
-## Will my code run on ARCHER2 full service? 
+### RDFaaS file systems
 
-We expect compiled code that runs successfully on archer2-4c to run successfully on archer2 full service. 
-More details about the differences between archer2-4c and archer2 full service can be found at<link to Andy's page on system differences>
+For users who have access to the RDFaaS, your RDFaaS data will be available on both the 4-cabinet system and the full system during the transition period and will be readable and writeable on both systems.
+
 
 
