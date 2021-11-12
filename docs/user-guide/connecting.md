@@ -155,6 +155,9 @@ You can use the following command from the [terminal](#command-line-terminal) wi
     ssh username@login-4c.archer2.ac.uk
     ```
 
+The order in which you are asked for credentials depends on the system you
+are accessing:
+
 === "Full system"
     You will first be prompted for the passphrase associated with your SSH key pair. Once you have entered this passphrase successfully, you will then be prompted for your machine account password. You need to enter both credentials correctly to be able to access ARCHER2.
 === "4-cabinet system"
