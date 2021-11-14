@@ -35,7 +35,7 @@ The compute nodes each have 128 cores. They are dual socket nodes with two 64 co
 
 
 ## Memory details
-The 5,568 standard nodes have 256 GB and the 292 high memory nodes have 512 GB of 8 channel DDR4 3200MHz with 204.8 GB/s peak bandwidth.
+The 5,568 standard nodes have 256 GB and the 584 high memory nodes have 512 GB of 8 channel DDR4 3200MHz with 204.8 GB/s peak bandwidth.
 
 ## Interconnect details
 ARCHER2 has a HPE Slingshot interconnect with 200 Gb/s signalling. It uses a dragonfly topology:
