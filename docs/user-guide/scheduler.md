@@ -183,7 +183,7 @@ on ARCHER2.
 === "Full system"
     | Partition | Description                                                 | Max nodes available |
     | --------- | ----------------------------------------------------------- | ------------------- |
-    | standard  | CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 256 GB memory | 5366                |
+    | standard  | CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 256 GB memory | 5276                |
     | highmem  | CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 512 GB memory | 584                |
 
 === "4-cabinet system"
