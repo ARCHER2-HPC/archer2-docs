@@ -234,7 +234,7 @@ using the `srun` command directly. For example, to reserve 1 core
 and 8 GB of memory, you would use:
 
 ```bash 
-auser@ln01:> srun   --time=00:20:00 --partition=serial --qos=serial \
+auser@ln01:~> srun   --time=00:20:00 --partition=serial --qos=serial \
                     --account=[budget code]    \
                     --ntasks=1 --mem=8gb \
                     --pty /bin/bash
@@ -261,7 +261,7 @@ You can view data on the data analysis nodes by starting an interactive
 your local system:
 
 ```bash 
-auser@ln01:> srun   --time=00:20:00 --partition=serial --qos=serial  \
+auser@ln01:~> srun   --time=00:20:00 --partition=serial --qos=serial  \
                         --hint=nomultithread --account=[budget code]    \
                         --ntasks=[number of cores] --mem=[memory in MB] \
                         --x11 --pty /bin/bash

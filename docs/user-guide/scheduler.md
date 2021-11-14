@@ -1956,7 +1956,7 @@ Your request will be checked by the ARCHER2 User Administration team and, if app
 
 You can run serial jobs on the shared data analysis nodes. More information
 on using the data analysis nodes (including example job submission scripts)
-can be found in the[Data Analysis section](analysis.md) of the User and Best
+can be found in the [Data Analysis section](analysis.md) of the User and Best
 Practice Guide.
 
 ## Best practices for job submission
