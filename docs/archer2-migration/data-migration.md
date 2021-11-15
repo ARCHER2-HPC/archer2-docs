@@ -17,7 +17,7 @@ transferred.
     
 !!! tip
     Unlike normal access, ARCHER2 4-cabinet system to ARCHER2 full system transfer 
-    has been set up to require only one form of authentication. You will not need 
+    has been set up to require only one form of authentication. You will **not** need 
     to generate a new SSH key pair to transfer data from the ARCHER2 4-cabinet system 
     to ARCHER2 as your password will suffice.
 
@@ -50,7 +50,7 @@ the budget associated with that username.
 We use the `-P` flag to allow partial transfer -- the same
 command could be used to restart the transfer after a loss of
 connection. We move our research archive to our project work directory 
-on the ARCHER2 full ssystem.
+on the ARCHER2 full system.
 
 ## Transferring data using scp
 
