@@ -16,7 +16,7 @@ have seen that application binaries compiled on the 4-cabinet
 system can usually be copied over to the full system and work
 well and give good performance. However, if you run into issues
 with executables taken from the 4-cabinet system on the full system
-you should recompile in the fist instance.
+you should recompile in the first instance.
 
 Information on compiling applications on the full system can be
 found in the

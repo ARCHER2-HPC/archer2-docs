@@ -36,7 +36,7 @@ There will be a period of at least 30 days where users will have access to both 
 
 You will keep the same usernames, passwords and SSH keys that you use on the 4-cabinet system on the full system.
 
-You do not need to do anything to enable your account, these will be made available automatically once access to the full system is avaiable. 
+You do not need to do anything to enable your account, these will be made available automatically once access to the full system is available. 
  
 You will connect to the full system in the same way as you connect to the 4-cabinet system except for switching the ordering of the credentials: 
 
@@ -69,7 +69,7 @@ There are different work file systems for the 4-cabinet system and the full syst
  
 The work file system on the 4-cabinet system (labelled “archer2-4c-work” in SAFE) will remain available on the 4-cabinet system during the transition period.
 
-There will be a new work file systems on the full system and you will have new directories on the new work file systems. Your initial quotas will typically be double your quotas for the 4-cabinet work file system.
+There will be new work file systems on the full system and you will have new directories on the new work file systems. Your initial quotas will typically be double your quotas for the 4-cabinet work file system.
  
 Important: you are responsible for transferring any required data from the 4-cabinet work file systems  to your new directories on the work file systems on the full system.
 
