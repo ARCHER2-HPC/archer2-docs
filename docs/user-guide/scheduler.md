@@ -82,20 +82,24 @@ We cover each of these commands in more detail below.
 partitions. Without any options, `sinfo` lists the status of all
 resources and partitions, e.g.
 
-    sinfo 
-    
-    PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST 
-    standard     up 1-00:00:00    105  down* nid[001006,...,002014]
-    standard     up 1-00:00:00     12  drain nid[001016,...,001969]
-    standard     up 1-00:00:00      5   resv nid[001000,001002-001004,001114] 
-    standard     up 1-00:00:00    683  alloc nid[001001,...,001970-001991] 
-    standard     up 1-00:00:00    214   idle nid[001022-001023,...,002015-002023]
-    standard     up 1-00:00:00      2   down nid[001021,001050]
+```bash
+auser@ln01:~> sinfo 
+
+PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST 
+standard     up 1-00:00:00    105  down* nid[001006,...,002014]
+standard     up 1-00:00:00     12  drain nid[001016,...,001969]
+standard     up 1-00:00:00      5   resv nid[001000,001002-001004,001114] 
+standard     up 1-00:00:00    683  alloc nid[001001,...,001970-001991] 
+standard     up 1-00:00:00    214   idle nid[001022-001023,...,002015-002023]
+standard     up 1-00:00:00      2   down nid[001021,001050]
+```
 
 Here we see the number of nodes in different states. For example, 683
 nodes are allocated (running jobs), and 214 are idle (available to run
-jobs). !!! note that long lists of node IDs have been abbreviated with
-`...`.
+jobs).
+
+!!! note
+    that long lists of node IDs have been abbreviated with `...`.
 
 ### `sbatch`: submitting jobs
 
@@ -107,22 +111,28 @@ When you submit the job, the scheduler provides the job ID, which is
 used to identify this job in other Slurm commands and when looking at
 resource usage in SAFE.
 
-    sbatch test-job.slurm
-    Submitted batch job 12345
+```bash
+auser@ln01:~> sbatch test-job.slurm
+Submitted batch job 12345
+```
 
 ### `squeue`: monitoring jobs
 
 `squeue` without any options or arguments shows the current status of
 all jobs known to the scheduler. For example:
 
-    squeue
+```bash
+auser@ln01:~> squeue
+```
 
 will list all jobs on ARCHER2.
 
 The output of this is often overwhelmingly large. You can restrict the
 output to just your jobs by adding the `-u $USER` option:
 
-    squeue -u $USER
+```bash
+auser@ln01:~> squeue -u $USER
+```
 
 ### `scancel`: deleting jobs
 
@@ -134,7 +144,9 @@ stopped immediately.
 want to cancel a specific job you need to provide the job ID of the job
 you wish to cancel/stop. For example:
 
-    scancel 12345
+```bash
+auser@ln01:~> scancel 12345
+```
 
 will cancel (if waiting) or stop (if running) the job with ID `12345`.
 
@@ -142,8 +154,8 @@ will cancel (if waiting) or stop (if running) the job with ID `12345`.
 your pending (queued) jobs but leave the running jobs running, you could
 use:
 
-```
-scancel --state=PENDING
+```bash
+auser@ln01:~> scancel --state=PENDING
 ```
 
 ## Resource Limits
@@ -183,9 +195,9 @@ on ARCHER2.
 === "Full system"
     | Partition | Description                                                 | Max nodes available |
     | --------- | ----------------------------------------------------------- | ------------------- |
-    | standard  | CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 256 GB memory | 5276                |
-    | highmem  | CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 512 GB memory | 584                |
-
+    | standard  | CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 256 GB memory | 5366    |
+    | highmem   | CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 512 GB memory | 292     |
+    | serial    | CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 512 GB memory | 2       |
 === "4-cabinet system"
     | Partition | Description                                                 | Max nodes available |
     | --------- | ----------------------------------------------------------- | ------------------- |
@@ -210,6 +222,7 @@ lists the active QoS on ARCHER2.
     | long       | 64                | 48 hrs       | 16          | 16           | standard     | Minimum walltime of 24 hrs, maximum 512 nodes in use by any one user at any time, maximum of 2048 nodes in use by QoS |
     | largescale | 5860               | 12 hrs        | 8           | 1            | standard     | Minimum job size of 2049 nodes |
     | lowpriority | 5860               | 6 hrs        | 16           | 16            | standard, highmem     | Jobs not charged but requires at least 1 CU in budget to use. |
+    | serial | 32 cores and/or 128 GB memory   | 24 hrs        | 12           | 4            | serial    | Jobs not charged but requires at least 1 CU in budget to use. |
 
 === "4-cabinet system"
     | QoS        | Max Nodes Per Job | Max Walltime | Jobs Queued | Jobs Running | Partition(s) | Notes |
@@ -223,7 +236,9 @@ lists the active QoS on ARCHER2.
 You can find out the QoS that you can use by running the following
 command:
 
-    sacctmgr show assoc user=$USER cluster=archer2-es format=cluster,account,user,qos%50
+```bash
+auser@ln01:~> sacctmgr show assoc user=$USER cluster=archer2-es format=cluster,account,user,qos%50
+```
 
 !!! hint
     If you have needs which do not fit within the current QoS, please
@@ -372,7 +387,18 @@ Other common options that are used are:
    - `--time=<hh:mm:ss>` the maximum walltime for your job. *e.g.* For
      a 6.5 hour walltime, you would use `--time=6:30:0`.
    - `--job-name=<jobname>` set a name for the job to help identify it
-     in
+     in the queue
+
+To prevent the behaviour of batch scripts being dependent on the user
+environment at the point of submission, the option
+
+   - `--export=none` prevents the user environment from being exported
+     to the batch system.
+
+Using the `--export=none` means that the behaviour of batch submissions
+should be repeatable. We strongly recommend its use.
+
+### Additional options for parallel jobs
 
 In addition, parallel jobs will also need to specify how many nodes,
 parallel processes and threads they require.
@@ -382,7 +408,7 @@ parallel processes and threads they require.
      processes (e.g. MPI ranks) per node.
    - `--cpus-per-task=1` if you are using parallel processes only with
      no threading then you should set the number of CPUs (cores) per
-     parallel process to 1. **!!! note:** if you are using threading (e.g.
+     parallel process to 1. **note:** if you are using threading (e.g.
      with OpenMP) then you will need to change this option as described
      below.
 
@@ -402,14 +428,25 @@ to change the `--cpus-per-task` option.
     compute nodes with you. Hence, the minimum amount of resource you can
     request for a parallel job is 1 node (or 128 cores).
 
-To prevent the behaviour of batch scripts being dependent on the user
-environment at the point of submission, the option
+### Options for jobs on the data analysis nodes
 
-   - `--export=none` prevents the user environment from being exported
-     to the batch system.
+The data analysis nodes are shared between all users and can be used to 
+run jobs that require small numbers of cores and/or access to an external
+network to transfer data. These jobs are often **serial jobs** that only
+require a single core.
 
-Using the `--export=none` means that the behaviour of batch submissions
-should be repeatable. We strongly recommend its use.
+To run jobs on the data analysis node you require the following options:
+
+   - `--partition=serial` to select the data analysis nodes
+   - `--qos=serial` to select the data analysis QoS (see above for QoS limits)
+   - `--ntasks=<number of cores>` to select the number of cores you want
+      to use in this job (up to the maximum defined in the QoS)
+   - `--mem=<amount of memory>` to select the amount of memory you require
+      (up to the maximum defined in the QoS).
+
+More information on using the data analysis nodes (including example job
+submission scripts) can be found in the
+[Data Analysis section](analysis.md) of the User and Best Practice Guide.
 
 ## Using modules in the batch system: the `epcc-job-env` module: 4-cabinet system only
 
@@ -1913,6 +1950,13 @@ Your request will be checked by the ARCHER2 User Administration team and, if app
 
 !!! tip
     You can submit jobs to a reservation as soon as the reservation has been set up; jobs will remain queued until the reservation starts.
+
+## Serial jobs
+
+You can run serial jobs on the shared data analysis nodes. More information
+on using the data analysis nodes (including example job submission scripts)
+can be found in the [Data Analysis section](analysis.md) of the User and Best
+Practice Guide.
 
 ## Best practices for job submission
 
