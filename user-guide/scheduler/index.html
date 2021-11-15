@@ -743,6 +743,26 @@
     Specifying resources in job scripts
   </a>
   
+    <nav class="md-nav" aria-label="Specifying resources in job scripts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#additional-options-for-parallel-jobs" class="md-nav__link">
+    Additional options for parallel jobs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#options-for-jobs-on-the-data-analysis-nodes" class="md-nav__link">
+    Options for jobs on the data analysis nodes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -986,6 +1006,13 @@
         <li class="md-nav__item">
   <a href="#reservations" class="md-nav__link">
     Reservations
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#serial-jobs" class="md-nav__link">
+    Serial jobs
   </a>
   
 </li>
@@ -2189,6 +2216,26 @@
     Specifying resources in job scripts
   </a>
   
+    <nav class="md-nav" aria-label="Specifying resources in job scripts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#additional-options-for-parallel-jobs" class="md-nav__link">
+    Additional options for parallel jobs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#options-for-jobs-on-the-data-analysis-nodes" class="md-nav__link">
+    Options for jobs on the data analysis nodes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2437,6 +2484,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#serial-jobs" class="md-nav__link">
+    Serial jobs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#best-practices-for-job-submission" class="md-nav__link">
     Best practices for job submission
   </a>
@@ -2607,20 +2661,23 @@ command line:</p>
 <p><code>sinfo</code> is used to query information about available resources and
 partitions. Without any options, <code>sinfo</code> lists the status of all
 resources and partitions, e.g.</p>
-<pre><code>sinfo
+<div class="highlight"><pre><span></span><code>auser@ln01:~&gt; sinfo 
 
 PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST 
-standard     up 1-00:00:00    105  down* nid[001006,...,002014]
-standard     up 1-00:00:00     12  drain nid[001016,...,001969]
-standard     up 1-00:00:00      5   resv nid[001000,001002-001004,001114] 
-standard     up 1-00:00:00    683  alloc nid[001001,...,001970-001991] 
-standard     up 1-00:00:00    214   idle nid[001022-001023,...,002015-002023]
-standard     up 1-00:00:00      2   down nid[001021,001050]
-</code></pre>
+standard     up <span class="m">1</span>-00:00:00    <span class="m">105</span>  down* nid<span class="o">[</span><span class="m">001006</span>,...,002014<span class="o">]</span>
+standard     up <span class="m">1</span>-00:00:00     <span class="m">12</span>  drain nid<span class="o">[</span><span class="m">001016</span>,...,001969<span class="o">]</span>
+standard     up <span class="m">1</span>-00:00:00      <span class="m">5</span>   resv nid<span class="o">[</span><span class="m">001000</span>,001002-001004,001114<span class="o">]</span> 
+standard     up <span class="m">1</span>-00:00:00    <span class="m">683</span>  alloc nid<span class="o">[</span><span class="m">001001</span>,...,001970-001991<span class="o">]</span> 
+standard     up <span class="m">1</span>-00:00:00    <span class="m">214</span>   idle nid<span class="o">[</span><span class="m">001022</span>-001023,...,002015-002023<span class="o">]</span>
+standard     up <span class="m">1</span>-00:00:00      <span class="m">2</span>   down nid<span class="o">[</span><span class="m">001021</span>,001050<span class="o">]</span>
+</code></pre></div>
 <p>Here we see the number of nodes in different states. For example, 683
 nodes are allocated (running jobs), and 214 are idle (available to run
-jobs). !!! note that long lists of node IDs have been abbreviated with
-<code>...</code>.</p>
+jobs).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>that long lists of node IDs have been abbreviated with <code>...</code>.</p>
+</div>
 <h3 id="sbatch-submitting-jobs"><code>sbatch</code>: submitting jobs</h3>
 <p><code>sbatch</code> is used to submit a job script to the job submission system.
 The script will typically contain one or more <code>srun</code> commands to launch
@@ -2628,19 +2685,19 @@ parallel tasks.</p>
 <p>When you submit the job, the scheduler provides the job ID, which is
 used to identify this job in other Slurm commands and when looking at
 resource usage in SAFE.</p>
-<pre><code>sbatch test-job.slurm
-Submitted batch job 12345
-</code></pre>
+<div class="highlight"><pre><span></span><code>auser@ln01:~&gt; sbatch test-job.slurm
+Submitted batch job <span class="m">12345</span>
+</code></pre></div>
 <h3 id="squeue-monitoring-jobs"><code>squeue</code>: monitoring jobs</h3>
 <p><code>squeue</code> without any options or arguments shows the current status of
 all jobs known to the scheduler. For example:</p>
-<pre><code>squeue
-</code></pre>
+<div class="highlight"><pre><span></span><code>auser@ln01:~&gt; squeue
+</code></pre></div>
 <p>will list all jobs on ARCHER2.</p>
 <p>The output of this is often overwhelmingly large. You can restrict the
 output to just your jobs by adding the <code>-u $USER</code> option:</p>
-<pre><code>squeue -u $USER
-</code></pre>
+<div class="highlight"><pre><span></span><code>auser@ln01:~&gt; squeue -u <span class="nv">$USER</span>
+</code></pre></div>
 <h3 id="scancel-deleting-jobs"><code>scancel</code>: deleting jobs</h3>
 <p><code>scancel</code> is used to delete a jobs from the scheduler. If the job is
 waiting to run it is simply cancelled, if it is a running job then it is
@@ -2648,13 +2705,13 @@ stopped immediately.</p>
 <p><code>scancel</code> on its own will delete all jobs belonging to you. If you only
 want to cancel a specific job you need to provide the job ID of the job
 you wish to cancel/stop. For example:</p>
-<pre><code>scancel 12345
-</code></pre>
+<div class="highlight"><pre><span></span><code>auser@ln01:~&gt; scancel <span class="m">12345</span>
+</code></pre></div>
 <p>will cancel (if waiting) or stop (if running) the job with ID <code>12345</code>.</p>
 <p><code>scancel</code> can take other options. For example, if you want ot cancel all
 your pending (queued) jobs but leave the running jobs running, you could
 use:</p>
-<div class="highlight"><pre><span></span><code>scancel --state=PENDING
+<div class="highlight"><pre><span></span><code>auser@ln01:~&gt; scancel --state<span class="o">=</span>PENDING
 </code></pre></div>
 <h2 id="resource-limits">Resource Limits</h2>
 <p>The ARCHER2 resource limits for any given job are covered by three
@@ -2699,12 +2756,17 @@ on ARCHER2.</p>
 <tr>
 <td>standard</td>
 <td>CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 256 GB memory</td>
-<td>5276</td>
+<td>5366</td>
 </tr>
 <tr>
 <td>highmem</td>
 <td>CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 512 GB memory</td>
-<td>584</td>
+<td>292</td>
+</tr>
+<tr>
+<td>serial</td>
+<td>CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 512 GB memory</td>
+<td>2</td>
 </tr>
 </tbody>
 </table>
@@ -2813,6 +2875,15 @@ lists the active QoS on ARCHER2.</p>
 <td>standard, highmem</td>
 <td>Jobs not charged but requires at least 1 CU in budget to use.</td>
 </tr>
+<tr>
+<td>serial</td>
+<td>32 cores and/or 128 GB memory</td>
+<td>24 hrs</td>
+<td>12</td>
+<td>4</td>
+<td>serial</td>
+<td>Jobs not charged but requires at least 1 CU in budget to use.</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -2881,8 +2952,8 @@ lists the active QoS on ARCHER2.</p>
 </div>
 <p>You can find out the QoS that you can use by running the following
 command:</p>
-<pre><code>sacctmgr show assoc user=$USER cluster=archer2-es format=cluster,account,user,qos%50
-</code></pre>
+<div class="highlight"><pre><span></span><code>auser@ln01:~&gt; sacctmgr show assoc <span class="nv">user</span><span class="o">=</span><span class="nv">$USER</span> <span class="nv">cluster</span><span class="o">=</span>archer2-es <span class="nv">format</span><span class="o">=</span>cluster,account,user,qos%50
+</code></pre></div>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
 <p>If you have needs which do not fit within the current QoS, please
@@ -3138,8 +3209,17 @@ that they wish to charge the job too with the option:</p>
 <li><code>--time=&lt;hh:mm:ss&gt;</code> the maximum walltime for your job. <em>e.g.</em> For
      a 6.5 hour walltime, you would use <code>--time=6:30:0</code>.</li>
 <li><code>--job-name=&lt;jobname&gt;</code> set a name for the job to help identify it
-     in</li>
+     in the queue</li>
 </ul>
+<p>To prevent the behaviour of batch scripts being dependent on the user
+environment at the point of submission, the option</p>
+<ul>
+<li><code>--export=none</code> prevents the user environment from being exported
+     to the batch system.</li>
+</ul>
+<p>Using the <code>--export=none</code> means that the behaviour of batch submissions
+should be repeatable. We strongly recommend its use.</p>
+<h3 id="additional-options-for-parallel-jobs">Additional options for parallel jobs</h3>
 <p>In addition, parallel jobs will also need to specify how many nodes,
 parallel processes and threads they require.</p>
 <ul>
@@ -3148,7 +3228,7 @@ parallel processes and threads they require.</p>
      processes (e.g. MPI ranks) per node.</li>
 <li><code>--cpus-per-task=1</code> if you are using parallel processes only with
      no threading then you should set the number of CPUs (cores) per
-     parallel process to 1. <strong>!!! note:</strong> if you are using threading (e.g.
+     parallel process to 1. <strong>note:</strong> if you are using threading (e.g.
      with OpenMP) then you will need to change this option as described
      below.</li>
 </ul>
@@ -3169,14 +3249,23 @@ for your jobs (<em>i.e.</em> 128 cores) and that no other user can share those
 compute nodes with you. Hence, the minimum amount of resource you can
 request for a parallel job is 1 node (or 128 cores).</p>
 </div>
-<p>To prevent the behaviour of batch scripts being dependent on the user
-environment at the point of submission, the option</p>
+<h3 id="options-for-jobs-on-the-data-analysis-nodes">Options for jobs on the data analysis nodes</h3>
+<p>The data analysis nodes are shared between all users and can be used to 
+run jobs that require small numbers of cores and/or access to an external
+network to transfer data. These jobs are often <strong>serial jobs</strong> that only
+require a single core.</p>
+<p>To run jobs on the data analysis node you require the following options:</p>
 <ul>
-<li><code>--export=none</code> prevents the user environment from being exported
-     to the batch system.</li>
+<li><code>--partition=serial</code> to select the data analysis nodes</li>
+<li><code>--qos=serial</code> to select the data analysis QoS (see above for QoS limits)</li>
+<li><code>--ntasks=&lt;number of cores&gt;</code> to select the number of cores you want
+      to use in this job (up to the maximum defined in the QoS)</li>
+<li><code>--mem=&lt;amount of memory&gt;</code> to select the amount of memory you require
+      (up to the maximum defined in the QoS).</li>
 </ul>
-<p>Using the <code>--export=none</code> means that the behaviour of batch submissions
-should be repeatable. We strongly recommend its use.</p>
+<p>More information on using the data analysis nodes (including example job
+submission scripts) can be found in the
+<a href="../analysis/">Data Analysis section</a> of the User and Best Practice Guide.</p>
 <h2 id="using-modules-in-the-batch-system-the-epcc-job-env-module-4-cabinet-system-only">Using modules in the batch system: the <code>epcc-job-env</code> module: 4-cabinet system only</h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -4562,6 +4651,11 @@ You need to provide the following:</p>
 <p class="admonition-title">Tip</p>
 <p>You can submit jobs to a reservation as soon as the reservation has been set up; jobs will remain queued until the reservation starts.</p>
 </div>
+<h2 id="serial-jobs">Serial jobs</h2>
+<p>You can run serial jobs on the shared data analysis nodes. More information
+on using the data analysis nodes (including example job submission scripts)
+can be found in the <a href="../analysis/">Data Analysis section</a> of the User and Best
+Practice Guide.</p>
 <h2 id="best-practices-for-job-submission">Best practices for job submission</h2>
 <p>This guidance is adapted from <a href="https://docs.nersc.gov/jobs/best-practices/">the advice provided by
 NERSC</a></p>
