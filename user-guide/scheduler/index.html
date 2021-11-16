@@ -2755,13 +2755,13 @@ on ARCHER2.</p>
 <tbody>
 <tr>
 <td>standard</td>
-<td>CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 256 GB memory</td>
-<td>5366</td>
+<td>CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 256/512 GB memory</td>
+<td>5860</td>
 </tr>
 <tr>
 <td>highmem</td>
 <td>CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 512 GB memory</td>
-<td>292</td>
+<td>584</td>
 </tr>
 <tr>
 <td>serial</td>
@@ -2790,9 +2790,11 @@ on ARCHER2.</p>
 </table>
 </div>
 </div>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>You may not have access to all the available partitions.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code>standard</code> partition includes both the standard memory and high memory nodes but standard memory
+nodes are preferentially chosen for jobs where possible. To guarantee access to high memory nodes
+you should specify the <code>highmem</code> partition.</p>
 </div>
 <h3 id="quality-of-service-qos">Quality of Service (QoS)</h3>
 <p>On ARCHER2, job limits are defined by the requested Quality of Service
@@ -2827,7 +2829,7 @@ lists the active QoS on ARCHER2.</p>
 <td>24 hrs</td>
 <td>16</td>
 <td>16</td>
-<td>standard</td>
+<td>highmem</td>
 <td>Maximum of 512 nodes in use by any one user at any time</td>
 </tr>
 <tr>
@@ -2836,7 +2838,7 @@ lists the active QoS on ARCHER2.</p>
 <td>24 hrs</td>
 <td>128</td>
 <td>32</td>
-<td>highmem</td>
+<td>standard</td>
 <td>Maximum of 256 nodes in use by any one user at any time</td>
 </tr>
 <tr>
@@ -4585,7 +4587,6 @@ in your budget.</p>
 <div class="tabbed-set" data-tabs="15:2"><input checked="checked" id="__tabbed_15_1" name="__tabbed_15" type="radio" /><label for="__tabbed_15_1">Full system</label><div class="tabbed-content">
 <ul>
 <li>No maximum job size</li>
-<li>512 nodes maximum in use by low priority at any one time</li>
 <li>Maximum 16 low priority jobs in the queue per user</li>
 <li>Maximum 16 low priority job running per user (of the 4 queued)</li>
 <li>Maximum runtime of 6 hours</li>
@@ -4642,7 +4643,7 @@ You need to provide the following:</p>
 <li>The number of nodes required.</li>
 <li>Your justification for the reservation -- this must be provided or the request will be rejected.</li>
 </ul>
-<p>Your request will be checked by the ARCHER2 User Administration team and, if approved, you will be provided a reservation ID which can be used on the system. To submit jobs to a reservation, you need to add <code>--reservation=&lt;reservation ID&gt;</code> to your job submission script or command.</p>
+<p>Your request will be checked by the ARCHER2 User Administration team and, if approved, you will be provided a reservation ID which can be used on the system. To submit jobs to a reservation, you need to add <code>--reservation=&lt;reservation ID&gt;</code> and <code>--qos=reservation</code> options to your job submission script or command.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>You must have at least 1 CU in the budget to submit a job on ARCHER2, even to a pre-paid reservation.</p>
