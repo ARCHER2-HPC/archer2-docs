@@ -195,16 +195,18 @@ on ARCHER2.
 === "Full system"
     | Partition | Description                                                 | Max nodes available |
     | --------- | ----------------------------------------------------------- | ------------------- |
-    | standard  | CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 256 GB memory | 5366    |
-    | highmem   | CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 512 GB memory | 292     |
+    | standard  | CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 256/512 GB memory | 5860    |
+    | highmem   | CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 512 GB memory | 584     |
     | serial    | CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 512 GB memory | 2       |
 === "4-cabinet system"
     | Partition | Description                                                 | Max nodes available |
     | --------- | ----------------------------------------------------------- | ------------------- |
     | standard  | CPU nodes with AMD EPYC 7742 64-core processor &times; 2    | 1024                |
 
-!!! tip
-    You may not have access to all the available partitions.
+!!! note
+    The `standard` partition includes both the standard memory and high memory nodes but standard memory
+    nodes are preferentially chosen for jobs where possible. To guarantee access to high memory nodes
+    you should specify the `highmem` partition.
 
 ### Quality of Service (QoS)
 
@@ -216,8 +218,8 @@ lists the active QoS on ARCHER2.
     | QoS        | Max Nodes Per Job | Max Walltime | Jobs Queued | Jobs Running | Partition(s) | Notes |
     | ---------- | ----------------- | ------------ | ----------- | ------------ | ------------ | ------|
     | standard   | 2048               | 24 hrs       | 64          | 16           | standard     | Maximum of 2048 nodes in use by any one user at any time |
-    | highmem   | 256               | 24 hrs       | 16          | 16           | standard     | Maximum of 512 nodes in use by any one user at any time |
-    | taskfarm   | 16               | 24 hrs       | 128          | 32           | highmem     | Maximum of 256 nodes in use by any one user at any time |
+    | highmem   | 256               | 24 hrs       | 16          | 16           | highmem     | Maximum of 512 nodes in use by any one user at any time |
+    | taskfarm   | 16               | 24 hrs       | 128          | 32           | standard     | Maximum of 256 nodes in use by any one user at any time |
     | short      | 32                 | 20 mins      | 16           | 4            | standard     | |
     | long       | 64                | 48 hrs       | 16          | 16           | standard     | Minimum walltime of 24 hrs, maximum 512 nodes in use by any one user at any time, maximum of 2048 nodes in use by QoS |
     | largescale | 5860               | 12 hrs        | 8           | 1            | standard     | Minimum job size of 2049 nodes |
@@ -1887,7 +1889,6 @@ Low priority access is always available and has the following limits:
 
 === "Full system"
     - No maximum job size
-    - 512 nodes maximum in use by low priority at any one time
     - Maximum 16 low priority jobs in the queue per user
     - Maximum 16 low priority job running per user (of the 4 queued)
     - Maximum runtime of 6 hours
@@ -1943,7 +1944,7 @@ You need to provide the following:
  - The number of nodes required.
  - Your justification for the reservation -- this must be provided or the request will be rejected.
 
-Your request will be checked by the ARCHER2 User Administration team and, if approved, you will be provided a reservation ID which can be used on the system. To submit jobs to a reservation, you need to add `--reservation=<reservation ID>` to your job submission script or command.
+Your request will be checked by the ARCHER2 User Administration team and, if approved, you will be provided a reservation ID which can be used on the system. To submit jobs to a reservation, you need to add `--reservation=<reservation ID>` and `--qos=reservation` options to your job submission script or command.
 
 !!! important
     You must have at least 1 CU in the budget to submit a job on ARCHER2, even to a pre-paid reservation.
