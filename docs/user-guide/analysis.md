@@ -170,7 +170,7 @@ would use:
 
 # Define memory required for this jobs. By default, you would 
 # get 2 GB, but you can ask for up to 128 GB.
-#SBATCH --mem=4gb
+#SBATCH --mem=4G
 
 # Set the number of threads to 1
 #   This prevents any threaded system libraries from automatically 
@@ -198,7 +198,7 @@ would use:
 ```bash 
 auser@ln01:~> salloc --time=00:20:00 --partition=serial --qos=serial \
                     --account=[budget code] --ntasks=1 \
-                    --mem=4gb
+                    --mem=4G
 ```
     
 When you submit this job, your terminal will display something like:
@@ -236,7 +236,7 @@ and 8 GB of memory, you would use:
 ```bash 
 auser@ln01:~> srun   --time=00:20:00 --partition=serial --qos=serial \
                     --account=[budget code]    \
-                    --ntasks=1 --mem=8gb \
+                    --ntasks=1 --mem=8G \
                     --pty /bin/bash
 ```
 
@@ -258,13 +258,12 @@ option to the `srun` command.
 
 You can view data on the data analysis nodes by starting an interactive 
 `srun` session with the `--x11` flag to export the X display back to
-your local system:
+your local system. For 1 core with * GB of memory:
 
 ```bash 
 auser@ln01:~> srun   --time=00:20:00 --partition=serial --qos=serial  \
                         --hint=nomultithread --account=[budget code]    \
-                        --ntasks=[number of cores] --mem=[memory in MB] \
-                        --x11 --pty /bin/bash
+                        --ntasks=1 --mem=8G --x11 --pty /bin/bash
 ```
     
 
