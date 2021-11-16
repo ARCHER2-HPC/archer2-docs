@@ -1988,7 +1988,7 @@ would use:</p>
 
 <span class="c1"># Define memory required for this jobs. By default, you would </span>
 <span class="c1"># get 2 GB, but you can ask for up to 128 GB.</span>
-<span class="kp">#SBATCH --mem=4gb</span>
+<span class="kp">#SBATCH --mem=4G</span>
 
 <span class="c1"># Set the number of threads to 1</span>
 <span class="c1">#   This prevents any threaded system libraries from automatically </span>
@@ -2010,7 +2010,7 @@ example, to request 1 core and 4 GB of memory for 20 minutes, you
 would use:</p>
 <div class="highlight"><pre><span></span><code>auser@ln01:~&gt; salloc --time<span class="o">=</span><span class="m">00</span>:20:00 --partition<span class="o">=</span>serial --qos<span class="o">=</span>serial <span class="se">\</span>
                     --account<span class="o">=[</span>budget code<span class="o">]</span> --ntasks<span class="o">=</span><span class="m">1</span> <span class="se">\</span>
-                    --mem<span class="o">=</span>4gb
+                    --mem<span class="o">=</span>4G
 </code></pre></div>
 <p>When you submit this job, your terminal will display something like:</p>
 <div class="highlight"><pre><span></span><code>salloc: Pending job allocation <span class="m">523113</span>
@@ -2039,7 +2039,7 @@ using the <code>srun</code> command directly. For example, to reserve 1 core
 and 8 GB of memory, you would use:</p>
 <div class="highlight"><pre><span></span><code>auser@ln01:~&gt; srun   --time<span class="o">=</span><span class="m">00</span>:20:00 --partition<span class="o">=</span>serial --qos<span class="o">=</span>serial <span class="se">\</span>
                     --account<span class="o">=[</span>budget code<span class="o">]</span>    <span class="se">\</span>
-                    --ntasks<span class="o">=</span><span class="m">1</span> --mem<span class="o">=</span>8gb <span class="se">\</span>
+                    --ntasks<span class="o">=</span><span class="m">1</span> --mem<span class="o">=</span>8G <span class="se">\</span>
                     --pty /bin/bash
 </code></pre></div>
 <p>The <code>--pty /bin/bash</code> will cause a new shell to be started on the data 
@@ -2055,11 +2055,10 @@ option to the <code>srun</code> command.</p>
 <h4 id="visualising-data-using-the-data-analysis-nodes-using-x">Visualising data using the data analysis nodes using X</h4>
 <p>You can view data on the data analysis nodes by starting an interactive 
 <code>srun</code> session with the <code>--x11</code> flag to export the X display back to
-your local system:</p>
+your local system. For 1 core with * GB of memory:</p>
 <div class="highlight"><pre><span></span><code>auser@ln01:~&gt; srun   --time<span class="o">=</span><span class="m">00</span>:20:00 --partition<span class="o">=</span>serial --qos<span class="o">=</span>serial  <span class="se">\</span>
                         --hint<span class="o">=</span>nomultithread --account<span class="o">=[</span>budget code<span class="o">]</span>    <span class="se">\</span>
-                        --ntasks<span class="o">=[</span>number of cores<span class="o">]</span> --mem<span class="o">=[</span>memory <span class="k">in</span> MB<span class="o">]</span> <span class="se">\</span>
-                        --x11 --pty /bin/bash
+                        --ntasks<span class="o">=</span><span class="m">1</span> --mem<span class="o">=</span>8G --x11 --pty /bin/bash
 </code></pre></div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
