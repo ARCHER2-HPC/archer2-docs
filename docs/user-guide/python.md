@@ -81,11 +81,27 @@ Cray Python environment. This can be done using:
 This uses the `--user` flag to ensure the packages are installed in
 the directory specified by `PYTHONUSERBASE`.
 
+## Setting up virtual environments
 We recommend that you use the `pipenv` and/or `virtualenv` packages to
-manage your Python environments. For information on how to do this see:
+manage your Python environments. A summary of how to get a virtual environment set up is contained in the below, but for further information, see:
 
    - [Pipenv and Virtual
      Environments](https://docs.python-guide.org/dev/virtualenvs/)
+
+Sometimes, you may need several different versions of the same package installed, for example, due to dependency issues. Virtual environments allow you to manage these conflicting requirements. The first step is to run the commands contained in the above section so that you can install the `virtualenv` package which will manage your environments. To install `virtualenv` run:
+```
+pip install --user virtualenv  # The --user flag indicates this should be installed in the user's package folder
+```
+Next you must create a folder for the virtual environment's files to live in and tell `virtualenv` to set this folder up for storing virtual environment 'stuff'. This is done by running the command
+```
+mkdir /work/t01/t01/auser/<<name of your virtual environment>>  # Create the folder
+virtualenv -p /opt/cray/pe/python/3.8.5.0/bin/python /work/t01/t01/asuser/<<name of your virtual environment>>  # -p flag means use this python interpreter
+```
+Finally, you're ready to `activate` your environment. This is done by running
+```
+source /work/t01/t01/auser/<<name of your virtual environment>>/bin/activate
+```
+Once your environment is activated you will be able to install packages as usual using `pip install <<package name>>`. These packages will only be available within this environment. When running code that requires these packages you must activate the environment, by adding the above `source ... activate` line of code to any submission scripts.
 
 ## Running Python on the compute nodes
 
@@ -112,6 +128,9 @@ variety of scenarios of using Python on the ARCHER2 compute nodes.
     # Load the Python module
     module load cray-python
     
+    # If using a virtual environment
+    source <<path to virtual environment>>/bin/activate
+    
     # Run your Python progamme
     python python_test.py
     ```
@@ -133,9 +152,12 @@ variety of scenarios of using Python on the ARCHER2 compute nodes.
     
     # Setup the batch environment
     module load epcc-job-env
-    
+   
     # Load the Python module
     module load cray-python
+    
+    # If using a virtual environment
+    source <<path to virtual environment>>/bin/activate
     
     # Run your Python progamme
     python python_test.py
@@ -224,6 +246,8 @@ Please follow these steps.
    module load cray-python
    export PYTHONUSERBASE=/work/t01/t01/auser/.local
    export PATH=$PYTHONUSERBASE/bin:$PATH
+   # source <<path to virtual environment>>/bin/activate  # If using a virtualenvironment uncomment this line and remove the --user flag from the next
+   
    pip install --user jupyterlab
    ```
 
@@ -245,6 +269,7 @@ Please follow these steps.
    export PATH=$PYTHONUSERBASE/bin:$PATH
    export HOME=$(pwd)
    module load cray-python
+   # source <<path to virtual environment>>/bin/activate  # If using a virtualenvironment uncomment this line
    ```
 
 3. Run the JupyterLab server.
