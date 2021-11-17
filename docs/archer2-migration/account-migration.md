@@ -54,6 +54,34 @@ Login addresses:
 * ARCHER2 4-cabinet system: login-4c.archer2.ac.uk
 * ARCHER2 full system: login.archer2.ac.uk
 
+!!! tip
+    When logging into the ARCHER2 full system for the first time, you may see an error 
+    from SSH that looks like
+    
+    ```
+    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    @       WARNING: POSSIBLE DNS SPOOFING DETECTED!          @
+    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    The ECDSA host key for login.archer2.ac.uk has changed,
+    and the key for the corresponding IP address 193.62.216.43
+    has a different value. This could either mean that
+    DNS SPOOFING is happening or the IP address for the host
+    and its host key have changed at the same time.
+    Offending key for IP in /Users/auser/.ssh/known_hosts:11
+    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+    Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+    It is also possible that a host key has just been changed.
+    The fingerprint for the ECDSA key sent by the remote host is
+    SHA256:UGS+LA8I46LqnD58WiWNlaUFY3uD1WFr+V8RCG09fUg.
+    Please contact your system administrator.
+    ```
+    
+    If you see this, you should delete the offending host key from your `~/.ssh/known_hosts`
+    file (in the example above the offending line is line #11)
+
 
 ## What will happen to ARCHER2 data? 
 
