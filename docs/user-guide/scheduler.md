@@ -1034,6 +1034,10 @@ node you must be aware of a few things:
  - The `srun` command must specify any Slurm options that differ in value
    from those specified to `sbatch`. This typically means that you need 
    to specify the `--nodes`, `--ntasks` and `--tasks-per-node` options to `srun`.
+ - On the ARCHER2 full system, you will need to include the `--oversubscribe` 
+   flag to your `srun` command, and you will need to define the memory required 
+   by each subjob with the `--mem=<amount of memory>` flag. The amount of memory 
+   is given in MiB.
  - You will usually need to specify the task pinning to cores manually to 
    prevent multiple executables/scripts running on the same core. We provide
    a small utility (`genmaskcpu`) to assist with this.
@@ -1136,7 +1140,10 @@ this example would look like:
     # 1 process per subjob, 1 thread per process
     maskcpu=$(genmaskcpu 128 ${i} 1 1)
     # Launch subjob overriding job settings as required and in the background
-    srun --cpu-bind=mask_cpu:${maskcpu} --nodes=1 --ntasks=1 --tasks-per-node=1 xthi > placement${i}.txt &
+    # Make sure to change <amount of memory> to the amount of memory required 
+    # per job (in MiB).
+    srun --cpu-bind=mask_cpu:${maskcpu} --nodes=1 --ntasks=1 --tasks-per-node=1 \
+         --oversubscribe --mem=<amount of memory> xthi > placement${i}.txt &
     done
 
     # Wait for all subjobs to finish
@@ -1227,7 +1234,10 @@ this example would look like:
         # 8 MPI processes per subjob, 2 OpenMP threads per process
         maskcpu=$(genmaskcpu 8 ${i} 8 2)
         # Launch subjob overriding job settings as required and in the background
-        srun --cpu-bind=mask_cpu:${maskcpu} --nodes=1 --ntasks=8 --tasks-per-node=8 --cpus-per-task=2 xthi > placement${i}.txt &
+	# Make sure to change <amount of memory> to the amount of memory required 
+        # per job (in MiB).
+        srun --cpu-bind=mask_cpu:${maskcpu} --nodes=1 --ntasks=8 --tasks-per-node=8 --cpus-per-task=2 \
+	     --oversubscribe --mem=<amount of memory> xthi > placement${i}.txt &
     done
 
     # Wait for all subjobs to finish
@@ -1331,8 +1341,11 @@ script for this example would look like:
             # 1 process per subjob, 1 thread per process
             maskcpu=$(genmaskcpu 128 ${i} 1 1)
             # Launch subjob overriding job settings as required and in the background, note
-            # additional --nodelist option to specify the correct node to bind to
-            srun --cpu-bind=mask_cpu:${maskcpu} --nodelist=${nodeid} --nodes=1 --ntasks=1 --tasks-per-node=1 xthi > placement_${nodeid}_${i}.txt &
+            # additional --nodelist option to specify the correct node to bind to.
+	    # Make sure to change <amount of memory> to the amount of memory required 
+            # per job (in MiB).
+            srun --cpu-bind=mask_cpu:${maskcpu} --nodelist=${nodeid} --nodes=1 --ntasks=1 --tasks-per-node=1 \
+	         --oversubscribe --mem=<amount of memory> xthi > placement_${nodeid}_${i}.txt &
         done
     done
 
