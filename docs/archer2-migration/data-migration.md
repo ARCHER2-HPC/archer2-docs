@@ -34,6 +34,10 @@ following command:
 Please be selective -- the more data you want to transfer, the more time it 
 will take.
 
+Unpack the archive file in the destination directory
+
+    tar -xzf all_my_files.tar.gz
+
 ## Transferring data using `rsync` (recommended)
 
 Begin the data transfer from the ARCHER2 4-cabinet system to the ARCHER2 full 
