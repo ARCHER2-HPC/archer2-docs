@@ -140,9 +140,8 @@ auser@ln01:~> squeue -u $USER
 waiting to run it is simply cancelled, if it is a running job then it is
 stopped immediately.
 
-`scancel` on its own will delete all jobs belonging to you. If you only
-want to cancel a specific job you need to provide the job ID of the job
-you wish to cancel/stop. For example:
+If you only want to cancel a specific job you need to provide the job ID
+of the job you wish to cancel/stop. For example:
 
 ```bash
 auser@ln01:~> scancel 12345
@@ -150,12 +149,12 @@ auser@ln01:~> scancel 12345
 
 will cancel (if waiting) or stop (if running) the job with ID `12345`.
 
-`scancel` can take other options. For example, if you want ot cancel all
+`scancel` can take other options. For example, if you want to cancel all
 your pending (queued) jobs but leave the running jobs running, you could
 use:
 
 ```bash
-auser@ln01:~> scancel --state=PENDING
+auser@ln01:~> scancel --state=PENDING --user=$USER
 ```
 
 ## Resource Limits
