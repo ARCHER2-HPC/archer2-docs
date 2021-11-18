@@ -3799,14 +3799,15 @@ last subjob was submitted and kill all running subjobs.</li>
 may sometimes be useful to be able to run multiple executables on a single
 node. For example, you may want to run 128 copies of a serial executable or
 Python script; or, you may want to run multiple copies of parallel executables
-that use less than 128 cores each. This use model is possible using 
+that use fewer than 128 cores each. This use model is possible using 
 multiple <code>srun</code> commands in a job script on ARCHER2</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>You can never share a compute node with another user. Although you can
 use <code>srun</code> to place multiple copies of an executable or script on a 
 compute node, you still have exclusive use of that node. The minimum
-amount of use you can reserve for your use on ARCHER2 is a single node.</p>
+amount of resources you can reserve for your use on ARCHER2 is a single
+node.</p>
 </div>
 <p>When using <code>srun</code> to place multiple executables or scripts on a compute 
 node you must be aware of a few things:</p>
@@ -3814,9 +3815,16 @@ node you must be aware of a few things:</p>
 <li>The <code>srun</code> command must specify any Slurm options that differ in value
    from those specified to <code>sbatch</code>. This typically means that you need 
    to specify the <code>--nodes</code>, <code>--ntasks</code> and <code>--tasks-per-node</code> options to <code>srun</code>.</li>
+<li>On the ARCHER2 full system, you will need to include the <code>--oversubscribe</code> 
+   flag to your <code>srun</code> command, and you will need to define the memory required 
+   by each subjob with the <code>--mem=&lt;amount of memory&gt;</code> flag. The amount of memory 
+   is given in MiB by default but other units can be specified. If you do not know 
+   how much memory to specify, we recommend that you specify 1500M (1,500 MiB) per 
+   core being used.</li>
 <li>You will usually need to specify the task pinning to cores manually to 
    prevent multiple executables/scripts running on the same core. We provide
-   a small utility (<code>genmaskcpu</code>) to assist with this.</li>
+   a small utility (<code>genmaskcpu</code>) to assist with this. This utility is described
+   below.</li>
 <li>You will need to place each <code>srun</code> command into the background and 
    then use the <code>wait</code> command at the end of the submission script to
    make sure it does not exit before the commands are complete.</li>
@@ -3905,7 +3913,12 @@ module load genmaskcpu
 <span class="c1"># 1 process per subjob, 1 thread per process</span>
 <span class="nv">maskcpu</span><span class="o">=</span><span class="k">$(</span>genmaskcpu <span class="m">128</span> <span class="si">${</span><span class="nv">i</span><span class="si">}</span> <span class="m">1</span> <span class="m">1</span><span class="k">)</span>
 <span class="c1"># Launch subjob overriding job settings as required and in the background</span>
-<span class="nb">srun</span> --cpu-bind<span class="o">=</span>mask_cpu:<span class="si">${</span><span class="nv">maskcpu</span><span class="si">}</span> --nodes<span class="o">=</span><span class="m">1</span> --ntasks<span class="o">=</span><span class="m">1</span> --tasks-per-node<span class="o">=</span><span class="m">1</span> xthi &gt; placement<span class="si">${</span><span class="nv">i</span><span class="si">}</span>.txt <span class="p">&amp;</span>
+<span class="c1"># Make sure to change the amount specified by the `--mem=` flag to the amount </span>
+<span class="c1"># of memory required. The amount of memory is given in MiB by default but other</span>
+<span class="c1"># units can be specified. If you do not know how much memory to specify, we </span>
+<span class="c1"># recommend that you specify `--mem=1500M` (1,500 MiB).</span>
+<span class="nb">srun</span> --cpu-bind<span class="o">=</span>mask_cpu:<span class="si">${</span><span class="nv">maskcpu</span><span class="si">}</span> --nodes<span class="o">=</span><span class="m">1</span> --ntasks<span class="o">=</span><span class="m">1</span> --tasks-per-node<span class="o">=</span><span class="m">1</span> <span class="se">\</span>
+     --oversubscribe --mem<span class="o">=</span>1500M xthi &gt; placement<span class="si">${</span><span class="nv">i</span><span class="si">}</span>.txt <span class="p">&amp;</span>
 <span class="k">done</span>
 
 <span class="c1"># Wait for all subjobs to finish</span>
@@ -3994,7 +4007,12 @@ module load genmaskcpu
     <span class="c1"># 8 MPI processes per subjob, 2 OpenMP threads per process</span>
     <span class="nv">maskcpu</span><span class="o">=</span><span class="k">$(</span>genmaskcpu <span class="m">8</span> <span class="si">${</span><span class="nv">i</span><span class="si">}</span> <span class="m">8</span> <span class="m">2</span><span class="k">)</span>
     <span class="c1"># Launch subjob overriding job settings as required and in the background</span>
-    <span class="nb">srun</span> --cpu-bind<span class="o">=</span>mask_cpu:<span class="si">${</span><span class="nv">maskcpu</span><span class="si">}</span> --nodes<span class="o">=</span><span class="m">1</span> --ntasks<span class="o">=</span><span class="m">8</span> --tasks-per-node<span class="o">=</span><span class="m">8</span> --cpus-per-task<span class="o">=</span><span class="m">2</span> xthi &gt; placement<span class="si">${</span><span class="nv">i</span><span class="si">}</span>.txt <span class="p">&amp;</span>
+    <span class="c1"># Make sure to change the amount specified by the `--mem=` flag to the amount </span>
+    <span class="c1"># of memory required. The amount of memory is given in MiB by default but other</span>
+    <span class="c1"># units can be specified. If you do not know how much memory to specify, we </span>
+    <span class="c1"># recommend that you specify `--mem=12500M` (12,500 MiB).</span>
+    <span class="nb">srun</span> --cpu-bind<span class="o">=</span>mask_cpu:<span class="si">${</span><span class="nv">maskcpu</span><span class="si">}</span> --nodes<span class="o">=</span><span class="m">1</span> --ntasks<span class="o">=</span><span class="m">8</span> --tasks-per-node<span class="o">=</span><span class="m">8</span> --cpus-per-task<span class="o">=</span><span class="m">2</span> <span class="se">\</span>
+     --oversubscribe --mem<span class="o">=</span>12500M xthi &gt; placement<span class="si">${</span><span class="nv">i</span><span class="si">}</span>.txt <span class="p">&amp;</span>
 <span class="k">done</span>
 
 <span class="c1"># Wait for all subjobs to finish</span>
@@ -4095,9 +4113,13 @@ module load genmaskcpu
         <span class="c1"># Generate mask: 128 subjobs per node, subjob number in sequence given by i,</span>
         <span class="c1"># 1 process per subjob, 1 thread per process</span>
         <span class="nv">maskcpu</span><span class="o">=</span><span class="k">$(</span>genmaskcpu <span class="m">128</span> <span class="si">${</span><span class="nv">i</span><span class="si">}</span> <span class="m">1</span> <span class="m">1</span><span class="k">)</span>
-        <span class="c1"># Launch subjob overriding job settings as required and in the background, note</span>
-        <span class="c1"># additional --nodelist option to specify the correct node to bind to</span>
-        <span class="nb">srun</span> --cpu-bind<span class="o">=</span>mask_cpu:<span class="si">${</span><span class="nv">maskcpu</span><span class="si">}</span> --nodelist<span class="o">=</span><span class="si">${</span><span class="nv">nodeid</span><span class="si">}</span> --nodes<span class="o">=</span><span class="m">1</span> --ntasks<span class="o">=</span><span class="m">1</span> --tasks-per-node<span class="o">=</span><span class="m">1</span> xthi &gt; placement_<span class="si">${</span><span class="nv">nodeid</span><span class="si">}</span>_<span class="si">${</span><span class="nv">i</span><span class="si">}</span>.txt <span class="p">&amp;</span>
+        <span class="c1"># Launch subjob overriding job settings as required and in the background</span>
+        <span class="c1"># Make sure to change the amount specified by the `--mem=` flag to the amount </span>
+        <span class="c1"># of memory required. The amount of memory is given in MiB by default but other</span>
+        <span class="c1"># units can be specified. If you do not know how much memory to specify, we </span>
+        <span class="c1"># recommend that you specify `--mem=1500M` (1,500 MiB).</span>
+        <span class="nb">srun</span> --cpu-bind<span class="o">=</span>mask_cpu:<span class="si">${</span><span class="nv">maskcpu</span><span class="si">}</span> --nodelist<span class="o">=</span><span class="si">${</span><span class="nv">nodeid</span><span class="si">}</span> --nodes<span class="o">=</span><span class="m">1</span> --ntasks<span class="o">=</span><span class="m">1</span> --tasks-per-node<span class="o">=</span><span class="m">1</span> <span class="se">\</span>
+         --oversubscribe --mem<span class="o">=</span>1500M xthi &gt; placement_<span class="si">${</span><span class="nv">nodeid</span><span class="si">}</span>_<span class="si">${</span><span class="nv">i</span><span class="si">}</span>.txt <span class="p">&amp;</span>
     <span class="k">done</span>
 <span class="k">done</span>
 
