@@ -462,6 +462,12 @@ Miscellaneous options:
 | `-h omp` | Compile OpenMP (default is `-hnoomp`)                  |
 | `-v` | Display verbose output from compiler stages                |
 
+#### CCE Reference Documentation
+
+* [Clang/Clang++ documentation](https://clang.llvm.org/docs/UsersManual.html), CCE-specific 
+  details are available via `man clang` once the CCE compiler environment is loaded.
+* [Cray Fortran documentation](https://internal.support.hpe.com/hpesc/public/docDisplay?docId=a00114872en_us&page=index.html)
+
 ### AMD Optimizing Compiler Collection (AOCC)
 
 The AMD Optimizing Compiler Collection (AOCC) is a clang-based optimising
