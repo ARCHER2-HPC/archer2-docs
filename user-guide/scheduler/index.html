@@ -2702,16 +2702,15 @@ output to just your jobs by adding the <code>-u $USER</code> option:</p>
 <p><code>scancel</code> is used to delete a jobs from the scheduler. If the job is
 waiting to run it is simply cancelled, if it is a running job then it is
 stopped immediately.</p>
-<p><code>scancel</code> on its own will delete all jobs belonging to you. If you only
-want to cancel a specific job you need to provide the job ID of the job
-you wish to cancel/stop. For example:</p>
+<p>If you only want to cancel a specific job you need to provide the job ID
+of the job you wish to cancel/stop. For example:</p>
 <div class="highlight"><pre><span></span><code>auser@ln01:~&gt; scancel <span class="m">12345</span>
 </code></pre></div>
 <p>will cancel (if waiting) or stop (if running) the job with ID <code>12345</code>.</p>
-<p><code>scancel</code> can take other options. For example, if you want ot cancel all
+<p><code>scancel</code> can take other options. For example, if you want to cancel all
 your pending (queued) jobs but leave the running jobs running, you could
 use:</p>
-<div class="highlight"><pre><span></span><code>auser@ln01:~&gt; scancel --state<span class="o">=</span>PENDING
+<div class="highlight"><pre><span></span><code>auser@ln01:~&gt; scancel --state<span class="o">=</span>PENDING --user<span class="o">=</span><span class="nv">$USER</span>
 </code></pre></div>
 <h2 id="resource-limits">Resource Limits</h2>
 <p>The ARCHER2 resource limits for any given job are covered by three
