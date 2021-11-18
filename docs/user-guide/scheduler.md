@@ -1038,7 +1038,9 @@ node you must be aware of a few things:
  - On the ARCHER2 full system, you will need to include the `--oversubscribe` 
    flag to your `srun` command, and you will need to define the memory required 
    by each subjob with the `--mem=<amount of memory>` flag. The amount of memory 
-   is given in MiB.
+   is given in MiB by default but other units can be specified. If you do not know 
+   how much memory to specify, we recommend that you specify 1500M (1,500 MiB) per 
+   core being used.
  - You will usually need to specify the task pinning to cores manually to 
    prevent multiple executables/scripts running on the same core. We provide
    a small utility (`genmaskcpu`) to assist with this. This utility is described
