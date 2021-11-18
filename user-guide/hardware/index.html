@@ -1612,9 +1612,10 @@
                 
                 <h1 id="archer2-hardware">ARCHER2 hardware</h1>
 <h2 id="system-overview">System overview</h2>
-<p>ARCHER2 is a HPE Cray EX supercomputing system which will have a total of 5,860 compute nodes. Each compute node has 128 cores (dual AMD EPYC 7742 64 core 2.25GHz processors) giving a total of 750,080 cores. Compute nodes are connected together by a HPE Slingshot interconnect. </p>
-<p>There are additional User Access Nodes (UAN, also called login nodes) which provide access to the system. Compute nodes are only accessible via the Slurm job scheduling system.</p>
-<p>There are two storage types: home and work. Home is available only on login nodes. Work is available on login and compute nodes (see <a href="../io/">I/O and file systems</a>).</p>
+<p>ARCHER2 is a HPE Cray EX supercomputing system which has a total of 5,860 compute nodes. Each compute node has 128 cores (dual AMD EPYC 7742 64-core 2.25GHz processors) giving a total of 750,080 cores. Compute nodes are connected together by a HPE Slingshot interconnect. </p>
+<p>There are additional User Access Nodes (UAN, also called login nodes), which provide access to the system, and data-analysis nodes, which are well-suited for preparation of job inputs and analysis of job outputs.</p>
+<p>Compute nodes are only accessible via the Slurm job scheduling system.</p>
+<p>There are two storage types: home and work. Home is available on login nodes and data-analysis nodes. Work is available on login, data-analysis nodes and compute nodes (see <a href="../io/">I/O and file systems</a>).</p>
 <p>This is shown in the ARCHER2 architecture diagram:
 <img alt="ACRHER2 architecture" src="../../images/archer2_architecture.png" /></p>
 <h2 id="compute-node-details">Compute node details</h2>
@@ -1649,7 +1650,7 @@
 </tr>
 <tr>
 <td>Memory per core</td>
-<td>2 GB, 4 GB</td>
+<td>2 GB (standard), 4 GB (high memory)</td>
 </tr>
 <tr>
 <td>L1 cache</td>
@@ -1675,7 +1676,7 @@
 </table>
 <p><img alt="ARCHER2 node diagram" src="../../images/archer2_full_node_diagram.png" /></p>
 <h2 id="memory-details">Memory details</h2>
-<p>The 5,276 standard nodes have 256 GB and the 584 high memory nodes have 512 GB of 8 channel DDR4 3200MHz with 204.8 GB/s peak bandwidth.</p>
+<p>The 5,276 standard nodes each have 256 GB and the 584 high memory nodes each have 512 GB. All memory is 8-channel, DDR4 3200MHz with 204.8 GB/s peak bandwidth.</p>
 <h2 id="interconnect-details">Interconnect details</h2>
 <p>ARCHER2 has a HPE Slingshot interconnect with 200 Gb/s signalling. It uses a dragonfly topology:</p>
 <ul>
