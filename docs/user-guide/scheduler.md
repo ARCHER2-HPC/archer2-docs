@@ -1019,7 +1019,7 @@ As the ARCHER2 nodes contain a large number of cores (128 per node) it
 may sometimes be useful to be able to run multiple executables on a single
 node. For example, you may want to run 128 copies of a serial executable or
 Python script; or, you may want to run multiple copies of parallel executables
-that use less than 128 cores each. This use model is possible using 
+that use fewer than 128 cores each. This use model is possible using 
 multiple `srun` commands in a job script on ARCHER2
 
 !!! note
