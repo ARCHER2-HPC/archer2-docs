@@ -238,9 +238,14 @@ lists the active QoS on ARCHER2.
 You can find out the QoS that you can use by running the following
 command:
 
-```bash
-auser@ln01:~> sacctmgr show assoc user=$USER cluster=archer2-es format=cluster,account,user,qos%50
-```
+=== "Full system"
+   ```bash
+   auser@ln01:~> sacctmgr show assoc user=$USER cluster=archer2 format=cluster,account,user,qos%50
+  ```
+=== "4-cabinet system"
+   ```bash
+   auser@ln01:~> sacctmgr show assoc user=$USER cluster=archer2-es format=cluster,account,user,qos%50
+  ```
 
 !!! hint
     If you have needs which do not fit within the current QoS, please
