@@ -7,6 +7,14 @@ active investigation by HPE Cray and the wider service.
 ## Open Issues
 
 
+### Occasionally larger jobs (requiring greater than 128 nodes) will run slow or fail (Added: 2021-11-18)
+
+- **Systems affected:** ARCHER2 full system
+
+The CSE team has seen instances when larger jobs (those involving more than 128 nodes) will run slow (perhaps two or three times slower than normally) or not finish (because the slowness causes a time-out). In system testing, we saw this problem for a small number of applications (most notably, LAMMPS) on around 10--20% of jobs: the issue worsens as the job size increases.
+
+The issue is being actively investigated by HPE, as a priority. At this time, there is no known work-around, though it is usually possible to resubmit the affected job successfully.
+
 ### Error message: `No space left on device` (Added: 2021-07-20)
 
 - **Systems affected:** ARCHER2 4-cabinet system
