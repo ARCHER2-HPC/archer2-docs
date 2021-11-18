@@ -29,9 +29,10 @@ appropriate.
   flexibility. You can find details of the new QoS available in
   [the Submitting Jobs on ARCHER2 section of the User Guide](../user-guide/scheduler.md).
 - You no longer need to specify `--reservation=shortqos` when using the 
-  "short" QoS.
-- Resevations can now run for longer than the maximum wall time available in
-  any of the QoS defined in the scheduler.
+  `short` QoS.
+- Jobs running in a reservation can now run for longer than the maximum wall time available
+  in any of the normal QoS defined in the scheduler. Reservations must use the `reservation`
+  QoS.
 - You should no longer add the `module load epcc-job-env` command to job submission
   scripts.
 
