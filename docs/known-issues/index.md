@@ -51,7 +51,7 @@ ARCHER2 or on the compute nodes when you run a job. This is being investigated
 and we hope to fix the issue soon.
 
 **Workarounds** You can access the `perftools` modules by restoring a different
-compiler environment or by switching to a different Programming Environment 
+compiler environment or by switching to a different Programming Environment
 release.
 
 *Option 1: Restoring a different compiler environment*
@@ -102,7 +102,7 @@ Users should also check individual software pages, for known limitations/ caveat
 - **Systems affected:** ARCHER2 4-cabinet system
 
 The `stat-view` utility from the `cray-stat` module does not currently
-work due to missing dependencies within the HPE Cray software stack. If you 
+work due to missing dependencies within the HPE Cray software stack. If you
 try to use the tool, you will see errors similar too:
 
 ```
@@ -153,8 +153,8 @@ see [the description in the User and Best Practice Guide](../user-guide/dev-envi
 
 - **Systems affected:** ARCHER2 4-cabinet system
 
-Your program compiles and seems to run fine, but after some time (at least 10 
-minutes), it crashes with an out-of-memory (OOM) error. The job crashes more 
+Your program compiles and seems to run fine, but after some time (at least 10
+minutes), it crashes with an out-of-memory (OOM) error. The job crashes more
 quickly when run on a smaller number of nodes.
 
 The workaround for this issue is to use the newer HPE Cray Programming Environment
@@ -195,6 +195,21 @@ export UCX_IB_REG_METHODS=direct
 
 !!! note
     Setting this flag may have an impact on code performance.
+
+
+
+### AOCC compiler fails to compile with NetCDF (Added: 2021-11-18)
+
+- **Systems affected:** ARCHER2 full system
+
+There is currently a problem with the module file which means cray-netcdf-hdf5parallel will not operate correctly in PrgEnv-aocc. An example of the error seen is:  
+
+```
+F90-F-0004-Corrupt or Old Module file /opt/cray/pe/netcdf-hdf5parallel/4.7.4.3/crayclang/9.1/include/netcdf.mod (netcdf.F90: 8)
+```
+
+The current workaround for this is to load module epcc-netcdf-hdf5parallel instead if PrgEnv-aocc is required.
+
 
 ## Recently Resolved Issues
 
