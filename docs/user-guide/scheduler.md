@@ -1026,7 +1026,8 @@ multiple `srun` commands in a job script on ARCHER2
     You can never share a compute node with another user. Although you can
     use `srun` to place multiple copies of an executable or script on a 
     compute node, you still have exclusive use of that node. The minimum
-    amount of use you can reserve for your use on ARCHER2 is a single node.
+    amount of resources you can reserve for your use on ARCHER2 is a single
+    node.
 
 When using `srun` to place multiple executables or scripts on a compute 
 node you must be aware of a few things:
@@ -1040,7 +1041,8 @@ node you must be aware of a few things:
    is given in MiB.
  - You will usually need to specify the task pinning to cores manually to 
    prevent multiple executables/scripts running on the same core. We provide
-   a small utility (`genmaskcpu`) to assist with this.
+   a small utility (`genmaskcpu`) to assist with this. This utility is described
+   below.
  - You will need to place each `srun` command into the background and 
    then use the `wait` command at the end of the submission script to
    make sure it does not exit before the commands are complete.
