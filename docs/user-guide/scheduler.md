@@ -1140,10 +1140,12 @@ this example would look like:
     # 1 process per subjob, 1 thread per process
     maskcpu=$(genmaskcpu 128 ${i} 1 1)
     # Launch subjob overriding job settings as required and in the background
-    # Make sure to change <amount of memory> to the amount of memory required 
-    # per job (in MiB).
+    # Make sure to change the amount specified by the `--mem=` flag to the amount 
+    # of memory required. The amount of memory is given in MiB by default but other
+    # units can be specified. If you do not know how much memory to specify, we 
+    # recommend that you specify `--mem=1500M` (1,500 MiB).
     srun --cpu-bind=mask_cpu:${maskcpu} --nodes=1 --ntasks=1 --tasks-per-node=1 \
-         --oversubscribe --mem=<amount of memory> xthi > placement${i}.txt &
+         --oversubscribe --mem=1500M xthi > placement${i}.txt &
     done
 
     # Wait for all subjobs to finish
@@ -1234,10 +1236,12 @@ this example would look like:
         # 8 MPI processes per subjob, 2 OpenMP threads per process
         maskcpu=$(genmaskcpu 8 ${i} 8 2)
         # Launch subjob overriding job settings as required and in the background
-	# Make sure to change <amount of memory> to the amount of memory required 
-        # per job (in MiB).
+        # Make sure to change the amount specified by the `--mem=` flag to the amount 
+        # of memory required. The amount of memory is given in MiB by default but other
+        # units can be specified. If you do not know how much memory to specify, we 
+        # recommend that you specify `--mem=12500M` (12,500 MiB).
         srun --cpu-bind=mask_cpu:${maskcpu} --nodes=1 --ntasks=8 --tasks-per-node=8 --cpus-per-task=2 \
-	     --oversubscribe --mem=<amount of memory> xthi > placement${i}.txt &
+	     --oversubscribe --mem=12500M xthi > placement${i}.txt &
     done
 
     # Wait for all subjobs to finish
@@ -1340,12 +1344,13 @@ script for this example would look like:
             # Generate mask: 128 subjobs per node, subjob number in sequence given by i,
             # 1 process per subjob, 1 thread per process
             maskcpu=$(genmaskcpu 128 ${i} 1 1)
-            # Launch subjob overriding job settings as required and in the background, note
-            # additional --nodelist option to specify the correct node to bind to.
-	    # Make sure to change <amount of memory> to the amount of memory required 
-            # per job (in MiB).
+            # Launch subjob overriding job settings as required and in the background
+            # Make sure to change the amount specified by the `--mem=` flag to the amount 
+            # of memory required. The amount of memory is given in MiB by default but other
+            # units can be specified. If you do not know how much memory to specify, we 
+            # recommend that you specify `--mem=1500M` (1,500 MiB).
             srun --cpu-bind=mask_cpu:${maskcpu} --nodelist=${nodeid} --nodes=1 --ntasks=1 --tasks-per-node=1 \
-	         --oversubscribe --mem=<amount of memory> xthi > placement_${nodeid}_${i}.txt &
+	         --oversubscribe --mem=1500M xthi > placement_${nodeid}_${i}.txt &
         done
     done
 
