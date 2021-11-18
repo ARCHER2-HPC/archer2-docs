@@ -2962,8 +2962,14 @@ lists the active QoS on ARCHER2.</p>
 </div>
 <p>You can find out the QoS that you can use by running the following
 command:</p>
-<div class="highlight"><pre><span></span><code>auser@ln01:~&gt; sacctmgr show assoc <span class="nv">user</span><span class="o">=</span><span class="nv">$USER</span> <span class="nv">cluster</span><span class="o">=</span>archer2-es <span class="nv">format</span><span class="o">=</span>cluster,account,user,qos%50
-</code></pre></div>
+<div class="tabbed-set" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Full system</label><div class="tabbed-content"></div>
+</div>
+<p><code>bash
+   auser@ln01:~&gt; sacctmgr show assoc user=$USER cluster=archer2 format=cluster,account,user,qos%50</code></p>
+<div class="tabbed-set" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">4-cabinet system</label><div class="tabbed-content"></div>
+</div>
+<p><code>bash
+   auser@ln01:~&gt; sacctmgr show assoc user=$USER cluster=archer2-es format=cluster,account,user,qos%50</code></p>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
 <p>If you have needs which do not fit within the current QoS, please
@@ -3438,7 +3444,7 @@ Examples are provided for both the full system and the 4-cabinet system.</p>
 <h3 id="example-job-submission-script-for-mpi-parallel-job">Example: job submission script for MPI parallel job</h3>
 <p>A simple MPI job submission script to submit a job using 4 compute nodes
 and 128 MPI ranks per node for 20 minutes would look like:</p>
-<div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Full system</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><label for="__tabbed_5_1">Full system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
 <span class="c1"># Slurm job options (job-name, compute nodes, job time)</span>
@@ -3465,7 +3471,7 @@ and 128 MPI ranks per node for 20 minutes would look like:</p>
 <span class="nb">srun</span> --distribution<span class="o">=</span>block:block --hint<span class="o">=</span>nomultithread ./my_mpi_executable.x
 </code></pre></div>
 </div>
-<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">4-cabinet system</label><div class="tabbed-content">
+<input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><label for="__tabbed_5_2">4-cabinet system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
 <span class="c1"># Slurm job options (job-name, compute nodes, job time)</span>
@@ -3525,7 +3531,7 @@ MPI process. This results in all 128 physical cores per node being used.</p>
 <p>Note the use of the <code>export OMP_PLACES=cores</code> environment option to
 generate the correct thread pinning.</p>
 </div>
-<div class="tabbed-set" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">Full system</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><label for="__tabbed_6_1">Full system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
 <span class="c1"># Slurm job options (job-name, compute nodes, job time)</span>
@@ -3555,7 +3561,7 @@ generate the correct thread pinning.</p>
 <span class="nb">srun</span> --hint<span class="o">=</span>nomultithread --distribution<span class="o">=</span>block:block ./my_mixed_executable.x arg1 arg2
 </code></pre></div>
 </div>
-<input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><label for="__tabbed_4_2">4-cabinet system</label><div class="tabbed-content">
+<input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><label for="__tabbed_6_2">4-cabinet system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
 <span class="c1"># Slurm job options (job-name, compute nodes, job time)</span>
@@ -3604,7 +3610,7 @@ individual subjobs or used to select the input data per subjob.</p>
 index as the only argument to the executable. Each subjob requests a
 single node and uses all 128 cores on the node by placing 1 MPI process
 per core and specifies 4 hours maximum runtime per subjob:</p>
-<div class="tabbed-set" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><label for="__tabbed_5_1">Full system</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><label for="__tabbed_7_1">Full system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1"># Slurm job options (job-name, compute nodes, job time)</span>
 <span class="kp">#SBATCH --job-name=Example_Array_Job</span>
@@ -3627,7 +3633,7 @@ per core and specifies 4 hours maximum runtime per subjob:</p>
 <span class="nb">srun</span> --distribution<span class="o">=</span>block:block --hint<span class="o">=</span>nomultithread /path/to/exe <span class="nv">$SLURM_ARRAY_TASK_ID</span>
 </code></pre></div>
 </div>
-<input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><label for="__tabbed_5_2">4-cabinet system</label><div class="tabbed-content">
+<input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><label for="__tabbed_7_2">4-cabinet system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1"># Slurm job options (job-name, compute nodes, job time)</span>
 <span class="kp">#SBATCH --job-name=Example_Array_Job</span>
@@ -3704,7 +3710,7 @@ run on a different compute node. We start by showing
 the job script that would achieve this and then explain how this works
 and the options used. In our case, we will run 100 copies of the <code>xthi</code> 
 program that prints the process placement on the node it is running on.</p>
-<div class="tabbed-set" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><label for="__tabbed_6_1">Full system</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="8:2"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><label for="__tabbed_8_1">Full system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
 <span class="c1"># Slurm job options (job-name, compute nodes, job time)</span>
@@ -3737,7 +3743,7 @@ module load xthi
 <span class="nb">wait</span>
 </code></pre></div>
 </div>
-<input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><label for="__tabbed_6_2">4-cabinet system</label><div class="tabbed-content">
+<input id="__tabbed_8_2" name="__tabbed_8" type="radio" /><label for="__tabbed_8_2">4-cabinet system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
 <span class="c1"># Slurm job options (job-name, compute nodes, job time)</span>
@@ -3879,7 +3885,7 @@ prints process/thread placement) on a single ARCHER2 compute node with each
 copy of <code>xthi</code> pinned to a different core. We will use <code>genmaskcpu</code> to generate the 
 correct binding mask for each subjob. The job submission script for
 this example would look like:</p>
-<div class="tabbed-set" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><label for="__tabbed_7_1">Full system</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="9:2"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio" /><label for="__tabbed_9_1">Full system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1"># Slurm job options (job-name, compute nodes, job time)</span>
 <span class="kp">#SBATCH --job-name=MultiSerialOnCompute</span>
@@ -3924,7 +3930,7 @@ module load genmaskcpu
 <span class="nb">wait</span>
 </code></pre></div>
 </div>
-<input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><label for="__tabbed_7_2">4-cabinet system</label><div class="tabbed-content">
+<input id="__tabbed_9_2" name="__tabbed_9" type="radio" /><label for="__tabbed_9_2">4-cabinet system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1"># Slurm job options (job-name, compute nodes, job time)</span>
 <span class="kp">#SBATCH --job-name=MultiSerialOnCompute</span>
@@ -3974,7 +3980,7 @@ prints process/thread placement) across 1 node. Each subjob will use 8 MPI proce
 and 2 OpenMP threads per process. We will use <code>genmaskcpu</code> to generate the 
 correct binding mask for each subjob. The job submission script for
 this example would look like:</p>
-<div class="tabbed-set" data-tabs="8:2"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><label for="__tabbed_8_1">Full system</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="10:2"><input checked="checked" id="__tabbed_10_1" name="__tabbed_10" type="radio" /><label for="__tabbed_10_1">Full system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1"># Slurm job options (job-name, compute nodes, job time)</span>
 <span class="kp">#SBATCH --job-name=MultiParallelOnCompute</span>
@@ -4018,7 +4024,7 @@ module load genmaskcpu
 <span class="nb">wait</span>
 </code></pre></div>
 </div>
-<input id="__tabbed_8_2" name="__tabbed_8" type="radio" /><label for="__tabbed_8_2">4-cabinet system</label><div class="tabbed-content">
+<input id="__tabbed_10_2" name="__tabbed_10" type="radio" /><label for="__tabbed_10_2">4-cabinet system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1"># Slurm job options (job-name, compute nodes, job time)</span>
 <span class="kp">#SBATCH --job-name=MultiParallelOnCompute</span>
@@ -4070,7 +4076,7 @@ node IDs to pass to <code>srun</code> as this is required to ensure that the ind
 assigned to the correct node. This mechanism uses the <code>scontrol</code> command to turn the 
 nodelist from <code>sbatch</code> into a format we can use as input to <code>srun</code>. The job submission
 script for this example would look like:</p>
-<div class="tabbed-set" data-tabs="9:2"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio" /><label for="__tabbed_9_1">Full system</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="11:2"><input checked="checked" id="__tabbed_11_1" name="__tabbed_11" type="radio" /><label for="__tabbed_11_1">Full system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1"># Slurm job options (job-name, compute nodes, job time)</span>
 <span class="kp">#SBATCH --job-name=MultiSerialOnComputes</span>
@@ -4126,7 +4132,7 @@ module load genmaskcpu
 <span class="nb">wait</span>
 </code></pre></div>
 </div>
-<input id="__tabbed_9_2" name="__tabbed_9" type="radio" /><label for="__tabbed_9_2">4-cabinet system</label><div class="tabbed-content">
+<input id="__tabbed_11_2" name="__tabbed_11" type="radio" /><label for="__tabbed_11_2">4-cabinet system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1"># Slurm job options (job-name, compute nodes, job time)</span>
 <span class="kp">#SBATCH --job-name=MultiSerialOnComputes</span>
@@ -4198,13 +4204,13 @@ jobs.</p>
 <p>To submit a request for an interactive job reserving 8 nodes (1024
 physical cores) for 20 minutes on the short queue you would issue the
 following command from the command line:</p>
-<div class="tabbed-set" data-tabs="10:2"><input checked="checked" id="__tabbed_10_1" name="__tabbed_10" type="radio" /><label for="__tabbed_10_1">Full system</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="12:2"><input checked="checked" id="__tabbed_12_1" name="__tabbed_12" type="radio" /><label for="__tabbed_12_1">Full system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>auser@ln01:&gt; salloc --nodes<span class="o">=</span><span class="m">8</span> --tasks-per-node<span class="o">=</span><span class="m">128</span> --cpus-per-task<span class="o">=</span><span class="m">1</span> <span class="se">\</span>
                 --time<span class="o">=</span><span class="m">00</span>:20:00 --partition<span class="o">=</span>standard --qos<span class="o">=</span>short <span class="se">\</span>
                 --account<span class="o">=[</span>budget code<span class="o">]</span>
 </code></pre></div>
 </div>
-<input id="__tabbed_10_2" name="__tabbed_10" type="radio" /><label for="__tabbed_10_2">4-cabinet system</label><div class="tabbed-content">
+<input id="__tabbed_12_2" name="__tabbed_12" type="radio" /><label for="__tabbed_12_2">4-cabinet system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>auser@uan01:&gt; salloc --nodes<span class="o">=</span><span class="m">8</span> --tasks-per-node<span class="o">=</span><span class="m">128</span> --cpus-per-task<span class="o">=</span><span class="m">1</span> <span class="se">\</span>
                 --time<span class="o">=</span><span class="m">00</span>:20:00 --partition<span class="o">=</span>standard --qos<span class="o">=</span>short <span class="se">\</span>
                 --reservation<span class="o">=</span>shortqos --account<span class="o">=[</span>budget code<span class="o">]</span>
@@ -4212,14 +4218,14 @@ following command from the command line:</p>
 </div>
 </div>
 <p>When you submit this job your terminal will display something like:</p>
-<div class="tabbed-set" data-tabs="11:2"><input checked="checked" id="__tabbed_11_1" name="__tabbed_11" type="radio" /><label for="__tabbed_11_1">Full system</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="13:2"><input checked="checked" id="__tabbed_13_1" name="__tabbed_13" type="radio" /><label for="__tabbed_13_1">Full system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>salloc: Granted job allocation 24236
 salloc: Waiting for resource configuration
 salloc: Nodes nid000002 are ready for job
 auser@ln01:&gt;
 </code></pre></div>
 </div>
-<input id="__tabbed_11_2" name="__tabbed_11" type="radio" /><label for="__tabbed_11_2">4-cabinet system</label><div class="tabbed-content">
+<input id="__tabbed_13_2" name="__tabbed_13" type="radio" /><label for="__tabbed_13_2">4-cabinet system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>salloc: Granted job allocation 24236
 salloc: Waiting for resource configuration
 salloc: Nodes nid000002 are ready for job
@@ -4245,7 +4251,7 @@ return you to your prompt before you issued the <code>salloc</code> command.</p>
 <h3 id="using-srun-directly">Using <code>srun</code> directly</h3>
 <p>A second way to run an interactive job is to use <code>srun</code> directly in the
 following way (here using the "short queue"):</p>
-<div class="tabbed-set" data-tabs="12:2"><input checked="checked" id="__tabbed_12_1" name="__tabbed_12" type="radio" /><label for="__tabbed_12_1">Full system</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="14:2"><input checked="checked" id="__tabbed_14_1" name="__tabbed_14" type="radio" /><label for="__tabbed_14_1">Full system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>auser@ln01:/work/t01/t01/auser&gt; srun --nodes=1 --exclusive --time=00:20:00 \
                --partition=standard --qos=short --reservation=shortqos \
        --pty /bin/bash
@@ -4272,7 +4278,7 @@ be returned to the front end.</p>
 <p>By default, the interactive shell will retain the environment of the
 parent. If you want a clean shell, remember to specify <code>--export=none</code>.</p>
 </div>
-<input id="__tabbed_12_2" name="__tabbed_12" type="radio" /><label for="__tabbed_12_2">4-cabinet system</label><div class="tabbed-content">
+<input id="__tabbed_14_2" name="__tabbed_14" type="radio" /><label for="__tabbed_14_2">4-cabinet system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>auser@uan01:/work/t01/t01/auser&gt; srun --nodes=1 --exclusive --time=00:20:00 \
                --partition=standard --qos=short --reservation=shortqos \
                --pty /bin/bash
@@ -4392,7 +4398,7 @@ a communicator size 8 (ranks 0-7). The second executable runs on
 two nodes also with communicator size 8 (ranks 0-7, 4 ranks per node).
 Further examples of placement for heterogenenous jobs are given below.</p>
 <h3 id="heterogeneous-jobs-for-a-shared-mpi_com_world">Heterogeneous jobs for a shared <code>MPI_COM_WORLD</code></h3>
-<div class="tabbed-set" data-tabs="13:2"><input checked="checked" id="__tabbed_13_1" name="__tabbed_13" type="radio" /><label for="__tabbed_13_1">Full system</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="15:2"><input checked="checked" id="__tabbed_15_1" name="__tabbed_15" type="radio" /><label for="__tabbed_15_1">Full system</label><div class="tabbed-content">
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The directive <code>SBATCH hetjob</code> can no longer be used for jobs requiring
@@ -4446,7 +4452,7 @@ Node    2, rank   14, thread   0, (affinity =    2)
 Node    2, rank   15, thread   0, (affinity =    3) 
 </code></pre></div></p>
 </div>
-<input id="__tabbed_13_2" name="__tabbed_13" type="radio" /><label for="__tabbed_13_2">4-cabinet system</label><div class="tabbed-content">
+<input id="__tabbed_15_2" name="__tabbed_15" type="radio" /><label for="__tabbed_15_2">4-cabinet system</label><div class="tabbed-content">
 <p>If two or more heterogeneous components need to share a unique
 <code>MPI_COMM_WORLD</code>, a single <code>srun</code> invocation with the differrent
 components separated by a colon <code>:</code> should be used. For example,</p>
@@ -4506,7 +4512,7 @@ first component runs 8 MPI tasks each with 16 OpenMP threads.
 The second component runs 8 MPI tasks with
 one task per NUMA region on one node; each task has one thread.
 An appropriate Slurm submission might be:</p>
-<div class="tabbed-set" data-tabs="14:2"><input checked="checked" id="__tabbed_14_1" name="__tabbed_14" type="radio" /><label for="__tabbed_14_1">Full system</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="16:2"><input checked="checked" id="__tabbed_16_1" name="__tabbed_16" type="radio" /><label for="__tabbed_16_1">Full system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 
 #SBATCH --time=00:20:00
@@ -4531,7 +4537,7 @@ srun --het-group=0 ${SHARED_ARGS} --export=all,OMP_NUM_THREADS=16 ./xthi-a : \
      --het-group=1 ${SHARED_ARGS} --export=all,OMP_NUM_THREADS=1  ./xthi-b
 </code></pre></div>
 </div>
-<input id="__tabbed_14_2" name="__tabbed_14" type="radio" /><label for="__tabbed_14_2">4-cabinet system</label><div class="tabbed-content">
+<input id="__tabbed_16_2" name="__tabbed_16" type="radio" /><label for="__tabbed_16_2">4-cabinet system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 
 #SBATCH --time=00:20:00
@@ -4614,7 +4620,7 @@ the queue. Although low priority jobs are not charged, you do need a valid, posi
 budget to be able to submit and run low priority jobs, i.e. you need at least 1 CU
 in your budget.</p>
 <p>Low priority access is always available and has the following limits:</p>
-<div class="tabbed-set" data-tabs="15:2"><input checked="checked" id="__tabbed_15_1" name="__tabbed_15" type="radio" /><label for="__tabbed_15_1">Full system</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="17:2"><input checked="checked" id="__tabbed_17_1" name="__tabbed_17" type="radio" /><label for="__tabbed_17_1">Full system</label><div class="tabbed-content">
 <ul>
 <li>No maximum job size</li>
 <li>Maximum 16 low priority jobs in the queue per user</li>
@@ -4622,7 +4628,7 @@ in your budget.</p>
 <li>Maximum runtime of 6 hours</li>
 </ul>
 </div>
-<input id="__tabbed_15_2" name="__tabbed_15" type="radio" /><label for="__tabbed_15_2">4-cabinet system</label><div class="tabbed-content">
+<input id="__tabbed_17_2" name="__tabbed_17" type="radio" /><label for="__tabbed_17_2">4-cabinet system</label><div class="tabbed-content">
 <ul>
 <li>256 node maximum job size</li>
 <li>256 nodes maximum in use by any one user</li>
