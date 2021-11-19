@@ -499,13 +499,13 @@ Due to MODULEPATH changes, the following have been reloaded:
 
 HPE Cray provide, as standard, an MPICH implementation of the message
 passing interface which is specifically optimised for the ARCHER2
-network. The current implementation supports MPI standard version 3.1.
+interconnect. The current implementation supports MPI standard version 3.1.
 
 The HPE Cray MPICH implementation is linked into software by default when
 compiling using the standard wrapper scripts: `cc`, `CC` and `ftn`.
 
 You do not need to do anything to make HPE Cray MPICH available when you
-log into ArCHER2, it is available by default to all users.
+log into ARCHER2, it is available by default to all users.
 
 #### Switching to alternative UCX MPI implementation
 
@@ -649,6 +649,14 @@ environment.
     Unloading the `cpe` module does not restore the original programming environment
     release. To restore the default programming environment release you should log 
     out and then log back in to ARCHER2.
+
+#### Accessing performance analysis tools in non-default Programming Environment
+
+The performance analysis tools (such as CrayPAT and CrayPAT-lite) behave slightly differently
+to other HPE Cray modules when you change to a non-default version of the programming
+environment. Specifically, an additional step is required to make them available. Once
+you have loaded the `cpe` module, you will also need to load the `perftools-base` 
+module to be able to load and use the performance tools modules.
     
 ### Available HPE Cray Programming Environment releases on ARCHER2
 
