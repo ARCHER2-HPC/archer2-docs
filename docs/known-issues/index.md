@@ -6,6 +6,24 @@ active investigation by HPE Cray and the wider service.
 
 ## Open Issues
 
+### Warning when compiling Fortran code with CCE and MPI_F08 interface (Added: 2021-11-18)
+
+- **Systems affected:** ARCHER2 full system
+
+When you compile Fortran code using the MPI F08 interface (i.e. `use mpi_f08`) using the default version
+of CCE (11.0.4) you will see warnings similar to:
+
+```
+  use mpi_f08
+      ^       
+ftn-1753 crayftn: WARNING INTERFACE_MPI, File = interface_mpi_mod.f90, Line = 8, Column = 7 
+  File "/opt/cray/pe/mpich/8.1.4/ofi/cray/9.1/include/MPI_F08.mod" containing [sub]module information for "MPI_F08" was created with a previous compiler release.  It will not be supported by the next major release.  It is version 110 from release 9.0.
+```
+
+These warnings can be safely ignored as they do not affect the functioning of the code. If
+you wish to avoid the warnings, you can compile using the more recent CCE version (12.0.3)
+on the system. To switch to this version, use `module load cpe/21.09` from the default
+environment on ARCHER2.
 
 ### Occasionally larger jobs (requiring greater than 128 nodes) will run slow or fail (Added: 2021-11-18)
 
