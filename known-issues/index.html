@@ -455,6 +455,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#occasionally-larger-jobs-requiring-greater-than-128-nodes-will-run-slow-or-fail-added-2021-11-18" class="md-nav__link">
+    Occasionally larger jobs (requiring greater than 128 nodes) will run slow or fail (Added: 2021-11-18)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#error-message-no-space-left-on-device-added-2021-07-20" class="md-nav__link">
     Error message: No space left on device (Added: 2021-07-20)
   </a>
@@ -1640,6 +1647,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#occasionally-larger-jobs-requiring-greater-than-128-nodes-will-run-slow-or-fail-added-2021-11-18" class="md-nav__link">
+    Occasionally larger jobs (requiring greater than 128 nodes) will run slow or fail (Added: 2021-11-18)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#error-message-no-space-left-on-device-added-2021-07-20" class="md-nav__link">
     Error message: No space left on device (Added: 2021-07-20)
   </a>
@@ -1749,6 +1763,12 @@
 impacts and any known workarounds. Many of these issues are under
 active investigation by HPE Cray and the wider service.</p>
 <h2 id="open-issues">Open Issues</h2>
+<h3 id="occasionally-larger-jobs-requiring-greater-than-128-nodes-will-run-slow-or-fail-added-2021-11-18">Occasionally larger jobs (requiring greater than 128 nodes) will run slow or fail (Added: 2021-11-18)</h3>
+<ul>
+<li><strong>Systems affected:</strong> ARCHER2 full system</li>
+</ul>
+<p>The CSE team has seen instances when larger jobs (those involving more than 128 nodes) will run slow (perhaps two or three times slower than normally) or not finish (because the slowness causes a time-out). In system testing, we saw this problem for a small number of applications (most notably, LAMMPS) on around 10--20% of jobs: the issue worsens as the job size increases.</p>
+<p>The issue is being actively investigated by HPE, as a priority. At this time, there is no known work-around, though it is usually possible to resubmit the affected job successfully.</p>
 <h3 id="error-message-no-space-left-on-device-added-2021-07-20">Error message: <code>No space left on device</code> (Added: 2021-07-20)</h3>
 <ul>
 <li><strong>Systems affected:</strong> ARCHER2 4-cabinet system</li>
