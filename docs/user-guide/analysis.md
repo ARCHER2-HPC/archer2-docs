@@ -141,11 +141,11 @@ memory per core (which is a little less than 2 GB), when specifying
 cores only, and 1 core when specifying the memory only.
 
 !!! note
-    Each data analysis node is fitted with 128 GB of memory. However,
+    Each data analysis node is fitted with 512 GB of memory. However,
     a small amount of this memory is needed for system processes,
-    which is why we set an upper limit of 125 GB. This is also why the
+    which is why we set an upper limit of 125 GB per user (a user is
+    limited to one quarter of the RAM on a node). This is also why the
     per-core default memory allocation is slightly less than 2 GB.
-
 
 !!! note
     When running on the data analysis nodes, you must always specify either 
