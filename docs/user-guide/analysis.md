@@ -177,7 +177,7 @@ would use something like:
 #SBATCH --qos=serial
 
 # Define memory required for this jobs. By default, you would 
-# get 2 GB, but you can ask for up to 128 GB.
+# get just under 2 GB, but you can ask for up to 125 GB.
 #SBATCH --mem=4G
 
 # Set the number of threads to 1
