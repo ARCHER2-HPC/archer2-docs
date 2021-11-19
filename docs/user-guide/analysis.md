@@ -161,13 +161,13 @@ one for the compute nodes. The main differences are that you need to use
 `--partition=serial` and `--qos=serial`, specify the number of tasks
 (rather than the number of nodes) and/or specify the amount of memory
 you want. For example, to use a single core and 4 GB of memory, you 
-would use:
+would use something like:
 
 ```slurm
 #!/bin/bash
 
 # Slurm job options (job-name, job time)
-#SBATCH --job-name=Example_MPI_Job
+#SBATCH --job-name=data_analysis
 #SBATCH --time=0:20:0
 #SBATCH --ntasks=1
 
@@ -185,7 +185,9 @@ would use:
 #   using threading.
 export OMP_NUM_THREADS=1
 
-./my_executable.x
+module load cray-python
+
+python my_analysis_script.py
 ```
 
 ### Interactive session on the data analysis nodes
