@@ -1981,11 +1981,11 @@ one for the compute nodes. The main differences are that you need to use
 <code>--partition=serial</code> and <code>--qos=serial</code>, specify the number of tasks
 (rather than the number of nodes) and/or specify the amount of memory
 you want. For example, to use a single core and 4 GB of memory, you 
-would use:</p>
+would use something like:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
 <span class="c1"># Slurm job options (job-name, job time)</span>
-<span class="kp">#SBATCH --job-name=Example_MPI_Job</span>
+<span class="kp">#SBATCH --job-name=data_analysis</span>
 <span class="kp">#SBATCH --time=0:20:0</span>
 <span class="kp">#SBATCH --ntasks=1</span>
 
@@ -2003,7 +2003,9 @@ would use:</p>
 <span class="c1">#   using threading.</span>
 <span class="nb">export</span> <span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
 
-./my_executable.x
+module load cray-python
+
+python my_analysis_script.py
 </code></pre></div>
 <h3 id="interactive-session-on-the-data-analysis-nodes">Interactive session on the data analysis nodes</h3>
 <p>There are two ways to start an interactive session on the data analysis nodes: 

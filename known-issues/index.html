@@ -455,6 +455,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#warning-when-compiling-fortran-code-with-cce-and-mpi_f08-interface-added-2021-11-18" class="md-nav__link">
+    Warning when compiling Fortran code with CCE and MPI_F08 interface (Added: 2021-11-18)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#occasionally-larger-jobs-requiring-greater-than-128-nodes-will-run-slow-or-fail-added-2021-11-18" class="md-nav__link">
     Occasionally larger jobs (requiring greater than 128 nodes) will run slow or fail (Added: 2021-11-18)
   </a>
@@ -1647,6 +1654,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#warning-when-compiling-fortran-code-with-cce-and-mpi_f08-interface-added-2021-11-18" class="md-nav__link">
+    Warning when compiling Fortran code with CCE and MPI_F08 interface (Added: 2021-11-18)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#occasionally-larger-jobs-requiring-greater-than-128-nodes-will-run-slow-or-fail-added-2021-11-18" class="md-nav__link">
     Occasionally larger jobs (requiring greater than 128 nodes) will run slow or fail (Added: 2021-11-18)
   </a>
@@ -1763,6 +1777,21 @@
 impacts and any known workarounds. Many of these issues are under
 active investigation by HPE Cray and the wider service.</p>
 <h2 id="open-issues">Open Issues</h2>
+<h3 id="warning-when-compiling-fortran-code-with-cce-and-mpi_f08-interface-added-2021-11-18">Warning when compiling Fortran code with CCE and MPI_F08 interface (Added: 2021-11-18)</h3>
+<ul>
+<li><strong>Systems affected:</strong> ARCHER2 full system</li>
+</ul>
+<p>When you compile Fortran code using the MPI F08 interface (i.e. <code>use mpi_f08</code>) using the default version
+of CCE (11.0.4) you will see warnings similar to:</p>
+<div class="highlight"><pre><span></span><code>  use mpi_f08
+      ^       
+ftn-1753 crayftn: WARNING INTERFACE_MPI, File = interface_mpi_mod.f90, Line = 8, Column = 7 
+  File &quot;/opt/cray/pe/mpich/8.1.4/ofi/cray/9.1/include/MPI_F08.mod&quot; containing [sub]module information for &quot;MPI_F08&quot; was created with a previous compiler release.  It will not be supported by the next major release.  It is version 110 from release 9.0.
+</code></pre></div>
+<p>These warnings can be safely ignored as they do not affect the functioning of the code. If
+you wish to avoid the warnings, you can compile using the more recent CCE version (12.0.3)
+on the system. To switch to this version, use <code>module load cpe/21.09</code> from the default
+environment on ARCHER2.</p>
 <h3 id="occasionally-larger-jobs-requiring-greater-than-128-nodes-will-run-slow-or-fail-added-2021-11-18">Occasionally larger jobs (requiring greater than 128 nodes) will run slow or fail (Added: 2021-11-18)</h3>
 <ul>
 <li><strong>Systems affected:</strong> ARCHER2 full system</li>
