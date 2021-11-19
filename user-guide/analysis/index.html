@@ -1950,15 +1950,23 @@ only request part of a single node and you will likely be sharing the node
 with other users.</p>
 <p>The data analysis nodes are set up such that you can specify the number of 
 cores you want to use (up to 32 physical cores) and the amount of memory you 
-want for your job (up to 128 GB). You can have multiple jobs running on the 
+want for your job (up to 125 GB). You can have multiple jobs running on the 
 data analysis nodes at the same time, but the total number of cores used by 
-jobs currently running from a single user cannot exceed 32 cores, and the
+those jobs cannot exceed 32, and the
 total memory used by jobs currently running from a single user cannot exceed
-128 GB -- any jobs above this limit will remain pending until your previous
+125 GB -- any jobs above this limit will remain pending until your previous
 jobs are finished.</p>
-<p>You do not need to specify both number of cores <em>and</em> memory for jobs on the
-data analysis nodes. By default, you will get 2 GB of memory per core when
-specifying cores only, and 1 core when specifying the memory only.</p>
+<p>You do not need to specify both number of cores <em>and</em> memory for jobs
+on the data analysis nodes. By default, you will get 1984 MiB of
+memory per core (which is a little less than 2 GB), when specifying
+cores only, and 1 core when specifying the memory only.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Each data analysis node is fitted with 128 GB of memory. However,
+a small amount of this memory is needed for system processes,
+which is why we set an upper limit of 125 GB. This is also why the
+per-core default memory allocation is slightly less than 2 GB.</p>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>When running on the data analysis nodes, you must always specify either 
