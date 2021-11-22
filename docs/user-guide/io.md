@@ -1,4 +1,4 @@
-# I/O and file systems
+# I/O performance and tuning
 
 This section describes common IO patterns and how to get good performance
 on the ARCHER2 storage. 
@@ -7,21 +7,9 @@ Information on the file systems, directory layouts, quotas,
 archiving and transferring data can be found in the
 [Data management and transfer section](data.md).
 
-## Using the ARCHER2 file systems
-
-Different file systems are configured for different purposes and
-performance. ARCHER2 has two file systems available to users:
-
-| Node type | Available file systems |
-| --------- | ---------------------- |
-| Login     | /home, /work           |
-| Compute   | /work                  |
-
-!!! warning
-    Any data used in parallel jobs should be located on `/work` (Lustre)
-    as the compute nodes cannot access `/home`. You should use `/home`
-    for critical data as it is backed up; `/work` is not backed up.
-
+The advice here is targetted at use of the parallel file
+systems available on the compute nodes on ARCHER2 (i.e. **Not**
+the home and RDFaaS file systems).
 ## Common I/O patterns
 
 There are number of I/O patterns that are frequently used in
