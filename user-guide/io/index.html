@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#io-and-file-systems" class="md-skip">
+        <a href="#io-performance-and-tuning" class="md-skip">
           Skip to content
         </a>
       
@@ -601,13 +601,6 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#using-the-archer2-file-systems" class="md-nav__link">
-    Using the ARCHER2 file systems
-  </a>
-  
-</li>
       
         <li class="md-nav__item">
   <a href="#common-io-patterns" class="md-nav__link">
@@ -1667,13 +1660,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#using-the-archer2-file-systems" class="md-nav__link">
-    Using the ARCHER2 file systems
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#common-io-patterns" class="md-nav__link">
     Common I/O patterns
   </a>
@@ -1812,39 +1798,15 @@
                   </a>
                 
                 
-                <h1 id="io-and-file-systems">I/O and file systems</h1>
+                <h1 id="io-performance-and-tuning">I/O performance and tuning</h1>
 <p>This section describes common IO patterns and how to get good performance
 on the ARCHER2 storage. </p>
 <p>Information on the file systems, directory layouts, quotas,
 archiving and transferring data can be found in the
 <a href="../data/">Data management and transfer section</a>.</p>
-<h2 id="using-the-archer2-file-systems">Using the ARCHER2 file systems</h2>
-<p>Different file systems are configured for different purposes and
-performance. ARCHER2 has two file systems available to users:</p>
-<table>
-<thead>
-<tr>
-<th>Node type</th>
-<th>Available file systems</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Login</td>
-<td>/home, /work</td>
-</tr>
-<tr>
-<td>Compute</td>
-<td>/work</td>
-</tr>
-</tbody>
-</table>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Any data used in parallel jobs should be located on <code>/work</code> (Lustre)
-as the compute nodes cannot access <code>/home</code>. You should use <code>/home</code>
-for critical data as it is backed up; <code>/work</code> is not backed up.</p>
-</div>
+<p>The advice here is targetted at use of the parallel file
+systems available on the compute nodes on ARCHER2 (i.e. <strong>Not</strong>
+the home and RDFaaS file systems).</p>
 <h2 id="common-io-patterns">Common I/O patterns</h2>
 <p>There are number of I/O patterns that are frequently used in
 parallel applications:</p>
