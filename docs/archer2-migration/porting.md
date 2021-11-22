@@ -1,10 +1,5 @@
 # Porting applications to full ARCHER2 system
 
-!!! important
-    The full ARCHER2 system is not yet available so you will not be able to
-    port any software yet. Users will be informed once the full system 
-    is available and they can start porting software and using the system.
-
 Porting applications to the full ARCHER2 system has generally 
 proven straightforward if they are running successfully on 
 the ARCHER2 4-cabinet system. You should be able to use the 
