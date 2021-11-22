@@ -399,16 +399,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#transferring-data-interactively-from-the-4-cabinet-system-to-the-full-system" class="md-nav__link">
+    Transferring data interactively from the 4-cabinet system to the full system
+  </a>
+  
+    <nav class="md-nav" aria-label="Transferring data interactively from the 4-cabinet system to the full system">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#transferring-data-using-rsync-recommended" class="md-nav__link">
     Transferring data using rsync (recommended)
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#transferring-data-using-scp" class="md-nav__link">
     Transferring data using scp
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1552,16 +1565,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#transferring-data-interactively-from-the-4-cabinet-system-to-the-full-system" class="md-nav__link">
+    Transferring data interactively from the 4-cabinet system to the full system
+  </a>
+  
+    <nav class="md-nav" aria-label="Transferring data interactively from the 4-cabinet system to the full system">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#transferring-data-using-rsync-recommended" class="md-nav__link">
     Transferring data using rsync (recommended)
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#transferring-data-using-scp" class="md-nav__link">
     Transferring data using scp
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1602,10 +1628,15 @@ in to both accounts.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>Unlike normal access, ARCHER2 4-cabinet system to ARCHER2 full system transfer 
-has been set up to require only one form of authentication. You will <strong>not</strong> need 
-to generate a new SSH key pair to transfer data from the ARCHER2 4-cabinet system 
-to ARCHER2 as your password will suffice.</p>
+has been set up to require only one form of authentication. You will only need
+one factor to authenticate from the 4-cab to the full system or vice versa. This
+factor can be either an SSH key (that has been registered against your account in 
+SAFE) or you can use your passowrd. If you have a large amount of data to transfer
+you may want to setup a passphrase-less SSH key on ARCHER2 full system and
+<a href="../../user-guide/data/">use the data analysis nodes</a> to run transfers via a
+Slurm job.</p>
 </div>
+<h2 id="transferring-data-interactively-from-the-4-cabinet-system-to-the-full-system">Transferring data interactively from the 4-cabinet system to the full system</h2>
 <p>First, login to the ARCHER2 4-cabinet system (making sure to change <code>auser</code> 
 to your username):</p>
 <pre><code>ssh auser@login-4c.archer2.ac.uk
@@ -1619,7 +1650,7 @@ will take.</p>
 <p>Unpack the archive file in the destination directory</p>
 <pre><code>tar -xzf all_my_files.tar.gz
 </code></pre>
-<h2 id="transferring-data-using-rsync-recommended">Transferring data using <code>rsync</code> (recommended)</h2>
+<h3 id="transferring-data-using-rsync-recommended">Transferring data using <code>rsync</code> (recommended)</h3>
 <p>Begin the data transfer from the ARCHER2 4-cabinet system to the ARCHER2 full 
 system using <code>rsync</code>:</p>
 <pre><code>rsync -Pv all_my_files.tar.gz a2user@login.archer2.ac.uk:/work/t01/t01/a2user
@@ -1633,7 +1664,7 @@ the budget associated with that username.</p>
 command could be used to restart the transfer after a loss of
 connection. We move our research archive to our project work directory 
 on the ARCHER2 full system.</p>
-<h2 id="transferring-data-using-scp">Transferring data using scp</h2>
+<h3 id="transferring-data-using-scp">Transferring data using scp</h3>
 <p>If you are unconcerned about being able to restart an interrupted
 transfer, you could instead use the <code>scp</code> command,</p>
 <pre><code>scp all_my_files.tar.gz a2user@login.archer2.ac.uk:/work/t01/t01/a2user/
