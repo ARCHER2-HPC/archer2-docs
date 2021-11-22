@@ -29,7 +29,7 @@ Some further information that may be useful:
 The unit of allocation on ARCHER2 is called the ARCHER2 Compute Unit (CU) and 1 CU is equivalent to 1 ARCHER2 node hour.
 Your time budget will be shared on both systems. This means that any existing allocation available to your project on the 4-cabinet system will also be available on the full system. 
 
-There will be a period of at least 30 days where users will have access to both the 4-cabinet system and the full system. During this time, use on the full system will be uncharged and use on the 4-cabinet system will be a charged in the usual way.  Users will be notified before the no-charging period ends.
+There will be a period of at least 30 days where users will have access to both the 4-cabinet system and the full system. During this time, use on the full system will be uncharged (though users must still have access to a valid, positive budget to be able to submit jobs) and use on the 4-cabinet system will be a charged in the usual way. Users will be notified before the no-charging period ends.
 
 
 ## How do I set up an account on the full system?
