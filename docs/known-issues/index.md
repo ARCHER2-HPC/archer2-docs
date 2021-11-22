@@ -6,6 +6,12 @@ active investigation by HPE Cray and the wider service.
 
 ## Open Issues
 
+### Dask Python package missing dependencies (Added: 2021-11-22)
+
+The Dask Python package is missing some dependencies on the latest Programming
+Environment (21.09). This can be worked around either by using the default
+Programming Environment (21.04), or by following the [instructions](https://docs.archer2.ac.uk/user-guide/python/#adding-your-own-packages)
+to install dask in your own user space.
 
 ### Error message: `No space left on device` (Added: 2021-07-20)
 
