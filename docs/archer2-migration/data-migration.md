@@ -17,9 +17,15 @@ transferred.
     
 !!! tip
     Unlike normal access, ARCHER2 4-cabinet system to ARCHER2 full system transfer 
-    has been set up to require only one form of authentication. You will **not** need 
-    to generate a new SSH key pair to transfer data from the ARCHER2 4-cabinet system 
-    to ARCHER2 as your password will suffice.
+    has been set up to require only one form of authentication. You will only need
+    one factor to authenticate from the 4-cab to the full system or vice versa. This
+    factor can be either an SSH key (that has been registered against your account in 
+    SAFE) or you can use your passowrd. If you have a large amount of data to transfer
+    you may want to setup a passphrase-less SSH key on ARCHER2 full system and
+    [use the data analysis nodes](../user-guide/data.md) to run transfers via a
+    Slurm job.
+
+## Transferring data interactively from the 4-cabinet system to the full system
 
 First, login to the ARCHER2 4-cabinet system (making sure to change `auser` 
 to your username):
@@ -38,7 +44,7 @@ Unpack the archive file in the destination directory
 
     tar -xzf all_my_files.tar.gz
 
-## Transferring data using `rsync` (recommended)
+### Transferring data using `rsync` (recommended)
 
 Begin the data transfer from the ARCHER2 4-cabinet system to the ARCHER2 full 
 system using `rsync`:
@@ -56,7 +62,7 @@ command could be used to restart the transfer after a loss of
 connection. We move our research archive to our project work directory 
 on the ARCHER2 full system.
 
-## Transferring data using scp
+### Transferring data using scp
 
 If you are unconcerned about being able to restart an interrupted
 transfer, you could instead use the `scp` command,
