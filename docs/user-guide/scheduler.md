@@ -216,12 +216,12 @@ lists the active QoS on ARCHER2.
 === "Full system"
     | QoS        | Max Nodes Per Job | Max Walltime | Jobs Queued | Jobs Running | Partition(s) | Notes |
     | ---------- | ----------------- | ------------ | ----------- | ------------ | ------------ | ------|
-    | standard   | 2048               | 24 hrs       | 64          | 16           | standard     | Maximum of 2048 nodes in use by any one user at any time |
+    | standard   | 1024               | 24 hrs       | 64          | 16           | standard     | Maximum of 1024 nodes in use by any one user at any time |
     | highmem   | 256               | 24 hrs       | 16          | 16           | highmem     | Maximum of 512 nodes in use by any one user at any time |
     | taskfarm   | 16               | 24 hrs       | 128          | 32           | standard     | Maximum of 256 nodes in use by any one user at any time |
     | short      | 32                 | 20 mins      | 16           | 4            | standard     | |
     | long       | 64                | 48 hrs       | 16          | 16           | standard     | Minimum walltime of 24 hrs, maximum 512 nodes in use by any one user at any time, maximum of 2048 nodes in use by QoS |
-    | largescale | 5860               | 12 hrs        | 8           | 1            | standard     | Minimum job size of 2049 nodes |
+    | largescale | 5860               | 12 hrs        | 8           | 1            | standard     | Minimum job size of 1025 nodes |
     | lowpriority | 5860               | 6 hrs        | 16           | 16            | standard, highmem     | Jobs not charged but requires at least 1 CU in budget to use. |
     | serial | 32 cores and/or 128 GB memory   | 24 hrs        | 12           | 4            | serial    | Jobs not charged but requires at least 1 CU in budget to use. |
     | reservation | Size of reservation  | Length of reservation       | No limit           | no limit           | standard   |  |
