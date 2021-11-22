@@ -14,7 +14,7 @@ In rare circumstances, it is possible for a user job to crash the compute nodes 
 
 The underlying issue is resolved in an update to the compute-node operating system (Shasta Version 1.5), which is expected to be rolled out to the main system early in 2022.
 
-In the meantime, users who experience this issue are advised to try disabling XPMEM in their application. CSE can provide advice on how to do this.
+In the meantime, users who experience this issue are advised to try disabling XPMEM in their application. The ARCHER2 CSE team can provide advice on how to do this. You can contact the  CSE team via the [service desk](https://www.archer2.ac.uk/support-access/servicedesk.html).
 
 
 ### Dask Python package missing dependencies (Added: 2021-11-22)
