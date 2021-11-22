@@ -455,6 +455,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#occasionally-user-jobs-can-cause-compute-nodes-to-crash-added-2021-11-22" class="md-nav__link">
+    Occasionally user jobs can cause compute nodes to crash (Added: 2021-11-22)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#dask-python-package-missing-dependencies-added-2021-11-22" class="md-nav__link">
     Dask Python package missing dependencies (Added: 2021-11-22)
   </a>
@@ -1661,6 +1668,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#occasionally-user-jobs-can-cause-compute-nodes-to-crash-added-2021-11-22" class="md-nav__link">
+    Occasionally user jobs can cause compute nodes to crash (Added: 2021-11-22)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#dask-python-package-missing-dependencies-added-2021-11-22" class="md-nav__link">
     Dask Python package missing dependencies (Added: 2021-11-22)
   </a>
@@ -1791,6 +1805,13 @@
 impacts and any known workarounds. Many of these issues are under
 active investigation by HPE Cray and the wider service.</p>
 <h2 id="open-issues">Open Issues</h2>
+<h3 id="occasionally-user-jobs-can-cause-compute-nodes-to-crash-added-2021-11-22">Occasionally user jobs can cause compute nodes to crash (Added: 2021-11-22)</h3>
+<ul>
+<li><strong>Systems affected:</strong> ARCHER2 full system</li>
+</ul>
+<p>In rare circumstances, it is possible for a user job to crash the compute nodes on which it is running. This is only evident to the user as a failed job: there is no obvious sign that the nodes have crashed. Therefore, if we identify a user whose jobs are causing nodes to crash, we may need to work with them to stop this happening.</p>
+<p>The underlying issue is resolved in an update to the compute-node operating system (Shasta Version 1.5), which is expected to be rolled out to the main system early in 2022.</p>
+<p>In the meantime, users who experience this issue are advised to try disabling XPMEM in their application. The ARCHER2 CSE team can provide advice on how to do this. You can contact the  CSE team via the <a href="https://www.archer2.ac.uk/support-access/servicedesk.html">service desk</a>.</p>
 <h3 id="dask-python-package-missing-dependencies-added-2021-11-22">Dask Python package missing dependencies (Added: 2021-11-22)</h3>
 <p>The Dask Python package is missing some dependencies on the latest Programming
 Environment (21.09). This can be worked around either by using the default
