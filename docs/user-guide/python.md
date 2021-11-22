@@ -27,7 +27,6 @@ include:
 
   - numpy and scipy - built using GCC against HPE Cray LibSci
   - mpi4py - built using GCC against HPE Cray MPICH
-  - dask
 
 The HPE Cray Python distribution can be loaded (either on the front-end
 or in a submission script) using:
