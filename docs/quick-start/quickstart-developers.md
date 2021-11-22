@@ -6,9 +6,9 @@ assumes that you are familiar with the material in the
 
 ## Compiler wrappers
 
-When compiling code on ARCHER2, you should make use of the Cray compiler
+When compiling code on ARCHER2, you should make use of the HPE Cray compiler
 wrappers. These ensure that the correct libraries and headers (for
-example, MPI or Cray LibSci) will be used during the compilation and
+example, MPI or HPE LibSci) will be used during the compilation and
 linking stages. These wrappers should be accessed by providing the
 following compiler names:
 
@@ -33,21 +33,27 @@ build to ensure that the build tool is aware of the wrappers:
 set of compiler and linker options being used by passing the
 `-craype-verbose` option to the wrapper when using it.
 
+!!! tip
+    The HPE Cray compiler wrappers should be used instead of the MPI compiler
+    wrappers such as `mpicc`, `mpicxx` and `mpif90` that you may have used
+    on other HPC systems.
+
+
 ## Programming environments
 
-On login to ARCHER2, the `PrgEnv-cray` collection will be loaded, as
-will a `cce` module. The latter makes available Cray's compilers from
+On login to ARCHER2, the `PrgEnv-cray` compiler environment will be loaded, as
+will a `cce` module. The latter makes available the Cray compilers from
 the Cray Compiling Environment (CCE), while the former provides the
 correct wrappers and support to use them. The GNU Compiler Collection
-(GCC) is also available.
+(GCC) and the AMD compiler environment (AOCC) are also available.
 
-To make use of any Programming Environment, restore the correct `PrgEnv`
-collection. After doing so the compiler wrappers (`cc`, `CC` and `ftn`)
+To make use of any particular compiler environment, you load the correct `PrgEnv`
+module. After doing so the compiler wrappers (`cc`, `CC` and `ftn`)
 will correctly call the compilers from the new suite. The default
 version of the corresponding compiler suite will also be loaded, but you
 may swap to another available version if you wish.
 
-The following table summarises the suites and associated programming
+The following table summarises the suites and associated compiler
 environments.
 
 | Suite name | Module | Programming environment collection |
@@ -57,21 +63,22 @@ environments.
 | AOCC       | `aocc` | `PrgEnv-aocc`                      |
 
 As an example, after logging in you may wish to use GCC as your compiler
-suite. Running `module restore PrgEnv-gnu` will replace the Cray
+suite. Running `module load PrgEnv-gnu` will replace the default CCE (Cray)
 environment with the GNU environment. It will also unload the `cce`
 module and load the default version of the `gcc` module; at the time of
-writing, this is GCC 10.1.0. If you need to use a different version of
+writing, this is GCC 10.2.0. If you need to use a different version of
 GCC, for example 9.3.0, you would follow up with `module swap gcc
 gcc/9.3.0`. At this point you may invoke the compiler wrappers and they
-will correctly use Cray's libraries and tools in conjunction with GCC
+will correctly use the HPE libraries and tools in conjunction with GCC
 9.3.0.
 
 !!! warning
-    The `gcc/8.3.0` module is available on ARCHER2 but cannot be used as the
+    The `gcc/8.1.0` (full system) and `gcc/8.3.0` (4-cabinet system) modules
+    are available on ARCHER2 but cannot be used as the
     supporting scientific and system libraries are not available. You should
     **not** use this version of GCC.
 
-When choosing the programming environment, a big factor will likely be
+When choosing the compiler environment, a big factor will likely be
 which compilers you have previously used for your code's development.
 The Cray Fortran compiler is similar to the compiler you may be familiar
 with from ARCHER, while the Cray C and C++ compilers provided on ARCHER2
@@ -95,7 +102,7 @@ flags should be a good starting point for reasonable performance:
 | GCC          | `-O2 -ftree-vectorize -funroll-loops -ffast-math` |
 
 !!! tip
-    If you want to use GCC version 10 or greater to compile Fortran code,
+    If you want to use GCC version 10 or greater to compile MPI Fortran code,
     you **must** add the `-fallow-argument-mismatch` option when compiling
     otherwise you will see compile errors associated with MPI functions.
 
@@ -149,7 +156,7 @@ If you attempt to link statically, you will see errors similar to:
     collect2: error: ld returned 1 exit status
 
 The compiler wrapper scripts on ARCHER link runtime libraries in using
-the `runpath` by default. This means that the paths to the runtime
+the `RUNPATH` by default. This means that the paths to the runtime
 libraries are encoded into the executable so you do not need to load the
 compiler environment in your job submission scripts.
 
@@ -219,12 +226,7 @@ crashes. Debugging jobs will end when you exit gdb4hpc, or you can end
 them yourself by running, in this example, `release $my_prog`.
 
 For more information on debugging parallel codes, see the documentation
-at `ARCHER2 User and Best Practice Guide - Debugging
-<../user-guide/debug>`.
-
-!!! note
-    We will add more information on using the debugging tools once the
-    ARCHER2 system is available.
+in the [Debugging section](../user-guide/debug.md) of the ARCHER2 User and Best Practice Guide.
 
 ## Profiling tools
 
@@ -280,22 +282,19 @@ The available `perftools-lite` modules are:
 
 !!! tip
     For more information on profiling parallel codes, see the documentation
-    at [ARCHER2 User and Best Practice Guide - Profiling](../user-guide/profile.md).
- 
-!!! note
-    We will add more information on using the profiling tools once the
-    ARCHER2 system is available.
+    in the [Profiling section](../user-guide/profile.md) of the
+    ARCHER2 User and Best Practice Guide.
 
 ## Useful Links
 
 Links to other documentation you may find useful:
 
-  - [ARCHER2 User and Best Practice Guide](../user-guide/) -
+  - [ARCHER2 User and Best Practice Guide](../../user-guide/) -
     Covers all aspects of use of the ARCHER2 service. This includes
     fundamentals (required by all users to use the system effectively),
     best practice for getting the most out of ARCHER2, and more advanced
     technical topics.
-  - [Cray Programming Environment User
-    Guide](https://pubs.cray.com/bundle/XC_Series_Programming_Environment_User_Guide_1705_S-2529/page/Record_of_Revision.html)
-  - [Cray Performance Measurement and Analysis Tools User
-    Guide](https://pubs.cray.com/bundle/Cray_Performance_Measurement_and_Analysis_Tools_User_Guide_644_S-2376/page/About_the_Cray_Performance_Measurement_and_Analysis_Tools_User_Guide.html)
+  - [HPE Cray Programming Environment User
+    Guide](https://internal.support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&docId=a00115304en_us)
+  - [HPE Cray Performance Measurement and Analysis Tools User
+    Guide](https://support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&docId=a00114942en_us)

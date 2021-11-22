@@ -30,48 +30,92 @@ library()
 
 At the time of writing, the HPE Cray R distribution included the following packages:
 
-```
-Packages in library ‘/opt/R/4.0.2.0/lib64/R/library’:
-
-base                    The R Base Package
-boot                    Bootstrap Functions (Originally by Angelo Canty
-                        for S)
-class                   Functions for Classification
-cluster                 "Finding Groups in Data": Cluster Analysis
-                        Extended Rousseeuw et al.
-codetools               Code Analysis Tools for R
-compiler                The R Compiler Package
-datasets                The R Datasets Package
-foreign                 Read Data Stored by 'Minitab', 'S', 'SAS',
-                        'SPSS', 'Stata', 'Systat', 'Weka', 'dBase', ...
-graphics                The R Graphics Package
-grDevices               The R Graphics Devices and Support for Colours
-                        and Fonts
-grid                    The Grid Graphics Package
-KernSmooth              Functions for Kernel Smoothing Supporting Wand
-                        & Jones (1995)
-lattice                 Trellis Graphics for R
-MASS                    Support Functions and Datasets for Venables and
-                        Ripley's MASS
-Matrix                  Sparse and Dense Matrix Classes and Methods
-methods                 Formal Methods and Classes
-mgcv                    Mixed GAM Computation Vehicle with Automatic
-                        Smoothness Estimation
-nlme                    Linear and Nonlinear Mixed Effects Models
-nnet                    Feed-Forward Neural Networks and Multinomial
-                        Log-Linear Models
-parallel                Support for Parallel computation in R
-rpart                   Recursive Partitioning and Regression Trees
-spatial                 Functions for Kriging and Point Pattern
-                        Analysis
-splines                 Regression Spline Functions and Classes
-stats                   The R Stats Package
-stats4                  Statistical Functions using S4 Classes
-survival                Survival Analysis
-tcltk                   Tcl/Tk Interface
-tools                   Tools for Package Development
-utils                   The R Utils Package
-```
+=== "Full System"
+   ```
+   Packages in library ‘/opt/R/4.0.3.0/lib64/R/library’:
+   
+   base                    The R Base Package
+   boot                    Bootstrap Functions (Originally by Angelo Canty
+                           for S)
+   class                   Functions for Classification
+   cluster                 "Finding Groups in Data": Cluster Analysis
+                           Extended Rousseeuw et al.
+   codetools               Code Analysis Tools for R
+   compiler                The R Compiler Package
+   datasets                The R Datasets Package
+   foreign                 Read Data Stored by 'Minitab', 'S', 'SAS',
+                           'SPSS', 'Stata', 'Systat', 'Weka', 'dBase', ...
+   graphics                The R Graphics Package
+   grDevices               The R Graphics Devices and Support for Colours
+                           and Fonts
+   grid                    The Grid Graphics Package
+   KernSmooth              Functions for Kernel Smoothing Supporting Wand
+                           & Jones (1995)
+   lattice                 Trellis Graphics for R
+   MASS                    Support Functions and Datasets for Venables and
+                           Ripley's MASS
+   Matrix                  Sparse and Dense Matrix Classes and Methods
+   methods                 Formal Methods and Classes
+   mgcv                    Mixed GAM Computation Vehicle with Automatic
+                           Smoothness Estimation
+   nlme                    Linear and Nonlinear Mixed Effects Models
+   nnet                    Feed-Forward Neural Networks and Multinomial
+                           Log-Linear Models
+   parallel                Support for Parallel computation in R
+   rpart                   Recursive Partitioning and Regression Trees
+   spatial                 Functions for Kriging and Point Pattern
+                           Analysis
+   splines                 Regression Spline Functions and Classes
+   stats                   The R Stats Package
+   stats4                  Statistical Functions using S4 Classes
+   survival                Survival Analysis
+   tcltk                   Tcl/Tk Interface
+   tools                   Tools for Package Development
+   utils                   The R Utils Package
+   ```
+=== "4-cabinet system"
+   ```
+   Packages in library ‘/opt/R/4.0.2.0/lib64/R/library’:
+   
+   base                    The R Base Package
+   boot                    Bootstrap Functions (Originally by Angelo Canty
+                           for S)
+   class                   Functions for Classification
+   cluster                 "Finding Groups in Data": Cluster Analysis
+                           Extended Rousseeuw et al.
+   codetools               Code Analysis Tools for R
+   compiler                The R Compiler Package
+   datasets                The R Datasets Package
+   foreign                 Read Data Stored by 'Minitab', 'S', 'SAS',
+                           'SPSS', 'Stata', 'Systat', 'Weka', 'dBase', ...
+   graphics                The R Graphics Package
+   grDevices               The R Graphics Devices and Support for Colours
+                           and Fonts
+   grid                    The Grid Graphics Package
+   KernSmooth              Functions for Kernel Smoothing Supporting Wand
+                           & Jones (1995)
+   lattice                 Trellis Graphics for R
+   MASS                    Support Functions and Datasets for Venables and
+                           Ripley's MASS
+   Matrix                  Sparse and Dense Matrix Classes and Methods
+   methods                 Formal Methods and Classes
+   mgcv                    Mixed GAM Computation Vehicle with Automatic
+                           Smoothness Estimation
+   nlme                    Linear and Nonlinear Mixed Effects Models
+   nnet                    Feed-Forward Neural Networks and Multinomial
+                           Log-Linear Models
+   parallel                Support for Parallel computation in R
+   rpart                   Recursive Partitioning and Regression Trees
+   spatial                 Functions for Kriging and Point Pattern
+                           Analysis
+   splines                 Regression Spline Functions and Classes
+   stats                   The R Stats Package
+   stats4                  Statistical Functions using S4 Classes
+   survival                Survival Analysis
+   tcltk                   Tcl/Tk Interface
+   tools                   Tools for Package Development
+   utils                   The R Utils Package
+   ```
 
 ## Running R on the compute nodes
 

@@ -11,54 +11,84 @@ flow of both the atmosphere and ocean.
 
 ## Useful Links
 
-  - MITgcm home page <http://mitgcm.org>
-  - MITgcm documentation <https://mitgcm.readthedocs.io/en/latest/>
+  - [MITgcm home page](http://mitgcm.org)
+  - [MITgcm documentation](https://mitgcm.readthedocs.io/en/latest/)
 
 ## Building MITgcm on ARCHER2
 
 MITgcm is not available via a module on ARCHER2 as users will build
 their own executables specific to the problem they are working on.
-However, we do provide an optfile which will allow genmake2 to create
+However, we do provide an optfile which will allow `genmake2` to create
 Makefiles which will work on ARCHER2.
+
+!!! note
+    The processes to build MITgcm on the ARCHER2 4-cabinet system and full
+    system are slightly different. Please make sure you use the commands
+    for the correct system below.
 
 You can obtain the MITgcm source code from the developers by cloning
 from the GitHub repository with the command
 
     git clone https://github.com/MITgcm/MITgcm.git
 
-You should then copy the ARCHER2 optfile into the MITgcm directories:
+You should then copy the ARCHER2 optfile into the MITgcm directories. You may use the files at the locations below for the 4-cabinet and full systems.
 
+=== "Full system"
+    ```bash
+    cp /work/y07/shared/apps/core/mitgcm/optfiles/linux_amd64_gnu_archer2 MITgcm/tools/build_options/
+    ```
+
+=== "4-cabinet system"
+    ```bash
     cp /work/n02/shared/MITgcm/optfiles/dev_linux_amd64_gnu_archer2 MITgcm/tools/build_options/
+    ```
 
 Note that this build options file is still being tested for optimisation purposes. For working with large executables (e.g. adjoint configurations), edit the build options file to include the lines:
 
     FFLAGS="$FFLAGS -mcmodel=large"
     CFLAGS="$CFLAGS -mcmodel=large"
 
-You can also use `-mcmodel=medium` for a lower-memory options. When you are building your code with this optfile, use the GNU
-environment with
+You can also use `-mcmodel=medium` for a lower-memory options. When you are building your code with this optfile, use the GNU environment with
 
+=== "Full system"
+    ```
+    module load PrgEnv-gnu
+    ```
+
+=== "4-cabinet system"
+    ```
     module restore PrgEnv-gnu
+    ```
 
 You should also set the following environment variables.
 `MITGCM_ROOTDIR` is used to locate the source code and should point to
 the top MITgcm directory. Optionally, adding the MITgcm tools directory
 to your `PATH` environment variable makes it easier to use tools such as
-genmake2, and the `MITGCM_OPT` environment variable makes it easier to
-refer to pass the optfile to genmake2.
+`genmake2`, and the `MITGCM_OPT` environment variable makes it easier to
+refer to pass the optfile to `genmake2`.
 
+=== "Full system"
+    ```
+    export MITGCM_ROOTDIR=/path/to/MITgcm
+    export PATH=$MITGCM_ROOTDIR/tools:$PATH
+    export MITGCM_OPT=$MITGCM_ROOTDIR/tools/build_options/linux_amd64_gnu_archer2
+    ```
+
+=== "4-cabinet system"
+    ```
     export MITGCM_ROOTDIR=/path/to/MITgcm
     export PATH=$MITGCM_ROOTDIR/tools:$PATH
     export MITGCM_OPT=$MITGCM_ROOTDIR/tools/build_options/dev_linux_amd64_gnu_archer2
+    ```
 
-When using genmake2 to create the Makefile, you will need to specify the
+When using `genmake2` to create the Makefile, you will need to specify the
 optfile to use. Other commonly used options might be to use extra source
 code with the `-mods` option, and to enable MPI with `-mpi`. You might
 then run a command that resembles the following:
 
     genmake2 -mods /path/to/additional/source -mpi -optfile $MITGCM_OPT
 
-You can read about the full set of options available to genmake2 by
+You can read about the full set of options available to `genmake2` by
 running
 
     genmake2 -help
@@ -73,34 +103,68 @@ following which will allow it to run on the ARCHER2 compute nodes. This
 example would run a pure MPI MITgcm simulation over 2 nodes of 128 cores
 each for up to one hour.
 
+=== "Full system"
+    ```
     #!/bin/bash
-    
+
     # Slurm job options (job-name, compute nodes, job time)
     #SBATCH --job-name=MITgcm-simulation
     #SBATCH --time=1:0:0
     #SBATCH --nodes=2
     #SBATCH --tasks-per-node=128
     #SBATCH --cpus-per-task=1
-    
+
     # Replace [budget code] below with your project code (e.g. t01)
     #SBATCH --account=[budget code] 
     #SBATCH --partition=standard
     #SBATCH --qos=standard
-    
-    # Setup the job environment (this module needs to be loaded before any other modules)
-    module load epcc-job-env
-    
+
     # Set the number of threads to 1
     #   This prevents any threaded system libraries from automatically
     #   using threading.
     export OMP_NUM_THREADS=1
-    
+
     # Launch the parallel job
     #   Using 256 MPI processes and 128 MPI processes per node
     #   srun picks up the distribution from the sbatch options
     srun --distribution=block:block --hint=nomultithread ./mitgcmuv
+    ```
+
+=== "4-cabinet system"
+    ```
+    #!/bin/bash
+
+    # Slurm job options (job-name, compute nodes, job time)
+    #SBATCH --job-name=MITgcm-simulation
+    #SBATCH --time=1:0:0
+    #SBATCH --nodes=2
+    #SBATCH --tasks-per-node=128
+    #SBATCH --cpus-per-task=1
+
+    # Replace [budget code] below with your project code (e.g. t01)
+    #SBATCH --account=[budget code]
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+
+    # Setup the job environment (this module needs to be loaded before any other modules)
+    module load epcc-job-env
+
+    # Set the number of threads to 1
+    #   This prevents any threaded system libraries from automatically
+    #   using threading.
+    export OMP_NUM_THREADS=1
+
+    # Launch the parallel job
+    #   Using 256 MPI processes and 128 MPI processes per node
+    #   srun picks up the distribution from the sbatch options
+    srun --distribution=block:block --hint=nomultithread ./mitgcmuv
+    ```
     
 ## Reproducing the ECCO version 4 (release 4) state estimate on ARCHER2
+
+!!! note
+    These instructions apply only to the 4-cabinet and have not yet
+    been tested on the full ARCHER2 system.
 
 The ECCO version 4 state estimate (ECCOv4-r4) is an observationally-constrained numerical solution produced by the ECCO group at JPL. If you would like to reproduce the state estimate on ARCHER2 in order to create customised runs and experiments, follow the instructions below. They have been slightly modified from the JPL instructions for ARCHER2. 
 
@@ -240,9 +304,6 @@ To run on ARCHER2, submit a batch script to the Slurm scheduler. Here is an exam
     #SBATCH --account=[budget code] 
     #SBATCH --partition=standard
     #SBATCH --qos=standard
-    
-    # Setup the job environment (this module needs to be loaded before any other modules)
-    module load epcc-job-env
     
     # Set the number of threads to 1
     #   This prevents any threaded system libraries from automatically

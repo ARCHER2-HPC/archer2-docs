@@ -2,13 +2,12 @@
 
 The Met Office Unified Model ("the UM") is a numerical model of the
 atmosphere used for both weather and climate applications. It is often
-rcoupled to the [NEMO](../nemo/nemo.md) ocean model using the OASIS
-couplign framework to provide a full Earth system model.
+coupled to the [NEMO](../nemo/nemo.md) ocean model using the OASIS
+coupling framework to provide a full Earth system model.
 
 ## Useful Links
 
-  - Met Office Unified Model home page
-    <https://www.metoffice.gov.uk/research/approach/modelling-systems/unified-model/index>
+  - [Met Office Unified Model home page](https://www.metoffice.gov.uk/research/approach/modelling-systems/unified-model/index)
 
 ## Using the UM
 
