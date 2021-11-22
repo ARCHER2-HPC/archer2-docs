@@ -6,6 +6,17 @@ active investigation by HPE Cray and the wider service.
 
 ## Open Issues
 
+### Occasionally user jobs can cause compute nodes to crash (Added: 2021-11-22)
+
+- **Systems affected:** ARCHER2 full system
+
+In rare circumstances, it is possible for a user job to crash the compute nodes on which it is running. This is only evident to the user as a failed job: there is no obvious sign that the nodes have crashed. Therefore, if we identify a user whose jobs are causing nodes to crash, we may need to work with them to stop this happening.
+
+The underlying issue is resolved in an update to the compute-node operating system (Shasta Version 1.5), which is expected to be rolled out to the main system early in 2022.
+
+In the meantime, users who experience this issue are advised to try disabling XPMEM in their application. The ARCHER2 CSE team can provide advice on how to do this. You can contact the  CSE team via the [service desk](https://www.archer2.ac.uk/support-access/servicedesk.html).
+
+
 ### Dask Python package missing dependencies (Added: 2021-11-22)
 
 The Dask Python package is missing some dependencies on the latest Programming
