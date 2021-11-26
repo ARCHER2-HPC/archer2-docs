@@ -1666,6 +1666,30 @@ submitting them to the
 <p>The following script will run a NWChem job using 2 nodes (256 cores) in
 the standard partition. It assumes that the input file is called
 <code>test\_calc.nw</code>.</p>
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Full system</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+
+# Request 2 nodes with 128 MPI tasks per node for 20 minutes
+
+#SBATCH --job-name=NWChem_test
+#SBATCH --nodes=2
+#SBATCH --tasks-per-node=128
+#SBATCH --cpus-per-task=1
+#SBATCH --time=00:20:00
+
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code] 
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+# Load the NWChem module, avoid any unintentional OpenMP threading by
+# setting OMP_NUM_THREADS, and launch the code.
+module load nwchem
+export OMP_NUM_THREADS=1
+srun --distribution=block:block --hint=nomultithread nwchem test_calc
+</code></pre></div>
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">4-cabinet system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 
 # Request 2 nodes with 128 MPI tasks per node for 20 minutes
@@ -1690,6 +1714,8 @@ module load nwchem
 export OMP_NUM_THREADS=1
 srun --distribution=block:block --hint=nomultithread nwchem test_calc
 </code></pre></div>
+</div>
+</div>
 <h2 id="compiling-nwchem">Compiling NWChem</h2>
 <p>The latest instructions for building NWChem on ARCHER2 may be found in
 the GitHub repository of build instructions:</p>

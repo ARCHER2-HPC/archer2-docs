@@ -1653,6 +1653,26 @@ out if necessary (see below).</p>
 in exclusive mode using more than one node.</p>
 <p>For example, the following script will run a LAMMPS MD job using 4 nodes
 (128x4 cores) with MPI only.</p>
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Full system</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+
+#SBATCH --job-name=lammps_test
+#SBATCH --nodes=4
+#SBATCH --tasks-per-node=128
+#SBATCH --cpus-per-task=1
+#SBATCH --time=00:20:00
+
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code] 
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+module load lammps
+
+srun --distribution=block:block --hint=nomultithread lmp -i in.test -l out.test
+</code></pre></div>
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">4-cabinet system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 
 #SBATCH --job-name=lammps_test
@@ -1673,6 +1693,8 @@ module load lammps
 
 srun --distribution=block:block --hint=nomultithread lmp -i in.test -l out.test
 </code></pre></div>
+</div>
+</div>
 <h2 id="compiling-lammps">Compiling LAMMPS</h2>
 <p>The large range of optional packages available for LAMMPS, and
 opportunity for extensibility, may mean that it is convenient for users
