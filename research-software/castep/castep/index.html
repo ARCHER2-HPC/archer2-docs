@@ -1677,17 +1677,20 @@ ARCHER2, please make a request via the SAFE, see:</p>
 <h3 id="note-on-using-relativistic-j-dependent-pseudopotentials">Note on using Relativistic J-dependent pseudopotentials</h3>
 <p>These pseudopotentials cannot be generated on the fly by CASTEP and so are available in
 the following directory on ARCHER2:</p>
-<p>=== Full system ===
-   <div class="highlight"><pre><span></span><code>/work/y07/shared/apps/core/castep/pseudopotentials
+<div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Full system</label><div class="tabbed-content"></div>
+</div>
+<div class="highlight"><pre><span></span><code>/work/y07/shared/apps/core/castep/pseudopotentials
 </code></pre></div>
-=== 4-cabinet system ===
-   <div class="highlight"><pre><span></span><code>/work/y07/shared/castep/pseudopotentials
-</code></pre></div></p>
+<div class="tabbed-set" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">4-cabinet system</label><div class="tabbed-content"></div>
+</div>
+<div class="highlight"><pre><span></span><code>/work/y07/shared/castep/pseudopotentials
+</code></pre></div>
 <h2 id="running-parallel-castep-jobs">Running parallel CASTEP jobs</h2>
 <p>The following script will run a CASTEP job using 2 nodes (256 cores). it
 assumes that the input files have the file stem <code>text_calc</code>.</p>
-<p>=== Full system ===
-   <div class="highlight"><pre><span></span><code>#!/bin/bash
+<div class="tabbed-set" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Full system</label><div class="tabbed-content"></div>
+</div>
+<div class="highlight"><pre><span></span><code>#!/bin/bash
 
 # Request 2 nodes with 128 MPI tasks per node for 20 minutes
 #SBATCH --job-name=CASTEP
@@ -1707,8 +1710,9 @@ module load castep
 export OMP_NUM_THREADS=1
 srun --distribution=block:block --hint=nomultithread castep.mpi test_calc
 </code></pre></div>
-=== 4-cabinet system ===
-   <div class="highlight"><pre><span></span><code>#!/bin/bash
+<div class="tabbed-set" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">4-cabinet system</label><div class="tabbed-content"></div>
+</div>
+<div class="highlight"><pre><span></span><code>#!/bin/bash
 
 # Request 2 nodes with 128 MPI tasks per node for 20 minutes
 #SBATCH --job-name=CASTEP
@@ -1730,7 +1734,7 @@ module load epcc-job-env
 module load castep
 export OMP_NUM_THREADS=1
 srun --distribution=block:block --hint=nomultithread castep.mpi test_calc
-</code></pre></div></p>
+</code></pre></div>
 <h2 id="using-serial-castep-tools">Using serial CASTEP tools</h2>
 <p>We also provide a set of CASTEP tools compiled for serial use on the login
 nodes or in job submission scripts. You can access these through the 
