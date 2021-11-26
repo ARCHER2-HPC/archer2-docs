@@ -1676,6 +1676,8 @@ Three versions are available:</p>
 <h3 id="running-mpi-only-jobs">Running MPI only jobs</h3>
 <p>The following script will run a GROMACS MD job using 4 nodes (128x4
 cores) with pure MPI.</p>
+<div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Full system</label><div class="tabbed-content"></div>
+</div>
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 
 #SBATCH --job-name=mdrun_test
@@ -1689,7 +1691,28 @@ cores) with pure MPI.</p>
 #SBATCH --partition=standard
 #SBATCH --qos=standard
 
-# Setup the batch environment
+# Setup the environment
+module load gromacs
+
+export OMP_NUM_THREADS=1 
+srun --distribution=block:block --hint=nomultithread gmx_mpi mdrun -s test_calc.tpr
+</code></pre></div>
+<div class="tabbed-set" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">4-cabinet system</label><div class="tabbed-content"></div>
+</div>
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+
+#SBATCH --job-name=mdrun_test
+#SBATCH --nodes=4
+#SBATCH --tasks-per-node=128
+#SBATCH --cpus-per-task=1
+#SBATCH --time=00:20:00
+
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code]
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+# Setup the environment
 module load epcc-job-env
 module load gromacs
 
@@ -1700,6 +1723,8 @@ srun --distribution=block:block --hint=nomultithread gmx_mpi mdrun -s test_calc.
 <p>The following script will run a GROMACS MD job using 4 nodes (128x4
 cores) with 6 MPI processes per node (24 MPI processes in total) and 6
 OpenMP threads per MPI process.</p>
+<div class="tabbed-set" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Full system</label><div class="tabbed-content"></div>
+</div>
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 #SBATCH --job-name=mdrun_test
 #SBATCH --nodes=4
@@ -1712,7 +1737,27 @@ OpenMP threads per MPI process.</p>
 #SBATCH --partition=standard
 #SBATCH --qos=standard
 
-# Setup the batch environment
+# Setup the environment
+module load gromacs
+
+export OMP_NUM_THREADS=8
+srun --distribution=block:block --hint=nomultithread gmx_mpi mdrun -s test_calc.tpr
+</code></pre></div>
+<div class="tabbed-set" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">4-cabinet system</label><div class="tabbed-content"></div>
+</div>
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+#SBATCH --job-name=mdrun_test
+#SBATCH --nodes=4
+#SBATCH --tasks-per-node=16
+#SBATCH --cpus-per-task=8
+#SBATCH --time=00:20:00
+
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code]
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+# Setup the environment
 module load epcc-job-env
 module load gromacs
 
