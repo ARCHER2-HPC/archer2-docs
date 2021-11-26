@@ -32,11 +32,11 @@ Please have your license details to hand.
 These pseudopotentials cannot be generated on the fly by CASTEP and so are available in
 the following directory on ARCHER2:
 
-=== Full system ===
+=== "Full system"
    ```
    /work/y07/shared/apps/core/castep/pseudopotentials
    ```
-=== 4-cabinet system ===
+=== "4-cabinet system"
    ```
    /work/y07/shared/castep/pseudopotentials
    ```
@@ -46,7 +46,7 @@ the following directory on ARCHER2:
 The following script will run a CASTEP job using 2 nodes (256 cores). it
 assumes that the input files have the file stem `text_calc`.
 
-=== Full system ===
+=== "Full system"
    ```
    #!/bin/bash
 
@@ -68,7 +68,7 @@ assumes that the input files have the file stem `text_calc`.
    export OMP_NUM_THREADS=1
    srun --distribution=block:block --hint=nomultithread castep.mpi test_calc
    ```
-=== 4-cabinet system ===
+=== "4-cabinet system"
    ```
    #!/bin/bash
 
