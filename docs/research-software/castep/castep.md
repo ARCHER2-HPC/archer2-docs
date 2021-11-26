@@ -98,7 +98,7 @@ assumes that the input files have the file stem `text_calc`.
 
 === "Full system"
     Serial castep tools are available in the standard CASTEP module.
-=== "4-cabiney system"
+=== "4-cabinet system"
     We also provide a set of CASTEP tools compiled for serial use on the login
     nodes or in job submission scripts. You can access these through the 
     `castep-tools` module:

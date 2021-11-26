@@ -27,38 +27,68 @@ Please have your license details to hand.
 The following script will run a ONETEP job using 2 nodes (256 cores). It
 assumes that the input file is called `text_calc.dat`.
 
-```
-#!/bin/bash
+=== "Full system"
+    ```
+    #!/bin/bash
 
-# Request 2 nodes with 128 MPI tasks per node for 20 minutes
-# Replace [budget code] below with your account code,
-# e.g. '--account=t01'
+    # Request 2 nodes with 128 MPI tasks per node for 20 minutes
+    # Replace [budget code] below with your account code,
+    # e.g. '--account=t01'
 
-#SBATCH --job-name=ONETEP
-#SBATCH --nodes=2
-#SBATCH --tasks-per-node=128
-#SBATCH --cpus-per-task=1
-#SBATCH --time=00:20:00
+    #SBATCH --job-name=ONETEP
+    #SBATCH --nodes=2
+    #SBATCH --tasks-per-node=128
+    #SBATCH --cpus-per-task=1
+    #SBATCH --time=00:20:00
 
-# Replace [budget code] below with your project code (e.g. t01)
-#SBATCH --account=[budget code] 
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+    # Replace [budget code] below with your project code (e.g. t01)
+    #SBATCH --account=[budget code] 
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
 
-# Setup the job environment (this module needs to be loaded before any other modules)
-module load epcc-job-env
+    # Load the ONETEP module
+    module load onetep
 
-# Load the ONETEP module
-module load onetep
+    # Make sure that the stack settings are correct
+    export OMP_STACKSIZE=64M
+    export OMP_NUM_THREADS=1
 
-# Make sure that the stack settings are correct
-ulimit -s unlimited
-export OMP_STACKSIZE=64M
-export OMP_NUM_THREADS=1
+    # Launch the executable
+    srun --distribution=block:block --hint=nomultithread onetep.archer2 test_calc > test_calc.out
+    ```
+=== "4-cabinet system"
+    ```
+    #!/bin/bash
 
-# Launch the executable
-srun --distribution=block:block --hint=nomultithread onetep.archer2 test_calc > test_calc.out
-```
+    # Request 2 nodes with 128 MPI tasks per node for 20 minutes
+    # Replace [budget code] below with your account code,
+    # e.g. '--account=t01'
+
+    #SBATCH --job-name=ONETEP
+    #SBATCH --nodes=2
+    #SBATCH --tasks-per-node=128
+    #SBATCH --cpus-per-task=1
+    #SBATCH --time=00:20:00
+
+    # Replace [budget code] below with your project code (e.g. t01)
+    #SBATCH --account=[budget code] 
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+
+    # Setup the job environment (this module needs to be loaded before any other modules)
+    module load epcc-job-env
+
+    # Load the ONETEP module
+    module load onetep
+
+    # Make sure that the stack settings are correct
+    ulimit -s unlimited
+    export OMP_STACKSIZE=64M
+    export OMP_NUM_THREADS=1
+
+    # Launch the executable
+    srun --distribution=block:block --hint=nomultithread onetep.archer2 test_calc > test_calc.out
+    ```
 
 ## Hints and Tips
 

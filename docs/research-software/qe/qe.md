@@ -21,31 +21,55 @@ ARCHER2 users.
 For example, the following script will run a QE `pw.x` job using 4 nodes
 (128x4 cores).
 
-```
-#!/bin/bash
+=== "Full system"
+    ```
+    #!/bin/bash
 
-# Request 4 nodes to run a 512 MPI task job with 128 MPI tasks per node.
-# The maximum walltime limit is set to be 20 minutes.
+    # Request 4 nodes to run a 512 MPI task job with 128 MPI tasks per node.
+    # The maximum walltime limit is set to be 20 minutes.
 
-#SBATCH --job-name=qe_test
-#SBATCH --nodes=4
-#SBATCH --tasks-per-node=128
-#SBATCH --cpus-per-task=1
-#SBATCH --time=00:20:00
+    #SBATCH --job-name=qe_test
+    #SBATCH --nodes=4
+    #SBATCH --tasks-per-node=128
+    #SBATCH --cpus-per-task=1
+    #SBATCH --time=00:20:00
 
-# Replace [budget code] below with your project code (e.g. t01)
-#SBATCH --account=[budget code] 
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+    # Replace [budget code] below with your project code (e.g. t01)
+    #SBATCH --account=[budget code] 
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
 
-# Setup the job environment (this module needs to be loaded before any other modules)
-module load epcc-job-env
+    # Load the relevant Quantum Espresso module
+    module load quantum-espresso
 
-# Load the relevant Quantum Espresso module
-module load quantum-espresso
+    srun pw.x < test_calc.in
+    ```
+=== "4-cabinet system"
+    ```
+    #!/bin/bash
 
-srun pw.x < test_calc.in
-```
+    # Request 4 nodes to run a 512 MPI task job with 128 MPI tasks per node.
+    # The maximum walltime limit is set to be 20 minutes.
+
+    #SBATCH --job-name=qe_test
+    #SBATCH --nodes=4
+    #SBATCH --tasks-per-node=128
+    #SBATCH --cpus-per-task=1
+    #SBATCH --time=00:20:00
+
+    # Replace [budget code] below with your project code (e.g. t01)
+    #SBATCH --account=[budget code] 
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+
+    # Setup the job environment (this module needs to be loaded before any other modules)
+    module load epcc-job-env
+
+    # Load the relevant Quantum Espresso module
+    module load quantum-espresso
+
+    srun pw.x < test_calc.in
+    ```
 
 ## Hints and tips
 
