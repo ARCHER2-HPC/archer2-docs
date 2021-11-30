@@ -43,14 +43,6 @@ you wish to avoid the warnings, you can compile using the more recent CCE versio
 on the system. To switch to this version, use `module load cpe/21.09` from the default
 environment on ARCHER2.
 
-### Occasionally larger jobs (requiring greater than 128 nodes) will run slow or fail (Added: 2021-11-18)
-
-- **Systems affected:** ARCHER2 full system
-
-The CSE team has seen instances when larger jobs (those involving more than 128 nodes) will run slow (perhaps two or three times slower than normally) or not finish (because the slowness causes a time-out). In system testing, we saw this problem for a small number of applications (most notably, LAMMPS) on around 10--20% of jobs: the issue worsens as the job size increases.
-
-The issue is being actively investigated by HPE, as a priority. At this time, there is no known work-around, though it is usually possible to resubmit the affected job successfully.
-
 ### Error message: `No space left on device` (Added: 2021-07-20)
 
 - **Systems affected:** ARCHER2 4-cabinet system
@@ -256,6 +248,13 @@ The current workaround for this is to load module epcc-netcdf-hdf5parallel inste
 
 
 ## Recently Resolved Issues
+
+### Occasionally larger jobs (requiring greater than 128 nodes) will run slow or fail (Added: 2021-11-18)
+
+- **Systems affected:** ARCHER2 full system
+
+The CSE team saw instances when larger jobs (those involving more than 128 nodes) ran slow (perhaps two or three times slower than normally) or did not finish (because the slowness causes a time-out). The issue has been traced to a hardware fault, which has been resolved.
+
 
 ### Singularity and CMake 3.x
 
