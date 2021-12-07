@@ -1611,11 +1611,13 @@ a valid license should request access via the ARCHER2 SAFE.</p>
 <h2 id="running-parallel-chemshell-jobs">Running parallel ChemShell jobs</h2>
 <p>The following script will run a pure MPI Tcl-based ChemShell job using 8 
 nodes (128x8 cores).</p>
-<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Full system</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label><label for="__tabbed_1_2">4-cabinet system</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <p>We are working with the ChemShell developers to make ChemShell available 
 on the full system as soon as possible.</p>
 </div>
-<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">4-cabinet system</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 
 # Slurm job options (job-name, compute nodes, job time)
@@ -1643,6 +1645,7 @@ export OMP_NUM_THREADS=1
 
   srun --distribution=block:block --hint=nomultithread chemsh.x input.chm &gt; output.log
 </code></pre></div>
+</div>
 </div>
 </div>
 

@@ -1652,7 +1652,9 @@ see <a href="https://doc.nektar.info/tutorials/latest/incns/taylor-green-vortex/
 wget https://doc.nektar.info/tutorials/latest/incns/taylor-green-vortex/incns-taylor-green-vortex.tar.gz
 tar -xvzf incns-taylor-green-vortex.tar.gz
 </code></pre></div>
-<div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Full system</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1">#SBATCH --job-name=nektar</span>
 <span class="c1">#SBATCH --nodes=1</span>
@@ -1676,6 +1678,7 @@ srun --distribution<span class="o">=</span>block:cyclic --hint<span class="o">=<
         <span class="si">${</span><span class="nv">NEK_INPUT_PATH</span><span class="si">}</span>/TGV64_mesh.xml <span class="se">\</span>
         <span class="si">${</span><span class="nv">NEK_INPUT_PATH</span><span class="si">}</span>/TGV64_conditions.xml
 </code></pre></div>
+</div>
 </div>
 </div>
 <h2 id="compiling-nektar">Compiling Nektar++</h2>

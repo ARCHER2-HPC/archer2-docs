@@ -2002,18 +2002,23 @@ an X Server.</p>
 <li>ARCHER2 4-cabinet system: login-4c.archer2.ac.uk</li>
 </ul>
 <p>You can use the following command from the <a href="#command-line-terminal">terminal</a> window to log in to ARCHER2:</p>
-<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Full system</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label><label for="__tabbed_1_2">4-cabinet system</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>ssh username@login.archer2.ac.uk
 </code></pre></div>
 </div>
-<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">4-cabinet system</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>ssh username@login-4c.archer2.ac.uk
 </code></pre></div>
 </div>
 </div>
+</div>
 <p>The order in which you are asked for credentials depends on the system you
 are accessing:</p>
-<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Full system</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Full system</label><label for="__tabbed_2_2">4-cabinet system</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <p>You will first be prompted for the passphrase associated with your SSH key pair. Once you have entered this passphrase successfully, you will then be prompted for your machine account password. You need to enter both credentials correctly to be able to access ARCHER2.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -2042,8 +2047,9 @@ Please contact your system administrator.
 file (in the example above the offending line is line #11)</p>
 </div>
 </div>
-<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">4-cabinet system</label><div class="tabbed-content">
+<div class="tabbed-block">
 <p>You will first be prompted for your machine account password. Once you have entered your password successfully, you will then be prompted for the passphrase associated with your SSH key pair. You need to enter both credentials correctly to be able to access the ARCHER2 4-cabinet system.</p>
+</div>
 </div>
 </div>
 <div class="admonition warning">
@@ -2069,13 +2075,16 @@ initial password. This is a three-step process:</p>
 <p>Your password will now have been changed</p>
 </div>
 <p>To allow remote programs, especially graphical applications, to control your local display, such as for a debugger, use:</p>
-<div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Full system</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Full system</label><label for="__tabbed_3_2">4-cabinet system</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>ssh -X username@login.archer2.ac.uk
 </code></pre></div>
 </div>
-<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">4-cabinet system</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>ssh -X username@login-4c.archer2.ac.uk
 </code></pre></div>
+</div>
 </div>
 </div>
 <p>Some sites recommend using the <code>-Y</code> flag. While this can fix some
@@ -2096,17 +2105,20 @@ the SSH configuration file, usually located on your local machine at
 <code>.ssh/config</code> to make the process more convenient.</p>
 <p>Each remote site (or group of sites) can have an entry in this file,
 which may look something like:</p>
-<div class="tabbed-set" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">Full system</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">Full system</label><label for="__tabbed_4_2">4-cabinet system</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>Host archer2
     HostName login.archer2.ac.uk
     User username
 </code></pre></div>
 </div>
-<input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><label for="__tabbed_4_2">4-cabinet system</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>Host archer2-4c
     HostName login-4c.archer2.ac.uk
     User username
 </code></pre></div>
+</div>
 </div>
 </div>
 <p>(remember to replace <code>username</code> with your actual username!).</p>

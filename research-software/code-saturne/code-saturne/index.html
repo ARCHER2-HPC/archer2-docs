@@ -1637,7 +1637,9 @@ You should also add the two <code>module</code> commands, and
 retained or removed.</p>
 <p>This script will run an MPI-only Code_Saturne job using the default GCC build and UCX
 over 4 nodes (128 x 4 = 512 cores) for a maximum of 20 minutes.</p>
-<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Full system</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label><label for="__tabbed_1_2">4-cabinet system</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 #SBATCH --export=none
 #SBATCH --job-name=CSExample
@@ -1667,7 +1669,7 @@ export OMP_NUM_THREADS=1
 srun --distribution=block:block --hint=nomultithread ./cs_solver --mpi $@
 </code></pre></div>
 </div>
-<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">4-cabinet system</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 #SBATCH --export=none
 #SBATCH --job-name=CSExample
@@ -1697,6 +1699,7 @@ export OMP_NUM_THREADS=1
 # Run solver.
 srun --distribution=block:block --hint=nomultithread ./cs_solver --mpi $@
 </code></pre></div>
+</div>
 </div>
 </div>
 <p>The script can then be submitted to the batch system with <code>sbatch</code>.</p>
