@@ -220,3 +220,65 @@ Please follow these steps:
    server. If you haven't selected the correct node id, you will get a
    connection error. If you are on a compute node, the notebook will be
    available for the length of the interactive session you have requested.
+
+
+## Using Dask Job-Queue on ARCHER2
+
+The Dask-jobqueue project makes it easy to deploy Dask on ARCHER2. 
+You can find more information [here](http://jobqueue.dask.org/en/latest/).
+
+Please follow these steps:
+
+1. Install Dask-Jobqueue
+
+```
+module load cray-python
+export PYTHONUSERBASE=/work/t01/t01/auser/.local
+export PATH=$PYTHONUSERBASE/bin:$PATH
+
+pip install --user dask-jobqueue --upgrade
+```
+
+2. Using Dask
+
+Dask-jobqueue creates a Dask Scheduler in the Python process where the cluster
+object is instantiated. An example for running on ARCHER2 might look something
+like this:
+
+```
+from dask_jobqueue import SLURMCluster
+cluster = SLURMCluster(cores=128, 
+                       processes=16,
+                       memory='256GB',
+                       queue='standard',
+                       header_skip=['--mem'],
+                       job_extra=['--qos="standard"'],
+                       python='srun python',
+                       project='z19',
+                       walltime="01:00:00",
+                       shebang="#!/bin/bash --login",
+                       local_directory='$PWD'
+                       env_extra=['module load cray-python',
+                                  'export PYTHONUSERBASE=/work/t01/t01/auser/.local/',
+                                  'export PATH=$PYTHONUSERBASE/bin:$PATH',
+                                  'export PYTHONPATH=$PYTHONUSERBASE/lib/python3.8/site-packages:$PYTHONPATH'])
+
+
+
+cluster.scale(jobs=2)    # Deploy two single-node jobs
+
+from dask.distributed import Client
+client = Client(cluster)  # Connect this local process to remote workers
+
+# wait for jobs to arrive, depending on the queue, this may take some time
+import dask.array as da
+x = …
+```
+
+The header_skip option is required as we are running on exclusive nodes where you should not
+ specify the memory requirements, however Dask requires you to supply this option.
+
+Jobs are be deployed with the cluster.scale  command, where the number of jobs is
+the number of nodes required.
+
+
