@@ -45,6 +45,7 @@ nav:
     - "Overview": archer2-migration/index.md
     - "Account migration": archer2-migration/account-migration.md
     - "Data migration": archer2-migration/data-migration.md
+    - "Porting applications": archer2-migration/porting.md
     - "Differences between ARCHER2 4-cab and full ARCHER2": archer2-migration/archer2-differences.md
   - "ARCHER2 Known Issues": known-issues/index.md
   - "ARCHER2 Frequently Asked Questions": faq/index.md
@@ -90,7 +91,7 @@ nav:
     - "HPE Cray LibSci: BLAS, LAPACK, ScaLAPACK": software-libraries/libsci.md
     - "FFTW": software-libraries/fftw.md
     - "HDF5": software-libraries/hdf5.md
-    - "NetCDF": software-libraries/index.md
+    - "NetCDF": software-libraries/netcdf.md
     - "ADIOS": software-libraries/adios.md
     - "ARPACK": software-libraries/arpack.md
     - "Boost": software-libraries/boost.md

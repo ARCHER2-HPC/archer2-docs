@@ -9,7 +9,7 @@ appropriate.
 
 - There are 5860 compute nodes in total on the full ARCHER2 system rather 
   than just the 1024 on the 4-cabinet ARCHER2 system.
-- Of the 5860 compute nodes, 494 are *high memory nodes*, these nodes have
+- Of the 5860 compute nodes, 292 are *high memory nodes*, these nodes have
   512 GiB of memory rather than the 256 GiB available on standard memory
   nodes.
 - There are two data analysis nodes available and these are shared by multiple

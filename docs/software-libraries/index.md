@@ -22,12 +22,6 @@ modules are:
     discrete Fourier transforms. See the
     [FFTW home page][1]
 
-- **cray-ga**
-
-    Global Arrays (GA) provides a partitioned global address space (PGAS)
-    programming model used by a number of applications. See the
-    [GA home page][2]
-
 - **cray-hdf5** and **cray-hdf5-parallel** [*...details for hdf5...*](hdf5.md)
 
     Hierarchical Data Format (HDF5) is a high-performance and portable data
@@ -44,10 +38,10 @@ modules are:
      Module `cray-libsci` is loaded by default in all programming
      environments.
 
-- **cray-netcdf**
+- **cray-netcdf** [*...details for cray-netcdf...*](netcdf.md)
 
     Serial version of Network Common Data Form (NetCDF), a widely used
-    and portable data format. Load module `cray-hdf5` first.
+    and portable data format.
     See the [NETCDF website](https://www.unidata.ucar.edu/software/netcdf/)
 
 - **cray-netcdf-hdf5parallel**
@@ -55,7 +49,7 @@ modules are:
     A serial NetCDF built against parallel HDF5. Load module
     `cray-hdf5-parallel` first.
  
-- **cray-parallel-netcdf**
+- **cray-parallel-netcdf** [*...deatils for Parallel NetCDF...*](netcdf.md)
 
     A parallel NetCDF implementation (sometimes referred to as "Pnetcdf").
 

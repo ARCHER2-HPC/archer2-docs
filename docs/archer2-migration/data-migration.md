@@ -1,8 +1,13 @@
 # Data migration from the ARCHER2 4-cabinet system to the ARCHER2 full system
 
-This short guide explains how to move data from from `/work` on the ARCHER2 4-cabinet system
-to the ARCHER2 full system. Your `/home` directory is shared between the ARCHER2 4-cabinet system 
-and the ARCHER2 full system so everything from your `/home` directory is already effectively
+!!! important
+    The full ARCHER2 system is not yet available so you will not be able to
+    transfer any data yet. Users will be informed once the full system 
+    is available and they can start transferring data and using the system.
+
+This short guide explains how to move data from from the work file system on the ARCHER2 4-cabinet system
+to the ARCHER2 full system. Your space on the home file system is shared between the ARCHER2 4-cabinet system 
+and the ARCHER2 full system so everything from your home directory is already effectively
 transferred.
 
 !!! note

@@ -89,9 +89,14 @@ Full details of these methods and the provided scripts can be found on
 On ARCHER2, the VTST version of VASP 5 can be accessed by loading the modules with
 `VTST` in the module name, for example:
 
-```
-module load vasp/5/5.4.4-VTST-gcc10-cpe2103
-```
+=== "Full system"
+    ```
+    module load vasp/5/5.4.4.pl2-vtst
+    ```
+=== "4-cabinet system'
+    ```
+    module load vasp/5/5.4.4-VTST-gcc10-cpe2103
+    ```
 
 #### Example VASP 5 job submission script
 
@@ -285,7 +290,7 @@ Basic information:
 - [Full TiO2 performance data](https://github.com/hpc-uk/archer-benchmarks/blob/main/others/VASP/analysis/VASP_TiO2_perf_analysis.ipynb)
 
 Performance summary (best choices of NCORE at different node counts). All tests with
-`vasp/5/5.4.4.pl2-gcc10-cpe2103` module on ARCHER2.
+`vasp/5/5.4.4.pl2-gcc10-cpe2103` module on the ARCHER2 4-cabinet system.
 
 | Nodes | MPI processes per node | Total MPI processes | NCORE | Maximum LOOP time (s) |
 |------:|-----------------------:|--------------------:|------:|----------------------:|
@@ -303,7 +308,7 @@ Basic information:
   - [CdTe performance data](https://github.com/hpc-uk/archer-benchmarks/blob/main/others/VASP/analysis/VASP_CdTe_perf_analysis.ipynb)
 
   Performance summary (best choices of NCORE and KPAR at different node counts). All tests with
-`vasp/5/5.4.4.pl2-gcc10-cpe2103` module on ARCHER2.
+`vasp/5/5.4.4.pl2-gcc10-cpe2103` module on ARCHER2 4-cabinet system.
 
 | Nodes | MPI processes per node | Total MPI processes | NCORE | KPAR | Maximum LOOP time (s) |
 |------:|-----------------------:|--------------------:|------:|-----:|----------------------:|

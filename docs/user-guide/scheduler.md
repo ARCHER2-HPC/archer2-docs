@@ -184,7 +184,7 @@ on ARCHER2.
     | Partition | Description                                                 | Max nodes available |
     | --------- | ----------------------------------------------------------- | ------------------- |
     | standard  | CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 256 GB memory | 5366                |
-    | highmem  | CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 512 GB memory | 494                |
+    | highmem  | CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 512 GB memory | 292                |
 
 === "4-cabinet system"
     | Partition | Description                                                 | Max nodes available |
@@ -1434,10 +1434,34 @@ following way (here using the "short queue"):
 === "Full system"
     ```
     auser@ln01:/work/t01/t01/auser> srun --nodes=1 --exclusive --time=00:20:00 \
-                   --partition=standard --qos=short --pty /bin/bash
+                   --partition=standard --qos=short --reservation=shortqos \
+		   --pty /bin/bash
     auser@nid001261:/work/t01/t01/auser> hostname
     nid001261
     ```
+    
+    The `--pty /bin/bash` will cause a new shell to be started on the first
+    node of a new allocation . This is perhaps closer to what
+    many people consider an 'interactive' job than the method using `salloc`
+    appears.
+
+    One can now issue shell commands in the usual way. A further invocation
+    of `srun` is required to launch a parallel job in the allocation.
+    
+    !!! note
+        When using `srun` within an interactive `srun` session, you will need to 
+        include the `--oversubscribe` flag and specify the number of cores you want 
+        to use:
+        ```
+        auser@nid001261:/work/t01/t01/auser> srun --oversubscribe --distribution=block:block \
+                       --hint=nomultithread --ntasks=128 ./my_mpi_executable.x
+        ```
+    
+    When finished, type `exit` to relinquish the allocation and control will
+    be returned to the front end.
+    
+    By default, the interactive shell will retain the environment of the
+    parent. If you want a clean shell, remember to specify `--export=none`.
 === "4-cabinet system"
     ```
     auser@uan01:/work/t01/t01/auser> srun --nodes=1 --exclusive --time=00:20:00 \
@@ -1446,20 +1470,20 @@ following way (here using the "short queue"):
     auser@nid001261:/work/t01/t01/auser> hostname
     nid001261
     ```
-
-The `--pty /bin/bash` will cause a new shell to be started on the first
-node of a new allocation . This is perhaps closer to what
-many people consider an 'interactive' job than the method using `salloc`
-appears.
-
-One can now issue shell commands in the usual way. A further invocation
-of `srun` is required to launch a parallel job in the allocation.
-
-When finished, type `exit` to relinquish the allocation and control will
-be returned to the front end.
-
-By default, the interactive shell will retain the environment of the
-parent. If you want a clean shell, remember to specify `--export=none`.
+    
+    The `--pty /bin/bash` will cause a new shell to be started on the first
+    node of a new allocation . This is perhaps closer to what
+    many people consider an 'interactive' job than the method using `salloc`
+    appears.
+    
+    One can now issue shell commands in the usual way. A further invocation
+    of `srun` is required to launch a parallel job in the allocation.
+    
+    When finished, type `exit` to relinquish the allocation and control will
+    be returned to the front end.
+    
+    By default, the interactive shell will retain the environment of the
+    parent. If you want a clean shell, remember to specify `--export=none`.
 
 ## Heterogeneous jobs
 

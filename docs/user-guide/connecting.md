@@ -143,6 +143,7 @@ The login addresses for ARCHER2 are:
 - ARCHER2 full system: login.archer2.ac.uk
 - ARCHER2 4-cabinet system: login-4c.archer2.ac.uk
 
+
 You can use the following command from the [terminal](#command-line-terminal) window to log in to ARCHER2:
 
 === "Full system"
@@ -200,10 +201,11 @@ Current MacOS systems do not have an X window system. Users should install the X
 
 ## Host Keys
 
-These are the entries in `~/.ssh/known_hosts`
+A host key adds an extra security layer for users over SSH. Using one enables users to log in to ARCHER2 if the login node has the same corresponding host key. The host key can be found in the entries in `~/.ssh/known_hosts`, as given in the example below: 
 
     AAAAB3NzaC1yc2EAAAADAQABAAABAQC/zGWlNKRmbGcH3j/+wQ/3vytRJnautfshhKNx6naoymVxmXSg9CvtsJQUCNsNMnYu7NvZwOu1SqouXUNbpXZbOxikPLooRmM6JmCiJ72Zz5ylsXaFaIPmU7nl40J8YP5xcmlW6+HP6/gcnrZeCGLOcCSGHIIAAPotL1hwF9ab0RFbHV1+IyNPc5LYwslwmtn1zU5BY6xKISL8cMy+tAxBExY07xKZ6k+7bNPc4Ia4GfoU+8U9/2ZpN6wpNZVCNOsQ92nyELKveO9PIzLPJvxkxnRYaEfYshnRPCauBEnhZbixqrlnyWQsShbjfxBac3XEgQlg0XIAvHfFLUQNL1bv
 
+Host key verification can fail if this key is out of date, a problem which can be fixed by removing the offending entry in `~/.ssh/known_hosts`.
 
 ## Making access more convenient using the SSH configuration file
 
@@ -344,7 +346,7 @@ indicate a problem with your SSH key. Some things to check:
      have uploaded the correct public key to SAFE.
  
    - Are permissions correct on the SSH key? One common issue is that
-     the permissions are set incorrect on either the key files or
+     the permissions are set incorrectly on either the key files or
      the directory it is contained in. On Linux and MacOS, if
      your private keys are held in `~/.ssh/` you can check this with
      `ls -al ~/.ssh`. This should give something similar to the
@@ -377,6 +379,7 @@ way: `chmod <code> <target>`. So for example to set correct
 permissions on the private key file `id_rsa_ARCHER2`, use the command
 `chmod 600 id_rsa_ARCHER2`.
 
+=======
 On Windows, permissions are handled differently but can be set by
      right-clicking on the file and selecting Properties \> Security \>
      Advanced. The user, SYSTEM, and Administrators should have `Full
@@ -413,6 +416,36 @@ output, add the `-vvv` flag to your SSH command. For example:
 The output is lengthy, but somewhere in there you should see lines
 similar to the following:
 
+    debug1: Next authentication method: publickey
+    debug1: Offering public key: RSA SHA256:<key_hash> <path_to_private_key>
+    debug3: send_pubkey_test
+    debug3: send packet: type 50
+    debug2: we sent a publickey packet, wait for reply
+    debug3: receive packet: type 60
+    debug1: Server accepts key: pkalg rsa-sha2-512 blen 2071
+    debug2: input_userauth_pk_ok: fp SHA256:<key_hash>
+    debug3: sign_and_send_pubkey: RSA SHA256:<key_hash>
+    Enter passphrase for key '<path_to_private_key>':
+    debug3: send packet: type 50
+    debug3: receive packet: type 51
+    Authenticated with partial success.
+    debug1: Authentications that can continue: password, keyboard-interactive
+
+In the text above, you can see which files ssh has checked for private
+keys, and you can see if any key is accepted. The line `Authenticated
+succeeded` indicates that the SSH key has been accepted. By default
+SSH will go through a list of standard private-key files, as well as
+any you have specified with `-i` or a config file. To succeed, one of
+these private keys needs to match to the public key uploaded to SAFE.
+
+If your SSH key passphrase is incorrect, you will be asked to try again
+up to three times in total, before being disconnected with `Permission
+denied (publickey)`. If you enter your passphrase correctly, but still
+see this error message, please consider the advice under *SSH key*
+above.
+
+You should next see something similiar to:
+
     debug1: Next authentication method: keyboard-interactive
     debug2: userauth_kbdint
     debug3: send packet: type 50
@@ -426,9 +459,8 @@ similar to the following:
     debug2: input_userauth_info_req
     debug2: input_userauth_info_req: num_prompts 0
     debug3: send packet: type 61
-    debug3: receive packet: type 51
-    Authenticated with partial success.
-    debug1: Authentications that can continue: publickey,password
+    debug3: receive packet: type 52
+    debug1: Authentication succeeded (keyboard-interactive).
 
 If you do not see the `Password:` prompt you may have connection issues,
 or there could be a problem with the ARCHER2 login nodes. If you do not
@@ -438,35 +470,6 @@ times before the connection will be rejected. Consider the suggestions
 under *Password* above. If you *do* see `Authenticated with partial
 success`, it means your password was accepted, and your SSH key will now
 be checked.
-
-You should next see something similiar to:
-
-    debug1: Next authentication method: publickey
-    debug1: Offering public key: RSA SHA256:<key_hash> <path_to_private_key>
-    debug3: send_pubkey_test
-    debug3: send packet: type 50
-    debug2: we sent a publickey packet, wait for reply
-    debug3: receive packet: type 60
-    debug1: Server accepts key: pkalg rsa-sha2-512 blen 2071
-    debug2: input_userauth_pk_ok: fp SHA256:<key_hash>
-    debug3: sign_and_send_pubkey: RSA SHA256:<key_hash>
-    Enter passphrase for key '<path_to_private_key>':
-    debug3: send packet: type 50
-    debug3: receive packet: type 52
-    debug1: Authentication succeeded (publickey).
-
-Most importantly, you can see which files SSH has checked for private
-keys, and you can see if any key is accepted. The line `Authenticated
-succeeded` indicates that the SSH key has been accepted. By default
-SSH will go through a list of standard private-key files, as well as
-any you have specified with `-i` or a config file. To succeed, one of
-these private keys needs to match to the public key uploaded to SAFE.
-
-If your SSH key passphrase is incorrect, you will be asked to try again
-up to three times in total, before being disconnected with `Permission
-denied (publickey)`. If you enter your passphrase correctly, but still
-see this error message, please consider the advice under *SSH key*
-above.
 
 The equivalent information can be obtained in PuTTY by
 enabling All Logging in settings.
