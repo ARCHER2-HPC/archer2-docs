@@ -295,7 +295,8 @@ Please follow these steps.
 ## Using Dask Job-Queue on ARCHER2
 
 The Dask-jobqueue project makes it easy to deploy Dask on ARCHER2. 
-You can find more information [here](http://jobqueue.dask.org/en/latest/).
+You can find more information in 
+[the Dask Job-Queue documentation](http://jobqueue.dask.org/en/latest/).
 
 Please follow these steps:
 
@@ -312,8 +313,8 @@ pip install --user dask-jobqueue --upgrade
 2. Using Dask
 
 Dask-jobqueue creates a Dask Scheduler in the Python process where the cluster
-object is instantiated. An example for running on ARCHER2 might look something
-like this:
+object is instantiated. A script for running dask jobs on ARCHER2
+might look something like this:
 
 ```
 from dask_jobqueue import SLURMCluster
@@ -344,11 +345,20 @@ client = Client(cluster)  # Connect this local process to remote workers
 import dask.array as da
 x = …
 ```
+The cluster object parameters specify the characteristics for running on a single compute node.
 
 The header_skip option is required as we are running on exclusive nodes where you should not
- specify the memory requirements, however Dask requires you to supply this option.
+specify the memory requirements, however Dask requires you to supply this option.
 
-Jobs are be deployed with the cluster.scale command, where the number of jobs is
-the number of nodes required.
+Jobs are be deployed with the cluster.scale command, where the jobs option sets
+the number of single node jobs requested. Job scripts are generated
+(from the cluster object) and these are submitted to the queue to begin 
+running once the resources are available. You can check the status of the jobs by 
+running `squeue -u $USER` in a separate terminal.
 
+If you wish to see the generated job script you can use:
+
+```
+print(cluster.job_script())
+```
 
