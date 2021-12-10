@@ -343,10 +343,14 @@ client = Client(cluster)  # Connect this local process to remote workers
 
 # wait for jobs to arrive, depending on the queue, this may take some time
 import dask.array as da
-x = …
+x = …              # Dask commands now use these distributed resources
 ```
-The cluster object parameters specify the characteristics for running on a single compute node.
 
+This script can be run on the login nodes and it submits the Dask jobs
+to the job queue. Users should ensure that the computationally intensive
+work is done with the Dask commands which run on the compute nodes.
+
+The cluster object parameters specify the characteristics for running on a single compute node.
 The header_skip option is required as we are running on exclusive nodes where you should not
 specify the memory requirements, however Dask requires you to supply this option.
 
