@@ -222,8 +222,8 @@ lists the active QoS on ARCHER2.
     | short      | 32                 | 20 mins      | 16           | 4            | standard     | |
     | long       | 64                | 48 hrs       | 16          | 16           | standard     | Minimum walltime of 24 hrs, maximum 512 nodes in use by any one user at any time, maximum of 2048 nodes in use by QoS |
     | largescale | 5860               | 12 hrs        | 8           | 1            | standard     | Minimum job size of 1025 nodes |
-    | lowpriority | 5860               | 6 hrs        | 16           | 16            | standard, highmem     | Jobs not charged but requires at least 1 CU in budget to use. |
-    | serial | 32 cores and/or 128 GB memory   | 24 hrs        | 12           | 4            | serial    | Jobs not charged but requires at least 1 CU in budget to use. |
+    | lowpriority | 1024               | 24 hrs        | 16           | 16            | standard, highmem     | Jobs not charged but requires at least 1 CU in budget to use. |
+    | serial | 32 cores and/or 128 GB memory   | 24 hrs        | 12           | 4            | serial    | Jobs not charged but requires at least 1 CU in budget to use. Maximum of 1024 nodes in use by any one user at any time. |
     | reservation | Size of reservation  | Length of reservation       | No limit           | no limit           | standard   |  |
 
 === "4-cabinet system"
