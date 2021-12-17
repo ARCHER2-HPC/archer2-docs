@@ -2016,7 +2016,49 @@ experiment to find the best balance between runtime (long runtimes
 minimise the checkpoint/restart overheads) and throughput (short
 runtimes maximise throughput).
 
-### I/O performance
+### Interconnect locality
+
+For jobs which are sensitive to interconnect (MPI) performance and
+utilise 128 nodes or less it is possible to request that all nodes
+are in a single Slingshot dragonfly group. The maximum number of nodes in
+a group on ARCHER2 is 128.
+
+Slurm has a concept of "switches" which on ARCHER2 are configured to map
+to Slingshot electrical groups; where all compute nodes have all-to-all
+electrical connections which minimises latency. Since this places an
+additional constraint on the scheduler a maximum time to wait for the
+requested topology can be specified - after this time, the job will be
+placed without the constraint.
+
+For example, to specify that all requested nodes should come from one
+electrical group and to wait for up to 6 hours (360 minutes) for that
+placement, you would use the following option in your job:
+
+```slurm
+#SBATCH --switches=1@360
+```
+
+You can request multiple groups using this option if you are using 
+more nodes than are in a single group to maximise the number of
+nodes that share electrical connetions in the job. For example, to
+request 4 groups (maximum of 512 nodes) and have this as an absolute
+constraint with no timeout, you would use:
+
+```slurm
+#SBATCH --switches=4
+```
+
+!!! danger
+    When specifying the number of groups take care to request enough
+    groups to satisfy the requested number of nodes. If the number
+    is too low then an unneccesary delay will be added due to the
+    unsatisfiable request.
+
+    A useful heuristic to ensure this is the case is to ensure
+    $$
+    N_{\mathrm{nodes}} \geq N_{\mathrm{groups}} * 128.
+    $$
+
 
 ### Large Jobs
 
