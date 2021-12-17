@@ -2018,6 +2018,10 @@ runtimes maximise throughput).
 
 ### Interconnect locality
 
+!!! important
+    The locality options are only available on the full ARCHER2 
+    system. The 4-cabinet system does not support this option.
+
 For jobs which are sensitive to interconnect (MPI) performance and
 utilise 128 nodes or less it is possible to request that all nodes
 are in a single Slingshot dragonfly group. The maximum number of nodes in
@@ -2054,10 +2058,9 @@ constraint with no timeout, you would use:
     is too low then an unneccesary delay will be added due to the
     unsatisfiable request.
 
-    A useful heuristic to ensure this is the case is to ensure
-    $$
-    N_{\mathrm{nodes}} \geq N_{\mathrm{groups}} * 128.
-    $$
+    A useful heuristic to ensure this is the case is to ensure that
+    the total nodes requested is greater than or equal to the number
+    of groups multiplied by 128.
 
 
 ### Large Jobs
