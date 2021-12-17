@@ -4749,6 +4749,11 @@ experiment to find the best balance between runtime (long runtimes
 minimise the checkpoint/restart overheads) and throughput (short
 runtimes maximise throughput).</p>
 <h3 id="interconnect-locality">Interconnect locality</h3>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The locality options are only available on the full ARCHER2 
+system. The 4-cabinet system does not support this option.</p>
+</div>
 <p>For jobs which are sensitive to interconnect (MPI) performance and
 utilise 128 nodes or less it is possible to request that all nodes
 are in a single Slingshot dragonfly group. The maximum number of nodes in
@@ -4777,10 +4782,9 @@ constraint with no timeout, you would use:</p>
 groups to satisfy the requested number of nodes. If the number
 is too low then an unneccesary delay will be added due to the
 unsatisfiable request.</p>
-<p>A useful heuristic to ensure this is the case is to ensure
-$$
-N_{\mathrm{nodes}} \geq N_{\mathrm{groups}} * 128.
-$$</p>
+<p>A useful heuristic to ensure this is the case is to ensure that
+the total nodes requested is greater than or equal to the number
+of groups multiplied by 128.</p>
 </div>
 <h3 id="large-jobs">Large Jobs</h3>
 <p>Large jobs may take longer to start up. The <code>sbcast</code> command is
