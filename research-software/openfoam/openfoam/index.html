@@ -1643,21 +1643,18 @@ most common are distributed by openfoam.org and openfoam.com.</p>
 <h2 id="using-openfoam-on-archer2">Using OpenFOAM on ARCHER2</h2>
 <p>OpenFOAM is released under a GPL v3 license and is freely available to
 all users on ARCHER2.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label><label for="__tabbed_1_2">4-cabinet system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Full system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>auser@ln01&gt; module avail openfoam
 --------------- /work/y07/shared/archer2-lmod/apps/core -----------------
 openfoam/com/v2106          openfoam/org/v9.20210903 (D)
 openfoam/org/v8.20200901
 </code></pre></div>
 </div>
-<div class="tabbed-block">
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">4-cabinet system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>auser@uan01:&gt; module avail openfoam
 --------------- /work/y07/shared/archer2-modules/modulefiles-cse ----------
 openfoam/com/v2006  openfoam/com/v2106  openfoam/org/v8.20200901
 </code></pre></div>
-</div>
 </div>
 </div>
 <p>Versions from openfoam.org are typically v8.0 etc and there is typically
@@ -1667,18 +1664,15 @@ there are typically two releases a year (one in June, and one in
 December).</p>
 <p>To use OpenFOAM on ARCHER2 you should first load the OpenFOAM module,
 e.g.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Full system</label><label for="__tabbed_2_2">4-cabinet system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
+<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Full system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>user@uan01:&gt; module load PrgEnv-gnu
 user@uan01:&gt; module load openfoam/com/v2006
 </code></pre></div>
 </div>
-<div class="tabbed-block">
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">4-cabinet system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>user@uan01:&gt; module -s restore PrgEnv-gnu
 user@uan01:&gt; module load openfoam/com/v2006
 </code></pre></div>
-</div>
 </div>
 </div>
 <p>The module defines only the base installation directory via the
@@ -1701,9 +1695,7 @@ end is a shared resource.</p>
 <p>A typical SLURM job submission script for OpenFOAM is given here. This
 would request 4 nodes to run with 128 MPI tasks per node (a total of 512
 MPI tasks). Each MPI task is allocated one core (<code>--cpus-per-task=1</code>).</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Full system</label><label for="__tabbed_3_2">4-cabinet system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
+<div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Full system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 
 #SBATCH --nodes=4
@@ -1729,7 +1721,7 @@ source ${FOAM_INSTALL_DIR}/etc/bashrc
 srun interFoam -parallel
 </code></pre></div>
 </div>
-<div class="tabbed-block">
+<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">4-cabinet system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 
 #SBATCH --nodes=4
@@ -1759,7 +1751,6 @@ srun --distribution=block:block --hint=nomultithread interFoam -parallel
 </code></pre></div>
 </div>
 </div>
-</div>
 <h2 id="compiling-openfoam">Compiling OpenFOAM</h2>
 <p>If you want to compile your own version of OpenFOAM, instructions are
 available for ARCHER2 at:</p>
@@ -1768,9 +1759,7 @@ available for ARCHER2 at:</p>
 </ul>
 <h2 id="module-version-history">Module version history</h2>
 <p>The following centrally installed versions are available.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">Full system</label><label for="__tabbed_4_2">4-cabinet system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
+<div class="tabbed-set" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">Full system</label><div class="tabbed-content">
 <ul>
 <li>
 <p>Module <code>openfoam/com/v2106</code> installed October 2021 (Cray PE 21.04)</p>
@@ -1789,7 +1778,7 @@ See <a href="https://openfoam.org/news/v8-patch/">OpenFOAM.org website</a></p>
 </li>
 </ul>
 </div>
-<div class="tabbed-block">
+<input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><label for="__tabbed_4_2">4-cabinet system</label><div class="tabbed-content">
 <ul>
 <li>
 <p>Module <code>openfoam/com/v2106</code> installed July 2021 (Cray PE 20.10)</p>
@@ -1807,7 +1796,6 @@ See <a href="https://www.openfoam.com/releases/openfoam-v2006/">OpenFOAM.com web
 See <a href="https://openfoam.org/news/v8-patch/">OpenFOAM.org website</a></p>
 </li>
 </ul>
-</div>
 </div>
 </div>
 <h2 id="known-issues">Known Issues</h2>

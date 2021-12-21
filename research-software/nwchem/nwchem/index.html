@@ -1648,9 +1648,7 @@ submitting them to the
 <p>The following script will run a NWChem job using 2 nodes (256 cores) in
 the standard partition. It assumes that the input file is called
 <code>test\_calc.nw</code>.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label><label for="__tabbed_1_2">4-cabinet system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Full system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 
 # Request 2 nodes with 128 MPI tasks per node for 20 minutes
@@ -1673,7 +1671,7 @@ export OMP_NUM_THREADS=1
 srun --distribution=block:block --hint=nomultithread nwchem test_calc
 </code></pre></div>
 </div>
-<div class="tabbed-block">
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">4-cabinet system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 
 # Request 2 nodes with 128 MPI tasks per node for 20 minutes
@@ -1698,7 +1696,6 @@ module load nwchem
 export OMP_NUM_THREADS=1
 srun --distribution=block:block --hint=nomultithread nwchem test_calc
 </code></pre></div>
-</div>
 </div>
 </div>
 <h2 id="compiling-nwchem">Compiling NWChem</h2>

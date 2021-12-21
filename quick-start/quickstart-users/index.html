@@ -1811,9 +1811,7 @@ user account on ARCHER2 itself. To do this you will require a <em>Project
 Code</em>; you usually obtain this from the Principle Investigator (PI) or
 project manager for the project you will be working on. Once you have
 the Project Code:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label><label for="__tabbed_1_2">4-cabinet system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Full system</label><div class="tabbed-content">
 <ol>
 <li><a href="https://safe.epcc.ed.ac.uk">Log into SAFE</a></li>
 <li>Use the <em>Login accounts - Request new account</em> menu item</li>
@@ -1832,7 +1830,7 @@ the Project Code:</p>
 <li>Click <em>Request</em></li>
 </ol>
 </div>
-<div class="tabbed-block">
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">4-cabinet system</label><div class="tabbed-content">
 <ol>
 <li><a href="https://safe.epcc.ed.ac.uk">Log into SAFE</a></li>
 <li>Use the <em>Login accounts - Request new account</em> menu item</li>
@@ -1850,7 +1848,6 @@ the Project Code:</p>
 </li>
 <li>Click <em>Request</em></li>
 </ol>
-</div>
 </div>
 </div>
 <p>The PI or project manager of the project will be asked to approve your
@@ -1915,21 +1912,16 @@ your new machine account password.</p>
 </div>
 <h2 id="login-to-archer2">Login to ARCHER2</h2>
 <p>To log into ARCHER2 you should use the address:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Full system</label><label for="__tabbed_2_2">4-cabinet system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
+<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Full system</label><div class="tabbed-content">
 <p>ssh [userID]@login.archer2.ac.uk</p>
 </div>
-<div class="tabbed-block">
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">4-cabinet system</label><div class="tabbed-content">
 <p>ssh [userID]@login-4c.archer2.ac.uk</p>
-</div>
 </div>
 </div>
 <p>The order in which you are asked for credentials depends on the system you
 are accessing:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Full system</label><label for="__tabbed_3_2">4-cabinet system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
+<div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Full system</label><div class="tabbed-content">
 <p>You will first be prompted for the passphrase associated with your SSH key pair. Once you have entered this passphrase successfully, you will then be prompted for your machine account password. You need to enter both credentials correctly to be able to access ARCHER2.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -1958,9 +1950,8 @@ Please contact your system administrator.
 file (in the example above the offending line is line #11)</p>
 </div>
 </div>
-<div class="tabbed-block">
+<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">4-cabinet system</label><div class="tabbed-content">
 <p>You will first be prompted for your machine account password. Once you have entered your password successfully, you will then be prompted for the passphrase associated with your SSH key pair. You need to enter both credentials correctly to be able to access the ARCHER2 4-cabinet system.</p>
-</div>
 </div>
 </div>
 <div class="admonition tip">
@@ -2168,9 +2159,7 @@ above with your project code and replace the username
 <code>ENTER_PARTITION_HERE</code> with the partition you wish to run on (e.g
 <code>standard</code>), and <code>ENTER_QOS_HERE</code> with the quality of service you want
 (e.g. <code>standard</code>).</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">Full system</label><label for="__tabbed_4_2">4-cabinet system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
+<div class="tabbed-set" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">Full system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>#!/bin/bash --login
 
 #SBATCH --job-name=test_job
@@ -2191,7 +2180,7 @@ module load xthi
 srun --distribution=block:block --hint=nomultithread xthi
 </code></pre></div>
 </div>
-<div class="tabbed-block">
+<input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><label for="__tabbed_4_2">4-cabinet system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>#!/bin/bash --login
 
 #SBATCH --job-name=test_job
@@ -2211,7 +2200,6 @@ module load xthi
 # srun launches the parallel program based on the SBATCH options
 srun --distribution=block:block --hint=nomultithread xthi
 </code></pre></div>
-</div>
 </div>
 </div>
 <h2 id="submit-your-job-to-the-queue">Submit your job to the queue</h2>

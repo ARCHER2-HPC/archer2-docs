@@ -1675,9 +1675,7 @@ Experts may also wish to compile their own versions of the code (see below for i
 <code>cp2k.popt</code> executable.</p>
 <p>For example, the following script will run a CP2K job using 4 nodes
 (128x4 cores):</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label><label for="__tabbed_1_2">4-cabinet system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Full system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 
 # Request 4 nodes using 128 cores per node for 128 MPI tasks per node.
@@ -1701,7 +1699,7 @@ export OMP_NUM_THREADS=1
 srun --hint=nomultithread --distribution=block:block cp2k.popt -i MYINPUT.inp
 </code></pre></div>
 </div>
-<div class="tabbed-block">
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">4-cabinet system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 
 # Request 4 nodes using 128 cores per node for 128 MPI tasks per node.
@@ -1728,13 +1726,10 @@ srun --hint=nomultithread --distribution=block:block cp2k.popt -i MYINPUT.inp
 </code></pre></div>
 </div>
 </div>
-</div>
 <h3 id="mpiopenmp-hybrid-jobs">MPI/OpenMP hybrid jobs</h3>
 <p>To run CP2K using MPI and OpenMP, load the <code>cp2k</code> module and use the
 <code>cp2k.psmp</code> executable.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Full system</label><label for="__tabbed_2_2">4-cabinet system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
+<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Full system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 
 # Request 4 nodes with 16 MPI tasks per node each using 8 threads;
@@ -1762,7 +1757,7 @@ export OMP_PLACES=cores
 srun --hint=nomultithread --distribution=block:block cp2k.psmp -i MYINPUT.inp
 </code></pre></div>
 </div>
-<div class="tabbed-block">
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">4-cabinet system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 
 # Request 4 nodes with 16 MPI tasks per node each using 8 threads;
@@ -1791,7 +1786,6 @@ export OMP_PLACES=cores
 
 srun --hint=nomultithread --distribution=block:block cp2k.psmp -i MYINPUT.inp
 </code></pre></div>
-</div>
 </div>
 </div>
 <h2 id="compiling-cp2k">Compiling CP2K</h2>

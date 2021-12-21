@@ -1617,9 +1617,7 @@ module.</p>
 </div>
 <p>The following script will run a pure MPI NAMD MD job using 4 nodes (i.e.
 128x4 = 512 CPU-cores).</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label><label for="__tabbed_1_2">4-cabinet system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Full system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 
 # Request four nodes to run a job of 512 MPI tasks with 128 MPI
@@ -1641,7 +1639,7 @@ module load namd/2.14-nosmp
 srun --distribution=block:block --hint=nomultithread namd2 input.namd
 </code></pre></div>
 </div>
-<div class="tabbed-block">
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">4-cabinet system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 
 # Request four nodes to run a job of 512 MPI tasks with 128 MPI
@@ -1667,7 +1665,6 @@ srun --distribution=block:block --hint=nomultithread namd2 input.namd
 </code></pre></div>
 </div>
 </div>
-</div>
 <p>If your jobs runs out of memory, then you can can run the <em>smp</em>
 version of NAMD which uses less memory. This involves launching a
 combination of MPI processes for communication and worker threads
@@ -1686,9 +1683,7 @@ and 96 worker threads. The number of workers per communication process
 is specified by the <code>+ppn</code> argument to NAMD, which is set here to
 <code>cpus-per-task - 1</code>, i.e <code>+ppn 3</code>, to leave a CPU-core free for the
 associated MPI process.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Full system</label><label for="__tabbed_2_2">4-cabinet system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
+<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Full system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 #SBATCH --job-name=namd-smp
 #SBATCH --tasks-per-node=32
@@ -1715,7 +1710,7 @@ echo &quot;Number of worker threads PPN = $PPN&quot;
 srun --distribution=block:block --hint=nomultithread namd2 +setcpuaffinity +ppn $PPN input.namd
 </code></pre></div>
 </div>
-<div class="tabbed-block">
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">4-cabinet system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 #SBATCH --job-name=namd-smp
 #SBATCH --tasks-per-node=32
@@ -1742,7 +1737,6 @@ echo &quot;Number of worker threads PPN = $PPN&quot;
 # Run NAMD
 srun --distribution=block:block --hint=nomultithread namd2 +setcpuaffinity +ppn $PPN input.namd
 </code></pre></div>
-</div>
 </div>
 </div>
 <p>This is likely to be a reasonable first choice but you should

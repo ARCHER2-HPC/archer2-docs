@@ -1816,24 +1816,19 @@ and provides additional scripts to use with VASP. Additional functionality inclu
 <a href="http://theory.cm.utexas.edu/vtsttools/">the VTST website</a>.</p>
 <p>On ARCHER2, the VTST version of VASP 5 can be accessed by loading the modules with
 <code>VTST</code> in the module name, for example:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label><label for="__tabbed_1_2">4-cabinet system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Full system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>module load vasp/5/5.4.4.pl2-vtst
 </code></pre></div>
 </div>
-<div class="tabbed-block">
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">4-cabinet system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>module load vasp/5/5.4.4-VTST-gcc10-cpe2103
 </code></pre></div>
-</div>
 </div>
 </div>
 <h4 id="example-vasp-5-job-submission-script">Example VASP 5 job submission script</h4>
 <p>The following script will run a VASP job using 2 nodes (128x2, 256 total
 cores).</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Full system</label><label for="__tabbed_2_2">4-cabinet system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
+<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Full system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 
 # Request 16 nodes (2048 MPI tasks at 128 tasks per node) for 20 minutes.   
@@ -1859,7 +1854,7 @@ export OMP_NUM_THREADS=1
 srun --distribution=block:block --hint=nomultithread vasp_std
 </code></pre></div>
 </div>
-<div class="tabbed-block">
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">4-cabinet system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 
 # Request 16 nodes (2048 MPI tasks at 128 tasks per node) for 20 minutes.   
@@ -1887,7 +1882,6 @@ export OMP_NUM_THREADS=1
 # Launch the code.
 srun --distribution=block:block --hint=nomultithread vasp_std
 </code></pre></div>
-</div>
 </div>
 </div>
 <h3 id="vasp-6">VASP 6</h3>
@@ -1912,9 +1906,7 @@ cores) using only MPI ranks and no OpenMP threading.</p>
 MPI. We will add notes on performance and use of threading in VASP as
 information becomes available.</p>
 </div>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Full system</label><label for="__tabbed_3_2">4-cabinet system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
+<div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Full system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 
 # Request 16 nodes (2048 MPI tasks at 128 tasks per node) for 20 minutes.   
@@ -1940,7 +1932,7 @@ export OMP_NUM_THREADS=1
 srun --distribution=block:block --hint=nomultithread vasp_std
 </code></pre></div>
 </div>
-<div class="tabbed-block">
+<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">4-cabinet system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 
 # Request 16 nodes (2048 MPI tasks at 128 tasks per node) for 20 minutes.   
@@ -1968,7 +1960,6 @@ export OMP_NUM_THREADS=1
 # Launch the code.
 srun --distribution=block:block --hint=nomultithread vasp_std
 </code></pre></div>
-</div>
 </div>
 </div>
 <h2 id="compiling-vasp-on-archer2">Compiling VASP on ARCHER2</h2>

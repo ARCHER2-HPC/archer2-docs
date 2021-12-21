@@ -1891,9 +1891,7 @@ commands (or scripts) within the image.</p>
 <p>An example job submission script to run a serial job that executes the
 runscript within the <code>hello-world.sif</code> image that we downloaded previously to an
 ARCHER2 login node would be as follows.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label><label for="__tabbed_1_2">4-cabinet system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Full system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash --login</span>
 
 <span class="c1"># Slurm job options (name, compute nodes, job time)</span>
@@ -1912,7 +1910,7 @@ ARCHER2 login node would be as follows.</p>
 singularity run <span class="nv">$SLURM_SUBMIT_DIR</span>/hello-world.sif
 </code></pre></div>
 </div>
-<div class="tabbed-block">
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">4-cabinet system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash --login</span>
 
 <span class="c1"># Slurm job options (name, compute nodes, job time)</span>
@@ -1933,7 +1931,6 @@ module load epcc-job-env
 <span class="c1"># Run the serial executable</span>
 singularity run <span class="nv">$SLURM_SUBMIT_DIR</span>/hello-world.sif
 </code></pre></div>
-</div>
 </div>
 </div>
 <p>You submit this in the usual way and the standard output and error
@@ -2136,9 +2133,7 @@ non-Singularity jobs. The example job submission script below uses the image
 we built above with MPICH and the OSU benchmarks to run the Allreduce benchmark
 on two nodes where all 128 cores on each node are used for MPI processes (so, 256
 MPI processes in total).</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Full system</label><label for="__tabbed_2_2">4-cabinet system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
+<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Full system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
 <span class="c1"># Slurm job options (name, compute nodes, job time)</span>
@@ -2179,7 +2174,7 @@ srun --hint<span class="o">=</span>nomultithread --distribution<span class="o">=
         collective/osu_allreduce
 </code></pre></div>
 </div>
-<div class="tabbed-block">
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">4-cabinet system</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
 <span class="c1"># Slurm job options (name, compute nodes, job time)</span>
@@ -2221,7 +2216,6 @@ srun --hint<span class="o">=</span>nomultithread --distribution<span class="o">=
     singularity run <span class="si">${</span><span class="nv">BIND_OPTS</span><span class="si">}</span> osu_benchmarks.sif <span class="se">\</span>
         collective/osu_allreduce
 </code></pre></div>
-</div>
 </div>
 </div>
 <p>The only changes from a standard submission script are:</p>
