@@ -29,8 +29,7 @@ markdown_extensions:
   - admonition
   - pymdownx.details
   - pymdownx.superfences
-  - pymdownx.tabbed:
-      alternate_style: true 
+  - pymdownx.tabbed
 
 google_analytics:
   - UA-165933823-2
