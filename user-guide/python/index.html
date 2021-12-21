@@ -1742,7 +1742,9 @@ Once your environment is activated you will be able to install packages as usual
 <p>In this section we provide example Python job submission scripts for a
 variety of scenarios of using Python on the ARCHER2 compute nodes.</p>
 <h3 id="example-serial-python-submission-script">Example serial Python submission script</h3>
-<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Full system</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label><label for="__tabbed_1_2">4-cabinet system</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>#!/bin/bash --login
 
 #SBATCH --job-name=python_test
@@ -1766,7 +1768,7 @@ source &lt;&lt;path to virtual environment&gt;&gt;/bin/activate
 python python_test.py
 </code></pre></div>
 </div>
-<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">4-cabinet system</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>#!/bin/bash --login
 
 #SBATCH --job-name=python_test
@@ -1792,6 +1794,7 @@ source &lt;&lt;path to virtual environment&gt;&gt;/bin/activate
 # Run your Python progamme
 python python_test.py
 </code></pre></div>
+</div>
 </div>
 </div>
 <div class="admonition tip">
@@ -1808,7 +1811,9 @@ previous section is that we must run the program using
 <code>srun python my_prog.py</code> instead of <code>python my_prog,py</code>. Failing to do so will 
 cause a segmentation fault in your program when it reaches the line
 "<code>from mpi4py import MPI</code>".</p>
-<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Full system</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Full system</label><label for="__tabbed_2_2">4-cabinet system</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>#!/bin/bash --login
 # Slurm job options (job-name, compute nodes, job time)
 #SBATCH --job-name=mpi4py_test
@@ -1831,7 +1836,7 @@ module load cray-python
 srun python mpi4py_test.py
 </code></pre></div>
 </div>
-<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">4-cabinet system</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>#!/bin/bash --login
 # Slurm job options (job-name, compute nodes, job time)
 #SBATCH --job-name=mpi4py_test
@@ -1856,6 +1861,7 @@ module load cray-python
 # will occur
 srun python mpi4py_test.py
 </code></pre></div>
+</div>
 </div>
 </div>
 <h2 id="using-jupyterlab-on-archer2">Using JupyterLab on ARCHER2</h2>

@@ -1730,13 +1730,16 @@ from the GitHub repository with the command</p>
 <pre><code>git clone https://github.com/MITgcm/MITgcm.git
 </code></pre>
 <p>You should then copy the ARCHER2 optfile into the MITgcm directories. You may use the files at the locations below for the 4-cabinet and full systems.</p>
-<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Full system</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label><label for="__tabbed_1_2">4-cabinet system</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>cp /work/y07/shared/apps/core/mitgcm/optfiles/linux_amd64_gnu_archer2 MITgcm/tools/build_options/
 </code></pre></div>
 </div>
-<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">4-cabinet system</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>cp /work/n02/shared/MITgcm/optfiles/dev_linux_amd64_gnu_archer2 MITgcm/tools/build_options/
 </code></pre></div>
+</div>
 </div>
 </div>
 <p>Note that this build options file is still being tested for optimisation purposes. For working with large executables (e.g. adjoint configurations), edit the build options file to include the lines:</p>
@@ -1744,13 +1747,16 @@ from the GitHub repository with the command</p>
 CFLAGS="$CFLAGS -mcmodel=large"
 </code></pre>
 <p>You can also use <code>-mcmodel=medium</code> for a lower-memory options. When you are building your code with this optfile, use the GNU environment with</p>
-<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Full system</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Full system</label><label for="__tabbed_2_2">4-cabinet system</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>module load PrgEnv-gnu
 </code></pre></div>
 </div>
-<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">4-cabinet system</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>module restore PrgEnv-gnu
 </code></pre></div>
+</div>
 </div>
 </div>
 <p>You should also set the following environment variables.
@@ -1759,17 +1765,20 @@ the top MITgcm directory. Optionally, adding the MITgcm tools directory
 to your <code>PATH</code> environment variable makes it easier to use tools such as
 <code>genmake2</code>, and the <code>MITGCM_OPT</code> environment variable makes it easier to
 refer to pass the optfile to <code>genmake2</code>.</p>
-<div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Full system</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Full system</label><label for="__tabbed_3_2">4-cabinet system</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>export MITGCM_ROOTDIR=/path/to/MITgcm
 export PATH=$MITGCM_ROOTDIR/tools:$PATH
 export MITGCM_OPT=$MITGCM_ROOTDIR/tools/build_options/linux_amd64_gnu_archer2
 </code></pre></div>
 </div>
-<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">4-cabinet system</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>export MITGCM_ROOTDIR=/path/to/MITgcm
 export PATH=$MITGCM_ROOTDIR/tools:$PATH
 export MITGCM_OPT=$MITGCM_ROOTDIR/tools/build_options/dev_linux_amd64_gnu_archer2
 </code></pre></div>
+</div>
 </div>
 </div>
 <p>When using <code>genmake2</code> to create the Makefile, you will need to specify the
@@ -1789,7 +1798,9 @@ running</p>
 following which will allow it to run on the ARCHER2 compute nodes. This
 example would run a pure MPI MITgcm simulation over 2 nodes of 128 cores
 each for up to one hour.</p>
-<div class="tabbed-set" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">Full system</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">Full system</label><label for="__tabbed_4_2">4-cabinet system</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 
 # Slurm job options (job-name, compute nodes, job time)
@@ -1815,7 +1826,7 @@ export OMP_NUM_THREADS=1
 srun --distribution=block:block --hint=nomultithread ./mitgcmuv
 </code></pre></div>
 </div>
-<input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><label for="__tabbed_4_2">4-cabinet system</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 
 # Slurm job options (job-name, compute nodes, job time)
@@ -1843,6 +1854,7 @@ export OMP_NUM_THREADS=1
 #   srun picks up the distribution from the sbatch options
 srun --distribution=block:block --hint=nomultithread ./mitgcmuv
 </code></pre></div>
+</div>
 </div>
 </div>
 <h2 id="reproducing-the-ecco-version-4-release-4-state-estimate-on-archer2">Reproducing the ECCO version 4 (release 4) state estimate on ARCHER2</h2>
