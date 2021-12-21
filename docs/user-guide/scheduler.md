@@ -311,12 +311,12 @@ the likely cause:
     is 20 minutes.
 
 
-### Slurm queued reasons
+### Slurm job state codes
 
 The ``squeue`` command allows users to view information for jobs managed by Slurm. Jobs
 typically go through the following states: PENDING, RUNNING, COMPLETING, and COMPLETED.
 The first table provides a description of some job state codes. The second table provides a description
-of the reasons that cause a job to be in a state.
+of the [reasons](#slurm-queued-reasons) that cause a job to be in a state.
 
 
 | Status        | Code | Description |
@@ -334,6 +334,8 @@ of the reasons that cause a job to be in a state.
 | CANCELLED     | CA   | Job was explicitly cancelled by the user or system administrator. The job may or may not have been initiated. |
 
 For a full list of see [Job State Codes](https://slurm.schedmd.com/squeue.html#lbAG).
+
+### Slurm queued reasons
 
 | Reason | Description |
 |--------|-------------|
