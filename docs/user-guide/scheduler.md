@@ -259,6 +259,61 @@ command:
 E-mail notifications from the scheduler are not currently available
 on ARCHER2.
 
+### Priority
+
+Job priority on ARCHER2 depends on a number of different factors:
+
+ - The QoS your job has specified
+ - The amount of time you have been queuing for
+ - The number of nodes you have requested (job size)
+ - Your current fairshare factor
+
+Each of these factors is normalised to a value between 0 and 1, is multiplied
+with a weight and the resulting values combined to produce a priority for the job. 
+The current job priority formula on Tursa is:
+
+```
+Priority = [10000 * P(QoS)] + [500 * P(Age)] + [300 * P(Fairshare)] + [100 * P(size)]
+```
+
+The priority factors are:
+
+- P(QoS) - The QoS priority normalised to a value between 0 and 1. The maximum raw
+  value is 10000 and the minimum is 0. Most QoS on ARCHER2 have a raw prioity of 500; the
+  `lowpriority` QoS has a raw priority of 1.
+- P(Age) - The priority based on the job age normalised to a value between 0 and 1.
+  The maximum raw value is 14 days (where P(Age) = 1).
+- P(Fairshare) - The fairshare priority normalised to a value between 0 and 1. Your
+  fairshare priority is determined by a combination of your budget code fairshare 
+  value and your user fairshare value within that budget code. The more use that 
+  the budget code you are using has made of the system recently relative to other 
+  budget codes on the system, the lower the budget code fairshare value will be; and the more
+  use you have made of the system recently relative to other users within your
+  budget code, the lower your user fairshare value will be. The decay half life 
+  for fairshare on ARCHER2 is set to 14 days. [More information on the Slurm fairshare
+  algorithm](https://slurm.schedmd.com/fair_tree.html).
+- P(Size) - The priority based on the job size normalised to a value between 0 and 1.
+  The maximum size is the total number of ARCHER2 compute nodes.
+
+You can view the priorities for current queued jobs on the system with the `sprio`
+command:
+
+```
+auser@ln04:~> sprio -l
+          JOBID PARTITION   PRIORITY       SITE        AGE  FAIRSHARE    JOBSIZE        QOS
+         828764 standard        1049          0         45          0          4       1000
+         828765 standard        1049          0         45          0          4       1000
+         828770 standard        1049          0         45          0          4       1000
+         828771 standard        1012          0          8          0          4       1000
+         828773 standard        1012          0          8          0          4       1000
+         828791 standard        1012          0          8          0          4       1000
+         828797 standard        1118          0        115          0          4       1000
+         828800 standard        1154          0        150          0          4       1000
+         828801 standard        1154          0        150          0          4       1000
+         828805 standard        1118          0        115          0          4       1000
+         828806 standard        1154          0        150          0          4       1000
+```
+
 ## Troubleshooting
 
 ### Slurm error messages
