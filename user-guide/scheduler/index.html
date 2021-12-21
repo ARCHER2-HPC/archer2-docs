@@ -682,6 +682,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#priority" class="md-nav__link">
+    Priority
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2161,6 +2168,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#priority" class="md-nav__link">
+    Priority
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2988,6 +3002,54 @@ can discuss how to accommodate your requirements.</p>
 <h3 id="e-mail-notifications">E-mail notifications</h3>
 <p>E-mail notifications from the scheduler are not currently available
 on ARCHER2.</p>
+<h3 id="priority">Priority</h3>
+<p>Job priority on ARCHER2 depends on a number of different factors:</p>
+<ul>
+<li>The QoS your job has specified</li>
+<li>The amount of time you have been queuing for</li>
+<li>The number of nodes you have requested (job size)</li>
+<li>Your current fairshare factor</li>
+</ul>
+<p>Each of these factors is normalised to a value between 0 and 1, is multiplied
+with a weight and the resulting values combined to produce a priority for the job. 
+The current job priority formula on Tursa is:</p>
+<div class="highlight"><pre><span></span><code>Priority = [10000 * P(QoS)] + [500 * P(Age)] + [300 * P(Fairshare)] + [100 * P(size)]
+</code></pre></div>
+<p>The priority factors are:</p>
+<ul>
+<li>P(QoS) - The QoS priority normalised to a value between 0 and 1. The maximum raw
+  value is 10000 and the minimum is 0. Most QoS on ARCHER2 have a raw prioity of 500; the
+  <code>lowpriority</code> QoS has a raw priority of 1.</li>
+<li>P(Age) - The priority based on the job age normalised to a value between 0 and 1.
+  The maximum raw value is 14 days (where P(Age) = 1).</li>
+<li>P(Fairshare) - The fairshare priority normalised to a value between 0 and 1. Your
+  fairshare priority is determined by a combination of your budget code fairshare 
+  value and your user fairshare value within that budget code. The more use that 
+  the budget code you are using has made of the system recently relative to other 
+  budget codes on the system, the lower the budget code fairshare value will be; and the more
+  use you have made of the system recently relative to other users within your
+  budget code, the lower your user fairshare value will be. The decay half life 
+  for fairshare on ARCHER2 is set to 14 days. <a href="https://slurm.schedmd.com/fair_tree.html">More information on the Slurm fairshare
+  algorithm</a>.</li>
+<li>P(Size) - The priority based on the job size normalised to a value between 0 and 1.
+  The maximum size is the total number of ARCHER2 compute nodes.</li>
+</ul>
+<p>You can view the priorities for current queued jobs on the system with the <code>sprio</code>
+command:</p>
+<div class="highlight"><pre><span></span><code>auser@ln04:~&gt; sprio -l
+          JOBID PARTITION   PRIORITY       SITE        AGE  FAIRSHARE    JOBSIZE        QOS
+         828764 standard        1049          0         45          0          4       1000
+         828765 standard        1049          0         45          0          4       1000
+         828770 standard        1049          0         45          0          4       1000
+         828771 standard        1012          0          8          0          4       1000
+         828773 standard        1012          0          8          0          4       1000
+         828791 standard        1012          0          8          0          4       1000
+         828797 standard        1118          0        115          0          4       1000
+         828800 standard        1154          0        150          0          4       1000
+         828801 standard        1154          0        150          0          4       1000
+         828805 standard        1118          0        115          0          4       1000
+         828806 standard        1154          0        150          0          4       1000
+</code></pre></div>
 <h2 id="troubleshooting">Troubleshooting</h2>
 <h3 id="slurm-error-messages">Slurm error messages</h3>
 <p>An incorrect submission will cause Slurm to return an error.
