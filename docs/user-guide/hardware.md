@@ -11,8 +11,7 @@ Compute nodes are only accessible via the Slurm job scheduling system.
 There are two storage types: home and work. Home is available on login nodes and data-analysis nodes. Work is available on login, data-analysis nodes and compute nodes (see [I/O and file systems](io.md)).
 
 This is shown in the ARCHER2 architecture diagram:
-![ACRHER2 architecture](../images/archer2_architecture.png)
-
+![ARCHER2 architecture](../images/archer2_architecture.png)
 
 
 ## Compute node details

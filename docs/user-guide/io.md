@@ -133,7 +133,7 @@ command to query the stripe settings for a directory (or file) is `lfs
 getstripe`. For example, to query the stripe settings of an already
 created directory `resdir`:
 
-    [auser@archer2]$ lfs getstripe resdir/
+    auser@ln03:~> lfs getstripe resdir/
     resdir
     stripe_count:   1 stripe_size:    1048576 stripe_offset:  -1 
 
@@ -156,7 +156,7 @@ Users can set stripe settings for a directory (or file) using the
 For example, to set a stripe size of 4 MiB for the existing directory
 `resdir`, along with maximum striping count you would use:
 
-    [auser@archer2]$ lfs setstripe -s 4m -c -1 resdir/
+    auser@ln03:~> lfs setstripe -s 4m -c -1 resdir/
 
 ### Recommended ARCHER2 I/O settings
 
@@ -196,8 +196,6 @@ To switch library version see [the Application Development Environment section o
     I/O, so you should check the overall performance of your program
     before and after the switch. It is possible that other functions
     may run slower even if the I/O performance improves.
-
-
 
 ## I/O Profiling
 

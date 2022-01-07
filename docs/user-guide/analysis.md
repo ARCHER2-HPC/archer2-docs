@@ -48,24 +48,7 @@ can also be used for data analysis.
 
     Rscript example.R
     ```
-=== "4-cabinet system"
-    ```slurm
-    #!/bin/bash
-    #SBATCH --job-name=data_analysis
-    #SBATCH --time=0:10:0
-    #SBATCH --nodes=1
-    #SBATCH --tasks-per-node=1
-    #SBATCH --cpus-per-task=1
 
-    #SBATCH --account=[budget code]
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
-
-    module load epcc-job-env
-    module load cray-R
-
-    Rscript example.R
-    ```
 
 An advantage of this method is that you can use
 [Job chaining](https://docs.archer2.ac.uk/user-guide/scheduler/#job-chaining)
@@ -89,12 +72,6 @@ be found
                   --time=00:20:00 --partition=standard --qos=short \
                   --account=[budget code]
     ```
-=== "4-cabinet system"
-    ```bash
-    auser@uan01:> salloc --nodes=1 --tasks-per-node=1 --cpus-per-task=1 \
-                  --time=00:20:00 --partition=standard --qos=short \
-                  --reservation=shortqos --account=[budget code]
-    ```
 
 !!! note
     If you want to run for longer than 20 minutes, you will need to use
@@ -103,11 +80,7 @@ be found
 
 ## Data analysis nodes
 
-!!! important
-    The data analysis nodes are only available on the full ARCHER2 
-    system.
-
-The data analysis nodes on the ARCHER2 full system are designed for large
+The data analysis nodes on the ARCHER2 system are designed for large
 compilations, post-calculation analysis and data manipulation. They should 
 be used for jobs which are too small to require a whole compute node, but 
 which would have an adverse impact on the operation of the login nodes if 

@@ -170,7 +170,7 @@ in the future please delete it.
 
 #### Quotas on the work file systems
 
-As for the homefile systems, all projects are assigned a quota on the
+As for the home file systems, all projects are assigned a quota on the
 work file systems. The project PI or manager can split this quota up
 between users or groups of users if they wish.
 
@@ -203,7 +203,7 @@ themselves using the `lfs quota` command. To do this:
 - To check your user quota, you would use the command:
 
    ```
-   lfs quota -hu auser .
+   auser@ln03:/work/t01/t01/auser> lfs quota -hu auser .
    Disk quotas for usr auser (uid 5496):
      Filesystem    used   quota   limit   grace   files   quota   limit   grace
               .  1.366G      0k      0k       -    5486       0       0       -
@@ -217,7 +217,7 @@ themselves using the `lfs quota` command. To do this:
 - To check your project quota, you would use the command:
 
    ```
-   lfs quota -hp $(id -g) .
+   auser@ln03:/work/t01/t01/auser> lfs quota -hp $(id -g) .
    Disk quotas for prj 1009 (pid 1009):
      Filesystem    used   quota   limit   grace   files   quota   limit   grace
               .  2.905G      0k      0k       -   25300       0       0       -
@@ -575,7 +575,7 @@ remote machine onto a local machine.
 
 For example, to transfer files to ARCHER2 from a local machine:
 
-    scp [options] source user@login-4c.archer2.ac.uk:[destination]
+    scp [options] source user@login.archer2.ac.uk:[destination]
 
 (Remember to replace `user` with your ARCHER2 username in the example
 above.)
@@ -591,7 +591,7 @@ If you want to request a different encryption algorithm add the `-c
 (usually faster) *arcfour* encryption algorithm you would
     use:
 
-    scp [options] -c aes128-ctr source user@login-4c.archer2.ac.uk:[destination]
+    scp [options] -c aes128-ctr source user@login.archer2.ac.uk:[destination]
 
 (Remember to replace `user` with your ARCHER2 username in the example
 above.)
@@ -610,7 +610,7 @@ machine.
 To transfer files to ARCHER2 using `rsync` with `ssh` the command has
 the form:
 
-    rsync [options] -e ssh source user@login-4c.archer2.ac.uk:[destination]
+    rsync [options] -e ssh source user@login.archer2.ac.uk:[destination]
 
 (Remember to replace `user` with your ARCHER2 username in the example
 above.)
@@ -625,7 +625,7 @@ Additional flags can be specified for the underlying `ssh` command by
 using a quoted string as the argument of the `-e` flag.
     e.g.
 
-    rsync [options] -e "ssh -c arcfour" source user@login-4c.archer2.ac.uk:[destination]
+    rsync [options] -e "ssh -c arcfour" source user@login.archer2.ac.uk:[destination]
 
 (Remember to replace `user` with your ARCHER2 username in the example
 above.)
@@ -681,7 +681,7 @@ We then initiate the data transfer from our system to ARCHER2, here using
 again, in the event of a loss of connection or other failure. For example, using
 the SSH key in the file `~/.ssh/id_RSA_A2` on our local system:
 
-    rsync -Pv -e"ssh -c aes128-gcm@openssh.com -i $HOME/.ssh/id_RSA_A2" ./all_my_files.tar.gz otbz19@login-4c.archer2.ac.uk:/work/z19/z19/otbz19/
+    rsync -Pv -e"ssh -c aes128-gcm@openssh.com -i $HOME/.ssh/id_RSA_A2" ./all_my_files.tar.gz otbz19@login.archer2.ac.uk:/work/z19/z19/otbz19/
 
 Note the use of the `-P` flag to allow partial transfer -- the same
 command could be used to restart the transfer after a loss of
@@ -699,6 +699,6 @@ ARCHER2.
 If we were unconcerned about being able to restart an interrupted
 transfer, we could instead use the `scp` command,
 
-    scp -c aes128-gcm@openssh.com -i ~/.ssh/id_RSA_A2 all_my_files.tar.gz otbz19@login-4c.archer2.ac.uk:/work/z19/z19/otbz19/
+    scp -c aes128-gcm@openssh.com -i ~/.ssh/id_RSA_A2 all_my_files.tar.gz otbz19@login.archer2.ac.uk:/work/z19/z19/otbz19/
 
 but `rsync` is recommended for larger transfers.
