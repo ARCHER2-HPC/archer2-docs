@@ -58,20 +58,6 @@ the Project Code:
         2.  You can always add an SSH key (or additional SSH keys) using
             the process described below.
     7.  Click *Request*
-=== "4-cabinet system"
-    1.  [Log into SAFE](https://safe.epcc.ed.ac.uk)
-    2.  Use the *Login accounts - Request new account* menu item
-    3.  Select the correct project from the drop down list
-    4.  Select the *archer2-4c* machine in the list of available machines
-    5.  Click *Next*
-    6.  Enter a username for the account and (optionally) an SSH public
-        key
-        1.  If you do not specify an SSH key at this stage, your default
-            key will be used (if you have one). For users who had an ARCHER
-            account, the default key will be your ARCHER SSH key.
-        2.  You can always add an SSH key (or additional SSH keys) using
-            the process described below.
-    7.  Click *Request*
 
 The PI or project manager of the project will be asked to approve your
 request. After your request has been approved the account will be
@@ -143,8 +129,6 @@ To log into ARCHER2 you should use the address:
 
 === "Full system"
     ssh [userID]@login.archer2.ac.uk
-=== "4-cabinet system"
-    ssh [userID]@login-4c.archer2.ac.uk
 
 The order in which you are asked for credentials depends on the system you
 are accessing:
@@ -178,9 +162,6 @@ are accessing:
 
         If you see this, you should delete the offending host key from your `~/.ssh/known_hosts`
         file (in the example above the offending line is line #11)
-        
-=== "4-cabinet system"
-    You will first be prompted for your machine account password. Once you have entered your password successfully, you will then be prompted for the passphrase associated with your SSH key pair. You need to enter both credentials correctly to be able to access the ARCHER2 4-cabinet system.
 
 !!! tip
     If your SSH key pair is not stored in the default location (usually
@@ -401,27 +382,6 @@ Paste the following text into your job submission script, replacing
 
 
 === "Full system"
-    ```
-    #!/bin/bash --login
-    
-    #SBATCH --job-name=test_job
-    #SBATCH --nodes=1
-    #SBATCH --tasks-per-node=128
-    #SBATCH --cpus-per-task=1
-    #SBATCH --time=0:5:0
-    
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code]
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
-    
-    # Load the xthi module to get access to the xthi program
-    module load xthi
-    
-    # srun launches the parallel program based on the SBATCH options
-    srun --distribution=block:block --hint=nomultithread xthi
-    ```
-=== "4-cabinet system"
     ```
     #!/bin/bash --login
     
