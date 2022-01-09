@@ -14,7 +14,7 @@ relativity.
 
   - [NWChem home page](https://nwchemgit.github.io/)
   - [NWChem documentation](https://nwchemgit.github.io/Home.html)
-  - [NWChem forum][1]
+  - [NWChem forum](https://nwchemgit.github.io/Forum.html)
 
 ## Using NWChem on ARCHER2
 
@@ -59,32 +59,6 @@ the standard partition. It assumes that the input file is called
     export OMP_NUM_THREADS=1
     srun --distribution=block:block --hint=nomultithread nwchem test_calc
     ```
-=== "4-cabinet system"
-    ```
-    #!/bin/bash
-
-    # Request 2 nodes with 128 MPI tasks per node for 20 minutes
-
-    #SBATCH --job-name=NWChem_test
-    #SBATCH --nodes=2
-    #SBATCH --tasks-per-node=128
-    #SBATCH --cpus-per-task=1
-    #SBATCH --time=00:20:00
-
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code] 
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
-
-    # Setup the job environment (this module needs to be loaded before any other modules)
-    module load epcc-job-env
-
-    # Load the NWChem module, avoid any unintentional OpenMP threading by
-    # setting OMP_NUM_THREADS, and launch the code.
-    module load nwchem
-    export OMP_NUM_THREADS=1
-    srun --distribution=block:block --hint=nomultithread nwchem test_calc
-    ```
 
 ## Compiling NWChem
 
@@ -94,5 +68,3 @@ the GitHub repository of build instructions:
    - [Build instructions for NWChem on
      GitHub](https://github.com/hpc-uk/build-instructions/tree/main/apps/NWChem)
 
-<!--- NWChem forum URL -->
-[1]: https://nwchemgit.github.io/Forum.html

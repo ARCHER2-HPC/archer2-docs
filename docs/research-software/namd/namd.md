@@ -51,32 +51,6 @@ The following script will run a pure MPI NAMD MD job using 4 nodes (i.e.
     srun --distribution=block:block --hint=nomultithread namd2 input.namd
     ```
 
-=== "4-cabinet system"
-    ```
-    #!/bin/bash
-
-    # Request four nodes to run a job of 512 MPI tasks with 128 MPI
-    # tasks per node, here for maximum time 20 minutes.
-
-    #SBATCH --job-name=namd-nosmp
-    #SBATCH --nodes=4
-    #SBATCH --tasks-per-node=128
-    #SBATCH --cpus-per-task=1
-    #SBATCH --time=00:20:00
-
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code] 
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
-
-    # Setup the job environment (this module needs to be loaded before any other modules)
-    module load epcc-job-env
-
-    module load namd/2.14-nosmp-gcc10
-
-    srun --distribution=block:block --hint=nomultithread namd2 input.namd
-    ```
-
 If your jobs runs out of memory, then you can can run the _smp_
 version of NAMD which uses less memory. This involves launching a
 combination of MPI processes for communication and worker threads
@@ -110,35 +84,6 @@ associated MPI process.
     #SBATCH --qos=standard
 
     # Load the relevant modules
-    module load namd
-
-    # Set procs per node (PPN) & OMP_NUM_THREADS
-    export PPN=$(($SLURM_CPUS_PER_TASK-1))
-    export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
-    export OMP_PLACES=cores
-
-    # Record PPN in the output file
-    echo "Number of worker threads PPN = $PPN"
-
-    # Run NAMD
-    srun --distribution=block:block --hint=nomultithread namd2 +setcpuaffinity +ppn $PPN input.namd
-    ```
-
-=== "4-cabinet system"
-    ```
-    #!/bin/bash
-    #SBATCH --job-name=namd-smp
-    #SBATCH --tasks-per-node=32
-    #SBATCH --cpus-per-task=4
-    #SBATCH --nodes=4
-    #SBATCH --time=00:20:00
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code] 
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
-
-    # Load the relevant modules
-    module load epcc-job-env
     module load namd
 
     # Set procs per node (PPN) & OMP_NUM_THREADS
