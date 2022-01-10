@@ -109,6 +109,13 @@ F90-F-0004-Corrupt or Old Module file /opt/cray/pe/netcdf-hdf5parallel/4.7.4.3/c
 
 The current workaround for this is to load module epcc-netcdf-hdf5parallel instead if PrgEnv-aocc is required.
 
+### Slurm  `--export` option does not work in job submission script
+
+The option `--export=ALL` propagates all the environment variables from the login node to the compute node. If you include the option in the job submission script, it is wrongly ignored by Slurm. The current workaround is to include the option when the job submission script is launched. For instance:
+
+    sbatch --export=ALL myjob.slurm
+
 ## Recently Resolved Issues
 
-No recently resolved issues
+No recently resolved issues.
+
