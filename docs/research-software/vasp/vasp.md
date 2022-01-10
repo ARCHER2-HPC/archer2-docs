@@ -93,10 +93,6 @@ On ARCHER2, the VTST version of VASP 5 can be accessed by loading the modules wi
     ```
     module load vasp/5/5.4.4.pl2-vtst
     ```
-=== "4-cabinet system"
-    ```
-    module load vasp/5/5.4.4-VTST-gcc10-cpe2103
-    ```
 
 #### Example VASP 5 job submission script
 
@@ -120,36 +116,6 @@ cores).
     #SBATCH --partition=standard
     #SBATCH --qos=standard
 
-    # Load the VASP module
-    module load vasp/5
-
-    # Avoid any unintentional OpenMP threading by setting OMP_NUM_THREADS
-    export OMP_NUM_THREADS=1
-
-    # Launch the code.
-    srun --distribution=block:block --hint=nomultithread vasp_std
-    ```
-
-=== "4-cabinet system"
-    ```
-    #!/bin/bash
-    
-    # Request 16 nodes (2048 MPI tasks at 128 tasks per node) for 20 minutes.   
-    
-    #SBATCH --job-name=VASP_test
-    #SBATCH --nodes=16
-    #SBATCH --tasks-per-node=128
-    #SBATCH --cpus-per-task=1
-    #SBATCH --time=00:20:00
-    
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code] 
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
-    
-    # Setup the job environment (this module needs to be loaded before any other modules)
-    module load epcc-job-env
-    
     # Load the VASP module
     module load vasp/5
 
@@ -212,38 +178,6 @@ cores) using only MPI ranks and no OpenMP threading.
     # Launch the code.
     srun --distribution=block:block --hint=nomultithread vasp_std
     ```
-
-=== "4-cabinet system"
-
-    ```
-    #!/bin/bash
-
-    # Request 16 nodes (2048 MPI tasks at 128 tasks per node) for 20 minutes.   
-
-    #SBATCH --job-name=VASP_test
-    #SBATCH --nodes=16
-    #SBATCH --tasks-per-node=128
-    #SBATCH --cpus-per-task=1
-    #SBATCH --time=00:20:00
-
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code] 
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
-
-    # Setup the job environment (this module needs to be loaded before any other modules)
-    module load epcc-job-env
-
-    # Load the VASP module
-    module load vasp/6
-
-    # Avoid any unintentional OpenMP threading by setting OMP_NUM_THREADS
-    export OMP_NUM_THREADS=1
-
-    # Launch the code.
-    srun --distribution=block:block --hint=nomultithread vasp_std
-    ```
-
 ## Compiling VASP on ARCHER2
 
 If you wish to compile your own version of VASP on ARCHER2 (either VASP

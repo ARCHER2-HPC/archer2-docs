@@ -29,7 +29,7 @@ command:
 module load code_saturne
 ```
 
-On the 4-cabinet system this will load the default `code_saturne/6.0.5-gcc10` module. On the 23-cabinet system the default `code_saturne/7.0.1-gcc11` module will be loaded. A build using the CCE compilers, `code_saturne/7.0.1-cce12`, has also been made optionally available to users on the full ARCHER2 system as testing indicates that this may provide improved performance over the GCC build.
+This will load the default `code_saturne/7.0.1-gcc11` module. A build using the CCE compilers, `code_saturne/7.0.1-cce12`, has also been made optionally available to users on the full ARCHER2 system as testing indicates that this may provide improved performance over the GCC build.
 
 ## Running parallel Code\_Saturne jobs
 
@@ -81,38 +81,6 @@ over 4 nodes (128 x 4 = 512 cores) for a maximum of 20 minutes.
     # Switch to mpich-ucx implementation (see info note below)
     module swap craype-network-ofi craype-network-ucx
     module swap cray-mpich cray-mpich-ucx
-
-    # Prevent threading.
-    export OMP_NUM_THREADS=1
-
-    # Run solver.
-    srun --distribution=block:block --hint=nomultithread ./cs_solver --mpi $@
-    ```
-
-=== "4-cabinet system"
-    ```
-    #!/bin/bash
-    #SBATCH --export=none
-    #SBATCH --job-name=CSExample
-    #SBATCH --time=0:20:0
-    #SBATCH --nodes=4
-    #SBATCH --tasks-per-node=128
-    #SBATCH --cpus-per-task=1
-
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code]
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
-
-    # Setup the batch environment
-    module load epcc-job-env
-
-    # Load the GCC build of Code_Saturne 6.0.5
-    module load code_saturne
-
-    # Switch to mpich-ucx implementation (see info note below)
-    module switch cray-mpich/8.0.16 cray-mpich-ucx/8.0.16
-    module switch craype-network-ofi craype-network-ucx
 
     # Prevent threading.
     export OMP_NUM_THREADS=1

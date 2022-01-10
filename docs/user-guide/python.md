@@ -135,34 +135,6 @@ variety of scenarios of using Python on the ARCHER2 compute nodes.
     python python_test.py
     ```
 
-=== "4-cabinet system"
-    ```
-    #!/bin/bash --login
-    
-    #SBATCH --job-name=python_test
-    #SBATCH --nodes=1
-    #SBATCH --tasks-per-node=1
-    #SBATCH --cpus-per-task=1
-    #SBATCH --time=00:10:00
-    
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code]
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
-    
-    # Setup the batch environment
-    module load epcc-job-env
-   
-    # Load the Python module
-    module load cray-python
-    
-    # If using a virtual environment
-    source <<path to virtual environment>>/bin/activate
-    
-    # Run your Python progamme
-    python python_test.py
-    ```
-
 !!! tip
     If you have installed your own packages you will need to set `PATH` and
     `PYTHONPATH` as described above within your job submission script in order
@@ -192,33 +164,6 @@ cause a segmentation fault in your program when it reaches the line
     #SBATCH --account=[budget code]
     #SBATCH --partition=standard
     #SBATCH --qos=standard
-    
-    # Load the Python module
-    module load cray-python
-    
-    # Run your Python programme
-    # Note that srun MUST be used to wrap the call to python, otherwise an error
-    # will occur
-    srun python mpi4py_test.py
-    ```
-
-=== "4-cabinet system"
-    ```
-    #!/bin/bash --login
-    # Slurm job options (job-name, compute nodes, job time)
-    #SBATCH --job-name=mpi4py_test
-    #SBATCH --nodes=1
-    #SBATCH --tasks-per-node=2
-    #SBATCH --cpus-per-task=1
-    #SBATCH --time=0:10:0
-    
-    # Replace [budget code] below with your budget code (e.g. t01)
-    #SBATCH --account=[budget code]
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
-    
-    # Setup the batch environment
-    module load epcc-job-env
     
     # Load the Python module
     module load cray-python
@@ -313,6 +258,3 @@ Please follow these steps.
     the one formatted `http://<node_id>:<port_number>/lab?token=<string>`. Your local
     browser will not recognise the `<node_id>` part of the address.
 
-!!! note
-    You willl of course need to use a different hostname for the SSH tunnel if you're running on the
-    ARCHER2 4-cabinet system, `login-4c.archer2.ac.uk`.   

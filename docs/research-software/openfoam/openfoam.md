@@ -34,12 +34,6 @@ all users on ARCHER2.
     openfoam/com/v2106          openfoam/org/v9.20210903 (D)
     openfoam/org/v8.20200901
     ```
-=== "4-cabinet system"
-    ``` 
-    auser@uan01:> module avail openfoam
-    --------------- /work/y07/shared/archer2-modules/modulefiles-cse ----------
-    openfoam/com/v2006  openfoam/com/v2106  openfoam/org/v8.20200901
-    ```
 
 Versions from openfoam.org are typically v8.0 etc and there is typically
 one release per year (in June; with a patch release in September).
@@ -52,19 +46,15 @@ e.g.
 
 === "Full system"
     ```
-    user@uan01:> module load PrgEnv-gnu
-    user@uan01:> module load openfoam/com/v2006
+    user@ln01:> module load PrgEnv-gnu
+    user@ln01:> module load openfoam/com/v2006
     ```
-=== "4-cabinet system"
-    ```
-    user@uan01:> module -s restore PrgEnv-gnu
-    user@uan01:> module load openfoam/com/v2006
-    ```
+
 The module defines only the base installation directory via the
 environment variable `FOAM_INSTALL_DIR`. After loading the module you
 need to source the `etc/bashrc` file provided by OpenFOAM, e.g.
 
-    user@uan01:> source ${FOAM_INSTALL_DIR}/etc/bashrc
+    user@ln01:> source ${FOAM_INSTALL_DIR}/etc/bashrc
 
 You should then be able to use OpenFOAM. The above commands will also
 need to be added to any job/batch submission scripts you want to use to
@@ -113,35 +103,6 @@ MPI tasks). Each MPI task is allocated one core (`--cpus-per-task=1`).
     srun interFoam -parallel
 
     ```
-=== "4-cabinet system"
-    ```
-    #!/bin/bash
-    
-    #SBATCH --nodes=4
-    #SBATCH --tasks-per-node=128
-    #SBATCH --cpus-per-task=1
-    #SBATCH --time=00:10:00
-    
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code] 
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
-    
-    # Setup the job environment (this module needs to be loaded before any other modules)
-    module load epcc-job-env
-    
-    # Load the appropriate modules and source the OpenFOAM bashrc file
-    # The first line makes PrgEnv-gnu available on the back end nodes.
-    
-    module -s restore /etc/cray-pe.d/PrgEnv-gnu
-    module load openfoam/org/v8.20200901
-    
-    source ${FOAM_INSTALL_DIR}/etc/bashrc
-    
-    # Run OpenFOAM work
-    
-    srun --distribution=block:block --hint=nomultithread interFoam -parallel
-    ```
 
 ## Compiling OpenFOAM
 
@@ -169,42 +130,4 @@ The following centrally installed versions are available.
         
         Version 8 patch release 1st September 2020.
         See [OpenFOAM.org website](https://openfoam.org/news/v8-patch/)
-=== "4-cabinet system"
-    * Module `openfoam/com/v2106` installed July 2021 (Cray PE 20.10)
-        
-        Version v2106 (June 2021).
-        See [OpenFOAM.com website](https://www.openfoam.com/news/main-news/openfoam-v2106)
-    
-    * Module `openfoam/com/v2006` installed October 2020 (Cray PE 20.10)
-        
-        Version v2006 (June 2020).
-        See [OpenFOAM.com website](https://www.openfoam.com/releases/openfoam-v2006/)
-    
-    * Module `openfoam/org/v8.20200901` installed October 2020 (Cray PE 20.10)
-        
-        Version 8 patch release 1st September 2020.
-        See [OpenFOAM.org website](https://openfoam.org/news/v8-patch/)
 
-
-## Known Issues
-
-Some users have experienced memory leaks associated with the default
-MPI implementation resulting in "out-of-memory" errors, where the
-program unexpectedly crashes.
-
-A work-around for this problem is to make the following addition to
-the submission script, e.g.,:
-```
-...
-module -s restore /etc/cray-pe.d/PrgEnv-gnu
-
-module unload craype-network-ofi 
-module unload cray-mpich 
-module load craype-network-ucx 
-module load cray-mpich-ucx/8.0.16 
-
-module load openfoam/org/v8.20200901
-...
-```
-This replaces the default MPI implementation with an alternative without
-the problem.

@@ -38,11 +38,6 @@ You should then copy the ARCHER2 optfile into the MITgcm directories. You may us
     cp /work/y07/shared/apps/core/mitgcm/optfiles/linux_amd64_gnu_archer2 MITgcm/tools/build_options/
     ```
 
-=== "4-cabinet system"
-    ```bash
-    cp /work/n02/shared/MITgcm/optfiles/dev_linux_amd64_gnu_archer2 MITgcm/tools/build_options/
-    ```
-
 Note that this build options file is still being tested for optimisation purposes. For working with large executables (e.g. adjoint configurations), edit the build options file to include the lines:
 
     FFLAGS="$FFLAGS -mcmodel=large"
@@ -53,11 +48,6 @@ You can also use `-mcmodel=medium` for a lower-memory options. When you are buil
 === "Full system"
     ```
     module load PrgEnv-gnu
-    ```
-
-=== "4-cabinet system"
-    ```
-    module restore PrgEnv-gnu
     ```
 
 You should also set the following environment variables.
@@ -72,13 +62,6 @@ refer to pass the optfile to `genmake2`.
     export MITGCM_ROOTDIR=/path/to/MITgcm
     export PATH=$MITGCM_ROOTDIR/tools:$PATH
     export MITGCM_OPT=$MITGCM_ROOTDIR/tools/build_options/linux_amd64_gnu_archer2
-    ```
-
-=== "4-cabinet system"
-    ```
-    export MITGCM_ROOTDIR=/path/to/MITgcm
-    export PATH=$MITGCM_ROOTDIR/tools:$PATH
-    export MITGCM_OPT=$MITGCM_ROOTDIR/tools/build_options/dev_linux_amd64_gnu_archer2
     ```
 
 When using `genmake2` to create the Makefile, you will need to specify the
@@ -118,36 +101,6 @@ each for up to one hour.
     #SBATCH --account=[budget code] 
     #SBATCH --partition=standard
     #SBATCH --qos=standard
-
-    # Set the number of threads to 1
-    #   This prevents any threaded system libraries from automatically
-    #   using threading.
-    export OMP_NUM_THREADS=1
-
-    # Launch the parallel job
-    #   Using 256 MPI processes and 128 MPI processes per node
-    #   srun picks up the distribution from the sbatch options
-    srun --distribution=block:block --hint=nomultithread ./mitgcmuv
-    ```
-
-=== "4-cabinet system"
-    ```
-    #!/bin/bash
-
-    # Slurm job options (job-name, compute nodes, job time)
-    #SBATCH --job-name=MITgcm-simulation
-    #SBATCH --time=1:0:0
-    #SBATCH --nodes=2
-    #SBATCH --tasks-per-node=128
-    #SBATCH --cpus-per-task=1
-
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code]
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
-
-    # Setup the job environment (this module needs to be loaded before any other modules)
-    module load epcc-job-env
 
     # Set the number of threads to 1
     #   This prevents any threaded system libraries from automatically

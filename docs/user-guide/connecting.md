@@ -141,7 +141,6 @@ an X Server.
 The login addresses for ARCHER2 are:
 
 - ARCHER2 full system: login.archer2.ac.uk
-- ARCHER2 4-cabinet system: login-4c.archer2.ac.uk
 
 
 You can use the following command from the [terminal](#command-line-terminal) window to log in to ARCHER2:
@@ -149,10 +148,6 @@ You can use the following command from the [terminal](#command-line-terminal) wi
 === "Full system"
     ```bash
     ssh username@login.archer2.ac.uk
-    ```
-=== "4-cabinet system"
-    ```bash
-    ssh username@login-4c.archer2.ac.uk
     ```
 
 The order in which you are asked for credentials depends on the system you
@@ -189,8 +184,6 @@ are accessing:
         If you see this, you should delete the offending host key from your `~/.ssh/known_hosts`
         file (in the example above the offending line is line #11)
 
-=== "4-cabinet system"
-    You will first be prompted for your machine account password. Once you have entered your password successfully, you will then be prompted for the passphrase associated with your SSH key pair. You need to enter both credentials correctly to be able to access the ARCHER2 4-cabinet system.
 
 !!! warning
     If your SSH key pair is not stored in the default location (usually
@@ -217,10 +210,6 @@ To allow remote programs, especially graphical applications, to control your loc
 === "Full system"
     ```bash
     ssh -X username@login.archer2.ac.uk
-    ```
-=== "4-cabinet system"
-    ```bash
-    ssh -X username@login-4c.archer2.ac.uk
     ```
 
 Some sites recommend using the `-Y` flag. While this can fix some
@@ -253,12 +242,6 @@ which may look something like:
     ```
     Host archer2
         HostName login.archer2.ac.uk
-        User username
-    ```
-=== "4-cabinet system"
-    ```
-    Host archer2-4c
-        HostName login-4c.archer2.ac.uk
         User username
     ```
 
@@ -302,11 +285,6 @@ to use for each system.
 
 If you find you are unable to connect to ARCHER2, there are some simple checks you may use to diagnose the issue, which are described below. If you are having difficulties connecting, we suggest trying these before
 contacting the ARCHER2 Service Desk.
-
-In the examples below, we have assumed you are connecting to the full
-ARCHER2 system at `login.archer2.ac.uk`. If you are trying to log into
-the 4-cabinet system instead, please replace the login address with
-`login-4c.archer2.ac.uk`.
 
 ### Use the `user@login.archer2.ac.uk` syntax rather than `-l user login.archer2.ac.uk`
 
@@ -411,12 +389,11 @@ way: `chmod <code> <target>`. So for example to set correct
 permissions on the private key file `id_rsa_ARCHER2`, use the command
 `chmod 600 id_rsa_ARCHER2`.
 
-=======
 On Windows, permissions are handled differently but can be set by
-     right-clicking on the file and selecting Properties \> Security \>
-     Advanced. The user, SYSTEM, and Administrators should have `Full
-     control`, and no other permissions should exist for both the public
-     and private key files, as well as the containing folder.
+right-clicking on the file and selecting Properties \> Security \>
+Advanced. The user, SYSTEM, and Administrators should have `Full
+control`, and no other permissions should exist for both the public
+and private key files, as well as the containing folder.
      
 !!! tip
     Unix file permissions can be understood in the following way. There are

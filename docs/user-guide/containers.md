@@ -79,7 +79,7 @@ then Singularity allows you to do this from ARCHER2 itself.
 For example, to retrieve an image from SingularityHub on ARCHER2 we can
 simply issue a Singularity command to pull the image.
 
-    [auser@uan01 ~]$ singularity pull hello-world.sif shub://vsoch/hello-world
+    auser@ln03:~> singularity pull hello-world.sif shub://vsoch/hello-world
 
 The image located at the `shub` URI is written to a Singularity Image
 File (SIF) called `hello-world.sif`.
@@ -90,7 +90,7 @@ Once you have an image file, using it on the login nodes in an
 interactive way is extremely simple: you use the `singularity shell`
 command. Using the image we built in the example above:
 
-    [auser@uan01 ~]$ singularity shell hello-world.sif
+    auser@ln03:~> singularity shell hello-world.sif
     Singularity> 
 
 Within a Singularity image your home directory will be available.
@@ -100,7 +100,7 @@ login node prompt with the `exit` command:
 
     Singularity> exit
     exit
-    [auser@uan01 ~]$
+    auser@ln03:~>
 
 ### Interactive use on the compute nodes
 
@@ -112,7 +112,7 @@ you first have to submit an interactive serial job (from a location on
 For example, to reserve a full node for you to work on interactively you
 would use:
 
-    auser@uan01:/work/t01/t01/auser> srun --nodes=1 --exclusive --time=00:20:00 \
+    auser@ln03:/work/t01/t01/auser> srun --nodes=1 --exclusive --time=00:20:00 \
                                           --account=[budget code] \
                                           --partition=standard --qos=standard \
                                           --pty /bin/bash
@@ -128,7 +128,7 @@ you can use the image in the same way as on the login node.
     Singularity> exit
     exit
     auser@nid00001:/work/t01/t01/auser> exit
-    auser@uan01:/work/t01/t01/auser>
+    auser@ln03:/work/t01/t01/auser>
 
 !!! note
     We used `exit` to leave the interactive image shell and then
@@ -161,29 +161,6 @@ ARCHER2 login node would be as follows.
     #SBATCH --account=[budget code]
     #SBATCH --partition=standard
     #SBATCH --qos=standard
-    
-    # Run the serial executable
-    singularity run $SLURM_SUBMIT_DIR/hello-world.sif
-    ```
-
-=== "4-cabinet system"
-    ```bash
-    #!/bin/bash --login
-    
-    # Slurm job options (name, compute nodes, job time)
-    
-    #SBATCH --job-name=helloworld
-    #SBATCH --nodes=1
-    #SBATCH --ntasks-per-node=1
-    #SBATCH --cpus-per-task=1
-    #SBATCH --time=00:10:00
-    
-    #SBATCH --account=[budget code]
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
-    
-    # Setup the batch environment
-    module load epcc-job-env
     
     # Run the serial executable
     singularity run $SLURM_SUBMIT_DIR/hello-world.sif
@@ -448,50 +425,6 @@ MPI processes in total).
     BIND_OPTS="-B /opt/cray,/usr/lib64:/usr/lib64/host,/usr/lib64/tcl"
     BIND_OPTS="${BIND_OPTS},/var/spool/slurmd/mpi_cray_shasta"
 
-    # Launch the parallel job.
-    srun --hint=nomultithread --distribution=block:block \
-        singularity run ${BIND_OPTS} osu_benchmarks.sif \
-            collective/osu_allreduce
-    ```
-
-=== "4-cabinet system"
-    ```bash
-    #!/bin/bash
-
-    # Slurm job options (name, compute nodes, job time)
-    #SBATCH --job-name=singularity_parallel
-    #SBATCH --time=0:10:0
-    #SBATCH --nodes=2
-    #SBATCH --tasks-per-node=128
-    #SBATCH --cpus-per-task=1
-
-    # Replace [budget code] below with your budget code (e.g. t01)
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
-    #SBATCH --account=[budget code]
-
-    # Setup the batch environment
-    module load epcc-job-env
-    
-    # Set the number of threads to 1.
-    # This prevents any threaded system libraries from automatically using threading.
-    export OMP_NUM_THREADS=1
-
-    # Set the LD_LIBRARY_PATH environment variable within the Singularity container
-    # to ensure that it used the correct MPI libraries.
-    export SINGULARITYENV_LD_LIBRARY_PATH= \
-        /opt/cray/pe/mpich/8.0.16/ofi/gnu/9.1/lib-abi-mpich: \
-        /opt/cray/pe/pmi/6.0.7/lib: \
-        /opt/cray/libfabric/1.11.0.0.233/lib64: \
-        /usr/lib64/host: \
-        /usr/lib/x86_64-linux-gnu/libibverbs: \
-        /.singularity.d/libs
-
-    # This makes sure Cray Slingshot interconnect libraries are available
-    # from inside the container.
-    BIND_OPTS="-B /opt/cray,/usr/lib64:/usr/lib64/host,/usr/lib64/tcl"
-    BIND_OPTS="${BIND_OPTS},/var/spool/slurmd/mpi_cray_shasta"
-                  
     # Launch the parallel job.
     srun --hint=nomultithread --distribution=block:block \
         singularity run ${BIND_OPTS} osu_benchmarks.sif \

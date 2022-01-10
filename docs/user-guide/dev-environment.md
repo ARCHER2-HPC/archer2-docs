@@ -1,4 +1,4 @@
-# Application development environment: full system
+# Application development environment
 
 !!! important
     This section covers the application development environment on the full

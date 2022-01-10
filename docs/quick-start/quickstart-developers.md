@@ -73,8 +73,8 @@ will correctly use the HPE libraries and tools in conjunction with GCC
 9.3.0.
 
 !!! warning
-    The `gcc/8.1.0` (full system) and `gcc/8.3.0` (4-cabinet system) modules
-    are available on ARCHER2 but cannot be used as the
+    The `gcc/8.1.0` module
+    is available on ARCHER2 but cannot be used as the
     supporting scientific and system libraries are not available. You should
     **not** use this version of GCC.
 

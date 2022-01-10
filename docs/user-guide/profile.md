@@ -21,11 +21,11 @@ tool set.
 
 1.  Ensure the `perftools-base` module is loaded
 
-    `auser@uan01:/work/t01/t01/auser> module list`
+    `auser@ln01:/work/t01/t01/auser> module list`
 
 2.  Load the `perftools-lite` module
 
-    `auser@uan01:/work/t01/t01/auser> module load perftools-lite`
+    `auser@ln01:/work/t01/t01/auser> module load perftools-lite`
 
 3.  Compile your application normally. An informational message from
     CrayPat-lite will appear indicating that the executable has been
@@ -51,11 +51,8 @@ tool set.
     #SBATCH --partition=standard
     #SBATCH --qos=standard
 
-    # Setup the batch environment
-    module load epcc-job-env
-
     # Launch the parallel program
-    srun mpi_test.x
+    srun --hint=nomultithread --distribution=block:block mpi_test.x
     ```
 
 5.  Analyse the data
@@ -107,14 +104,14 @@ profiling for a representative length of time.
     separated by using the `-c` compile flag.
 
     ```
-    auser@uan01:/work/t01/t01/auser> cc -h std=c99 -c jacobi.c
-    auser@uan01:/work/t01/t01/auser> cc jacobi.o -o jacobi
+    auser@ln01:/work/t01/t01/auser> cc -h std=c99 -c jacobi.c
+    auser@ln01:/work/t01/t01/auser> cc jacobi.o -o jacobi
     ```
 
 4.  To instrument the binary, run the `pat_build` command. This will 
     generate a new binary with `+pat` appended to the end (e.g. `jacobi+pat`)
 
-    `auser@uan01:/work/t01/t01/auser> pat_build jacobi`
+    `auser@ln:/work/t01/t01/auser> pat_build jacobi`
 
 5.  Run the new executable with `+pat` appended as you would with the
     regular executable. Each run will produce its own 'experiment
@@ -130,7 +127,7 @@ be post-processed to produce useful results. This is done using the
 readable form. You should provide the name of the experiment directory as
 the argument:
 
-    [user@archer2]$ pat_report jacobi+pat+12265-1573s
+    auser@ln:/work/t01/t01/auser> pat_report jacobi+pat+12265-1573s
 
     Table 1:  Profile by Function (limited entries shown)
 
@@ -182,7 +179,7 @@ predefined report types are:
 
 Example output:
     
-    auser@uan01:/work/t01/t01/auser> pat_report -O ca+src,load_balance  jacobi+pat+12265-1573s
+    auser@ln01:/work/t01/t01/auser> pat_report -O ca+src,load_balance  jacobi+pat+12265-1573s
 
     Table 1:  Profile by Function and Callers, with Line Numbers (limited entries shown)
 
@@ -226,7 +223,7 @@ We can produce a focused tracing experiment based on the results from
 the *sampling* experiment using `pat_build` with the `.apa` file
 produced during the sampling.
 
-    auser@uan01:/work/t01/t01/auser> pat_build -O jacobi+pat+12265-1573s/build-options.apa
+    auser@ln01:/work/t01/t01/auser> pat_build -O jacobi+pat+12265-1573s/build-options.apa
 
 This will produce a third binary with extension `+apa`. This binary
 should once again be run on the compute nodes and the name of the
@@ -234,7 +231,7 @@ executable changed to `jacobi+apa`. As with the sampling analysis, a
 report can be produced using `pat_report`. For example:
 
     
-    auser@uan01:/work/t01/t01/auser> pat_report jacobi+apa+13955-1573t
+    auser@ln01:/work/t01/t01/auser> pat_report jacobi+apa+13955-1573t
 
     Table 1:  Profile by Function Group and Function (limited entries shown)
 
@@ -269,14 +266,14 @@ requirements.
 The entire program can be traced as a whole using `-w`:
 
     
-    auser@uan01:/work/t01/t01/auser> pat_build -w jacobi
+    auser@ln01:/work/t01/t01/auser> pat_build -w jacobi
     
 
 Using `-g` a program can be instrumented to trace all function entry
 point references belonging to the trace function group tracegroup (mpi,
 libsci, lapack, scalapack, heap, etc):
 
-    auser@uan01:/work/t01/t01/auser> pat_build -w -g mpi jacobi
+    auser@ln01:/work/t01/t01/auser> pat_build -w -g mpi jacobi
 
 ### Dynamically-linked binaries
 
@@ -299,7 +296,7 @@ information for codes that cannot easily be rebuilt. To use `pat_run`:
 3.  Use `pat_report` to examine any data collected during the execution
     of your application.
 
-    `auser@uan01:/work/t01/t01/auser> pat_report jacobi+pat+12265-1573s`
+    `auser@ln01:/work/t01/t01/auser> pat_report jacobi+pat+12265-1573s`
 
 Some useful `pat_run` options are:
 
@@ -351,7 +348,7 @@ then open the experiment directory generated during the instrumentation
 phase with Apprentice2:
 
 
-    auser@uan01:/work/t01/t01/auser> app2 jacobi+pat+12265-1573s
+    auser@ln01:/work/t01/t01/auser> app2 jacobi+pat+12265-1573s
     
 
 ## Hardware Performance Counters
@@ -384,7 +381,7 @@ We provide examples of the use of these three commands below.
 To display the current memory use of a running job with the ID 123456:
 
 ```
-auser@uan01:/work/t01/t01/auser> sstat --format=JobID,AveCPU,AveRSS,MaxRSS,MaxRSSTask,AveVMSize,MaxVMSize -j 123456
+auser@ln01:/work/t01/t01/auser> sstat --format=JobID,AveCPU,AveRSS,MaxRSS,MaxRSSTask,AveVMSize,MaxVMSize -j 123456
 ```
 
 ### Example 2: `sacct` for finished jobs
@@ -392,13 +389,13 @@ auser@uan01:/work/t01/t01/auser> sstat --format=JobID,AveCPU,AveRSS,MaxRSS,MaxRS
 To display the memory use of a completed job with the ID 123456:
 
 ```
-auser@uan01:/work/t01/t01/auser> sacct --format=JobID,JobName,AveRSS,MaxRSS,MaxRSSTask,AveVMSize,MaxVMSize -j 123456
+auser@ln01:/work/t01/t01/auser> sacct --format=JobID,JobName,AveRSS,MaxRSS,MaxRSSTask,AveVMSize,MaxVMSize -j 123456
 ```    
 
 Another usage of `sacct` is to display when a job was submitted, started running and ended for a particular user:
 
 ```
-auser@uan01:/work/t01/t01/auser> sacct --format=JobID,Submit,Start,End -u auser
+auser@ln01:/work/t01/t01/auser> sacct --format=JobID,Submit,Start,End -u auser
 ```
 
 ### Example 3: `archer2jobload` for running jobs
@@ -411,7 +408,7 @@ of the CPU and memory use for a specific job. For example, to get the usage data
 123456, you would use:
 
 ```
-auser@uan01:~> archer2jobload 123456
+auser@ln01:~> archer2jobload 123456
 # JOB: 123456
 CPU_LOAD            MEMORY              ALLOCMEM            FREE_MEM            TMP_DISK            NODELIST            
 127.35-127.86       256000              239872              169686-208172       0                   nid[001481,001638-00
@@ -422,7 +419,7 @@ This shows the minimum CPU load on a compute node is 126.04 (close to the limit 
 If you add the `-l` option, you will see a breakdown per node:
 
 ```
-auser@uan01:~> archer2jobload -l 276236
+auser@ln01:~> archer2jobload -l 276236
 # JOB: 123456
 NODELIST            CPU_LOAD            MEMORY              ALLOCMEM            FREE_MEM            TMP_DISK            
 nid001481           127.86              256000              239872              169686              0                   
