@@ -1,10 +1,5 @@
 # Application development environment
 
-!!! important
-    This section covers the application development environment on the full
-    ARCHER2 system. For docmentation on the application development environment on the
-    initial, 4-cabinet ARCHER2 system, please see [Application development environment: 4-cabinet system](dev-environment-4cab.md).
-
 ## What's available
 
 ARCHER2 runs the HPE Cray Linux Environment (a version of SUSE Linux),

@@ -1,9 +1,4 @@
-# Software environment: full system
-
-!!! important
-    This section covers the software environment on the full
-    ARCHER2 system. For docmentation on the software environment on the
-    initial, 4-cabinet ARCHER2 system, please see [Software environment: 4-cabinet system](sw-environment-4cab.md).
+# Software environment
 
 The software environment on ARCHER2 is managed using the 
 [Lmod](https://lmod.readthedocs.io/) software. Selecting which software
