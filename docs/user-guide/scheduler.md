@@ -1536,10 +1536,10 @@ in your budget.
 Low priority access is always available and has the following limits:
 
 === "Full system"
-    - No maximum job size
+    - 1024 node maximum job size
     - Maximum 16 low priority jobs in the queue per user
-    - Maximum 16 low priority job running per user (of the 4 queued)
-    - Maximum runtime of 6 hours
+    - Maximum 16 low priority job running per user (of the 16 queued)
+    - Maximum runtime of 24 hours
 
 You submit a low priority job on ARCHER2 by using the `lowpriority` QoS. For example,
 you would usually have the following line in your job submission script sbatch 
