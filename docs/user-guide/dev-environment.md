@@ -311,7 +311,7 @@ Switch the the GCC compiler environment from the default CCE (cray)
 compiler environment via:
 
 ```
-auser@ln03:~> module swap PrgEnv-cray PrgEnv-gcc
+auser@ln03:~> module swap PrgEnv-cray PrgEnv-gnu
 
 Due to MODULEPATH changes, the following have been reloaded:
   1) cray-mpich/8.1.4
