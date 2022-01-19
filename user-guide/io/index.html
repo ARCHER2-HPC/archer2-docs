@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.6">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.7">
     
     
       
@@ -1765,7 +1765,7 @@ stripe_count:   1 stripe_size:    1048576 stripe_offset:  -1
 <li><code>[--stripe-count|-c]</code> to set the stripe count; 0 means use the
     system default (usually 1) and -1 means stripe over all available
     OSTs.</li>
-<li><code>[--stripe-size|-s]</code> to set the stripe size; 0 means use the system
+<li><code>[--stripe-size|-S]</code> to set the stripe size; 0 means use the system
     default (usually 1 MB) otherwise use k, m or g for KB, MB or GB
     respectively</li>
 <li><code>[--stripe-index|-i]</code> to set the OST index (starting at 0) on which
@@ -1775,7 +1775,7 @@ stripe_count:   1 stripe_size:    1048576 stripe_offset:  -1
 </ul>
 <p>For example, to set a stripe size of 4 MiB for the existing directory
 <code>resdir</code>, along with maximum striping count you would use:</p>
-<pre><code>auser@ln03:~&gt; lfs setstripe -s 4m -c -1 resdir/
+<pre><code>auser@ln03:~&gt; lfs setstripe -S 4m -c -1 resdir/
 </code></pre>
 <h3 id="recommended-archer2-io-settings">Recommended ARCHER2 I/O settings</h3>
 <p>As mentioned above, it is very important to use collective calls when
@@ -1941,7 +1941,7 @@ call MPI-IO at the lowest level.</p>
     <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.22074ed6.min.js"}</script>
     
     
-      <script src="../../assets/javascripts/bundle.1514a9a0.min.js"></script>
+      <script src="../../assets/javascripts/bundle.01de222e.min.js"></script>
       
     
   </body>
