@@ -1581,11 +1581,15 @@ consortium.</p>
 <ul>
 <li><a href="https://www.nemo-ocean.eu">NEMO home page</a></li>
 <li><a href="https://forge.ipsl.jussieu.fr/nemo/chrome/site/doc/NEMO/guide/html/guide.html">NEMO documentation</a></li>
-<li><a href="http://forge.ipsl.jussieu.fr/nemo/wiki/Users">NEMO users' area</a>, which includes information on obtaining and downloading the latest source code releases. </li>
+<li><a href="http://forge.ipsl.jussieu.fr/nemo/wiki/Users">NEMO users' area</a>, which includes information on obtaining and downloading the latest source code releases.</li>
 </ul>
 <p>NEMO is released under a CeCILL license and if freely available to all
 users on ARCHER2.</p>
 <h2 id="using-nemo-on-archer2">Using NEMO on ARCHER2</h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>These instructions are currently under review and untested on the full ARCHER2 system.</p>
+</div>
 <p>A central install of NEMO is not appropriate for most users of ARCHER2 since
 many configurations will want to add bespoke code changes. There is, however, a
 case for providing some central material specific to ARCHER2. This includes:
@@ -1633,12 +1637,12 @@ should not be necessary because the -I setting is already given and, according t
 the manual, directories given by -J are searched first followed by those given by
 -I. The slight difference in priority seems to matter though and parallel builds
 will fail with the Cray compilers unless the following change is made to:</p>
-<div class="highlight"><pre><span></span><code>NEMO/r4.0.X/ext/FCM/lib/Fcm/Config.pm   (NEMO4 source tree) 
+<div class="highlight"><pre><span></span><code>NEMO/r4.0.X/ext/FCM/lib/Fcm/Config.pm   (NEMO4 source tree)
 </code></pre></div>
 <p>and (if compiling xios, not everyone needs to do this, see next section)</p>
 <div class="highlight"><pre><span></span><code>xios-2.5/tools/FCM/lib/Fcm/Config.pm   (may need to run make_xios once to unpack this)
 </code></pre></div>
-<p>In both cases change: </p>
+<p>In both cases change:</p>
 <div class="highlight"><pre><span></span><code>FC_MODSEARCH =&gt; &#39;&#39;,             # FC flag, specify &quot;module&quot; path
 to
 FC_MODSEARCH =&gt; &#39;-J&#39;,           # FC flag, specify &quot;module&quot; path
@@ -1663,7 +1667,7 @@ to guard against any possible issues with future updates.</p>
 once the:
 <div class="highlight"><pre><span></span><code>/work/n01/shared/acc/arch-X86_ARCHER2-Cray.fcm
 </code></pre></div>
-file has been dropped into the NEMO arch directory. Note this arch file 
+file has been dropped into the NEMO arch directory. Note this arch file
 currently sets compiler flags of:
 <div class="highlight"><pre><span></span><code>-em -s integer32 -s real64 -O1 -hflex_mp=intolerant
 </code></pre></div></p>
@@ -1678,7 +1682,7 @@ have to manually add this file.</p>
 <p>The following 5 sections describe an evolving approach to running NEMO
 on ARCHER2 that culminated in the recommended method described in the last
 section: <a href="#running-heterogeneous-jobs">Running heterogeneous jobs</a>. If you
-are not interested in the details of how this solution was reached, skip 
+are not interested in the details of how this solution was reached, skip
 straight to that <a href="#running-heterogeneous-jobs">final section</a>.</p>
 </div>
 <p>Most NEMO applications will want to run in detached mode with separate XIOS
@@ -1688,7 +1692,7 @@ versatile since executables can be mixed on a node.  Generally, xios_servers
 will need to be more lightly packed than NEMO cores because:</p>
 <ul>
 <li>xios servers have less consistent memory requirements than the ocean cores</li>
-<li>They generally require more memory and their needs can spike depending on 
+<li>They generally require more memory and their needs can spike depending on
    output interval or experimental needs</li>
 <li>There are far fewer of them than ocean cores so a pragmatic solution might be to
    assign each xios_server an entire NUMA region of its own</li>
@@ -1696,16 +1700,16 @@ will need to be more lightly packed than NEMO cores because:</p>
 <li>Very large models may require xios_servers to occupy more than one NUMA (TBD)</li>
 </ul>
 <p>All this can be achieved using the:
-<div class="highlight"><pre><span></span><code> –cpu-bind=map_cpu:&lt;cpu map&gt; 
+<div class="highlight"><pre><span></span><code> –cpu-bind=map_cpu:&lt;cpu map&gt;
 </code></pre></div>
-option to srun but it is tedious to construct cpu maps by hand. 
+option to srun but it is tedious to construct cpu maps by hand.
 The:
-<div class="highlight"><pre><span></span><code>/work/n01/shared/acc/mkslurm 
+<div class="highlight"><pre><span></span><code>/work/n01/shared/acc/mkslurm
 </code></pre></div>
 script will construct a basic run script using supplied packing arguments.</p>
 <h2 id="the-mkslurm-script">The mkslurm script</h2>
-<p><div class="highlight"><pre><span></span><code>usage: mkslurm [-S num_servers] [-s server_spacing] [-m max_servers_per_node] 
-               [-C num_clients] [-c client_spacing] 
+<p><div class="highlight"><pre><span></span><code>usage: mkslurm [-S num_servers] [-s server_spacing] [-m max_servers_per_node]
+               [-C num_clients] [-c client_spacing]
                [-t time_limit] [-a account] [-j job_name]
 </code></pre></div>
 It is recommended to take your own copy and set defaults for most of these arguments</p>
@@ -1775,8 +1779,8 @@ core spacing argument (-c) for the ocean cores is replaced by a -g option
 representing the frequency of a gap in the, otherwise tightly-packed, ocean
 cores. A -v option has also been introduced to provide a human-readable
 indication of the core usage. I.e.:</p>
-<div class="highlight"><pre><span></span><code>usage:  mkslurm_alt [-S num_servers] [-s server_spacing] [-m max_servers_per_node] 
-                    [-C num_clients] [-g client_gap_interval] [-t time_limit] 
+<div class="highlight"><pre><span></span><code>usage:  mkslurm_alt [-S num_servers] [-s server_spacing] [-m max_servers_per_node]
+                    [-C num_clients] [-g client_gap_interval] [-t time_limit]
                     [-a account] [-j job_name] [-v]
 </code></pre></div>
 <p><img alt="Screenshot" src="../gap_options.png" /></p>
@@ -1793,7 +1797,7 @@ with which to try different packing strategies.</p>
 <p>Is it possible to match or better this elapsed time on a single node including
 external I/O servers?  -Yes!  -but not with an obvious gap frequency:</p>
 <p><img alt="Screenshot" src="../alt_packing_tests.png" /></p>
-<p>And activating land suppression can reduce times further: </p>
+<p>And activating land suppression can reduce times further:</p>
 <p><img alt="Screenshot" src="../land_suppression_tests.png" /></p>
 <p>The optimal two-node solution is also shown (this is quicker but the one node
 solution is cheaper).</p>
