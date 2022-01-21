@@ -54,7 +54,7 @@ Then load the ParaView module and start pvserver with the srun command,
 
 ```
 auser@nid001023:/work/t01/t01/auser> module load paraview
-auser@nid001023:/work/t01/t01/auser> srun -n 4 pvserver --mpi --force-offscreen-rendering
+auser@nid001023:/work/t01/t01/auser> srun --oversubscribe -n 4 pvserver --mpi --force-offscreen-rendering
 Waiting for client...
 Connection URL: cs://nid001023:11111
 Accepting connection(s): nid001023:11111
