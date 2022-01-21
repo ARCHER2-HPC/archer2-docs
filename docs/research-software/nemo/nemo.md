@@ -9,12 +9,16 @@ consortium.
 
   - [NEMO home page](https://www.nemo-ocean.eu)
   - [NEMO documentation](https://forge.ipsl.jussieu.fr/nemo/chrome/site/doc/NEMO/guide/html/guide.html)
-  - [NEMO users' area](http://forge.ipsl.jussieu.fr/nemo/wiki/Users), which includes information on obtaining and downloading the latest source code releases. 
+  - [NEMO users' area](http://forge.ipsl.jussieu.fr/nemo/wiki/Users), which includes information on obtaining and downloading the latest source code releases.
 
 NEMO is released under a CeCILL license and if freely available to all
 users on ARCHER2.
 
 ## Using NEMO on ARCHER2
+
+!!! warning
+    These instructions are currently under review and untested on the full ARCHER2 system.
+
 
 A central install of NEMO is not appropriate for most users of ARCHER2 since
 many configurations will want to add bespoke code changes. There is, however, a
@@ -28,7 +32,7 @@ Earth System Models with NEMO as just one component of a fully interacting,
 OASIS-coupled, suite is best dealt with by more comprehensive workflow
 management systems such as the Rose and Cylc set-up used by NCAS.
 
-## Setting up the correct environment 
+## Setting up the correct environment
 
 The first point of note is that NEMO will not operate successfully in the
 default environment on ARCHER2. To be precise, this statement is true for any
@@ -58,7 +62,7 @@ module -s restore /work/n01/shared/acc/n01_modules/ucx_env
 If your NEMO tasks are failing at start-up (or possibly hanging) then the
 chances are you are attempting to use the wrong mpich library. Note
 all investigations to date have focussed on using the Cray compilers.
- 
+
 ## Enabling FCM to compile in parallel with Cray compilers
 
 FCM is bundled with both NEMO and XIOS and is used by makenemo and make_xios
@@ -72,7 +76,7 @@ the manual, directories given by -J are searched first followed by those given b
 will fail with the Cray compilers unless the following change is made to:
 
 ```
-NEMO/r4.0.X/ext/FCM/lib/Fcm/Config.pm 	(NEMO4 source tree) 
+NEMO/r4.0.X/ext/FCM/lib/Fcm/Config.pm 	(NEMO4 source tree)
 ```
 
 and (if compiling xios, not everyone needs to do this, see next section)
@@ -81,7 +85,7 @@ and (if compiling xios, not everyone needs to do this, see next section)
 xios-2.5/tools/FCM/lib/Fcm/Config.pm   (may need to run make_xios once to unpack this)
 ```
 
-In both cases change: 
+In both cases change:
 
 ```
 FC_MODSEARCH => '',             # FC flag, specify "module" path
@@ -118,7 +122,7 @@ once the:
 ```
 /work/n01/shared/acc/arch-X86_ARCHER2-Cray.fcm
 ```
-file has been dropped into the NEMO arch directory. Note this arch file 
+file has been dropped into the NEMO arch directory. Note this arch file
 currently sets compiler flags of:
 ```
 -em -s integer32 -s real64 -O1 -hflex_mp=intolerant
@@ -136,7 +140,7 @@ have to manually add this file.
     The following 5 sections describe an evolving approach to running NEMO
     on ARCHER2 that culminated in the recommended method described in the last
     section: [Running heterogeneous jobs](#running-heterogeneous-jobs). If you
-    are not interested in the details of how this solution was reached, skip 
+    are not interested in the details of how this solution was reached, skip
     straight to that [final section](#running-heterogeneous-jobs).
 
 Most NEMO applications will want to run in detached mode with separate XIOS
@@ -146,7 +150,7 @@ versatile since executables can be mixed on a node.  Generally, xios_servers
 will need to be more lightly packed than NEMO cores because:
 
  - xios servers have less consistent memory requirements than the ocean cores
- - They generally require more memory and their needs can spike depending on 
+ - They generally require more memory and their needs can spike depending on
    output interval or experimental needs
  - There are far fewer of them than ocean cores so a pragmatic solution might be to
    assign each xios_server an entire NUMA region of its own
@@ -155,20 +159,20 @@ will need to be more lightly packed than NEMO cores because:
 
 All this can be achieved using the:
 ```
- –cpu-bind=map_cpu:<cpu map> 
+ –cpu-bind=map_cpu:<cpu map>
 ```
-option to srun but it is tedious to construct cpu maps by hand. 
+option to srun but it is tedious to construct cpu maps by hand.
 The:
 ```
-/work/n01/shared/acc/mkslurm 
+/work/n01/shared/acc/mkslurm
 ```
 script will construct a basic run script using supplied packing arguments.
 
 ## The mkslurm script
 
 ```
-usage: mkslurm [-S num_servers] [-s server_spacing] [-m max_servers_per_node] 
-               [-C num_clients] [-c client_spacing] 
+usage: mkslurm [-S num_servers] [-s server_spacing] [-m max_servers_per_node]
+               [-C num_clients] [-c client_spacing]
                [-t time_limit] [-a account] [-j job_name]
 ```
 It is recommended to take your own copy and set defaults for most of these arguments
@@ -178,7 +182,7 @@ sole occupancy of a 16-core NUMA region and 96 ocean cores, spaced with an idle
 core in between each, use:
 ```
 ./mkslurm -S 4 -s 16 -m 2 -C 96 -c 2 > myscript.slurm
-``` 
+```
 This will report (to stderr) that 2 nodes are needed with 100 active cores
 spread over 256 cores. It will also echo the equivalent full command (to stderr)
 to show the defaults used for those arguments not given, i.e.:
@@ -254,8 +258,8 @@ cores. A -v option has also been introduced to provide a human-readable
 indication of the core usage. I.e.:
 
 ```
-usage:  mkslurm_alt [-S num_servers] [-s server_spacing] [-m max_servers_per_node] 
-                    [-C num_clients] [-g client_gap_interval] [-t time_limit] 
+usage:  mkslurm_alt [-S num_servers] [-s server_spacing] [-m max_servers_per_node]
+                    [-C num_clients] [-g client_gap_interval] [-t time_limit]
                     [-a account] [-j job_name] [-v]
 ```
 
@@ -281,7 +285,7 @@ external I/O servers?  -Yes!  -but not with an obvious gap frequency:
 
 ![Screenshot](./alt_packing_tests.png)
 
-And activating land suppression can reduce times further: 
+And activating land suppression can reduce times further:
 
 ![Screenshot](./land_suppression_tests.png)
 
