@@ -43,7 +43,7 @@ srun --nodes=1 --exclusive --time=00:20:00 \
                --pty /bin/bash
 ```
 
-Once the job starts the commannd prompt will change to show you are now
+Once the job starts the command prompt will change to show you are now
 on the compute node e.g.
 
 ```
