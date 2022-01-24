@@ -41,6 +41,11 @@ This is the documentation for the ARCHER2 service and includes:
     required to use ARCHER2 efficiently: *e.g.* using Linux command
     line, accessing help and documentation.
 
+  - [ARCHER2 and publications](publish/index.md)
+    This section describes how to acknowledge the use of ARCHER2 in
+    your published work and how to use the ARCHER2 publications 
+    database.
+
 ## Contributing to the documentation
 
 The source for this documentation is publicly available in the [ARCHER2
