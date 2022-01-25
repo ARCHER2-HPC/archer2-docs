@@ -14,125 +14,22 @@ consortium.
 NEMO is released under a CeCILL license and if freely available to all
 users on ARCHER2.
 
+
+## Compiling NEMO
+
+A central install of NEMO is not appropriate for most users of ARCHER2 since
+many configurations will want to add bespoke code changes.
+
+The latest instructions for building NEMO on ARCHER2 may be found in the Github repository of build instructions:
+
+- [Build instructions for NEMO on
+  GitHub](https://github.com/hpc-uk/build-instructions/tree/main/apps/NEMO)
+
+
 ## Using NEMO on ARCHER2
 
 !!! warning
     These instructions are currently under review and untested on the full ARCHER2 system.
-
-
-A central install of NEMO is not appropriate for most users of ARCHER2 since
-many configurations will want to add bespoke code changes. There is, however, a
-case for providing some central material specific to ARCHER2. This includes:
-arch files for compiling on ARCHER2; a pre-compiled version of XIOS and guides
-for running NEMO on ARCHER2. The guides provided here address the running of
-NEMO as a stand-alone ocean model (albeit with optional sea-ice and external
-XIOS i/o servers ) and provide links to some of the material held in the shared
-workspace of the n01 (oceans and shelf seas) consortium. The running of full
-Earth System Models with NEMO as just one component of a fully interacting,
-OASIS-coupled, suite is best dealt with by more comprehensive workflow
-management systems such as the Rose and Cylc set-up used by NCAS.
-
-## Setting up the correct environment
-
-The first point of note is that NEMO will not operate successfully in the
-default environment on ARCHER2. To be precise, this statement is true for any
-attempts to run NEMO as part of a MPMD task with external XIOS servers. In
-attached mode, where no external servers are used and every ocean process acts
-as an io server, then the default environment can be used to launch NEMO as a
-SPMD task. Since attached mode is not performant at high core counts it is
-advisable to standardise on on environment which is suitable for all NEMO
-applications. This is currently:
-
- - Either (starting from the default environment):
-
-```
-module unload cray-mpich
-module load craype-network-ucx
-module load cray-mpich-ucx
-module load libfabric
-module load cray-hdf5-parallel
-module load cray-netcdf-hdf5parallel
-module load gcc
-```
-- Or, equivalently:
-```
-module -s restore /work/n01/shared/acc/n01_modules/ucx_env
-```
-
-If your NEMO tasks are failing at start-up (or possibly hanging) then the
-chances are you are attempting to use the wrong mpich library. Note
-all investigations to date have focussed on using the Cray compilers.
-
-## Enabling FCM to compile in parallel with Cray compilers
-
-FCM is bundled with both NEMO and XIOS and is used by makenemo and make_xios
-scripts These scripts accept –j N/-jobs N arguments for parallel builds but the
-Cray compilers trip up attempting to load modules which have only just been
-built. It seems to be a timing issue because if the -J option is added to inform
-the compiler where to look for modules the problem disappears. The -J option
-should not be necessary because the -I setting is already given and, according to
-the manual, directories given by -J are searched first followed by those given by
--I. The slight difference in priority seems to matter though and parallel builds
-will fail with the Cray compilers unless the following change is made to:
-
-```
-NEMO/r4.0.X/ext/FCM/lib/Fcm/Config.pm 	(NEMO4 source tree)
-```
-
-and (if compiling xios, not everyone needs to do this, see next section)
-
-```
-xios-2.5/tools/FCM/lib/Fcm/Config.pm   (may need to run make_xios once to unpack this)
-```
-
-In both cases change:
-
-```
-FC_MODSEARCH => '',             # FC flag, specify "module" path
-to
-FC_MODSEARCH => '-J',           # FC flag, specify "module" path
-```
-
-## Compiling XIOS and NEMO
-
-It is not necessary for everyone to compile XIOS. A compiled version is available in:
-```
-/work/n01/shared/acc/xios-2.5
-```
-This was compiled with:
-```
-./make_xios --prod --arch X86_ARCHER2-Cray --netcdf_lib netcdf4_par --job 16 --full
-```
-using the:
-```
-/work/n01/shared/acc/xios-2.5/arch/arch-X86_ARCHER2-Cray.[env,fcm,path] settings
-```
-
-The NEMO arch file suggested at the next step will link nemo with the xios libraries
-contained therein and copies of the xios_server.exe executable can be taken from
-the xios-2.5/bin directory. It is recommended to take copies of this executable
-to guard against any possible issues with future updates.
-
-NEMO can be compiled with (for example):
-
-```
-./makenemo -n ORCA2_ICE_PISCES_ST -r ORCA2_ICE_PISCES  -m X86_ARCHER2-Cray -j 16
-```
-once the:
-```
-/work/n01/shared/acc/arch-X86_ARCHER2-Cray.fcm
-```
-file has been dropped into the NEMO arch directory. Note this arch file
-currently sets compiler flags of:
-```
--em -s integer32 -s real64 -O1 -hflex_mp=intolerant
-```
-
-Small gains at higher optimisation levels are offset by much longer compile
-times and an inability to attain restartability and reproducibility passes in
-some of the standard SETTE tests. Future releases of NEMO (post r4.0.4) will
-contain this arch file for ARCHER2. Users of versions 4.0.4 and earlier will
-have to manually add this file.
 
 ## Building a run script
 
