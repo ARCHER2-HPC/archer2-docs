@@ -222,44 +222,42 @@ Current MacOS systems do not have an X window system. Users should install the X
 
 ## Host Keys
 
-A host key adds an extra security layer for users over SSH. Using one enables users to log in to ARCHER2 if the login node has the same corresponding host key. 
+Adding the host keys to your SSH configuration file provides an extra level of security for your connections to ARCHER2. The host keys are checked against the login nodes when you login to ARCHER2 and if the remote server key does not match the one in the configuration file, the connection will be refused. This provides protection against potential malicious servers masquerading as the ARCHER2 login nodes.
 
-ARCHER2 systems may occasionally update the host keys  - check here to confirm the current fingerprints.
+### login1.archer2.ac.uk:22 SSH-2.0-OpenSSH_7.9
 
-
-The host key can be found in the entries in `~/.ssh/known_hosts`, as given in the examples below: 
-
-login1.archer2.ac.uk:22 SSH-2.0-OpenSSH_7.9
-
-    login1.archer2.ac.uk ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEnMeFf1TPZ4pbupWeD4IeahEeeqJMAhrCv1znyQGAL45yOIArVltscW8GNhzfaWk5vKb9sIAm2mJZPc3b7te3c=
-
-    login1.archer2.ac.uk ssh-rsa      AAAAB3NzaC1yc2EAAAADAQABAAABAQCZKpFN25u13uSTOun8jOKEO+4Y/98DW9/8dxoGYOf8Q7qZEyQUGk5QUuJCiB7ZzCOJ01Lxl+ghYpQ13oiebZWkTWUdypSCBH5f4/y5z+f87fDqOjkHKhpYb90RlpbP+Ik+6IapQOTYKGBPFfwkbp2LYh3ktV7ocpKVCNst0k5IELNufNBgsGNFYNyRYIR6hHoH2kUqDvrN8IXf8085vKbKdMQPdAtIEX7sOX+UNUpR/46zcAyn8VRn/CGA5WA39nKKOiPzJn8pFtKDUmme/DA9/Y+Z/jJS55coHxV81Qws5WYmg7bzgVDkZJvtzQ6haJAOhsWNYzNtrEwNNDCc610z
-
-    login1.archer2.ac.uk ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII/OY5bYUBnnLr0B7keiT97WtzSGtTsTexpgmxkdCI+b
-
- 
-
-login3.archer2.ac.uk:22 SSH-2.0-OpenSSH_7.9
-
-    login3.archer2.ac.uk ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCZKpFN25u13uSTOun8jOKEO+4Y/98DW9/8dxoGYOf8Q7qZEyQUGk5QUuJCiB7ZzCOJ01Lxl+ghYpQ13oiebZWkTWUdypSCBH5f4/y5z+f87fDqOjkHKhpYb90RlpbP+Ik+6IapQOTYKGBPFfwkbp2LYh3ktV7ocpKVCNst0k5IELNufNBgsGNFYNyRYIR6hHoH2kUqDvrN8IXf8085vKbKdMQPdAtIEX7sOX+UNUpR/46zcAyn8VRn/CGA5WA39nKKOiPzJn8pFtKDUmme/DA9/Y+Z/jJS55coHxV81Qws5WYmg7bzgVDkZJvtzQ6haJAOhsWNYzNtrEwNNDCc610z
-
-    login3.archer2.ac.uk ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEnMeFf1TPZ4pbupWeD4IeahEeeqJMAhrCv1znyQGAL45yOIArVltscW8GNhzfaWk5vKb9sIAm2mJZPc3b7te3c=
-
-    login3.archer2.ac.uk ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII/OY5bYUBnnLr0B7keiT97WtzSGtTsTexpgmxkdCI+b
-
-
-
-login4.archer2.ac.uk:22 SSH-2.0-OpenSSH_7.9
-
-    login4.archer2.ac.uk ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEnMeFf1TPZ4pbupWeD4IeahEeeqJMAhrCv1znyQGAL45yOIArVltscW8GNhzfaWk5vKb9sIAm2mJZPc3b7te3c=
-
-    login4.archer2.ac.uk ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCZKpFN25u13uSTOun8jOKEO+4Y/98DW9/8dxoGYOf8Q7qZEyQUGk5QUuJCiB7ZzCOJ01Lxl+ghYpQ13oiebZWkTWUdypSCBH5f4/y5z+f87fDqOjkHKhpYb90RlpbP+Ik+6IapQOTYKGBPFfwkbp2LYh3ktV7ocpKVCNst0k5IELNufNBgsGNFYNyRYIR6hHoH2kUqDvrN8IXf8085vKbKdMQPdAtIEX7sOX+UNUpR/46zcAyn8VRn/CGA5WA39nKKOiPzJn8pFtKDUmme/DA9/Y+Z/jJS55coHxV81Qws5WYmg7bzgVDkZJvtzQ6haJAOhsWNYzNtrEwNNDCc610z
-
-    login4.archer2.ac.uk ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII/OY5bYUBnnLr0B7keiT97WtzSGtTsTexpgmxkdCI+b
- 
+```
+login1.archer2.ac.uk ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEnMeFf1TPZ4pbupWeD4IeahEeeqJMAhrCv1znyQGAL45yOIArVltscW8GNhzfaWk5vKb9sIAm2mJZPc3b7te3c=
     
+login1.archer2.ac.uk ssh-rsa  AAAAB3NzaC1yc2EAAAADAQABAAABAQCZKpFN25u13uSTOun8jOKEO+4Y/98DW9/8dxoGYOf8Q7qZEyQUGk5QUuJCiB7ZzCOJ01Lxl+ghYpQ13oiebZWkTWUdypSCBH5f4/y5z+f87fDqOjkHKhpYb90RlpbP+Ik+6IapQOTYKGBPFfwkbp2LYh3ktV7ocpKVCNst0k5IELNufNBgsGNFYNyRYIR6hHoH2kUqDvrN8IXf8085vKbKdMQPdAtIEX7sOX+UNUpR/46zcAyn8VRn/CGA5WA39nKKOiPzJn8pFtKDUmme/DA9/Y+Z/jJS55coHxV81Qws5WYmg7bzgVDkZJvtzQ6haJAOhsWNYzNtrEwNNDCc610z
+    
+login1.archer2.ac.uk ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII/OY5bYUBnnLr0B7keiT97WtzSGtTsTexpgmxkdCI+b
+```
+ 
 
-Host key verification can fail if this key is out of date, a problem which can be fixed by removing the offending entry in `~/.ssh/known_hosts`.
+### login3.archer2.ac.uk:22 SSH-2.0-OpenSSH_7.9
+
+```
+login3.archer2.ac.uk ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCZKpFN25u13uSTOun8jOKEO+4Y/98DW9/8dxoGYOf8Q7qZEyQUGk5QUuJCiB7ZzCOJ01Lxl+ghYpQ13oiebZWkTWUdypSCBH5f4/y5z+f87fDqOjkHKhpYb90RlpbP+Ik+6IapQOTYKGBPFfwkbp2LYh3ktV7ocpKVCNst0k5IELNufNBgsGNFYNyRYIR6hHoH2kUqDvrN8IXf8085vKbKdMQPdAtIEX7sOX+UNUpR/46zcAyn8VRn/CGA5WA39nKKOiPzJn8pFtKDUmme/DA9/Y+Z/jJS55coHxV81Qws5WYmg7bzgVDkZJvtzQ6haJAOhsWNYzNtrEwNNDCc610z
+
+login3.archer2.ac.uk ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEnMeFf1TPZ4pbupWeD4IeahEeeqJMAhrCv1znyQGAL45yOIArVltscW8GNhzfaWk5vKb9sIAm2mJZPc3b7te3c=
+
+login3.archer2.ac.uk ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII/OY5bYUBnnLr0B7keiT97WtzSGtTsTexpgmxkdCI+b
+```
+
+
+### login4.archer2.ac.uk:22 SSH-2.0-OpenSSH_7.9
+
+```
+login4.archer2.ac.uk ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEnMeFf1TPZ4pbupWeD4IeahEeeqJMAhrCv1znyQGAL45yOIArVltscW8GNhzfaWk5vKb9sIAm2mJZPc3b7te3c=
+
+login4.archer2.ac.uk ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCZKpFN25u13uSTOun8jOKEO+4Y/98DW9/8dxoGYOf8Q7qZEyQUGk5QUuJCiB7ZzCOJ01Lxl+ghYpQ13oiebZWkTWUdypSCBH5f4/y5z+f87fDqOjkHKhpYb90RlpbP+Ik+6IapQOTYKGBPFfwkbp2LYh3ktV7ocpKVCNst0k5IELNufNBgsGNFYNyRYIR6hHoH2kUqDvrN8IXf8085vKbKdMQPdAtIEX7sOX+UNUpR/46zcAyn8VRn/CGA5WA39nKKOiPzJn8pFtKDUmme/DA9/Y+Z/jJS55coHxV81Qws5WYmg7bzgVDkZJvtzQ6haJAOhsWNYzNtrEwNNDCc610z
+
+login4.archer2.ac.uk ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII/OY5bYUBnnLr0B7keiT97WtzSGtTsTexpgmxkdCI+b
+ 
+```    
+
+Host key verification can fail if this key is out of date, a problem which can be fixed by removing the offending entry in `~/.ssh/known_hosts` and replacing it with the new key published here.  We recommend users should check this page for any key updates and not just accept a new key from the server without confirmation.
 
 ## Making access more convenient using the SSH configuration file
 
