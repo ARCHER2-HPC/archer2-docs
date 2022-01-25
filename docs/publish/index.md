@@ -17,7 +17,7 @@ You should also tag outputs with the keyword "ARCHER2" whenever possible.
 
 The ARCHER2 service maintains a publication database of works that have arisen from ARCHER2 and
 links them to project IDs that have ARCHER2 access. We ask all users of ARCHER2 to register any
-publications in the database - all you need to do this is your publication's DOI.
+publications in the database - all you need is your publication's DOI.
 
 Registering your publications in SAFE has a number of advantages:
 
