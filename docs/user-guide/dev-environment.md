@@ -578,7 +578,7 @@ first choice for access to software libraries if available.
 
 !!! important
     See the section below on using non-default versions of HPE Cray libraries
-    below as this process will generally need to be followed when using software
+    as this process will generally need to be followed when using software
     from non-default PE installs.
 
 Access to non-default PE environments is controlled by the use of the `cpe` modules.
@@ -659,6 +659,10 @@ ARCHER2 currently has the following HPE Cray Programming Environment releases av
 
 - **21.04: Current default**
 - 21.09: available via `cpe/21.09` module
+
+You can find information, notes, and lists of changes for current and upcoming ARCHER2 
+HPE Cray programming environments in the HPE Cray Programming Environment GitHub
+repository found [here](https://github.com/PE-Cray).
 
 ## Using non-default versions of HPE Cray libraries on ARCHER2
 
