@@ -1,29 +1,26 @@
 # Profiling
 
 There are a number of different ways to access profiling data on 
-ARCHER2. In this section we discuss the HPE Cray profiling tools:
-CrayPAT-lite and CrayPAT, as well as discuss how to get usage data
-on currently running jobs from Slurm itself.
-
-!!! warning
-    See [current known issues.](../known-issues/index.md)
+ARCHER2. In this section, we discuss the HPE Cray profiling tools,
+CrayPAT-lite and CrayPAT. We also show how to get usage data
+on currently running jobs from Slurm batch system.
 
 ## CrayPat-lite
 
 CrayPat-lite is a simplified and easy-to-use version of the Cray
-Performance Measurement and Analysis Tool (CrayPat) set. CrayPat-lite
+Performance Measurement and Analysis Tool (CrayPat). CrayPat-lite
 provides basic performance analysis information automatically, with a
 minimum of user interaction, and yet offers information useful to users
 wishing to explore a program's behaviour further using the full CrayPat
-tool set.
+suite.
 
 ### How to use CrayPat-lite
 
-1.  Ensure the `perftools-base` module is loaded
+1.  Ensure the `perftools-base` module is loaded.
 
     `auser@ln01:/work/t01/t01/auser> module list`
 
-2.  Load the `perftools-lite` module
+2.  Load the `perftools-lite` module.
 
     `auser@ln01:/work/t01/t01/auser> module load perftools-lite`
 
@@ -55,20 +52,18 @@ tool set.
     srun --hint=nomultithread --distribution=block:block mpi_test.x
     ```
 
-5.  Analyse the data
+5.  Analyse the data.
 
     After the job finishes executing, CrayPat-lite output should be printed
-    to stdout (i.e. at the end of the job's output file generated). A new
-    directory will also be created in the directory the run occurred in with
-    `.rpt` and `.ap2` files. The `.rpt` files are text files that contain
-    the same information printed in the job's output file and the `.ap2` files
-    can be used to obtain more detailed information and can also be visualized
-    with the Cray Apprentice2 tool (for information on using this, please
-    take a look at [Cray Apprentice2](#cray-apprentice2)).
+    to stdout (i.e. at the end of the job's output file). A new directory will
+    also be created containing `.rpt` and `.ap2` files. The `.rpt` files are text
+    files that contain the same information printed in the job's output file and
+    the `.ap2` files can be used to obtain more detailed information, which can be
+    visualized using the [Cray Apprentice2 tool](#cray-apprentice2).
 
 ### Further help
 
-  - [CrayPat-lite User Guide](https://pubs.cray.com/bundle/Cray_Performance_Measurement_and_Analysis_Tools_Installation_Guide_632_S-2474/page/Use_CrayPat_CrayPat-lite_Apprentice2_or_Reveal.html)
+  - [CrayPat-lite User Guide](https://support.hpe.com/hpesc/public/docDisplay?docId=a00114942en_us&page=index.html)
 
 ## CrayPat
 
@@ -77,10 +72,10 @@ analysing a parallel application’s performance on Cray supercomputers.
 It can provide very detailed information about the timing and performance
 of individual application procedures.
 
-CrayPat can perform two types of performance analysis: *sampling*
+CrayPat can perform two types of performance analysis, *sampling*
 experiments and *tracing* experiments. A sampling experiment probes the
-code at a predefined interval and produces a report based on these
-statistics. A tracing experiment explicitly monitors the code
+code at a predefined interval and produces a report based on the data
+collected. A tracing experiment explicitly monitors the code
 performance within named routines. Typically, the overhead associated
 with a tracing experiment is higher than that associated with a sampling
 experiment but provides much more detailed information. The key to
@@ -89,18 +84,18 @@ profiling for a representative length of time.
 
 ### Sampling analysis
 
-1.  Ensure the `perftools-base` module is loaded
+1.  Ensure the `perftools-base` module is loaded.
 
     `module list`
 
-2.  Load `perftools` module
+2.  Load `perftools` module.
 
     `module load perftools`
 
 3.  Compile your code in the standard way always using the Cray compiler
     wrappers (ftn, cc and CC). Object files need to be made available to
     CrayPat to correctly build an instrumented executable for profiling
-    or tracing, this means that compile and link stage should be
+    or tracing, this means that the compile and link stage should be
     separated by using the `-c` compile flag.
 
     ```
@@ -109,23 +104,23 @@ profiling for a representative length of time.
     ```
 
 4.  To instrument the binary, run the `pat_build` command. This will 
-    generate a new binary with `+pat` appended to the end (e.g. `jacobi+pat`)
+    generate a new binary with `+pat` appended to the end (e.g. `jacobi+pat`).
 
     `auser@ln:/work/t01/t01/auser> pat_build jacobi`
 
 5.  Run the new executable with `+pat` appended as you would with the
     regular executable. Each run will produce its own 'experiment
-    directory' directory containing the performance data as `.xf` files
+    directory' containing the performance data as `.xf` files
     inside a subdirectory called `xf-files` (e.g. running the 
     `jacobi+pat` instrumented executable might produce
     `jacobi+pat+12265-1573s/xf-files`).
 6.  Generate report data with `pat_report`.
 
-These `.xf` files contain the raw sampling data from the run and need to
+The `.xf` files contain the raw sampling data from the run and need to
 be post-processed to produce useful results. This is done using the
 `pat_report` tool which converts all the raw data into a summarised and
 readable form. You should provide the name of the experiment directory as
-the argument:
+the argument to `pat_report`.
 
     auser@ln:/work/t01/t01/auser> pat_report jacobi+pat+12265-1573s
 
@@ -152,20 +147,18 @@ the argument:
     |==================================================
 
 This report will generate more files with the extension `.ap2` in the
-experiment directory. These hold the same data as the `.xf` file but
+experiment directory. These hold the same data as the `.xf` files but
 in the post-processed form. Another file produced has an `.apa` extension
 and is a text file with a suggested configuration for generating a
 traced experiment. 
 
 The `.ap2` files generated are used to view performance
-data graphically with the Cray Apprentice2 tool (for information on using
-this, please take a look at [Cray Apprentice2](#cray-apprentice2)), and
-the latter is used for more detailed tracing experiments.
+data graphically with the [Cray Apprentice2 tool](#cray-apprentice2).
 
 The `pat_report` command is able to produce many different profile
 reports from the profiling data. You can select a predefined report with
 the `-O` flag to `pat_report`. A selection of the most generally useful
-predefined report types are:
+predefined report types are:= listed below.
 
   - **ca+src** - Show the callers (bottom-up view) leading to the
     routines that have a high use in the report and include source code
@@ -269,9 +262,9 @@ The entire program can be traced as a whole using `-w`:
     auser@ln01:/work/t01/t01/auser> pat_build -w jacobi
     
 
-Using `-g` a program can be instrumented to trace all function entry
-point references belonging to the trace function group tracegroup (mpi,
-libsci, lapack, scalapack, heap, etc):
+Using `-g`, a program can be instrumented to trace all function entry
+point references belonging to the trace function group (mpi, libsci,
+lapack, scalapack, heap, etc):
 
     auser@ln01:/work/t01/t01/auser> pat_build -w -g mpi jacobi
 
@@ -281,15 +274,13 @@ CrayPat allows you to profile un-instrumented, dynamically linked
 binaries with the `pat_run` utility. `pat_run` delivers profiling
 information for codes that cannot easily be rebuilt. To use `pat_run`:
 
-1.  Load the `perftools-base` module if it is not already loaded
+1.  Load the `perftools-base` module if it is not already loaded.
 
-    
     `module load perftools-base`
     
 
 2.  Run your application normally including the `pat_run` command right
-    after your `srun`
-    options
+    after your `srun` options.
 
     `srun [srun-options] pat_run [pat_run-options] program [program-options]`
 
@@ -298,7 +289,7 @@ information for codes that cannot easily be rebuilt. To use `pat_run`:
 
     `auser@ln01:/work/t01/t01/auser> pat_report jacobi+pat+12265-1573s`
 
-Some useful `pat_run` options are:
+Some useful `pat_run` options are as follows.
 
   - `-w`  Collect data by tracing.
   - `-g`  Trace functions belonging to group names. See the -g option in
@@ -307,16 +298,15 @@ Some useful `pat_run` options are:
 
 ### Further help
 
-  - [CrayPat User Guide](https://pubs.cray.com/content/S-2376/7.0.0/cray-performance-measurement-and-analysis-tools-user-guide/craypat)
+  - [CrayPat User Guide](https://support.hpe.com/hpesc/public/docDisplay?docId=a00114942en_us&page=index.html)
 
 ## Cray Apprentice2
 
 Cray Apprentice2 is an optional GUI tool that is used to visualize and
 manipulate the performance analysis data captured during program
-execution. Cray Apprentice2 can
-display a wide variety of reports and graphs, depending on the type of
-program being analyzed, the way in which the program was instrumented
-for data capture, and the data that was collected during program
+execution. Cray Apprentice2 can display a wide variety of reports and graphs,
+depending on the type of program being analyzed, the way in which the program
+was instrumented for data capture, and the data that was collected during program
 execution.
 
 You will need to use CrayPat to first instrument your program and
@@ -338,14 +328,14 @@ analyzing the resulting data in Cray Apprentice2.
     
 
 To use Cray Apprentice2 (`app2`), load `perftools-base` module if it is
-not already loaded
+not already loaded.
 
     
     module load perftools-base
     
 
-then open the experiment directory generated during the instrumentation
-phase with Apprentice2:
+Next, open the experiment directory generated during the instrumentation
+phase with Apprentice2.
 
 
     auser@ln01:/work/t01/t01/auser> app2 jacobi+pat+12265-1573s
