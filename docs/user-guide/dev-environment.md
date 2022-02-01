@@ -661,8 +661,8 @@ ARCHER2 currently has the following HPE Cray Programming Environment releases av
 - 21.09: available via `cpe/21.09` module
 
 You can find information, notes, and lists of changes for current and upcoming ARCHER2 
-HPE Cray programming environments in the HPE Cray Programming Environment GitHub
-repository found [here](https://github.com/PE-Cray).
+HPE Cray programming environments in [the HPE Cray Programming Environment GitHub
+repository](https://github.com/PE-Cray).
 
 ## Using non-default versions of HPE Cray libraries on ARCHER2
 
