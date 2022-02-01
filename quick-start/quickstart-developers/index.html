@@ -1552,7 +1552,7 @@ assumes that you are familiar with the material in the
 wrappers. These ensure that the correct libraries and headers (for
 example, MPI or HPE LibSci) will be used during the compilation and
 linking stages. These wrappers should be accessed by providing the
-following compiler names:</p>
+following compiler names.</p>
 <table>
 <thead>
 <tr>
@@ -1578,7 +1578,7 @@ following compiler names:</p>
 <p>This means that you should use the wrapper names whether on the command
 line, in build scripts, or in configure options. It could be helpful to
 set some or all of the following environment variables before running a
-build to ensure that the build tool is aware of the wrappers:</p>
+build to ensure that the build tool is aware of the wrappers.</p>
 <p>export CC=cc
   export CXX=CC
   export FC=ftn
@@ -1586,7 +1586,7 @@ build to ensure that the build tool is aware of the wrappers:</p>
   export F90=ftn</p>
 <p><code>man</code> pages are available for each wrapper. You can also see the full
 set of compiler and linker options being used by passing the
-<code>-craype-verbose</code> option to the wrapper when using it.</p>
+<code>-craype-verbose</code> option to the wrapper.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>The HPE Cray compiler wrappers should be used instead of the MPI compiler
@@ -1662,7 +1662,7 @@ Flang.</p>
 <h2 id="useful-compiler-options">Useful compiler options</h2>
 <p>The compiler options you use will depend on both the software you are
 building and also on the current stage of development. The following
-flags should be a good starting point for reasonable performance:</p>
+flags should be a good starting point for reasonable performance.</p>
 <table>
 <thead>
 <tr>
@@ -1695,8 +1695,7 @@ otherwise you will see compile errors associated with MPI functions.</p>
 more aggressive optimisations; in this case you could start using the
 following flags. Please note, however, that these optimisations may lead
 to deviations from IEEE/ISO specifications. If your code relies on
-strict adherence then these flags may lead to it producing incorrect
-output.</p>
+strict adherence then using these flags may cause incorrect output.</p>
 <table>
 <thead>
 <tr>
@@ -1724,7 +1723,7 @@ above, by Cray C and C++ at <code>-O2</code> and above or when using
 <code>-ftree-vectorize</code>, and by the GCC compilers at <code>-O3</code> and above or when
 using <code>-ftree-vectorize</code>.</p>
 <p>You may wish to promote default <code>real</code> and <code>integer</code> types in Fortran
-codes from 4 to 8 bytes. In this case, the following flags may be used:</p>
+codes from 4 to 8 bytes. In this case, the following flags may be used.</p>
 <table>
 <thead>
 <tr>
@@ -1744,7 +1743,7 @@ codes from 4 to 8 bytes. In this case, the following flags may be used:</p>
 </tbody>
 </table>
 <p>More documentation on the compilers is available through <code>man</code>. The
-pages to read are accessed as follow:</p>
+pages to read are accessed as follow.</p>
 <table>
 <thead>
 <tr>
@@ -1800,7 +1799,7 @@ not need to concern themselves with ensuring the linker will be able to
 find the libraries.</p>
 <p>This is achieved by providing RPATHs to the compiler as options. To set
 the compiler wrappers to do this, you can set the following environment
-variable:</p>
+variable.</p>
 <pre><code>export CRAY_ADD_RPATH=yes
 </code></pre>
 <p>You can also provide RPATHs directly to the compilers using the
@@ -1851,11 +1850,11 @@ Measurement and Analysis Tools (CrayPAT). This has a number of different
 components:</p>
 <ul>
 <li><strong>CrayPAT</strong> the full-featured program analysis tool set. CrayPAT
-    consists of pat_build, the utility used to instrument programs, the
+    consists of <code>pat_build</code>, the utility used to instrument programs, the
     CrayPat run time environment, which collects the specified
-    performance data during program execution, and pat_report, the
+    performance data during program execution, and <code>pat_report</code>, the
     first-level data analysis tool, used to produce text reports or
-    export data for more sophisticated analysis</li>
+    export data for more sophisticated analysis.</li>
 <li><strong>CrayPAT-lite</strong> a simplified and easy-to-use version of CrayPAT
     that provides basic performance analysis information automatically,
     with a minimum of user interaction.</li>
@@ -1910,7 +1909,7 @@ ARCHER2 User and Best Practice Guide.</p>
     technical topics.</li>
 <li><a href="https://internal.support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&amp;docId=a00115304en_us">HPE Cray Programming Environment User
     Guide</a></li>
-<li><a href="https://support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&amp;docId=a00114942en_us">HPE Cray Performance Measurement and Analysis Tools User
+<li><a href="https://support.hpe.com/hpesc/public/docDisplay?docId=a00114942en_us&amp;page=index.html">HPE Cray Performance Measurement and Analysis Tools User
     Guide</a></li>
 </ul>
 

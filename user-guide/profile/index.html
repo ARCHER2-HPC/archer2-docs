@@ -1707,28 +1707,24 @@
 
 <h1 id="profiling">Profiling</h1>
 <p>There are a number of different ways to access profiling data on 
-ARCHER2. In this section we discuss the HPE Cray profiling tools:
-CrayPAT-lite and CrayPAT, as well as discuss how to get usage data
-on currently running jobs from Slurm itself.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>See <a href="../../known-issues/">current known issues.</a></p>
-</div>
+ARCHER2. In this section, we discuss the HPE Cray profiling tools,
+CrayPAT-lite and CrayPAT. We also show how to get usage data
+on currently running jobs from Slurm batch system.</p>
 <h2 id="craypat-lite">CrayPat-lite</h2>
 <p>CrayPat-lite is a simplified and easy-to-use version of the Cray
-Performance Measurement and Analysis Tool (CrayPat) set. CrayPat-lite
+Performance Measurement and Analysis Tool (CrayPat). CrayPat-lite
 provides basic performance analysis information automatically, with a
 minimum of user interaction, and yet offers information useful to users
 wishing to explore a program's behaviour further using the full CrayPat
-tool set.</p>
+suite.</p>
 <h3 id="how-to-use-craypat-lite">How to use CrayPat-lite</h3>
 <ol>
 <li>
-<p>Ensure the <code>perftools-base</code> module is loaded</p>
+<p>Ensure the <code>perftools-base</code> module is loaded.</p>
 <p><code>auser@ln01:/work/t01/t01/auser&gt; module list</code></p>
 </li>
 <li>
-<p>Load the <code>perftools-lite</code> module</p>
+<p>Load the <code>perftools-lite</code> module.</p>
 <p><code>auser@ln01:/work/t01/t01/auser&gt; module load perftools-lite</code></p>
 </li>
 <li>
@@ -1758,30 +1754,28 @@ srun --hint=nomultithread --distribution=block:block mpi_test.x
 </code></pre></div>
 </li>
 <li>
-<p>Analyse the data</p>
+<p>Analyse the data.</p>
 <p>After the job finishes executing, CrayPat-lite output should be printed
-to stdout (i.e. at the end of the job's output file generated). A new
-directory will also be created in the directory the run occurred in with
-<code>.rpt</code> and <code>.ap2</code> files. The <code>.rpt</code> files are text files that contain
-the same information printed in the job's output file and the <code>.ap2</code> files
-can be used to obtain more detailed information and can also be visualized
-with the Cray Apprentice2 tool (for information on using this, please
-take a look at <a href="#cray-apprentice2">Cray Apprentice2</a>).</p>
+to stdout (i.e. at the end of the job's output file). A new directory will
+also be created containing <code>.rpt</code> and <code>.ap2</code> files. The <code>.rpt</code> files are text
+files that contain the same information printed in the job's output file and
+the <code>.ap2</code> files can be used to obtain more detailed information, which can be
+visualized using the <a href="#cray-apprentice2">Cray Apprentice2 tool</a>.</p>
 </li>
 </ol>
 <h3 id="further-help">Further help</h3>
 <ul>
-<li><a href="https://pubs.cray.com/bundle/Cray_Performance_Measurement_and_Analysis_Tools_Installation_Guide_632_S-2474/page/Use_CrayPat_CrayPat-lite_Apprentice2_or_Reveal.html">CrayPat-lite User Guide</a></li>
+<li><a href="https://support.hpe.com/hpesc/public/docDisplay?docId=a00114942en_us&amp;page=index.html">CrayPat-lite User Guide</a></li>
 </ul>
 <h2 id="craypat">CrayPat</h2>
 <p>The Cray Performance Analysis Tool (CrayPAT) is a powerful framework for
 analysing a parallel application’s performance on Cray supercomputers.
 It can provide very detailed information about the timing and performance
 of individual application procedures.</p>
-<p>CrayPat can perform two types of performance analysis: <em>sampling</em>
+<p>CrayPat can perform two types of performance analysis, <em>sampling</em>
 experiments and <em>tracing</em> experiments. A sampling experiment probes the
-code at a predefined interval and produces a report based on these
-statistics. A tracing experiment explicitly monitors the code
+code at a predefined interval and produces a report based on the data
+collected. A tracing experiment explicitly monitors the code
 performance within named routines. Typically, the overhead associated
 with a tracing experiment is higher than that associated with a sampling
 experiment but provides much more detailed information. The key to
@@ -1790,18 +1784,18 @@ profiling for a representative length of time.</p>
 <h3 id="sampling-analysis">Sampling analysis</h3>
 <ol>
 <li>
-<p>Ensure the <code>perftools-base</code> module is loaded</p>
+<p>Ensure the <code>perftools-base</code> module is loaded.</p>
 <p><code>module list</code></p>
 </li>
 <li>
-<p>Load <code>perftools</code> module</p>
+<p>Load <code>perftools</code> module.</p>
 <p><code>module load perftools</code></p>
 </li>
 <li>
 <p>Compile your code in the standard way always using the Cray compiler
     wrappers (ftn, cc and CC). Object files need to be made available to
     CrayPat to correctly build an instrumented executable for profiling
-    or tracing, this means that compile and link stage should be
+    or tracing, this means that the compile and link stage should be
     separated by using the <code>-c</code> compile flag.</p>
 <div class="highlight"><pre><span></span><code>auser@ln01:/work/t01/t01/auser&gt; cc -h std=c99 -c jacobi.c
 auser@ln01:/work/t01/t01/auser&gt; cc jacobi.o -o jacobi
@@ -1809,24 +1803,24 @@ auser@ln01:/work/t01/t01/auser&gt; cc jacobi.o -o jacobi
 </li>
 <li>
 <p>To instrument the binary, run the <code>pat_build</code> command. This will 
-    generate a new binary with <code>+pat</code> appended to the end (e.g. <code>jacobi+pat</code>)</p>
+    generate a new binary with <code>+pat</code> appended to the end (e.g. <code>jacobi+pat</code>).</p>
 <p><code>auser@ln:/work/t01/t01/auser&gt; pat_build jacobi</code></p>
 </li>
 <li>
 <p>Run the new executable with <code>+pat</code> appended as you would with the
     regular executable. Each run will produce its own 'experiment
-    directory' directory containing the performance data as <code>.xf</code> files
+    directory' containing the performance data as <code>.xf</code> files
     inside a subdirectory called <code>xf-files</code> (e.g. running the 
     <code>jacobi+pat</code> instrumented executable might produce
     <code>jacobi+pat+12265-1573s/xf-files</code>).</p>
 </li>
 <li>Generate report data with <code>pat_report</code>.</li>
 </ol>
-<p>These <code>.xf</code> files contain the raw sampling data from the run and need to
+<p>The <code>.xf</code> files contain the raw sampling data from the run and need to
 be post-processed to produce useful results. This is done using the
 <code>pat_report</code> tool which converts all the raw data into a summarised and
 readable form. You should provide the name of the experiment directory as
-the argument:</p>
+the argument to <code>pat_report</code>.</p>
 <pre><code>auser@ln:/work/t01/t01/auser&gt; pat_report jacobi+pat+12265-1573s
 
 Table 1:  Profile by Function (limited entries shown)
@@ -1852,18 +1846,16 @@ Samp% |  Samp |  Imb. |  Imb. | Group
 |==================================================
 </code></pre>
 <p>This report will generate more files with the extension <code>.ap2</code> in the
-experiment directory. These hold the same data as the <code>.xf</code> file but
+experiment directory. These hold the same data as the <code>.xf</code> files but
 in the post-processed form. Another file produced has an <code>.apa</code> extension
 and is a text file with a suggested configuration for generating a
 traced experiment. </p>
 <p>The <code>.ap2</code> files generated are used to view performance
-data graphically with the Cray Apprentice2 tool (for information on using
-this, please take a look at <a href="#cray-apprentice2">Cray Apprentice2</a>), and
-the latter is used for more detailed tracing experiments.</p>
+data graphically with the <a href="#cray-apprentice2">Cray Apprentice2 tool</a>.</p>
 <p>The <code>pat_report</code> command is able to produce many different profile
 reports from the profiling data. You can select a predefined report with
 the <code>-O</code> flag to <code>pat_report</code>. A selection of the most generally useful
-predefined report types are:</p>
+predefined report types are:= listed below.</p>
 <ul>
 <li><strong>ca+src</strong> - Show the callers (bottom-up view) leading to the
     routines that have a high use in the report and include source code
@@ -1954,9 +1946,9 @@ requirements.</p>
 <p>The entire program can be traced as a whole using <code>-w</code>:</p>
 <pre><code>auser@ln01:/work/t01/t01/auser&gt; pat_build -w jacobi
 </code></pre>
-<p>Using <code>-g</code> a program can be instrumented to trace all function entry
-point references belonging to the trace function group tracegroup (mpi,
-libsci, lapack, scalapack, heap, etc):</p>
+<p>Using <code>-g</code>, a program can be instrumented to trace all function entry
+point references belonging to the trace function group (mpi, libsci,
+lapack, scalapack, heap, etc):</p>
 <pre><code>auser@ln01:/work/t01/t01/auser&gt; pat_build -w -g mpi jacobi
 </code></pre>
 <h3 id="dynamically-linked-binaries">Dynamically-linked binaries</h3>
@@ -1965,13 +1957,12 @@ binaries with the <code>pat_run</code> utility. <code>pat_run</code> delivers pr
 information for codes that cannot easily be rebuilt. To use <code>pat_run</code>:</p>
 <ol>
 <li>
-<p>Load the <code>perftools-base</code> module if it is not already loaded</p>
+<p>Load the <code>perftools-base</code> module if it is not already loaded.</p>
 <p><code>module load perftools-base</code></p>
 </li>
 <li>
 <p>Run your application normally including the <code>pat_run</code> command right
-    after your <code>srun</code>
-    options</p>
+    after your <code>srun</code> options.</p>
 <p><code>srun [srun-options] pat_run [pat_run-options] program [program-options]</code></p>
 </li>
 <li>
@@ -1980,7 +1971,7 @@ information for codes that cannot easily be rebuilt. To use <code>pat_run</code>
 <p><code>auser@ln01:/work/t01/t01/auser&gt; pat_report jacobi+pat+12265-1573s</code></p>
 </li>
 </ol>
-<p>Some useful <code>pat_run</code> options are:</p>
+<p>Some useful <code>pat_run</code> options are as follows.</p>
 <ul>
 <li><code>-w</code>  Collect data by tracing.</li>
 <li><code>-g</code>  Trace functions belonging to group names. See the -g option in
@@ -1989,15 +1980,14 @@ information for codes that cannot easily be rebuilt. To use <code>pat_run</code>
 </ul>
 <h3 id="further-help_1">Further help</h3>
 <ul>
-<li><a href="https://pubs.cray.com/content/S-2376/7.0.0/cray-performance-measurement-and-analysis-tools-user-guide/craypat">CrayPat User Guide</a></li>
+<li><a href="https://support.hpe.com/hpesc/public/docDisplay?docId=a00114942en_us&amp;page=index.html">CrayPat User Guide</a></li>
 </ul>
 <h2 id="cray-apprentice2">Cray Apprentice2</h2>
 <p>Cray Apprentice2 is an optional GUI tool that is used to visualize and
 manipulate the performance analysis data captured during program
-execution. Cray Apprentice2 can
-display a wide variety of reports and graphs, depending on the type of
-program being analyzed, the way in which the program was instrumented
-for data capture, and the data that was collected during program
+execution. Cray Apprentice2 can display a wide variety of reports and graphs,
+depending on the type of program being analyzed, the way in which the program
+was instrumented for data capture, and the data that was collected during program
 execution.</p>
 <p>You will need to use CrayPat to first instrument your program and
 capture performance analysis data, and then <code>pat_report</code> to generate
@@ -2014,11 +2004,11 @@ analyzing the resulting data in Cray Apprentice2.</p>
 <pre><code>export PAT_RT_SUMMARY=0
 </code></pre>
 <p>To use Cray Apprentice2 (<code>app2</code>), load <code>perftools-base</code> module if it is
-not already loaded</p>
+not already loaded.</p>
 <pre><code>module load perftools-base
 </code></pre>
-<p>then open the experiment directory generated during the instrumentation
-phase with Apprentice2:</p>
+<p>Next, open the experiment directory generated during the instrumentation
+phase with Apprentice2.</p>
 <pre><code>auser@ln01:/work/t01/t01/auser&gt; app2 jacobi+pat+12265-1573s
 </code></pre>
 <h2 id="hardware-performance-counters">Hardware Performance Counters</h2>
