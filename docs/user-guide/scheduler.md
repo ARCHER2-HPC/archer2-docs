@@ -296,14 +296,6 @@ auser@ln04:~> sprio -l
          828806 standard        1154          0        150          0          4       1000
 ```
 
-!!! Hint
-    `sbatch --test-only` validates the batch script and returns an estimate of when the job would be scheduled to run given the current job queue and all the other arguments specifying the job requirements. The job is not actually submitted.
-    ```
-    auser@ln01:~> sbatch --test-only submit.slurm 
-    sbatch: Job 1039497 to start at 2022-02-01T23:20:51 using 256 processors on nodes nid002836
-    in partition standard
-    ```
-
 ## Troubleshooting
 
 ### Slurm error messages
@@ -649,6 +641,15 @@ An example of the sort of output the tool can give would be:
     
     
     checkScript finished: 0 warning(s) and 0 error(s).
+
+## Checking scripts and estimating start time with `--test-only`
+
+`sbatch --test-only` validates the batch script and returns an estimate of when the job would be scheduled to run given the current job queue. Please note that it is just an estimate, the actual start time may differ as the job queue status when the start time was estimated may be different from the moment that the estimation took place. The job is not actually submitted.
+    ```
+    auser@ln01:~> sbatch --test-only submit.slurm
+    sbatch: Job 1039497 to start at 2022-02-01T23:20:51 using 256 processors on nodes nid002836
+    in partition standard
+    ```
 
 ## Example job submission scripts
 
