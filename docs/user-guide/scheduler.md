@@ -455,7 +455,7 @@ parallel processes and threads they require.
      processes (e.g. MPI ranks) per node.
    - `--cpus-per-task=1` if you are using parallel processes only with
      no threading then you should set the number of CPUs (cores) per
-     parallel process to 1. **note:** if you are using threading (e.g.
+     parallel process to 1. **Important:** if you are using threading (e.g.
      with OpenMP) then you will need to change this option as described
      below.
 
@@ -464,7 +464,7 @@ to change the `--cpus-per-task` option.
 
    - `--cpus-per-task=<threads per task>` the number of threads per
      parallel process (e.g. number of OpenMP threads per MPI task for
-     hybrid MPI/OpenMP jobs). **!!! note:** you must also set the
+     hybrid MPI/OpenMP jobs). **Important:** you must also set the
      `OMP_NUM_THREADS` environment variable if using OpenMP in your
      job.
 
@@ -641,6 +641,15 @@ An example of the sort of output the tool can give would be:
     
     
     checkScript finished: 0 warning(s) and 0 error(s).
+
+## Checking scripts and estimating start time with `--test-only`
+
+`sbatch --test-only` validates the batch script and returns an estimate of when the job would be scheduled to run given the current job queue. Please note that it is just an estimate, the actual start time may differ as the job queue status when the start time was estimated may be different from the moment that the estimation took place. The job is not actually submitted.
+    ```
+    auser@ln01:~> sbatch --test-only submit.slurm
+    sbatch: Job 1039497 to start at 2022-02-01T23:20:51 using 256 processors on nodes nid002836
+    in partition standard
+    ```
 
 ## Example job submission scripts
 
