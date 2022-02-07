@@ -686,6 +686,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#checking-scripts-and-estimating-start-time-with-test-only" class="md-nav__link">
+    Checking scripts and estimating start time with --test-only
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#example-job-submission-scripts" class="md-nav__link">
     Example job submission scripts
   </a>
@@ -2153,6 +2160,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#checking-scripts-and-estimating-start-time-with-test-only" class="md-nav__link">
+    Checking scripts and estimating start time with --test-only
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#example-job-submission-scripts" class="md-nav__link">
     Example job submission scripts
   </a>
@@ -3071,7 +3085,7 @@ parallel processes and threads they require.</p>
      processes (e.g. MPI ranks) per node.</li>
 <li><code>--cpus-per-task=1</code> if you are using parallel processes only with
      no threading then you should set the number of CPUs (cores) per
-     parallel process to 1. <strong>note:</strong> if you are using threading (e.g.
+     parallel process to 1. <strong>Important:</strong> if you are using threading (e.g.
      with OpenMP) then you will need to change this option as described
      below.</li>
 </ul>
@@ -3080,7 +3094,7 @@ to change the <code>--cpus-per-task</code> option.</p>
 <ul>
 <li><code>--cpus-per-task=&lt;threads per task&gt;</code> the number of threads per
      parallel process (e.g. number of OpenMP threads per MPI task for
-     hybrid MPI/OpenMP jobs). <strong>!!! note:</strong> you must also set the
+     hybrid MPI/OpenMP jobs). <strong>Important:</strong> you must also set the
      <code>OMP_NUM_THREADS</code> environment variable if using OpenMP in your
      job.</li>
 </ul>
@@ -3244,6 +3258,12 @@ CU Usage Estimate (if full job time used)
 
 checkScript finished: 0 warning(s) and 0 error(s).
 </code></pre>
+<h2 id="checking-scripts-and-estimating-start-time-with-test-only">Checking scripts and estimating start time with <code>--test-only</code></h2>
+<p><code>sbatch --test-only</code> validates the batch script and returns an estimate of when the job would be scheduled to run given the current job queue. Please note that it is just an estimate, the actual start time may differ as the job queue status when the start time was estimated may be different from the moment that the estimation took place. The job is not actually submitted.
+    <div class="highlight"><pre><span></span><code>auser@ln01:~&gt; sbatch --test-only submit.slurm
+sbatch: Job 1039497 to start at 2022-02-01T23:20:51 using 256 processors on nodes nid002836
+in partition standard
+</code></pre></div></p>
 <h2 id="example-job-submission-scripts">Example job submission scripts</h2>
 <p>A subset of example job submission scripts are included in full below.
 Examples are provided for both the full system and the 4-cabinet system.</p>
