@@ -4,6 +4,11 @@ This guide aims to quickly enable new users to get up and running on
 ARCHER2. It covers the process of getting an ARCHER2 account, logging in
 and running your first job.
 
+!!! important
+    This guide covers both the ARCHER2 4-cabinet system and the
+    ARCHER2 full system. Please ensure you follow the instructions
+    for the correct system.
+
 ## Request an account on ARCHER2
 
 !!! important
@@ -39,19 +44,20 @@ Code*; you usually obtain this from the Principle Investigator (PI) or
 project manager for the project you will be working on. Once you have
 the Project Code:
 
-1.  [Log into SAFE](https://safe.epcc.ed.ac.uk)
-2.  Use the *Login accounts - Request new account* menu item
-3.  Select the correct project from the drop down list
-4.  Select the *archer2* machine in the list of available machines
-5.  Click *Next*
-6.  Enter a username for the account and (optionally) an SSH public
-    key
-    1.  If you do not specify an SSH key at this stage, your default
-        key will be used (if you have one). For users who had an ARCHER
-        account, the default key will be your ARCHER SSH key.
-    2.  You can always add an SSH key (or additional SSH keys) using
-        the process described below.
-7.  Click *Request*
+=== "Full system"
+    1.  [Log into SAFE](https://safe.epcc.ed.ac.uk)
+    2.  Use the *Login accounts - Request new account* menu item
+    3.  Select the correct project from the drop down list
+    4.  Select the *archer2* machine in the list of available machines
+    5.  Click *Next*
+    6.  Enter a username for the account and (optionally) an SSH public
+        key
+        1.  If you do not specify an SSH key at this stage, your default
+            key will be used (if you have one). For users who had an ARCHER
+            account, the default key will be your ARCHER SSH key.
+        2.  You can always add an SSH key (or additional SSH keys) using
+            the process described below.
+    7.  Click *Request*
 
 The PI or project manager of the project will be asked to approve your
 request. After your request has been approved the account will be
@@ -119,14 +125,43 @@ Policy](https://www.archer2.ac.uk/about/policies/passwords_usernames.html).
 
 ## Login to ARCHER2
 
-To log into ARCHER2 you should use the `login.archer2.ac.uk` address:
+To log into ARCHER2 you should use the address:
 
+=== "Full system"
     ssh [userID]@login.archer2.ac.uk
 
-You will first be prompted for your machine account password. Once you
-have entered your password successfully, you will then be prompted for
-the passphrase associated with your SSH key pair. You need to enter both
-credentials correctly to be able to access ARCHER2.
+The order in which you are asked for credentials depends on the system you
+are accessing:
+
+=== "Full system"
+    You will first be prompted for the passphrase associated with your SSH key pair. Once you have entered this passphrase successfully, you will then be prompted for your machine account password. You need to enter both credentials correctly to be able to access ARCHER2.
+    !!! tip
+        If you previously logged into the 4-cabinet system with your account you may see an error 
+        from SSH that looks like
+
+        ```
+        @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        @       WARNING: POSSIBLE DNS SPOOFING DETECTED!          @
+        @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        The ECDSA host key for login.archer2.ac.uk has changed,
+        and the key for the corresponding IP address 193.62.216.43
+        has a different value. This could either mean that
+        DNS SPOOFING is happening or the IP address for the host
+        and its host key have changed at the same time.
+        Offending key for IP in /Users/auser/.ssh/known_hosts:11
+        @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+        @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+        Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+        It is also possible that a host key has just been changed.
+        The fingerprint for the ECDSA key sent by the remote host is
+        SHA256:UGS+LA8I46LqnD58WiWNlaUFY3uD1WFr+V8RCG09fUg.
+        Please contact your system administrator.
+        ```
+
+        If you see this, you should delete the offending host key from your `~/.ssh/known_hosts`
+        file (in the example above the offending line is line #11)
 
 !!! tip
     If your SSH key pair is not stored in the default location (usually
@@ -222,8 +257,8 @@ available versions and variants of VASP may be found by running
 
 You will see that different versions are available for many modules. For
 example, `vasp/5/5.4.4.pl2` and `vasp/6/6.1.0` are two available versions of
-VASP. Furthermore, a default version may be specified; this is used if
-no version is provided by the user.
+VASP on the full system. Furthermore, a default version may be specified;
+this is used if no version is provided by the user.
 
 !!! important
     VASP is licensed software, as are other software packages on ARCHER2.
@@ -345,6 +380,9 @@ Paste the following text into your job submission script, replacing
 `standard`), and `ENTER_QOS_HERE` with the quality of service you want
 (e.g. `standard`).
 
+
+=== "Full system"
+    ```
     #!/bin/bash --login
     
     #SBATCH --job-name=test_job
@@ -363,6 +401,7 @@ Paste the following text into your job submission script, replacing
     
     # srun launches the parallel program based on the SBATCH options
     srun --distribution=block:block --hint=nomultithread xthi
+    ```
 
 ## Submit your job to the queue
 

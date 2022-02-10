@@ -1,9 +1,4 @@
-# Application development environment: full system
-
-!!! important
-    This section covers the application development environment on the full
-    ARCHER2 system. For docmentation on the application development environment on the
-    initial, 4-cabinet ARCHER2 system, please see [Application development environment: 4-cabinet system](dev-environment-4cab.md).
+# Application development environment
 
 ## What's available
 
@@ -316,7 +311,7 @@ Switch the the GCC compiler environment from the default CCE (cray)
 compiler environment via:
 
 ```
-auser@ln03:~> module swap PrgEnv-cray PrgEnv-gcc
+auser@ln03:~> module swap PrgEnv-cray PrgEnv-gnu
 
 Due to MODULEPATH changes, the following have been reloaded:
   1) cray-mpich/8.1.4
@@ -462,6 +457,12 @@ Miscellaneous options:
 | `-h omp` | Compile OpenMP (default is `-hnoomp`)                  |
 | `-v` | Display verbose output from compiler stages                |
 
+#### CCE Reference Documentation
+
+* [Clang/Clang++ documentation](https://clang.llvm.org/docs/UsersManual.html), CCE-specific 
+  details are available via `man clang` once the CCE compiler environment is loaded.
+* [Cray Fortran documentation](https://internal.support.hpe.com/hpesc/public/docDisplay?docId=a00114872en_us&page=index.html)
+
 ### AMD Optimizing Compiler Collection (AOCC)
 
 The AMD Optimizing Compiler Collection (AOCC) is a clang-based optimising
@@ -493,13 +494,13 @@ Due to MODULEPATH changes, the following have been reloaded:
 
 HPE Cray provide, as standard, an MPICH implementation of the message
 passing interface which is specifically optimised for the ARCHER2
-network. The current implementation supports MPI standard version 3.1.
+interconnect. The current implementation supports MPI standard version 3.1.
 
 The HPE Cray MPICH implementation is linked into software by default when
 compiling using the standard wrapper scripts: `cc`, `CC` and `ftn`.
 
 You do not need to do anything to make HPE Cray MPICH available when you
-log into ArCHER2, it is available by default to all users.
+log into ARCHER2, it is available by default to all users.
 
 #### Switching to alternative UCX MPI implementation
 
@@ -577,7 +578,7 @@ first choice for access to software libraries if available.
 
 !!! important
     See the section below on using non-default versions of HPE Cray libraries
-    below as this process will generally need to be followed when using software
+    as this process will generally need to be followed when using software
     from non-default PE installs.
 
 Access to non-default PE environments is controlled by the use of the `cpe` modules.
@@ -643,6 +644,14 @@ environment.
     Unloading the `cpe` module does not restore the original programming environment
     release. To restore the default programming environment release you should log 
     out and then log back in to ARCHER2.
+
+#### Accessing performance analysis tools in non-default Programming Environment
+
+The performance analysis tools (such as CrayPAT and CrayPAT-lite) behave slightly differently
+to other HPE Cray modules when you change to a non-default version of the programming
+environment. Specifically, an additional step is required to make them available. Once
+you have loaded the `cpe` module, you will also need to load the `perftools-base` 
+module to be able to load and use the performance tools modules.
     
 ### Available HPE Cray Programming Environment releases on ARCHER2
 
@@ -650,6 +659,10 @@ ARCHER2 currently has the following HPE Cray Programming Environment releases av
 
 - **21.04: Current default**
 - 21.09: available via `cpe/21.09` module
+
+You can find information, notes, and lists of changes for current and upcoming ARCHER2 
+HPE Cray programming environments in [the HPE Cray Programming Environment GitHub
+repository](https://github.com/PE-Cray).
 
 ## Using non-default versions of HPE Cray libraries on ARCHER2
 

@@ -27,12 +27,7 @@ Please have your license details to hand.
 
 ## Running parallel CRYSTAL jobs
 
-!!! important
-    CRYSTAL is not yet available on the full ARCHER2 system. We are 
-    working with the CRYSTAL developers to get the software 
-    deployed as soon as possible.
-
-The following script will run a CRYSTAL job on the ARCHER2 4-cabinet
+The following script will run a CRYSTAL job on the ARCHER2
 system using 256 cores (2 nodes). It assumes that the input file is tio2.d12
 
 ```slurm
@@ -46,9 +41,7 @@ system using 256 cores (2 nodes). It assumes that the input file is tio2.d12
 #SBATCH --account=[budget code]
 #SBATCH --partition=standard
 #SBATCH --qos=standard
-#SBATCH --export=none
 
-module load epcc-job-env
 module load other-software
 module load crystal
 

@@ -43,7 +43,7 @@ srun --nodes=1 --exclusive --time=00:20:00 \
                --pty /bin/bash
 ```
 
-Once the job starts the commannd prompt will change to show you are now
+Once the job starts the command prompt will change to show you are now
 on the compute node e.g.
 
 ```
@@ -54,7 +54,7 @@ Then load the ParaView module and start pvserver with the srun command,
 
 ```
 auser@nid001023:/work/t01/t01/auser> module load paraview
-auser@nid001023:/work/t01/t01/auser> srun -n 4 pvserver --mpi --force-offscreen-rendering
+auser@nid001023:/work/t01/t01/auser> srun --oversubscribe -n 4 pvserver --mpi --force-offscreen-rendering
 Waiting for client...
 Connection URL: cs://nid001023:11111
 Accepting connection(s): nid001023:11111

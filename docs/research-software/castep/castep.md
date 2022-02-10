@@ -32,13 +32,9 @@ Please have your license details to hand.
 These pseudopotentials cannot be generated on the fly by CASTEP and so are available in
 the following directory on ARCHER2:
 
-=== Full system ===
+=== "Full system"
    ```
    /work/y07/shared/apps/core/castep/pseudopotentials
-   ```
-=== 4-cabinet system ===
-   ```
-   /work/y07/shared/castep/pseudopotentials
    ```
 
 ## Running parallel CASTEP jobs
@@ -46,63 +42,33 @@ the following directory on ARCHER2:
 The following script will run a CASTEP job using 2 nodes (256 cores). it
 assumes that the input files have the file stem `text_calc`.
 
-=== Full system ===
-   ```
-   #!/bin/bash
-
-   # Request 2 nodes with 128 MPI tasks per node for 20 minutes
-   #SBATCH --job-name=CASTEP
-   #SBATCH --nodes=2
-   #SBATCH --tasks-per-node=128
-   #SBATCH --cpus-per-task=1
-   #SBATCH --time=00:20:00
-
-   # Replace [budget code] below with your project code (e.g. t01)
-   #SBATCH --account=[budget code]
-   #SBATCH --partition=standard
-   #SBATCH --qos=standard
-
-   # Load the CASTEP module, avoid any unintentional OpenMP threading by
-   # setting OMP_NUM_THREADS, and launch the code.
-   module load castep
-   export OMP_NUM_THREADS=1
-   srun --distribution=block:block --hint=nomultithread castep.mpi test_calc
-   ```
-=== 4-cabinet system ===
-   ```
-   #!/bin/bash
-
-   # Request 2 nodes with 128 MPI tasks per node for 20 minutes
-   #SBATCH --job-name=CASTEP
-   #SBATCH --nodes=2
-   #SBATCH --tasks-per-node=128
-   #SBATCH --cpus-per-task=1
-   #SBATCH --time=00:20:00
-
-   # Replace [budget code] below with your project code (e.g. t01)
-   #SBATCH --account=[budget code]
-   #SBATCH --partition=standard
-   #SBATCH --qos=standard
-
-   # Setup the batch environment
-   module load epcc-job-env
-
-   # Load the CASTEP module, avoid any unintentional OpenMP threading by
-   # setting OMP_NUM_THREADS, and launch the code.
-   module load castep
-   export OMP_NUM_THREADS=1
-   srun --distribution=block:block --hint=nomultithread castep.mpi test_calc
-   ```
+=== "Full system"
+    ```
+    #!/bin/bash
+    
+    # Request 2 nodes with 128 MPI tasks per node for 20 minutes
+    #SBATCH --job-name=CASTEP
+    #SBATCH --nodes=2
+    #SBATCH --tasks-per-node=128
+    #SBATCH --cpus-per-task=1
+    #SBATCH --time=00:20:00
+    
+    # Replace [budget code] below with your project code (e.g. t01)
+    #SBATCH --account=[budget code]
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+    
+    # Load the CASTEP module, avoid any unintentional OpenMP threading by
+    # setting OMP_NUM_THREADS, and launch the code.
+    module load castep
+    export OMP_NUM_THREADS=1
+    srun --distribution=block:block --hint=nomultithread castep.mpi test_calc
+    ```
 
 ## Using serial CASTEP tools
 
-We also provide a set of CASTEP tools compiled for serial use on the login
-nodes or in job submission scripts. You can access these through the 
-`castep-tools` module:
-
-```
-module load castep-tools
-```
+=== "Full system"
+    Serial CASTEP tools are available in the standard CASTEP module.
 
 ## Compiling CASTEP
 

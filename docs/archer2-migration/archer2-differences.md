@@ -9,14 +9,15 @@ appropriate.
 
 - There are 5860 compute nodes in total on the full ARCHER2 system rather 
   than just the 1024 on the 4-cabinet ARCHER2 system.
-- Of the 5860 compute nodes, 292 are *high memory nodes*, these nodes have
+- Of the 5860 compute nodes, 584 are *high memory nodes*, these nodes have
   512 GiB of memory rather than the 256 GiB available on standard memory
   nodes.
 - There are two data analysis nodes available and these are shared by multiple
   users. When using these nodes, users typically request the number of cores
   and the amount of memory they require (unlike compute nodes where you always
   have access to all the cores and all the memory on a node and do not share
-  with any other users).
+  with any other users). See [the Data Analysis section of the User Guide](../user-guide/analysis.md)
+  for more information.
 - Software is provided by the [Lmod](https://lmod.readthedocs.io/) module
   system (on the 4-cabinet system, TCL environment modules are used instead). Many
   commands are similar but there are some differences, see 
@@ -28,9 +29,10 @@ appropriate.
   flexibility. You can find details of the new QoS available in
   [the Submitting Jobs on ARCHER2 section of the User Guide](../user-guide/scheduler.md).
 - You no longer need to specify `--reservation=shortqos` when using the 
-  "short" QoS.
-- Resevations can now run for longer than the maximum wall time available in
-  any of the QoS defined in the scheduler.
+  `short` QoS.
+- Jobs running in a reservation can now run for longer than the maximum wall time available
+  in any of the normal QoS defined in the scheduler. Reservations must use the `reservation`
+  QoS.
 - You should no longer add the `module load epcc-job-env` command to job submission
   scripts.
 

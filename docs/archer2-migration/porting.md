@@ -1,10 +1,5 @@
 # Porting applications to full ARCHER2 system
 
-!!! important
-    The full ARCHER2 system is not yet available so you will not be able to
-    port any software yet. Users will be informed once the full system 
-    is available and they can start porting software and using the system.
-
 Porting applications to the full ARCHER2 system has generally 
 proven straightforward if they are running successfully on 
 the ARCHER2 4-cabinet system. You should be able to use the 
@@ -16,7 +11,7 @@ have seen that application binaries compiled on the 4-cabinet
 system can usually be copied over to the full system and work
 well and give good performance. However, if you run into issues
 with executables taken from the 4-cabinet system on the full system
-you should recompile in the fist instance.
+you should recompile in the first instance.
 
 Information on compiling applications on the full system can be
 found in the

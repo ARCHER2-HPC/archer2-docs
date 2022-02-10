@@ -1,4 +1,4 @@
-# I/O and file systems
+# I/O performance and tuning
 
 This section describes common IO patterns and how to get good performance
 on the ARCHER2 storage. 
@@ -7,21 +7,9 @@ Information on the file systems, directory layouts, quotas,
 archiving and transferring data can be found in the
 [Data management and transfer section](data.md).
 
-## Using the ARCHER2 file systems
-
-Different file systems are configured for different purposes and
-performance. ARCHER2 has two file systems available to users:
-
-| Node type | Available file systems |
-| --------- | ---------------------- |
-| Login     | /home, /work           |
-| Compute   | /work                  |
-
-!!! warning
-    Any data used in parallel jobs should be located on `/work` (Lustre)
-    as the compute nodes cannot access `/home`. You should use `/home`
-    for critical data as it is backed up; `/work` is not backed up.
-
+The advice here is targetted at use of the parallel file
+systems available on the compute nodes on ARCHER2 (i.e. **Not**
+the home and RDFaaS file systems).
 ## Common I/O patterns
 
 There are number of I/O patterns that are frequently used in
@@ -145,7 +133,7 @@ command to query the stripe settings for a directory (or file) is `lfs
 getstripe`. For example, to query the stripe settings of an already
 created directory `resdir`:
 
-    [auser@archer2]$ lfs getstripe resdir/
+    auser@ln03:~> lfs getstripe resdir/
     resdir
     stripe_count:   1 stripe_size:    1048576 stripe_offset:  -1 
 
@@ -157,7 +145,7 @@ Users can set stripe settings for a directory (or file) using the
   - `[--stripe-count|-c]` to set the stripe count; 0 means use the
     system default (usually 1) and -1 means stripe over all available
     OSTs.
-  - `[--stripe-size|-s]` to set the stripe size; 0 means use the system
+  - `[--stripe-size|-S]` to set the stripe size; 0 means use the system
     default (usually 1 MB) otherwise use k, m or g for KB, MB or GB
     respectively
   - `[--stripe-index|-i]` to set the OST index (starting at 0) on which
@@ -168,7 +156,7 @@ Users can set stripe settings for a directory (or file) using the
 For example, to set a stripe size of 4 MiB for the existing directory
 `resdir`, along with maximum striping count you would use:
 
-    [auser@archer2]$ lfs setstripe -s 4m -c -1 resdir/
+    auser@ln03:~> lfs setstripe -S 4m -c -1 resdir/
 
 ### Recommended ARCHER2 I/O settings
 
@@ -208,8 +196,6 @@ To switch library version see [the Application Development Environment section o
     I/O, so you should check the overall performance of your program
     before and after the switch. It is possible that other functions
     may run slower even if the I/O performance improves.
-
-
 
 ## I/O Profiling
 

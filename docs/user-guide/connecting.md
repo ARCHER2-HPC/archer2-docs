@@ -141,7 +141,6 @@ an X Server.
 The login addresses for ARCHER2 are:
 
 - ARCHER2 full system: login.archer2.ac.uk
-- ARCHER2 4-cabinet system: login-4c.archer2.ac.uk
 
 
 You can use the following command from the [terminal](#command-line-terminal) window to log in to ARCHER2:
@@ -150,15 +149,41 @@ You can use the following command from the [terminal](#command-line-terminal) wi
     ```bash
     ssh username@login.archer2.ac.uk
     ```
-=== "4-cabinet system"
-    ```bash
-    ssh username@login-4c.archer2.ac.uk
-    ```
+
+The order in which you are asked for credentials depends on the system you
+are accessing:
 
 === "Full system"
     You will first be prompted for the passphrase associated with your SSH key pair. Once you have entered this passphrase successfully, you will then be prompted for your machine account password. You need to enter both credentials correctly to be able to access ARCHER2.
-=== "4-cabinet system"
-    You will first be prompted for your machine account password. Once you have entered your password successfully, you will then be prompted for the passphrase associated with your SSH key pair. You need to enter both credentials correctly to be able to access the ARCHER2 4-cabinet system.
+    
+    !!! tip
+        If you previously logged into the 4-cabinet system with your account you may see an error 
+        from SSH that looks like
+
+        ```
+        @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        @       WARNING: POSSIBLE DNS SPOOFING DETECTED!          @
+        @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        The ECDSA host key for login.archer2.ac.uk has changed,
+        and the key for the corresponding IP address 193.62.216.43
+        has a different value. This could either mean that
+        DNS SPOOFING is happening or the IP address for the host
+        and its host key have changed at the same time.
+        Offending key for IP in /Users/auser/.ssh/known_hosts:11
+        @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+        @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+        Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+        It is also possible that a host key has just been changed.
+        The fingerprint for the ECDSA key sent by the remote host is
+        SHA256:UGS+LA8I46LqnD58WiWNlaUFY3uD1WFr+V8RCG09fUg.
+        Please contact your system administrator.
+        ```
+
+        If you see this, you should delete the offending host key from your `~/.ssh/known_hosts`
+        file (in the example above the offending line is line #11)
+
 
 !!! warning
     If your SSH key pair is not stored in the default location (usually
@@ -186,10 +211,6 @@ To allow remote programs, especially graphical applications, to control your loc
     ```bash
     ssh -X username@login.archer2.ac.uk
     ```
-=== "4-cabinet system"
-    ```bash
-    ssh -X username@login-4c.archer2.ac.uk
-    ```
 
 Some sites recommend using the `-Y` flag. While this can fix some
 compatibility issues, the `-X` flag is more secure.
@@ -201,11 +222,21 @@ Current MacOS systems do not have an X window system. Users should install the X
 
 ## Host Keys
 
-A host key adds an extra security layer for users over SSH. Using one enables users to log in to ARCHER2 if the login node has the same corresponding host key. The host key can be found in the entries in `~/.ssh/known_hosts`, as given in the example below: 
+Adding the host keys to your SSH configuration file provides an extra level of security for your connections to ARCHER2. The host keys are checked against the login nodes when you login to ARCHER2 and if the remote server key does not match the one in the configuration file, the connection will be refused. This provides protection against potential malicious servers masquerading as the ARCHER2 login nodes.
 
-    AAAAB3NzaC1yc2EAAAADAQABAAABAQC/zGWlNKRmbGcH3j/+wQ/3vytRJnautfshhKNx6naoymVxmXSg9CvtsJQUCNsNMnYu7NvZwOu1SqouXUNbpXZbOxikPLooRmM6JmCiJ72Zz5ylsXaFaIPmU7nl40J8YP5xcmlW6+HP6/gcnrZeCGLOcCSGHIIAAPotL1hwF9ab0RFbHV1+IyNPc5LYwslwmtn1zU5BY6xKISL8cMy+tAxBExY07xKZ6k+7bNPc4Ia4GfoU+8U9/2ZpN6wpNZVCNOsQ92nyELKveO9PIzLPJvxkxnRYaEfYshnRPCauBEnhZbixqrlnyWQsShbjfxBac3XEgQlg0XIAvHfFLUQNL1bv
+### login.archer2.ac.uk
 
-Host key verification can fail if this key is out of date, a problem which can be fixed by removing the offending entry in `~/.ssh/known_hosts`.
+```
+login.archer2.ac.uk ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEnMeFf1TPZ4pbupWeD4IeahEeeqJMAhrCv1znyQGAL45yOIArVltscW8GNhzfaWk5vKb9sIAm2mJZPc3b7te3c=
+    
+login.archer2.ac.uk ssh-rsa  AAAAB3NzaC1yc2EAAAADAQABAAABAQCZKpFN25u13uSTOun8jOKEO+4Y/98DW9/8dxoGYOf8Q7qZEyQUGk5QUuJCiB7ZzCOJ01Lxl+ghYpQ13oiebZWkTWUdypSCBH5f4/y5z+f87fDqOjkHKhpYb90RlpbP+Ik+6IapQOTYKGBPFfwkbp2LYh3ktV7ocpKVCNst0k5IELNufNBgsGNFYNyRYIR6hHoH2kUqDvrN8IXf8085vKbKdMQPdAtIEX7sOX+UNUpR/46zcAyn8VRn/CGA5WA39nKKOiPzJn8pFtKDUmme/DA9/Y+Z/jJS55coHxV81Qws5WYmg7bzgVDkZJvtzQ6haJAOhsWNYzNtrEwNNDCc610z
+    
+login.archer2.ac.uk ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII/OY5bYUBnnLr0B7keiT97WtzSGtTsTexpgmxkdCI+b
+```
+ 
+ 
+
+Host key verification can fail if this key is out of date, a problem which can be fixed by removing the offending entry in `~/.ssh/known_hosts` and replacing it with the new key published here.  We recommend users should check this page for any key updates and not just accept a new key from the server without confirmation.
 
 ## Making access more convenient using the SSH configuration file
 
@@ -221,12 +252,6 @@ which may look something like:
     ```
     Host archer2
         HostName login.archer2.ac.uk
-        User username
-    ```
-=== "4-cabinet system"
-    ```
-    Host archer2-4c
-        HostName login-4c.archer2.ac.uk
         User username
     ```
 
@@ -270,11 +295,6 @@ to use for each system.
 
 If you find you are unable to connect to ARCHER2, there are some simple checks you may use to diagnose the issue, which are described below. If you are having difficulties connecting, we suggest trying these before
 contacting the ARCHER2 Service Desk.
-
-In the examples below, we have assumed you are connecting to the full
-ARCHER2 system at `login.archer2.ac.uk`. If you are trying to log into
-the 4-cabinet system instead, please replace the login address with
-`login-4c.archer2.ac.uk`.
 
 ### Use the `user@login.archer2.ac.uk` syntax rather than `-l user login.archer2.ac.uk`
 
@@ -379,12 +399,11 @@ way: `chmod <code> <target>`. So for example to set correct
 permissions on the private key file `id_rsa_ARCHER2`, use the command
 `chmod 600 id_rsa_ARCHER2`.
 
-=======
 On Windows, permissions are handled differently but can be set by
-     right-clicking on the file and selecting Properties \> Security \>
-     Advanced. The user, SYSTEM, and Administrators should have `Full
-     control`, and no other permissions should exist for both the public
-     and private key files, as well as the containing folder.
+right-clicking on the file and selecting Properties \> Security \>
+Advanced. The user, SYSTEM, and Administrators should have `Full
+control`, and no other permissions should exist for both the public
+and private key files, as well as the containing folder.
      
 !!! tip
     Unix file permissions can be understood in the following way. There are

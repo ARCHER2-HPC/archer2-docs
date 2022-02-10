@@ -6,89 +6,40 @@ active investigation by HPE Cray and the wider service.
 
 ## Open Issues
 
+### Occasionally user jobs can cause compute nodes to crash (Added: 2021-11-22)
 
-### Error message: `No space left on device` (Added: 2021-07-20)
+In rare circumstances, it is possible for a user job to crash the compute nodes on which it is running. This is only evident to the user as a failed job: there is no obvious sign that the nodes have crashed. Therefore, if we identify a user whose jobs are causing nodes to crash, we may need to work with them to stop this happening.
 
-- **Systems affected:** ARCHER2 4-cabinet system
+The underlying issue is resolved in an update to the compute-node operating system (Shasta Version 1.5), which is expected to be rolled out to the main system early in 2022.
 
-Following an issue with te Lustre file system, there may be a number of files on the
-system that have stale active file handles on the Lustre server. Attempts to overwrite
-or append to these files may lead to error messages such as:
+In the meantime, users who experience this issue are advised to try disabling XPMEM in their application. The ARCHER2 CSE team can provide advice on how to do this. You can contact the  CSE team via the [service desk](https://www.archer2.ac.uk/support-access/servicedesk.html).
 
-```
-No space left on device
-```
 
-even though there are no issues with storage quotas. There are two potential workarounds
-for this issue:
+### Dask Python package missing dependencies (Added: 2021-11-22)
 
-1. Remove the offending file(s) (e.g. using the `rm` command)
-2. Work in a different directory or write to a different file name so you are not trying
-   to overwrite or append to the offending file(s)
+The Dask Python package is missing some dependencies on the latest Programming
+Environment (21.09). This can be worked around either by using the default
+Programming Environment (21.04), or by following the [instructions](https://docs.archer2.ac.uk/user-guide/python/#adding-your-own-packages)
+to install dask in your own user space.
 
-### PETSc fails when used on more than one node (Added: 2021-06-21)
+### Warning when compiling Fortran code with CCE and MPI_F08 interface (Added: 2021-11-18)
 
-- **Systems affected:** ARCHER2 4-cabinet system
-
-There is a bug in the default HPE Cray MPICH which leads to failures from PETSc
-when running on more than one node.
-
-**Workaround:** switch to a newer version of HPE Cray MPICH. To do this, modify
-your job submission script to add the following lines after all your other
-`module` commands but before you use `srun` to run the executable:
+When you compile Fortran code using the MPI F08 interface (i.e. `use mpi_f08`) using the default version
+of CCE (11.0.4) you will see warnings similar to:
 
 ```
-module swap cray-mpich cray-mpich/8.1.3
-export LD_LIBRARY_PATH=${CRAY_LD_LIBRARY_PATH}:${LD_LIBRARY_PATH}
+  use mpi_f08
+      ^       
+ftn-1753 crayftn: WARNING INTERFACE_MPI, File = interface_mpi_mod.f90, Line = 8, Column = 7 
+  File "/opt/cray/pe/mpich/8.1.4/ofi/cray/9.1/include/MPI_F08.mod" containing [sub]module information for "MPI_F08" was created with a previous compiler release.  It will not be supported by the next major release.  It is version 110 from release 9.0.
 ```
 
-### HPE Cray `perftools` modules not available by default (Added: 2021-04-27)
-
-- **Systems affected:** ARCHER2 4-cabinet system
-
-The HPE Cray `perftools` modules are no longer available by default on login to
-ARCHER2 or on the compute nodes when you run a job. This is being investigated
-and we hope to fix the issue soon.
-
-**Workarounds** You can access the `perftools` modules by restoring a different
-compiler environment or by switching to a different Programming Environment 
-release.
-
-*Option 1: Restoring a different compiler environment*
-
-On an ARCHER2 login node you can make the `perftools` modules available with
-a command such as:
-
-```
-module restore -s PrgEnv-gnu
-```
-
-If you need to use the `perftools` modules with the default Cray compilers then
-you must first switch to a different compiler suite and then back to the Cray
-compiler suite:
-
-```
-module restore -s PrgEnv-gnu
-module restore -s PrgEnv-cray
-```
-
-*Option 2: Switch to a different Programming Environment (PE) release*
-
-You can also restore the `perftools` modules by switching to a different PE
-release. For example, if you want to use the Cray compiler suite with the
-21.03 PE release, you would use:
-
-```
-module load cpe/21.03
-```
-
-This would make the `perftools` modules available. More information on
-using different PE releases [is available in the User and Best Practice Guide](../user-guide/dev-environment.md#switching-to-a-different-hpe-cray-programming-environment-release)
-
+These warnings can be safely ignored as they do not affect the functioning of the code. If
+you wish to avoid the warnings, you can compile using the more recent CCE version (12.0.3)
+on the system. To switch to this version, use `module load cpe/21.09` from the default
+environment on ARCHER2.
 
 ### Research Software
-
-- **Systems affected:** ARCHER2 full system, ARCHER2 4-cabinet system
 
 There are several outstanding issues for the centrally installed Research Software:
 
@@ -96,39 +47,6 @@ There are several outstanding issues for the centrally installed Research Softwa
 - **PLUMED** is not yet available. Currently, we recommend affected users to install a local version of the software.
 
 Users should also check individual software pages, for known limitations/ caveats, for the use of software on the Cray EX platform and Cray Linux Environment.
-
-### `stat-view` not working
-
-- **Systems affected:** ARCHER2 4-cabinet system
-
-The `stat-view` utility from the `cray-stat` module does not currently
-work due to missing dependencies within the HPE Cray software stack. If you 
-try to use the tool, you will see errors similar too:
-
-```
-auser@uan01:~> module load cray-stat
-auser@uan01:~> stat-view
-Traceback (most recent call last):
-File "/opt/cray/pe/stat/4.7.1/lib/python3.6/site-packages/STATview.py", line 60, in <module>
-import xdot
-ModuleNotFoundError: No module named 'xdot'
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-File "/opt/cray/pe/stat/4.7.1/lib/python3.6/site-packages/STATmain.py", line 73, in <module>
-raise import_exception
-File "/opt/cray/pe/stat/4.7.1/lib/python3.6/site-packages/STATmain.py", line 40, in <module>
-from STATGUI import STATGUI_main
-File "/opt/cray/pe/stat/4.7.1/lib/python3.6/site-packages/STATGUI.py", line 37, in <module>
-import STATview
-File "/opt/cray/pe/stat/4.7.1/lib/python3.6/site-packages/STATview.py", line 62, in <module>
-raise Exception('STATview requires xdot\nxdot can be downloaded from https://github.com/jrfonseca/xdot.py\n')
-Exception: STATview requires xdot
-xdot can be downloaded from https://github.com/jrfonseca/xdot.py
-```
-
-The current workaround is to use `/work/y02/shared/stat-view-workaround/stat-view` instead.
 
 ### Issues with RPATH for non-default library versions
 
@@ -148,22 +66,7 @@ export LD_LIBRARY_PATH=$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH
 at both compile and runtime. For more details on using non-default versions of libraries,
 see [the description in the User and Best Practice Guide](../user-guide/dev-environment.md#using-non-default-versions-of-hpe-cray-libraries-on-archer2)
 
-
-### Memory leak leads to job fail by out of memory (OOM) error (Updated: 2021-04-26)
-
-- **Systems affected:** ARCHER2 4-cabinet system
-
-Your program compiles and seems to run fine, but after some time (at least 10 
-minutes), it crashes with an out-of-memory (OOM) error. The job crashes more 
-quickly when run on a smaller number of nodes.
-
-The workaround for this issue is to use the newer HPE Cray Programming Environment
-release 21.03. Instructions on using a non-default programming environment release
-[are available in the User and Best Practice Guide](../user-guide/dev-environment.md#switching-to-a-different-hpe-cray-programming-environment-release)
-
 ### MPI `UCX ERROR: ivb_reg_mr`
-
-- **Systems affected:** ARCHER2 4-cabinet system
 
 If you are using the UCX layer for MPI communication you may see an error such as:
 
@@ -196,21 +99,23 @@ export UCX_IB_REG_METHODS=direct
 !!! note
     Setting this flag may have an impact on code performance.
 
+### AOCC compiler fails to compile with NetCDF (Added: 2021-11-18)
+
+There is currently a problem with the module file which means cray-netcdf-hdf5parallel will not operate correctly in PrgEnv-aocc. An example of the error seen is:  
+
+```
+F90-F-0004-Corrupt or Old Module file /opt/cray/pe/netcdf-hdf5parallel/4.7.4.3/crayclang/9.1/include/netcdf.mod (netcdf.F90: 8)
+```
+
+The current workaround for this is to load module epcc-netcdf-hdf5parallel instead if PrgEnv-aocc is required.
+
+### Slurm  `--export` option does not work in job submission script
+
+The option `--export=ALL` propagates all the environment variables from the login node to the compute node. If you include the option in the job submission script, it is wrongly ignored by Slurm. The current workaround is to include the option when the job submission script is launched. For instance:
+
+    sbatch --export=ALL myjob.slurm
+
 ## Recently Resolved Issues
 
-### Singularity and CMake 3.x
+No recently resolved issues.
 
-- **Systems affected:** ARCHER2 4-cabinet system
-
-Certain cmake variables need to be set before a containerised cmake can find
-MPI libraries located on the host.
-
-```
-MPI_ROOT=/opt/cray/pe/mpich/8.0.16/ofi/gnu/9.1
-
-cmake ...
-    -DMPI_C_HEADER_DIR="${MPI_ROOT}/include" -DMPI_CXX_HEADER_DIR="${MPI_ROOT}/include" \
-    -DMPI_C_LIB_NAMES=mpi -DMPI_CXX_LIB_NAMES=mpi \
-    -DMPI_mpi_LIBRARY="${MPI_ROOT}/lib/libmpi.so" \
-    ...
-```
