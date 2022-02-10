@@ -258,10 +258,6 @@ Please follow these steps.
     the one formatted `http://<node_id>:<port_number>/lab?token=<string>`. Your local
     browser will not recognise the `<node_id>` part of the address.
 
-!!! note
-    You willl of course need to use a different hostname for the SSH tunnel if you're running on the
-    ARCHER2 4-cabinet system, `login-4c.archer2.ac.uk`.   
-
 ## Using Dask Job-Queue on ARCHER2
 
 The Dask-jobqueue project makes it easy to deploy Dask on ARCHER2. 
