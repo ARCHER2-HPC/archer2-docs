@@ -258,3 +258,77 @@ Please follow these steps.
     the one formatted `http://<node_id>:<port_number>/lab?token=<string>`. Your local
     browser will not recognise the `<node_id>` part of the address.
 
+## Using Dask Job-Queue on ARCHER2
+
+The Dask-jobqueue project makes it easy to deploy Dask on ARCHER2. 
+You can find more information in 
+[the Dask Job-Queue documentation](http://jobqueue.dask.org/en/latest/).
+
+Please follow these steps:
+
+1. Install Dask-Jobqueue
+
+```
+module load cray-python
+export PYTHONUSERBASE=/work/t01/t01/auser/.local
+export PATH=$PYTHONUSERBASE/bin:$PATH
+
+pip install --user dask-jobqueue --upgrade
+```
+
+2. Using Dask
+
+Dask-jobqueue creates a Dask Scheduler in the Python process where the cluster
+object is instantiated. A script for running dask jobs on ARCHER2
+might look something like this:
+
+```
+from dask_jobqueue import SLURMCluster
+cluster = SLURMCluster(cores=128, 
+                       processes=16,
+                       memory='256GB',
+                       queue='standard',
+                       header_skip=['--mem'],
+                       job_extra=['--qos="standard"'],
+                       python='srun python',
+                       project='z19',
+                       walltime="01:00:00",
+                       shebang="#!/bin/bash --login",
+                       local_directory='$PWD'
+                       env_extra=['module load cray-python',
+                                  'export PYTHONUSERBASE=/work/t01/t01/auser/.local/',
+                                  'export PATH=$PYTHONUSERBASE/bin:$PATH',
+                                  'export PYTHONPATH=$PYTHONUSERBASE/lib/python3.8/site-packages:$PYTHONPATH'])
+
+
+
+cluster.scale(jobs=2)    # Deploy two single-node jobs
+
+from dask.distributed import Client
+client = Client(cluster)  # Connect this local process to remote workers
+
+# wait for jobs to arrive, depending on the queue, this may take some time
+import dask.array as da
+x = …              # Dask commands now use these distributed resources
+```
+
+This script can be run on the login nodes and it submits the Dask jobs
+to the job queue. Users should ensure that the computationally intensive
+work is done with the Dask commands which run on the compute nodes.
+
+The cluster object parameters specify the characteristics for running on a single compute node.
+The header_skip option is required as we are running on exclusive nodes where you should not
+specify the memory requirements, however Dask requires you to supply this option.
+
+Jobs are be deployed with the cluster.scale command, where the jobs option sets
+the number of single node jobs requested. Job scripts are generated
+(from the cluster object) and these are submitted to the queue to begin 
+running once the resources are available. You can check the status of the jobs by 
+running `squeue -u $USER` in a separate terminal.
+
+If you wish to see the generated job script you can use:
+
+```
+print(cluster.job_script())
+```
+
