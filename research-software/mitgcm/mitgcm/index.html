@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.11">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.1">
     
     
       
@@ -17,7 +17,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.50e68009.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.e8d9bf0c.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.e6a45f82.min.css">
@@ -791,13 +791,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#issue-with-dos-formatting-and-end-of-namelist-characters" class="md-nav__link">
-    Issue with DOS formatting and end-of-namelist characters
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#create-run-directory-and-link-files" class="md-nav__link">
     Create run directory and link files
   </a>
@@ -1536,13 +1529,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#issue-with-dos-formatting-and-end-of-namelist-characters" class="md-nav__link">
-    Issue with DOS formatting and end-of-namelist characters
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#create-run-directory-and-link-files" class="md-nav__link">
     Create run directory and link files
   </a>
@@ -1583,6 +1569,7 @@
 </a>
 
 
+
 <h1 id="mitgcm">MITgcm</h1>
 <p>The Massachusetts Institute of Technology General Circulation Model
 (MITgcm) is a numerical model designed for study of the atmosphere,
@@ -1616,20 +1603,7 @@ from the GitHub repository with the command</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>cp /work/y07/shared/apps/core/mitgcm/optfiles/linux_amd64_gnu_archer2 MITgcm/tools/build_options/
-</code></pre></div>
-</div>
-</div>
-</div>
-<p>Note that this build options file is still being tested for optimisation purposes. For working with large executables (e.g. adjoint configurations), edit the build options file to include the lines:</p>
-<pre><code>FFLAGS="$FFLAGS -mcmodel=large"
-CFLAGS="$CFLAGS -mcmodel=large"
-</code></pre>
-<p>You can also use <code>-mcmodel=medium</code> for a lower-memory options. When you are building your code with this optfile, use the GNU environment with</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Full system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>module load PrgEnv-gnu
+<div class="highlight"><pre><span></span><code>cp /work/n02/shared/mjmn02/ECCOv4/cases/cce/cce1/scripts/dev_linux_amd64_cray_archer2 MITgcm/tools/build_options/
 </code></pre></div>
 </div>
 </div>
@@ -1640,12 +1614,12 @@ the top MITgcm directory. Optionally, adding the MITgcm tools directory
 to your <code>PATH</code> environment variable makes it easier to use tools such as
 <code>genmake2</code>, and the <code>MITGCM_OPT</code> environment variable makes it easier to
 refer to pass the optfile to <code>genmake2</code>.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Full system</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Full system</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>export MITGCM_ROOTDIR=/path/to/MITgcm
 export PATH=$MITGCM_ROOTDIR/tools:$PATH
-export MITGCM_OPT=$MITGCM_ROOTDIR/tools/build_options/linux_amd64_gnu_archer2
+export MITGCM_OPT=$MITGCM_ROOTDIR/tools/build_options/dev_linux_amd64_cray_archer2
 </code></pre></div>
 </div>
 </div>
@@ -1660,14 +1634,16 @@ then run a command that resembles the following:</p>
 running</p>
 <pre><code>genmake2 -help
 </code></pre>
-<p>Finally, you may then build your executable with the <code>make depend</code>,
-<code>make</code> commands.</p>
+<p>Finally, you may then build your executable by running </p>
+<pre><code>make depend
+make
+</code></pre>
 <h2 id="running-mitgcm-on-archer2">Running MITgcm on ARCHER2</h2>
 <p>Once you have built your executable you can write a script like the
 following which will allow it to run on the ARCHER2 compute nodes. This
 example would run a pure MPI MITgcm simulation over 2 nodes of 128 cores
 each for up to one hour.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">Full system</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Full system</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
@@ -1698,11 +1674,6 @@ srun --distribution=block:block --hint=nomultithread ./mitgcmuv
 </div>
 </div>
 <h2 id="reproducing-the-ecco-version-4-release-4-state-estimate-on-archer2">Reproducing the ECCO version 4 (release 4) state estimate on ARCHER2</h2>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>These instructions apply only to the 4-cabinet and have not yet
-been tested on the full ARCHER2 system.</p>
-</div>
 <p>The ECCO version 4 state estimate (ECCOv4-r4) is an observationally-constrained numerical solution produced by the ECCO group at JPL. If you would like to reproduce the state estimate on ARCHER2 in order to create customised runs and experiments, follow the instructions below. They have been slightly modified from the JPL instructions for ARCHER2. </p>
 <p>For more information, see the ECCOv4-r4 website <a href="https://ecco-group.org/products-ECCO-V4r4.htm">https://ecco-group.org/products-ECCO-V4r4.htm</a></p>
 <h3 id="get-the-eccov4-r4-source-code">Get the ECCOv4-r4 source code</h3>
@@ -1743,40 +1714,23 @@ mkdir build
 cd build
 </code></pre>
 <p>If you haven't already, copy the ARCHER2 optfile into the MITgcm directories:</p>
-<pre><code>cp /work/n02/shared/MITgcm/optfiles/dev_linux_amd64_gnu_archer2 MITgcm/tools/build_options/
+<pre><code>cp /work/n02/shared/mjmn02/ECCOv4/cases/cce/cce1/scripts/dev_linux_amd64_cray_archer2 MITgcm/tools/build_options/
 </code></pre>
-<p>For working with large executables like ECCOv4-r4, edit the build options file to include the lines:</p>
-<pre><code>FFLAGS="$FFLAGS -mcmodel=large"
-CFLAGS="$CFLAGS -mcmodel=large"
-</code></pre>
-<p>You can also use <code>-mcmodel=medium</code> for a lower-memory options. When you are building your code with this optfile, use the GNU
-environment with</p>
-<pre><code>module restore PrgEnv-gnu
+<p>Load the NetCDF modules:</p>
+<pre><code>module load cray-hdf5
+module load cray-netcdf
 </code></pre>
 <p>If you haven't already, set your environment variables:</p>
-<pre><code>export MITGCM_ROOTDIR=/path/to/MITgcm
+<pre><code>export MITGCM_ROOTDIR=../../../../MITgcm
 export PATH=$MITGCM_ROOTDIR/tools:$PATH
-export MITGCM_OPT=$MITGCM_ROOTDIR/tools/build_options/linux_amd64_gfortran_archer2
+export MITGCM_OPT=$MITGCM_ROOTDIR/tools/build_options/dev_linux_amd64_cray_archer2
 </code></pre>
 <p>Next, compile the executable:</p>
-<pre><code>genmake2 -mods /path/to/additional/source -mpi -optfile $MITGCM_OPT
+<pre><code>genmake2 -mods ../code -mpi -optfile $MITGCM_OPT
 make depend
 make
 </code></pre>
 <p>Once you have compiled the model, you will have the mitgcmuv executable for ECCOv4-r4. </p>
-<h4 id="issue-with-dos-formatting-and-end-of-namelist-characters">Issue with DOS formatting and end-of-namelist characters</h4>
-<p>As of 16 December 2020, some of the ECCOv4-r4 files downloaded from the ECCO GitHub repository appear to be DOS formatted and/or have inconsistent end-of-namelist characters. This causes end-of-file runtime errors. You may need to manually replace the end-of-namelist "&amp;" characters in some of the namelist files with "/". The namelists are found here:</p>
-<pre><code>cd MITgcm/ECCOV4/release4/input_init/NAMELIST/
-</code></pre>
-<p>The files with "&amp;" end-of-namelist characters are:</p>
-<pre><code>data.autodiff
-data.salt_plume
-data.layers
-data.optim
-data.ptracers
-data.grdchk
-</code></pre>
-<p>So far, this has only been tested with the gnu compiler (gcc 10.1.0). </p>
 <h4 id="create-run-directory-and-link-files">Create run directory and link files</h4>
 <p>In order to run the model, you need to create a run directory and link/copy the appropriate files. First, navigate to your directory on the <code>work</code> filesystem. From the <code>MITgcm/ECCOV4/release4</code> directory:</p>
 <pre><code>mkdir run
@@ -1962,10 +1916,10 @@ cp -p ../build_ad/mitgcmuv_ad .
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["tabs"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.092fa1f6.min.js"}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["tabs"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.bd0b6b67.min.js"}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.5a9542cf.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.8aa65030.min.js"></script>
       
     
   </body>
