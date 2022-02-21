@@ -35,21 +35,9 @@ You should then copy the ARCHER2 optfile into the MITgcm directories. You may us
 
 === "Full system"
     ```bash
-    cp /work/y07/shared/apps/core/mitgcm/optfiles/linux_amd64_gnu_archer2 MITgcm/tools/build_options/
+    cp /work/n02/shared/mjmn02/ECCOv4/cases/cce/cce1/scripts/dev_linux_amd64_cray_archer2 MITgcm/tools/build_options/
     ```
-
-Note that this build options file is still being tested for optimisation purposes. For working with large executables (e.g. adjoint configurations), edit the build options file to include the lines:
-
-    FFLAGS="$FFLAGS -mcmodel=large"
-    CFLAGS="$CFLAGS -mcmodel=large"
-
-You can also use `-mcmodel=medium` for a lower-memory options. When you are building your code with this optfile, use the GNU environment with
-
-=== "Full system"
-    ```
-    module load PrgEnv-gnu
-    ```
-
+  
 You should also set the following environment variables.
 `MITGCM_ROOTDIR` is used to locate the source code and should point to
 the top MITgcm directory. Optionally, adding the MITgcm tools directory
@@ -61,7 +49,7 @@ refer to pass the optfile to `genmake2`.
     ```
     export MITGCM_ROOTDIR=/path/to/MITgcm
     export PATH=$MITGCM_ROOTDIR/tools:$PATH
-    export MITGCM_OPT=$MITGCM_ROOTDIR/tools/build_options/linux_amd64_gnu_archer2
+    export MITGCM_OPT=$MITGCM_ROOTDIR/tools/build_options/dev_linux_amd64_cray_archer2
     ```
 
 When using `genmake2` to create the Makefile, you will need to specify the
@@ -76,8 +64,10 @@ running
 
     genmake2 -help
 
-Finally, you may then build your executable with the `make depend`,
-`make` commands.
+Finally, you may then build your executable by running 
+
+    make depend
+    make
 
 ## Running MITgcm on ARCHER2
 
@@ -114,10 +104,6 @@ each for up to one hour.
     ```
     
 ## Reproducing the ECCO version 4 (release 4) state estimate on ARCHER2
-
-!!! note
-    These instructions apply only to the 4-cabinet and have not yet
-    been tested on the full ARCHER2 system.
 
 The ECCO version 4 state estimate (ECCOv4-r4) is an observationally-constrained numerical solution produced by the ECCO group at JPL. If you would like to reproduce the state estimate on ARCHER2 in order to create customised runs and experiments, follow the instructions below. They have been slightly modified from the JPL instructions for ARCHER2. 
 
@@ -176,48 +162,26 @@ The steps for building the ECCOv4-r4 instance of MITgcm are very similar to thos
 
 If you haven't already, copy the ARCHER2 optfile into the MITgcm directories:
 
-    cp /work/n02/shared/MITgcm/optfiles/dev_linux_amd64_gnu_archer2 MITgcm/tools/build_options/
+    cp /work/n02/shared/mjmn02/ECCOv4/cases/cce/cce1/scripts/dev_linux_amd64_cray_archer2 MITgcm/tools/build_options/
 
-For working with large executables like ECCOv4-r4, edit the build options file to include the lines:
+Load the NetCDF modules:
 
-    FFLAGS="$FFLAGS -mcmodel=large"
-    CFLAGS="$CFLAGS -mcmodel=large"
-
-You can also use `-mcmodel=medium` for a lower-memory options. When you are building your code with this optfile, use the GNU
-environment with
-
-    module restore PrgEnv-gnu
+    module load cray-hdf5
+    module load cray-netcdf
 
 If you haven't already, set your environment variables:
 
-    export MITGCM_ROOTDIR=/path/to/MITgcm
+    export MITGCM_ROOTDIR=../../../../MITgcm
     export PATH=$MITGCM_ROOTDIR/tools:$PATH
-    export MITGCM_OPT=$MITGCM_ROOTDIR/tools/build_options/linux_amd64_gfortran_archer2
+    export MITGCM_OPT=$MITGCM_ROOTDIR/tools/build_options/dev_linux_amd64_cray_archer2
     
 Next, compile the executable:
 
-    genmake2 -mods /path/to/additional/source -mpi -optfile $MITGCM_OPT
+    genmake2 -mods ../code -mpi -optfile $MITGCM_OPT
     make depend
     make
     
 Once you have compiled the model, you will have the mitgcmuv executable for ECCOv4-r4. 
-
-#### Issue with DOS formatting and end-of-namelist characters
-
-As of 16 December 2020, some of the ECCOv4-r4 files downloaded from the ECCO GitHub repository appear to be DOS formatted and/or have inconsistent end-of-namelist characters. This causes end-of-file runtime errors. You may need to manually replace the end-of-namelist "&" characters in some of the namelist files with "/". The namelists are found here:
-
-    cd MITgcm/ECCOV4/release4/input_init/NAMELIST/
-  
-The files with "&" end-of-namelist characters are:
-
-    data.autodiff
-    data.salt_plume
-    data.layers
-    data.optim
-    data.ptracers
-    data.grdchk
-    
-So far, this has only been tested with the gnu compiler (gcc 10.1.0). 
 
 #### Create run directory and link files
 
