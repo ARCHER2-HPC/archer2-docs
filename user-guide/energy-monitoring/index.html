@@ -13,7 +13,7 @@
     
     
       
-        <title>HYPRE - ARCHER2 User Documentation</title>
+        <title>Energy monitoring - ARCHER2 User Documentation</title>
       
     
     
@@ -60,7 +60,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#hypre" class="md-skip">
+        <a href="#energy-monitoring-on-archer2" class="md-skip">
           Skip to content
         </a>
       
@@ -92,7 +92,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              HYPRE
+              Energy monitoring
             
           </span>
         </div>
@@ -320,12 +320,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
       
       
       
@@ -348,7 +350,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         Overview
       </a>
     </li>
@@ -362,7 +364,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/hardware/" class="md-nav__link">
+      <a href="../hardware/" class="md-nav__link">
         Hardware
       </a>
     </li>
@@ -376,7 +378,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/connecting/" class="md-nav__link">
+      <a href="../connecting/" class="md-nav__link">
         Connecting to ARCHER2
       </a>
     </li>
@@ -390,7 +392,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/data/" class="md-nav__link">
+      <a href="../data/" class="md-nav__link">
         Data management and transfer
       </a>
     </li>
@@ -404,7 +406,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/sw-environment/" class="md-nav__link">
+      <a href="../sw-environment/" class="md-nav__link">
         Software environment
       </a>
     </li>
@@ -418,7 +420,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/scheduler/" class="md-nav__link">
+      <a href="../scheduler/" class="md-nav__link">
         Running jobs
       </a>
     </li>
@@ -432,7 +434,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/io/" class="md-nav__link">
+      <a href="../io/" class="md-nav__link">
         I/O and file systems
       </a>
     </li>
@@ -446,7 +448,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/dev-environment/" class="md-nav__link">
+      <a href="../dev-environment/" class="md-nav__link">
         Application development environment
       </a>
     </li>
@@ -460,7 +462,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/containers/" class="md-nav__link">
+      <a href="../containers/" class="md-nav__link">
         Containers
       </a>
     </li>
@@ -474,7 +476,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/python/" class="md-nav__link">
+      <a href="../python/" class="md-nav__link">
         Using Python
       </a>
     </li>
@@ -488,7 +490,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/analysis/" class="md-nav__link">
+      <a href="../analysis/" class="md-nav__link">
         Data analysis
       </a>
     </li>
@@ -502,7 +504,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/debug/" class="md-nav__link">
+      <a href="../debug/" class="md-nav__link">
         Debugging
       </a>
     </li>
@@ -516,7 +518,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/profile/" class="md-nav__link">
+      <a href="../profile/" class="md-nav__link">
         Profiling
       </a>
     </li>
@@ -530,7 +532,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/tuning/" class="md-nav__link">
+      <a href="../tuning/" class="md-nav__link">
         Performance tuning
       </a>
     </li>
@@ -542,11 +544,52 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../user-guide/energy-monitoring/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Energy monitoring
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Energy monitoring
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#using-sacct-to-get-energy-usage-for-individual-jobs" class="md-nav__link">
+    Using sacct to get energy usage for individual jobs
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -864,14 +907,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
       
       
       
@@ -894,7 +935,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../../software-libraries/" class="md-nav__link">
         Overview
       </a>
     </li>
@@ -908,7 +949,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../libsci/" class="md-nav__link">
+      <a href="../../software-libraries/libsci/" class="md-nav__link">
         HPE Cray LibSci: BLAS, LAPACK, ScaLAPACK
       </a>
     </li>
@@ -922,7 +963,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../fftw/" class="md-nav__link">
+      <a href="../../software-libraries/fftw/" class="md-nav__link">
         FFTW
       </a>
     </li>
@@ -936,7 +977,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../hdf5/" class="md-nav__link">
+      <a href="../../software-libraries/hdf5/" class="md-nav__link">
         HDF5
       </a>
     </li>
@@ -950,7 +991,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../netcdf/" class="md-nav__link">
+      <a href="../../software-libraries/netcdf/" class="md-nav__link">
         NetCDF
       </a>
     </li>
@@ -964,7 +1005,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../adios/" class="md-nav__link">
+      <a href="../../software-libraries/adios/" class="md-nav__link">
         ADIOS
       </a>
     </li>
@@ -978,7 +1019,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../arpack/" class="md-nav__link">
+      <a href="../../software-libraries/arpack/" class="md-nav__link">
         ARPACK
       </a>
     </li>
@@ -992,7 +1033,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../boost/" class="md-nav__link">
+      <a href="../../software-libraries/boost/" class="md-nav__link">
         Boost
       </a>
     </li>
@@ -1006,7 +1047,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../eigen/" class="md-nav__link">
+      <a href="../../software-libraries/eigen/" class="md-nav__link">
         Eigen
       </a>
     </li>
@@ -1020,7 +1061,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../glm/" class="md-nav__link">
+      <a href="../../software-libraries/glm/" class="md-nav__link">
         GLM
       </a>
     </li>
@@ -1032,79 +1073,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          HYPRE
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../software-libraries/hypre/" class="md-nav__link">
         HYPRE
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#compiling-and-linking-with-hypre" class="md-nav__link">
-    Compiling and linking with HYPRE
-  </a>
-  
-    <nav class="md-nav" aria-label="Compiling and linking with HYPRE">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#version-history" class="md-nav__link">
-    Version history
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#compiling-your-own-version" class="md-nav__link">
-    Compiling your own version
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#resources" class="md-nav__link">
-    Resources
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1116,7 +1089,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../matio/" class="md-nav__link">
+      <a href="../../software-libraries/matio/" class="md-nav__link">
         Matio
       </a>
     </li>
@@ -1130,7 +1103,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../mkl/" class="md-nav__link">
+      <a href="../../software-libraries/mkl/" class="md-nav__link">
         Intel MKL
       </a>
     </li>
@@ -1144,7 +1117,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../mumps/" class="md-nav__link">
+      <a href="../../software-libraries/mumps/" class="md-nav__link">
         MUMPS
       </a>
     </li>
@@ -1158,7 +1131,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../petsc/" class="md-nav__link">
+      <a href="../../software-libraries/petsc/" class="md-nav__link">
         PETSc
       </a>
     </li>
@@ -1172,7 +1145,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../metis/" class="md-nav__link">
+      <a href="../../software-libraries/metis/" class="md-nav__link">
         Metis/Parmetis
       </a>
     </li>
@@ -1186,7 +1159,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../scotch/" class="md-nav__link">
+      <a href="../../software-libraries/scotch/" class="md-nav__link">
         Scotch/PT-Scotch
       </a>
     </li>
@@ -1200,7 +1173,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../slepc/" class="md-nav__link">
+      <a href="../../software-libraries/slepc/" class="md-nav__link">
         SLEPc
       </a>
     </li>
@@ -1214,7 +1187,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../superlu/" class="md-nav__link">
+      <a href="../../software-libraries/superlu/" class="md-nav__link">
         SuperLU/SuperLU_DIST
       </a>
     </li>
@@ -1228,7 +1201,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../trilinos/" class="md-nav__link">
+      <a href="../../software-libraries/trilinos/" class="md-nav__link">
         Trilinos
       </a>
     </li>
@@ -1451,35 +1424,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#compiling-and-linking-with-hypre" class="md-nav__link">
-    Compiling and linking with HYPRE
-  </a>
-  
-    <nav class="md-nav" aria-label="Compiling and linking with HYPRE">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#version-history" class="md-nav__link">
-    Version history
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#compiling-your-own-version" class="md-nav__link">
-    Compiling your own version
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#resources" class="md-nav__link">
-    Resources
+  <a href="#using-sacct-to-get-energy-usage-for-individual-jobs" class="md-nav__link">
+    Using sacct to get energy usage for individual jobs
   </a>
   
 </li>
@@ -1496,61 +1442,35 @@
             <article class="md-content__inner md-typeset">
               
                 
-<a href="https://github.com/ARCHER2-HPC/archer2-docs/edit/main/docs/software-libraries/hypre.md" title="Edit this page" class="md-content__button md-icon">
+<a href="https://github.com/ARCHER2-HPC/archer2-docs/edit/main/docs/user-guide/energy-monitoring.md" title="Edit this page" class="md-content__button md-icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
 </a>
 
 
 
-<h1 id="hypre">HYPRE</h1>
-<p>HYPRE is a library of linear solvers for structured and unstructured
-problems with a particular emphasis on multigrid. It is a product of
-the Lawrence Livermore National Laboratory and is distrubted under
-either the MIT license or the Apache license.</p>
-<h2 id="compiling-and-linking-with-hypre">Compiling and linking with HYPRE</h2>
-<ul>
-<li><code>module load hypre</code></li>
-</ul>
-<p>To compile and link an application with the HYPRE libraries, load the
-<code>hypre</code> module and use the compiler wrappers <code>cc</code>, <code>CC</code>, or <code>ftn</code> in
-the usual way. The relevant include files and libraries will be
-introduced automatically.</p>
-<p>Two versions of HYPRE are included: one with, and one without, OpenMP.
-The relevant version will be selected if e.g., <code>-fopenmp</code> is included
-in the compile or link stage.</p>
-<p>The <code>hypre</code> module defines the environment variable <code>HYPRE_DIR</code> which
-will show the root of the installation for the current programming
-environment if required.</p>
-<h3 id="version-history">Version history</h3>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label><label for="__tabbed_1_2">4-cabinet system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<ul>
-<li>Module <code>hypre/2.18.0</code> installed October 2021 (PE 21.04)</li>
-</ul>
-</div>
-<div class="tabbed-block">
-<ul>
-<li>Module <code>hypre/2.18.0</code> installed January 2021</li>
-</ul>
-</div>
-</div>
-</div>
-<h2 id="compiling-your-own-version">Compiling your own version</h2>
-<p>The current supported version on Archer2 can be built using the script
-from the Archer2 repository:
-<div class="highlight"><pre><span></span><code>$ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
-$ cd pe-scripts
-$ git checkout modules-2021-10
-$ ./sh/tpsl/hypre.sh --prefix=/path/to/install/location
-</code></pre></div>
-where the <code>--prefix</code> option determines the install directory. See the
-Archer2 <a href="https://github.com/ARCHER2-HPC/pe-scripts/tree/cse-develop">github repository</a> for more information.</p>
-<h2 id="resources">Resources</h2>
-<p>HYPRE <a href="https://computing.llnl.gov/projects/hypre-scalable-linear-solvers-multigrid-methods">home page</a></p>
-<p>The latest HYPRE <a href="https://hypre.readthedocs.io/en/latest/">user manual</a> (HTML)</p>
-<p>An older <a href="https://computing.llnl.gov/sites/default/files/public/hypre-2.11.2_usr_manual.pdf">pdf version</a></p>
-<p>HYPRE <a href="https://github.com/hypre-space/hypre">github repository</a></p>
+<h1 id="energy-monitoring-on-archer2">Energy monitoring on ARCHER2</h1>
+<h2 id="using-sacct-to-get-energy-usage-for-individual-jobs">Using sacct to get energy usage for individual jobs</h2>
+<p>Energy usage for a particular job may be obtained using the <code>sacct</code> command. For instance</p>
+<pre><code>sacct -j 00001 --format=JobID,Elapsed,ConsumedEnergy
+</code></pre>
+<p>will provide the elapsed time and consumed energy in joules for the job(s) specified with <code>-j</code>. In this case we would
+get something like</p>
+<pre><code>       JobID    Elapsed ConsumedEnergy 
+------------ ---------- -------------- 
+00001          00:01:50         59.53K 
+00001.bat+     00:01:50         59.16K 
+00001.ext+     00:01:50         59.53K 
+00001.0        00:01:44         58.80K
+</code></pre>
+<p>In this case we can see that the job consumed 59.53kJ for a run lasting 1 minute and 50 seconds. To convert to kWh we
+can multiply the energy in joules by 2.78e-7, in this case resulting in 0.0165kWh. </p>
+<p>Data for completed jobs is stored for up to 24 hours after the job completes, so usage statistics must be gathered soon
+after the job finishes. </p>
+<p>In addition to energy statistics <code>sacct</code> provides a number of other statistics that can be specified to the <code>--format</code>
+option, the full list of which can be viewed with</p>
+<pre><code>sacct --helpformat
+</code></pre>
+<p>or using the <code>man</code> pages. </p>
 
               
             </article>
@@ -1564,7 +1484,7 @@ Archer2 <a href="https://github.com/ARCHER2-HPC/pe-scripts/tree/cse-develop">git
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../glm/" class="md-footer__link md-footer__link--prev" aria-label="Previous: GLM" rel="prev">
+        <a href="../tuning/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Performance tuning" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1573,20 +1493,20 @@ Archer2 <a href="https://github.com/ARCHER2-HPC/pe-scripts/tree/cse-develop">git
               <span class="md-footer__direction">
                 Previous
               </span>
-              GLM
+              Performance tuning
             </div>
           </div>
         </a>
       
       
         
-        <a href="../matio/" class="md-footer__link md-footer__link--next" aria-label="Next: Matio" rel="next">
+        <a href="../../research-software/" class="md-footer__link md-footer__link--next" aria-label="Next: Overview" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Matio
+              Overview
             </div>
           </div>
           <div class="md-footer__button md-icon">
