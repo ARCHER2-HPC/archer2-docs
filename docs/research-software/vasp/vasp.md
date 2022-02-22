@@ -188,14 +188,23 @@ versions in the build instructions GitHub repository. See:
 
 ## Tips for using VASP on ARCHER2
 
-The performance of VASP depends on the performance of MPI collective operations 
-and the choice of VASP parallelisation parameters (`NCORE`/`NPAR` and `KPAR`).
+The performance of VASP depends on the version of VASP used, the performance
+of MPI collective operations, the choice of VASP parallelisation parameters
+(`NCORE`/`NPAR` and `KPAR`) and how many MPI processes per node are used.
 
-**MPI collective performance:** To ensure that the MPI collective operations give the best performance, you should
-ensure that consecutive MPI rank IDs are pinned to consecutive cores on a node
-to maximise shared memory optimisations in NUMA regions. In practice, the recommended
-options to the `srun` command: `--hint=nomultithread` and `--distribution=block:block`
-should always be specified when running VASP on ARCHER2.
+**VASP version** For the benchmarks studied, VASP 6.3.0 usually gives
+better performance than the older VASP 5.4.4.pl2. The exception is for when
+using higher node counts (above 8 nodes) for the CdTe benchmark (which uses
+`vasp_ncl`). Users should generally use VASP 6.3.0 but it may be worth evaluating
+the performance fo VASP 5.4.4.pl2 for your case if you are running larger
+calculations, particularly when using the non-collinear version of VASP.
+
+**MPI collective performance:** To ensure that the MPI collective operations give
+the best performance, you should ensure that consecutive MPI rank IDs are pinned to
+consecutive cores on a node to maximise shared memory optimisations in NUMA regions.
+In practice, the recommended options to the `srun` command: `--hint=nomultithread`
+and `--distribution=block:block` should always be specified when running VASP on
+ARCHER2.
 
 **KPAR:** You should always use the maximum value of `KPAR` that is possible for
 your calculation within the memory limits of what is possible.
@@ -209,6 +218,20 @@ choices for the benchmarks we have run on ARCHER2 that may serve as a useful sta
 point. The performance difference from choosing different values can vary by up to
 100% so it is worth spending time investigating this.
 
+**MPI processes per node** We found that it is sometimes beneficial to performance to
+use less MPI processes per node than the total number of cores per node in some cases
+for the benchmarks used. We found that for the large TiO2 &Gamma;-point calculation it
+was best to use just 64 MPI processes per node (leaving half of the cores idle). For
+the CdTe non-collinear, multiple k-point benchmark, best performance was achieved when
+all 128 cores on the node had an MPI process (128 MPI processes per node).
+
+**OpenMP threads** The use of OpenMP threads did not improve performance or scaling
+for either of the benchmarks used. This was true even for the TiO2 benchmark case where 
+we used only 64 MPI processes per node, the performance was better with 64 idle cores
+on a node rather than using the spare core for OpenMP threads. This seems to be because
+when OpenMP threading is used, `NCORE` is fixed at a value of 1, which gives poor
+performance.
+
 ## VASP performance data on ARCHER2
 
 VASP performance data on ARCHER2 is currently available for two
@@ -220,36 +243,107 @@ different benchmark systems:
 ### TiO_2 Supercell, pure DFT functional, Gamma-point, 1080 atoms
 
 Basic information:
+
 - Uses `vasp_gam`
+- `NELM = 10`
 - [Full TiO2 performance data](https://github.com/hpc-uk/archer-benchmarks/blob/main/others/VASP/analysis/VASP_TiO2_perf_analysis.ipynb)
 
-Performance summary (best choices of NCORE at different node counts). All tests with
-`vasp/5/5.4.4.pl2-gcc10-cpe2103` module on the ARCHER2 4-cabinet system.
+Performance summary for best choices of MPI processes per node and NCORE at
+different node counts. Performance reported as timing for `LOOP+` in seconds.
 
-| Nodes | MPI processes per node | Total MPI processes | NCORE | Maximum LOOP time (s) |
-|------:|-----------------------:|--------------------:|------:|----------------------:|
-|     1 |                    128 |                 128 |    32 |                   387 |
-|     2 |                    128 |                 256 |   128 |                   170 |
-|     4 |                    128 |                 512 |   128 |                    88 |
-|     8 |                    128 |                1024 |   128 |                    47 |
-|    16 |                    128 |                2046 |   128 |                    28 |
-|    32 |                    128 |                4096 |   128 |                    16 |
+Performance summary:
+
+- Best performance from VASP 6.3.0
+- Best performance from 64 MPI processes per node - leaves 64 cores idle on each node
+- Best performance with `NCORE = 64`
+- Scales well to 16 nodes
+- Using OpenMP threads results in worse performance
+
+#### Full system, VASP 6.3.0
+
+ - `vasp/6/6.3.0` module
+ - GCC 10.2.0
+ - AOCL 3.1 for BLAS/LAPACK/ScaLAPACK and FFTW
+
+| Nodes | MPI processes per node | Total MPI processes | NCORE | 6.3.0 (full system) |
+|------:|-----------------------:|--------------------:|------:|--------------------:|
+|     1 |                     64 |                 128 |    64 |                3318 |
+|     2 |                     64 |                 256 |    64 |                1580 |
+|     4 |                     64 |                 512 |    64 |                 815 |
+|     8 |                     64 |                 512 |    64 |                 416 |
+|    16 |                     64 |                1024 |    64 |                 238 |
+|    32 |                     64 |                2048 |    64 |                 204 |
+|    64 |                     64 |                4096 |    64 |                 246 |
+
+#### Full system, 5.4.4.pl2
+
+ - `vasp/5/5.4.4.pl2` module
+ - GCC 11.2.0 with
+ - HPE Cray LibSci 21.09 for BLAS/LAPACK/ScaLAPACK and FFTW 3.3.8.11
+
+| Nodes | MPI processes per node | Total MPI processes | NCORE | 5.4.4.pl2 (full system) |
+|------:|-----------------------:|--------------------:|------:|------------------------:|
+|     1 |                     64 |                  64 |    64 |                    3441 |
+|     2 |                     64 |                 128 |    64 |                    1605 |
+|     4 |                     64 |                 256 |    64 |                     827 |
+|     8 |                     64 |                 512 |    64 |                     457 |
+|    16 |                     64 |                1024 |    64 |                     249 |
+|    32 |                     64 |                2048 |    64 |                     210 |
+|    64 |                     64 |                4096 |    64 |                     244 |
+
 
 ### CdTe Supercell, hybrid DFT functional. 8 k-points, 65 atoms
 
 Basic information:
-  - Uses `vasp_ncl`
-  - [CdTe performance data](https://github.com/hpc-uk/archer-benchmarks/blob/main/others/VASP/analysis/VASP_CdTe_perf_analysis.ipynb)
 
-  Performance summary (best choices of NCORE and KPAR at different node counts). All tests with
-`vasp/5/5.4.4.pl2-gcc10-cpe2103` module on ARCHER2 4-cabinet system.
+- Uses `vasp_ncl`
+- `NELM = 6`
+- [CdTe performance data](https://github.com/hpc-uk/archer-benchmarks/blob/main/others/VASP/analysis/VASP_CdTe_perf_analysis.ipynb)
 
-| Nodes | MPI processes per node | Total MPI processes | NCORE | KPAR | Maximum LOOP time (s) |
-|------:|-----------------------:|--------------------:|------:|-----:|----------------------:|
-|     1 |                    128 |                 128 |     2 |    2 |                 13956 |
-|     2 |                    128 |                 256 |     4 |    2 |                  6494 |
-|     4 |                    128 |                 512 |     4 |    2 |                  3061 |
-|     8 |                    128 |                1024 |     4 |    2 |                  1695 |
-|    16 |                    128 |                2046 |    16 |    2 |                  1132 |
-|    32 |                    128 |                4096 |    16 |    2 |                   593 |
-|    64 |                    128 |                8192 |    16 |    2 |                   459 |
+Performance summary:
+
+- VASP version:
+  + Up to 8 nodes: best performance from VASP 6.3.0
+  + 16 nodes or more: best performance from VASP 5.4.4.pl2
+- Cores per node:
+  + Best performance usually from 128 MPI processes per node - all cores occupied
+  + At 64 nodes, best performance from 64 MPI processes per node - 64 core idle
+- `NCORE`:
+  + Up to 8 nodes: best performance with `NCORE = 4` (VASP 6.3.0)
+  + 16 nodes or more: best performance with `NCORE = 16` (VASP 5.4.4.pl2)
+- `KPAR = 2` is maximum that can be used on standard memory nodes 
+- Scales well to 64 nodes
+- Using OpenMP threads results in worse performance
+
+#### Full system, VASP 6.3.0
+
+ - `vasp/6/6.3.0` module
+ - GCC 10.2.0
+ - AOCL 3.1 for BLAS/LAPACK/ScaLAPACK and FFTW
+
+| Nodes | MPI processes per node | Total MPI processes | NCORE | KPAR | 5.4.4.pl2 (4-cab system) |
+|------:|-----------------------:|--------------------:|------:|-----:|-------------------------:|
+|     1 |                    128 |                 128 |     4 |    2 |                    19916 |
+|     2 |                    128 |                 256 |     4 |    2 |                    10492 |
+|     4 |                    128 |                 512 |     4 |    2 |                     5849 |
+|     8 |                    128 |                1024 |     4 |    2 |                     3263 |
+|    16 |                    128 |                2048 |     8 |    2 |                     2135 |
+|    32 |                     64 |                2048 |     8 |    2 |                     1430 |
+|    64 |                     64 |                4096 |    16 |    2 |                      954 |
+
+#### Full system, 5.4.4.pl2
+
+ - `vasp/5/5.4.4.pl2` module
+ - GCC 11.2.0 with
+ - HPE Cray LibSci 21.09 for BLAS/LAPACK/ScaLAPACK and FFTW 3.3.8
+
+| Nodes | MPI processes per node | Total MPI processes | NCORE | KPAR | 5.4.4.pl2 (4-cab system) |
+|------:|-----------------------:|--------------------:|------:|-----:|-------------------------:|
+|     1 |                    128 |                 128 |     4 |    2 |                    26362 |
+|     2 |                    128 |                 256 |     4 |    2 |                    13436 |
+|     4 |                    128 |                 512 |     4 |    2 |                     7256 |
+|     8 |                    128 |                1024 |     4 |    2 |                     4003 |
+|    16 |                     64 |                1024 |    16 |    2 |                     2093 |
+|    32 |                     64 |                2048 |    16 |    2 |                     1264 |
+|    64 |                     64 |                4096 |    16 |    2 |                      853 |
+
