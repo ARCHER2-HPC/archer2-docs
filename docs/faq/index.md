@@ -82,7 +82,7 @@ of its value when it fails (so if you have ``--tasks-per-node=128``, reduce it
 to ``--tasks-per-node=64``).
 
 If the problem persists on underpopulated node, this may be a result of a
-known issue with the default version of MPICH. You can find more information
+known issue with the underlying libfabric on ARCHER2. You can find more information
 on this issue (including a temporary workaround) in the
 [Known Issues](https://docs.archer2.ac.uk/known-issues/) section.
 
