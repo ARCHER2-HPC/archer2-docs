@@ -37,7 +37,7 @@ module load cray-fftw
 export LD_LIBRARY_PATH=$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH
 ```
 
-THe issue arises because the compilers encode a default path to libraries (`/opt/cray/pe/lib64`) into the `RUNPATH` of 
+The issue arises because the compilers encode a default path to libraries (`/opt/cray/pe/lib64`) into the `RUNPATH` of 
 the executable so that you do not need to load all the library module dependencies at runtime. The libraries that the
 executable finds at `/opt/cray/pe/lib64` are soft links to the default versions of the libraries. There is an error in 
 the soft link to the FFTW libraries in this directory such they point to the Haswell version of the FFTW libraries rather
