@@ -8,7 +8,7 @@ active investigation by HPE Cray and the wider service.
 
 ### OOM due to memory leak in libfabric (Added: 2022-02-23)
 
-There is an underlying memory leak in the version of libfabric on ArCHER2 (that comes as part of the underlying
+There is an underlying memory leak in the version of libfabric on ARCHER2 (that comes as part of the underlying
 SLES operating system) which can cause jobs to fail with an OOM (Out Of Memory) error. This issue will be addressed
 in a future upgrade of the ARCHER2 operating system. You can workaround this issue by setting the following 
 environment variable in your job submission scripts:
@@ -37,8 +37,11 @@ module load cray-fftw
 export LD_LIBRARY_PATH=$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH
 ```
 
-This will make sure that the application uses the correct libraries rather than those that are incorrectly linked from the
-default location at `/opt/cray/pe/lib64` which is encoded into the executable's `RUNPATH`.
+THe issue arises because the compilers encode a default path to libraries (`/opt/cray/pe/lib64`) into the `RUNPATH` of 
+the executable so that you do not need to load all the library module dependencies at runtime. The libraries that the
+executable finds at `/opt/cray/pe/lib64` are soft links to the default versions of the libraries. There is an error in 
+the soft link to the FFTW libraries in this directory such they point to the Haswell version of the FFTW libraries rather
+than the AMD EPYC (Rome) versions of the libraries.
 
 ### Occasionally user jobs can cause compute nodes to crash (Added: 2021-11-22)
 
