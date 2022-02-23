@@ -6,6 +6,43 @@ active investigation by HPE Cray and the wider service.
 
 ## Open Issues
 
+### OOM due to memory leak in libfabric (Added: 2022-02-23)
+
+There is an underlying memory leak in the version of libfabric on ARCHER2 (that comes as part of the underlying
+SLES operating system) which can cause jobs to fail with an OOM (Out Of Memory) error. This issue will be addressed
+in a future upgrade of the ARCHER2 operating system. You can workaround this issue by setting the following 
+environment variable in your job submission scripts:
+
+```
+export FI_MR_CACHE_MAX_COUNT=0
+```
+
+This may come with a performance penalty (though in many cases, we have not seen a noticeable performance impact).
+
+If you continue to see OOM errors after setting this environment variable and do not believe that your application
+should be requesting too much memory then please
+[contact the service desk](https://www.archer2.ac.uk/support-access/servicedesk.html)
+
+### Default FFTW library points to Intel Haswell version rather than AMD Rome at runtime (Added: 2022-02-23)
+
+By default, and at runtime, the standard FFTW library version (from the module `cray-fftw`) will link to a version of the
+FFTW library optimised for the Intel Haswell architecture rather than the AMD EPYC architecture. This does not cause 
+errors as the instruction set is compatible between the two architectures but may not provide optimal performance. The
+performance differences observed have been small (&lt; 5%) but if you want to ensure that applications using the `cray-fftw`
+module use the correct version of the libraries at runtime, you should add the following lines to your job submission
+script:
+
+```
+module load cray-fftw
+export LD_LIBRARY_PATH=$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH
+```
+
+The issue arises because the compilers encode a default path to libraries (`/opt/cray/pe/lib64`) into the `RUNPATH` of 
+the executable so that you do not need to load all the library module dependencies at runtime. The libraries that the
+executable finds at `/opt/cray/pe/lib64` are soft links to the default versions of the libraries. There is an error in 
+the soft link to the FFTW libraries in this directory such they point to the Haswell version of the FFTW libraries rather
+than the AMD EPYC (Rome) versions of the libraries.
+
 ### Occasionally user jobs can cause compute nodes to crash (Added: 2021-11-22)
 
 In rare circumstances, it is possible for a user job to crash the compute nodes on which it is running. This is only evident to the user as a failed job: there is no obvious sign that the nodes have crashed. Therefore, if we identify a user whose jobs are causing nodes to crash, we may need to work with them to stop this happening.
@@ -49,8 +86,6 @@ There are several outstanding issues for the centrally installed Research Softwa
 Users should also check individual software pages, for known limitations/ caveats, for the use of software on the Cray EX platform and Cray Linux Environment.
 
 ### Issues with RPATH for non-default library versions
-
-- **Systems affected:** ARCHER2 full system, ARCHER2 4-cabinet system
 
 When you compile applications against non-default versions of libraries within the HPE
 Cray software stack and use the environment variable `CRAY_ADD_RPATH=yes` to try and encode
