@@ -2048,13 +2048,19 @@ information on running jobs:</p>
   Durham.)</li>
 </ul>
 <p>We provide examples of the use of these three commands below.</p>
+<p>For the <code>sacct</code> and <code>sstat</code> command, the memory properties we print out below are:</p>
+<ul>
+<li><code>AveRSS</code> - The mean memory use per node over the length of the job</li>
+<li><code>MaxRSS</code> - The maximum memory use per node measureed during the job</li>
+<li><code>MaxRSSTask</code> - The maximum memory use from any process in the job</li>
+</ul>
 <h3 id="example-1-sstat-for-running-jobs">Example 1: <code>sstat</code> for running jobs</h3>
 <p>To display the current memory use of a running job with the ID 123456:</p>
-<div class="highlight"><pre><span></span><code>auser@ln01:/work/t01/t01/auser&gt; sstat --format=JobID,AveCPU,AveRSS,MaxRSS,MaxRSSTask,AveVMSize,MaxVMSize -j 123456
+<div class="highlight"><pre><span></span><code>auser@ln01:/work/t01/t01/auser&gt; sstat --format=JobID,AveCPU,AveRSS,MaxRSS,MaxRSSTask -j 123456
 </code></pre></div>
 <h3 id="example-2-sacct-for-finished-jobs">Example 2: <code>sacct</code> for finished jobs</h3>
 <p>To display the memory use of a completed job with the ID 123456:</p>
-<div class="highlight"><pre><span></span><code>auser@ln01:/work/t01/t01/auser&gt; sacct --format=JobID,JobName,AveRSS,MaxRSS,MaxRSSTask,AveVMSize,MaxVMSize -j 123456
+<div class="highlight"><pre><span></span><code>auser@ln01:/work/t01/t01/auser&gt; sacct --format=JobID,JobName,AveRSS,MaxRSS,MaxRSSTask -j 123456
 </code></pre></div>
 <p>Another usage of <code>sacct</code> is to display when a job was submitted, started running and ended for a particular user:</p>
 <div class="highlight"><pre><span></span><code>auser@ln01:/work/t01/t01/auser&gt; sacct --format=JobID,Submit,Start,End -u auser
