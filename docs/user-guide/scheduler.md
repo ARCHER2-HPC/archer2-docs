@@ -1184,7 +1184,7 @@ script for this example would look like:
 
 ## Process placement
 
-There are many occaisions where you may want to control (usually, MPI) process placement and change
+There are many occasions where you may want to control (usually, MPI) process placement and change
 it from the default, for example:
 
  - You may want to place processes to NUMA regions in a round-robin way rather than
