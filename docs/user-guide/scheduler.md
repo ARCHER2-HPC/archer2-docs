@@ -1189,8 +1189,8 @@ it from the default, for example:
 
  - You may want to place processes to NUMA regions in a round-robin way rather than
    the default sequential placement
- - You may be using less than 128 processes per node and want to ensure that processes
-   are placed evenly across NUMA regions (16-core blocks) or core complexes (8-core blocks that
+ - You may be using fewer than 128 processes per node and want to ensure that processes
+   are placed evenly across NUMA regions (16-core blocks) or core complexes (4-core blocks that
    share an L3 cache)
 
 There are a number of different methods for defining process placement, below we cover two different
@@ -1254,7 +1254,7 @@ Node    1, rank  131, thread   0, (affinity =    3)
 
 #### For underpopulation of nodes with processes
 
-When you are using less processes than cores on compute nodes (i.e. &lt; 128 processes
+When you are using fewer processes than cores on compute nodes (i.e. &lt; 128 processes
 per node) the basic Slurm options (usually supplied in your script as options to `sbatch`) for 
 process placement are:
 
@@ -1267,17 +1267,17 @@ submission script:
  - `--hint=nomultithread` Only use physical cores (avoids use of SMT/hyperthreads)
  - `--distribution=block:block` Allocate processes to cores in a sequential fashion
 
-For example, to place 16 processes per node and have 1 process per 8-core block (corresponding
+For example, to place 32 processes per node and have 1 process per 4-core block (corresponding
 to a *core complex* that shares an L3 cache), you would set:
 
- - `--ntasks-per-node=16` Place 16 processes on each node
- - `--cpus-per-task=8` Set a stride of 8 cores between each placed process
+ - `--ntasks-per-node=32` Place 32 processes on each node
+ - `--cpus-per-task=4` Set a stride of 4 cores between each placed process
 
 Here is the output from `xthi`:
 
 ```
-auser@ln04:/work/t01/t01/auser> salloc --nodes=2 --tasks-per-node=16 \
-     --cpus-per-task=8 --time=0:10:0 --partition=standard --qos=short \
+auser@ln04:/work/t01/t01/auser> salloc --nodes=2 --tasks-per-node=32 \
+     --cpus-per-task=4 --time=0:10:0 --partition=standard --qos=short \
      --account=[your account]
 
 salloc: Pending job allocation 1170383
@@ -1292,41 +1292,73 @@ auser@ln04:/work/t01/t01/auser> export OMP_NUM_THREADS=1
 auser@ln04:/work/t01/t01/auser> srun --distribution=block:block --hint=nomultithread xthi
 
 Node summary for    2 nodes:
-Node    0, hostname nid002526, mpi  16, omp   1, executable xthi
-Node    1, hostname nid002527, mpi  16, omp   1, executable xthi
-MPI summary: 32 ranks 
-Node    0, rank    0, thread   0, (affinity =  0-7) 
-Node    0, rank    1, thread   0, (affinity = 8-15) 
-Node    0, rank    2, thread   0, (affinity = 16-23) 
-Node    0, rank    3, thread   0, (affinity = 24-31) 
-Node    0, rank    4, thread   0, (affinity = 32-39) 
-Node    0, rank    5, thread   0, (affinity = 40-47) 
-Node    0, rank    6, thread   0, (affinity = 48-55) 
-Node    0, rank    7, thread   0, (affinity = 56-63) 
-Node    0, rank    8, thread   0, (affinity = 64-71) 
-Node    0, rank    9, thread   0, (affinity = 72-79) 
-Node    0, rank   10, thread   0, (affinity = 80-87) 
-Node    0, rank   11, thread   0, (affinity = 88-95) 
-Node    0, rank   12, thread   0, (affinity = 96-103) 
-Node    0, rank   13, thread   0, (affinity = 104-111) 
-Node    0, rank   14, thread   0, (affinity = 112-119) 
-Node    0, rank   15, thread   0, (affinity = 120-127) 
-Node    1, rank   16, thread   0, (affinity =  0-7) 
-Node    1, rank   17, thread   0, (affinity = 8-15) 
-Node    1, rank   18, thread   0, (affinity = 16-23) 
-Node    1, rank   19, thread   0, (affinity = 24-31) 
-Node    1, rank   20, thread   0, (affinity = 32-39) 
-Node    1, rank   21, thread   0, (affinity = 40-47) 
-Node    1, rank   22, thread   0, (affinity = 48-55) 
-Node    1, rank   23, thread   0, (affinity = 56-63) 
-Node    1, rank   24, thread   0, (affinity = 64-71) 
-Node    1, rank   25, thread   0, (affinity = 72-79) 
-Node    1, rank   26, thread   0, (affinity = 80-87) 
-Node    1, rank   27, thread   0, (affinity = 88-95) 
-Node    1, rank   28, thread   0, (affinity = 96-103) 
-Node    1, rank   29, thread   0, (affinity = 104-111) 
-Node    1, rank   30, thread   0, (affinity = 112-119) 
-Node    1, rank   31, thread   0, (affinity = 120-127) 
+Node    0, hostname nid002526, mpi  32, omp   1, executable xthi
+Node    1, hostname nid002527, mpi  32, omp   1, executable xthi
+MPI summary: 64 ranks 
+Node    0, rank    0, thread   0, (affinity =  0-3) 
+Node    0, rank    1, thread   0, (affinity =  4-7) 
+Node    0, rank    2, thread   0, (affinity = 8-11) 
+Node    0, rank    3, thread   0, (affinity = 12-15) 
+Node    0, rank    4, thread   0, (affinity = 16-19) 
+Node    0, rank    5, thread   0, (affinity = 20-23) 
+Node    0, rank    6, thread   0, (affinity = 24-27) 
+Node    0, rank    7, thread   0, (affinity = 28-31) 
+Node    0, rank    8, thread   0, (affinity = 32-35) 
+Node    0, rank    9, thread   0, (affinity = 36-39) 
+Node    0, rank   10, thread   0, (affinity = 40-43) 
+Node    0, rank   11, thread   0, (affinity = 44-47) 
+Node    0, rank   12, thread   0, (affinity = 48-51) 
+Node    0, rank   13, thread   0, (affinity = 52-55) 
+Node    0, rank   14, thread   0, (affinity = 56-59) 
+Node    0, rank   15, thread   0, (affinity = 60-63) 
+Node    0, rank   16, thread   0, (affinity = 64-67) 
+Node    0, rank   17, thread   0, (affinity = 68-71) 
+Node    0, rank   18, thread   0, (affinity = 72-75) 
+Node    0, rank   19, thread   0, (affinity = 76-79) 
+Node    0, rank   20, thread   0, (affinity = 80-83) 
+Node    0, rank   21, thread   0, (affinity = 84-87) 
+Node    0, rank   22, thread   0, (affinity = 88-91) 
+Node    0, rank   23, thread   0, (affinity = 92-95) 
+Node    0, rank   24, thread   0, (affinity = 96-99) 
+Node    0, rank   25, thread   0, (affinity = 100-103) 
+Node    0, rank   26, thread   0, (affinity = 104-107) 
+Node    0, rank   27, thread   0, (affinity = 108-111) 
+Node    0, rank   28, thread   0, (affinity = 112-115) 
+Node    0, rank   29, thread   0, (affinity = 116-119) 
+Node    0, rank   30, thread   0, (affinity = 120-123) 
+Node    0, rank   31, thread   0, (affinity = 124-127) 
+Node    1, rank   32, thread   0, (affinity =  0-3) 
+Node    1, rank   33, thread   0, (affinity =  4-7) 
+Node    1, rank   34, thread   0, (affinity = 8-11) 
+Node    1, rank   35, thread   0, (affinity = 12-15) 
+Node    1, rank   36, thread   0, (affinity = 16-19) 
+Node    1, rank   37, thread   0, (affinity = 20-23) 
+Node    1, rank   38, thread   0, (affinity = 24-27) 
+Node    1, rank   39, thread   0, (affinity = 28-31) 
+Node    1, rank   40, thread   0, (affinity = 32-35) 
+Node    1, rank   41, thread   0, (affinity = 36-39) 
+Node    1, rank   42, thread   0, (affinity = 40-43) 
+Node    1, rank   43, thread   0, (affinity = 44-47) 
+Node    1, rank   44, thread   0, (affinity = 48-51) 
+Node    1, rank   45, thread   0, (affinity = 52-55) 
+Node    1, rank   46, thread   0, (affinity = 56-59) 
+Node    1, rank   47, thread   0, (affinity = 60-63) 
+Node    1, rank   48, thread   0, (affinity = 64-67) 
+Node    1, rank   49, thread   0, (affinity = 68-71) 
+Node    1, rank   50, thread   0, (affinity = 72-75) 
+Node    1, rank   51, thread   0, (affinity = 76-79) 
+Node    1, rank   52, thread   0, (affinity = 80-83) 
+Node    1, rank   53, thread   0, (affinity = 84-87) 
+Node    1, rank   54, thread   0, (affinity = 88-91) 
+Node    1, rank   55, thread   0, (affinity = 92-95) 
+Node    1, rank   56, thread   0, (affinity = 96-99) 
+Node    1, rank   57, thread   0, (affinity = 100-103) 
+Node    1, rank   58, thread   0, (affinity = 104-107) 
+Node    1, rank   59, thread   0, (affinity = 108-111) 
+Node    1, rank   60, thread   0, (affinity = 112-115) 
+Node    1, rank   61, thread   0, (affinity = 116-119) 
+Node    1, rank   62, thread   0, (affinity = 120-123) 
+Node    1, rank   63, thread   0, (affinity = 124-127) 
 ```
 
 !!! tip
@@ -1466,15 +1498,15 @@ Node    1, rank   31, thread   0, (affinity =  113)
 Remember, MPI collective performance is generally much worse if processes are not placed
 sequentially on a node (so adjacent MPI ranks are as close to each other as possible). This
 is the reason that the default recommended placement on ARCHER2 is sequential rather than 
-rounds-robin.
+round-robin.
 
 ### `MPICH_RANK_REORDER_METHOD` for MPI process placement
 
 The `MPICH_RANK_REORDER_METHOD` environment variable can also be used to specify
-other types of MPI task placement. For example, setting it to 0 results
+other types of MPI task placement. For example, setting it to "0" results
 in a round-robin placement on both nodes and NUMA regions in a node (equivalent to
-the `--distribution=cyclic:cyclic` option to `srun`). Note, we do not specify the `--distribtion`
-option to `srun` in this case as the environment variable is controlling placement.:
+the `--distribution=cyclic:cyclic` option to `srun`). Note, we do not specify the `--distribution`
+option to `srun` in this case as the environment variable is controlling placement:
 
 ```
 salloc --nodes=8 --tasks-per-node=2 --cpus-per-task=1 --time=0:10:0 --account=t01
