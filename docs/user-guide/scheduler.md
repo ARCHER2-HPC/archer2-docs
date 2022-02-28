@@ -754,6 +754,8 @@ MPI process. This results in all 128 physical cores per node being used.
     srun --hint=nomultithread --distribution=block:block ./my_mixed_executable.x arg1 arg2
     ```
 
+## Job arrays
+
 The Slurm job scheduling system offers the *job array* concept, for
 running collections of almost-identical jobs. For example, running the
 same program several times with different arguments or input data.
@@ -1179,6 +1181,367 @@ script for this example would look like:
     # Wait for all subjobs to finish
     wait
     ```
+
+## Process placement
+
+There are many occaisions where you may want to control (usually, MPI) process placement and change
+it from the default, for example:
+
+ - You may want to place processes to NUMA regions in a round-robin way rather than
+   the default sequential placement
+ - You may be using less than 128 processes per node and want to ensure that processes
+   are placed evenly across NUMA regions (16-core blocks) or core complexes (8-core blocks that
+   share an L3 cache)
+
+There are a number of different methods for defining process placement, below we cover two different
+options: using Slurm options and using the `MPICH_RANK_REORDER_METHOD` environment variable. Most users will
+likely use the Slurm options approach.
+
+### Default process placement
+
+The default is to place processes sequentially on nodes until the
+maximum number of tasks is reached. You can use the `xthi` program
+to verify this for MPI process placement:
+
+```
+auser@ln04:/work/t01/t01/auser> salloc --nodes=2 --tasks-per-node=128 \
+     --cpus-per-task=1 --time=0:10:0 --partition=standard --qos=short \
+     --account=[your account]
+
+salloc: Pending job allocation 1170365
+salloc: job 1170365 queued and waiting for resources
+salloc: job 1170365 has been allocated resources
+salloc: Granted job allocation 1170365
+salloc: Waiting for resource configuration
+salloc: Nodes nid[002526-002527] are ready for job
+
+auser@ln04:/work/t01/t01/auser> module load xthi
+auser@ln04:/work/t01/t01/auser> export OMP_NUM_THREADS=1
+auser@ln04:/work/t01/t01/auser> srun --distribution=block:block --hint=nomultithread xthi
+
+Node summary for    2 nodes:
+Node    0, hostname nid002526, mpi 128, omp   1, executable xthi
+Node    1, hostname nid002527, mpi 128, omp   1, executable xthi
+MPI summary: 256 ranks 
+Node    0, rank    0, thread   0, (affinity =    0) 
+Node    0, rank    1, thread   0, (affinity =    1) 
+Node    0, rank    2, thread   0, (affinity =    2) 
+Node    0, rank    3, thread   0, (affinity =    3) 
+
+...output trimmed...
+
+Node    0, rank  124, thread   0, (affinity =  124) 
+Node    0, rank  125, thread   0, (affinity =  125) 
+Node    0, rank  126, thread   0, (affinity =  126) 
+Node    0, rank  127, thread   0, (affinity =  127) 
+Node    1, rank  128, thread   0, (affinity =    0) 
+Node    1, rank  129, thread   0, (affinity =    1) 
+Node    1, rank  130, thread   0, (affinity =    2) 
+Node    1, rank  131, thread   0, (affinity =    3) 
+
+...output trimmed...
+```
+
+!!! note
+    For MPI programs on ARCHER2, each *rank* corresponds to a *process*.
+
+!!! important
+    To get good performance out of MPI collective operations, MPI processes
+    should be placed sequentially on cores as in the default placement described
+    above.
+    
+### Setting process placement using Slurm options
+
+#### For underpopulation of nodes with processes
+
+When you are using less processes than cores on compute nodes (i.e. &lt; 128 processes
+per node) the basic Slurm options (usually supplied in your script as options to `sbatch`) for 
+process placement are:
+
+ - `--ntasks-per-node=X` Place *X* processes on each node
+ - `--cpus-per-task=Y` Set a stride of *Y* cores between each placed process
+
+In addition, the following options are added to your `srun` commands in your job
+submission script:
+
+ - `--hint=nomultithread` Only use physical cores (avoids use of SMT/hyperthreads)
+ - `--distribution=block:block` Allocate processes to cores in a sequential fashion
+
+For example, to place 16 processes per node and have 1 process per 8-core block (corresponding
+to a *core complex* that shares an L3 cache), you would set:
+
+ - `--ntasks-per-node=16` Place 16 processes on each node
+ - `--cpus-per-task=8` Set a stride of 8 cores between each placed process
+
+Here is the output from `xthi`:
+
+```
+auser@ln04:/work/t01/t01/auser> salloc --nodes=2 --tasks-per-node=16 \
+     --cpus-per-task=8 --time=0:10:0 --partition=standard --qos=short \
+     --account=[your account]
+
+salloc: Pending job allocation 1170383
+salloc: job 1170383 queued and waiting for resources
+salloc: job 1170383 has been allocated resources
+salloc: Granted job allocation 1170383
+salloc: Waiting for resource configuration
+salloc: Nodes nid[002526-002527] are ready for job
+
+auser@ln04:/work/t01/t01/auser> module load xthi
+auser@ln04:/work/t01/t01/auser> export OMP_NUM_THREADS=1
+auser@ln04:/work/t01/t01/auser> srun --distribution=block:block --hint=nomultithread xthi
+
+Node summary for    2 nodes:
+Node    0, hostname nid002526, mpi  16, omp   1, executable xthi
+Node    1, hostname nid002527, mpi  16, omp   1, executable xthi
+MPI summary: 32 ranks 
+Node    0, rank    0, thread   0, (affinity =  0-7) 
+Node    0, rank    1, thread   0, (affinity = 8-15) 
+Node    0, rank    2, thread   0, (affinity = 16-23) 
+Node    0, rank    3, thread   0, (affinity = 24-31) 
+Node    0, rank    4, thread   0, (affinity = 32-39) 
+Node    0, rank    5, thread   0, (affinity = 40-47) 
+Node    0, rank    6, thread   0, (affinity = 48-55) 
+Node    0, rank    7, thread   0, (affinity = 56-63) 
+Node    0, rank    8, thread   0, (affinity = 64-71) 
+Node    0, rank    9, thread   0, (affinity = 72-79) 
+Node    0, rank   10, thread   0, (affinity = 80-87) 
+Node    0, rank   11, thread   0, (affinity = 88-95) 
+Node    0, rank   12, thread   0, (affinity = 96-103) 
+Node    0, rank   13, thread   0, (affinity = 104-111) 
+Node    0, rank   14, thread   0, (affinity = 112-119) 
+Node    0, rank   15, thread   0, (affinity = 120-127) 
+Node    1, rank   16, thread   0, (affinity =  0-7) 
+Node    1, rank   17, thread   0, (affinity = 8-15) 
+Node    1, rank   18, thread   0, (affinity = 16-23) 
+Node    1, rank   19, thread   0, (affinity = 24-31) 
+Node    1, rank   20, thread   0, (affinity = 32-39) 
+Node    1, rank   21, thread   0, (affinity = 40-47) 
+Node    1, rank   22, thread   0, (affinity = 48-55) 
+Node    1, rank   23, thread   0, (affinity = 56-63) 
+Node    1, rank   24, thread   0, (affinity = 64-71) 
+Node    1, rank   25, thread   0, (affinity = 72-79) 
+Node    1, rank   26, thread   0, (affinity = 80-87) 
+Node    1, rank   27, thread   0, (affinity = 88-95) 
+Node    1, rank   28, thread   0, (affinity = 96-103) 
+Node    1, rank   29, thread   0, (affinity = 104-111) 
+Node    1, rank   30, thread   0, (affinity = 112-119) 
+Node    1, rank   31, thread   0, (affinity = 120-127) 
+```
+
+!!! tip
+    You usually only want to use physical cores on ARCHER2, so
+    (`tasks-per-node`) &times; (`cpus-per-task`) should generally be equal to 128.
+
+#### Full node population with non-sequential process placement
+
+If you want to change the order processes are placed on nodes and cores using Slurm options
+then you should use the `--distribution` option to `srun` to change this.
+
+For example, to place processes sequentially on nodes but round-robin on the 16-core NUMA regions in a
+single node, you would use the `--distribution=block:cyclic` option to `srun`. This type
+of process placement can be beneficial when a code is memory bound.
+
+```
+auser@ln04:/work/t01/t01/auser> salloc --nodes=2 --tasks-per-node=128 \
+     --cpus-per-task=1 --time=0:10:0 --partition=standard --qos=short \
+     --account=[your account]
+
+salloc: Pending job allocation 1170594
+salloc: job 1170594 queued and waiting for resources
+salloc: job 1170594 has been allocated resources
+salloc: Granted job allocation 1170594
+salloc: Waiting for resource configuration
+salloc: Nodes nid[002616,002621] are ready for job
+
+auser@ln04:/work/t01/t01/auser> module load xthi
+auser@ln04:/work/t01/t01/auser> export OMP_NUM_THREADS=1
+auser@ln04:/work/t01/t01/auser> srun --distribution=block:cyclic --hint=nomultithread xthi
+
+Node summary for    2 nodes:
+Node    0, hostname nid002616, mpi 128, omp   1, executable xthi
+Node    1, hostname nid002621, mpi 128, omp   1, executable xthi
+MPI summary: 256 ranks 
+Node    0, rank    0, thread   0, (affinity =    0) 
+Node    0, rank    1, thread   0, (affinity =   16) 
+Node    0, rank    2, thread   0, (affinity =   32) 
+Node    0, rank    3, thread   0, (affinity =   48) 
+Node    0, rank    4, thread   0, (affinity =   64) 
+Node    0, rank    5, thread   0, (affinity =   80) 
+Node    0, rank    6, thread   0, (affinity =   96) 
+Node    0, rank    7, thread   0, (affinity =  112) 
+Node    0, rank    8, thread   0, (affinity =    1) 
+Node    0, rank    9, thread   0, (affinity =   17) 
+Node    0, rank   10, thread   0, (affinity =   33) 
+Node    0, rank   11, thread   0, (affinity =   49) 
+Node    0, rank   12, thread   0, (affinity =   65) 
+Node    0, rank   13, thread   0, (affinity =   81) 
+Node    0, rank   14, thread   0, (affinity =   97) 
+Node    0, rank   15, thread   0, (affinity =  113
+
+...output trimmed...
+
+Node    0, rank  120, thread   0, (affinity =   15) 
+Node    0, rank  121, thread   0, (affinity =   31) 
+Node    0, rank  122, thread   0, (affinity =   47) 
+Node    0, rank  123, thread   0, (affinity =   63) 
+Node    0, rank  124, thread   0, (affinity =   79) 
+Node    0, rank  125, thread   0, (affinity =   95) 
+Node    0, rank  126, thread   0, (affinity =  111) 
+Node    0, rank  127, thread   0, (affinity =  127) 
+Node    1, rank  128, thread   0, (affinity =    0) 
+Node    1, rank  129, thread   0, (affinity =   16) 
+Node    1, rank  130, thread   0, (affinity =   32) 
+Node    1, rank  131, thread   0, (affinity =   48) 
+Node    1, rank  132, thread   0, (affinity =   64) 
+Node    1, rank  133, thread   0, (affinity =   80) 
+Node    1, rank  134, thread   0, (affinity =   96) 
+Node    1, rank  135, thread   0, (affinity =  112) 
+
+...output trimmed...
+```
+
+If you wish to place processes round robin on *both* nodes and 16-core NUMA regions
+within in a node you would use `--distribution=cyclic:cyclic`:
+
+```
+auser@ln04:/work/t01/t01/auser> salloc --nodes=2 --tasks-per-node=128 \
+     --cpus-per-task=1 --time=0:10:0 --partition=standard --qos=short \
+     --account=[your account]
+
+salloc: Pending job allocation 1170594
+salloc: job 1170594 queued and waiting for resources
+salloc: job 1170594 has been allocated resources
+salloc: Granted job allocation 1170594
+salloc: Waiting for resource configuration
+salloc: Nodes nid[002616,002621] are ready for job
+
+auser@ln04:/work/t01/t01/auser> module load xthi
+auser@ln04:/work/t01/t01/auser> export OMP_NUM_THREADS=1
+auser@ln04:/work/t01/t01/auser> srun --distribution=cyclic:cyclic --hint=nomultithread xthi
+
+Node summary for    2 nodes:
+Node    0, hostname nid002616, mpi 128, omp   1, executable xthi
+Node    1, hostname nid002621, mpi 128, omp   1, executable xthi
+MPI summary: 256 ranks 
+Node    0, rank    0, thread   0, (affinity =    0) 
+Node    0, rank    2, thread   0, (affinity =   16) 
+Node    0, rank    4, thread   0, (affinity =   32) 
+Node    0, rank    6, thread   0, (affinity =   48) 
+Node    0, rank    8, thread   0, (affinity =   64) 
+Node    0, rank   10, thread   0, (affinity =   80) 
+Node    0, rank   12, thread   0, (affinity =   96) 
+Node    0, rank   14, thread   0, (affinity =  112) 
+Node    0, rank   16, thread   0, (affinity =    1) 
+Node    0, rank   18, thread   0, (affinity =   17) 
+Node    0, rank   20, thread   0, (affinity =   33) 
+Node    0, rank   22, thread   0, (affinity =   49) 
+Node    0, rank   24, thread   0, (affinity =   65) 
+Node    0, rank   26, thread   0, (affinity =   81) 
+Node    0, rank   28, thread   0, (affinity =   97) 
+Node    0, rank   30, thread   0, (affinity =  113) 
+
+...output trimmed...
+
+Node    1, rank    1, thread   0, (affinity =    0) 
+Node    1, rank    3, thread   0, (affinity =   16) 
+Node    1, rank    5, thread   0, (affinity =   32) 
+Node    1, rank    7, thread   0, (affinity =   48) 
+Node    1, rank    9, thread   0, (affinity =   64) 
+Node    1, rank   11, thread   0, (affinity =   80) 
+Node    1, rank   13, thread   0, (affinity =   96) 
+Node    1, rank   15, thread   0, (affinity =  112) 
+Node    1, rank   17, thread   0, (affinity =    1) 
+Node    1, rank   19, thread   0, (affinity =   17) 
+Node    1, rank   21, thread   0, (affinity =   33) 
+Node    1, rank   23, thread   0, (affinity =   49) 
+Node    1, rank   25, thread   0, (affinity =   65) 
+Node    1, rank   27, thread   0, (affinity =   81) 
+Node    1, rank   29, thread   0, (affinity =   97) 
+Node    1, rank   31, thread   0, (affinity =  113) 
+
+...output trimmed...
+```
+
+Remember, MPI collective performance is generally much worse if processes are not placed
+sequentially on a node (so adjacent MPI ranks are as close to each other as possible). This
+is the reason that the default recommended placement on ARCHER2 is sequential rather than 
+rounds-robin.
+
+### `MPICH_RANK_REORDER_METHOD` for MPI process placement
+
+The `MPICH_RANK_REORDER_METHOD` environment variable can also be used to specify
+other types of MPI task placement. For example, setting it to 0 results
+in a round-robin placement on both nodes and NUMA regions in a node (equivalent to
+the `--distribution=cyclic:cyclic` option to `srun`). Note, we do not specify the `--distribtion`
+option to `srun` in this case as the environment variable is controlling placement.:
+
+```
+salloc --nodes=8 --tasks-per-node=2 --cpus-per-task=1 --time=0:10:0 --account=t01
+
+salloc: Granted job allocation 24236
+salloc: Waiting for resource configuration
+salloc: Nodes cn13 are ready for job
+
+module load xthi
+export OMP_NUM_THREADS=1
+export MPICH_RANK_REORDER_METHOD=0
+srun --hint=nomultithread xthi
+
+Node summary for    2 nodes:
+Node    0, hostname nid002616, mpi 128, omp   1, executable xthi
+Node    1, hostname nid002621, mpi 128, omp   1, executable xthi
+MPI summary: 256 ranks 
+Node    0, rank    0, thread   0, (affinity =    0) 
+Node    0, rank    2, thread   0, (affinity =   16) 
+Node    0, rank    4, thread   0, (affinity =   32) 
+Node    0, rank    6, thread   0, (affinity =   48) 
+Node    0, rank    8, thread   0, (affinity =   64) 
+Node    0, rank   10, thread   0, (affinity =   80) 
+Node    0, rank   12, thread   0, (affinity =   96) 
+Node    0, rank   14, thread   0, (affinity =  112) 
+Node    0, rank   16, thread   0, (affinity =    1) 
+Node    0, rank   18, thread   0, (affinity =   17) 
+Node    0, rank   20, thread   0, (affinity =   33) 
+Node    0, rank   22, thread   0, (affinity =   49) 
+Node    0, rank   24, thread   0, (affinity =   65) 
+Node    0, rank   26, thread   0, (affinity =   81) 
+Node    0, rank   28, thread   0, (affinity =   97) 
+Node    0, rank   30, thread   0, (affinity =  113) 
+
+...output trimmed...
+```
+
+There are other modes available with the `MPICH_RANK_REORDER_METHOD`
+environment variable, including one which lets the user provide a file
+called `MPICH_RANK_ORDER` which contains a list of each task's placement
+on each node. These options are described in detail in the `intro_mpi`
+man page.
+
+#### grid\_order
+
+For MPI applications which perform a large amount of nearest-neighbor
+communication, e.g., stencil-based applications on structured grids,
+HPE provide a tool in the `perftools-base` module (Loaded by default for
+all users) called `grid_order`
+which can generate a `MPICH_RANK_ORDER` file automatically by taking as
+parameters the dimensions of the grid, core count, etc. For example, to
+place 256 MPI parameters in row-major order on a Cartesian grid of size $(8, 8,
+4)$, using 128 cores per node:
+
+```
+grid_order -R -c 128 -g 8,8,4
+
+# grid_order -R -Z -c 128 -g 8,8,4
+# Region 3: 0,0,1 (0..255)
+0,1,2,3,32,33,34,35,64,65,66,67,96,97,98,99,128,129,130,131,160,161,162,163,192,193,194,195,224,225,226,227,4,5,6,7,36,37,38,39,68,69,70,71,100,101,102,103,132,133,134,135,164,165,166,167,196,197,198,199,228,229,230,231,8,9,10,11,40,41,42,43,72,73,74,75,104,105,106,107,136,137,138,139,168,169,170,171,200,201,202,203,232,233,234,235,12,13,14,15,44,45,46,47,76,77,78,79,108,109,110,111,140,141,142,143,172,173,174,175,204,205,206,207,236,237,238,239
+16,17,18,19,48,49,50,51,80,81,82,83,112,113,114,115,144,145,146,147,176,177,178,179,208,209,210,211,240,241,242,243,20,21,22,23,52,53,54,55,84,85,86,87,116,117,118,119,148,149,150,151,180,181,182,183,212,213,214,215,244,245,246,247,24,25,26,27,56,57,58,59,88,89,90,91,120,121,122,123,152,153,154,155,184,185,186,187,216,217,218,219,248,249,250,251,28,29,30,31,60,61,62,63,92,93,94,95,124,125,126,127,156,157,158,159,188,189,190,191,220,221,222,223,252,253,254,255
+```
+
+One can then save this output to a file called `MPICH_RANK_ORDER` and
+then set `MPICH_RANK_REORDER_METHOD=3` before running the job, which
+tells Cray MPI to read the `MPICH_RANK_ORDER` file to set the MPI task
+placement. For more information, please see the man page `man grid_order`.
 
 ## Interactive Jobs
 
@@ -1701,114 +2064,6 @@ sbcast --compress=lz4 /path/to/exe /tmp/exe
 srun /tmp/exe
 ```
 
-### Process Placement
-
-Several mechanisms exist to control process placement on ARCHER2.
-Application performance can depend strongly on placement depending on
-the communication pattern and other computational characteristics.
-
-#### Default
-
-The default is to place MPI tasks sequentially on nodes until the
-maximum number of tasks is reached:
-
-```
-salloc --nodes=8 --tasks-per-node=2 --cpus-per-task=1 --time=0:10:0 \
-        --account=[account code] --partition=standard --qos=standard
-
-salloc: Granted job allocation 24236
-salloc: Waiting for resource configuration
-salloc: Nodes cn13 are ready for job
-
-module load xthi
-export OMP_NUM_THREADS=1
-srun --distribution=block:block --hint=nomultithread xthi
-
-Hello from rank 0, thread 0, on nid000001. (core affinity = 0,128)
-Hello from rank 1, thread 0, on nid000001. (core affinity = 16,144)
-Hello from rank 2, thread 0, on nid000002. (core affinity = 0,128)
-Hello from rank 3, thread 0, on nid000002. (core affinity = 16,144)
-Hello from rank 4, thread 0, on nid000003. (core affinity = 0,128)
-Hello from rank 5, thread 0, on nid000003. (core affinity = 16,144)
-Hello from rank 6, thread 0, on nid000004. (core affinity = 0,128)
-Hello from rank 7, thread 0, on nid000004. (core affinity = 16,144)
-Hello from rank 8, thread 0, on nid000005. (core affinity = 0,128)
-Hello from rank 9, thread 0, on nid000005. (core affinity = 16,144)
-Hello from rank 10, thread 0, on nid000006. (core affinity = 0,128)
-Hello from rank 11, thread 0, on nid000006. (core affinity = 16,144)
-Hello from rank 12, thread 0, on nid000007. (core affinity = 0,128)
-Hello from rank 13, thread 0, on nid000007. (core affinity = 16,144)
-Hello from rank 14, thread 0, on nid000008. (core affinity = 0,128)
-Hello from rank 15, thread 0, on nid000008. (core affinity = 16,144)
-```
-
-#### `MPICH_RANK_REORDER_METHOD`
-
-The `MPICH_RANK_REORDER_METHOD` environment variable is used to specify
-other types of MPI task placement. For example, setting it to 0 results
-in a round-robin placement:
-
-```
-salloc --nodes=8 --tasks-per-node=2 --cpus-per-task=1 --time=0:10:0 --account=t01
-
-salloc: Granted job allocation 24236
-salloc: Waiting for resource configuration
-salloc: Nodes cn13 are ready for job
-
-module load xthi
-export OMP_NUM_THREADS=1
-export MPICH_RANK_REORDER_METHOD=0
-srun xthi
-
-Hello from rank 0, thread 0, on nid000001. (core affinity = 0,128)
-Hello from rank 1, thread 0, on nid000002. (core affinity = 0,128)
-Hello from rank 2, thread 0, on nid000003. (core affinity = 0,128)
-Hello from rank 3, thread 0, on nid000004. (core affinity = 0,128)
-Hello from rank 4, thread 0, on nid000005. (core affinity = 0,128)
-Hello from rank 5, thread 0, on nid000006. (core affinity = 0,128)
-Hello from rank 6, thread 0, on nid000007. (core affinity = 0,128)
-Hello from rank 7, thread 0, on nid000008. (core affinity = 0,128)
-Hello from rank 8, thread 0, on nid000001. (core affinity = 16,144)
-Hello from rank 9, thread 0, on nid000002. (core affinity = 16,144)
-Hello from rank 10, thread 0, on nid000003. (core affinity = 16,144)
-Hello from rank 11, thread 0, on nid000004. (core affinity = 16,144)
-Hello from rank 12, thread 0, on nid000005. (core affinity = 16,144)
-Hello from rank 13, thread 0, on nid000006. (core affinity = 16,144)
-Hello from rank 14, thread 0, on nid000007. (core affinity = 16,144)
-Hello from rank 15, thread 0, on nid000008. (core affinity = 16,144)
-```
-
-There are other modes available with the `MPICH_RANK_REORDER_METHOD`
-environment variable, including one which lets the user provide a file
-called `MPICH_RANK_ORDER` which contains a list of each task's placement
-on each node. These options are described in detail in the `intro_mpi`
-man page.
-
-**grid\_order**
-
-For MPI applications which perform a large amount of nearest-neighbor
-communication, e.g., stencil-based applications on structured grids,
-Cray provides a tool in the `perftools-base` module called `grid_order`
-which can generate a `MPICH_RANK_ORDER` file automatically by taking as
-parameters the dimensions of the grid, core count, etc. For example, to
-place MPI tasks in row-major order on a Cartesian grid of size $(4, 4,
-4)$, using 32 tasks per node:
-
-```
-module load perftools-base
-grid_order -R -c 32 -g 4,4,4
-
-# grid_order -R -Z -c 32 -g 4,4,4
-# Region 3: 0,0,1 (0..63)
-0,1,2,3,16,17,18,19,32,33,34,35,48,49,50,51,4,5,6,7,20,21,22,23,36,37,38,39,52,53,54,55
-8,9,10,11,24,25,26,27,40,41,42,43,56,57,58,59,12,13,14,15,28,29,30,31,44,45,46,47,60,61,62,63
-```
-
-One can then save this output to a file called `MPICH_RANK_ORDER` and
-then set `MPICH_RANK_REORDER_METHOD=3` before running the job, which
-tells Cray MPI to read the `MPICH_RANK_ORDER` file to set the MPI task
-placement. For more information, please see the man page `man
-grid_order` (available when the `perftools-base` module is loaded).
 
 ### Huge pages
 
