@@ -18,18 +18,21 @@ suite.
 
 1.  Ensure the `perftools-base` module is loaded.
 
-    `auser@ln01:/work/t01/t01/auser> module list`
+    `module list`
 
 2.  Load the `perftools-lite` module.
 
-    `auser@ln01:/work/t01/t01/auser> module load perftools-lite`
+    `module load perftools-lite`
 
 3.  Compile your application normally. An informational message from
     CrayPat-lite will appear indicating that the executable has been
     instrumented.
 
     ```
-    auser@uan01:/work/t01/t01/auser> cc -h std=c99  -o myapplication.x myapplication.c
+    cc -h std=c99  -o myapplication.x myapplication.c
+    ```
+    
+    ```
     INFO: creating the CrayPat-instrumented executable 'myapplication.x' (lite-samples) ...OK  
     ```
 
@@ -377,7 +380,7 @@ For the `sacct` and `sstat` command, the memory properties we print out below ar
 To display the current memory use of a running job with the ID 123456:
 
 ```
-auser@ln01:/work/t01/t01/auser> sstat --format=JobID,AveCPU,AveRSS,MaxRSS,MaxRSSTask -j 123456
+sstat --format=JobID,AveCPU,AveRSS,MaxRSS,MaxRSSTask -j 123456
 ```
 
 ### Example 2: `sacct` for finished jobs
@@ -385,13 +388,13 @@ auser@ln01:/work/t01/t01/auser> sstat --format=JobID,AveCPU,AveRSS,MaxRSS,MaxRSS
 To display the memory use of a completed job with the ID 123456:
 
 ```
-auser@ln01:/work/t01/t01/auser> sacct --format=JobID,JobName,AveRSS,MaxRSS,MaxRSSTask -j 123456
+sacct --format=JobID,JobName,AveRSS,MaxRSS,MaxRSSTask -j 123456
 ```    
 
 Another usage of `sacct` is to display when a job was submitted, started running and ended for a particular user:
 
 ```
-auser@ln01:/work/t01/t01/auser> sacct --format=JobID,Submit,Start,End -u auser
+sacct --format=JobID,Submit,Start,End -u auser
 ```
 
 ### Example 3: `archer2jobload` for running jobs
