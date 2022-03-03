@@ -17,7 +17,7 @@ The home file system is provided by dual NetApp FAS8200A systems (one primary
 and one disaster recovery) with a capacity of 1 PB each.
 
 The work file system consists of four separate HPE Cray L300 storage systems,
-each with a capacity of 3.6 PB. The interconnect users a dragonfly topology, and
+each with a capacity of 3.6 PB. The interconnect uses a dragonfly topology, and
 has a bandwidth of 100 Gbps.
 
 The system also includes 1.1 PB burst buffer NVMe storage, provided by an HPE
