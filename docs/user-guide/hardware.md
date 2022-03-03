@@ -13,9 +13,23 @@ There are two storage types: home and work. Home is available on login nodes and
 This is shown in the ARCHER2 architecture diagram:
 ![ARCHER2 architecture](../images/archer2_architecture.png)
 
+The home file system is provided by dual NetApp FAS8200A systems (one primary
+and one disaster recovery) with a capacity of 1 PB each.
+
+The work file system consists of four separate HPE Cray L300 storage systems,
+each with a capacity of 3.6 PB. The interconnect uses a dragonfly topology, and
+has a bandwidth of 100 Gbps.
+
+The system also includes 1.1 PB burst buffer NVMe storage, provided by an HPE
+Cray E1000F.
+
+!!! note
+    The NVMe storage is currently in preparation, and is planned to be made
+    available to users in Spring 2022.
 
 ## Compute node details
 The compute nodes each have 128 cores. They are dual socket nodes with two 64 core AMD EPYC 7742 processors. 
+
 !!! note
     Note due to Simultaneous Multi-Threading (SMT) each core has 2 threads, therefore a node has 128 cores / 256 threads. Most users will not want to use SMT, see [Launching parallel jobs](scheduler.md#srun-launching-parallel-jobs).
 
