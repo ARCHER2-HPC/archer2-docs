@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.3">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.4">
     
     
       
@@ -17,7 +17,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.e8d9bf0c.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.2d9f7617.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.e6a45f82.min.css">
@@ -27,6 +27,7 @@
     
     
       
+        
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
@@ -1498,6 +1499,18 @@
 <p>There are two storage types: home and work. Home is available on login nodes and data-analysis nodes. Work is available on login, data-analysis nodes and compute nodes (see <a href="../io/">I/O and file systems</a>).</p>
 <p>This is shown in the ARCHER2 architecture diagram:
 <img alt="ARCHER2 architecture" src="../../images/archer2_architecture.png" /></p>
+<p>The home file system is provided by dual NetApp FAS8200A systems (one primary
+and one disaster recovery) with a capacity of 1 PB each.</p>
+<p>The work file system consists of four separate HPE Cray L300 storage systems,
+each with a capacity of 3.6 PB. The interconnect uses a dragonfly topology, and
+has a bandwidth of 100 Gbps.</p>
+<p>The system also includes 1.1 PB burst buffer NVMe storage, provided by an HPE
+Cray E1000F.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The NVMe storage is currently in preparation, and is planned to be made
+available to users in Spring 2022.</p>
+</div>
 <h2 id="compute-node-details">Compute node details</h2>
 <p>The compute nodes each have 128 cores. They are dual socket nodes with two 64 core AMD EPYC 7742 processors. </p>
 <div class="admonition note">
@@ -1676,7 +1689,7 @@
     <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.bd0b6b67.min.js"}</script>
     
     
-      <script src="../../assets/javascripts/bundle.b88e97c5.min.js"></script>
+      <script src="../../assets/javascripts/bundle.5413a266.min.js"></script>
       
     
   </body>
