@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.4">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.5">
     
     
       
@@ -2015,7 +2015,9 @@ on two nodes where all 128 cores on each node are used for MPI processes (so, 25
 MPI processes in total).</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Full system</label></div>
 <div class="tabbed-content">
-<div class="tabbed-block">
+<div class="tabbed-block"></div>
+</div>
+</div>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
 <span class="c1"># Slurm job options (name, compute nodes, job time)</span>
@@ -2036,31 +2038,21 @@ MPI processes in total).</p>
 
 <span class="c1"># Set the LD_LIBRARY_PATH environment variable within the Singularity container</span>
 <span class="c1"># to ensure that it used the correct MPI libraries.</span>
-<span class="nb">export</span> <span class="nv">SINGULARITYENV_LD_LIBRARY_PATH</span><span class="o">=</span> <span class="se">\</span>
-    /opt/cray/pe/mpich/8.1.9/ofi/gnu/9.1/lib-abi-mpich: <span class="se">\</span>
-    /opt/cray/pe/pmi/6.0.13/lib: <span class="se">\</span>
-    /opt/cray/libfabric/1.11.0.4.71/lib64: <span class="se">\</span>
-    /usr/lib64/host: <span class="se">\</span>
-    /usr/lib/x86_64-linux-gnu/libibverbs: <span class="se">\</span>
-    /.singularity.d/libs
+<span class="nb">export</span> <span class="nv">SINGULARITYENV_LD_LIBRARY_PATH</span><span class="o">=</span>/opt/cray/pe/mpich/8.1.4/ofi/gnu/9.1/lib-abi-mpich:/opt/cray/pe/pmi/6.0.10/lib:/opt/cray/libfabric/1.11.0.4.71/lib64:/usr/lib64/host:/usr/lib/x86_64-linux-gnu/libibverbs:/.singularity.d/libs:/opt/cray/pe/gcc-libs
 
-<span class="c1"># Set the options for the Singularity executable.</span>
-<span class="c1"># This makes sure Cray Slingshot interconnect libraries are available</span>
+<span class="c1"># This makes sure HPE Cray Slingshot interconnect libraries are available</span>
 <span class="c1"># from inside the container.</span>
-<span class="nv">BIND_OPTS</span><span class="o">=</span><span class="s2">&quot;-B /opt/cray,/usr/lib64:/usr/lib64/host,/usr/lib64/tcl&quot;</span>
-<span class="nv">BIND_OPTS</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">BIND_OPTS</span><span class="si">}</span><span class="s2">,/var/spool/slurmd/mpi_cray_shasta&quot;</span>
+<span class="nb">export</span> <span class="nv">SINGULARITY_BIND</span><span class="o">=</span><span class="s2">&quot;/opt/cray,/usr/lib64/libibverbs.so.1,/usr/lib64/librdmacm.so.1, /usr/lib64/libnl-3.so.200,/usr/lib64/libnl-route-3.so.200,/usr/lib64/libpals.so.0, /var/spool/slurmd/mpi_cray_shasta,/usr/lib64/libibverbs/libmlx5-rdmav25.so,/etc/libibverbs.d,/opt/gcc&quot;</span>
 
 <span class="c1"># Launch the parallel job.</span>
 srun --hint<span class="o">=</span>nomultithread --distribution<span class="o">=</span>block:block <span class="se">\</span>
-    singularity run <span class="si">${</span><span class="nv">BIND_OPTS</span><span class="si">}</span> osu_benchmarks.sif <span class="se">\</span>
+    singularity run osu_benchmarks.sif <span class="se">\</span>
         collective/osu_allreduce
 </code></pre></div>
-</div>
-</div>
-</div>
 <p>The only changes from a standard submission script are:</p>
 <ul>
-<li>We set the environment variable <code>SINGULARITY_LD_LIBRARY_PATH</code> to ensure the correct libraries are available within the container to be able to use Cray MPICH.</li>
+<li>We set the environment variable <code>SINGULARITY_LD_LIBRARY_PATH</code> to ensure that the excutable can find the correct libraries are available within the container to be able to use HPE Cray Slingshot interconnect.</li>
+<li>We set the environment variable <code>SINGULARITY_BIND</code> to ensure that the correct libraries are available within the container to be able to use HPE Cray Slingshot interconnect.</li>
 <li><code>srun</code> calls the <code>singularity</code> software with the image file we created rather than the parallel program directly.</li>
 </ul>
 <div class="admonition important">
@@ -2191,7 +2183,7 @@ file:</p>
     <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.bd0b6b67.min.js"}</script>
     
     
-      <script src="../../assets/javascripts/bundle.5413a266.min.js"></script>
+      <script src="../../assets/javascripts/bundle.467223ff.min.js"></script>
       
     
   </body>
