@@ -1641,7 +1641,7 @@ following way (here using the "short queue"):
     ```
     auser@ln01:/work/t01/t01/auser> srun --nodes=1 --exclusive --time=00:20:00 \
                    --partition=standard --qos=short --reservation=shortqos \
-		   --pty /bin/bash
+		           --account=[budget code] --pty /bin/bash
     auser@nid001261:/work/t01/t01/auser> hostname
     nid001261
     ```
