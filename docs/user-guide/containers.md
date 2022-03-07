@@ -390,50 +390,43 @@ on two nodes where all 128 cores on each node are used for MPI processes (so, 25
 MPI processes in total).
 
 === "Full system"
-    ```bash
-    #!/bin/bash
+```bash
+#!/bin/bash
 
-    # Slurm job options (name, compute nodes, job time)
-    #SBATCH --job-name=singularity_parallel
-    #SBATCH --time=0:10:0
-    #SBATCH --nodes=2
-    #SBATCH --tasks-per-node=128
-    #SBATCH --cpus-per-task=1
+# Slurm job options (name, compute nodes, job time)
+#SBATCH --job-name=singularity_parallel
+#SBATCH --time=0:10:0
+#SBATCH --nodes=2
+#SBATCH --tasks-per-node=128
+#SBATCH --cpus-per-task=1
 
-    # Replace [budget code] below with your budget code (e.g. t01)
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
-    #SBATCH --account=[budget code]
+# Replace [budget code] below with your budget code (e.g. t01)
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+#SBATCH --account=[budget code]
 
-    # Set the number of threads to 1.
-    # This prevents any threaded system libraries from automatically using threading.
-    export OMP_NUM_THREADS=1
+# Set the number of threads to 1.
+# This prevents any threaded system libraries from automatically using threading.
+export OMP_NUM_THREADS=1
 
-    # Set the LD_LIBRARY_PATH environment variable within the Singularity container
-    # to ensure that it used the correct MPI libraries.
-    export SINGULARITYENV_LD_LIBRARY_PATH= \
-        /opt/cray/pe/mpich/8.1.9/ofi/gnu/9.1/lib-abi-mpich: \
-        /opt/cray/pe/pmi/6.0.13/lib: \
-        /opt/cray/libfabric/1.11.0.4.71/lib64: \
-        /usr/lib64/host: \
-        /usr/lib/x86_64-linux-gnu/libibverbs: \
-        /.singularity.d/libs
+# Set the LD_LIBRARY_PATH environment variable within the Singularity container
+# to ensure that it used the correct MPI libraries.
+export SINGULARITYENV_LD_LIBRARY_PATH=/opt/cray/pe/mpich/8.1.4/ofi/gnu/9.1/lib-abi-mpich:/opt/cray/pe/pmi/6.0.10/lib:/opt/cray/libfabric/1.11.0.4.71/lib64:/usr/lib64/host:/usr/lib/x86_64-linux-gnu/libibverbs:/.singularity.d/libs:/opt/cray/pe/gcc-libs
 
-    # Set the options for the Singularity executable.
-    # This makes sure Cray Slingshot interconnect libraries are available
-    # from inside the container.
-    BIND_OPTS="-B /opt/cray,/usr/lib64:/usr/lib64/host,/usr/lib64/tcl"
-    BIND_OPTS="${BIND_OPTS},/var/spool/slurmd/mpi_cray_shasta"
+# This makes sure HPE Cray Slingshot interconnect libraries are available
+# from inside the container.
+export SINGULARITY_BIND="/opt/cray,/usr/lib64/libibverbs.so.1,/usr/lib64/librdmacm.so.1, /usr/lib64/libnl-3.so.200,/usr/lib64/libnl-route-3.so.200,/usr/lib64/libpals.so.0, /var/spool/slurmd/mpi_cray_shasta,/usr/lib64/libibverbs/libmlx5-rdmav25.so,/etc/libibverbs.d,/opt/gcc"
 
-    # Launch the parallel job.
-    srun --hint=nomultithread --distribution=block:block \
-        singularity run ${BIND_OPTS} osu_benchmarks.sif \
-            collective/osu_allreduce
-    ```
+# Launch the parallel job.
+srun --hint=nomultithread --distribution=block:block \
+    singularity run osu_benchmarks.sif \
+        collective/osu_allreduce
+```
 
 The only changes from a standard submission script are:
 
-- We set the environment variable `SINGULARITY_LD_LIBRARY_PATH` to ensure the correct libraries are available within the container to be able to use Cray MPICH.
+- We set the environment variable `SINGULARITY_LD_LIBRARY_PATH` to ensure that the excutable can find the correct libraries are available within the container to be able to use HPE Cray Slingshot interconnect.
+- We set the environment variable `SINGULARITY_BIND` to ensure that the correct libraries are available within the container to be able to use HPE Cray Slingshot interconnect.
 - `srun` calls the `singularity` software with the image file we created rather than the parallel program directly.
 
 !!! important
