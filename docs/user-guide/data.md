@@ -127,17 +127,14 @@ account.
    be limited by another quota.)
 
 !!! tip
-   Quota and usage data on SAFE is updated twice daily so may not be
-   exactly up to date with the situation on the systems themselves.
+    Quota and usage data on SAFE is updated twice daily so may not be
+    exactly up to date with the situation on the systems themselves.
 
 ### Work file systems
 
 There are currently three work file systems on the full ARCHER2 service.
 Each of these file systems is 3.4 PB and a portion of one of these file
 systems is available to each project.
-
-There is one 3.4 PB work file system on the ARCHER2 4-cabinet system. Every
-project on the 4-cabinet system has quota on this file system.
 
 All of these are high-performance, Lustre parallel file systems. They are
 designed to support data in large files. The performance for data stored
@@ -187,8 +184,8 @@ account.
    be limited by another quota.)
 
 !!! tip
-   Quota and usage data on SAFE is updated twice daily so may not be
-   exactly up to date with the situation on the systems themselves.
+    Quota and usage data on SAFE is updated twice daily so may not be
+    exactly up to date with the situation on the systems themselves.
 
 You can also examine up to date quotas and usage on the ARCHER2 systems
 themselves using the `lfs quota` command. To do this:
