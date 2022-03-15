@@ -1957,6 +1957,7 @@ suitable for different types of use.</p>
 <ul>
 <li>Login nodes</li>
 <li>Compute nodes</li>
+<li>Data analysis nodes</li>
 </ul>
 <p>Each type of node sees a different combination of the storage types.
 The following table shows which storage options are avalable on 
@@ -1967,6 +1968,7 @@ different node types:</p>
 <th>Storage</th>
 <th>Login Nodes</th>
 <th>Compute Nodes</th>
+<th>Data analysis nodes</th>
 <th>Notes</th>
 </tr>
 </thead>
@@ -1975,10 +1977,12 @@ different node types:</p>
 <td>/home</td>
 <td>yes</td>
 <td>no</td>
+<td>yes</td>
 <td>Backed up</td>
 </tr>
 <tr>
 <td>/work</td>
+<td>yes</td>
 <td>yes</td>
 <td>yes</td>
 <td>Not backed up, high performance</td>
@@ -1987,6 +1991,7 @@ different node types:</p>
 <td>RDFaaS</td>
 <td>yes</td>
 <td>no</td>
+<td>yes</td>
 <td>Backed up, high performance. Only available for projects that moved from ARCHER to ARCHER2.</td>
 </tr>
 </tbody>
