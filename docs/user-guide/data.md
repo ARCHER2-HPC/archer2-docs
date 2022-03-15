@@ -66,16 +66,17 @@ There are also two different types of node available to users:
 
    - Login nodes
    - Compute nodes
+   - Data analysis nodes
 
 Each type of node sees a different combination of the storage types.
 The following table shows which storage options are avalable on 
 different node types:
 
-| Storage | Login Nodes | Compute Nodes | Notes | 
-|---------|-------------|---------------|-------|
-| /home   | yes         | no            | Backed up |
-| /work   | yes         | yes           | Not backed up, high performance |
-| RDFaaS  | yes         | no            | Backed up, high performance. Only available for projects that moved from ARCHER to ARCHER2. |
+| Storage | Login Nodes | Compute Nodes | Data analysis nodes | Notes     | 
+|---------|-------------|---------------|---------------------|-----------|
+| /home   | yes         | no            | yes                 | Backed up |
+| /work   | yes         | yes           | yes                 | Not backed up, high performance |
+| RDFaaS  | yes         | no            | yes                 | Backed up, high performance. Only available for projects that moved from ARCHER to ARCHER2. |
 
 ### Home file systems
 
