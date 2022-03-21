@@ -9,6 +9,16 @@ The [Intel MKL link line advisor](https://software.intel.com/content/www/us/en/d
 Some examples are given below. Note that loading the `mkl` module will provide 
 the environment variable `MKLROOT` which holds the location of the various MKL components.
 
+!!! warning
+    The ARCHER2 CSE team have seen that using MKL on ARCHER2 for some software 
+    leads to failed regression tests due to numerical differences between refernece
+    results and those produced with software using MKL. 
+    
+    We strongly recommend that you use the HPE Cray LibSci and HPE Cray FFTW libraries
+    for software if at all possible rather than MKL. If you do decide to use MKL on
+    ARCHER2, then you should carefully validate results from your software to ensure
+    that it is giving the expected results.
+
 !!! important
     The `cray-libsci` module is loaded by default for all users and this module 
     also contains definitions of BLAS, LAPACK and ScaLAPACK routines that conflict
@@ -37,11 +47,6 @@ Swap modules:
     module load PrgEnv-gnu
     module load mkl
     ```
-=== 4-cabinet system ===
-    ```
-    module restore PrgEnv-gnu
-    module load mkl
-    ```
 
 | Language | Compile options | Link options |
 |----------|-|-|
@@ -57,11 +62,6 @@ Swap modules:
     module load PrgEnv-gnu
     module load mkl
     ```
-=== 4-cabinet system ===
-    ```
-    module restore PrgEnv-gnu
-    module load mkl
-    ```
 
 | Language | Compile options | Link options |
 |----------|-|-|
@@ -75,11 +75,6 @@ Swap modules:
 === Full system ===
     ```
     module load PrgEnv-gnu
-    module load mkl
-    ```
-=== 4-cabinet system ===
-    ```
-    module restore PrgEnv-gnu
     module load mkl
     ```
 
