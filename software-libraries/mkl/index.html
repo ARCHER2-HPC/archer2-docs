@@ -1485,6 +1485,16 @@ requirements for parallelism, and so on.
 The <a href="https://software.intel.com/content/www/us/en/develop/articles/intel-mkl-link-line-advisor.html">Intel MKL link line advisor</a> should be consulted.</p>
 <p>Some examples are given below. Note that loading the <code>mkl</code> module will provide 
 the environment variable <code>MKLROOT</code> which holds the location of the various MKL components.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The ARCHER2 CSE team have seen that using MKL on ARCHER2 for some software 
+leads to failed regression tests due to numerical differences between refernece
+results and those produced with software using MKL. </p>
+<p>We strongly recommend that you use the HPE Cray LibSci and HPE Cray FFTW libraries
+for software if at all possible rather than MKL. If you do decide to use MKL on
+ARCHER2, then you should carefully validate results from your software to ensure
+that it is giving the expected results.</p>
+</div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>The <code>cray-libsci</code> module is loaded by default for all users and this module 
@@ -1513,10 +1523,6 @@ versions of MKL do not support this option.</p>
 <p>=== Full system ===
     <div class="highlight"><pre><span></span><code>module load PrgEnv-gnu
 module load mkl
-</code></pre></div>
-=== 4-cabinet system ===
-    <div class="highlight"><pre><span></span><code>module restore PrgEnv-gnu
-module load mkl
 </code></pre></div></p>
 <table>
 <thead>
@@ -1544,10 +1550,6 @@ module load mkl
 <p>=== Full system ===
     <div class="highlight"><pre><span></span><code>module load PrgEnv-gnu
 module load mkl
-</code></pre></div>
-=== 4-cabinet system ===
-    <div class="highlight"><pre><span></span><code>module restore PrgEnv-gnu
-module load mkl
 </code></pre></div></p>
 <table>
 <thead>
@@ -1574,10 +1576,6 @@ module load mkl
 <p>Swap modules:</p>
 <p>=== Full system ===
     <div class="highlight"><pre><span></span><code>module load PrgEnv-gnu
-module load mkl
-</code></pre></div>
-=== 4-cabinet system ===
-    <div class="highlight"><pre><span></span><code>module restore PrgEnv-gnu
 module load mkl
 </code></pre></div></p>
 <table>
