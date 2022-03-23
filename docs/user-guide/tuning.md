@@ -267,3 +267,190 @@ such as `MPI_Win_fence` rather than `MPI_Barrier`.
     all the processes to call it before it can complete. A single slow
     process will therefore adversely impact the performance of your entire
     parallel program.
+
+## OpenMP
+
+There are a variety of possible issues that can result in poor performance of OpenMP programs. These include:
+
+### Sequential code
+
+Code outside of parallel regions is executed sequentially by the master thread.
+
+### Idle threads
+
+If different threads have different amounts of computation to do, then
+threads may be idle whenever a barrier is encountered, for example at
+the end of parallel regions or the end of worksharing loops. For
+worksharing loops, choosing a suitable schedule kind may help. For
+more irregular computation patterns, using OpenMP tasks might offer a
+solution: the runtime will try to load balance tasks across the
+threads in the team.
+
+Synchronisation mechanisms that enforce mutual exclusion, such as
+critical regions, atomic statements and locks can also result in idle
+threads if there is contention - threads have to wait their turn for
+access.
+
+### Synchronisation
+
+The act of synchronising threads comes at some cost, even if the
+threads are never idle. In OpenMP, the most common source of
+synchronisation overheads is the implicit barriers at the end of
+parallel regions and worksharing loops. The overhead of these barriers
+depends on the OpenMP implementation being used as well as on the
+number of threads, but is typically in the range of a few
+microseconds. This means that for a simple parallel loop such as
+
+    #pragma omp parallel for reduction(+:sum)
+    for (i=0;i<n;i++){
+       sum += a[i];
+    } 
+
+the number of iterations required to make parallel execution
+worthwhile may be of the order of 100,000. On ARCHER2, benchmarking
+has shown that for the AOCC compiler, OpenMP barriers have
+significantly higher overhead than for either the Cray or GNU
+compilers.
+
+It is possible to suppress the implicit barrier at the end of
+worksharing loop using a `nowait` clause, taking care that this does
+not introduce and race conditions.
+
+Atomic statements are designed to be capable of more efficient
+implementation that the equivalent critical region or lock/unlock pair,
+so should be used where applicable.
+
+### Scheduling
+
+Whenever we rely on the OpenMP runtime to dynamically assign
+computation to threads (e.g. dynamic or guided loop schedules, tasks),
+there is some overhead incurred (some of this cost may actually be
+internal synchronisation in the runtime).  It is often necessary to
+adjust the granularity of the computation to find a compromise between
+too many small units (and high scheduling cost) and too few large
+units (where load imbalance may dominate). For example, we can choose
+a non-default chunksize for the dynamic schedule, or adjust the amount of
+computation within each OpenMP task construct.
+
+### Communication
+
+Communication between threads in OpenMP takes place via the cache
+coherency mechanism. In brief, whenever a thread writes a memory
+location, all copies of this location which are in a cache belonging
+to a different core have to be marked as invalid. Subsequent accesses
+to this location by other threads will result in the up-to-date value
+being retrieved from the cache where the last write occurred (or
+possibly from main memory).
+
+Due to the fine granularity of memory accesses, these overheads are
+difficult to analyse or monitor. To minimise communication, we need to
+write code with good data affinity - i.e. each thread should access
+the same subset of program data as much as possible.
+
+
+#### NUMA effects
+
+On modern CPU nodes, main memory is often organised in NUMA regions -
+sections of main memory associated with a subset of the cores on a
+node. On ARCHER2 nodes, there are 8 NUMA regions per node, each
+associated with 16 CPU cores. On such systems the location of data in
+main memory with respect to the cores that are accessing it can be
+important. The default OS policy is to place data in the NUMA region
+which first accesses it (first touch policy).  For OpenMP programs
+this can be the worst possible option: if the data is initialised by
+the master thread, it is all allocated one NUMA region and having all
+threads accessing data becomes a bandwidth bottleneck.
+
+This default policy can be changed using the `numactl` command, but it
+is probably better to make use of the first touch policy by explicitly
+parallelising the data initialisation in the application code. This
+may be straightforward for large multidimensional arrays, but more
+challenging for irregular data structures.
+
+#### False sharing
+
+The cache coherency mechanism described above operates on units of
+data corresponding to the size of cache lines - for ARCHER2 CPUs this
+is 64 bytes. This means that if different threads are accessing
+neighbouring words in memory, and at least some of the accesses are
+writes, then communication may be happening even if no individual word
+is actually being accessed by more than one thread. This means that
+patterns such as
+
+   
+    #pragma omp parallel shared(count) private(myid) 
+    {
+      myid = omp_get_thread_num();
+      ....
+      count[myid]++;
+      ....
+    }
+
+may give poor performance if the updates to the `count` array are
+sufficiently frequent.
+
+### Hardware resource contention
+
+Whenever there are multiple threads (or processes) executing inside a
+node, they may contend for some hardware resources. The most important
+of these for many HPC applications is memory bandwidth. This is effect
+is very evident on ARCHER2 CPUs - it is possible for just 2 threads to
+almost saturate the available memory bandwidth in a NUMA region which
+has 16 cores associated with it. For very bandwidth-intensive
+applications, running more that 2 threads per NUMA region may gain
+little additional performance. If an OpenMP code is not using all the
+cores on a node, by default Slurm will spread the threads out across
+NUMA regions to maximise the available bandwidth.
+
+Another resource that threads may contend for is space in shared
+caches. On ARCHER2, every set of 4 cores shares 16MB of L3 cache. 
+
+
+### Compiler non-optimisation
+
+In rare cases, adding OpenMP directives can adversely affect the
+compiler's optimisation process. The symptom of this is that the
+OpenMP code running on 1 thread is slower than the same code compiled
+without the OpenMP flag. It can be difficult to find a workaround -
+using the compiler's diagnostic flags to find out which optimisation
+(e.g. vectorisation, loop unrolling) is being affected and adding
+compiler-specific directives may help.
+
+
+## Hybrid MPI and OpenMP
+
+There are two main motivations for using both MPI and OpenMP in the
+same application code: reducing memory requirements and improving
+performance. At low core counts, where the pure MPI version of the
+code is still scaling well, adding OpenMP is unlikely to improve
+performance. In fact, it can introduce some additional overheads which
+make performance worse! The benefit is likely to come in the regime
+where the pure MPI version starts to lose scalability - here adding
+OpenMP can reduce communication costs, make load balancing easier, or
+be an effective way of exploiting additional parallelism without
+excessive code re-writing.
+
+An important performance consideration for MPI + OpenMP applications
+is the choice of the number of OpenMP threads per MPI process. The
+optimum value will depend on the application, the input data, the
+number of nodes requested and the choice of compiler, and is hard to
+predict without experimentation. However, there are some
+considerations that apply to ARCHER2:
+
+* Due to NUMA effects, it is likely that running at least one MPI
+  process per NUMA region (i.e. at least 8 MPI processes per node) will 
+  be beneficial.
+
+* The number of MPI processes per node should be a power of 2, so that
+  all OpenMP threads run in the same NUMA region as their parent
+  MPI process.
+
+* For applications where each process has a small memory footprint
+  (e.g. some molecular dynamics codes), running no more than 4 OpenMP
+  threads per MPI process may be beneficial, so that all the threads
+  in a process share a single L3 cache.
+
+
+
+
+
