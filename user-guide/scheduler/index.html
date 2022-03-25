@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.6">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.7">
     
     
       
@@ -4678,11 +4678,6 @@ experiment to find the best balance between runtime (long runtimes
 minimise the checkpoint/restart overheads) and throughput (short
 runtimes maximise throughput).</p>
 <h3 id="interconnect-locality">Interconnect locality</h3>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>The locality options are only available on the full ARCHER2 
-system. The 4-cabinet system does not support this option.</p>
-</div>
 <p>For jobs which are sensitive to interconnect (MPI) performance and
 utilise 128 nodes or less it is possible to request that all nodes
 are in a single Slingshot dragonfly group. The maximum number of nodes in
