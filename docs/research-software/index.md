@@ -26,6 +26,7 @@ centrally supported packages:
   - [Code_Saturne](code-saturne/code-saturne.md)
   - [CP2K](cp2k/cp2k.md)
   - [ELK](elk/elk.md)
+  - [FHI-aims](fhi-aims/fhi-aims.md)
   - [FEniCS](fenics/fenics.md)
   - [GROMACS](gromacs/gromacs.md)
   - [LAMMPS](lammps/lammps.md)

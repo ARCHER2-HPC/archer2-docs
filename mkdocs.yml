@@ -67,6 +67,7 @@ nav:
     - "Code_Saturne": research-software/code-saturne/code-saturne.md
     - "CP2K": research-software/cp2k/cp2k.md
     - "ELK": research-software/elk/elk.md
+    - "FHI-aims": research-software/fhi-aims/fhi-aims.md
     - "FEniCS": research-software/fenics/fenics.md
     - "GROMACS": research-software/gromacs/gromacs.md
     - "LAMMPS": research-software/lammps/lammps.md
