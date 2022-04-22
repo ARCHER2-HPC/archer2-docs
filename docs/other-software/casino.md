@@ -135,10 +135,10 @@ Timings are reported as time taken for 100 equilibration steps in DMC calculatio
 
 ### CASINO_NUMABLK=8
 
-| Nodes | Time taken (s) |
-|------:|---------------:|
-|     1 |         289.90 |
-|     2 |         154.93 |
-|     4 |          81.06 |
-|     8 |          41.44 |
-|    16 |          23.16 |
+| Nodes | Time taken (s) | Speedup |
+|------:|---------------:|--------:|
+|     1 |         289.90 |     1.0 |
+|     2 |         154.93 |     1.9 |
+|     4 |          81.06 |     3.6 |
+|     8 |          41.44 |     7.0 |
+|    16 |          23.16 |    12.5 |
