@@ -2,7 +2,7 @@
 
 This section describes software that has been installed on ARCHER2 by external
 parties (i.e. not by the ARCHER2 service itself) for general use by ARCHER2 
-users.
+users or provides useful notes on software that is not installed centrally.
 
 !!! important
     While the ARCHER2 service desk is able to provide support for basic use of this
@@ -13,4 +13,5 @@ users.
 
 ## Research Software
 
+ - [CASINO](casino.md)
  - [CRYSTAL](crystal.md)
