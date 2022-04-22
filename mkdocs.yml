@@ -109,6 +109,7 @@ nav:
     - "VisiData": data-tools/visidata.md
   - "Other Software":
     - "Overview": other-software/index.md  
+    - "CASINO": other-software/casino.md
     - "CRYSTAL": other-software/crystal.md
   - "Essential Skills": essentials/index.md
   - "ARCHER2 and Publications": publish/index.md
