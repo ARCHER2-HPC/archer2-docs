@@ -42,7 +42,7 @@ Next, we show how to make sure that the MPI transport layer is set to UCX,
 how to set the number of cores sharing the System-V shared memory segments and
 how to pin MPI processes sequentially to cores.
 
-Finally, we provide an example CASINO job submission script that demonstrates all
+Finally, we provide a job submission script that demonstrates all
 these options together.
 
 ### Setting the MPI transport layer to UCX
@@ -59,9 +59,9 @@ module load cray-mpich-ucx
 
 ### Setting the number of cores sharing memory
 
-In your job submission script you set the number of cores sharing memory segements 
+In your job submission script you set the number of cores sharing memory segments 
 by setting the `CASINO_NUMABLK` environment variable before you run CASINO. For example,
-to specify that there should be shared memory segements each shared between 16 cores, you
+to specify that there should be shared memory segments each shared between 16 cores, you
 would use:
 
 ```
