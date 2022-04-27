@@ -2035,10 +2035,6 @@ runtimes maximise throughput).
 
 ### Interconnect locality
 
-!!! important
-    The locality options are only available on the full ARCHER2 
-    system. The 4-cabinet system does not support this option.
-
 For jobs which are sensitive to interconnect (MPI) performance and
 utilise 128 nodes or less it is possible to request that all nodes
 are in a single Slingshot dragonfly group. The maximum number of nodes in

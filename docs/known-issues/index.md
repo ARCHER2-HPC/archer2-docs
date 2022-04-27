@@ -152,5 +152,12 @@ The option `--export=ALL` propagates all the environment variables from the logi
 
 ## Recently Resolved Issues
 
-No recently resolved issues.
+### Intel MKL libraries: FFTW gives incorrect results (Added: 2022-03-28)
+
+Until recently, the Intel MKL library modules installed on ARCHER2 set environment variables
+to enable high-performance code paths. Unfortunately, recent investigations have revealed that
+these code paths resulted in incorrect results from the FFTW compenents of MKL. The modules
+were changed on 21 March 2022 to remove these environment variables and we have verified that
+the FFTW components of the MKL libraries now give the expected results.
+
 
