@@ -137,4 +137,4 @@ Then rerun the command
 source ./.env_mach_specific.sh && make
 ```
 
-Once this step has been completed, you are ready to run a simple test case.
+Once this step has been completed, you are ready to run a [simple test case](cesm213_run.md).
