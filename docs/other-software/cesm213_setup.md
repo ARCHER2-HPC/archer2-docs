@@ -116,6 +116,7 @@ To build, execute the following commands
 module load CESM2/2.1.3
 cd $CIMEROOT/tools/cprnc
 ../configure --macros-format=Makefile --mpilib=mpi-serial
+sed -i '/}}/d' .env_mach_specific.sh
 source ./.env_mach_specific.sh && make
 ```
 
@@ -125,13 +126,13 @@ You may see an error of the form
 -bash: export: '}}': not a valid identifier
 ```
 
-Should this happen, open the file `./.env_mach_specific.sh` in a text editor and comment out or delete the line
+This error should be safe to ignore, but can be solved by opening the file `./.env_mach_specific.sh` in a text editor and commenting out or deleting the line
 
 ```bash
 export OMP_NUM_THREADS={{ thread_count }}
 ```
 
-Then rerun the command
+Then rerunning the command
 
 ```bash
 source ./.env_mach_specific.sh && make
