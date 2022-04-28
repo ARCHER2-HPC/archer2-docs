@@ -108,7 +108,23 @@ If any changes are made to xml parameters that would necessitate rebuilding, the
 ./case.build --clean
 ./case.build
 ```
+## [Optional] Download input data
 
+You can check to see if the required input data is already in your input data directory using
+
+``` {.console}
+./check_input_data
+```
+
+If it is not present you can download the input data for the case prior to running the case using
+
+``` {.console}
+./check_input_data --download
+```
+
+This can be useful for cases where a large amount of data is needed, as you can write a simple slurm script to run this download on the serial queue. Information on creating job submission scripts can be found on the [ARCHER2 page on Running Jobs](https://docs.archer2.ac.uk/user-guide/scheduler/).
+
+This step is optional, and if skipped the data will be downloaded using the login node when you run the **case.submit** script.
 
 ## Run the case
 
