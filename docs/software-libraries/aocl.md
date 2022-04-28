@@ -27,5 +27,9 @@ When loaded, this collection of numerical libraries replaces ```cray-libsci``` a
 !!! warning
     When using ```gcc/11.2.0```, the LibM library is unavailable. This is a known issue that is being investigated.  
 
+# Resources  
+
+For more information on AOCL, please see: https://developer.amd.com/amd-aocl/#documentation 
+
 # Version history..
 - Module `aocl/3.1` installed April 2022
