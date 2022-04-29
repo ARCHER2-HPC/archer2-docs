@@ -154,6 +154,17 @@ Submit the job to the batch queue using the **case.submit** command.
 ./case.submit
 ```
 
+>Note
+There is a small possibility that your job may initially fail with the error message
+``` {.console}
+ERROR: Undefined env var 'CESM_ROOT'
+```
+This is due to a known issue with ARCHER2 where adding the SBATCH directive `export=ALL` to a slurm script will not work (see the [ARCHER2 known issues entry](https://docs.archer2.ac.uk/known-issues/#slurm-export-option-does-not-work-in-job-submission-script) on the subject). To avoid this, you can run the **case.submit** script with the following command
+``` {.console}
+./case.submit -a=--export=ALL
+```
+
+
 When the job is complete, most output will *NOT* be written under the case directory, but instead under some other directories. Review the following directories and files,
 whose locations can be found with **xmlquery** (note: **xmlquery** can
 be run with a list of comma separated names and no spaces):
