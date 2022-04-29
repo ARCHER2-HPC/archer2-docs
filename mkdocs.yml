@@ -88,6 +88,7 @@ nav:
     - "HDF5": software-libraries/hdf5.md
     - "NetCDF": software-libraries/netcdf.md
     - "ADIOS": software-libraries/adios.md
+    - "AOCL": software-libraries/aocl.md
     - "ARPACK": software-libraries/arpack.md
     - "Boost": software-libraries/boost.md
     - "Eigen": software-libraries/eigen.md
@@ -102,16 +103,14 @@ nav:
     - "SLEPc" : software-libraries/slepc.md
     - "SuperLU/SuperLU_DIST": software-libraries/superlu.md
     - "Trilinos": software-libraries/trilinos.md
-  - "Data Analysis and Tools": 
+  - "Data Analysis and Tools":
     - "Overview": data-tools/index.md
     - "ParaView": data-tools/paraview.md
     - "R": data-tools/cray-r.md
     - "VisiData": data-tools/visidata.md
   - "Other Software":
-    - "Overview": other-software/index.md  
+    - "Overview": other-software/index.md
     - "CASINO": other-software/casino.md
     - "CRYSTAL": other-software/crystal.md
   - "Essential Skills": essentials/index.md
   - "ARCHER2 and Publications": publish/index.md
-
-
