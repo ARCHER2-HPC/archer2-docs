@@ -1952,7 +1952,16 @@ the best performance, you should ensure that consecutive MPI rank IDs are pinned
 consecutive cores on a node to maximise shared memory optimisations in NUMA regions.
 In practice, the recommended options to the <code>srun</code> command: <code>--hint=nomultithread</code>
 and <code>--distribution=block:block</code> should always be specified when running VASP on
-ARCHER2.</p>
+ARCHER2. You should also make sure that you use the UCX transport layer for MPI
+rather than the default OpenFabrics transport layer. The VASP modules are setup
+to enable this but if you are using your own compiled version of VASP you should
+add the following lines to your job submission script before you run VASP 
+(assuming that you compiled VASP using GCC):</p>
+<div class="highlight"><pre><span></span><code>module load PrgEnv-gnu
+module load craype-network-ucx
+module load cray-mpich-ucx
+export UCX_IB_REG_METHODS=direct
+</code></pre></div>
 <p><strong>KPAR:</strong> You should always use the maximum value of <code>KPAR</code> that is possible for
 your calculation within the memory limits of what is possible.</p>
 <p><strong>NCORE/NPAR:</strong> We have found that the optimal values of <code>NCORE</code> (and hence <code>NPAR</code>)
@@ -2002,8 +2011,9 @@ different node counts. Performance reported as timing for <code>LOOP+</code> in 
 <h4 id="full-system-vasp-630">Full system, VASP 6.3.0</h4>
 <ul>
 <li><code>vasp/6/6.3.0</code> module</li>
-<li>GCC 10.2.0</li>
+<li>GCC 11.2.0</li>
 <li>AOCL 3.1 for BLAS/LAPACK/ScaLAPACK and FFTW</li>
+<li>UCX for MPI transport layer</li>
 </ul>
 <table>
 <thead>
@@ -2021,21 +2031,21 @@ different node counts. Performance reported as timing for <code>LOOP+</code> in 
 <td align="right">64</td>
 <td align="right">128</td>
 <td align="right">64</td>
-<td align="right">3318</td>
+<td align="right">3295</td>
 </tr>
 <tr>
 <td align="right">2</td>
 <td align="right">64</td>
 <td align="right">256</td>
 <td align="right">64</td>
-<td align="right">1580</td>
+<td align="right">1548</td>
 </tr>
 <tr>
 <td align="right">4</td>
 <td align="right">64</td>
 <td align="right">512</td>
 <td align="right">64</td>
-<td align="right">815</td>
+<td align="right">814</td>
 </tr>
 <tr>
 <td align="right">8</td>
@@ -2049,29 +2059,30 @@ different node counts. Performance reported as timing for <code>LOOP+</code> in 
 <td align="right">64</td>
 <td align="right">1024</td>
 <td align="right">64</td>
-<td align="right">238</td>
+<td align="right">221</td>
 </tr>
 <tr>
 <td align="right">32</td>
 <td align="right">64</td>
 <td align="right">2048</td>
 <td align="right">64</td>
-<td align="right">204</td>
+<td align="right">131</td>
 </tr>
 <tr>
 <td align="right">64</td>
 <td align="right">64</td>
 <td align="right">4096</td>
 <td align="right">64</td>
-<td align="right">246</td>
+<td align="right">82</td>
 </tr>
 </tbody>
 </table>
 <h4 id="full-system-544pl2">Full system, 5.4.4.pl2</h4>
 <ul>
 <li><code>vasp/5/5.4.4.pl2</code> module</li>
-<li>GCC 11.2.0 with</li>
+<li>GCC 11.2.0</li>
 <li>HPE Cray LibSci 21.09 for BLAS/LAPACK/ScaLAPACK and FFTW 3.3.8.11</li>
+<li>UCX for MPI transport layer</li>
 </ul>
 <table>
 <thead>
@@ -2089,49 +2100,49 @@ different node counts. Performance reported as timing for <code>LOOP+</code> in 
 <td align="right">64</td>
 <td align="right">64</td>
 <td align="right">64</td>
-<td align="right">3441</td>
+<td align="right">3428</td>
 </tr>
 <tr>
 <td align="right">2</td>
 <td align="right">64</td>
 <td align="right">128</td>
 <td align="right">64</td>
-<td align="right">1605</td>
+<td align="right">1615</td>
 </tr>
 <tr>
 <td align="right">4</td>
 <td align="right">64</td>
 <td align="right">256</td>
 <td align="right">64</td>
-<td align="right">827</td>
+<td align="right">823</td>
 </tr>
 <tr>
 <td align="right">8</td>
 <td align="right">64</td>
 <td align="right">512</td>
 <td align="right">64</td>
-<td align="right">457</td>
+<td align="right">429</td>
 </tr>
 <tr>
 <td align="right">16</td>
 <td align="right">64</td>
 <td align="right">1024</td>
 <td align="right">64</td>
-<td align="right">249</td>
+<td align="right">231</td>
 </tr>
 <tr>
 <td align="right">32</td>
 <td align="right">64</td>
 <td align="right">2048</td>
 <td align="right">64</td>
-<td align="right">210</td>
+<td align="right">135</td>
 </tr>
 <tr>
 <td align="right">64</td>
 <td align="right">64</td>
 <td align="right">4096</td>
 <td align="right">64</td>
-<td align="right">244</td>
+<td align="right">79</td>
 </tr>
 </tbody>
 </table>
@@ -2160,8 +2171,9 @@ different node counts. Performance reported as timing for <code>LOOP+</code> in 
 <h4 id="full-system-vasp-630_1">Full system, VASP 6.3.0</h4>
 <ul>
 <li><code>vasp/6/6.3.0</code> module</li>
-<li>GCC 10.2.0</li>
+<li>GCC 11.2.0</li>
 <li>AOCL 3.1 for BLAS/LAPACK/ScaLAPACK and FFTW</li>
+<li>UCX for MPI transport layer</li>
 </ul>
 <table>
 <thead>
@@ -2181,7 +2193,7 @@ different node counts. Performance reported as timing for <code>LOOP+</code> in 
 <td align="right">128</td>
 <td align="right">4</td>
 <td align="right">2</td>
-<td align="right">19916</td>
+<td align="right">19000</td>
 </tr>
 <tr>
 <td align="right">2</td>
@@ -2189,7 +2201,7 @@ different node counts. Performance reported as timing for <code>LOOP+</code> in 
 <td align="right">256</td>
 <td align="right">4</td>
 <td align="right">2</td>
-<td align="right">10492</td>
+<td align="right">10021</td>
 </tr>
 <tr>
 <td align="right">4</td>
@@ -2197,7 +2209,7 @@ different node counts. Performance reported as timing for <code>LOOP+</code> in 
 <td align="right">512</td>
 <td align="right">4</td>
 <td align="right">2</td>
-<td align="right">5849</td>
+<td align="right">5560</td>
 </tr>
 <tr>
 <td align="right">8</td>
@@ -2205,7 +2217,7 @@ different node counts. Performance reported as timing for <code>LOOP+</code> in 
 <td align="right">1024</td>
 <td align="right">4</td>
 <td align="right">2</td>
-<td align="right">3263</td>
+<td align="right">3176</td>
 </tr>
 <tr>
 <td align="right">16</td>
@@ -2213,15 +2225,15 @@ different node counts. Performance reported as timing for <code>LOOP+</code> in 
 <td align="right">2048</td>
 <td align="right">8</td>
 <td align="right">2</td>
-<td align="right">2135</td>
+<td align="right">2413</td>
 </tr>
 <tr>
 <td align="right">32</td>
 <td align="right">64</td>
 <td align="right">2048</td>
-<td align="right">8</td>
+<td align="right">16</td>
 <td align="right">2</td>
-<td align="right">1430</td>
+<td align="right">1340</td>
 </tr>
 <tr>
 <td align="right">64</td>
@@ -2229,15 +2241,16 @@ different node counts. Performance reported as timing for <code>LOOP+</code> in 
 <td align="right">4096</td>
 <td align="right">16</td>
 <td align="right">2</td>
-<td align="right">954</td>
+<td align="right">908</td>
 </tr>
 </tbody>
 </table>
 <h4 id="full-system-544pl2_1">Full system, 5.4.4.pl2</h4>
 <ul>
 <li><code>vasp/5/5.4.4.pl2</code> module</li>
-<li>GCC 11.2.0 with</li>
+<li>GCC 11.2.0</li>
 <li>HPE Cray LibSci 21.09 for BLAS/LAPACK/ScaLAPACK and FFTW 3.3.8</li>
+<li>UCX for MPI transport layer</li>
 </ul>
 <table>
 <thead>
@@ -2257,7 +2270,7 @@ different node counts. Performance reported as timing for <code>LOOP+</code> in 
 <td align="right">128</td>
 <td align="right">4</td>
 <td align="right">2</td>
-<td align="right">26362</td>
+<td align="right">23417</td>
 </tr>
 <tr>
 <td align="right">2</td>
@@ -2265,7 +2278,7 @@ different node counts. Performance reported as timing for <code>LOOP+</code> in 
 <td align="right">256</td>
 <td align="right">4</td>
 <td align="right">2</td>
-<td align="right">13436</td>
+<td align="right">12338</td>
 </tr>
 <tr>
 <td align="right">4</td>
@@ -2273,7 +2286,7 @@ different node counts. Performance reported as timing for <code>LOOP+</code> in 
 <td align="right">512</td>
 <td align="right">4</td>
 <td align="right">2</td>
-<td align="right">7256</td>
+<td align="right">6751</td>
 </tr>
 <tr>
 <td align="right">8</td>
@@ -2281,7 +2294,7 @@ different node counts. Performance reported as timing for <code>LOOP+</code> in 
 <td align="right">1024</td>
 <td align="right">4</td>
 <td align="right">2</td>
-<td align="right">4003</td>
+<td align="right">3676</td>
 </tr>
 <tr>
 <td align="right">16</td>
@@ -2289,7 +2302,7 @@ different node counts. Performance reported as timing for <code>LOOP+</code> in 
 <td align="right">1024</td>
 <td align="right">16</td>
 <td align="right">2</td>
-<td align="right">2093</td>
+<td align="right">2136</td>
 </tr>
 <tr>
 <td align="right">32</td>
@@ -2297,7 +2310,7 @@ different node counts. Performance reported as timing for <code>LOOP+</code> in 
 <td align="right">2048</td>
 <td align="right">16</td>
 <td align="right">2</td>
-<td align="right">1264</td>
+<td align="right">1266</td>
 </tr>
 <tr>
 <td align="right">64</td>
@@ -2305,7 +2318,7 @@ different node counts. Performance reported as timing for <code>LOOP+</code> in 
 <td align="right">4096</td>
 <td align="right">16</td>
 <td align="right">2</td>
-<td align="right">853</td>
+<td align="right">806</td>
 </tr>
 </tbody>
 </table>
