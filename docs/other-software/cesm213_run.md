@@ -154,18 +154,17 @@ Submit the job to the batch queue using the **case.submit** command.
 ./case.submit
 ```
 
->Note
-There is a small possibility that your job may initially fail with the error message
-``` {.console}
-ERROR: Undefined env var 'CESM_ROOT'
-```
-This is due to a known issue with ARCHER2 where adding the SBATCH directive `export=ALL` to a slurm script will not work (see the [ARCHER2 known issues entry](https://docs.archer2.ac.uk/known-issues/#slurm-export-option-does-not-work-in-job-submission-script) on the subject). To avoid this, you can run the **case.submit** script with the following command
+>**_Note_**:
+There is a small possibility that your job may initially fail with the error message `ERROR: Undefined env var 'CESM_ROOT'`.
+This could have two causes:
+1. You do not have the CESM2/2.1.3 module loaded. This module needs to be loaded when running the case as well as when building the case. Try running again after having run `module load CESM2/2.1.3`
+2. This could also be due to a known issue with ARCHER2 where adding the SBATCH directive `export=ALL` to a slurm script will not work (see the [ARCHER2 known issues entry](https://docs.archer2.ac.uk/known-issues/#slurm-export-option-does-not-work-in-job-submission-script) on the subject). The ARCHER2 configuration included in the version of cime that was downloaded during setup should apply a work-around to this, and so you should not see this error in this case. It may still occur in some corner cases however. To avoid this, ensure that the environment from which you are submitting your case has the CESM2/2.1.3 module loaded and run the **case.submit** script with the following command
 ``` {.console}
 ./case.submit -a=--export=ALL
 ```
 
 
-When the job is complete, most output will *NOT* be written under the case directory, but instead under some other directories. Review the following directories and files,
+When the job is complete, most output will not necessarily be written under the case directory, but instead under some other directories. Review the following directories and files,
 whose locations can be found with **xmlquery** (note: **xmlquery** can
 be run with a list of comma separated names and no spaces):
 
