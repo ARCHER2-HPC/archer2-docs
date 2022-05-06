@@ -1,6 +1,6 @@
 # Community Earth System Model (CESM) version 2.1.3
 
-[CESM2](https://www.cesm.ucar.edu/models/cesm2/) is a fully-coupled, community, global climate model that provides state-of-the-art computer simulations of the Earth's past, present, and future climate states. At the time of writing, CESM 2.1.3 is the latest scientifically verified version of the model.
+[CESM2](https://www.cesm.ucar.edu/models/cesm2/) is a fully-coupled, community, global climate model that provides state-of-the-art computer simulations of the Earth's past, present, and future climate states. It has seven different components: atmosphere, ocean, river run off, sea ice, land ice, waves and adaptive river transport.  At the time of writing, CESM 2.1.3 is the latest scientifically verified version of the model.
 
 ## Setting up CESM 2.1.3 on ARCHER2
 

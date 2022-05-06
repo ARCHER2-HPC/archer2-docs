@@ -25,13 +25,17 @@ resolutions](http://www.cesm.ucar.edu/models/cesm2/config/grids.html) and [suppo
 > **_Note_**:
 Variables presented as `$VAR` in this guide typically refer to variables in XML files in a CESM case. From within a case directory, you can determine the value of such a variable with `./xmlquery VAR`. In some instances, `$VAR` refers to a shell variable or some other variable; we try to make these exceptions clear.
 
-## Create a case
+##Preparing a case
+
+There are three stages to preparing the case: create, setup and build. Here you can find information on each of these steps
+
+### 1. Create a case
 
 The [create_newcase](http://esmci.github.io/cime/versions/master/html/users_guide/create-a-case.html) command creates a case directory containing the scripts and XML files to configure a case (see below) for the requested resolution, component set, and machine. **create_newcase** has three required arguments: `--case`, `--compset` and `--res` (invoke **create_newcase \--help** for help).
 
 On machines where a project or account code is needed (including ARCHER2), you must either specify the `--project` argument to **create_newcase** or set the `$PROJECT` variable in your shell environment.
 
-If running on a supported machine, that machine will normally be recognized automatically and therefore it is *not* required to specify the `--machine` argument to **create_newcase**. For CESM 2.1.3, ARCHER2 is classed as an *unsupported* machine, however the configurations for ARCHER2 are included in the version of cime downloaded in the setup process.
+If running on a supported machine, that machine will normally be recognized automatically and therefore it is *not* required to specify the `--machine` argument to **create_newcase**. For CESM 2.1.3, ARCHER2 is classed as an *unsupported* machine, however the configurations for ARCHER2 are included in the version of cime downloaded in the setup process, and so adding the `--machine` flag should not be necessary.
 
 Invoke **create_newcase** as follows:
 
@@ -50,10 +54,10 @@ where:
 Here is an example on ARCHER2 with the CESM2 module loaded:
 
 ``` {.console}
-./create_newcase --case $CESM_ROOT/runs/b.e20.B1850.f19_g17.test --compset B1850 --res f19_g17
+$CIMEROOT/create_newcase --case $CESM_ROOT/runs/b.e20.B1850.f19_g17.test --compset B1850 --res f19_g17 --project n02
 ```
 
-## Setting up the case run script
+### 2. Setting up the case run script
 
 Issuing the [case.setup](http://esmci.github.io/cime/versions/master/html/users_guide/setting-up-a-case.html) command creates scripts needed to run the model along with namelist `user_nl_xxx` files, where xxx denotes the set of components for the given case configuration. Before invoking **case.setup**, modify the `env_mach_pes.xml` file in the case directory using the [xmlchange](http://esmci.github.io/cime/versions/master/html/Tools_user/xmlchange.html) command as needed for the experiment.
 
@@ -63,13 +67,6 @@ cd to the case directory. Following the example from above:
 cd $CESM_ROOT/runs/b.e20.B1850.f19_g17.test
 ```
 
-Modify settings in `env_mach_pes.xml` (optional), using the [xmlchange](http://esmci.github.io/cime/versions/master/html/Tools_user/xmlchange.html) command. This command is used to make changes to the running parameters for the case (invoke **xmlchange \--help** for help and information on using xmlchange).
-
-For example to include multi-threading over 2 threads, run
-
-```{.console}
-./xmlchange NTHRDS=2
-```
 Invoke the **case.setup** command.
 
 ``` {.console}
@@ -82,9 +79,7 @@ If any changes are made to the case, **case.setup** can be re-run using
 ./case.setup --reset
 ```
 
-## Build the executable using the case.build command
-
-Modify build settings in `env_build.xml` (optional), again by using **xmlchange**.
+### 3. Build the executable using the case.build command
 
 Run the build script.
 
@@ -92,8 +87,9 @@ Run the build script.
 ./case.build
 ```
 
-The CESM executable will appear in the directory given by the XML
-variable `$EXEROOT`, which can be queried using:
+This build may take a while to run, and have periods where the build process doesn't seem to be doing anything. You should only cancel the build if there has been no activity by the build script after 15 minutes.
+
+The CESM executable will appear in the directory given by the XML variable `$EXEROOT`, which can be queried using:
 
 ``` {.console}
 ./xmlquery EXEROOT
@@ -101,14 +97,16 @@ variable `$EXEROOT`, which can be queried using:
 
 by default, this will be the `bld` directory in your case directory.
 
-If any changes are made to xml parameters that would necessitate rebuilding, then you can apply these by running
+If any changes are made to xml parameters that would necessitate rebuilding (see the [Making Changes](#making-changes-to-a-case) section below), then you can apply these by running
 
 ``` {.console}
 ./case.setup --reset
 ./case.build --clean
 ./case.build
 ```
-## [Optional] Download input data
+## Input Data
+
+Each case of CESM will require input data, which is downloaded from UCAR servers. Input data from similar compsets is often reused, so running two similar cases may not require downloading any additional input data for the second case.
 
 You can check to see if the required input data is already in your input data directory using
 
@@ -124,35 +122,120 @@ If it is not present you can download the input data for the case prior to runni
 
 This can be useful for cases where a large amount of data is needed, as you can write a simple slurm script to run this download on the serial queue. Information on creating job submission scripts can be found on the [ARCHER2 page on Running Jobs](https://docs.archer2.ac.uk/user-guide/scheduler/).
 
-This step is optional, and if skipped the data will be downloaded using the login node when you run the **case.submit** script.
+Downloading the case input data at this stage is optional, and if skipped the data will be downloaded using the login node when you run the **case.submit** script. This may cause the **case.submit** script to take a long time to download.
+
+An important thing to note is that your input data will be stored in your /work area, and will contribute to your storage allocation. These input files can sometimes take up a large amount of space, and so it is recommended that you do not keep any input data that is no longer needed.
+
+## Making changes to a case
+
+After creating a new case, the CIME functions can be used to make changes to the case setup, such as changing the wallclock time, number of cores etc.
+
+You can query settings using the **[xmlquery](https://esmci.github.io/cime/versions/master/html/Tools_user/xmlquery.html)** script from your case directory:
+
+``` {.console}
+./xmlquery <name_of_setting>
+```
+
+Adding the `-p` flag allows you to look up partial names, for example
+
+``` {.console}
+$ ./xmlquery -p JOB
+
+Output:
+Results in group case.run
+        JOB_QUEUE: standard
+        JOB_WALLCLOCK_TIME: 01:30:00
+
+Results in group case.st_archive
+        JOB_QUEUE: short
+        JOB_WALLCLOCK_TIME: 0:20:00
+
+```
+
+Here all parameters that match the `JOB` pattern are returned. It is worth noting that the parameters `JOB_QUEUE` and `JOB_WALLCLOCK_TIME` are present for both the **case.run** job and the **case.st_archive** job. To view just one of these, you can use the `--subgroup` flag:
+
+``` {.console}
+$ ./xmlquery -p JOB --subgroup case.run
+
+Output:
+Results in group case.run
+        JOB_QUEUE: standard
+        JOB_WALLCLOCK_TIME: 01:30:00
+```
+
+When you know which setting you want to change, you can do so using the **[xmlchange](http://esmci.github.io/cime/versions/master/html/Tools_user/xmlchange.html)** command
+
+``` {.console}
+./xmlchange <name_of_setting>=<new_value>
+```
+
+For example to change the wallclock time for the **case.run** job to 30 minutes, without knowing the exact name, you could do
+
+``` {.console}
+
+$ ./xmlquery -p WALLCLOCK
+
+Output:
+Results in group case.run
+        JOB_WALLCLOCK_TIME: 24:00:00
+
+Results in group case.st_archive
+        JOB_WALLCLOCK_TIME: 0:20:00
+
+$ ./xmlchange JOB_WALLCLOCK_TIME=00:30:00 --subgroup case.run
+
+$ ./xmlquery JOB_WALLCLOCK_TIME
+
+Output:
+Results in group case.run
+        JOB_WALLCLOCK_TIME: 00:30:00
+
+Results in group case.st_archive
+        JOB_WALLCLOCK_TIME: 0:20:00
+```
+
+
+>***Note:*** If you try to set a parameter equal to a value that is not known to the program, it might suggest using a ``--force`` flag. This may be useful, for example, in the case of using a queue that has not been configured yet, but use with care!
+
+
+Some changes to the case must be done before calling ``./case.setup`` or ``./case.build``, otherwise the case will need to be reset or cleaned, using ``./case.setup --reset`` and ``./case.build --clean-all``. These are as follows:
+
+* Before calling ``./case.setup``, changes to ``NTASKS``, ``NTHRDS``, ``ROOTPE``, ``PSTRID`` and ``NINST`` must be made, as well as any changes to the ``env_mach_specific.xml`` file, which contains some configuration for the module environment and environment variables.
+
+* Before calling ``./case.build``, ``./case.setup`` must have been called and any changes to ``env_build.xml`` and ``Macros.make`` must have been made. This includes whether you have edited the file directly, or used ``./xmlchange`` to alter the variables.
+
+Many of the namelist variables can be changed just before calling ``./case.submit``.
 
 ## Run the case
 
-Modify runtime settings in `env_run.xml` (optional). Two settings you may want to change now are:
+Modify runtime settings in `env_run.xml` (optional). At this point you may want to change the running parameters of your case, such as run length. By default, the model is set to run for 5 days based on the `$STOP_N` and `$STOP_OPTION` variables:
 
-1.  Run length: By default, the model is set to run for 5 days based on the `$STOP_N` and `$STOP_OPTION` variables:
+``` {.console}
+./xmlquery STOP_OPTION,STOP_N
+```
 
-    ``` {.console}
-    ./xmlquery STOP_OPTION,STOP_N
-    ```
+These default settings can be useful in [troubleshooting](http://esmci.github.io/cime/versions/master/html/users_guide/troubleshooting.html) runtime problems before submitting for a longer time, but will not allow the model to run long enough to produce monthly history climatology files. In order to produce history files, increase the run length to a month or longer:
 
-  These default settings can be useful in [troubleshooting](http://esmci.github.io/cime/versions/master/html/users_guide/troubleshooting.html) runtime problems before submitting for a longer time, but will not allow the model to run long enough to produce monthly history climatology files. In order to produce history files, increase the run length to a month or longer:
+``` {.console}
+./xmlchange STOP_OPTION=nmonths,STOP_N=1
+```
 
-    ``` {.console}
-    ./xmlchange STOP_OPTION=nmonths,STOP_N=1
-    ```
+Once you have set your job to run for the correct length of time, it is a good idea to check the correct amount of resource is available for the job. You can quickly check the job submission parameters by running
 
-2.  You can set the `$DOUT_S` variable to FALSE to turn off short term archiving:
+``` {.console}
+./preview_run
+```
 
-    ``` {.console}
-    ./xmlchange DOUT_S=FALSE
-    ```
+which will show you at a glance the wallclock times, job queues and the list of jobs to be submitted, as well as other parameters such as the number of MPI tasks, number of OpenMP threads.
+
 
 Submit the job to the batch queue using the **case.submit** command.
 
 ``` {.console}
 ./case.submit
 ```
+
+The **case.submit** script will submit a job called **.case.run**, and if `$DOUT_S` is set to `TRUE` it will also submit a short-term archiving job. By default, the queue these jobs are submitted to is the `standard` queue. For information on the resources available on each queue, see the [QOS guide](https://docs.archer2.ac.uk/user-guide/scheduler/#quality-of-service-qos).
 
 >**_Note_**:
 There is a small possibility that your job may initially fail with the error message `ERROR: Undefined env var 'CESM_ROOT'`.
@@ -163,10 +246,7 @@ This could have two causes:
 ./case.submit -a=--export=ALL
 ```
 
-
-When the job is complete, most output will not necessarily be written under the case directory, but instead under some other directories. Review the following directories and files,
-whose locations can be found with **xmlquery** (note: **xmlquery** can
-be run with a list of comma separated names and no spaces):
+When the job is complete, most output will not necessarily be written under the case directory, but instead under some other directories. Review the following directories and files, whose locations can be found with **xmlquery** (note: **xmlquery** can be run with a list of comma separated names and no spaces):
 
 ``` {.console}
 ./xmlquery RUNDIR,CASE,CASEROOT,DOUT_S,DOUT_S_ROOT
@@ -197,3 +277,66 @@ be run with a list of comma separated names and no spaces):
 -   `$CASEROOT/timing`
 
     There should be two timing files there that summarize the model performance.
+
+## Monitoring Jobs
+
+As CESM jobs are submitted to the ARCHER2 batch system, they can be monitored in the same way as other jobs, using the command
+
+``` {.console}
+squeue -u $USER
+```
+
+You can get more details about the batch scheduler by consulting the [ARCHER2 scheduling guide](https://docs.archer2.ac.uk/user-guide/scheduler/)
+
+## Archiving
+
+The CIME framework allows for short-term and long-term archiving of model output. This is particularly useful when the model is configured to output to a small storage space and large files may need to be moved during larger simulations. On ARCHER2, the model is configured to use short-term archiving, but not yet configured for long-term archiving.
+
+Short-term archiving is on by default for compsets and can be toggled on and off using the **DOUT_S** parameter set to True or False using the **xmlchange** script:
+
+``` {.console}
+./xmlchange DOUT_S=FALSE
+```
+
+When `DOUT_S=TRUE`, calling **./case.submit** will automatically submit a “st_archive” job to the batch system that will be held in the queue until the main job is complete. This can be configured in the same way as the main job for a different queue, wallclock time, etc. One change that may be advisable to make would be to change the queue your st_archive job is submitted to, as archiving does not require a large amount of resources and the short and serial queues on ARCHER2 to not use your project allowance. This would be done using the **xmlchange** script almost the same as for the **case.run** job. Note that the main job and the archiving job share some parameter names such as `JOB_QUEUE`, and so a flag (--subgroup) specifying which you want to change should be used, as below:
+
+``` {.console}
+./xmlchange JOB_QUEUE=short --subgroup case.st_archive
+```
+
+If the `--subgroup` flag is not used, then the `JOB_QUEUE` value for both the **case.run** and **case.st_archive** jobs will ber changed. You can verify that they are different by running
+
+``` {.console}
+./xmlquery JOB_QUEUE
+```
+
+which will show the value of this parameter for both jobs.
+
+The archive is set up to move .nc files and logs from `$CESM_ROOT/runs/$CASE` to `$CESM_ROOT/archive/$CASE`. As such, your /work storage quota is being used whether archiving is switched on or off, and so it would be recommended that data you wish to retain be moved to another service such as a group workspace on JASMIN. See the [Data Management and Transfer](user-guide/data.md) guide for more information on archiving data from ARCHER2. If you want to archive your files directly to a different location than the default, this can be set using the `$DOUT_S_ROOT` parameter.
+
+
+## Troubleshooting
+
+If a run fails, the first place to check is the run submission output file, usually located at
+
+``` {.console}
+$CASEROOT/run.$CASE
+```
+
+so, for the example job run in this guide, the output file will be at
+
+``` {.console}
+$CESM_ROOT/runs/b.e20.B1850.f19_g17.test/run.b.e20.B1850.f19_g17.test
+```
+
+If any errors have occurred, the location of the relevant log in which you can examine this error will be printed towards the end of this output file. The log will usually be located at
+
+``` {.console}
+$CASEROOT/run/cesm.log.*
+```
+
+so in this case, the path would be
+
+``` {.console}
+$CESM_ROOT/runs/b.e20.B1850.f19_g17.test/run/cesm.log.*
+```
