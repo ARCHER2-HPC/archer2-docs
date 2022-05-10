@@ -312,7 +312,7 @@ If the `--subgroup` flag is not used, then the `JOB_QUEUE` value for both the **
 
 which will show the value of this parameter for both jobs.
 
-The archive is set up to move `.nc` files and logs from `$CESM_ROOT/runs/$CASE` to `$CESM_ROOT/archive/$CASE`. As such, your `/work` storage quota is being used whether archiving is switched on or off, and so it would be recommended that data you wish to retain be moved to another service such as a group workspace on JASMIN. See the [Data Management and Transfer](https://docs.archer2.ac.uk/user-guide/data.md) guide for more information on archiving data from ARCHER2. If you want to archive your files directly to a different location than the default, this can be set using the `$DOUT_S_ROOT` parameter.
+The archive is set up to move `.nc` files and logs from `$CESM_ROOT/runs/$CASE` to `$CESM_ROOT/archive/$CASE`. As such, your `/work` storage quota is being used whether archiving is switched on or off, and so it would be recommended that data you wish to retain be moved to another service such as a group workspace on JASMIN. See the [Data Management and Transfer](https://docs.archer2.ac.uk/user-guide/data/) guide for more information on archiving data from ARCHER2. If you want to archive your files directly to a different location than the default, this can be set using the `$DOUT_S_ROOT` parameter.
 
 
 ## Troubleshooting
