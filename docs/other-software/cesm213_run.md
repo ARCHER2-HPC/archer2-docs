@@ -25,7 +25,7 @@ resolutions](http://www.cesm.ucar.edu/models/cesm2/config/grids.html) and [suppo
 > **_Note_**:
 Variables presented as `$VAR` in this guide typically refer to variables in XML files in a CESM case. From within a case directory, you can determine the value of such a variable with `./xmlquery VAR`. In some instances, `$VAR` refers to a shell variable or some other variable; we try to make these exceptions clear.
 
-##Preparing a case
+## Preparing a case
 
 There are three stages to preparing the case: create, setup and build. Here you can find information on each of these steps
 
@@ -54,7 +54,7 @@ where:
 Here is an example on ARCHER2 with the CESM2 module loaded:
 
 ``` {.console}
-$CIMEROOT/create_newcase --case $CESM_ROOT/runs/b.e20.B1850.f19_g17.test --compset B1850 --res f19_g17 --project n02
+$CIMEROOT/scripts/create_newcase --case $CIMEROOT/runs/b.e20.B1850.f19_g17.test --compset B1850 --res f19_g17 --project n02
 ```
 
 ### 2. Setting up the case run script
@@ -64,7 +64,7 @@ Issuing the [case.setup](http://esmci.github.io/cime/versions/master/html/users_
 cd to the case directory. Following the example from above:
 
 ``` {.console}
-cd $CESM_ROOT/runs/b.e20.B1850.f19_g17.test
+cd $CIMEROOT/runs/b.e20.B1850.f19_g17.test
 ```
 
 Invoke the **case.setup** command.
@@ -286,7 +286,7 @@ As CESM jobs are submitted to the ARCHER2 batch system, they can be monitored in
 squeue -u $USER
 ```
 
-You can get more details about the batch scheduler by consulting the [ARCHER2 scheduling guide](https://docs.archer2.ac.uk/user-guide/scheduler/)
+You can get more details about the batch scheduler by consulting the [ARCHER2 scheduling guide](https://docs.archer2.ac.uk/user-guide/scheduler/).
 
 ## Archiving
 
@@ -298,13 +298,13 @@ Short-term archiving is on by default for compsets and can be toggled on and off
 ./xmlchange DOUT_S=FALSE
 ```
 
-When `DOUT_S=TRUE`, calling **./case.submit** will automatically submit a “st_archive” job to the batch system that will be held in the queue until the main job is complete. This can be configured in the same way as the main job for a different queue, wallclock time, etc. One change that may be advisable to make would be to change the queue your st_archive job is submitted to, as archiving does not require a large amount of resources and the short and serial queues on ARCHER2 to not use your project allowance. This would be done using the **xmlchange** script almost the same as for the **case.run** job. Note that the main job and the archiving job share some parameter names such as `JOB_QUEUE`, and so a flag (--subgroup) specifying which you want to change should be used, as below:
+When `DOUT_S=TRUE`, calling **./case.submit** will automatically submit a “st_archive” job to the batch system that will be held in the queue until the main job is complete. This can be configured in the same way as the main job for a different queue, wallclock time, etc. One change that may be advisable to make would be to change the queue your st_archive job is submitted to, as archiving does not require a large amount of resources and the short and serial queues on ARCHER2 do not use your project allowance. This would be done using the **xmlchange** script almost the same as for the **case.run** job. Note that the main job and the archiving job share some parameter names such as `JOB_QUEUE`, and so a flag (--subgroup) specifying which you want to change should be used, as below:
 
 ``` {.console}
 ./xmlchange JOB_QUEUE=short --subgroup case.st_archive
 ```
 
-If the `--subgroup` flag is not used, then the `JOB_QUEUE` value for both the **case.run** and **case.st_archive** jobs will ber changed. You can verify that they are different by running
+If the `--subgroup` flag is not used, then the `JOB_QUEUE` value for both the **case.run** and **case.st_archive** jobs will be changed. You can verify that they are different by running
 
 ``` {.console}
 ./xmlquery JOB_QUEUE
@@ -312,7 +312,7 @@ If the `--subgroup` flag is not used, then the `JOB_QUEUE` value for both the **
 
 which will show the value of this parameter for both jobs.
 
-The archive is set up to move .nc files and logs from `$CESM_ROOT/runs/$CASE` to `$CESM_ROOT/archive/$CASE`. As such, your /work storage quota is being used whether archiving is switched on or off, and so it would be recommended that data you wish to retain be moved to another service such as a group workspace on JASMIN. See the [Data Management and Transfer](user-guide/data.md) guide for more information on archiving data from ARCHER2. If you want to archive your files directly to a different location than the default, this can be set using the `$DOUT_S_ROOT` parameter.
+The archive is set up to move `.nc` files and logs from `$CESM_ROOT/runs/$CASE` to `$CESM_ROOT/archive/$CASE`. As such, your `/work` storage quota is being used whether archiving is switched on or off, and so it would be recommended that data you wish to retain be moved to another service such as a group workspace on JASMIN. See the [Data Management and Transfer](user-guide/data.md) guide for more information on archiving data from ARCHER2. If you want to archive your files directly to a different location than the default, this can be set using the `$DOUT_S_ROOT` parameter.
 
 
 ## Troubleshooting
