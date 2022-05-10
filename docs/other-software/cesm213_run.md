@@ -54,7 +54,7 @@ where:
 Here is an example on ARCHER2 with the CESM2 module loaded:
 
 ``` {.console}
-$CIMEROOT/scripts/create_newcase --case $CIMEROOT/runs/b.e20.B1850.f19_g17.test --compset B1850 --res f19_g17 --project n02
+$CIMEROOT/scripts/create_newcase --case $CESM_ROOT/runs/b.e20.B1850.f19_g17.test --compset B1850 --res f19_g17 --project n02
 ```
 
 ### 2. Setting up the case run script
@@ -64,7 +64,7 @@ Issuing the [case.setup](http://esmci.github.io/cime/versions/master/html/users_
 cd to the case directory. Following the example from above:
 
 ``` {.console}
-cd $CIMEROOT/runs/b.e20.B1850.f19_g17.test
+cd $CESM_ROOT/runs/b.e20.B1850.f19_g17.test
 ```
 
 Invoke the **case.setup** command.
