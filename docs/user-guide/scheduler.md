@@ -939,16 +939,17 @@ node you must be aware of a few things:
  - The `srun` command must specify any Slurm options that differ in value
    from those specified to `sbatch`. This typically means that you need 
    to specify the `--nodes`, `--ntasks` and `--tasks-per-node` options to `srun`.
- - On the ARCHER2 full system, you will need to include the `--oversubscribe` 
-   flag to your `srun` command, and you will need to define the memory required 
-   by each subjob with the `--mem=<amount of memory>` flag. The amount of memory 
-   is given in MiB by default but other units can be specified. If you do not know 
-   how much memory to specify, we recommend that you specify 1500M (1,500 MiB) per 
-   core being used.
- - You will usually need to specify the task pinning to cores manually to 
-   prevent multiple executables/scripts running on the same core. We provide
-   a small utility (`genmaskcpu`) to assist with this. This utility is described
-   below.
+ - You will need to include the `--exact` flag to your `srun` command. With 
+   this flag on, Slurm will ensure that the resources you request are assigned 
+   to your subjob. Furthermore, if the resources are not currently available, 
+   Slurm will output a message letting you know that this is the case and 
+   stall the launch of this subjob until enough of your previous subjobs have 
+   completed to free up the resources for this subjob.
+ - You will need to define the memory required by each subjob with the 
+   `--mem=<amount of memory>` flag. The amount of memory is given in MiB 
+   by default but other units can be specified. If you do not know how 
+   much memory to specify, we recommend that you specify 1500M (1,500 MiB) 
+   per core being used.
  - You will need to place each `srun` command into the background and 
    then use the `wait` command at the end of the submission script to
    make sure it does not exit before the commands are complete.
@@ -957,61 +958,18 @@ node you must be aware of a few things:
    to pass the node ID to the `srun` commands otherwise Slurm will oversubscribe
    cores on the first node.
 
-Below, we briefly describe the `genmaskcpu` helper script and then provide
-three examples or running multiple subjobs in a node, one that runs 128
-serial processes across a single node; one that runs 8 subjobs each of
-which use 8 MPI processes with 2 OpenMP threads per MPI process; and one
+Below, we provide four examples or running multiple subjobs in a node: 
+one that runs 128 serial processes across a single node; one that runs 8 
+subjobs each of which use 8 MPI processes with 2 OpenMP threads per MPI 
+process; one that runs four inhomogeneous jobs, each of which requires a 
+different number of MPI processes and OpenMP threads per process; and one 
 that runs 256 serial processes across two nodes.
-
-#### `genmaskcpu` helper script
-
-When running multiple copies of executables/scripts on a single node Slurm
-can often not pin processes or threads to cores in such a way to ensure
-efficient use of resources (for example, multiple copies may end up bound
-to the same core). For this reason, you often have to specify manual bindings
-when running multiple executables/scripts on a node.
-
-Writing CPU binding masks for use with Slurm by hand can be quite tedious,
-especially if you want to use fat bitmasks to allow for binding of threads
-to different cores. To assist with generating binding masks we provide a
-utility script: `genmaskcpu`, that generates the correct bindings for 
-each subjob based on a number of input arguments:
-
- 1. Argument 1: The number of subjobs running *per node*
- 2. Argument 2: The index of this subjob within the number running on a node (e.g. if
-    there are 4 subjobs running per node, is this the 1st, 2nd, 3rd, or 4th
-    subjob?)
- 3. Argument 3: The number of parallel *processes* (MPI processes) per subjob (this must be the same
-    for all subjobs)
- 4. Argument 4: The number of *threads* per MPI process for the subjob (this must be 
-    the same for all subjobs)
-
-!!! important
-    `genmaskcpu` only works for *homogeneous* subjobs, where every subjob
-    on the node has the same number of parallel processes and threads per
-    parallel process. If your subjobs do not have the same number of processes
-    and threads then you will need to generate the binding masks manually.
-
-For example, to generate the binding mask for the first subjob in a set of
-8 subjobs on a node each of which uses 16 MPI processes and 1 thread per
-MPI process, you would use:
-
-```
-mask=$(genmaskcpu 8 1 16 1)
-```
-
-The second subjob would use:
-
-```
-mask=$(genmaskcpu 8 2 16 1)
-```
 
 #### Example 1: 128 serial tasks running on a single node
 
 For our first example, we will run 128 single-core copies of the `xthi` program (which
 prints process/thread placement) on a single ARCHER2 compute node with each
-copy of `xthi` pinned to a different core. We will use `genmaskcpu` to generate the 
-correct binding mask for each subjob. The job submission script for
+copy of `xthi` pinned to a different core. The job submission script for
 this example would look like:
 
 === "Full system"
@@ -1032,10 +990,6 @@ this example would look like:
     # Make xthi available
     module load xthi
 
-    # Make the pinning helper script available
-    module load cray-python
-    module load genmaskcpu
-
     # Set the number of threads to 1
     #   This prevents any threaded system libraries from automatically 
     #   using threading.
@@ -1044,16 +998,13 @@ this example would look like:
     # Loop over 128 subjobs pinning each to a different core
     for i in $(seq 1 128)
     do
-    # Generate mask: 128 subjobs per node, subjob number in sequence given by i,
-    # 1 process per subjob, 1 thread per process
-    maskcpu=$(genmaskcpu 128 ${i} 1 1)
     # Launch subjob overriding job settings as required and in the background
     # Make sure to change the amount specified by the `--mem=` flag to the amount 
     # of memory required. The amount of memory is given in MiB by default but other
     # units can be specified. If you do not know how much memory to specify, we 
     # recommend that you specify `--mem=1500M` (1,500 MiB).
-    srun --cpu-bind=mask_cpu:${maskcpu} --nodes=1 --ntasks=1 --tasks-per-node=1 \
-         --oversubscribe --mem=1500M xthi > placement${i}.txt &
+    srun --nodes=1 --ntasks=1 --tasks-per-node=1 \
+         --exact --mem=1500M xthi > placement${i}.txt &
     done
 
     # Wait for all subjobs to finish
@@ -1065,8 +1016,7 @@ this example would look like:
 
 For our second example, we will run 8 subjobs, each running the `xthi` program (which
 prints process/thread placement) across 1 node. Each subjob will use 8 MPI processes
-and 2 OpenMP threads per process. We will use `genmaskcpu` to generate the 
-correct binding mask for each subjob. The job submission script for
+and 2 OpenMP threads per process. The job submission script for
 this example would look like:
 
 === "Full system"
@@ -1087,10 +1037,6 @@ this example would look like:
     # Make xthi available
     module load xthi
 
-    # Make the pinning helper script available
-    module load cray-python
-    module load genmaskcpu
-
     # Set the number of threads to 2 as required by all subjobs
     export OMP_NUM_THREADS=2
 
@@ -1098,28 +1044,90 @@ this example would look like:
     for i in $(seq 1 8)
     do
         echo $j $i
-        # Generate mask: 8 subjobs per node, subjob number in sequence given by i,
-        # 8 MPI processes per subjob, 2 OpenMP threads per process
-        maskcpu=$(genmaskcpu 8 ${i} 8 2)
         # Launch subjob overriding job settings as required and in the background
         # Make sure to change the amount specified by the `--mem=` flag to the amount 
         # of memory required. The amount of memory is given in MiB by default but other
         # units can be specified. If you do not know how much memory to specify, we 
         # recommend that you specify `--mem=12500M` (12,500 MiB).
-        srun --cpu-bind=mask_cpu:${maskcpu} --nodes=1 --ntasks=8 --tasks-per-node=8 --cpus-per-task=2 \
-	     --oversubscribe --mem=12500M xthi > placement${i}.txt &
+        srun --nodes=1 --ntasks=8 --tasks-per-node=8 --cpus-per-task=2 \
+	     --exact --mem=12500M xthi > placement${i}.txt &
     done
 
     # Wait for all subjobs to finish
     wait
     ```
+    
+#### Example 3: Running inhomogeneous subjobs on one node
 
-#### Example 3: 256 serial tasks running across two nodes
+For our third example, we will run 4 subjobs, each running the `xthi` program 
+(which prints process/thread placement) across 1 node. Our subjobs will each 
+run with a different number of MPI processes and OpenMP threads. We will run:
+one job with 64 MPI processes and 1 OpenMP process per thread; one job with 
+16 MPI processes and 2 threads per process; one job with 4 MPI processes and 
+4 OpenMP threads per job; and, one job with 1 MPI process and 16 OpenMP 
+threads  per job.
 
-For our third example, we will run 256 single-core copies of the `xthi` program (which
+To be able to change the number of MPI processes and OpenMP threads per 
+process, we will need to forgo using the `#SBATCH --tasks-per-node` and the 
+`#SBATCH cpus-per-task` commands -- if you set these Slurm will not let you 
+alter the `OMP_NUM_THREADS` variable and you will not be able to change the 
+number of OpenMP threads per process between each job.
+
+Before each `srun` command, you will need to define the number of OpenMP 
+threads per process you want by changing the `OMP_NUM_THREADS` variable. 
+Furthermore, for each `srun` command, you will need to set the `--ntasks` flag 
+to equal the number of MPI processes you want to use. You will also need to 
+set the `--cpus-per-task` flag to equal the number of OpenMP threads per 
+process you want to use.
+
+=== "Full system"
+    ```slurm
+    #!/bin/bash
+    # Slurm job options (job-name, compute nodes, job time)
+    #SBATCH --job-name=MultiParallelOnCompute
+    #SBATCH --time=0:10:0
+    #SBATCH --nodes=1
+    #SBATCH --hint=nomultithread
+    #SBATCH --distribution=block:block
+
+    # Replace [budget code] below with your budget code (e.g. t01)
+    #SBATCH --account=[budget code]  
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+
+    # Make xthi available
+    module load xthi
+
+    # Set the number of threads to value required by the first job
+    export OMP_NUM_THREADS=1
+    srun --ntasks=64 --cpus-per-task=${OMP_NUM_THREADS} \
+         --exact --mem=12500M xthi > placement${OMP_NUM_THREADS}.txt &
+
+    # Set the number of threads to the value required by the second job
+    export OMP_NUM_THREADS=2
+    srun --ntasks=16 --cpus-per-task=${OMP_NUM_THREADS} \
+         --exact --mem=12500M xthi > placement${OMP_NUM_THREADS}.txt &
+
+    # Set the number of threads to the value required by the second job
+    export OMP_NUM_THREADS=4
+    srun --ntasks=4 --cpus-per-task=${OMP_NUM_THREADS} \
+         --exact --mem=12500M xthi > placement${OMP_NUM_THREADS}.txt &
+
+    # Set the number of threads to the value required by the second job
+    export OMP_NUM_THREADS=16
+    srun --ntasks=1 --cpus-per-task=${OMP_NUM_THREADS} \
+         --exact --mem=12500M xthi > placement${OMP_NUM_THREADS}.txt &
+
+    # Wait for all subjobs to finish
+    wait
+    ```
+
+
+#### Example 4: 256 serial tasks running across two nodes
+
+For our fourth example, we will run 256 single-core copies of the `xthi` program (which
 prints process/thread placement) across two ARCHER2 compute nodes with each
-copy of `xthi` pinned to a different core. We will use `genmaskcpu` to generate the 
-correct binding mask for each subjob. We will also illustrate a mechnism for getting the
+copy of `xthi` pinned to a different core. We will illustrate a mechanism for getting the
 node IDs to pass to `srun` as this is required to ensure that the individual subjobs are
 assigned to the correct node. This mechanism uses the `scontrol` command to turn the 
 nodelist from `sbatch` into a format we can use as input to `srun`. The job submission
@@ -1143,10 +1151,6 @@ script for this example would look like:
     # Make xthi available
     module load xthi
 
-    # Make the pinning helper script available
-    module load cray-python
-    module load genmaskcpu
-
     # Set the number of threads to 1
     #   This prevents any threaded system libraries from automatically 
     #   using threading.
@@ -1165,16 +1169,13 @@ script for this example would look like:
         # Loop over 128 subjobs on each node pinning each to a different core
         for i in $(seq 1 128)
         do
-            # Generate mask: 128 subjobs per node, subjob number in sequence given by i,
-            # 1 process per subjob, 1 thread per process
-            maskcpu=$(genmaskcpu 128 ${i} 1 1)
             # Launch subjob overriding job settings as required and in the background
             # Make sure to change the amount specified by the `--mem=` flag to the amount 
             # of memory required. The amount of memory is given in MiB by default but other
             # units can be specified. If you do not know how much memory to specify, we 
             # recommend that you specify `--mem=1500M` (1,500 MiB).
-            srun --cpu-bind=mask_cpu:${maskcpu} --nodelist=${nodeid} --nodes=1 --ntasks=1 --tasks-per-node=1 \
-	         --oversubscribe --mem=1500M xthi > placement_${nodeid}_${i}.txt &
+            srun --nodelist=${nodeid} --nodes=1 --ntasks=1 --tasks-per-node=1 \
+	         --exact --mem=1500M xthi > placement_${nodeid}_${i}.txt &
         done
     done
 
