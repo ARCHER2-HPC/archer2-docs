@@ -31,7 +31,7 @@ modules are:
 
 - **cray-libsci** [*...details for cray-libsci...*](libsci.md)
 
-    
+
      BLAS, LAPACK, BLACS, and SCALAPACK provide basic linear algebra
      functionality such as vector-vector, matrix-vector, and
      matrix-matrix multiplication.
@@ -48,7 +48,7 @@ modules are:
 
     A serial NetCDF built against parallel HDF5. Load module
     `cray-hdf5-parallel` first.
- 
+
 - **cray-parallel-netcdf** [*...deatils for Parallel NetCDF...*](netcdf.md)
 
     A parallel NetCDF implementation (sometimes referred to as "Pnetcdf").
@@ -70,7 +70,11 @@ The following libraries will also made available by the ARCHER2 CSE team:
 
 - **ADIOS** [*...details for ADIOS on ARCHER2...*](adios.md)
 
-    ADIOS (Adaptable I/O System) provides library services for parallel I/O. 
+    ADIOS (Adaptable I/O System) provides library services for parallel I/O.
+
+- **AOCL** [*...details for AOCL on ARCHER2...*](aocl.md)
+
+    AOCL (AMD Optimizing CPU Libraries) provides a set of numerical libraries optimised for AMD "Zen"-based processors. 
 
 - **ARPACK-NG** [*...details for ARPACK-NG on ARCHER2...*](arpack.md)
 
@@ -134,7 +138,7 @@ The following libraries will also made available by the ARCHER2 CSE team:
     [Sundials](https://computing.llnl.gov/projects/sundials) is a suite of libraries which address problems including
     ordinary differential equation integration, initial value problems,
     and non-linear algebraic equations.
-    See 
+    See
 
 - **SuperLU** and **SuperLU_DIST** [*...details for SuperLU on ARCHER2...*](superlu.md)
 

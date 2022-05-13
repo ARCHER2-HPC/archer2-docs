@@ -372,7 +372,7 @@ We provide examples of the use of these three commands below.
 For the `sacct` and `sstat` command, the memory properties we print out below are:
 
  - `AveRSS` - The mean memory use per node over the length of the job
- - `MaxRSS` - The maximum memory use per node measureed during the job
+ - `MaxRSS` - The maximum memory use per node measured during the job
  - `MaxRSSTask` - The maximum memory use from any process in the job
 
 ### Example 1: `sstat` for running jobs

@@ -204,7 +204,18 @@ the best performance, you should ensure that consecutive MPI rank IDs are pinned
 consecutive cores on a node to maximise shared memory optimisations in NUMA regions.
 In practice, the recommended options to the `srun` command: `--hint=nomultithread`
 and `--distribution=block:block` should always be specified when running VASP on
-ARCHER2.
+ARCHER2. You should also make sure that you use the UCX transport layer for MPI
+rather than the default OpenFabrics transport layer. The VASP modules are setup
+to enable this but if you are using your own compiled version of VASP you should
+add the following lines to your job submission script before you run VASP 
+(assuming that you compiled VASP using GCC):
+
+```
+module load PrgEnv-gnu
+module load craype-network-ucx
+module load cray-mpich-ucx
+export UCX_IB_REG_METHODS=direct
+```
 
 **KPAR:** You should always use the maximum value of `KPAR` that is possible for
 your calculation within the memory limits of what is possible.
@@ -262,34 +273,36 @@ Performance summary:
 #### Full system, VASP 6.3.0
 
  - `vasp/6/6.3.0` module
- - GCC 10.2.0
+ - GCC 11.2.0
  - AOCL 3.1 for BLAS/LAPACK/ScaLAPACK and FFTW
+ - UCX for MPI transport layer
 
 | Nodes | MPI processes per node | Total MPI processes | NCORE | 6.3.0 (full system) |
 |------:|-----------------------:|--------------------:|------:|--------------------:|
-|     1 |                     64 |                 128 |    64 |                3318 |
-|     2 |                     64 |                 256 |    64 |                1580 |
-|     4 |                     64 |                 512 |    64 |                 815 |
+|     1 |                     64 |                 128 |    64 |                3295 |
+|     2 |                     64 |                 256 |    64 |                1548 |
+|     4 |                     64 |                 512 |    64 |                 814 |
 |     8 |                     64 |                 512 |    64 |                 416 |
-|    16 |                     64 |                1024 |    64 |                 238 |
-|    32 |                     64 |                2048 |    64 |                 204 |
-|    64 |                     64 |                4096 |    64 |                 246 |
+|    16 |                     64 |                1024 |    64 |                 221 |
+|    32 |                     64 |                2048 |    64 |                 131 |
+|    64 |                     64 |                4096 |    64 |                  82 |
 
 #### Full system, 5.4.4.pl2
 
  - `vasp/5/5.4.4.pl2` module
- - GCC 11.2.0 with
+ - GCC 11.2.0
  - HPE Cray LibSci 21.09 for BLAS/LAPACK/ScaLAPACK and FFTW 3.3.8.11
+ - UCX for MPI transport layer
 
 | Nodes | MPI processes per node | Total MPI processes | NCORE | 5.4.4.pl2 (full system) |
 |------:|-----------------------:|--------------------:|------:|------------------------:|
-|     1 |                     64 |                  64 |    64 |                    3441 |
-|     2 |                     64 |                 128 |    64 |                    1605 |
-|     4 |                     64 |                 256 |    64 |                     827 |
-|     8 |                     64 |                 512 |    64 |                     457 |
-|    16 |                     64 |                1024 |    64 |                     249 |
-|    32 |                     64 |                2048 |    64 |                     210 |
-|    64 |                     64 |                4096 |    64 |                     244 |
+|     1 |                     64 |                  64 |    64 |                    3428 |
+|     2 |                     64 |                 128 |    64 |                    1615 |
+|     4 |                     64 |                 256 |    64 |                     823 |
+|     8 |                     64 |                 512 |    64 |                     429 |
+|    16 |                     64 |                1024 |    64 |                     231 |
+|    32 |                     64 |                2048 |    64 |                     135 |
+|    64 |                     64 |                4096 |    64 |                      79 |
 
 
 ### CdTe Supercell, hybrid DFT functional. 8 k-points, 65 atoms
@@ -318,32 +331,34 @@ Performance summary:
 #### Full system, VASP 6.3.0
 
  - `vasp/6/6.3.0` module
- - GCC 10.2.0
+ - GCC 11.2.0
  - AOCL 3.1 for BLAS/LAPACK/ScaLAPACK and FFTW
+ - UCX for MPI transport layer
 
 | Nodes | MPI processes per node | Total MPI processes | NCORE | KPAR | 5.4.4.pl2 (4-cab system) |
 |------:|-----------------------:|--------------------:|------:|-----:|-------------------------:|
-|     1 |                    128 |                 128 |     4 |    2 |                    19916 |
-|     2 |                    128 |                 256 |     4 |    2 |                    10492 |
-|     4 |                    128 |                 512 |     4 |    2 |                     5849 |
-|     8 |                    128 |                1024 |     4 |    2 |                     3263 |
-|    16 |                    128 |                2048 |     8 |    2 |                     2135 |
-|    32 |                     64 |                2048 |     8 |    2 |                     1430 |
-|    64 |                     64 |                4096 |    16 |    2 |                      954 |
+|     1 |                    128 |                 128 |     4 |    2 |                    19000 |
+|     2 |                    128 |                 256 |     4 |    2 |                    10021 |
+|     4 |                    128 |                 512 |     4 |    2 |                     5560 |
+|     8 |                    128 |                1024 |     4 |    2 |                     3176 |
+|    16 |                    128 |                2048 |     8 |    2 |                     2413 |
+|    32 |                     64 |                2048 |    16 |    2 |                     1340 |
+|    64 |                     64 |                4096 |    16 |    2 |                      908 |
 
 #### Full system, 5.4.4.pl2
 
  - `vasp/5/5.4.4.pl2` module
- - GCC 11.2.0 with
+ - GCC 11.2.0
  - HPE Cray LibSci 21.09 for BLAS/LAPACK/ScaLAPACK and FFTW 3.3.8
+ - UCX for MPI transport layer
 
 | Nodes | MPI processes per node | Total MPI processes | NCORE | KPAR | 5.4.4.pl2 (4-cab system) |
 |------:|-----------------------:|--------------------:|------:|-----:|-------------------------:|
-|     1 |                    128 |                 128 |     4 |    2 |                    26362 |
-|     2 |                    128 |                 256 |     4 |    2 |                    13436 |
-|     4 |                    128 |                 512 |     4 |    2 |                     7256 |
-|     8 |                    128 |                1024 |     4 |    2 |                     4003 |
-|    16 |                     64 |                1024 |    16 |    2 |                     2093 |
-|    32 |                     64 |                2048 |    16 |    2 |                     1264 |
-|    64 |                     64 |                4096 |    16 |    2 |                      853 |
+|     1 |                    128 |                 128 |     4 |    2 |                    23417 |
+|     2 |                    128 |                 256 |     4 |    2 |                    12338 |
+|     4 |                    128 |                 512 |     4 |    2 |                     6751 |
+|     8 |                    128 |                1024 |     4 |    2 |                     3676 |
+|    16 |                     64 |                1024 |    16 |    2 |                     2136 |
+|    32 |                     64 |                2048 |    16 |    2 |                     1266 |
+|    64 |                     64 |                4096 |    16 |    2 |                      806 |
 
