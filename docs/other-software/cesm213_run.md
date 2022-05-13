@@ -1,13 +1,13 @@
 # Quick Start: CESM Model Workflow (CESM 2.1.3)
 ---
 
-This is the procedure for quickly setting up and running a simple CESM2 case on ARCHER2. This document is based on the general [quickstart guide for CESM 2.1](https://escomp.github.io/CESM/versions/cesm2.1/html/quickstart.html), with modifications to give instructions specific to ARCHER2. For more expansive nstructions on running CESM 2.1, please consult the [NCAR CESM pages](https://escomp.github.io/CESM/versions/cesm2.1/html/introduction.html)
+This is the procedure for quickly setting up and running a simple CESM2 case on ARCHER2. This document is based on the general [quickstart guide for CESM 2.1](https://escomp.github.io/CESM/versions/cesm2.1/html/quickstart.html), with modifications to give instructions specific to ARCHER2. For more expansive instructions on running CESM 2.1, please consult the [NCAR CESM pages](https://escomp.github.io/CESM/versions/cesm2.1/html/introduction.html)
 
 Before following these instructions, ensure you have completed the setup procedure (see [Setting up CESM2 on ARCHER2](cesm213_setup.md)).
 
 For your target case, the first step is to select a component set, and a resolution for your case. For the purposes of this guide, we will be looking at a simple coupled case using the `B1850` compset and the `f19_g17` resolution.
 
-The current configuration of CESM 2.1.3 on ARCHER2 has been validated with the F2000 (atmosphere only), ETEST (slab ocean), B1850 (fully coupled) and FX2000 (WACCM-X) compsets.
+The current configuration of CESM 2.1.3 on ARCHER2 has been validated with the F2000 (atmosphere only), ETEST (slab ocean), B1850 (fully coupled) and FX2000 (WACCM-X) compsets. Instructions for these are here: [CESM2.1.3 further examples](cesm-further-examples.md).
 
 [comment]: # (Give a link to white paper here discussing testing and validation runs etc. once prepared)
 
