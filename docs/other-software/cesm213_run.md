@@ -1,7 +1,7 @@
 # Quick Start: CESM Model Workflow (CESM 2.1.3)
 ---
 
-This is the procedure for quickly setting up and running a simple CESM2 case on ARCHER2. This document is based on the general [quickstart guide for CESM 2.1](https://escomp.github.io/CESM/versions/cesm2.1/html/quickstart.html), with modifications to give instructions specific to ARCHER2. For more expansive nstructions on running CESM 2.1, please consult the [NCAR CESM pages](https://escomp.github.io/CESM/versions/cesm2.1/html/introduction.html)
+This is the procedure for quickly setting up and running a simple CESM2 case on ARCHER2. This document is based on the general [quickstart guide for CESM 2.1](https://escomp.github.io/CESM/versions/cesm2.1/html/quickstart.html), with modifications to give instructions specific to ARCHER2. For more expansive instructions on running CESM 2.1, please consult the [NCAR CESM pages](https://escomp.github.io/CESM/versions/cesm2.1/html/introduction.html)
 
 Before following these instructions, ensure you have completed the setup procedure (see [Setting up CESM2 on ARCHER2](cesm213_setup.md)).
 
