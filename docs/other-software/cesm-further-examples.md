@@ -42,6 +42,7 @@ ${CIMEROOT}/scripts/create_newcase --case [case name] --compset B1850 --res f09_
 cd [case directory]
 ./xmlchange NTASKS_CPL=1024,NTASKS_ICE=256,NTASKS_LND=256,NTASKS_GLC=128,NTASKS_ROF=128,NTASKS_WAV=256,NTASKS_OCN=512,NTASKS_ATM=1024
 ./xmlchange ROOTPE_CPL=0,ROOTPE_ICE=0,ROOTPE_LND=256,ROOTPE_GLC=512,ROOTPE_ROF=640,ROOTPE_WAV=768,ROOTPE_OCN=1024,ROOTPE_ATM=0
+[Any other changes e.g. run length or resubmissions]
 ./case.setup
 ./case.build
 ./case.submit
@@ -56,6 +57,8 @@ ${CIMEROOT}/scripts/create_newcase --case [case name] --compset FXHIST --res f19
 cd [case directory]
 ./xmlchange NTASKS=1024,NTASKS_ESP=1
 ./xmlchange NTHRDS=2
+./xmlchange DOUT_S=FALSE
+[Any other changes e.g. run length or resubmissions]
 ./case.setup
 ./case.build
 ./case.submit
