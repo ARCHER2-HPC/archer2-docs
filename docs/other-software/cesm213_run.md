@@ -101,7 +101,7 @@ If any changes are made to xml parameters that would necessitate rebuilding (see
 
 ``` {.console}
 ./case.setup --reset
-./case.build --clean
+./case.build --clean-all
 ./case.build
 ```
 ## Input Data
@@ -340,3 +340,27 @@ so in this case, the path would be
 ``` {.console}
 $CESM_ROOT/runs/b.e20.B1850.f19_g17.test/run/cesm.log.*
 ```
+
+### Known Issues
+
+#### SIGSEGV errors
+
+Sometimes an error will occur where a run is ended prematurely and gives an error of the form
+
+``` {.console}
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+```
+
+This can often be solved by increasing the amount of available memory per task, either by changing the maximum number of MPI tasks per node by using
+
+``` {.console}
+./xmlchange MAX_TASKS_PER_NODE=64
+```
+
+or by increasing the number of threads used by using
+
+``` {.console}
+./xmlchange NTHRDS=2
+```
+
+This will double the amount of memory available for each physical core
