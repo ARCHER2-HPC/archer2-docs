@@ -14,4 +14,10 @@ A [quickstart guide](cesm213_run.md) for running a simple coupled case of CESM 2
 
 ## Useful Links
 
-If this is your first time running CESM, it is highly recommended that you consult both the [CIME documentation](http://esmci.github.io/cime/versions/maint-5.6/html/) and the [NCAR CESM pages](https://escomp.github.io/CESM/versions/cesm2.1/html/introduction.html) for the version used in CESM 2.1.3, paying particular attention to the pages on [Basic Usage of CIME](http://esmci.github.io/cime/versions/maint-5.6/html/users_guide/index.html) which gives detailed description of the basic commands needed to get a model running.
+### Documentation
+
+If this is your first time running CESM2, it is highly recommended that you consult both the [CIME documentation](http://esmci.github.io/cime/versions/maint-5.6/html/) and the [NCAR CESM pages](https://escomp.github.io/CESM/versions/cesm2.1/html/introduction.html) for the version used in CESM 2.1.3, paying particular attention to the pages on [Basic Usage of CIME](http://esmci.github.io/cime/versions/maint-5.6/html/users_guide/index.html) which gives detailed description of the basic commands needed to get a model running.
+
+### Compsets and Configurations
+
+CESM2 allows simulations to be carried out using a very wide range of configurations. If you are new to CESM2 it is highly recommended that, unless you are running a case you are already familiar with, you consult the [CESM2.1 Configurations](https://escomp.github.io/CESM/versions/cesm2.1/html/cesm_configurations.html) page. You can also see a list of the defined compsets already available on the [component set definitions](https://www.cesm.ucar.edu/models/cesm2/config/2.1.3/compsets.html) page. More information about configurations, grids and compsets can be found on the [CESM2 Configurations and Grids](https://www.cesm.ucar.edu/models/cesm2/config/) page, which includes links to the configuration settings of the different components.

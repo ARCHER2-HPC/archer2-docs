@@ -220,6 +220,14 @@ These default settings can be useful in [troubleshooting](http://esmci.github.io
 ./xmlchange STOP_OPTION=nmonths,STOP_N=1
 ```
 
+If you want a longer run, for example 30 years, this cannot be done in a single job as the amount of wallclock time required would be considerably longer than the maximum allowed by the ARCHER2 queue system. To do this, you would split the simulation into appropriate chunks, such as 6 chunks of 5 years (assuming a simulated years per day (SYPD) of greater than 5 - some values for SYPD on ARCHER2 are given in the [further examples](cesm-further-examples.md) page). Using the `$RESUBMIT` xml variable and setting the values of the `$STOP_OPTION` and `$STOP_N` variables accordingly you can then chain the running of these chunks:
+
+``` {.console}
+./xmlchange RESUBMIT=6, STOP_OPTION= nyears, and STOP_N= 5
+```
+
+This would then run 6 resubmissions, each new job picking back up where the previous job had stopped. For more information about this, see the user guide page on [running a case](http://esmci.github.io/cime/versions/maint-5.6/html/users_guide/running-a-case.html).
+
 Once you have set your job to run for the correct length of time, it is a good idea to check the correct amount of resource is available for the job. You can quickly check the job submission parameters by running
 
 ``` {.console}
@@ -258,9 +266,9 @@ When the job is complete, most output will not necessarily be written under the 
 
 -   `$DOUT_S_ROOT/$CASE`
 
-    `$DOUT_S_ROOT` refers to the short term archive path location on local disk. This path is used by the case.st_archive script when `$DOUT_S = TRUE`. See [CESM Model Output File Locations](http://www.cesm.ucar.edu/models/cesm2/naming_conventions.html#modelOutputLocations) for details regarding the component model output filenames and locations.
+    `$DOUT_S_ROOT` refers to the short-term archive path location on local disk. This path is used by the case.st_archive script when `$DOUT_S = TRUE`. See [CESM Model Output File Locations](http://www.cesm.ucar.edu/models/cesm2/naming_conventions.html#modelOutputLocations) for details regarding the component model output filenames and locations.
 
-    `$DOUT_S_ROOT/$CASE` is the short term archive directory for this case. If `$DOUT_S` is FALSE, then no archive directory should exist. If `$DOUT_S` is TRUE, then log, history, and restart files should have been copied into a directory tree here.
+    `$DOUT_S_ROOT/$CASE` is the short-term archive directory for this case. If `$DOUT_S` is FALSE, then no archive directory should exist. If `$DOUT_S` is TRUE, then log, history, and restart files should have been copied into a directory tree here.
 
 -   `$DOUT_S_ROOT/$CASE/logs`
 
@@ -341,7 +349,60 @@ so in this case, the path would be
 $CESM_ROOT/runs/b.e20.B1850.f19_g17.test/run/cesm.log.*
 ```
 
-### Known Issues
+### Known Issues and Common Problems
+
+#### Input data errors
+
+Occasionally, the input data for a case is not downloaded correctly. Unfortunately, in these cases the checksum test run by the `check_input_data` script will not catch the corrupted fields in the file. The error message displayed can vary somewhat, but a common error message is
+
+```{.console}
+ERROR timeaddmonths(): MM out of range"
+```
+
+You can often spot these errors by examining the log as described above, as the error will occur shortly after a file has been read. If this happens, delete the file in question from your `cesm_inputdata` directory and rerun
+
+
+``` {.console}
+./check_input_data --download
+```
+to ensure that the data is downloaded correctly.
+
+
+#### SIGFPE errors
+
+If running a case with the DEBUG flag enabled, you may see some SIGFPE errors. In this case, the traceback shown in the logs will show the error as originating in one of three places:
+
+* $CESM_ROOT/components/cam/src/physics/cam/micro_mg2_0.F90:1651
+* $CESM_ROOT/components/clm/src/biogeochem/ch4Mod.F90:3555
+* $CESM_ROOT/components/ww3/src/cpl_mct/wav_comp_mct.F90:761
+
+This problem is caused by 'short-circuit' logic in the affected files, where there may be a conditional of the form
+
+```
+if (A .and. B) then....
+```
+where B cannot be properly evaluated if A fails, for example
+
+```
+if ( x /= 0 .and. y/x > c ) then....
+```
+which would result in a divide-by-zero error if the second condition was evaluated after the first condition had already failed.
+
+In standard simulations, the second condition would be skipped in these cases however if the user has set
+
+```
+./xmlchange DEBUG=TRUE
+```
+
+then the second condition will not be skipped and a SIGFPE error will occur.
+
+If encountering these errors, a user can do one of two things. The simplest solution is to turn off the DEBUG flag with
+
+```
+./xmlchange DEBUG=TRUE
+```
+If this option is not possible however, and your simulation absolutely needs to be run in DEBUG mode, then the conditional can be modified in the program code. **_THIS IS DONE AT YOUR OWN RISK!!!_** The fix that has been applied for the WW3 component can be seen [here](https://github.com/ESCOMP/WW3-CESM/pull/4/files). It is recommended that if you are making any changes to the code for this reason, that you revert your changes back once you no longer need to run your case in DEBUG mode.
+
 
 #### SIGSEGV errors
 
@@ -364,3 +425,29 @@ or by increasing the number of threads used by using
 ```
 
 This will double the amount of memory available for each physical core
+
+
+#### Archiving Errors
+
+When running WACCM-X cases (compsets starting FX*), there can sometimes be problems when running restart jobs. This is caused by the short-term archiving job mistakenly moving files needed for restarts to the archive. To ensure this does not happen, it can be a good idea when running WACCM-X simulations to turn off the short-term archiver using
+
+```{.console}
+./xmlchange DOUT_S=FALSE
+```
+
+While this behaviour has so far only been observed for WACCM-X jobs, it is possible that this behaviour can occur with other compsets
+
+
+#### Job Failing instantly with undefined environment variable
+
+There is a small possibility that your job may initially fail with the error message
+
+```
+ERROR: Undefined env var 'CESM_ROOT'
+```
+This could have two causes:
+1. You do not have the CESM2/2.1.3 module loaded. This module needs to be loaded when running the case as well as when building the case. Try running again after having run `module load CESM2/2.1.3`
+2. This could also be due to a known issue with ARCHER2 where adding the SBATCH directive `export=ALL` to a slurm script will not work (see the [ARCHER2 known issues entry](https://docs.archer2.ac.uk/known-issues/#slurm-export-option-does-not-work-in-job-submission-script) on the subject). The ARCHER2 configuration included in the version of cime that was downloaded during setup should apply a work-around to this, and so you should not see this error in this case. It may still occur in some corner cases however. To avoid this, ensure that the environment from which you are submitting your case has the CESM2/2.1.3 module loaded and run the **case.submit** script with the following command
+``` {.console}
+./case.submit -a=--export=ALL
+```
