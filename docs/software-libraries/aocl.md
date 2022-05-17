@@ -20,15 +20,10 @@ AOCL is comprised of the following eight libraries:
 ## Compiling with AOCL
 
 !!! tip
-    AOCL only supports the GCC programming environment (`PrgEnv-gnu`).
-    Other programming environments may work but this is untested and currently unsupported
-    on ARCHER2.
-
-!!! warning
-    When using ```gcc/11.2.0```, the LibM library is unavailable. This is a known issue that is being investigated.  
+    AOCL is currently unavailable for the Cray and AOCC programming environments (`PrgEnv-cray`, `PrgEnv-aocc`).
+    This is untested and currently unsupported on ARCHER2.
 
 ```
-module load PrgEnv-gnu
 module load aocl
 ```
 
@@ -37,4 +32,5 @@ module load aocl
 For more information on AOCL, please see: https://developer.amd.com/amd-aocl/#documentation
 
 # Version history..
+
 - Module `aocl/3.1` installed April 2022
