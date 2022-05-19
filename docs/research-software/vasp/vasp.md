@@ -188,6 +188,26 @@ versions in the build instructions GitHub repository. See:
 
 ## Tips for using VASP on ARCHER2
 
+### Switching MPI transport protocol rom UCX to OpenFabrics
+
+The VASP modules are setup to use the UCX MPI transport protocol as testing has shown
+that this passes all the regression tests and gives the best performance on ARCHER2.
+However, there may be cases where using UCX can give errors that can be fixed by
+switching to the OpenFabrics MPI transport protocol.
+
+If you see errors in VASP calculations that implicate UCX (they will typically be
+MPI errors with the string `ucx` or `UCX` in the output) then you can try using
+OpenFabrics instead by loading additional modules after you have loaded the
+VASP modules. For example, for VASP 6, you would use:
+
+```
+module load vasp/6
+module load craype-network-ofi
+module load cray-mpich
+```
+
+### Performance tips
+
 The performance of VASP depends on the version of VASP used, the performance
 of MPI collective operations, the choice of VASP parallelisation parameters
 (`NCORE`/`NPAR` and `KPAR`) and how many MPI processes per node are used.
