@@ -188,7 +188,7 @@ versions in the build instructions GitHub repository. See:
 
 ## Tips for using VASP on ARCHER2
 
-### Switching MPI transport protocol rom UCX to OpenFabrics
+### Switching MPI transport protocol from UCX to OpenFabrics
 
 The VASP modules are setup to use the UCX MPI transport protocol as testing has shown
 that this passes all the regression tests and gives the best performance on ARCHER2.
