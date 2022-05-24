@@ -20,10 +20,23 @@ AOCL is comprised of the following eight libraries:
 ## Compiling with AOCL
 
 !!! tip
-    AOCL is currently unavailable for the Cray and AOCC programming environments (`PrgEnv-cray`, `PrgEnv-aocc`).
+    AOCL is currently unavailable for the Cray programming environments (`PrgEnv-cray`).
     This is untested and currently unsupported on ARCHER2.
 
+### GNU Programming Environment
+
 ```
+module load PrgEnv-gnu
+module load aocl
+```
+
+### AOCC Programming Environment
+
+AOCL is only available with aocc/3.0.0.
+
+```
+module load PrgEnv-aocc
+module swap aocc/2.2.0.1 aocc/3.0.0
 module load aocl
 ```
 
