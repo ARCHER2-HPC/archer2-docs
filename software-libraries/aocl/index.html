@@ -1031,6 +1031,26 @@
     Compiling with AOCL
   </a>
   
+    <nav class="md-nav" aria-label="Compiling with AOCL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gnu-programming-environment" class="md-nav__link">
+    GNU Programming Environment
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aocc-programming-environment" class="md-nav__link">
+    AOCC Programming Environment
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1471,6 +1491,26 @@
     Compiling with AOCL
   </a>
   
+    <nav class="md-nav" aria-label="Compiling with AOCL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gnu-programming-environment" class="md-nav__link">
+    GNU Programming Environment
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aocc-programming-environment" class="md-nav__link">
+    AOCC Programming Environment
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1511,10 +1551,18 @@ with those in AOCL. The <code>aocl</code> module automatically unloads <code>cra
 <h2 id="compiling-with-aocl">Compiling with AOCL</h2>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>AOCL is currently unavailable for the Cray and AOCC programming environments (<code>PrgEnv-cray</code>, <code>PrgEnv-aocc</code>).
+<p>AOCL is currently unavailable for the Cray programming environments (<code>PrgEnv-cray</code>).
 This is untested and currently unsupported on ARCHER2.</p>
 </div>
-<div class="highlight"><pre><span></span><code>module load aocl
+<h3 id="gnu-programming-environment">GNU Programming Environment</h3>
+<div class="highlight"><pre><span></span><code>module load PrgEnv-gnu
+module load aocl
+</code></pre></div>
+<h3 id="aocc-programming-environment">AOCC Programming Environment</h3>
+<p>AOCL is only available with aocc/3.0.0.</p>
+<div class="highlight"><pre><span></span><code>module load PrgEnv-aocc
+module swap aocc/2.2.0.1 aocc/3.0.0
+module load aocl
 </code></pre></div>
 <h1 id="resources">Resources</h1>
 <p>For more information on AOCL, please see: https://developer.amd.com/amd-aocl/#documentation</p>
