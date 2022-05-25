@@ -2073,7 +2073,7 @@ constraint with no timeout, you would use:
     unsatisfiable request.
 
     A useful heuristic to ensure this is the case is to ensure that
-    the total nodes requested is greater than or equal to the number
+    the total nodes requested is less than or equal to the number
     of groups multiplied by 128.
 
 
