@@ -1975,20 +1975,26 @@ particular time e.g. for a demonstration or course.
 Reservations will be charged at 1.5 times the usual CU rate and our policy is that they
 will be charged the full rate for the entire reservation at the time of booking, whether
 or not you use the nodes for the full time. In addition, you will not be refunded the
-CUs if you fail to use them due to a job crash unless this crash is due to a system failure.
+CUs if you fail to use them due to a job issue unless this issue is due to a system failure.
 
 !!! bug
     At the moment, we are only able to charge for jobs in reservations, not for the full 
     reservation itself. Jobs in reservations are charged at 1.5x the standard rate.
 
-To request a reservation please [contact the ARCHER2 Service Desk](mailto:support@archer2.ac.uk).
-You need to provide the following:
+To request a reservation you complete a form on SAFE:
+
+ 1. [Log into SAFE](https://safe.epcc.ed.ac.uk)
+ 2. Under the "Login accounts" menu, choose the "Request reservation" option
+  
+On the first page, you need to provide the following:
 
  - The start time and date of the reservation.
  - The end time and date of the reservation.
- - The project code for the reservation.
- - The number of nodes required.
  - Your justification for the reservation -- this must be provided or the request will be rejected.
+ - The number of nodes required.
+
+On the second page, you will need to specify which username you wish the reservation to be charged against
+and, once the username has been selected, the budget you want to charge the reservation to.
 
 Your request will be checked by the ARCHER2 User Administration team and, if approved, you will be provided a reservation ID which can be used on the system. To submit jobs to a reservation, you need to add `--reservation=<reservation ID>` and `--qos=reservation` options to your job submission script or command.
 
