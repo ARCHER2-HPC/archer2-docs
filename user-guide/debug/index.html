@@ -1949,10 +1949,6 @@ are). To make this easily understandable it collates together all
 processes that are in the same place providing only unique program
 locations for display.</p>
 <h3 id="using-stat-on-archer2">Using STAT on ARCHER2</h3>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>STAT is currently not working on ARCHER2 as highlighted in the <a href="https://docs.archer2.ac.uk/known-issues/#stat-view-not-working">Known Issues</a></p>
-</div>
 <p>On the login node, load the <code>cray-stat</code> module:</p>
 <pre><code>module load cray-stat
 </code></pre>
@@ -2017,13 +2013,9 @@ Results written to $PATH_TO_RUN_DIRECTORY/stat_results/my_exe.0000
 <p>You can view the results that STAT has produced using the following
 command (note that "my_exe" will need to be replaced with the name
 of the executable you  ran):</p>
-<pre><code>/work/y02/shared/stat-view-workaround/stat-view stat_results/my_exe.0000/00_my_exe.0000.3D.dot
+<pre><code>stat-view stat_results/my_exe.0000/00_my_exe.0000.3D.dot
 </code></pre>
 <p>This produces a graph displaying all the different places within the program that the parallel processes were when you queried them.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Please note that <code>stat-view</code> is currently not working on ARCHER2 as highlighted in the <a href="https://docs.archer2.ac.uk/known-issues/#stat-view-not-working">Known Issues</a>. The current workaround is to use <code>/work/y02/shared/stat-view-workaround/stat-view</code> instead.</p>
-</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>To see the graph, you will need to have exported your X display when logging in.</p>
