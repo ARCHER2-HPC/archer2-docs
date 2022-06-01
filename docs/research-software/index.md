@@ -42,6 +42,6 @@ centrally supported packages:
 
 ### Not on the list?
 
-If the code you are interested in is not in the above list, we may still
+If the software you are interested in is not in the above list, we may still
 be able to help you install your own version, either individually, or as
 a project. Please [contact the Service Desk](https://www.archer2.ac.uk/support-access/servicedesk.html).
