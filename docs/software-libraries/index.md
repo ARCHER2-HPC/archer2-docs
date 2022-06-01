@@ -133,13 +133,6 @@ The following libraries will also made available by the ARCHER2 CSE team:
 
 [760]: https://slepc.upv.es
 
-- **SUNDIALS** *...details pending...*
-
-    [Sundials](https://computing.llnl.gov/projects/sundials) is a suite of libraries which address problems including
-    ordinary differential equation integration, initial value problems,
-    and non-linear algebraic equations.
-    See
-
 - **SuperLU** and **SuperLU_DIST** [*...details for SuperLU on ARCHER2...*](superlu.md)
 
     [SuperLU][800] provides solutions to large non-symmetric sparse systems.
