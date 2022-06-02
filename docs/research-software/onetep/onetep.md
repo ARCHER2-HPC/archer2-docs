@@ -24,21 +24,23 @@ Please have your license details to hand.
 
 ## Running parallel ONETEP jobs
 
-The following script will run a ONETEP job using 2 nodes (256 cores). It
+The following script will run a ONETEP job using 2 nodes (256 cores) with
+16 MPI processes per node and 8 OpenMP threads per MPI process. It
 assumes that the input file is called `text_calc.dat`.
 
 === "Full system"
     ```
     #!/bin/bash
 
-    # Request 2 nodes with 128 MPI tasks per node for 20 minutes
-    # Replace [budget code] below with your account code,
-    # e.g. '--account=t01'
+    # Request 2 nodes for 20 minutes
+    #    - 16 MPI processes per node (32 in total)
+    #    - 8 OpenMP threads per MPI process
+    #    - 256 cores used in total
 
     #SBATCH --job-name=ONETEP
     #SBATCH --nodes=2
-    #SBATCH --tasks-per-node=128
-    #SBATCH --cpus-per-task=1
+    #SBATCH --tasks-per-node=16
+    #SBATCH --cpus-per-task=8
     #SBATCH --time=00:20:00
 
     # Replace [budget code] below with your project code (e.g. t01)
@@ -46,12 +48,15 @@ assumes that the input file is called `text_calc.dat`.
     #SBATCH --partition=standard
     #SBATCH --qos=standard
 
-    # Load the ONETEP module
-    module load onetep
+    # Load the ONETEP module - use 6.1.9.0 to avoid issues on ARCHER2
+    # The module also sets:
+    #    - export OMP_PLACES=cores
+    #    - export OMP_PROC_BIND=close
+    #    - export FI_MR_CACHE_MAX_COUNT=0
+    module load onetep/6.1.9.0-CCE-LibSci
 
-    # Make sure that the stack settings are correct
-    export OMP_STACKSIZE=64M
-    export OMP_NUM_THREADS=1
+    # Set the threading (usually the same as --cpus-per-task)
+    export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
     # Launch the executable
     srun --distribution=block:block --hint=nomultithread onetep.archer2 test_calc > test_calc.out
@@ -59,7 +64,7 @@ assumes that the input file is called `text_calc.dat`.
 
 ## Hints and Tips
 
-See the information in the [ONETEP documentation](https://www.onetep.org/Main/RunningONETEP), in particular the information on stack sizes.
+See the information in the [ONETEP documentation](https://www.onetep.org/Main/RunningONETEP).
 
 ## Compiling ONETEP
 
