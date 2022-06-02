@@ -1553,21 +1553,23 @@ ARCHER2, please make a request via the SAFE, see:</p>
 </ul>
 <p>Please have your license details to hand.</p>
 <h2 id="running-parallel-onetep-jobs">Running parallel ONETEP jobs</h2>
-<p>The following script will run a ONETEP job using 2 nodes (256 cores). It
+<p>The following script will run a ONETEP job using 2 nodes (256 cores) with
+16 MPI processes per node and 8 OpenMP threads per MPI process. It
 assumes that the input file is called <code>text_calc.dat</code>.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 
-# Request 2 nodes with 128 MPI tasks per node for 20 minutes
-# Replace [budget code] below with your account code,
-# e.g. &#39;--account=t01&#39;
+# Request 2 nodes for 20 minutes
+#    - 16 MPI processes per node (32 in total)
+#    - 8 OpenMP threads per MPI process
+#    - 256 cores used in total
 
 #SBATCH --job-name=ONETEP
 #SBATCH --nodes=2
-#SBATCH --tasks-per-node=128
-#SBATCH --cpus-per-task=1
+#SBATCH --tasks-per-node=16
+#SBATCH --cpus-per-task=8
 #SBATCH --time=00:20:00
 
 # Replace [budget code] below with your project code (e.g. t01)
@@ -1575,12 +1577,15 @@ assumes that the input file is called <code>text_calc.dat</code>.</p>
 #SBATCH --partition=standard
 #SBATCH --qos=standard
 
-# Load the ONETEP module
-module load onetep
+# Load the ONETEP module - use 6.1.9.0 to avoid issues on ARCHER2
+# The module also sets:
+#    - export OMP_PLACES=cores
+#    - export OMP_PROC_BIND=close
+#    - export FI_MR_CACHE_MAX_COUNT=0
+module load onetep/6.1.9.0-CCE-LibSci
 
-# Make sure that the stack settings are correct
-export OMP_STACKSIZE=64M
-export OMP_NUM_THREADS=1
+# Set the threading (usually the same as --cpus-per-task)
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
 # Launch the executable
 srun --distribution=block:block --hint=nomultithread onetep.archer2 test_calc &gt; test_calc.out
@@ -1589,7 +1594,7 @@ srun --distribution=block:block --hint=nomultithread onetep.archer2 test_calc &g
 </div>
 </div>
 <h2 id="hints-and-tips">Hints and Tips</h2>
-<p>See the information in the <a href="https://www.onetep.org/Main/RunningONETEP">ONETEP documentation</a>, in particular the information on stack sizes.</p>
+<p>See the information in the <a href="https://www.onetep.org/Main/RunningONETEP">ONETEP documentation</a>.</p>
 <h2 id="compiling-onetep">Compiling ONETEP</h2>
 <p>The latest instructions for building ONETEP on ARCHER2 may be found in
 the GitHub repository of build instructions:</p>
