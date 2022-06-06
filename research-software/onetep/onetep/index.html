@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.16">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.3.2">
     
     
       
@@ -17,11 +17,12 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.1c3799f8.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.5d38496d.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cc9b2e1e.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cbb835fc.min.css">
         
+      
       
     
     
@@ -1553,46 +1554,152 @@ ARCHER2, please make a request via the SAFE, see:</p>
 </ul>
 <p>Please have your license details to hand.</p>
 <h2 id="running-parallel-onetep-jobs">Running parallel ONETEP jobs</h2>
-<p>The following script will run a ONETEP job using 2 nodes (256 cores) with
+<p>The following script, supplied by the ONETEP developers, will run a ONETEP job using 2 nodes (256 cores) with
 16 MPI processes per node and 8 OpenMP threads per MPI process. It
-assumes that the input file is called <code>text_calc.dat</code>.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>#!/bin/bash
+assumes that there is a single calculation options file with the <code>.dat</code>
+extension in the working directory.</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
-# Request 2 nodes for 20 minutes
-#    - 16 MPI processes per node (32 in total)
-#    - 8 OpenMP threads per MPI process
-#    - 256 cores used in total
+<span class="c1"># --------------------------------------------------------------------------</span>
+<span class="c1"># A SLURM submission script for ONETEP on ARCHER2 (full 23-cabinet system).</span>
+<span class="c1"># Central install, Cray compiler version.</span>
+<span class="c1"># Supports hybrid (MPI/OMP) parallelism.</span>
+<span class="c1">#</span>
+<span class="c1"># 2022.06 Jacek Dziedzic, J.Dziedzic@soton.ac.uk</span>
+<span class="c1">#                         University of Southampton</span>
+<span class="c1">#         Lennart Gundelach, L.Gundelach@soton.ac.uk</span>
+<span class="c1">#                            University of Southampton</span>
+<span class="c1">#         Tom Demeyere, T.Demeyere@soton.ac.uk</span>
+<span class="c1">#                       University of Southampton</span>
+<span class="c1"># --------------------------------------------------------------------------</span>
 
-#SBATCH --job-name=ONETEP
-#SBATCH --nodes=2
-#SBATCH --tasks-per-node=16
-#SBATCH --cpus-per-task=8
-#SBATCH --time=00:20:00
+<span class="c1"># v1.00 (2022.06.04) jd: Adapted from the user-compiled Cray compiler version.</span>
 
-# Replace [budget code] below with your project code (e.g. t01)
-#SBATCH --account=[budget code] 
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+<span class="c1"># ==========================================================================================================</span>
+<span class="c1"># Edit the following lines to your liking.</span>
+<span class="c1">#</span>
+<span class="kp">#SBATCH --job-name=mine               # Name of the job.</span>
+<span class="kp">#SBATCH --nodes=2                     # Number of nodes in job.</span>
+<span class="kp">#SBATCH --ntasks-per-node=16          # Number of MPI processes per node.</span>
+<span class="kp">#SBATCH --cpus-per-task=8             # Number of OMP threads spawned from each MPI process.</span>
+<span class="kp">#SBATCH --time=5:00:00                # Max time for your job (hh:mm:ss).</span>
+<span class="kp">#SBATCH --partition=standard          # Partition: standard memory CPU nodes with AMD EPYC 7742 64-core processor</span>
+<span class="kp">#SBATCH --account=t01                 # Replace &#39;t01&#39; with your budget code.</span>
+<span class="kp">#SBATCH --qos=standard                # Requested Quality of Service (QoS), See ARCHER2 documentation</span>
 
-# Load the ONETEP module - use 6.1.9.0 to avoid issues on ARCHER2
-# The module also sets:
-#    - export OMP_PLACES=cores
-#    - export OMP_PROC_BIND=close
-#    - export FI_MR_CACHE_MAX_COUNT=0
+<span class="nb">export</span> <span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">8</span>              <span class="c1"># Repeat the value from &#39;cpus-per-task&#39; here.</span>
+
+<span class="c1"># Set up the job environment, loading the ONETEP module.</span>
+<span class="c1"># The module automatically sets OMP_PLACES, OMP_PROC_BIND and FI_MR_CACHE_MAX_COUNT.</span>
+<span class="c1"># To use a different binary, replace this line with either (drop the leading &#39;#&#39;)</span>
+<span class="c1"># module load onetep/6.1.9.0-GCC-LibSci</span>
+<span class="c1"># to use the GCC-libsci binary, or with</span>
+<span class="c1"># module load onetep/6.1.9.0-GCC-MKL</span>
+<span class="c1"># to use the GCC-MKL binary.</span>
+
 module load onetep/6.1.9.0-CCE-LibSci
 
-# Set the threading (usually the same as --cpus-per-task)
-export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+<span class="c1"># ==========================================================================================================</span>
+<span class="c1"># !!! You should not need to modify anything below this line.</span>
+<span class="c1"># ==========================================================================================================</span>
 
-# Launch the executable
-srun --distribution=block:block --hint=nomultithread onetep.archer2 test_calc &gt; test_calc.out
+<span class="nv">workdir</span><span class="o">=</span><span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>
+<span class="nb">echo</span> <span class="s2">&quot;--- This is the submission script, the time is `date`.&quot;</span>
+
+<span class="c1"># Figure out ONETEP executable</span>
+<span class="nv">onetep_exe</span><span class="o">=</span><span class="sb">`</span>which onetep.archer2<span class="sb">`</span>
+<span class="nb">echo</span> <span class="s2">&quot;--- ONETEP executable is </span><span class="nv">$onetep_exe</span><span class="s2">.&quot;</span>
+
+<span class="nv">onetep_launcher</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$onetep_exe</span> <span class="p">|</span> sed -r <span class="s2">&quot;s/onetep.archer2/onetep_launcher/&quot;</span><span class="sb">`</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;--- workdir is &#39;</span><span class="nv">$workdir</span><span class="s2">&#39;.&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;--- onetep_launcher is &#39;</span><span class="nv">$onetep_launcher</span><span class="s2">&#39;.&quot;</span>
+
+<span class="c1"># Ensure exactly 1 .dat file in there.</span>
+<span class="nv">ndats</span><span class="o">=</span><span class="sb">`</span>ls -l *dat <span class="p">|</span> wc -l<span class="sb">`</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$ndats</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="nb">echo</span> <span class="s2">&quot;!!! There is no .dat file in the current directory. Aborting.&quot;</span> &gt;<span class="p">&amp;</span><span class="m">2</span>
+  touch <span class="s2">&quot;%NO_DAT_FILE&quot;</span>
+  <span class="nb">exit</span> <span class="m">2</span>
+<span class="k">fi</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$ndats</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="nb">true</span>
+<span class="k">else</span>
+  <span class="nb">echo</span> <span class="s2">&quot;!!! More than one .dat file in the current directory, that&#39;s too many. Aborting.&quot;</span> &gt;<span class="p">&amp;</span><span class="m">2</span>
+  touch <span class="s2">&quot;%MORE_THAN_ONE_DAT_FILE&quot;</span>
+  <span class="nb">exit</span> <span class="m">3</span>
+<span class="k">fi</span>
+
+<span class="nv">rootname</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> *.dat <span class="p">|</span> sed -r <span class="s2">&quot;s/\.dat\$//&quot;</span><span class="sb">`</span>
+<span class="nv">rootname_dat</span><span class="o">=</span><span class="nv">$rootname</span><span class="s2">&quot;.dat&quot;</span>
+<span class="nv">rootname_out</span><span class="o">=</span><span class="nv">$rootname</span><span class="s2">&quot;.out&quot;</span>
+<span class="nv">rootname_err</span><span class="o">=</span><span class="nv">$rootname</span><span class="s2">&quot;.err&quot;</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;--- The input file is </span><span class="nv">$rootname_dat</span><span class="s2">, the output goes to </span><span class="nv">$rootname_out</span><span class="s2"> and errors go to </span><span class="nv">$rootname_err</span><span class="s2">.&quot;</span>
+
+<span class="c1"># Ensure ONETEP executable is there and is indeed executable.</span>
+<span class="k">if</span> <span class="o">[</span> ! -x <span class="s2">&quot;</span><span class="nv">$onetep_exe</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="nb">echo</span> <span class="s2">&quot;!!! </span><span class="nv">$onetep_exe</span><span class="s2"> does not exist or is not executable. Aborting!&quot;</span> &gt;<span class="p">&amp;</span><span class="m">2</span>
+  touch <span class="s2">&quot;%ONETEP_EXE_MISSING&quot;</span>
+  <span class="nb">exit</span> <span class="m">4</span>
+<span class="k">fi</span>
+
+<span class="c1"># Ensure onetep_launcher is there and is indeed executable.</span>
+<span class="k">if</span> <span class="o">[</span> ! -x <span class="s2">&quot;</span><span class="nv">$onetep_launcher</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="nb">echo</span> <span class="s2">&quot;!!! </span><span class="nv">$onetep_launcher</span><span class="s2"> does not exist or is not executable. Aborting!&quot;</span> &gt;<span class="p">&amp;</span><span class="m">2</span>
+  touch <span class="s2">&quot;%ONETEP_LAUNCHER_MISSING&quot;</span>
+  <span class="nb">exit</span> <span class="m">5</span>
+<span class="k">fi</span>
+
+<span class="c1"># Dump the module list to a file.</span>
+module list &gt;<span class="se">\$</span>modules_loaded <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
+
+ldd <span class="nv">$onetep_exe</span> &gt;<span class="se">\$</span>ldd
+
+<span class="c1"># Report details</span>
+<span class="nb">echo</span> <span class="s2">&quot;--- Number of nodes as reported by SLURM: </span><span class="nv">$SLURM_JOB_NUM_NODES</span><span class="s2">.&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;--- Number of tasks as reported by SLURM: </span><span class="nv">$SLURM_NTASKS</span><span class="s2">.&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;--- Using this srun executable: &quot;</span><span class="sb">`</span>which <span class="nb">srun</span><span class="sb">`</span>
+<span class="nb">echo</span> <span class="s2">&quot;--- Executing ONETEP via </span><span class="nv">$onetep_launcher</span><span class="s2">.&quot;</span>
+
+
+<span class="c1"># Actually run ONETEP</span>
+<span class="c1"># Additional srun options to pin one thread per physical core</span>
+<span class="c1">########################################################################################################################################################</span>
+<span class="nb">srun</span> --hint<span class="o">=</span>nomultithread --distribution<span class="o">=</span>block:block -N <span class="nv">$SLURM_JOB_NUM_NODES</span> -n <span class="nv">$SLURM_NTASKS</span> <span class="nv">$onetep_launcher</span> -e <span class="nv">$onetep_exe</span> -t <span class="nv">$OMP_NUM_THREADS</span> <span class="nv">$rootname_dat</span> &gt;<span class="nv">$rootname_out</span> <span class="m">2</span>&gt;<span class="nv">$rootname_err</span>
+<span class="c1">########################################################################################################################################################</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;--- srun finished at `date`.&quot;</span>
+
+<span class="c1"># Check for error conditions</span>
+<span class="nv">result</span><span class="o">=</span><span class="nv">$?</span>
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$result</span> -ne <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="nb">echo</span> <span class="s2">&quot;!!! srun reported a non-zero exit code </span><span class="nv">$result</span><span class="s2">. Aborting!&quot;</span> &gt;<span class="p">&amp;</span><span class="m">2</span>
+  touch <span class="s2">&quot;%SRUN_ERROR&quot;</span>
+  <span class="nb">exit</span> <span class="m">6</span>
+<span class="k">fi</span>
+
+<span class="k">if</span> <span class="o">[</span> -r <span class="nv">$rootname</span>.error_message <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="nb">echo</span> <span class="s2">&quot;!!! ONETEP left an error message file. Aborting!&quot;</span> &gt;<span class="p">&amp;</span><span class="m">2</span>
+  touch <span class="s2">&quot;%ONETEP_ERROR_DETECTED&quot;</span>
+  <span class="nb">exit</span> <span class="m">7</span>
+<span class="k">fi</span>
+
+tail <span class="nv">$rootname</span>.out <span class="p">|</span> grep completed &gt;/dev/null <span class="m">2</span>&gt;/dev/null
+<span class="nv">result</span><span class="o">=</span><span class="nv">$?</span>
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$result</span> -ne <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="nb">echo</span> <span class="s2">&quot;!!! ONETEP calculation likely did not complete. Aborting!&quot;</span> &gt;<span class="p">&amp;</span><span class="m">2</span>
+  touch <span class="s2">&quot;%ONETEP_DID_NOT_COMPLETE&quot;</span>
+  <span class="nb">exit</span> <span class="m">8</span>
+<span class="k">fi</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;--- Looks like everything went fine. Praise be.&quot;</span>
+touch <span class="s2">&quot;%DONE&quot;</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;--- Finished successfully at `date`.&quot;</span>
 </code></pre></div>
-</div>
-</div>
-</div>
 <h2 id="hints-and-tips">Hints and Tips</h2>
 <p>See the information in the <a href="https://www.onetep.org/Main/RunningONETEP">ONETEP documentation</a>.</p>
 <h2 id="compiling-onetep">Compiling ONETEP</h2>
@@ -1605,6 +1712,7 @@ the GitHub repository of build instructions:</p>
 
               
             </article>
+            
           </div>
         </div>
         
@@ -1612,7 +1720,8 @@ the GitHub repository of build instructions:</p>
       
         <footer class="md-footer">
   
-    <nav class="md-footer__inner md-grid" aria-label="Footer">
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
         
         <a href="../../nwchem/nwchem/" class="md-footer__link md-footer__link--prev" aria-label="Previous: NWChem" rel="prev">
@@ -1698,10 +1807,10 @@ the GitHub repository of build instructions:</p>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["tabs"], "search": "../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["tabs"], "search": "../../../assets/javascripts/workers/search.b028fd86.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.3a4b43e5.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.7f366e99.min.js"></script>
       
     
   </body>
