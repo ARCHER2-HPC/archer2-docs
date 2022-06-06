@@ -50,13 +50,9 @@ the Project Code:
     3.  Select the correct project from the drop down list
     4.  Select the *archer2* machine in the list of available machines
     5.  Click *Next*
-    6.  Enter a username for the account and (optionally) an SSH public
-        key
-        1.  If you do not specify an SSH key at this stage, your default
-            key will be used (if you have one). For users who had an ARCHER
-            account, the default key will be your ARCHER SSH key.
-        2.  You can always add an SSH key (or additional SSH keys) using
-            the process described below.
+    6.  Enter a username for the account and the public part of an SSH key pair 
+        1.  More information on generating SSH key pair [can be found in the ARCHER2 User and Best Practice Guide](https://docs.archer2.ac.uk/user-guide/connecting/#ssh-key-pairs)
+        2.  You can add additional SSH keys using the process described below if you so wish.
     7.  Click *Request*
 
 The PI or project manager of the project will be asked to approve your
