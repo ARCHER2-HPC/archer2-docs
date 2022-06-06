@@ -50,13 +50,10 @@ the Project Code:
     3.  Select the correct project from the drop down list
     4.  Select the *archer2* machine in the list of available machines
     5.  Click *Next*
-    6.  Enter a username for the account and (optionally) an SSH public
-        key
-        1.  If you do not specify an SSH key at this stage, your default
-            key will be used (if you have one). For users who had an ARCHER
+    6.  Enter a username for the account and an SSH public key (optional; if you already uploaded a default SSH key to your SAFE account, this will be used)
+        1.  If you do not specify an SSH key at this stage, your default key will be used. For users who had an ARCHER
             account, the default key will be your ARCHER SSH key.
-        2.  You can always add an SSH key (or additional SSH keys) using
-            the process described below.
+        2.  You can always add an SSH key (or additional SSH keys) using the process described below.
     7.  Click *Request*
 
 The PI or project manager of the project will be asked to approve your
