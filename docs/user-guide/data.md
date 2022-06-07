@@ -66,16 +66,17 @@ There are also two different types of node available to users:
 
    - Login nodes
    - Compute nodes
+   - Data analysis nodes
 
 Each type of node sees a different combination of the storage types.
 The following table shows which storage options are avalable on 
 different node types:
 
-| Storage | Login Nodes | Compute Nodes | Notes | 
-|---------|-------------|---------------|-------|
-| /home   | yes         | no            | Backed up |
-| /work   | yes         | yes           | Not backed up, high performance |
-| RDFaaS  | yes         | no            | Backed up, high performance. Only available for projects that moved from ARCHER to ARCHER2. |
+| Storage | Login Nodes | Compute Nodes | Data analysis nodes | Notes     | 
+|---------|-------------|---------------|---------------------|-----------|
+| /home   | yes         | no            | yes                 | Backed up |
+| /work   | yes         | yes           | yes                 | Not backed up, high performance |
+| RDFaaS  | yes         | no            | yes                 | Backed up, high performance. Only available for projects that moved from ARCHER to ARCHER2. |
 
 ### Home file systems
 
@@ -126,17 +127,14 @@ account.
    be limited by another quota.)
 
 !!! tip
-   Quota and usage data on SAFE is updated twice daily so may not be
-   exactly up to date with the situation on the systems themselves.
+    Quota and usage data on SAFE is updated twice daily so may not be
+    exactly up to date with the situation on the systems themselves.
 
 ### Work file systems
 
 There are currently three work file systems on the full ARCHER2 service.
 Each of these file systems is 3.4 PB and a portion of one of these file
 systems is available to each project.
-
-There is one 3.4 PB work file system on the ARCHER2 4-cabinet system. Every
-project on the 4-cabinet system has quota on this file system.
 
 All of these are high-performance, Lustre parallel file systems. They are
 designed to support data in large files. The performance for data stored
@@ -186,8 +184,8 @@ account.
    be limited by another quota.)
 
 !!! tip
-   Quota and usage data on SAFE is updated twice daily so may not be
-   exactly up to date with the situation on the systems themselves.
+    Quota and usage data on SAFE is updated twice daily so may not be
+    exactly up to date with the situation on the systems themselves.
 
 You can also examine up to date quotas and usage on the ARCHER2 systems
 themselves using the `lfs quota` command. To do this:

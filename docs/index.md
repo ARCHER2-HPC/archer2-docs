@@ -36,6 +36,10 @@ This is the documentation for the ARCHER2 service and includes:
   - [Data Analysis and Tools](data-tools/index.md)
     Information on data analysis tools and other useful utilities.
 
+  - [Other Software](other-software/index.md)
+    Useful information on software that is not officially supported by the 
+    ARCHER2 service but that will be useful to users of that software.
+
   - [Essential Skills](essentials/index.md)
     This section provides information and links on essential skills
     required to use ARCHER2 efficiently: *e.g.* using Linux command
