@@ -9,7 +9,7 @@ ARCHER2 has a license for up to 64 nodes (8192 cores) shared between
 all users at any one time. (Note cores are counted by the license, not
 MPI processes, threads, or any other software entity.)
 
-There are two ways of running the ARM user interfaces. If you have a good
+There are two ways of running the Arm user interface. If you have a good
 internet connection to ARCHER2, the GUI can be run on the front-end (with
 an X-connection).
 Alternatively, one can download a copy of the Forge remote client to your
@@ -17,7 +17,8 @@ laptop or desktop, and run it locally. The remote client may be the
 preferred method for many users.
 
 To download the remote client, see the
-[ARM developer download pages](https://developer.arm.com/downloads/-/arm-forge). Version 21.0.3 is known to work at the time of writing.
+[Arm developer download pages](https://developer.arm.com/downloads/-/arm-forge). Version 21.0.3 is known to work at the time of writing. Connecting with
+the remote client is discussed below.
 
 
 !!! note
@@ -200,14 +201,14 @@ Successful execution will generate a file with a ```.map``` extension.
 This `.map` file may be viewed via the GUI (start with either `map` or
 `forge`) by selecting the
 "Load a profile data file from a previous run" option. The resulting
-sfile election dialogue can then be used to specify the `.map` file.
+file selection dialogue can then be used to specify the `.map` file.
 
 
 
 ### Connecting with the remote client
 
-If one starts the remote client, one should see the main window as
-seen above. Sellect "Remote Launch" and then "Configure" from the
+If one starts the Forge client on e.g., a laptop, one should see the main window as
+shown above. Select "Remote Launch" and then "Configure" from the
 pull-down menu. In the "Configure Remote Connections" dialgoue
 click "Add". The following window should be displayed. Fill
 in the fields as shown. The "Connection Name" is just a tag
