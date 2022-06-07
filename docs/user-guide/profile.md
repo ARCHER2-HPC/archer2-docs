@@ -2,7 +2,7 @@
 
 There are a number of different ways to access profiling data on 
 ARCHER2. In this section, we discuss the HPE Cray profiling tools,
-CrayPAT-lite and CrayPAT. We also show how to get usage data
+CrayPat-lite and CrayPat. We also show how to get usage data
 on currently running jobs from Slurm batch system.
 
 ## CrayPat-lite
@@ -41,7 +41,7 @@ suite.
     ```
     #!/bin/bash
 
-    #SBATCH --job-name=craypat_test
+    #SBATCH --job-name=CrayPat_test
     #SBATCH --nodes=4
     #SBATCH --tasks-per-node=128
     #SBATCH --cpus-per-task=1
@@ -70,7 +70,7 @@ suite.
 
 ## CrayPat
 
-The Cray Performance Analysis Tool (CrayPAT) is a powerful framework for
+The Cray Performance Analysis Tool (CrayPat) is a powerful framework for
 analysing a parallel application’s performance on Cray supercomputers.
 It can provide very detailed information about the timing and performance
 of individual application procedures.
@@ -347,7 +347,99 @@ phase with Apprentice2.
 ## Hardware Performance Counters
 
 !!! note
-    Information on hardware counters will be added soon.
+    A limited number of hardware performance counters are currently available
+    on the ARCHER2 compute nodes. We are working to make more available.
+
+Hardware performance counters can be used to monitor CPU and power events on
+ARCHER2 compute nodes. The monitoring and reporting of hardware counter events is 
+integrated with *CrayPat* - users should use CrayPat as described earlier in this
+section to run profiling experiments to gather data from hardware counter events
+and to analyse the data.
+
+### Counters and counter groups available
+
+You can explore which event counters are available on compute nodes by running the following
+commands (replace `t01` with a valid budget code for your account):
+
+```bash
+module load perftools
+srun --ntasks=1 --partition=standard --qos=short --account=t01 papi_avail
+```
+
+For convenience, the CrayPat tool provides predetermined groups of hardware event
+counters. You can get more information on the hardware event counters available
+through CrayPat with the following commands (on a login or compute node):
+
+```bash
+module load perftools
+pat_help counters rome groups
+```
+
+If you want information on which hardware event counters are included in a group
+you can type the group name at the prompt you get after running the command above.
+Once you have finished browsing the help, type `.` to quit back to the command line.
+
+#### Power/energy counters available
+
+You can also access counters on power/energy consumption. To list the counters available
+to monitor power/energy use you can use the command (replace `t01` with a valid budget
+code for your account):
+
+```bash
+module load perftools
+srun --ntasks=1 --partition=standard --qos=short --account=t01 papi_native_avail -i cray_pm
+```
+
+### Enabling hardware counter data collection
+
+You enable the collection of hardware event counter data as part of a CrayPat 
+experiment by setting the environment variable `PAT_RT_PERFCTR` to a comma separated
+list of the groups/counters that you wish to measure.
+
+For example, you could set (usually in your job submission script):
+
+```bash
+export PAT_RT_PERFCTR=1
+```
+
+to use the `1` counter group (summary with branch activity).
+
+### Analysing hardware counter data
+
+If you enabled collection of hardware event counters when running your profiling
+experiment, you will automatically get a report on the data when you use the 
+`pat_report` command to analyse the profile experiment data file.
+
+You will see information similar to the following in the output from CrayPat for
+different sections of your code (this example if for the case where 
+`export PAT_RT_PERFCTR=1`, counter group: summary with branch activity, was 
+set in the job submission script):
+
+```
+==============================================================================
+  USER / main
+------------------------------------------------------------------------------
+  Time%                                                   88.3% 
+  Time                                               446.113787 secs
+  Imb. Time                                           33.094417 secs
+  Imb. Time%                                               6.9% 
+  Calls                       0.002 /sec                    1.0 calls
+  PAPI_BR_TKN                 0.240G/sec    106,855,535,005.863 branch
+  PAPI_TOT_INS                5.679G/sec  2,533,386,435,314.367 instr
+  PAPI_BR_INS                 0.509G/sec    227,125,246,394.008 branch
+  PAPI_TOT_CYC                            1,243,344,265,012.828 cycles
+  Instr per cycle                                          2.04 inst/cycle
+  MIPS                 1,453,770.20M/sec                        
+  Average Time per Call                              446.113787 secs
+  CrayPat Overhead : Time      0.2%           
+```
+
+### More information on hardware counters
+
+More information on using hardware counters can be found in the appropriate section
+of the HPE documentation:
+
+* [HPE Performance Analysis Tools User Guide](https://support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&docId=a00123563en_us)
 
 ## Performance and profiling data in Slurm
 
