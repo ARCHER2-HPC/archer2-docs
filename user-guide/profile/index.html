@@ -653,6 +653,53 @@
     Hardware Performance Counters
   </a>
   
+    <nav class="md-nav" aria-label="Hardware Performance Counters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#counters-and-counter-groups-available" class="md-nav__link">
+    Counters and counter groups available
+  </a>
+  
+    <nav class="md-nav" aria-label="Counters and counter groups available">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#powerenergy-counters-available" class="md-nav__link">
+    Power/energy counters available
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enabling-hardware-counter-data-collection" class="md-nav__link">
+    Enabling hardware counter data collection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysing-hardware-counter-data" class="md-nav__link">
+    Analysing hardware counter data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#more-information-on-hardware-counters" class="md-nav__link">
+    More information on hardware counters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1689,6 +1736,53 @@
     Hardware Performance Counters
   </a>
   
+    <nav class="md-nav" aria-label="Hardware Performance Counters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#counters-and-counter-groups-available" class="md-nav__link">
+    Counters and counter groups available
+  </a>
+  
+    <nav class="md-nav" aria-label="Counters and counter groups available">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#powerenergy-counters-available" class="md-nav__link">
+    Power/energy counters available
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enabling-hardware-counter-data-collection" class="md-nav__link">
+    Enabling hardware counter data collection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysing-hardware-counter-data" class="md-nav__link">
+    Analysing hardware counter data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#more-information-on-hardware-counters" class="md-nav__link">
+    More information on hardware counters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1753,7 +1847,7 @@
 <h1 id="profiling">Profiling</h1>
 <p>There are a number of different ways to access profiling data on 
 ARCHER2. In this section, we discuss the HPE Cray profiling tools,
-CrayPAT-lite and CrayPAT. We also show how to get usage data
+CrayPat-lite and CrayPat. We also show how to get usage data
 on currently running jobs from Slurm batch system.</p>
 <h2 id="craypat-lite">CrayPat-lite</h2>
 <p>CrayPat-lite is a simplified and easy-to-use version of the Cray
@@ -1785,7 +1879,7 @@ suite.</p>
 <p>Run the generated executable normally by submitting a job.</p>
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 
-#SBATCH --job-name=craypat_test
+#SBATCH --job-name=CrayPat_test
 #SBATCH --nodes=4
 #SBATCH --tasks-per-node=128
 #SBATCH --cpus-per-task=1
@@ -1814,7 +1908,7 @@ visualized using the <a href="#cray-apprentice2">Cray Apprentice2 tool</a>.</p>
 <li><a href="https://support.hpe.com/hpesc/public/docDisplay?docId=a00114942en_us&amp;page=index.html">CrayPat-lite User Guide</a></li>
 </ul>
 <h2 id="craypat">CrayPat</h2>
-<p>The Cray Performance Analysis Tool (CrayPAT) is a powerful framework for
+<p>The Cray Performance Analysis Tool (CrayPat) is a powerful framework for
 analysing a parallel application’s performance on Cray supercomputers.
 It can provide very detailed information about the timing and performance
 of individual application procedures.</p>
@@ -2060,8 +2154,75 @@ phase with Apprentice2.</p>
 <h2 id="hardware-performance-counters">Hardware Performance Counters</h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Information on hardware counters will be added soon.</p>
+<p>A limited number of hardware performance counters are currently available
+on the ARCHER2 compute nodes. We are working to make more available.</p>
 </div>
+<p>Hardware performance counters can be used to monitor CPU and power events on
+ARCHER2 compute nodes. The monitoring and reporting of hardware counter events is 
+integrated with <em>CrayPat</em> - users should use CrayPat as described earlier in this
+section to run profiling experiments to gather data from hardware counter events
+and to analyse the data.</p>
+<h3 id="counters-and-counter-groups-available">Counters and counter groups available</h3>
+<p>You can explore which event counters are available on compute nodes by running the following
+commands (replace <code>t01</code> with a valid budget code for your account):</p>
+<div class="highlight"><pre><span></span><code>module load perftools
+srun --ntasks<span class="o">=</span><span class="m">1</span> --partition<span class="o">=</span>standard --qos<span class="o">=</span>short --account<span class="o">=</span>t01 papi_avail
+</code></pre></div>
+<p>For convenience, the CrayPat tool provides predetermined groups of hardware event
+counters. You can get more information on the hardware event counters available
+through CrayPat with the following commands (on a login or compute node):</p>
+<div class="highlight"><pre><span></span><code>module load perftools
+pat_help counters rome groups
+</code></pre></div>
+<p>If you want information on which hardware event counters are included in a group
+you can type the group name at the prompt you get after running the command above.
+Once you have finished browsing the help, type <code>.</code> to quit back to the command line.</p>
+<h4 id="powerenergy-counters-available">Power/energy counters available</h4>
+<p>You can also access counters on power/energy consumption. To list the counters available
+to monitor power/energy use you can use the command (replace <code>t01</code> with a valid budget
+code for your account):</p>
+<div class="highlight"><pre><span></span><code>module load perftools
+srun --ntasks<span class="o">=</span><span class="m">1</span> --partition<span class="o">=</span>standard --qos<span class="o">=</span>short --account<span class="o">=</span>t01 papi_native_avail -i cray_pm
+</code></pre></div>
+<h3 id="enabling-hardware-counter-data-collection">Enabling hardware counter data collection</h3>
+<p>You enable the collection of hardware event counter data as part of a CrayPat 
+experiment by setting the environment variable <code>PAT_RT_PERFCTR</code> to a comma separated
+list of the groups/counters that you wish to measure.</p>
+<p>For example, you could set (usually in your job submission script):</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">PAT_RT_PERFCTR</span><span class="o">=</span><span class="m">1</span>
+</code></pre></div>
+<p>to use the <code>1</code> counter group (summary with branch activity).</p>
+<h3 id="analysing-hardware-counter-data">Analysing hardware counter data</h3>
+<p>If you enabled collection of hardware event counters when running your profiling
+experiment, you will automatically get a report on the data when you use the 
+<code>pat_report</code> command to analyse the profile experiment data file.</p>
+<p>You will see information similar to the following in the output from CrayPat for
+different sections of your code (this example if for the case where 
+<code>export PAT_RT_PERFCTR=1</code>, counter group: summary with branch activity, was 
+set in the job submission script):</p>
+<div class="highlight"><pre><span></span><code>==============================================================================
+  USER / main
+------------------------------------------------------------------------------
+  Time%                                                   88.3% 
+  Time                                               446.113787 secs
+  Imb. Time                                           33.094417 secs
+  Imb. Time%                                               6.9% 
+  Calls                       0.002 /sec                    1.0 calls
+  PAPI_BR_TKN                 0.240G/sec    106,855,535,005.863 branch
+  PAPI_TOT_INS                5.679G/sec  2,533,386,435,314.367 instr
+  PAPI_BR_INS                 0.509G/sec    227,125,246,394.008 branch
+  PAPI_TOT_CYC                            1,243,344,265,012.828 cycles
+  Instr per cycle                                          2.04 inst/cycle
+  MIPS                 1,453,770.20M/sec                        
+  Average Time per Call                              446.113787 secs
+  CrayPat Overhead : Time      0.2%           
+</code></pre></div>
+<h3 id="more-information-on-hardware-counters">More information on hardware counters</h3>
+<p>More information on using hardware counters can be found in the appropriate section
+of the HPE documentation:</p>
+<ul>
+<li><a href="https://support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&amp;docId=a00123563en_us">HPE Performance Analysis Tools User Guide</a></li>
+</ul>
 <h2 id="performance-and-profiling-data-in-slurm">Performance and profiling data in Slurm</h2>
 <p>Slurm commands on the login nodes can be used to quickly and simply retrieve
 information about memory usage for currently running and completed jobs.</p>
