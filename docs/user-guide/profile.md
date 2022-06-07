@@ -2,7 +2,7 @@
 
 There are a number of different ways to access profiling data on 
 ARCHER2. In this section, we discuss the HPE Cray profiling tools,
-CrayPAT-lite and CrayPAT. We also show how to get usage data
+CrayPat-lite and CrayPat. We also show how to get usage data
 on currently running jobs from Slurm batch system.
 
 ## CrayPat-lite
@@ -41,7 +41,7 @@ suite.
     ```
     #!/bin/bash
 
-    #SBATCH --job-name=craypat_test
+    #SBATCH --job-name=CrayPat_test
     #SBATCH --nodes=4
     #SBATCH --tasks-per-node=128
     #SBATCH --cpus-per-task=1
@@ -70,7 +70,7 @@ suite.
 
 ## CrayPat
 
-The Cray Performance Analysis Tool (CrayPAT) is a powerful framework for
+The Cray Performance Analysis Tool (CrayPat) is a powerful framework for
 analysing a parallel application’s performance on Cray supercomputers.
 It can provide very detailed information about the timing and performance
 of individual application procedures.
@@ -301,7 +301,7 @@ Some useful `pat_run` options are as follows.
 
 ### Further help
 
-  - [CrayPAT User Guide](https://support.hpe.com/hpesc/public/docDisplay?docId=a00114942en_us&page=index.html)
+  - [CrayPat User Guide](https://support.hpe.com/hpesc/public/docDisplay?docId=a00114942en_us&page=index.html)
 
 ## Cray Apprentice2
 
