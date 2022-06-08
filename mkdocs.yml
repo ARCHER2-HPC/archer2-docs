@@ -62,24 +62,24 @@ nav:
     - "Energy monitoring": user-guide/energy-monitoring.md
   - "Research Software":
     - "Overview": research-software/index.md
-    - "CASTEP": research-software/castep/castep.md
-    - "Chemshell": research-software/chemshell/chemshell.md
-    - "Code_Saturne": research-software/code-saturne/code-saturne.md
-    - "CP2K": research-software/cp2k/cp2k.md
-    - "FHI-aims": research-software/fhi-aims/fhi-aims.md
-    - "FEniCS": research-software/fenics/fenics.md
-    - "GROMACS": research-software/gromacs/gromacs.md
-    - "LAMMPS": research-software/lammps/lammps.md
-    - "MITgcm": research-software/mitgcm/mitgcm.md
-    - "Met Office Unified Model": research-software/mo-unified-model/mo-unified-model.md
-    - "NAMD": research-software/namd/namd.md
-    - "Nektar++": research-software/nektarplusplus/nektarplusplus.md
-    - "NEMO": research-software/nemo/nemo.md
-    - "NWChem": research-software/nwchem/nwchem.md
-    - "ONETEP": research-software/onetep/onetep.md
-    - "OpenFOAM": research-software/openfoam/openfoam.md
-    - "Quantum Espresso": research-software/qe/qe.md
-    - "VASP": research-software/vasp/vasp.md
+    - "CASTEP": research-software/castep.md
+    - "Chemshell": research-software/chemshell.md
+    - "Code_Saturne": research-software/code-saturne.md
+    - "CP2K": research-software/cp2k.md
+    - "FHI-aims": research-software/fhi-aims.md
+    - "FEniCS": research-software/fenics.md
+    - "GROMACS": research-software/gromacs.md
+    - "LAMMPS": research-software/lammps.md
+    - "MITgcm": research-software/mitgcm.md
+    - "Met Office Unified Model": research-software/mo-unified-model.md
+    - "NAMD": research-software/namd.md
+    - "Nektar++": research-software/nektarplusplus.md
+    - "NEMO": research-software/nemo.md
+    - "NWChem": research-software/nwchem.md
+    - "ONETEP": research-software/onetep.md
+    - "OpenFOAM": research-software/openfoam.md
+    - "Quantum Espresso": research-software/qe.md
+    - "VASP": research-software/vasp.md
   - "Software Libraries":
     - "Overview": software-libraries/index.md
     - "HPE Cray LibSci: BLAS, LAPACK, ScaLAPACK": software-libraries/libsci.md
