@@ -1,0 +1,2471 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.3.3">
+    
+    
+      
+        <title>VASP - ARCHER2 User Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.4a0965b7.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/archer2.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="teal" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#vasp" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ARCHER2 User Documentation" class="md-header__button md-logo" aria-label="ARCHER2 User Documentation" data-md-component="logo">
+      
+  <img src="../../images/archer2_white_transparent.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ARCHER2 User Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              VASP
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/ARCHER2-HPC/archer2-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ARCHER2-HPC/archer2-docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ARCHER2 User Documentation" class="md-nav__button md-logo" aria-label="ARCHER2 User Documentation" data-md-component="logo">
+      
+  <img src="../../images/archer2_white_transparent.png" alt="logo">
+
+    </a>
+    ARCHER2 User Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ARCHER2-HPC/archer2-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ARCHER2-HPC/archer2-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Documentation overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Quickstart
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Quickstart" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Quickstart
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quick-start/overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quick-start/quickstart-users/" class="md-nav__link">
+        Quickstart for users
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quick-start/quickstart-developers/" class="md-nav__link">
+        Quickstart for developers
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../known-issues/" class="md-nav__link">
+        ARCHER2 Known Issues
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        ARCHER2 Frequently Asked Questions
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          User and Best Practice Guide
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="User and Best Practice Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          User and Best Practice Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/hardware/" class="md-nav__link">
+        Hardware
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/connecting/" class="md-nav__link">
+        Connecting to ARCHER2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/data/" class="md-nav__link">
+        Data management and transfer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/sw-environment/" class="md-nav__link">
+        Software environment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/scheduler/" class="md-nav__link">
+        Running jobs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/io/" class="md-nav__link">
+        I/O and file systems
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/dev-environment/" class="md-nav__link">
+        Application development environment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/containers/" class="md-nav__link">
+        Containers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/python/" class="md-nav__link">
+        Using Python
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/analysis/" class="md-nav__link">
+        Data analysis
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/debug/" class="md-nav__link">
+        Debugging
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/profile/" class="md-nav__link">
+        Profiling
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/tuning/" class="md-nav__link">
+        Performance tuning
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/energy-monitoring/" class="md-nav__link">
+        Energy monitoring
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Research Software
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Research Software" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Research Software
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../castep/" class="md-nav__link">
+        CASTEP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chemshell/" class="md-nav__link">
+        Chemshell
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../code-saturne/" class="md-nav__link">
+        Code_Saturne
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cp2k/" class="md-nav__link">
+        CP2K
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fhi-aims/" class="md-nav__link">
+        FHI-aims
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fenics/" class="md-nav__link">
+        FEniCS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gromacs/" class="md-nav__link">
+        GROMACS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lammps/" class="md-nav__link">
+        LAMMPS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mitgcm/" class="md-nav__link">
+        MITgcm
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mo-unified-model/" class="md-nav__link">
+        Met Office Unified Model
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../namd/" class="md-nav__link">
+        NAMD
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nektarplusplus/" class="md-nav__link">
+        Nektar++
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nemo/" class="md-nav__link">
+        NEMO
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nwchem/" class="md-nav__link">
+        NWChem
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../onetep/" class="md-nav__link">
+        ONETEP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../openfoam/" class="md-nav__link">
+        OpenFOAM
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qe/" class="md-nav__link">
+        Quantum Espresso
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          VASP
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        VASP
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#useful-links" class="md-nav__link">
+    Useful Links
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-vasp-on-archer2" class="md-nav__link">
+    Using VASP on ARCHER2
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-parallel-vasp-jobs" class="md-nav__link">
+    Running parallel VASP jobs
+  </a>
+  
+    <nav class="md-nav" aria-label="Running parallel VASP jobs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vasp-5" class="md-nav__link">
+    VASP 5
+  </a>
+  
+    <nav class="md-nav" aria-label="VASP 5">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vasp-transition-state-tools-vtst" class="md-nav__link">
+    VASP Transition State Tools (VTST)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-vasp-5-job-submission-script" class="md-nav__link">
+    Example VASP 5 job submission script
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vasp-6" class="md-nav__link">
+    VASP 6
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compiling-vasp-on-archer2" class="md-nav__link">
+    Compiling VASP on ARCHER2
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tips-for-using-vasp-on-archer2" class="md-nav__link">
+    Tips for using VASP on ARCHER2
+  </a>
+  
+    <nav class="md-nav" aria-label="Tips for using VASP on ARCHER2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#switching-mpi-transport-protocol-from-ucx-to-openfabrics" class="md-nav__link">
+    Switching MPI transport protocol from UCX to OpenFabrics
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performance-tips" class="md-nav__link">
+    Performance tips
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vasp-performance-data-on-archer2" class="md-nav__link">
+    VASP performance data on ARCHER2
+  </a>
+  
+    <nav class="md-nav" aria-label="VASP performance data on ARCHER2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tio_2-supercell-pure-dft-functional-gamma-point-1080-atoms" class="md-nav__link">
+    TiO_2 Supercell, pure DFT functional, Gamma-point, 1080 atoms
+  </a>
+  
+    <nav class="md-nav" aria-label="TiO_2 Supercell, pure DFT functional, Gamma-point, 1080 atoms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#full-system-vasp-630" class="md-nav__link">
+    Full system, VASP 6.3.0
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#full-system-544pl2" class="md-nav__link">
+    Full system, 5.4.4.pl2
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cdte-supercell-hybrid-dft-functional-8-k-points-65-atoms" class="md-nav__link">
+    CdTe Supercell, hybrid DFT functional. 8 k-points, 65 atoms
+  </a>
+  
+    <nav class="md-nav" aria-label="CdTe Supercell, hybrid DFT functional. 8 k-points, 65 atoms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#full-system-vasp-630_1" class="md-nav__link">
+    Full system, VASP 6.3.0
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#full-system-544pl2_1" class="md-nav__link">
+    Full system, 5.4.4.pl2
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          Software Libraries
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Software Libraries" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Software Libraries
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/libsci/" class="md-nav__link">
+        HPE Cray LibSci: BLAS, LAPACK, ScaLAPACK
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/fftw/" class="md-nav__link">
+        FFTW
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/hdf5/" class="md-nav__link">
+        HDF5
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/netcdf/" class="md-nav__link">
+        NetCDF
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/adios/" class="md-nav__link">
+        ADIOS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/aocl/" class="md-nav__link">
+        AOCL
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/arpack/" class="md-nav__link">
+        ARPACK
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/boost/" class="md-nav__link">
+        Boost
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/eigen/" class="md-nav__link">
+        Eigen
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/glm/" class="md-nav__link">
+        GLM
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/hypre/" class="md-nav__link">
+        HYPRE
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/matio/" class="md-nav__link">
+        Matio
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/mkl/" class="md-nav__link">
+        Intel MKL
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/mumps/" class="md-nav__link">
+        MUMPS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/petsc/" class="md-nav__link">
+        PETSc
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/metis/" class="md-nav__link">
+        Metis/Parmetis
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/scotch/" class="md-nav__link">
+        Scotch/PT-Scotch
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/slepc/" class="md-nav__link">
+        SLEPc
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/superlu/" class="md-nav__link">
+        SuperLU/SuperLU_DIST
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../software-libraries/trilinos/" class="md-nav__link">
+        Trilinos
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          Data Analysis and Tools
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Data Analysis and Tools" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Data Analysis and Tools
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-tools/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-tools/paraview/" class="md-nav__link">
+        ParaView
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-tools/cray-r/" class="md-nav__link">
+        R
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-tools/visidata/" class="md-nav__link">
+        VisiData
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          Other Software
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Other Software" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          Other Software
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other-software/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other-software/casino/" class="md-nav__link">
+        CASINO
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other-software/crystal/" class="md-nav__link">
+        CRYSTAL
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../essentials/" class="md-nav__link">
+        Essential Skills
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../publish/" class="md-nav__link">
+        ARCHER2 and Publications
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#useful-links" class="md-nav__link">
+    Useful Links
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-vasp-on-archer2" class="md-nav__link">
+    Using VASP on ARCHER2
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-parallel-vasp-jobs" class="md-nav__link">
+    Running parallel VASP jobs
+  </a>
+  
+    <nav class="md-nav" aria-label="Running parallel VASP jobs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vasp-5" class="md-nav__link">
+    VASP 5
+  </a>
+  
+    <nav class="md-nav" aria-label="VASP 5">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vasp-transition-state-tools-vtst" class="md-nav__link">
+    VASP Transition State Tools (VTST)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-vasp-5-job-submission-script" class="md-nav__link">
+    Example VASP 5 job submission script
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vasp-6" class="md-nav__link">
+    VASP 6
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compiling-vasp-on-archer2" class="md-nav__link">
+    Compiling VASP on ARCHER2
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tips-for-using-vasp-on-archer2" class="md-nav__link">
+    Tips for using VASP on ARCHER2
+  </a>
+  
+    <nav class="md-nav" aria-label="Tips for using VASP on ARCHER2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#switching-mpi-transport-protocol-from-ucx-to-openfabrics" class="md-nav__link">
+    Switching MPI transport protocol from UCX to OpenFabrics
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performance-tips" class="md-nav__link">
+    Performance tips
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vasp-performance-data-on-archer2" class="md-nav__link">
+    VASP performance data on ARCHER2
+  </a>
+  
+    <nav class="md-nav" aria-label="VASP performance data on ARCHER2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tio_2-supercell-pure-dft-functional-gamma-point-1080-atoms" class="md-nav__link">
+    TiO_2 Supercell, pure DFT functional, Gamma-point, 1080 atoms
+  </a>
+  
+    <nav class="md-nav" aria-label="TiO_2 Supercell, pure DFT functional, Gamma-point, 1080 atoms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#full-system-vasp-630" class="md-nav__link">
+    Full system, VASP 6.3.0
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#full-system-544pl2" class="md-nav__link">
+    Full system, 5.4.4.pl2
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cdte-supercell-hybrid-dft-functional-8-k-points-65-atoms" class="md-nav__link">
+    CdTe Supercell, hybrid DFT functional. 8 k-points, 65 atoms
+  </a>
+  
+    <nav class="md-nav" aria-label="CdTe Supercell, hybrid DFT functional. 8 k-points, 65 atoms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#full-system-vasp-630_1" class="md-nav__link">
+    Full system, VASP 6.3.0
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#full-system-544pl2_1" class="md-nav__link">
+    Full system, 5.4.4.pl2
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+  <a href="https://github.com/ARCHER2-HPC/archer2-docs/edit/main/docs/research-software/vasp.md" title="Edit this page" class="md-content__button md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+
+<h1 id="vasp">VASP</h1>
+<p>The <a href="http://www.vasp.at">Vienna Ab initio Simulation Package (VASP)</a> is
+a computer program for atomic scale materials modelling, e.g. electronic
+structure calculations and quantum-mechanical molecular dynamics, from
+first principles.</p>
+<p>VASP computes an approximate solution to the many-body Schrödinger
+equation, either within density functional theory (DFT), solving the
+Kohn-Sham equations, or within the Hartree-Fock (HF) approximation,
+solving the Roothaan equations. Hybrid functionals that mix the
+Hartree-Fock approach with density functional theory are implemented as
+well. Furthermore, Green's functions methods (GW quasiparticles, and
+ACFDT-RPA) and many-body perturbation theory (2nd-order Møller-Plesset)
+are available in VASP.</p>
+<p>In VASP, central quantities, like the one-electron orbitals, the
+electronic charge density, and the local potential are expressed in
+plane wave basis sets. The interactions between the electrons and ions
+are described using norm-conserving or ultrasoft pseudopotentials, or
+the projector-augmented-wave method.</p>
+<p>To determine the electronic ground state, VASP makes use of efficient
+iterative matrix diagonalisation techniques, like the residual
+minimisation method with direct inversion of the iterative subspace
+(RMM-DIIS) or blocked Davidson algorithms. These are coupled to highly
+efficient Broyden and Pulay density mixing schemes to speed up the
+self-consistency cycle.</p>
+<h2 id="useful-links">Useful Links</h2>
+<ul>
+<li><a href="https://www.vasp.at/wiki/index.php/The_VASP_Manual">VASP Manual</a></li>
+<li><a href="https://www.vasp.at/wiki/index.php/The_VASP_Manual">VASP wiki</a></li>
+<li><a href="https://www.vasp.at/faqs/">VASP FAQs</a></li>
+</ul>
+<h2 id="using-vasp-on-archer2">Using VASP on ARCHER2</h2>
+<p><strong>VASP is only available to users who have a valid VASP licence.</strong></p>
+<p>If you have a VASP 5 or 6 licence and wish to have access to VASP on
+ARCHER2, please make a request via the SAFE, see:</p>
+<ul>
+<li><a href="https://epcced.github.io/safe-docs/safe-for-users/#how-to-request-access-to-a-package-group">How to request access to package groups</a></li>
+</ul>
+<p>Please have your license details to hand.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Both VASP 5 and VASP 6 are available on ARCHER2. You generally need a
+different licence for each of these versions.</p>
+</div>
+<h2 id="running-parallel-vasp-jobs">Running parallel VASP jobs</h2>
+<p>To access VASP you should load the appropriate <code>vasp</code> module in your job
+submission scripts.</p>
+<h3 id="vasp-5">VASP 5</h3>
+<p>To load the default version of VASP 5, you would use:</p>
+<pre><code>module load vasp/5
+</code></pre>
+<p>Once loaded, the executables are called:</p>
+<ul>
+<li><code>vasp_std</code> - Multiple k-point version</li>
+<li><code>vasp_gam</code> - GAMMA-point only version</li>
+<li><code>vasp_ncl</code> - Non-collinear version</li>
+</ul>
+<p>Once the module has been loaded, you can access the LDA and PBE
+pseudopotentials for VASP on ARCHER2 at:</p>
+<pre><code>$VASP_PSPOT_DIR
+</code></pre>
+<h4 id="vasp-transition-state-tools-vtst">VASP Transition State Tools (VTST)</h4>
+<p>As well as the standard VASP 5 modules, we provide versions of VASP 5 with the
+<a href="http://theory.cm.utexas.edu/vtsttools/">VASP Transition State Tools (VTST)</a> from
+the University of Texas added. The VTST version adds various functionality to VASP
+and provides additional scripts to use with VASP. Additional functionality includes:</p>
+<ul>
+<li>Climbing Image NEB: method for finding reaction pathways between two stable states.</li>
+<li>Dimer: method for finding reaction pathways when only one state is known.</li>
+<li>Lanczos: provides an alternative way to find the lowest mode and find saddle points.</li>
+<li>Optimisers: provides an alternative way to find the lowest mode and find saddle points.</li>
+<li>Dynamical Matrix: uses finite difference to find normal modes and reaction prefactors.</li>
+</ul>
+<p>Full details of these methods and the provided scripts can be found on
+<a href="http://theory.cm.utexas.edu/vtsttools/">the VTST website</a>.</p>
+<p>On ARCHER2, the VTST version of VASP 5 can be accessed by loading the modules with
+<code>VTST</code> in the module name, for example:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>module load vasp/5/5.4.4.pl2-vtst
+</code></pre></div>
+</div>
+</div>
+</div>
+<h4 id="example-vasp-5-job-submission-script">Example VASP 5 job submission script</h4>
+<p>The following script will run a VASP job using 2 nodes (128x2, 256 total
+cores).</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Full system</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+
+# Request 16 nodes (2048 MPI tasks at 128 tasks per node) for 20 minutes.   
+
+#SBATCH --job-name=VASP_test
+#SBATCH --nodes=16
+#SBATCH --tasks-per-node=128
+#SBATCH --cpus-per-task=1
+#SBATCH --time=00:20:00
+
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code] 
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+# Load the VASP module
+module load vasp/5
+
+# Avoid any unintentional OpenMP threading by setting OMP_NUM_THREADS
+export OMP_NUM_THREADS=1
+
+# Launch the code.
+srun --distribution=block:block --hint=nomultithread vasp_std
+</code></pre></div>
+</div>
+</div>
+</div>
+<h3 id="vasp-6">VASP 6</h3>
+<p>To load the default version of VASP 6, you would use:</p>
+<pre><code>module load vasp/6
+</code></pre>
+<p>Once loaded, the executables are called:</p>
+<ul>
+<li><code>vasp_std</code> - Multiple k-point version</li>
+<li><code>vasp_gam</code> - GAMMA-point only version</li>
+<li><code>vasp_ncl</code> - Non-collinear version</li>
+</ul>
+<p>Once the module has been loaded, you can access the LDA and PBE
+pseudopotentials for VASP on ARCHER2 at:</p>
+<pre><code>$VASP_PSPOT_DIR
+</code></pre>
+<p>The following script will run a VASP job using 2 nodes (128x2, 256 total
+cores) using only MPI ranks and no OpenMP threading.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>VASP 6 can make use of OpenMP threads in addition to running with pure
+MPI. We will add notes on performance and use of threading in VASP as
+information becomes available.</p>
+</div>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Full system</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+
+# Request 16 nodes (2048 MPI tasks at 128 tasks per node) for 20 minutes.   
+
+#SBATCH --job-name=VASP_test
+#SBATCH --nodes=16
+#SBATCH --tasks-per-node=128
+#SBATCH --cpus-per-task=1
+#SBATCH --time=00:20:00
+
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code] 
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+# Load the VASP module
+module load vasp/6
+
+# Avoid any unintentional OpenMP threading by setting OMP_NUM_THREADS
+export OMP_NUM_THREADS=1
+
+# Launch the code.
+srun --distribution=block:block --hint=nomultithread vasp_std
+</code></pre></div>
+</div>
+</div>
+</div>
+<h2 id="compiling-vasp-on-archer2">Compiling VASP on ARCHER2</h2>
+<p>If you wish to compile your own version of VASP on ARCHER2 (either VASP
+5 or VASP 6) you can find information on how we compiled the central
+versions in the build instructions GitHub repository. See:</p>
+<ul>
+<li><a href="https://github.com/hpc-uk/build-instructions/tree/main/apps/VASP">Build instructions for VASP on GitHub</a></li>
+</ul>
+<h2 id="tips-for-using-vasp-on-archer2">Tips for using VASP on ARCHER2</h2>
+<h3 id="switching-mpi-transport-protocol-from-ucx-to-openfabrics">Switching MPI transport protocol from UCX to OpenFabrics</h3>
+<p>The VASP modules are setup to use the UCX MPI transport protocol as testing has shown
+that this passes all the regression tests and gives the best performance on ARCHER2.
+However, there may be cases where using UCX can give errors that can be fixed by
+switching to the OpenFabrics MPI transport protocol.</p>
+<p>If you see errors in VASP calculations that implicate UCX (they will typically be
+MPI errors with the string <code>ucx</code> or <code>UCX</code> in the output) then you can try using
+OpenFabrics instead by loading additional modules after you have loaded the
+VASP modules. For example, for VASP 6, you would use:</p>
+<div class="highlight"><pre><span></span><code>module load vasp/6
+module load craype-network-ofi
+module load cray-mpich
+</code></pre></div>
+<h3 id="performance-tips">Performance tips</h3>
+<p>The performance of VASP depends on the version of VASP used, the performance
+of MPI collective operations, the choice of VASP parallelisation parameters
+(<code>NCORE</code>/<code>NPAR</code> and <code>KPAR</code>) and how many MPI processes per node are used.</p>
+<p><strong>VASP version</strong> For the benchmarks studied, VASP 6.3.0 usually gives
+better performance than the older VASP 5.4.4.pl2. The exception is for when
+using higher node counts (above 8 nodes) for the CdTe benchmark (which uses
+<code>vasp_ncl</code>). Users should generally use VASP 6.3.0 but it may be worth evaluating
+the performance fo VASP 5.4.4.pl2 for your case if you are running larger
+calculations, particularly when using the non-collinear version of VASP.</p>
+<p><strong>MPI collective performance:</strong> To ensure that the MPI collective operations give
+the best performance, you should ensure that consecutive MPI rank IDs are pinned to
+consecutive cores on a node to maximise shared memory optimisations in NUMA regions.
+In practice, the recommended options to the <code>srun</code> command: <code>--hint=nomultithread</code>
+and <code>--distribution=block:block</code> should always be specified when running VASP on
+ARCHER2. You should also make sure that you use the UCX transport layer for MPI
+rather than the default OpenFabrics transport layer. The VASP modules are setup
+to enable this but if you are using your own compiled version of VASP you should
+add the following lines to your job submission script before you run VASP 
+(assuming that you compiled VASP using GCC):</p>
+<div class="highlight"><pre><span></span><code>module load PrgEnv-gnu
+module load craype-network-ucx
+module load cray-mpich-ucx
+export UCX_IB_REG_METHODS=direct
+</code></pre></div>
+<p><strong>KPAR:</strong> You should always use the maximum value of <code>KPAR</code> that is possible for
+your calculation within the memory limits of what is possible.</p>
+<p><strong>NCORE/NPAR:</strong> We have found that the optimal values of <code>NCORE</code> (and hence <code>NPAR</code>)
+depend on both the type of calculation you are performing (e.g. pure DFT, hybrid functional,
+&Gamma;-point, non-collinear) and the number of nodes/cores you are using for your 
+calculation. In practice, this means that you should experiment with different values
+to find the best choice for your calculation. There is information below on the best 
+choices for the benchmarks we have run on ARCHER2 that may serve as a useful starting
+point. The performance difference from choosing different values can vary by up to
+100% so it is worth spending time investigating this.</p>
+<p><strong>MPI processes per node</strong> We found that it is sometimes beneficial to performance to
+use less MPI processes per node than the total number of cores per node in some cases
+for the benchmarks used. We found that for the large TiO2 &Gamma;-point calculation it
+was best to use just 64 MPI processes per node (leaving half of the cores idle). For
+the CdTe non-collinear, multiple k-point benchmark, best performance was achieved when
+all 128 cores on the node had an MPI process (128 MPI processes per node).</p>
+<p><strong>OpenMP threads</strong> The use of OpenMP threads did not improve performance or scaling
+for either of the benchmarks used. This was true even for the TiO2 benchmark case where 
+we used only 64 MPI processes per node, the performance was better with 64 idle cores
+on a node rather than using the spare core for OpenMP threads. This seems to be because
+when OpenMP threading is used, <code>NCORE</code> is fixed at a value of 1, which gives poor
+performance.</p>
+<h2 id="vasp-performance-data-on-archer2">VASP performance data on ARCHER2</h2>
+<p>VASP performance data on ARCHER2 is currently available for two
+different benchmark systems:</p>
+<ul>
+<li>TiO_2 Supercell, pure DFT functional, &Gamma;-point, 1080 atoms</li>
+<li>CdTe Supercell, hybrid DFT functional. 8 k-points, 65 atoms</li>
+</ul>
+<h3 id="tio_2-supercell-pure-dft-functional-gamma-point-1080-atoms">TiO_2 Supercell, pure DFT functional, Gamma-point, 1080 atoms</h3>
+<p>Basic information:</p>
+<ul>
+<li>Uses <code>vasp_gam</code></li>
+<li><code>NELM = 10</code></li>
+<li><a href="https://github.com/hpc-uk/archer-benchmarks/blob/main/others/VASP/analysis/VASP_TiO2_perf_analysis.ipynb">Full TiO2 performance data</a></li>
+</ul>
+<p>Performance summary for best choices of MPI processes per node and NCORE at
+different node counts. Performance reported as timing for <code>LOOP+</code> in seconds.</p>
+<p>Performance summary:</p>
+<ul>
+<li>Best performance from VASP 6.3.0</li>
+<li>Best performance from 64 MPI processes per node - leaves 64 cores idle on each node</li>
+<li>Best performance with <code>NCORE = 64</code></li>
+<li>Scales well to 16 nodes</li>
+<li>Using OpenMP threads results in worse performance</li>
+</ul>
+<h4 id="full-system-vasp-630">Full system, VASP 6.3.0</h4>
+<ul>
+<li><code>vasp/6/6.3.0</code> module</li>
+<li>GCC 11.2.0</li>
+<li>AOCL 3.1 for BLAS/LAPACK/ScaLAPACK and FFTW</li>
+<li>UCX for MPI transport layer</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="right">Nodes</th>
+<th align="right">MPI processes per node</th>
+<th align="right">Total MPI processes</th>
+<th align="right">NCORE</th>
+<th align="right">6.3.0 (full system)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">1</td>
+<td align="right">64</td>
+<td align="right">128</td>
+<td align="right">64</td>
+<td align="right">3295</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td align="right">64</td>
+<td align="right">256</td>
+<td align="right">64</td>
+<td align="right">1548</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td align="right">64</td>
+<td align="right">512</td>
+<td align="right">64</td>
+<td align="right">814</td>
+</tr>
+<tr>
+<td align="right">8</td>
+<td align="right">64</td>
+<td align="right">512</td>
+<td align="right">64</td>
+<td align="right">416</td>
+</tr>
+<tr>
+<td align="right">16</td>
+<td align="right">64</td>
+<td align="right">1024</td>
+<td align="right">64</td>
+<td align="right">221</td>
+</tr>
+<tr>
+<td align="right">32</td>
+<td align="right">64</td>
+<td align="right">2048</td>
+<td align="right">64</td>
+<td align="right">131</td>
+</tr>
+<tr>
+<td align="right">64</td>
+<td align="right">64</td>
+<td align="right">4096</td>
+<td align="right">64</td>
+<td align="right">82</td>
+</tr>
+</tbody>
+</table>
+<h4 id="full-system-544pl2">Full system, 5.4.4.pl2</h4>
+<ul>
+<li><code>vasp/5/5.4.4.pl2</code> module</li>
+<li>GCC 11.2.0</li>
+<li>HPE Cray LibSci 21.09 for BLAS/LAPACK/ScaLAPACK and FFTW 3.3.8.11</li>
+<li>UCX for MPI transport layer</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="right">Nodes</th>
+<th align="right">MPI processes per node</th>
+<th align="right">Total MPI processes</th>
+<th align="right">NCORE</th>
+<th align="right">5.4.4.pl2 (full system)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">1</td>
+<td align="right">64</td>
+<td align="right">64</td>
+<td align="right">64</td>
+<td align="right">3428</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td align="right">64</td>
+<td align="right">128</td>
+<td align="right">64</td>
+<td align="right">1615</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td align="right">64</td>
+<td align="right">256</td>
+<td align="right">64</td>
+<td align="right">823</td>
+</tr>
+<tr>
+<td align="right">8</td>
+<td align="right">64</td>
+<td align="right">512</td>
+<td align="right">64</td>
+<td align="right">429</td>
+</tr>
+<tr>
+<td align="right">16</td>
+<td align="right">64</td>
+<td align="right">1024</td>
+<td align="right">64</td>
+<td align="right">231</td>
+</tr>
+<tr>
+<td align="right">32</td>
+<td align="right">64</td>
+<td align="right">2048</td>
+<td align="right">64</td>
+<td align="right">135</td>
+</tr>
+<tr>
+<td align="right">64</td>
+<td align="right">64</td>
+<td align="right">4096</td>
+<td align="right">64</td>
+<td align="right">79</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cdte-supercell-hybrid-dft-functional-8-k-points-65-atoms">CdTe Supercell, hybrid DFT functional. 8 k-points, 65 atoms</h3>
+<p>Basic information:</p>
+<ul>
+<li>Uses <code>vasp_ncl</code></li>
+<li><code>NELM = 6</code></li>
+<li><a href="https://github.com/hpc-uk/archer-benchmarks/blob/main/others/VASP/analysis/VASP_CdTe_perf_analysis.ipynb">CdTe performance data</a></li>
+</ul>
+<p>Performance summary:</p>
+<ul>
+<li>VASP version:</li>
+<li>Up to 8 nodes: best performance from VASP 6.3.0</li>
+<li>16 nodes or more: best performance from VASP 5.4.4.pl2</li>
+<li>Cores per node:</li>
+<li>Best performance usually from 128 MPI processes per node - all cores occupied</li>
+<li>At 64 nodes, best performance from 64 MPI processes per node - 64 core idle</li>
+<li><code>NCORE</code>:</li>
+<li>Up to 8 nodes: best performance with <code>NCORE = 4</code> (VASP 6.3.0)</li>
+<li>16 nodes or more: best performance with <code>NCORE = 16</code> (VASP 5.4.4.pl2)</li>
+<li><code>KPAR = 2</code> is maximum that can be used on standard memory nodes </li>
+<li>Scales well to 64 nodes</li>
+<li>Using OpenMP threads results in worse performance</li>
+</ul>
+<h4 id="full-system-vasp-630_1">Full system, VASP 6.3.0</h4>
+<ul>
+<li><code>vasp/6/6.3.0</code> module</li>
+<li>GCC 11.2.0</li>
+<li>AOCL 3.1 for BLAS/LAPACK/ScaLAPACK and FFTW</li>
+<li>UCX for MPI transport layer</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="right">Nodes</th>
+<th align="right">MPI processes per node</th>
+<th align="right">Total MPI processes</th>
+<th align="right">NCORE</th>
+<th align="right">KPAR</th>
+<th align="right">5.4.4.pl2 (4-cab system)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">1</td>
+<td align="right">128</td>
+<td align="right">128</td>
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="right">19000</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td align="right">128</td>
+<td align="right">256</td>
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="right">10021</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td align="right">128</td>
+<td align="right">512</td>
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="right">5560</td>
+</tr>
+<tr>
+<td align="right">8</td>
+<td align="right">128</td>
+<td align="right">1024</td>
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="right">3176</td>
+</tr>
+<tr>
+<td align="right">16</td>
+<td align="right">128</td>
+<td align="right">2048</td>
+<td align="right">8</td>
+<td align="right">2</td>
+<td align="right">2413</td>
+</tr>
+<tr>
+<td align="right">32</td>
+<td align="right">64</td>
+<td align="right">2048</td>
+<td align="right">16</td>
+<td align="right">2</td>
+<td align="right">1340</td>
+</tr>
+<tr>
+<td align="right">64</td>
+<td align="right">64</td>
+<td align="right">4096</td>
+<td align="right">16</td>
+<td align="right">2</td>
+<td align="right">908</td>
+</tr>
+</tbody>
+</table>
+<h4 id="full-system-544pl2_1">Full system, 5.4.4.pl2</h4>
+<ul>
+<li><code>vasp/5/5.4.4.pl2</code> module</li>
+<li>GCC 11.2.0</li>
+<li>HPE Cray LibSci 21.09 for BLAS/LAPACK/ScaLAPACK and FFTW 3.3.8</li>
+<li>UCX for MPI transport layer</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="right">Nodes</th>
+<th align="right">MPI processes per node</th>
+<th align="right">Total MPI processes</th>
+<th align="right">NCORE</th>
+<th align="right">KPAR</th>
+<th align="right">5.4.4.pl2 (4-cab system)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">1</td>
+<td align="right">128</td>
+<td align="right">128</td>
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="right">23417</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td align="right">128</td>
+<td align="right">256</td>
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="right">12338</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td align="right">128</td>
+<td align="right">512</td>
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="right">6751</td>
+</tr>
+<tr>
+<td align="right">8</td>
+<td align="right">128</td>
+<td align="right">1024</td>
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="right">3676</td>
+</tr>
+<tr>
+<td align="right">16</td>
+<td align="right">64</td>
+<td align="right">1024</td>
+<td align="right">16</td>
+<td align="right">2</td>
+<td align="right">2136</td>
+</tr>
+<tr>
+<td align="right">32</td>
+<td align="right">64</td>
+<td align="right">2048</td>
+<td align="right">16</td>
+<td align="right">2</td>
+<td align="right">1266</td>
+</tr>
+<tr>
+<td align="right">64</td>
+<td align="right">64</td>
+<td align="right">4096</td>
+<td align="right">16</td>
+<td align="right">2</td>
+<td align="right">806</td>
+</tr>
+</tbody>
+</table>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../qe/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Quantum Espresso" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Quantum Espresso
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../../software-libraries/" class="md-footer__link md-footer__link--next" aria-label="Next: Overview" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Overview
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+      
+      
+    
+    <a href="https://github.com/ARCHER2-HPC" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+    
+    
+      
+      
+    
+    <a href="https://twitter.com/ARCHER2_HPC" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+    </a>
+  
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/groups/13848871/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "search": "../../assets/javascripts/workers/search.b028fd86.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f758a944.min.js"></script>
+      
+    
+  </body>
+</html>
