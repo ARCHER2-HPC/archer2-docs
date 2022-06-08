@@ -543,6 +543,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#cgroup-control-of-login-resources" class="md-nav__link">
+    cgroup control of login resources
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1650,6 +1657,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#cgroup-control-of-login-resources" class="md-nav__link">
+    cgroup control of login resources
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2100,6 +2114,10 @@ execute:</p>
 <div class="highlight"><pre><span></span><code>unset OMP_NUM_THREADS
 </code></pre></div>
 <p>Note that the dollar symbol is not included when you use the <code>unset</code> command.</p>
+<h2 id="cgroup-control-of-login-resources">cgroup control of login resources</h2>
+<p>Note that it not possible for a single user to  monopolise the resources on
+a login node as this is controlled by cgroups. This means that a user cannot slow 
+down the response time for other users.</p>
 
               
             </article>
