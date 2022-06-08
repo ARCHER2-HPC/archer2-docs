@@ -3,7 +3,7 @@ theme:
   favicon: favicon.ico
   logo: images/archer2_white_transparent.png
   palette:
-    scheme: default
+    scheme: teal
   features:
     - tabs
   icon:
