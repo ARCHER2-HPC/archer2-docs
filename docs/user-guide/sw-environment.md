@@ -513,3 +513,9 @@ unset OMP_NUM_THREADS
 ```
 
 Note that the dollar symbol is not included when you use the `unset` command.
+
+## cgroup control of login resources
+
+Note that it not possible for a single user to  monopolise the resources on
+a login node as this is controlled by cgroups. This means that a user cannot slow 
+down the response time for other users.
