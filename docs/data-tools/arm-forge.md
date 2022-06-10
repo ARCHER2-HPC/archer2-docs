@@ -170,7 +170,7 @@ user@ln04:> module load arm/forge
 
 #### Compilation and linking
 
-Compilation should take place as usual. However, an addition set of
+Compilation should take place as usual. However, an additional set of
 libraries is required at link time.
 
 The additional libraries required will depend on the programming
