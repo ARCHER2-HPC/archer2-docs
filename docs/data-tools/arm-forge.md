@@ -13,8 +13,8 @@ There are two ways of running the Arm user interface. If you have a good
 internet connection to ARCHER2, the GUI can be run on the front-end (with
 an X-connection).
 Alternatively, one can download a copy of the Forge remote client to your
-laptop or desktop, and run it locally. The remote client may be the
-preferred method for many users.
+laptop or desktop, and run it locally. The remote client should be used if
+at all possible.
 
 To download the remote client, see the
 [Arm developer download pages](https://developer.arm.com/downloads/-/arm-forge). Version 21.0.3 is known to work at the time of writing. Connecting with
