@@ -34,7 +34,11 @@ markdown_extensions:
 
 analytics:
   provider: google
-  property: G-XVNML97F1T
+  property: G-XVNML97F1T 
+  
+analytics:
+  provider: google
+  property: UA-165933823-2
 
 google_analytics:
   - UA-165933823-2
