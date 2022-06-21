@@ -40,14 +40,16 @@ It is recommended that these commands are performed in the top-level work
 file system directory for the user account: `/work/project/project/${USER}`
 (where `project` is the relevant project). This directory will
 be referred to throughout as `${WORK}`.
-```
-user@ln04:> module load arm/forge
-user@ln04:> cd ${WORK}
-user@ln04:> source ${FORGE_ROOT}/config-init
+```bash
+module load arm/forge
+cd ${WORK}
+source ${FORGE_ROOT}/config-init
 ```
 This will create a directory `${WORK}/.allinea` with the following files:
+```bash
+ls .allinea
 ```
-user@ln04:> ls .allinea
+```output
 system.config  user.config
 ```
 The directory will also store other relevant files when Forge is run.
@@ -76,7 +78,7 @@ batch job.
 
 Such a job can be submitted to the batch system in the usual way. The
 relevant command to start the executable is, e.g.,:
-```
+```slurm
 # ... SLURM batch commands as usual ...
 
 module load arm/forge
@@ -107,9 +109,9 @@ failure.
 
 Start the client interactively (for details of remote launch, see below),
 e.g.,
-```
-user@ln04:> module load arm/forge
-user@ln04:> ddt
+```bash
+module load arm/forge
+ddt
 ```
 
 This should start a window as shown below. Click on the ddt panel on
@@ -164,8 +166,9 @@ then proceed as described in the Allinea documentation.
 ### Using MAP
 
 Load the `arm/forge` module:
-```
-user@ln04:> module load arm/forge
+
+```bash
+module load arm/forge
 ```
 
 #### Compilation and linking
@@ -173,28 +176,31 @@ user@ln04:> module load arm/forge
 Compilation should take place as usual. However, an additional set of
 libraries is required at link time.
 
-The additional libraries required will depend on the programming
-environment and the current CPE. For example, for `PrgEnv-aocc`
-and `cpe-21.09` the additional link command would be:
+The path to the additional libraries required will depend on the programming
+environment you are using. Here are the paths for each of the compiler
+environments:
+
+- `PrgEnv-cray`: `${FORGE_ROOT}/map/lib/crayclang/10.0
+- `PrgEnv-gnu`: `${FORGE_ROOT}/map/lib/gnu/8.0
+- `PrgEnv-aocc`: `${FORGE_ROOT}/map/lib/aocc/3.0
+
+For example, for `PrgEnv-gnu` the additional options required at link time
+are
 ```
--dynamic -lmap-sampler-pmpi -lmap-sampler \
--Wl,--eh-frame-hdr -Wl,-rpath=${FORGE_ROOT}/map/libs/cpe-21.09/aocc
-```
-For `PrgEnv-cray` or `PrgEnv-gnu` use `cray` or `gnu` respectively.
-To check available CPE versions
-```
-user@ln04:> ls ${FORGE_ROOT}/21.0.2/map/libs
+-L{FORGE_ROOT}/map/lib/gnu/8.0 \
+-lmap-sampler-pmpi -lmap-sampler -Wl,--eh-frame-hdr \
+-Wl,-rpath=${FORGE_ROOT}/map/libs/cpe-21.09/aocc
 ```
 
 #### Generating a profile
 
 Submit a batch job in the usual way, and include the lines:
-```
+```slurm
 # ... SLURM batch commands as usual ...
 
 module load arm/forge
 
-map --profile ./my_executable
+map -n <number of MPI processes> --mpiargs="--hint=nomultithread --distribution=block:block" --profile ./my_executable
 ```
 Successful execution will generate a file with a ```.map``` extension.
 
@@ -202,7 +208,6 @@ This `.map` file may be viewed via the GUI (start with either `map` or
 `forge`) by selecting the
 "Load a profile data file from a previous run" option. The resulting
 file selection dialogue can then be used to specify the `.map` file.
-
 
 
 ### Connecting with the remote client
