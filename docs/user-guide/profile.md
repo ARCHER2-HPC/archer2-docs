@@ -5,6 +5,9 @@ ARCHER2. In this section, we discuss the HPE Cray profiling tools,
 CrayPAT-lite and CrayPAT. We also show how to get usage data
 on currently running jobs from Slurm batch system.
 
+You can also use [the Arm Forge tool](../data-tools/arm-forge.md)
+to profile applications on ARCHER2
+
 ## CrayPat-lite
 
 CrayPat-lite is a simplified and easy-to-use version of the Cray
@@ -434,3 +437,9 @@ nid001922           127.35              256000              239872              
 ### Further help with Slurm
 
 The definitions of any variables discussed here and more usage information can be found in the man pages of `sstat` and `sacct`.
+
+## Arm Forge
+
+The Arm Forge tool also provides profiling capabilities. See:
+
+- [ARCHER2 Arm Forge documentation](../data-tools/arm-forge.md)

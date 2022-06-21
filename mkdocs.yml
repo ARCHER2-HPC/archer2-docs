@@ -105,6 +105,7 @@ nav:
     - "Trilinos": software-libraries/trilinos.md
   - "Data Analysis and Tools":
     - "Overview": data-tools/index.md
+    - "Arm Forge": data-tools/arm-forge.md
     - "ParaView": data-tools/paraview.md
     - "R": data-tools/cray-r.md
     - "VisiData": data-tools/visidata.md

@@ -180,16 +180,16 @@ The path to the additional libraries required will depend on the programming
 environment you are using. Here are the paths for each of the compiler
 environments:
 
-- `PrgEnv-cray`: `${FORGE_ROOT}/map/lib/crayclang/10.0
-- `PrgEnv-gnu`: `${FORGE_ROOT}/map/lib/gnu/8.0
-- `PrgEnv-aocc`: `${FORGE_ROOT}/map/lib/aocc/3.0
+- `PrgEnv-cray`: `${FORGE_ROOT}/map/lib/crayclang/10.0`
+- `PrgEnv-gnu`: `${FORGE_ROOT}/map/lib/gnu/8.0`
+- `PrgEnv-aocc`: `${FORGE_ROOT}/map/lib/aocc/3.0`
 
 For example, for `PrgEnv-gnu` the additional options required at link time
 are
 ```
 -L{FORGE_ROOT}/map/lib/gnu/8.0 \
--lmap-sampler-pmpi -lmap-sampler -Wl,--eh-frame-hdr \
--Wl,-rpath=${FORGE_ROOT}/map/libs/cpe-21.09/aocc
+-lmap-sampler-pmpi -lmap-sampler \
+-Wl,--eh-frame-hdr -Wl,-rpath=${FORGE_ROOT}/map/lib/gnu/8.0
 ```
 
 #### Generating a profile
