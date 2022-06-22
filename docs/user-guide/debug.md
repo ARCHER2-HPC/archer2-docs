@@ -2,6 +2,10 @@
 
 The following debugging tools are available on ARCHER2:
 
+  - [Arm Forge (DDT)](../data-tools/arm-forge.md) is an easy-to-use graphical
+    interface for source-level debugging of compiled C/C++ or Fortran codes.
+    It can also be used for non-interactive debugging, and there
+    is also some limited support for python debugging.
   - [gdb4hpc](#gdb4hpc) is a command-line debugging tool provided by
     HPE Cray. It works similarly to
     [gdb](https://www.gnu.org/software/gdb/), but allows the user to
@@ -22,6 +26,12 @@ The following debugging tools are available on ARCHER2:
   - CCDB Cray Comparative Debugger. Compare two versions of code
     side-by-side to analyse differences. (Not currently described in this
     documentation.)
+
+## Arm Forge
+
+The Arm Forge tool provides the DDT parallel debugger. See:
+
+- [ARCHER2 Arm Forge documentation](../data-tools/arm-forge.md)
 
 ## gdb4hpc
 
