@@ -592,43 +592,54 @@ For example, if you have a code that uses the Gnu compiler environment, FFTW
 and NetCDF parallel libraries and you want to compile in the (non-default) 21.09
 programming environment, you would do the following:
 
-First, load the `cpe/21.09` module to switch all the defaults to the versions from
-the 21.09 PE. Then, swap to the Gnu compiler environment and load the required library
+First, load the `cpe/22.04` module to switch all the defaults to the versions from
+the 22.04 PE. Then, swap to the GNU compiler environment and load the required library
 modules (FFTW, hdf5-parallel and NetCDF HDF5 parallel). The loaded module list shows they 
-are the versions from the 21.09 PE:
+are the versions from the 22.04 PE:
 
 
+```bash
+module load cpe/21.09
 ```
-auser@uan02:/work/t01/t01/auser> module load cpe/21.09
+
+Output:
+```output
 
 The following have been reloaded with a version change:
-  1) PrgEnv-cray/8.0.0 => PrgEnv-cray/8.1.0     2) cce/11.0.4 => cce/12.0.3     3) cray-libsci/21.04.1.1 => cray-libsci/21.08.1.2     4) cray-mpich/8.1.4 => cray-mpich/8.1.9     5) craype/2.7.6 => craype/2.7.10
+  1) PrgEnv-cray/8.0.0 => PrgEnv-cray/8.3.3     3) cray-libsci/21.04.1.1 => cray-libsci/21.08.1.2     5) craype/2.7.6 => craype/2.7.15
+  2) cce/11.0.4 => cce/13.0.2                   4) cray-mpich/8.1.4 => cray-mpich/8.1.15
+```
 
-auser@uan02:/work/t01/t01/auser> module swap PrgEnv-cray PrgEnv-gnu
+```bash
+module load PrgEnv-gnu
+```
+Output:
+```output
+Lmod is automatically replacing "cce/13.0.2" with "gcc/11.2.0".
+
+
+Lmod is automatically replacing "PrgEnv-cray/8.3.3" with "PrgEnv-gnu/8.0.0".
+
 
 Due to MODULEPATH changes, the following have been reloaded:
-  1) cray-mpich/8.1.9
+  1) cray-mpich/8.1.15
+```
 
-auser@uan02:/work/t01/t01/auser> module load cray-fftw
-auser@uan02:/work/t01/t01/auser> module load cray-hdf5-parallel
-auser@uan02:/work/t01/t01/auser> module load cray-netcdf-hdf5parallel
-auser@uan02:/work/t01/t01/auser> module list
+```bash
+module load cray-fftw
+module load cray-hdf5-parallel
+module load cray-netcdf-hdf5parallel
+module list
+```
 
+Output:
+```output
 Currently Loaded Modules:
-  1) cpe/21.09         5) libfabric/1.11.0.4.71   9) cray-libsci/21.08.1.2  13) PrgEnv-gnu/8.1.0
-  2) gcc/11.2.0        6) craype-network-ofi     10) bolt/0.7               14) cray-fftw/3.3.8.11
-  3) craype/2.7.10     7) cray-dsmml/0.2.1       11) epcc-setup-env         15) cray-hdf5-parallel/1.12.0.7
-  4) craype-x86-rome   8) cray-mpich/8.1.9       12) load-epcc-module       16) cray-netcdf-hdf5parallel/4.7.4.7
-
-
-```
-
-Finally, you will need to modify the value of
-`LD_LIBRARY_PATH` before you compile your software to ensure it picks up the
-non-default versions of libraries:
-
-```
-auser@uan02:/work/t01/t01/auser> export LD_LIBRARY_PATH=$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH
+  1) cpe/22.04               6) craype-network-ofi                         11) bolt/0.7           16) cray-hdf5-parallel/1.12.1.1
+  2) gcc/11.2.0              7) perftools-base/22.04.0                     12) epcc-setup-env     17) cray-netcdf-hdf5parallel/4.8.1.1
+  3) craype/2.7.15           8) xpmem/2.2.40-7.0.1.0_2.7__g1d7a24d.shasta  13) load-epcc-module
+  4) craype-x86-rome         9) cray-mpich/8.1.15                          14) PrgEnv-gnu/8.0.0
+  5) libfabric/1.11.0.4.71  10) cray-libsci/21.08.1.2                      15) cray-fftw/3.3.8.9
 ```
 
 Now you can go ahead and compile your software with the new programming
@@ -650,7 +661,7 @@ environment.
 The performance analysis tools (such as CrayPAT and CrayPAT-lite) behave slightly differently
 to other HPE Cray modules when you change to a non-default version of the programming
 environment. Specifically, an additional step is required to make them available. Once
-you have loaded the `cpe` module, you will also need to load the `perftools-base` 
+you have loaded the `cpe` module, you may also need to load the `perftools-base` 
 module to be able to load and use the performance tools modules.
     
 ### Available HPE Cray Programming Environment releases on ARCHER2
@@ -659,10 +670,15 @@ ARCHER2 currently has the following HPE Cray Programming Environment releases av
 
 - **21.04: Current default**
 - 21.09: available via `cpe/21.09` module
+- 22.04: available via `cpe/22.04` module
 
 You can find information, notes, and lists of changes for current and upcoming ARCHER2 
 HPE Cray programming environments in [the HPE Cray Programming Environment GitHub
 repository](https://github.com/PE-Cray).
+
+!!! tip
+    We recommend that users use the most recent version of the PE available to get
+    the latest improvements and bug fixes.
 
 ## Using non-default versions of HPE Cray libraries on ARCHER2
 
@@ -678,9 +694,9 @@ environment variable.
 version of HPE Cray LibSci in the default programming environment (Cray Compiler Environment,
 CCE) you would first setup the environment to compile with:
 
-```
-auser@uan01:~/test/libsci> module swap cray-libsci cray-libsci/21.08.1.2
-auser@uan01:~/test/libsci> export LD_LIBRARY_PATH=$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH
+```bash
+module load cray-libsci/21.08.1.2
+export LD_LIBRARY_PATH=$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH
 ```
 
 The order is important here: every time you change a module, you will need to reset
@@ -691,8 +707,12 @@ Now you can compile your code. You can check that the executable is using the co
 of LibSci with the `ldd` command and look for the line beginning `libsci_cray.so.5`, you
 should see the version in the path to the library file:
 
+```bash
+ldd dgemv.x 
 ```
-auser@uan01:~/test/libsci> ldd dgemv.x 
+
+Output:
+```
 	linux-vdso.so.1 (0x00007fffd33dd000)
 	libm.so.6 => /lib64/libm.so.6 (0x00007fbd6e7ed000)
 	libsci_cray.so.5 => /opt/cray/pe/libsci/21.08.1.2/CRAY/9.0/x86_64/lib/libsci_cray.so.5 (0x00007fbd6a8a7000)
@@ -726,7 +746,7 @@ check the library is pointing to the correct version). For example, a job submis
 script to run our `dgemv.x` executable with the non-default version of LibSci could
 look like:
 
-```
+```slurm
 #!/bin/bash
 #SBATCH --job-name=dgemv
 #SBATCH --time=0:20:0
