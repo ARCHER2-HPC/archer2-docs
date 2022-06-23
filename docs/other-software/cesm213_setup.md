@@ -122,13 +122,21 @@ sed -i '/}}/d' .env_mach_specific.sh
 source ./.env_mach_specific.sh && make
 ```
 
-You may see an error of the form
+It is likely you will see a warning message of the form
+
+```
+The following dependent module(s) are not currently loaded: cray-hdf5-parallel (required by: CESM2/2.1.3), cray-netcdf-hdf5parallel (required by: CESM2/2.1.3), cray-parallel-netcdf (required by: CESM2/2.1.3)
+```
+
+This is due to serial netCDF and hdf5 libraries being loaded as a result of the `--mpilib=mpi-serial` flag. This warning message is safe to ignore.
+
+In a small number of cases you may also see a warning of the form
 
 ```bash
 -bash: export: '}}': not a valid identifier
 ```
 
-This error should be safe to ignore, but can be solved by opening the file `./.env_mach_specific.sh` in a text editor and commenting out or deleting the line
+This warning should also be safe to ignore, but can be solved by opening the file `./.env_mach_specific.sh` in a text editor and commenting out or deleting the line
 
 ```bash
 export OMP_NUM_THREADS={{ thread_count }}
