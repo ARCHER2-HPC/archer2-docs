@@ -18,13 +18,14 @@ cd [case directory]
 
 ## Slab Ocean / ETEST
 
-The slab ocean case is similar to the atmosphere-only case in terms of resources needed, as the slab ocean is inexpensive to simulate in comparison to the atmosphere. The setup detailed below uses two OMP threads, and more tasks than were used by the F2000climo case, and so a throughput of around 20 SYPD can be expected. Unlike F2000climo, but like most compsets, this is unsupported (meaning it has not been scientifically verified by NCAR personnel) and as such an extra argument is required when creating the case.
+The slab ocean case is similar to the atmosphere-only case in terms of resources needed, as the slab ocean is inexpensive to simulate in comparison to the atmosphere. The setup detailed below uses two OMP threads, and more tasks than were used by the F2000climo case, and so a throughput of around 20 SYPD can be expected. Unlike F2000climo, but like most compsets, this is unsupported (meaning it has not been scientifically verified by NCAR personnel) and as such an extra argument is required when creating the case. The arguments for ROOTPE are to guard against poor decisions being automatically chosen with respect to resources.
 
 ```bash
-${CIMEROOT}/scripts/create_newcase --case [case name] --compset ETEST --res f09_f09_mg17 --walltime [enough time] --project [project code] --run-unsupported
+${CIMEROOT}/scripts/create_newcase --case [case name] --compset ETEST --res f09_g17 --walltime [enough time] --project [project code] --run-unsupported
 cd [case directory]
 ./xmlchange NTASKS=1024,NTASKS_ESP=1
 ./xmlchange NTHRDS=2
+./xmlchange ROOTPE_ICE=0,ROOTPE_OCN=0
 [Any other changes e.g. run length or resubmissions]
 ./case.setup
 ./case.build
@@ -66,7 +67,7 @@ The WACCM-X case needs care during the set up and running for a couple of reason
 ```bash
 ${CIMEROOT}/scripts/create_newcase --case [case name] --compset FXHIST --res f19_f19_mg16 --walltime [enough time] --project [project name] --run-unsupported
 cd [case directory]
-./xmlchange NTASKS=1024,NTASKS_ESP=1
+./xmlchange NTASKS=512,NTASKS_ESP=1
 ./xmlchange NTHRDS=2
 ./xmlchange DOUT_S=FALSE
 [Any other changes e.g. run length or resubmissions]
