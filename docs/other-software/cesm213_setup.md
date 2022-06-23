@@ -85,9 +85,9 @@ to
 
 ```bash
 [cime]
-branch = maint_5.6_archer2_port
+branch = maint-5.6
 protocol = git
-repo_url = https://github.com/cemac-ccs/cime
+repo_url = https://github.com/ESMCI/cime
 local_path = cime
 required = True
 ```
