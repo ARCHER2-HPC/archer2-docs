@@ -599,7 +599,7 @@ are the versions from the 22.04 PE:
 
 
 ```bash
-module load cpe/21.09
+module load cpe/22.04
 ```
 
 Output:
