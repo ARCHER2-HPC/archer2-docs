@@ -589,7 +589,7 @@ Loading a `cpe` module will do the following:
   one from the PE you have selected
 
 For example, if you have a code that uses the Gnu compiler environment, FFTW
-and NetCDF parallel libraries and you want to compile in the (non-default) 21.09
+and NetCDF parallel libraries and you want to compile in the (non-default) 22.04
 programming environment, you would do the following:
 
 First, load the `cpe/22.04` module to switch all the defaults to the versions from
@@ -690,7 +690,7 @@ environment variable.
 
 **At compile time** you need to load the version of the library module before you compile
 *and* set the LD_LIBRARY_PATH environment variable to include the contencts of
-`$CRAY_LD_LIBRARY_PATH` as the first entry. For example, to use the, non-default, 21.09.1.2
+`$CRAY_LD_LIBRARY_PATH` as the first entry. For example, to use the, non-default, 21.08.1.2
 version of HPE Cray LibSci in the default programming environment (Cray Compiler Environment,
 CCE) you would first setup the environment to compile with:
 
