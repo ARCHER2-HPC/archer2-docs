@@ -1748,8 +1748,8 @@ before the jobs completes.
 
 # Run two executables with separate MPI_COMM_WORLD
 
-srun --distribution=block:block --hint=nomultithread --het-group=0 ./xthi-a > xthi-a-out.txt &
-srun --distribution=block:block --hint=nomultithread --het-group=1 ./xthi-b > xthi-b-out.txt &
+srun --distribution=block:block --hint=nomultithread --het-group=0 ./xthi-a &
+srun --distribution=block:block --hint=nomultithread --het-group=1 ./xthi-b &
 wait
 ```
 In this case, each executable is launched with a separate call to
@@ -1776,7 +1776,6 @@ The example job will produce two reports showing the placement of the
 MPI tasks from the two instances of `xthi` running in each of the
 heterogeneous groups. For example, the output might be
 ```
-auser@ln04:/work/t01/t01/auser/job-dir> cat xthi-a-out.txt
 Node summary for    1 nodes:
 Node    0, hostname nid002400, mpi   8, omp   1, executable xthi-a
 MPI summary: 8 ranks
@@ -1788,10 +1787,9 @@ Node    0, rank    4, thread   0, (affinity =    4)
 Node    0, rank    5, thread   0, (affinity =    5)
 Node    0, rank    6, thread   0, (affinity =    6)
 Node    0, rank    7, thread   0, (affinity =    7)
-auser@ln04:/work/t01/t01/auser/job-dir> cat xthi-b-out.txt
 Node summary for    2 nodes:
-Node    0, hostname nid006692, mpi   4, omp   1, executable xthi-b
-Node    1, hostname nid006693, mpi   4, omp   1, executable xthi-b
+Node    0, hostname nid002146, mpi   4, omp   1, executable xthi-b
+Node    1, hostname nid002149, mpi   4, omp   1, executable xthi-b
 MPI summary: 8 ranks
 Node    0, rank    0, thread   0, (affinity =    0)
 Node    0, rank    1, thread   0, (affinity =    1)
@@ -1819,7 +1817,9 @@ Further examples of placement for heterogenenous jobs are given below.
     `MPI_COMM_WORLD`, a single `srun` invocation with the differrent
     components separated by a colon `:` should be used. Arguements
     to the individual components of the `srun` control the placement of
-    the tasks and threads for each component. For example:
+    the tasks and threads for each component. For example, running the
+    same `xthi-a` and `xthi-b` executables as above but now in a shared
+    communicator, we might run:
     
     ```
     #!/bin/bash
@@ -1842,7 +1842,8 @@ Further examples of placement for heterogenenous jobs are given below.
     ```
     
     The output should confirm we have a single `MPI_COMM_WORLD` with
-    a total of three nodes, and ranks 0-15.
+    a total of three nodes, `xthi-a` running on one and `xthi-b` on two,
+    with ranks 0-15 extending across both executables.
     ```
     Node summary for    3 nodes:
     Node    0, hostname nid002668, mpi   8, omp   1, executable xthi-a
