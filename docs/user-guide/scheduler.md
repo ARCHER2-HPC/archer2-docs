@@ -1875,11 +1875,11 @@ Some care may be required for placement of tasks/threads in heterogeneous
 jobs in which the number of threads needs to be specified differently
 for different components.
 
-In the following we have two components. The
-first component runs 8 MPI tasks each with 16 OpenMP threads.
-The second component runs 8 MPI tasks with
-one task per NUMA region on one node; each task has one thread.
-An appropriate Slurm submission might be:
+In the following we have two components, again using `xthi-a` and
+`xthi-b` as our two separate executables. The first component runs
+8 MPI tasks each with 16 OpenMP threads on one node. The second component
+runs 8 MPI tasks with one task per NUMA region on a second node; each
+task has one thread. An appropriate Slurm submission might be:
 
 === "Full system"
        
@@ -1916,7 +1916,7 @@ command line take effect. If `OMP_NUM_THREADS` is set in the calling
 environment, then that value takes precedence, and each component will
 see the same value of `OMP_NUM_THREADS`.
 
-The output would be:
+The output might then be:
 ```
 Node    0, hostname nid001111, mpi   8, omp  16, executable xthi-a
 Node    1, hostname nid001126, mpi   8, omp   1, executable xthi-b
@@ -1950,6 +1950,9 @@ Node    1, rank   13, thread   0, (affinity =   80)
 Node    1, rank   14, thread   0, (affinity =   96)
 Node    1, rank   15, thread   0, (affinity =  112)
 ```
+Here we can see the eight MPI tasks from `xthi-a` each running with
+sixteen OpenMP threads. Then the 8 MPI tasks with no threading from
+`xthi-b` are spaced across the cores on the second node, one per NUMA region.
 
 
 ## Low priority access
