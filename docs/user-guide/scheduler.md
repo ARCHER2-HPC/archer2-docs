@@ -1721,7 +1721,8 @@ QoS limits.
 Consider a case where we have two executables which may both be parallel (in
 that they use MPI), both run at the same time, and communicate with each
 other by some means other than MPI. In the following example, we run two
-different executables, both of which must finish before the jobs completes.
+different executables, `xthi-a` and `xthi-b`, both of which must finish
+before the jobs completes.
 
 ```
 #!/bin/bash
@@ -1745,7 +1746,7 @@ different executables, both of which must finish before the jobs completes.
 #SBATCH --ntasks-per-node=4
 
 
-# Run two execuatables with separate MPI_COMM_WORLD
+# Run two executables with separate MPI_COMM_WORLD
 
 srun --distribution=block:block --hint=nomultithread --het-group=0 ./xthi-a &
 srun --distribution=block:block --hint=nomultithread --het-group=1 ./xthi-b &
@@ -1758,20 +1759,26 @@ Both are run in the background with `&` and the `wait` is required
 to ensure both executables have completed before the job submission
 exits.
 
-In this rather artificial example, where each component makes a
-simple report about its placement, the output might be
+The above is a rather artificial example using two executables which
+are in fact just symbolic links in the job directory to `xthi`,
+used without loading the module. You can test this script yourself
+by creating symbolic links to the original executable before
+submitting the job:
 ```
-Node    0, hostname nid001028, mpi   4, omp   1, executable xthi-b
-Node    1, hostname nid001048, mpi   4, omp   1, executable xthi-b
-Node    0, rank    0, thread   0, (affinity =    0)
-Node    0, rank    1, thread   0, (affinity =    1)
-Node    0, rank    2, thread   0, (affinity =    2)
-Node    0, rank    3, thread   0, (affinity =    3)
-Node    1, rank    4, thread   0, (affinity =    0)
-Node    1, rank    5, thread   0, (affinity =    1)
-Node    1, rank    6, thread   0, (affinity =    2)
-Node    1, rank    7, thread   0, (affinity =    3)
-Node    0, hostname nid001027, mpi   8, omp   1, executable xthi-a
+auser@ln04:/work/t01/t01/auser/job-dir> module load xthi
+auser@ln04:/work/t01/t01/auser/job-dir> which xthi
+/work/y07/shared/utils/core/xthi/1.2/CRAYCLANG/11.0/bin/xthi
+auser@ln04:/work/t01/t01/auser/job-dir> ln -s /work/y07/shared/utils/core/xthi/1.2/CRAYCLANG/11.0/bin/xthi xthi-a
+auser@ln04:/work/t01/t01/auser/job-dir> ln -s /work/y07/shared/utils/core/xthi/1.2/CRAYCLANG/11.0/bin/xthi xthi-b
+```
+
+The example job will produce two reports showing the placement of the
+MPI tasks from the two instances of `xthi` running in each of the
+heterogeneous groups. For example, the output might be
+```
+Node summary for    1 nodes:
+Node    0, hostname nid002400, mpi   8, omp   1, executable xthi-a
+MPI summary: 8 ranks
 Node    0, rank    0, thread   0, (affinity =    0)
 Node    0, rank    1, thread   0, (affinity =    1)
 Node    0, rank    2, thread   0, (affinity =    2)
@@ -1780,6 +1787,18 @@ Node    0, rank    4, thread   0, (affinity =    4)
 Node    0, rank    5, thread   0, (affinity =    5)
 Node    0, rank    6, thread   0, (affinity =    6)
 Node    0, rank    7, thread   0, (affinity =    7)
+Node summary for    2 nodes:
+Node    0, hostname nid002146, mpi   4, omp   1, executable xthi-b
+Node    1, hostname nid002149, mpi   4, omp   1, executable xthi-b
+MPI summary: 8 ranks
+Node    0, rank    0, thread   0, (affinity =    0)
+Node    0, rank    1, thread   0, (affinity =    1)
+Node    0, rank    2, thread   0, (affinity =    2)
+Node    0, rank    3, thread   0, (affinity =    3)
+Node    1, rank    4, thread   0, (affinity =    0)
+Node    1, rank    5, thread   0, (affinity =    1)
+Node    1, rank    6, thread   0, (affinity =    2)
+Node    1, rank    7, thread   0, (affinity =    3)
 ```
 Here we have the first executable running on one node with
 a communicator size 8 (ranks 0-7). The second executable runs on
@@ -1798,7 +1817,9 @@ Further examples of placement for heterogenenous jobs are given below.
     `MPI_COMM_WORLD`, a single `srun` invocation with the differrent
     components separated by a colon `:` should be used. Arguements
     to the individual components of the `srun` control the placement of
-    the tasks and threads for each component. For example:
+    the tasks and threads for each component. For example, running the
+    same `xthi-a` and `xthi-b` executables as above but now in a shared
+    communicator, we might run:
     
     ```
     #!/bin/bash
@@ -1821,7 +1842,8 @@ Further examples of placement for heterogenenous jobs are given below.
     ```
     
     The output should confirm we have a single `MPI_COMM_WORLD` with
-    a total of three nodes, and ranks 0-15.
+    a total of three nodes, `xthi-a` running on one and `xthi-b` on two,
+    with ranks 0-15 extending across both executables.
     ```
     Node summary for    3 nodes:
     Node    0, hostname nid002668, mpi   8, omp   1, executable xthi-a
@@ -1853,11 +1875,11 @@ Some care may be required for placement of tasks/threads in heterogeneous
 jobs in which the number of threads needs to be specified differently
 for different components.
 
-In the following we have two components. The
-first component runs 8 MPI tasks each with 16 OpenMP threads.
-The second component runs 8 MPI tasks with
-one task per NUMA region on one node; each task has one thread.
-An appropriate Slurm submission might be:
+In the following we have two components, again using `xthi-a` and
+`xthi-b` as our two separate executables. The first component runs
+8 MPI tasks each with 16 OpenMP threads on one node. The second component
+runs 8 MPI tasks with one task per NUMA region on a second node; each
+task has one thread. An appropriate Slurm submission might be:
 
 === "Full system"
        
@@ -1894,7 +1916,7 @@ command line take effect. If `OMP_NUM_THREADS` is set in the calling
 environment, then that value takes precedence, and each component will
 see the same value of `OMP_NUM_THREADS`.
 
-The output would be:
+The output might then be:
 ```
 Node    0, hostname nid001111, mpi   8, omp  16, executable xthi-a
 Node    1, hostname nid001126, mpi   8, omp   1, executable xthi-b
@@ -1928,6 +1950,9 @@ Node    1, rank   13, thread   0, (affinity =   80)
 Node    1, rank   14, thread   0, (affinity =   96)
 Node    1, rank   15, thread   0, (affinity =  112)
 ```
+Here we can see the eight MPI tasks from `xthi-a` each running with
+sixteen OpenMP threads. Then the 8 MPI tasks with no threading from
+`xthi-b` are spaced across the cores on the second node, one per NUMA region.
 
 
 ## Low priority access
