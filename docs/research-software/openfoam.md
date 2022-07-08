@@ -37,7 +37,7 @@ all users on ARCHER2.
 
 Versions from openfoam.org are typically v8.0 etc and there is typically
 one release per year (in June; with a patch release in September).
-Versions from openfoam.com are e.g., v2006 (to be read as 2020 June) and
+Versions from openfoam.com are e.g., v2106 (to be read as 2021 June) and
 there are typically two releases a year (one in June, and one in
 December).
 
@@ -47,7 +47,7 @@ e.g.
 === "Full system"
     ```
     user@ln01:> module load PrgEnv-gnu
-    user@ln01:> module load openfoam/com/v2006
+    user@ln01:> module load openfoam/com/v2106
     ```
 
 The module defines only the base installation directory via the
