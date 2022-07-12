@@ -20,7 +20,7 @@ accessed from the login nodes. This can be done with the following code
 export WORK=/work/t01/t01/auser
 cd $WORK
 
-wget https://julialang-s3.julialang.org/bin/linux/x64/1.7/julia-1.6.6-linux-x86_64.tar.gz
+wget https://julialang-s3.julialang.org/bin/linux/x64/1.6/julia-1.6.6-linux-x86_64.tar.gz
 tar zxvf julia-1.6.6-linux-x86_64.tar.gz
 rm ./julia-1.6.6-linux-x86_64.tar.gz
 
@@ -28,7 +28,7 @@ export PATH="$PATH:$WORK/julia-1.6.6/bin"
 
 mkdir ./.julia
 export JULIA_DEPOT_PATH="$WORK/.julia"
-export PATH="$PATH:$WORK/$JULIA_DEPOT_PATH/bin
+export PATH="$PATH:$WORK/$JULIA_DEPOT_PATH/bin"
 ```
 
 At this point you should have a working installation of Julia! The environment
@@ -37,10 +37,10 @@ set them in the `.bashrc` file so that they're automatically defined every time
 you log in by adding the following lines to the end of the file `~/.bashrc`
 
 ```
-export WORK=/work/t01/t01/auser
+export WORK="/work/t01/t01/auser"
 export JULIA_DEPOT_PATH="$WORK/.julia"
 export PATH="$PATH:$WORK/julia-1.6.6/bin"
-export PATH="$PATH:$JULIA_DEPOT_PATH/bin
+export PATH="$PATH:$JULIA_DEPOT_PATH/bin"
 ```
 
 ## Installing packages and using environments
@@ -125,10 +125,10 @@ export JULIA_NUM_THREADS=1
 # Define some paths
 export WORK=/work/t01/t01/auser
 
-export JULIA=$WORK/julia-1.6.6/bin/julia  # The julia executable
-export PATH=$PATH:$WORK/julia-1.6.6/bin  # The folder of the julia executable
+export JULIA="$WORK/julia-1.6.6/bin/julia"  # The julia executable
+export PATH="$PATH:$WORK/julia-1.6.6/bin"  # The folder of the julia executable
 export JULIA_DEPOT_PATH="$WORK/.julia"
-export MPIEXECJL=$JULIA_DEPOT_PATH/bin/mpiexecjl  # The path to the mpiexexjl executable
+export MPIEXECJL="$JULIA_DEPOT_PATH/bin/mpiexecjl"  # The path to the mpiexexjl executable
 
 $MPIEXECJL --project=$WORK/MyTestEnv -n 24 $JULIA ./MyMpiJuliaScript.jl
 ```
