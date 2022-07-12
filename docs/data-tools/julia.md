@@ -28,6 +28,7 @@ export PATH="$PATH:$WORK/julia-1.6.6/bin"
 
 mkdir ./.julia
 export JULIA_DEPOT_PATH="$WORK/.julia"
+export PATH="$PATH:$WORK/$JULIA_DEPOT_PATH/bin
 ```
 
 At this point you should have a working installation of Julia! The environment
@@ -37,8 +38,9 @@ you log in by adding the following lines to the end of the file `~/.bashrc`
 
 ```
 export WORK=/work/t01/t01/auser
-export PATH="$PATH:$WORK/julia-1.6.6/bin"
 export JULIA_DEPOT_PATH="$WORK/.julia"
+export PATH="$PATH:$WORK/julia-1.6.6/bin"
+export PATH="$PATH:$JULIA_DEPOT_PATH/bin
 ```
 
 ## Installing packages and using environments
@@ -77,15 +79,59 @@ export JULIA_MPIEXEC="srun"
 julia --project=<<path to environment>>
 ```
 Once in the Julia terminal you can build the `MPI.jl` package using the
-following code
+following code. The final line installs the `mpiexecjl` command which should
+be used instead of `srun` to launch mpi processes.
 ```
 using Pkg
 Pkg.build("MPI"; verbose=true)
+MPI.install_mpiexecjl(command = "mpiexecjl", force = false, verbose = true)
 ```
+The `mpiexecjl` command will be installed in the directory that `JULIA_DEPOT_PATH`
+points too.
 
 !!! note
     You only need to do this once per environment.
 
 
 ## Running Julia on the compute nodes
-This section is coming soon.
+Below is an example script for running Julia with mpi on the compute nodes
+
+```
+#!/bin/bash
+# Slurm job options (job-name, compute nodes, job time)
+#SBATCH --job-name=<<job-name>>
+#SBATCH --time=00:19:00
+
+#SBATCH --nodes=1
+#SBATCH --tasks-per-node=24
+#SBATCH --cpus-per-task=1
+
+#SBATCH --qos=short
+#SBATCH --reservation=shortqos
+
+#SBATCH --account=<<your account>>
+#SBATCH --partition=standard
+
+# Setup the job environment (this module needs to be loaded before any other modules)
+module load PrgEnv-cray
+module load cray-mpich/8.1.4
+
+# Set the number of threads to 1
+#   This prevents any threaded system libraries from automatically
+#   using threading.
+export OMP_NUM_THREADS=1
+export JULIA_NUM_THREADS=1
+
+# Define some paths
+export WORK=/work/t01/t01/auser
+
+export JULIA=$WORK/julia-1.6.6/bin/julia  # The julia executable
+export PATH=$PATH:$WORK/julia-1.6.6/bin  # The folder of the julia executable
+export JULIA_DEPOT_PATH="$WORK/.julia"
+export MPIEXECJL=$JULIA_DEPOT_PATH/bin/mpiexecjl  # The path to the mpiexexjl executable
+
+$MPIEXECJL --project=$WORK/MyTestEnv -n 24 $JULIA ./MyMpiJuliaScript.jl
+```
+
+The above script uses MPI but you can also use multithreading instead by setitng the `JULIA_NUM_THREADS`
+environment variable.
