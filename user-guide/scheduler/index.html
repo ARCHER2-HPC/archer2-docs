@@ -4420,10 +4420,11 @@ parent. If you want a clean shell, remember to specify <code>--export=none</code
 </div>
 </div>
 <h2 id="heterogeneous-jobs">Heterogeneous jobs</h2>
-<p>The Slurm submissions discussed above involve a single executable image.
-However, there are situtions where two or more distinct executables are
-coupled and need to be run at the same time. This is most easily handled
-via the Slurm heterogeneous job mechanism.</p>
+<p>Most of the Slurm submissions discussed above involve running a single
+executable. However, there are situations where two or more distinct
+executables are coupled and need to be run at the same time, potentially
+using the same MPI communicator. This is most easily handled via the
+Slurm heterogeneous job mechanism.</p>
 <p>Two common cases are discussed below: first, a client server model in
 which client and server each have a different <code>MPI_COMM_WORLD</code>, and second
 the case were two or more executables share <code>MPI_COMM_WORLD</code>.</p>
