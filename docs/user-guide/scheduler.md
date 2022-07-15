@@ -1672,10 +1672,11 @@ following way (here using the "short queue"):
 
 ## Heterogeneous jobs
 
-The Slurm submissions discussed above involve a single executable image.
-However, there are situtions where two or more distinct executables are
-coupled and need to be run at the same time. This is most easily handled
-via the Slurm heterogeneous job mechanism.
+Most of the Slurm submissions discussed above involve running a single
+executable. However, there are situations where two or more distinct
+executables are coupled and need to be run at the same time, potentially
+using the same MPI communicator. This is most easily handled via the
+Slurm heterogeneous job mechanism.
 
 Two common cases are discussed below: first, a client server model in
 which client and server each have a different `MPI_COMM_WORLD`, and second
