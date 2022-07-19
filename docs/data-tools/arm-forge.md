@@ -212,6 +212,14 @@ file selection dialogue can then be used to specify the `.map` file.
 
 ### Connecting with the remote client
 
+!!! warning
+    There is a known issue with using remote client on ARCHER2. At 
+    present, the remote client will insist on submitting Slurm jobs 
+    from `/home` rather than from `/work`. This results in jobs not 
+    being able to run on the compute nodes. We are investigating how 
+    to fix this but, in the meantime, we recommend that jobs be 
+    launched from the login nodes rather than with the remote client.
+
 If one starts the Forge client on e.g., a laptop, one should see the main window as
 shown above. Select "Remote Launch" and then "Configure" from the
 pull-down menu. In the "Configure Remote Connections" dialgoue
