@@ -7,6 +7,7 @@ The tools currently available in this section are:
 
 - [Arm Forge](arm-forge.md): Provides debugging and profiling tools for MPI parallel applications, and
 OpenMP or pthreads mutli-threaded applications (and also hydrid MPI/OpenMP). 
+- [Julia](julia.md): The julia language
 - [ParaView](paraview.md): A data visualisation and analysis package 
 - [R](cray-r.md): The R statistical language
 - [VisiData](visidata.md): An interactive multitool for tabular data
