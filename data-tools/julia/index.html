@@ -13,7 +13,7 @@
     
     
       
-        <title>Main differences between ARCHER2 4-cabinet system and ARCHER2 full system - ARCHER2 User Documentation</title>
+        <title>Julia - ARCHER2 User Documentation</title>
       
     
     
@@ -72,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#main-differences-between-archer2-4-cabinet-system-and-archer2-full-system" class="md-skip">
+        <a href="#julia" class="md-skip">
           Skip to content
         </a>
       
@@ -104,7 +104,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Main differences between ARCHER2 4-cabinet system and ARCHER2 full system
+              Julia
             
           </span>
         </div>
@@ -1204,12 +1204,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" checked>
       
       
       
@@ -1232,7 +1234,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data-tools/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         Overview
       </a>
     </li>
@@ -1246,7 +1248,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data-tools/arm-forge/" class="md-nav__link">
+      <a href="../arm-forge/" class="md-nav__link">
         Arm Forge
       </a>
     </li>
@@ -1258,11 +1260,73 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../data-tools/julia/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Julia
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Julia
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#first-time-installation" class="md-nav__link">
+    First time installation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installing-packages-and-using-environments" class="md-nav__link">
+    Installing packages and using environments
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-mpijl" class="md-nav__link">
+    Configuring MPI.jl
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-julia-on-the-compute-nodes" class="md-nav__link">
+    Running Julia on the compute nodes
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1274,7 +1338,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data-tools/paraview/" class="md-nav__link">
+      <a href="../paraview/" class="md-nav__link">
         ParaView
       </a>
     </li>
@@ -1288,7 +1352,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data-tools/cray-r/" class="md-nav__link">
+      <a href="../cray-r/" class="md-nav__link">
         R
       </a>
     </li>
@@ -1302,7 +1366,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data-tools/visidata/" class="md-nav__link">
+      <a href="../visidata/" class="md-nav__link">
         VisiData
       </a>
     </li>
@@ -1463,15 +1527,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#for-all-users" class="md-nav__link">
-    For all users
+  <a href="#first-time-installation" class="md-nav__link">
+    First time installation
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#for-users-compiling-and-developing-software-on-archer2" class="md-nav__link">
-    For users compiling and developing software on ARCHER2
+  <a href="#installing-packages-and-using-environments" class="md-nav__link">
+    Installing packages and using environments
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-mpijl" class="md-nav__link">
+    Configuring MPI.jl
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-julia-on-the-compute-nodes" class="md-nav__link">
+    Running Julia on the compute nodes
   </a>
   
 </li>
@@ -1488,65 +1566,131 @@
             <article class="md-content__inner md-typeset">
               
                 
-  <a href="https://github.com/ARCHER2-HPC/archer2-docs/edit/main/docs/archer2-migration/archer2-differences.md" title="Edit this page" class="md-content__button md-icon">
+  <a href="https://github.com/ARCHER2-HPC/archer2-docs/edit/main/docs/data-tools/julia.md" title="Edit this page" class="md-content__button md-icon">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
   </a>
 
 
 
-<h1 id="main-differences-between-archer2-4-cabinet-system-and-archer2-full-system">Main differences between ARCHER2 4-cabinet system and ARCHER2 full system</h1>
-<p>This section provides an overview of the main differences between
-the ARCHER2 4-cabinet system that all users have been using up until
-now and the full ARCHER2 system along with links to more information where 
-appropriate.</p>
-<h2 id="for-all-users">For all users</h2>
-<ul>
-<li>There are 5860 compute nodes in total on the full ARCHER2 system rather 
-  than just the 1024 on the 4-cabinet ARCHER2 system.</li>
-<li>Of the 5860 compute nodes, 584 are <em>high memory nodes</em>, these nodes have
-  512 GiB of memory rather than the 256 GiB available on standard memory
-  nodes.</li>
-<li>There are two data analysis nodes available and these are shared by multiple
-  users. When using these nodes, users typically request the number of cores
-  and the amount of memory they require (unlike compute nodes where you always
-  have access to all the cores and all the memory on a node and do not share
-  with any other users). See <a href="../../user-guide/analysis/">the Data Analysis section of the User Guide</a>
-  for more information.</li>
-<li>Software is provided by the <a href="https://lmod.readthedocs.io/">Lmod</a> module
-  system (on the 4-cabinet system, TCL environment modules are used instead). Many
-  commands are similar but there are some differences, see 
-  <a href="../../user-guide/sw-environment/">the Software Environment section of the User Guide</a>
-  for more information.</li>
-<li>Not all versions of all software have been ported over to the full system from
-  the 4-cabinet system, some older versions of software have not been installed.</li>
-<li>The scheduler layout has been expanded to provide more functionality and 
-  flexibility. You can find details of the new QoS available in
-  <a href="../../user-guide/scheduler/">the Submitting Jobs on ARCHER2 section of the User Guide</a>.</li>
-<li>You no longer need to specify <code>--reservation=shortqos</code> when using the 
-  <code>short</code> QoS.</li>
-<li>Jobs running in a reservation can now run for longer than the maximum wall time available
-  in any of the normal QoS defined in the scheduler. Reservations must use the <code>reservation</code>
-  QoS.</li>
-<li>You should no longer add the <code>module load epcc-job-env</code> command to job submission
-  scripts.</li>
-</ul>
-<h2 id="for-users-compiling-and-developing-software-on-archer2">For users compiling and developing software on ARCHER2</h2>
-<ul>
-<li>The HPE Programming Environment (PE) version has been updated to the
-  21.04 release with the 21.09 release also available. These releases make
-  newer versions of compilers and MPI libraries available.</li>
-<li>The change to Lmod modules means that some modules are hidden by default
-  until dependencies have been loaded (for example, you will not be able
-  to load the <code>cray-netcdf</code> or <code>cray-netcdf-hdf5parallel</code> modules until
-  you have loaded the appropriate <code>cray-hdf5</code> or <code>cray-hdf5-parallel</code> modules).
-  You can use the <code>module spider</code> command to see all available modules, including
-  hidden ones.</li>
-<li>There are two MPI transport layers available: OpenFabrics (OFI) and UCX.
-  In some cases, you may see performance and/or scaling improvements by switching
-  to UCX rather than the default OFI transport layer. For more information on
-  when to switch and how to switch, see
-  <a href="../../user-guide/dev-environment/">the Application Development Environment section of the User Guide</a></li>
-</ul>
+<h1 id="julia">Julia</h1>
+<p><a href="https://julialang.org">Julia</a> is a general purpose software used widely
+in datascience and for data visualisation.</p>
+<h2 id="first-time-installation">First time installation</h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There is no centrally installed version of Julia, so you will have to
+manually install it and any packages you may need. The following
+guide was tested on julia-1.6.6.</p>
+</div>
+<p>You will first need to download Julia into your work directory and untar the
+folder. You should then add the folder to your system path so you can use the
+<code>julia</code> executable. Finally, you need to tell Julia to install any packages in
+the work directory as opposed to the default home directory,  which can only be
+accessed from the login nodes. This can be done with the following code</p>
+<div class="highlight"><pre><span></span><code>export WORK=/work/t01/t01/auser
+cd $WORK
+
+wget https://julialang-s3.julialang.org/bin/linux/x64/1.6/julia-1.6.6-linux-x86_64.tar.gz
+tar zxvf julia-1.6.6-linux-x86_64.tar.gz
+rm ./julia-1.6.6-linux-x86_64.tar.gz
+
+export PATH=&quot;$PATH:$WORK/julia-1.6.6/bin&quot;
+
+mkdir ./.julia
+export JULIA_DEPOT_PATH=&quot;$WORK/.julia&quot;
+export PATH=&quot;$PATH:$WORK/$JULIA_DEPOT_PATH/bin&quot;
+</code></pre></div>
+<p>At this point you should have a working installation of Julia! The environment
+variables will however be cleared when you log out of the terminal. You can
+set them in the <code>.bashrc</code> file so that they're automatically defined every time
+you log in by adding the following lines to the end of the file <code>~/.bashrc</code></p>
+<div class="highlight"><pre><span></span><code>export WORK=&quot;/work/t01/t01/auser&quot;
+export JULIA_DEPOT_PATH=&quot;$WORK/.julia&quot;
+export PATH=&quot;$PATH:$WORK/julia-1.6.6/bin&quot;
+export PATH=&quot;$PATH:$JULIA_DEPOT_PATH/bin&quot;
+</code></pre></div>
+<h2 id="installing-packages-and-using-environments">Installing packages and using environments</h2>
+<p>Julia has a built in package manager which can be used to install registered
+packages quickly and easily. Like with many other high level programming
+languages we can make use of environments to control dependencies etc.</p>
+<p>To make an environment, first navigate to where you want your environment to be
+(ideally a subfolder of your <code>/work/</code> directory) and create an empty folder to
+store the environment in. Then launch Julia with the --project flag.
+<div class="highlight"><pre><span></span><code>cd $WORK
+mkdir ./MyTestEnv
+julia --project=$WORK/MyTestEnv
+</code></pre></div>
+This launches Julia in the <code>MyTestEnv</code> environment. You can then install
+packages as usual using the normal commands in the Julia terminal. E.g.
+<div class="highlight"><pre><span></span><code>using Pkg
+Pkg.add(&quot;Oceananigans&quot;)
+</code></pre></div></p>
+<h2 id="configuring-mpijl">Configuring MPI.jl</h2>
+<p>The <code>MPI.jl</code> package doesn't use the system MPICH implementation by default.
+You can set it up to do this by following the steps below. First you will need
+to load the <code>cray-mpich</code> module and define some environment variables (see <a href="https://juliaparallel.org/MPI.jl/stable/configuration/">here</a>
+for further details). Then you can launch Julia in an environment of your
+choice, ready to build.
+<div class="highlight"><pre><span></span><code>module load cray-mpich/8.1.4
+export JULIA_MPI_BINARY=&quot;system&quot;
+export JULIA_MPI_PATH=&quot;&quot;
+export JULIA_MPI_LIBRARY=&quot;/opt/cray/pe/mpich/8.1.4/ofi/cray/9.1/lib/libmpi.so&quot;
+export JULIA_MPIEXEC=&quot;srun&quot;
+
+julia --project=&lt;&lt;path to environment&gt;&gt;
+</code></pre></div>
+Once in the Julia terminal you can build the <code>MPI.jl</code> package using the
+following code. The final line installs the <code>mpiexecjl</code> command which should
+be used instead of <code>srun</code> to launch mpi processes.
+<div class="highlight"><pre><span></span><code>using Pkg
+Pkg.build(&quot;MPI&quot;; verbose=true)
+MPI.install_mpiexecjl(command = &quot;mpiexecjl&quot;, force = false, verbose = true)
+</code></pre></div>
+The <code>mpiexecjl</code> command will be installed in the directory that <code>JULIA_DEPOT_PATH</code>
+points too.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You only need to do this once per environment.</p>
+</div>
+<h2 id="running-julia-on-the-compute-nodes">Running Julia on the compute nodes</h2>
+<p>Below is an example script for running Julia with mpi on the compute nodes</p>
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+# Slurm job options (job-name, compute nodes, job time)
+#SBATCH --job-name=&lt;&lt;job-name&gt;&gt;
+#SBATCH --time=00:19:00
+
+#SBATCH --nodes=1
+#SBATCH --tasks-per-node=24
+#SBATCH --cpus-per-task=1
+
+#SBATCH --qos=short
+#SBATCH --reservation=shortqos
+
+#SBATCH --account=&lt;&lt;your account&gt;&gt;
+#SBATCH --partition=standard
+
+# Setup the job environment (this module needs to be loaded before any other modules)
+module load PrgEnv-cray
+module load cray-mpich/8.1.4
+
+# Set the number of threads to 1
+#   This prevents any threaded system libraries from automatically
+#   using threading.
+export OMP_NUM_THREADS=1
+export JULIA_NUM_THREADS=1
+
+# Define some paths
+export WORK=/work/t01/t01/auser
+
+export JULIA=&quot;$WORK/julia-1.6.6/bin/julia&quot;  # The julia executable
+export PATH=&quot;$PATH:$WORK/julia-1.6.6/bin&quot;  # The folder of the julia executable
+export JULIA_DEPOT_PATH=&quot;$WORK/.julia&quot;
+export MPIEXECJL=&quot;$JULIA_DEPOT_PATH/bin/mpiexecjl&quot;  # The path to the mpiexexjl executable
+
+$MPIEXECJL --project=$WORK/MyTestEnv -n 24 $JULIA ./MyMpiJuliaScript.jl
+</code></pre></div>
+<p>The above script uses MPI but you can also use multithreading instead by setitng the <code>JULIA_NUM_THREADS</code>
+environment variable.</p>
 
               
             </article>
@@ -1557,6 +1701,42 @@ appropriate.</p>
       </main>
       
         <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../arm-forge/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Arm Forge" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Arm Forge
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../paraview/" class="md-footer__link md-footer__link--next" aria-label="Next: ParaView" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              ParaView
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
