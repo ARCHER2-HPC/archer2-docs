@@ -13,6 +13,6 @@ users or provides useful notes on software that is not installed centrally.
 
 ## Research Software
 
- - [CASINO](casino.md)
- - [CESM 2.1.3](cesm213.md)
- - [CRYSTAL](crystal.md)
+ - [CASINO](../research-software/casino.md)
+ - [CESM 2.1.3](../research-software/cesm213.md)
+ - [CRYSTAL](../research-software/crystal.md)

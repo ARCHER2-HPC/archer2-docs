@@ -19,12 +19,16 @@ usually not maintain older versions and versions no longer supported by
 the developers of the package.
 
 The following sections provide details on access to each of the
-centrally supported packages:
+centrally installed packages (software that is installed or maintained
+by third-parties rather than the ARCHER2 service are marked with *):
 
+  - [CASINO(*)(casino.md)]
   - [CASTEP](castep.md)
+  - [CESM(*)](cesm213.md)
   - [Chemshell](chemshell.md)
   - [Code_Saturne](code-saturne.md)
   - [CP2K](cp2k.md)
+  - [CRYSTAL(*)](crystal.md)
   - [FHI-aims](fhi-aims.md)
   - [FEniCS](fenics.md)
   - [GROMACS](gromacs.md)

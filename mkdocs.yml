@@ -68,10 +68,13 @@ nav:
     - "Energy monitoring": user-guide/energy-monitoring.md
   - "Research Software":
     - "Overview": research-software/index.md
+    - "CASINO": research-software/casino.md
     - "CASTEP": research-software/castep.md
+    - "CESM": research-software/cesm213.md
     - "Chemshell": research-software/chemshell.md
     - "Code_Saturne": research-software/code-saturne.md
     - "CP2K": research-software/cp2k.md
+    - "CRYSTAL": research-software/crystal.md
     - "FHI-aims": research-software/fhi-aims.md
     - "FEniCS": research-software/fenics.md
     - "GROMACS": research-software/gromacs.md
