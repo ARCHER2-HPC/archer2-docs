@@ -22,7 +22,7 @@ The following sections provide details on access to each of the
 centrally installed packages (software that is installed or maintained
 by third-parties rather than the ARCHER2 service are marked with *):
 
-  - [CASINO(*)(casino.md)]
+  - [CASINO(*)](casino.md)
   - [CASTEP](castep.md)
   - [CESM(*)](cesm213.md)
   - [Chemshell](chemshell.md)

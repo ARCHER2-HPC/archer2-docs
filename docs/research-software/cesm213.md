@@ -2,6 +2,14 @@
 
 [CESM2](https://www.cesm.ucar.edu/models/cesm2/) is a fully-coupled, community, global climate model that provides state-of-the-art computer simulations of the Earth's past, present, and future climate states. It has seven different components: atmosphere, ocean, river run off, sea ice, land ice, waves and adaptive river transport.  At the time of writing, CESM 2.1.3 is the latest scientifically verified version of the model.
 
+!!! important
+    CESM is not part of the officially supported
+    software on ARCHER2. While the ARCHER2 service desk is able to provide
+    support for basic use of this software (e.g. access to software, writing
+    job submission scripts) it does not generally provide detailed technical
+    support for the software and you may be directed to seek support from
+    other places if the service desk cannot answer the questions.
+
 ## Setting up CESM 2.1.3 on ARCHER2
 
 Due to the nature of CESM2, there is not a centrally installed version of the program available on ARCHER2. Instead, users download their own copy of the program and make use of ARCHER2-specific configurations that have been rigorously tested.

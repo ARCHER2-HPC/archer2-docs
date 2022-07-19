@@ -10,6 +10,14 @@ locality. Restricted (Closed Shell) and Unrestricted (Spin-polarized)
 calculations can be performed with all-electron and valence-only basis sets
 with effective core pseudo-potentials. The current release is CRYSTAL17.
 
+!!! important
+    CRYSTAL is not part of the officially supported
+    software on ARCHER2. While the ARCHER2 service desk is able to provide
+    support for basic use of this software (e.g. access to software, writing
+    job submission scripts) it does not generally provide detailed technical
+    support for the software and you may be directed to seek support from
+    other places if the service desk cannot answer the questions.
+
 ## Useful Links
 
 - [CRYSTAL home site](https://www.crystal.unito.it)

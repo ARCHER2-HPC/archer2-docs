@@ -5,6 +5,14 @@
     page provides tips on using CASINO on ARCHER2 for users who have obtained their 
     own copy of the code.
 
+!!! important
+    CASINO is not part of the officially supported
+    software on ARCHER2. While the ARCHER2 service desk is able to provide
+    support for basic use of this software (e.g. access to software, writing
+    job submission scripts) it does not generally provide detailed technical
+    support for the software and you may be directed to seek support from
+    other places if the service desk cannot answer the questions.
+
 [CASINO](https://vallico.net/casinoqmc/) is a computer program system for performing
 quantum Monte Carlo (QMC) electronic structure calculations that has been developed
 by a group of researchers initially working in the Theory of Condensed Matter group in
