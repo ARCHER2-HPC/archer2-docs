@@ -3,6 +3,15 @@
 [Julia](https://julialang.org) is a general purpose software used widely
 in datascience and for data visualisation.
 
+!!! important
+    This documentation is provided by an external party (i.e. not by the
+    ARCHER2 service itself). Julia is not part of the officially supported
+    software on ARCHER2. While the ARCHER2 service desk is able to provide
+    support for basic use of this software (e.g. access to software, writing
+    job submission scripts) it does not generally provide detailed technical
+    support for the software and you may be directed to seek support from
+    other places if the service desk cannot answer the questions.
+
 ## First time installation
 
 !!! note
