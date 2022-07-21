@@ -1641,8 +1641,8 @@ following way (here using the "short queue"):
 === "Full system"
     ```
     auser@ln01:/work/t01/t01/auser> srun --nodes=1 --exclusive --time=00:20:00 \
-                   --partition=standard --qos=short --reservation=shortqos \
-		           --account=[budget code] --pty /bin/bash
+                   --partition=standard --qos=short --account=[budget code] \
+		   --pty /bin/bash
     auser@nid001261:/work/t01/t01/auser> hostname
     nid001261
     ```
