@@ -70,7 +70,7 @@ nav:
     - "Overview": research-software/index.md
     - "CASINO": research-software/casino.md
     - "CASTEP": research-software/castep.md
-    - "CESM 2.1.3": research-software/cesm213.md
+    - "CESM2": research-software/cesm.md
     - "Chemshell": research-software/chemshell.md
     - "Code_Saturne": research-software/code-saturne.md
     - "CP2K": research-software/cp2k.md

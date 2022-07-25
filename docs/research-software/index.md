@@ -18,7 +18,7 @@ by third-parties rather than the ARCHER2 service are marked with *):
 
   - [CASINO(*)](casino.md)
   - [CASTEP](castep.md)
-  - [CESM(*)](cesm213.md)
+  - [CESM2(*)](cesm.md)
   - [Chemshell](chemshell.md)
   - [Code_Saturne](code-saturne.md)
   - [CP2K](cp2k.md)
