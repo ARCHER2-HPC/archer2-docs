@@ -2003,9 +2003,7 @@ will be charged the full rate for the entire reservation at the time of booking,
 or not you use the nodes for the full time. In addition, you will not be refunded the
 CUs if you fail to use them due to a job issue unless this issue is due to a system failure.
 
-!!! bug
-    At the moment, we are only able to charge for jobs in reservations, not for the full 
-    reservation itself. Jobs in reservations are charged at 1.5x the standard rate.
+
 
 To request a reservation you complete a form on SAFE:
 
