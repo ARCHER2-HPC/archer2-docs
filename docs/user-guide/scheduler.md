@@ -434,7 +434,7 @@ Other common options that are used are:
    - `--time=<hh:mm:ss>` the maximum walltime for your job. *e.g.* For
      a 6.5 hour walltime, you would use `--time=6:30:0`.
    - `--job-name=<jobname>` set a name for the job to help identify it
-     in the queue
+     in Slurm
 
 To prevent the behaviour of batch scripts being dependent on the user
 environment at the point of submission, the option
@@ -644,12 +644,13 @@ An example of the sort of output the tool can give would be:
 
 ## Checking scripts and estimating start time with `--test-only`
 
-`sbatch --test-only` validates the batch script and returns an estimate of when the job would be scheduled to run given the current job queue. Please note that it is just an estimate, the actual start time may differ as the job queue status when the start time was estimated may be different from the moment that the estimation took place. The job is not actually submitted.
-    ```
-    auser@ln01:~> sbatch --test-only submit.slurm
-    sbatch: Job 1039497 to start at 2022-02-01T23:20:51 using 256 processors on nodes nid002836
-    in partition standard
-    ```
+`sbatch --test-only` validates the batch script and returns an estimate of when the job would be scheduled to run given the current scheduler state. Please note that it is just an estimate, the actual start time may differ as the scheduler status when the start time was estimated may be different once the job is actually submitted and due to subsequent changes to the scheduler state. The job is not actually submitted.
+
+```
+auser@ln01:~> sbatch --test-only submit.slurm
+sbatch: Job 1039497 to start at 2022-02-01T23:20:51 using 256 processors on nodes nid002836
+in partition standard
+```
 
 ## Example job submission scripts
 
@@ -1595,7 +1596,7 @@ You use the `salloc` command to reserve compute nodes for interactive
 jobs.
 
 To submit a request for an interactive job reserving 8 nodes (1024
-physical cores) for 20 minutes on the short queue you would issue the
+physical cores) for 20 minutes on the short QoS you would issue the
 following command from the command line:
 
 === "Full system"
@@ -1636,7 +1637,7 @@ return you to your prompt before you issued the `salloc` command.
 ### Using `srun` directly
 
 A second way to run an interactive job is to use `srun` directly in the
-following way (here using the "short queue"):
+following way (here using the `short` QoS):
 
 === "Full system"
     ```
@@ -1711,7 +1712,7 @@ where new each component beyond the first is introduced by the special
 token `#SBATCH hetjob` (note this is not a normal option and is not
 `--hetjob`). Each component must specify a partition.
 
-Such a job will appear in the queue system as, e.g.,
+Such a job will appear in the scheduler as, e.g.,
 ```
            50098+0  standard qscript-    user  PD       0:00      1 (None) 
            50098+1  standard qscript-    user  PD       0:00      2 (None) 
@@ -1959,17 +1960,16 @@ sixteen OpenMP threads. Then the 8 MPI tasks with no threading from
 ## Low priority access
 
 Low priority jobs are not charged against your allocation but will only run when
-other, higher-priority, jobs cannot be run or there are no higher-priority jobs in
-the queue. Although low priority jobs are not charged, you do need a valid, positive
-budget to be able to submit and run low priority jobs, i.e. you need at least 1 CU
-in your budget.
+other, higher-priority, jobs cannot be run. Although low priority jobs are not
+charged, you do need a valid, positive budget to be able to submit and run low
+priority jobs, i.e. you need at least 1 CU in your budget.
 
 Low priority access is always available and has the following limits:
 
 === "Full system"
     - 1024 node maximum job size
-    - Maximum 16 low priority jobs in the queue per user
-    - Maximum 16 low priority job running per user (of the 16 queued)
+    - Maximum 16 low priority jobs submitted (including running) per user
+    - Maximum 16 low priority job running per user
     - Maximum runtime of 24 hours
 
 You submit a low priority job on ARCHER2 by using the `lowpriority` QoS. For example,
@@ -1986,7 +1986,7 @@ Reservations are available on ARCHER2. These allow users to reserve a number of 
 for a specified length of time starting at a particular time on the system.
 
 Reservations require justification. They will only be approved if the request could not
-be fulfilled with the standard queues. For instance, you require a job/jobs to run at a
+be fulfilled with the normal QoS's. For instance, you require a job/jobs to run at a
 particular time e.g. for a demonstration or course.
 
 !!! note
