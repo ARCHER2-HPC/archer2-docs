@@ -54,7 +54,7 @@ refer to pass the optfile to `genmake2`.
 
 When using `genmake2` to create the Makefile, you will need to specify the
 optfile to use. Other commonly used options might be to use extra source
-code with the `-mods` option, and to enable MPI with `-mpi`. You might
+code with the `-mods` option, to enable MPI with `-mpi`, and to enable OpenMP with `-omp`. You might
 then run a command that resembles the following:
 
     genmake2 -mods /path/to/additional/source -mpi -optfile $MITGCM_OPT
@@ -71,6 +71,7 @@ Finally, you may then build your executable by running
 
 ## Running MITgcm on ARCHER2
 
+### Pure MPI
 Once you have built your executable you can write a script like the
 following which will allow it to run on the ARCHER2 compute nodes. This
 example would run a pure MPI MITgcm simulation over 2 nodes of 128 cores
@@ -101,8 +102,69 @@ each for up to one hour.
     #   Using 256 MPI processes and 128 MPI processes per node
     #   srun picks up the distribution from the sbatch options
     srun --distribution=block:block --hint=nomultithread ./mitgcmuv
-    ```
     
+    ```
+
+### Hybrid OpenMP & MPI
+!!! warning
+    Running the model in hybrid mode may lead to performance decreases as well
+    as increases. You should be sure to profile your code both as a pure MPI
+    application and as a hybrid OpenMP-MPI application to ensure you are
+    making efficient use of resources. Be sure to read both the Archer2
+    [advice on OpenMP](../user-guide/tuning.md#hybrid-mpi-and-openmp)  and the
+    [MITgcm documentation](https://mitgcm.readthedocs.io/en/latest/getting_started/getting_started.html#building-with-openmp)
+    first.
+
+!!! note
+    Early versions of the ARCHER2 MITgcm optfile do not contain an `OMPFLAG`.
+    Please ensure you have an up to date copy of the optfile before attempting
+    to compile OpenMP enabled codes.
+
+Depending upon your model setup, you may wish to run the MITgcm code as a
+hybrid OpenMP-MPI application. In terms of compiling the model, this is as
+simple as using the flag `-omp` when calling `genmake2`, and updating your
+`SIZE.h` file to have multiple tiles per process.
+
+The model can be run using a slurm job submission script similar to that shown
+below. This example will run MITgcm across 2 nodes, with each node using 16 MPI
+processes, and each process using 4 threads. Note that this would underpopulate
+the nodes — i.e. we will only be using 128 of the 256 cores available to us.
+This can also sometimes lead to performance increases.
+
+=== "Full system"
+    ```
+    #!/bin/bash
+
+    # Slurm job options (job-name, compute nodes, job time)
+    #SBATCH --job-name=MITgcm-hybrid-simulation
+    #SBATCH --time=1:0:0
+    #SBATCH --nodes=2
+    #SBATCH --tasks-per-node=16
+    #SBATCH --cpus-per-task=4
+
+    # Replace [budget code] below with your project code (e.g. t01)
+    #SBATCH --account=[budget code] 
+    #SBATCH --partition=standard
+    #SBATCH --qos=standard
+
+    # Set the number of threads to 1
+    #   This prevents any threaded system libraries from automatically
+    #   using threading.
+    export OMP_NUM_THREADS=4  # Set to number of threads per process
+    export OMP_PLACES="cores(128)"  # Set to total number of threads
+    export OMP_PROC_BIND=true  # Required if we want to underpopulate nodes
+
+    # Launch the parallel job
+    #   Using 256 MPI processes and 128 MPI processes per node
+    #   srun picks up the distribution from the sbatch options
+    srun --distribution=block:block --hint=nomultithread ./mitgcmuv
+
+    ```
+
+One final note, is that you should remember to update the `eedata` file in the
+model's run directory to ensure the number of threads requested there match
+those requested in the job submission script.
+
 ## Reproducing the ECCO version 4 (release 4) state estimate on ARCHER2
 
 The ECCO version 4 state estimate (ECCOv4-r4) is an observationally-constrained numerical solution produced by the ECCO group at JPL. If you would like to reproduce the state estimate on ARCHER2 in order to create customised runs and experiments, follow the instructions below. They have been slightly modified from the JPL instructions for ARCHER2. 
