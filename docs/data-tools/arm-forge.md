@@ -17,7 +17,7 @@ laptop or desktop, and run it locally. The remote client should be used if
 at all possible.
 
 To download the remote client, see the
-[Arm developer download pages](https://developer.arm.com/downloads/-/arm-forge). Version 21.0.3 is known to work at the time of writing. Connecting with
+[Arm developer download pages](https://developer.arm.com/downloads/-/arm-forge). Version 22.0.3 is known to work at the time of writing. Connecting with
 the remote client is discussed below.
 
 
@@ -212,7 +212,8 @@ file selection dialogue can then be used to specify the `.map` file.
 
 ### Connecting with the remote client
 
-If one starts the Forge client on e.g., a laptop, one should see the main window as
+If one starts the Forge client on e.g., a laptop, one should see the
+main window as
 shown above. Select "Remote Launch" and then "Configure" from the
 pull-down menu. In the "Configure Remote Connections" dialgoue
 click "Add". The following window should be displayed. Fill
@@ -220,11 +221,14 @@ in the fields as shown. The "Connection Name" is just a tag
 for convenience (useful if a number of different accounts are
 in use). The "Host Name" should be as shown with the appropriate
 `userid`. The "Remote Installation Directory" should be exactly as
-shown. The "Remote Script" is optional, but can be useful if you
-need to execute additional environment commands when connecting.
-Such a script could be placed in e.g., `${WORK}/.allinea`.
+shown. The "Remote Script" is needed to execute additional environment
+commands on connection. A default script is provided in the location
+shown:
+```
+/work/y07/shared/utils/core/arm/forge/22.0.2/remote-init
+```
 
-Other settings can be as shown. Remember to click "OK when done.
+Other settings can be as shown. Remember to click "OK" when done.
 
 ![Remote Launch Settings](./forge-remote-launch.png)
 
@@ -234,12 +238,16 @@ Name. Select this, and enter the relevant ssh passphase and machine
 password to connect. A remote connection will allow you to debug,
 or view a profile, as discussed above.
 
-When launching jobs using the remote client, include the following line in your
-submission script:
-```
-source /work/y07/shared/utils/core/arm/forge/22.0.2/remote-init
-```
-This is needed to ensure that your job launches from `/work` instead of `/home`.
+If different commands are required on connection, a copy of the
+`remote-init` script can be placed in, e.g., `${HOME/home/work}/.allinea`
+and edited as necessary. The full path of the new script should then be
+specified in the remote launch settings dialogue.
+Note that the script changes directory to the `/work/` file system so
+that batch submissions via `sbatch` will not be rejected.
+
+Finally, note that `ssh` may need to be configured so that it picks up
+the correct local public key file. This may be done, e.g., via the
+local `.ssh/config` configuration file.
 
 ## Useful links
 
