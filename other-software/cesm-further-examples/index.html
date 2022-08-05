@@ -13,7 +13,7 @@
     
     
       
-        <title>Further Examples CESM 2.1.3 - ARCHER2 User Documentation</title>
+        <title>Cesm further examples - ARCHER2 User Documentation</title>
       
     
     
@@ -71,11 +71,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#further-examples-cesm-213" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -104,7 +99,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Further Examples CESM 2.1.3
+              Cesm further examples
             
           </span>
         </div>
@@ -618,8 +613,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../../research-software/casino/" class="md-nav__link">
+        CASINO
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../research-software/castep/" class="md-nav__link">
         CASTEP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research-software/cesm/" class="md-nav__link">
+        CESM2
       </a>
     </li>
   
@@ -662,6 +685,20 @@
     <li class="md-nav__item">
       <a href="../../research-software/cp2k/" class="md-nav__link">
         CP2K
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research-software/crystal/" class="md-nav__link">
+        CRYSTAL
       </a>
     </li>
   
@@ -1323,96 +1360,6 @@
   
   
   
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_9">
-          Other Software
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Other Software" data-md-level="1">
-        <label class="md-nav__title" for="__nav_9">
-          <span class="md-nav__icon md-icon"></span>
-          Other Software
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
-        Overview
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../casino/" class="md-nav__link">
-        CASINO
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../cesm213/" class="md-nav__link">
-        CESM 2.1.3
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../crystal/" class="md-nav__link">
-        CRYSTAL
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
     <li class="md-nav__item">
       <a href="../../essentials/" class="md-nav__link">
         Essential Skills
@@ -1453,44 +1400,6 @@
   
   
   
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#atmosphere-only-f2000climo" class="md-nav__link">
-    Atmosphere-only / F2000climo
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#slab-ocean-etest" class="md-nav__link">
-    Slab Ocean / ETEST
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#coupled-ocean-b1850" class="md-nav__link">
-    Coupled Ocean / B1850
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#waccm-x-fxhist" class="md-nav__link">
-    WACCM-X / FXHIST
-  </a>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -1508,63 +1417,9 @@
 
 
 
-<h1 id="further-examples-cesm-213">Further Examples CESM 2.1.3</h1>
-<p>In the process of porting CESM 2.1.3 to ARCHER2, a set of 4 long runs were carried out. This page contains the four example cases which have been validated with longer runs. They vary in the numbers of cores or threads used, but included here are the PE layouts used in these validation runs, which can be used as a guide for other runs. While only these four compsets and grids have been validated, CESM2 is not bound to just these cases. Links to the UCAR/NCAR pages on configurations, compsets and grids are in the <a href="../cesm213/#useful-links">useful links</a> section of the CESM2.1.3 on ARCHER2 page, which can be used to find many of the defined compsets for CESM2.1.3.</p>
-<h2 id="atmosphere-only-f2000climo">Atmosphere-only / F2000climo</h2>
-<p>This compset uses the F09 grid which is roughly equivalent to a 1 degree resolution. On ARCHER2 with four nodes this configuration should give a throughput of around 7.8 simulated years per (wallclock) day (SYPD). The commands to set up and run the case are as follows:</p>
-<div class="highlight"><pre><span></span><code><span class="si">${</span><span class="nv">CIMEROOT</span><span class="si">}</span>/scripts/create_newcase --case <span class="o">[</span><span class="k">case</span> name<span class="o">]</span> --compset F2000climo --res f09_f09_mg17 --walltime <span class="o">[</span>enough time<span class="o">]</span> --project <span class="o">[</span>project code<span class="o">]</span>
-<span class="nb">cd</span> <span class="o">[</span><span class="k">case</span> directory<span class="o">]</span>
-./xmlchange <span class="nv">NTASKS</span><span class="o">=</span><span class="m">512</span>,NTASKS_ESP<span class="o">=</span><span class="m">1</span>
-<span class="o">[</span>Any other changes e.g. run length or resubmissions<span class="o">]</span>
-./case.setup
-./case.build
-./case.submit
-</code></pre></div>
-<h2 id="slab-ocean-etest">Slab Ocean / ETEST</h2>
-<p>The slab ocean case is similar to the atmosphere-only case in terms of resources needed, as the slab ocean is inexpensive to simulate in comparison to the atmosphere. The setup detailed below uses two OMP threads, and more tasks than were used by the F2000climo case, and so a throughput of around 20 SYPD can be expected. Unlike F2000climo, but like most compsets, this is unsupported (meaning it has not been scientifically verified by NCAR personnel) and as such an extra argument is required when creating the case. The arguments for ROOTPE are to guard against poor decisions being automatically chosen with respect to resources.</p>
-<div class="highlight"><pre><span></span><code><span class="si">${</span><span class="nv">CIMEROOT</span><span class="si">}</span>/scripts/create_newcase --case <span class="o">[</span><span class="k">case</span> name<span class="o">]</span> --compset ETEST --res f09_g17 --walltime <span class="o">[</span>enough time<span class="o">]</span> --project <span class="o">[</span>project code<span class="o">]</span> --run-unsupported
-<span class="nb">cd</span> <span class="o">[</span><span class="k">case</span> directory<span class="o">]</span>
-./xmlchange <span class="nv">NTASKS</span><span class="o">=</span><span class="m">1024</span>,NTASKS_ESP<span class="o">=</span><span class="m">1</span>
-./xmlchange <span class="nv">NTHRDS</span><span class="o">=</span><span class="m">2</span>
-./xmlchange <span class="nv">ROOTPE_ICE</span><span class="o">=</span><span class="m">0</span>,ROOTPE_OCN<span class="o">=</span><span class="m">0</span>
-<span class="o">[</span>Any other changes e.g. run length or resubmissions<span class="o">]</span>
-./case.setup
-./case.build
-./case.submit
-</code></pre></div>
-<h2 id="coupled-ocean-b1850">Coupled Ocean / B1850</h2>
-<p>Compsets with the <code>B</code> prefix are fully coupled, and actively simulate all components. As such, This case is more expensive to run, most especially the ocean component. This case can be set up to run on dedicated nodes by changing the <code>$ROOTPE</code> variables (run the ./pelayout command to check that you have things as you wish). This should give a throughput of just over 10 SYPD.</p>
-<div class="highlight"><pre><span></span><code><span class="si">${</span><span class="nv">CIMEROOT</span><span class="si">}</span>/scripts/create_newcase --case <span class="o">[</span><span class="k">case</span> name<span class="o">]</span> --compset B1850 --res f09_g17 --walltime <span class="o">[</span>enough time<span class="o">]</span> --project <span class="o">[</span>project name<span class="o">]</span>
-<span class="nb">cd</span> <span class="o">[</span><span class="k">case</span> directory<span class="o">]</span>
-./xmlchange <span class="nv">NTASKS_CPL</span><span class="o">=</span><span class="m">1024</span>,NTASKS_ICE<span class="o">=</span><span class="m">256</span>,NTASKS_LND<span class="o">=</span><span class="m">256</span>,NTASKS_GLC<span class="o">=</span><span class="m">128</span>,NTASKS_ROF<span class="o">=</span><span class="m">128</span>,NTASKS_WAV<span class="o">=</span><span class="m">256</span>,NTASKS_OCN<span class="o">=</span><span class="m">512</span>,NTASKS_ATM<span class="o">=</span><span class="m">1024</span>
-./xmlchange <span class="nv">ROOTPE_CPL</span><span class="o">=</span><span class="m">0</span>,ROOTPE_ICE<span class="o">=</span><span class="m">0</span>,ROOTPE_LND<span class="o">=</span><span class="m">256</span>,ROOTPE_GLC<span class="o">=</span><span class="m">512</span>,ROOTPE_ROF<span class="o">=</span><span class="m">640</span>,ROOTPE_WAV<span class="o">=</span><span class="m">768</span>,ROOTPE_OCN<span class="o">=</span><span class="m">1024</span>,ROOTPE_ATM<span class="o">=</span><span class="m">0</span>
-<span class="o">[</span>Any other changes e.g. run length or resubmissions<span class="o">]</span>
-./case.setup
-./case.build
-./case.submit
-</code></pre></div>
-<p>You can also define the PE layout in terms of full nodes by using negative values. As such, for a <code>$MAX_MPITASKS_PER_NODE=128</code> and <code>$MAX_TASKS_PER_NODE=128</code>, the below is equivalent to the above:</p>
-<div class="highlight"><pre><span></span><code><span class="si">${</span><span class="nv">CIMEROOT</span><span class="si">}</span>/scripts/create_newcase --case <span class="o">[</span><span class="k">case</span> name<span class="o">]</span> --compset B1850 --res f09_g17 --walltime <span class="o">[</span>enough time<span class="o">]</span> --project <span class="o">[</span>project name<span class="o">]</span>
-<span class="nb">cd</span> <span class="o">[</span><span class="k">case</span> directory<span class="o">]</span>
-./xmlchange <span class="nv">NTASKS_CPL</span><span class="o">=</span>-8,NTASKS_ICE<span class="o">=</span>-2,NTASKS_LND<span class="o">=</span>-2,NTASKS_GLC<span class="o">=</span>-1,NTASKS_ROF<span class="o">=</span>-1,NTASKS_WAV<span class="o">=</span>-2,NTASKS_OCN<span class="o">=</span>-4,NTASKS_ATM<span class="o">=</span>-8
-./xmlchange <span class="nv">ROOTPE_CPL</span><span class="o">=</span><span class="m">0</span>,ROOTPE_ICE<span class="o">=</span><span class="m">0</span>,ROOTPE_LND<span class="o">=</span>-2,ROOTPE_GLC<span class="o">=</span>-4,ROOTPE_ROF<span class="o">=</span>-5,ROOTPE_WAV<span class="o">=</span>-6,ROOTPE_OCN<span class="o">=</span>-8,ROOTPE_ATM<span class="o">=</span><span class="m">0</span>
-<span class="o">[</span>Any other changes e.g. run length or resubmissions<span class="o">]</span>
-./case.setup
-./case.build
-./case.submit
-</code></pre></div>
-<h2 id="waccm-x-fxhist">WACCM-X / FXHIST</h2>
-<p>The WACCM-X case needs care during the set up and running for a couple of reasons. Firstly, as mentioned in the <a href="../cesm213_run/#archiving-errors">known issues section on archiving errors</a> the short-term archiver can sometimes move too many files and thus create problems with resubmissions. Secondly, it can pick up other files in the cesm_inputdata directory, causing issues when running. WACCM-X is also comparatively very expensive, and so only has an expected throughput of a little over 1.5 SYPD, and that when on a coarser grid than above. The setup for running a WACCM-X case with approximately 2 degree resolution and no short-term archiving is</p>
-<div class="highlight"><pre><span></span><code><span class="si">${</span><span class="nv">CIMEROOT</span><span class="si">}</span>/scripts/create_newcase --case <span class="o">[</span><span class="k">case</span> name<span class="o">]</span> --compset FXHIST --res f19_f19_mg16 --walltime <span class="o">[</span>enough time<span class="o">]</span> --project <span class="o">[</span>project name<span class="o">]</span> --run-unsupported
-<span class="nb">cd</span> <span class="o">[</span><span class="k">case</span> directory<span class="o">]</span>
-./xmlchange <span class="nv">NTASKS</span><span class="o">=</span><span class="m">512</span>,NTASKS_ESP<span class="o">=</span><span class="m">1</span>
-./xmlchange <span class="nv">NTHRDS</span><span class="o">=</span><span class="m">2</span>
-./xmlchange <span class="nv">DOUT_S</span><span class="o">=</span>FALSE
-<span class="o">[</span>Any other changes e.g. run length or resubmissions<span class="o">]</span>
-./case.setup
-./case.build
-./case.submit
-</code></pre></div>
+  <h1>Cesm further examples</h1>
+
+<p><a href="../../research-software/cesm-further-examples/">This page has moved</a></p>
 
               
             </article>

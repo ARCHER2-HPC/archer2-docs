@@ -13,7 +13,7 @@
     
     
       
-        <title>First-Time setup of CESM 2.1.3 - ARCHER2 User Documentation</title>
+        <title>Cesm213 setup - ARCHER2 User Documentation</title>
       
     
     
@@ -71,11 +71,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#first-time-setup-of-cesm-213" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -104,7 +99,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              First-Time setup of CESM 2.1.3
+              Cesm213 setup
             
           </span>
         </div>
@@ -618,8 +613,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../../research-software/casino/" class="md-nav__link">
+        CASINO
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../research-software/castep/" class="md-nav__link">
         CASTEP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research-software/cesm/" class="md-nav__link">
+        CESM2
       </a>
     </li>
   
@@ -662,6 +685,20 @@
     <li class="md-nav__item">
       <a href="../../research-software/cp2k/" class="md-nav__link">
         CP2K
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research-software/crystal/" class="md-nav__link">
+        CRYSTAL
       </a>
     </li>
   
@@ -1323,96 +1360,6 @@
   
   
   
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_9">
-          Other Software
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Other Software" data-md-level="1">
-        <label class="md-nav__title" for="__nav_9">
-          <span class="md-nav__icon md-icon"></span>
-          Other Software
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
-        Overview
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../casino/" class="md-nav__link">
-        CASINO
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../cesm213/" class="md-nav__link">
-        CESM 2.1.3
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../crystal/" class="md-nav__link">
-        CRYSTAL
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
     <li class="md-nav__item">
       <a href="../../essentials/" class="md-nav__link">
         Essential Skills
@@ -1453,50 +1400,6 @@
   
   
   
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#downloading-cesm-213-and-setting-up-the-directory-structure" class="md-nav__link">
-    Downloading CESM 2.1.3 And Setting Up The Directory Structure
-  </a>
-  
-    <nav class="md-nav" aria-label="Downloading CESM 2.1.3 And Setting Up The Directory Structure">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#manual-setup-instructions" class="md-nav__link">
-    Manual setup instructions
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#linking-and-downloading-components" class="md-nav__link">
-    Linking And Downloading Components
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#building-cprnc" class="md-nav__link">
-    Building cprnc
-  </a>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -1514,109 +1417,9 @@
 
 
 
-<h1 id="first-time-setup-of-cesm-213">First-Time setup of CESM 2.1.3</h1>
-<p>Due to the nature of the CESM program, a centrally installed version of the code is not provided on ARCHER2. Instead, a user needs to download and set up the program themselves in their <code>/work</code> area. The installation is done in three steps:</p>
-<ol>
-<li><a href="#downloading-cesm-2.1.3-and-setting-up-the-directory-structure">Download the code and set up the directory structure</a></li>
-<li><a href="#linking-and-downloading-components">Link and Download Components</a></li>
-<li><a href="#building-cprnc">Build CPRNC</a></li>
-</ol>
-<p>After setup, CESM is ready to run a simple case.</p>
-<h2 id="downloading-cesm-213-and-setting-up-the-directory-structure">Downloading CESM 2.1.3 And Setting Up The Directory Structure</h2>
-<p>For ease of use, a setup script has been created which downloads CESM 2.1.3, creates the directory structure needed for running CESM2 cases and creates a hidden file in your home directory containing environment variables needed by CESM.</p>
-<p>To execute this script, run the following in an archer2 terminal</p>
-<div class="highlight"><pre><span></span><code><span class="nb">source</span> /work/n02/shared/CESM2/setup_cesm213.sh
-</code></pre></div>
-<p>This script will create a directory, defaulting to <code>/work/$GROUP/$GROUP/$USER/cesm/CESM2.1.3</code>, where <code>$GROUP</code> is your default group, for example n02, and populate it with the following subdirectories:
-* <code>archive</code> - short-term archiving for completed runs,
-* <code>ccsm_baselines</code> - baseline files,
-* <code>cesm_inputdata</code> - input data downloaded and used when running cases,
-* <code>runs</code> - location of the case files used when running a case,
-* cesm directory - location of the cesm source code and the various components. Defaults to <code>my_cesm_sandbox</code></p>
-<p>The default locations for the CESM root directory and the CESM location can be overridden during installation either by entering new paths at runtime when prompted or by providing them as command line arguments, for example</p>
-<div class="highlight"><pre><span></span><code><span class="nb">source</span> /work/n02/shared/CESM2/setup_cesm213.sh -p /work/n03/n03/<span class="nv">$USER</span>/CESM213 -l cesm_prog
-</code></pre></div>
-<h3 id="manual-setup-instructions">Manual setup instructions</h3>
-<p>If you have trouble with running the setup script, you can install manually by running the following commands:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">PREFIX</span><span class="o">=</span><span class="s2">&quot;path/to/your/desired/cesm/root/location&quot;</span>
-<span class="nv">CESM_DIR_LOC</span><span class="o">=</span><span class="s2">&quot;name_of_install_directory_for_cesm&quot;</span>
+  <h1>Cesm213 setup</h1>
 
-mkdir -p <span class="nv">$PREFIX</span>
-<span class="nb">cd</span> <span class="nv">$PREFIX</span>
-mkdir -p archive
-mkdir -p ccsm_baselines
-mkdir -p cesm_inputdata
-mkdir -p runs
-
-<span class="nv">CESM_LOC</span><span class="o">=</span><span class="nv">$PREFIX</span>/<span class="nv">$CESM_DIR_LOC</span>
-
-git clone -b release-cesm2.1.3  https://github.com/ESCOMP/CESM.git <span class="nv">$CESM_LOC</span>
-<span class="nb">cd</span> <span class="nv">$CESM_LOC</span>
-git checkout release-cesm2.1.3
-
-tee <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/.cesm213 <span class="s">&lt;&lt;EOF &gt; /dev/null</span>
-<span class="s">### CESM 2.1.3 on ARCHER2 Path File</span>
-<span class="s">### Do Not Edit This File Unless You Know What You Are Doing</span>
-<span class="s">CIME_MODEL=cesm</span>
-<span class="s">CESM_ROOT=$PREFIX</span>
-<span class="s">CESM_LOC=$PREFIX/$CESM_DIR_LOC</span>
-<span class="s">CIMEROOT=$PREFIX/$CESM_DIR_LOC/cime</span>
-<span class="s">EOF</span>
-
-<span class="nb">echo</span> <span class="s2">&quot;module use /work/n02/shared/CESM2/module&quot;</span> &gt;&gt; ~/.bashrc
-module use /work/n02/shared/CESM2/module
-module load CESM2/2.1.3
-</code></pre></div>
-<h2 id="linking-and-downloading-components">Linking And Downloading Components</h2>
-<p>CESM utilises multiple components, including CAM (atmosphere), CICE (sea ice), CISM (ice sheets), CTSM (land), MOSART (adaptive river transport), POP2 (ocean), RTM (river transport) and WW3 (waves), all of which are connected using the Common Infrastructure for Modelling the Earth (CIME). These components are hosted on github, and during the setup process they are downloaded.</p>
-<p>Before downloading the external components, you must first modify the file <code>$CESM_LOC/Externals.cfg</code>. This will change the version of CIME from the default cime 5.6.32 to the maintained cime 5.6 branch. This is done by modifying the file so that the cime section goes from</p>
-<div class="highlight"><pre><span></span><code><span class="o">[</span>cime<span class="o">]</span>
-<span class="nv">tag</span> <span class="o">=</span> cime5.6.32
-<span class="nv">protocol</span> <span class="o">=</span> git
-<span class="nv">repo_url</span> <span class="o">=</span> https://github.com/ESMCI/cime
-<span class="nv">local_path</span> <span class="o">=</span> cime
-<span class="nv">required</span> <span class="o">=</span> True
-</code></pre></div>
-<p>to</p>
-<div class="highlight"><pre><span></span><code><span class="o">[</span>cime<span class="o">]</span>
-<span class="nv">branch</span> <span class="o">=</span> maint-5.6
-<span class="nv">protocol</span> <span class="o">=</span> git
-<span class="nv">repo_url</span> <span class="o">=</span> https://github.com/ESMCI/cime
-<span class="nv">local_path</span> <span class="o">=</span> cime
-<span class="nv">required</span> <span class="o">=</span> True
-</code></pre></div>
-<p>By making this change, the configurations for archer2 are brought in along with some bug fixes</p>
-<p>Once this has been done you are free to download the external components by executing the commands</p>
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span> <span class="nv">$CESM_LOC</span>
-./manage_externals/checkout_externals
-</code></pre></div>
-<p>The first time you run the checkout_externals script, you may be asked to accept a certificate, and you may also get an error of the form</p>
-<p><div class="highlight"><pre><span></span><code>    svn: E120108: Error running context: The server unexpectedly closed the connection.
-</code></pre></div>
-If this happens, rerun the checkout_externals script and it should download the external components correctly.</p>
-<h2 id="building-cprnc">Building cprnc</h2>
-<p>cprnc is a generic tool for analyzing a netcdf file or comparing two netcdf files. It is used in various places by CESM and the source is included with cime.</p>
-<p>To build, execute the following commands</p>
-<div class="highlight"><pre><span></span><code>module load CESM2/2.1.3
-<span class="nb">cd</span> <span class="nv">$CIMEROOT</span>/tools/cprnc
-../configure --macros-format<span class="o">=</span>Makefile --mpilib<span class="o">=</span>mpi-serial
-sed -i <span class="s1">&#39;/}}/d&#39;</span> .env_mach_specific.sh
-<span class="nb">source</span> ./.env_mach_specific.sh <span class="o">&amp;&amp;</span> make
-</code></pre></div>
-<p>It is likely you will see a warning message of the form</p>
-<div class="highlight"><pre><span></span><code>The following dependent module(s) are not currently loaded: cray-hdf5-parallel (required by: CESM2/2.1.3), cray-netcdf-hdf5parallel (required by: CESM2/2.1.3), cray-parallel-netcdf (required by: CESM2/2.1.3)
-</code></pre></div>
-<p>This is due to serial netCDF and hdf5 libraries being loaded as a result of the <code>--mpilib=mpi-serial</code> flag. This warning message is safe to ignore.</p>
-<p>In a small number of cases you may also see a warning of the form</p>
-<div class="highlight"><pre><span></span><code>-bash: export: <span class="s1">&#39;}}&#39;</span>: not a valid identifier
-</code></pre></div>
-<p>This warning should also be safe to ignore, but can be solved by opening the file <code>./.env_mach_specific.sh</code> in a text editor and commenting out or deleting the line</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">OMP_NUM_THREADS</span><span class="o">={{</span> thread_count <span class="o">}}</span>
-</code></pre></div>
-<p>Then rerunning the command</p>
-<div class="highlight"><pre><span></span><code><span class="nb">source</span> ./.env_mach_specific.sh <span class="o">&amp;&amp;</span> make
-</code></pre></div>
-<p>Once this step has been completed, you are ready to run a <a href="../cesm213_run/">simple test case</a>.</p>
+<p><a href="../../research-software/cesm213_setup/">This page has moved</a></p>
 
               
             </article>
