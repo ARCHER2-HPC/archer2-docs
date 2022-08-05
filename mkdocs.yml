@@ -68,10 +68,13 @@ nav:
     - "Energy monitoring": user-guide/energy-monitoring.md
   - "Research Software":
     - "Overview": research-software/index.md
+    - "CASINO": research-software/casino.md
     - "CASTEP": research-software/castep.md
+    - "CESM2": research-software/cesm.md
     - "Chemshell": research-software/chemshell.md
     - "Code_Saturne": research-software/code-saturne.md
     - "CP2K": research-software/cp2k.md
+    - "CRYSTAL": research-software/crystal.md
     - "FHI-aims": research-software/fhi-aims.md
     - "FEniCS": research-software/fenics.md
     - "GROMACS": research-software/gromacs.md
@@ -115,10 +118,5 @@ nav:
     - "ParaView": data-tools/paraview.md
     - "R": data-tools/cray-r.md
     - "VisiData": data-tools/visidata.md
-  - "Other Software":
-    - "Overview": other-software/index.md
-    - "CASINO": other-software/casino.md
-    - "CESM 2.1.3": other-software/cesm213.md
-    - "CRYSTAL": other-software/crystal.md
   - "Essential Skills": essentials/index.md
   - "ARCHER2 and Publications": publish/index.md
