@@ -90,24 +90,12 @@ performance but are well suited to standard operations like compilation
 and file editing. These file systems are visible from the ARCHER2 login
 nodes.
 
-#### Accessing backups of home file systems
+#### Accessing snapshots of home file systems
 
-The home file systems **are fully backed up**. Full backups are taken
-weekly (for each of the past two weeks), daily (for each of the past
-two days) and hourly (for each of the last 6 hours). You can access the
-snapshots at the `/home1/.snapshot`, `/home2/.snapshot`, `/home3/.snapshot`
-and `/home4/.snapshot` depending on which of the file systems you have
-your home directories on. You can find out which file system your
-home directory is on with the command:
+The home file systems retain snapshots which can be used to recover past versions of files. Snapshots are taken weekly (for each of the past two weeks), daily (for each of the past two days) and hourly (for each of the last 6 hours). You can access the snapshots at `.snapshot` from any given directory on the home file systems. Note that the `.snapshot` directory will not show up under any version of “ls” and will not tab complete.
 
-```
-readlink -f $HOME
-```
+These file systems are a good location to keep source code, copies of scripts and compiled binaries. Small amounts of important data can also be copied here for safe keeping though the file systems are not fast enough to manipulate large datasets effectively.
 
-These file-systems are a good location to keep source-code, copies of
-scripts and compiled binaries. Small amounts of important data can also
-be copied here for safe keeping though the file systems are not fast
-enough to manipulate large datasets effectively.
 
 #### Quotas on home file systems
 
