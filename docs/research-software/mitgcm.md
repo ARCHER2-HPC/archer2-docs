@@ -350,3 +350,4 @@ To run the model, change the name of the executable in the Slurm submission scri
 If taf compilation fails with an error like "failed to convert GOTPCREL relocation; relink with --no-relax" then try recompiling with the gnu compiler. This requires:
 1. Use of the dev_linux_amd64_gfortran_archer2 options file **COMING**
 2. Add "module load PrgEnv-gnu" to the compilation commands *before* the other module loads
+3. Make sure all the namelists (data.* files) end in '/' not '&' or you will get runtime errors
