@@ -222,10 +222,6 @@ The steps for building the ECCOv4-r4 instance of MITgcm are very similar to thos
     mkdir build
     cd build
 
-If you haven't already, copy the ARCHER2 optfile into the MITgcm directories:
-
-    cp /work/n02/shared/mjmn02/ECCOv4/cases/cce/cce1/scripts/dev_linux_amd64_cray_archer2 MITgcm/tools/build_options/
-
 Load the NetCDF modules:
 
     module load cray-hdf5
@@ -348,3 +344,9 @@ The source code will be packaged and forwarded to the FastOpt servers, where it 
     cp -p ../build_ad/mitgcmuv_ad .
     
 To run the model, change the name of the executable in the Slurm submission script; everything else should be the same as in the forward case. As above, at the end of the run you should have a set of `STDOUT.*` files that you can examine for any obvious problems. 
+
+#### Other compile options
+
+If taf compilation fails with an error like "failed to convert GOTPCREL relocation; relink with --no-relax" then try recompiling with the gnu compiler. This requires:
+1. Use of the dev_linux_amd64_gfortran_archer2 options file **COMING**
+2. Add "module load PrgEnv-gnu" to the compilation commands *before* the other module loads
