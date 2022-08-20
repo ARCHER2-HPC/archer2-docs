@@ -116,7 +116,6 @@ the following will run on a single node:
 #SBATCH --partition=standard
 #SBATCH --qos=standard
 
-module load epcc-job-env
 module load paraview
 
 srun --mpi=pmi2 pvbatch pvbatchscript.py
