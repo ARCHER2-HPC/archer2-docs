@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.4.0">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.4.1">
     
     
       
@@ -1637,7 +1637,6 @@ the following will run on a single node:</p>
 #SBATCH --partition=standard
 #SBATCH --qos=standard
 
-module load epcc-job-env
 module load paraview
 
 srun --mpi=pmi2 pvbatch pvbatchscript.py
