@@ -1639,7 +1639,7 @@ the following will run on a single node:</p>
 
 module load paraview
 
-srun --mpi=pmi2 pvbatch pvbatchscript.py
+srun --distribution=block:block --hint=nomultithread pvbatch pvbatchscript.py
 </code></pre></div>
 <h2 id="compiling-paraview">Compiling ParaView</h2>
 <p>The latest instructions for building ParaView on ARCHER2 may be found in
