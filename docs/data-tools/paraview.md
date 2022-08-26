@@ -118,7 +118,7 @@ the following will run on a single node:
 
 module load paraview
 
-srun --mpi=pmi2 pvbatch pvbatchscript.py
+srun --distribution=block:block --hint=nomultithread pvbatch pvbatchscript.py
 ```
 
 ## Compiling ParaView
