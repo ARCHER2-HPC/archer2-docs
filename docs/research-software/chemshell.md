@@ -58,7 +58,7 @@ the `chemsh` command:
     # Replace [budget code] below with your project code (e.g. t01)
     chemsh --submit               \
            --jobname pychmsh      \
-           --account budget code] \
+           --account [budget code] \
            --partition standard   \
            --qos standard         \
            --walltime 0:10:0      \
