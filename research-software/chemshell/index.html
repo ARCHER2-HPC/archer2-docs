@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.4.1">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.4.2">
     
     
       
@@ -48,7 +48,7 @@
   
 
 
-  <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-XVNML97F1T"),document.addEventListener("DOMContentLoaded",function(){if(document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document.forms.feedback){var e,a=document.forms.feedback;for(e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}"undefined"!=typeof location$&&location$.subscribe(function(e){n("config","G-XVNML97F1T",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-XVNML97F1T",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+  <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-XVNML97F1T"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-XVNML97F1T",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-XVNML97F1T",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
 
   
     <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
@@ -705,16 +705,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#using-chemshell-on-archer2" class="md-nav__link">
-    Using ChemShell on ARCHER2
+  <a href="#using-py-chemshell-on-archer2" class="md-nav__link">
+    Using Py-ChemShell on ARCHER2
+  </a>
+  
+    <nav class="md-nav" aria-label="Using Py-ChemShell on ARCHER2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#running-parallel-py-chemshell-jobs" class="md-nav__link">
+    Running parallel Py-ChemShell jobs
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#running-parallel-chemshell-jobs" class="md-nav__link">
-    Running parallel ChemShell jobs
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1481,16 +1487,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#using-chemshell-on-archer2" class="md-nav__link">
-    Using ChemShell on ARCHER2
+  <a href="#using-py-chemshell-on-archer2" class="md-nav__link">
+    Using Py-ChemShell on ARCHER2
+  </a>
+  
+    <nav class="md-nav" aria-label="Using Py-ChemShell on ARCHER2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#running-parallel-py-chemshell-jobs" class="md-nav__link">
+    Running parallel Py-ChemShell jobs
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#running-parallel-chemshell-jobs" class="md-nav__link">
-    Running parallel ChemShell jobs
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1520,11 +1532,18 @@ Tcl-ChemShell and a more recent python-based version Py-ChemShell.</p>
 <p>The advice from <a href="https://www.chemshell.org/licence">https://www.chemshell.org/licence</a> on the difference
 is:</p>
 <blockquote>
-<p>We regard Py-ChemShell 19.0 as suitable for production calculations on
-materials systems, although you will find its feature set is more
-limited than Tcl-ChemShell. We do not currently recommend Py-ChemShell
-for calculations on biological systems, as automated import of
-biomolecular force fields is scheduled for a future release.</p>
+<p>We regard Py-ChemShell 21.0 as suitable for production calculations on 
+materials systems, and would encourage materials modellers to consider 
+switching from Tcl-ChemShell to Py-ChemShell if they haven't already 
+done so.</p>
+<p>Py-ChemShell 21.0 is the first beta release to include support for 
+calculations on biomolecular systems, including a guided protein solvation 
+workflow and automated import of CHARMM and AMBER forcefields for 
+biomolecular QM/MM calculations. We encourage experienced ChemShell users 
+to try the new functionality and send us feedback on your experience. For 
+new users, we would currently still recommend using Tcl-ChemShell for 
+biomolecular calculations until the next beta release of Py-ChemShell, 
+which is anticipated for summer 2022.</p>
 </blockquote>
 <h2 id="useful-links">Useful Links</h2>
 <ul>
@@ -1532,24 +1551,71 @@ biomolecular force fields is scheduled for a future release.</p>
 <li>ChemShell documentation <a href="https://www.chemshell.org/documentation">https://www.chemshell.org/documentation</a></li>
 <li>ChemShell forums <a href="https://www.chemshell.org/forum">https://www.chemshell.org/forum</a></li>
 </ul>
-<h2 id="using-chemshell-on-archer2">Using ChemShell on ARCHER2</h2>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>The python-based version of ChemShell is not yet available on 
-ARCHER2</p>
-</div>
+<h2 id="using-py-chemshell-on-archer2">Using Py-ChemShell on ARCHER2</h2>
 <p>The python-based version of ChemShell is open-source and is freely
 available to all users on ARCHER2.</p>
-<p>The older version of Tcl-based ChemShell requires a license. Users with
-a valid license should request access via the ARCHER2 SAFE.</p>
-<h2 id="running-parallel-chemshell-jobs">Running parallel ChemShell jobs</h2>
-<p>The following script will run a pure MPI Tcl-based ChemShell job using 8 
-nodes (128x8 cores).</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Py-ChemShell on ARCHER2 is compiled with 
+<a href="http://gulp.curtin.edu.au/gulp/">GULP 6.0</a>. This is a licenced 
+software that is free to use for academics. If you are not an 
+academic user (or if you are using Py-ChemShell for non-academic 
+work), please ensure that you have the correct GULP licence before 
+using GULP functionalities in py-ChemShell or make sure that you 
+are not using any of the GULP functionalities in your code.</p>
+</div>
+<h3 id="running-parallel-py-chemshell-jobs">Running parallel Py-ChemShell jobs</h3>
+<p>Unlike most other ARCHER2 software packages, the Py-ChemShell module is built 
+in such a way as to enable users to create and submit jobs to the compute 
+nodes by running a <code>chemsh</code> script from the login node rather than by creating 
+and submitting a Slurm submission script. Below is an example command for 
+submitting a pure MPI Py-ChemShell job running on 8 nodes (128x8 cores) with 
+the <code>chemsh</code> command:</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p>We are working with the ChemShell developers to make ChemShell available 
-on the full system as soon as possible.</p>
+<h1 id="run-this-from-the-login-node">Run this from the login node</h1>
+<p>module load pychemshell</p>
+<h1 id="replace-budget-code-below-with-your-project-code-eg-t01">Replace [budget code] below with your project code (e.g. t01)</h1>
+<p>chemsh --submit               \
+       --jobname pychmsh      \
+       --account [budget code] \
+       --partition standard   \
+       --qos standard         \
+       --walltime 0:10:0      \
+       --nnodes 8             \
+       --nprocs 1024          \ 
+       py-chemshell-job.py
+```</p>
+</div>
+</div>
+</div>
+<h2 id="using-tcl-chemshell-on-archer2">Using Tcl-ChemShell on ARCHER2</h2>
+<p>The older version of Tcl-based ChemShell requires a license. Users with
+a valid license should request access via the ARCHER2 SAFE.</p>
+<h3 id="running-parallel-tcl-chemshell-jobs">Running parallel Tcl-ChemShell jobs</h3>
+<p>The following script will run a pure MPI Tcl-based ChemShell job using 8 
+nodes (128x8 cores).</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Full system</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+
+#SBATCH --job-name=lammps_test
+#SBATCH --nodes=8
+#SBATCH --tasks-per-node=128
+#SBATCH --cpus-per-task=1
+#SBATCH --time=00:20:00
+
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code] 
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+module load tcl-chemshell/3.7.1
+
+srun --distribution=block:block --hint=nomultithread chemsh.x input.chm
+</code></pre></div>
 </div>
 </div>
 </div>
