@@ -52,7 +52,7 @@ Coward provides a tool to aid users in the construction submission scripts:
 
 ```
 /work/n01/shared/nemo/mkslurm_hetjob
-/work/n01/shared/nemo/mkslurm_hetjob_gnu
+/work/n01/shared/nemo/mkslurm_hetjob_Gnu
 ```
 
 Usage of the script:
