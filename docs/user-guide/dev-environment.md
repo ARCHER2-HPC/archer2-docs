@@ -839,7 +839,7 @@ To set up your environment for serial compilation, you will need to run:
 ```
 
 Once this is done, you can use the compiler wrappers (`cc` for C, `CC` for 
-C++, and `ftn` for fortran) to compile your code in serial.
+C++, and `ftn` for Fortran) to compile your code in serial.
 
 ## Managing development
 
