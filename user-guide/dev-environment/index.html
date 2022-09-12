@@ -733,6 +733,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#using-the-compiler-wrappers-for-serial-compilations" class="md-nav__link">
+    Using the compiler wrappers for serial compilations
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#managing-development" class="md-nav__link">
     Managing development
   </a>
@@ -1948,6 +1955,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#using-the-compiler-wrappers-for-serial-compilations" class="md-nav__link">
+    Using the compiler wrappers for serial compilations
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#managing-development" class="md-nav__link">
     Managing development
   </a>
@@ -2845,6 +2859,16 @@ e.g. to use the Gnu compiler environemnt:</p>
 <p>You can also use a compute node in an interactive way using <code>salloc</code>. Please see
 Section <a href="../scheduler/#using-salloc-to-reserve-resources">Using salloc to reserve resources</a>
 for further details. Once your interactive session is ready, you can load the compilation environment and compile the code.</p>
+<h2 id="using-the-compiler-wrappers-for-serial-compilations">Using the compiler wrappers for serial compilations</h2>
+<p>The compiler wrappers link with a number of HPE-provided libraries automatically. 
+It is possible to compile codes in serial with the compiler wrappers to take 
+advantage of the HPE libraries.</p>
+<p>To set up your environment for serial compilation, you will need to run:</p>
+<div class="highlight"><pre><span></span><code>  module load craype-network-none
+  module remove cray-mpich
+</code></pre></div>
+<p>Once this is done, you can use the compiler wrappers (<code>cc</code> for C, <code>CC</code> for 
+C++, and <code>ftn</code> for Fortran) to compile your code in serial.</p>
 <h2 id="managing-development">Managing development</h2>
 <p>ARCHER2 supports common revision control software such as <code>git</code>.</p>
 <p>Standard GNU autoconf tools are available, along with <code>make</code> (which is
