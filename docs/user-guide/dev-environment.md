@@ -825,6 +825,22 @@ You can also use a compute node in an interactive way using `salloc`. Please see
 Section [Using salloc to reserve resources](../scheduler/#using-salloc-to-reserve-resources)
 for further details. Once your interactive session is ready, you can load the compilation environment and compile the code.
 
+## Using the compiler wrappers for serial compilations
+
+The compiler wrappers link with a number of HPE-provided libraries automatically. 
+It is possible to compile codes in serial with the compiler wrappers to take 
+advantage of the HPE libraries.
+
+To set up your environment for serial compilation, you will need to run:
+
+```bash
+  module load craype-network-none
+  module remove cray-mpich
+```
+
+Once this is done, you can use the compiler wrappers (`cc` for C, `CC` for 
+C++, and `ftn` for Fortran) to compile your code in serial.
+
 ## Managing development
 
 ARCHER2 supports common revision control software such as `git`.
