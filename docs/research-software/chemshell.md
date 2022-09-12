@@ -31,7 +31,9 @@ is:
 ## Using Py-ChemShell on ARCHER2
 
 The python-based version of ChemShell is open-source and is freely
-available to all users on ARCHER2.
+available to all users on ARCHER2. The version of Py-ChemShell 
+pre-installed on ARCHER2 is compiled with NWChem and GULP as 
+libraries.
 
 !!! warning
     Py-ChemShell on ARCHER2 is compiled with 
@@ -40,7 +42,8 @@ available to all users on ARCHER2.
     academic user (or if you are using Py-ChemShell for non-academic 
     work), please ensure that you have the correct GULP licence before 
     using GULP functionalities in py-ChemShell or make sure that you 
-    are not using any of the GULP functionalities in your code.
+    are not using any of the GULP functionalities in your code (i.e., 
+    do not set theory=GULP in your calculations).
 
 ### Running parallel Py-ChemShell jobs
 
@@ -51,9 +54,9 @@ and submitting a Slurm submission script. Below is an example command for
 submitting a pure MPI Py-ChemShell job running on 8 nodes (128x8 cores) with 
 the `chemsh` command:
 
-=== "Full system"
+```bash
     # Run this from the login node
-    module load pychemshell
+    module load py-chemshell
 
     # Replace [budget code] below with your project code (e.g. t01)
     chemsh --submit               \
@@ -65,7 +68,7 @@ the `chemsh` command:
            --nnodes 8             \
            --nprocs 1024          \ 
            py-chemshell-job.py
-    ```
+```
 
 ## Using Tcl-ChemShell on ARCHER2
 
@@ -77,8 +80,7 @@ a valid license should request access via the ARCHER2 SAFE.
 The following script will run a pure MPI Tcl-based ChemShell job using 8 
 nodes (128x8 cores).
 
-=== "Full system"
-    ```
+```
     #!/bin/bash
 
     #SBATCH --job-name=lammps_test
@@ -95,4 +97,4 @@ nodes (128x8 cores).
     module load tcl-chemshell/3.7.1
 
     srun --distribution=block:block --hint=nomultithread chemsh.x input.chm
-    ```
+```
