@@ -80,7 +80,6 @@ environment on ARCHER2.
 
 There are several outstanding issues for the centrally installed Research Software:
 
-- **PyChemShell** is not yet available. We are working with the code developers to address this.
 - **PLUMED** is not yet available. Currently, we recommend affected users to install a local version of the software.
 
 Users should also check individual software pages, for known limitations/ caveats, for the use of software on the Cray EX platform and Cray Linux Environment.
