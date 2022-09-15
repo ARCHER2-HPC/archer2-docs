@@ -348,3 +348,25 @@ The source code will be packaged and forwarded to the FastOpt servers, where it 
     cp -p ../build_ad/mitgcmuv_ad .
     
 To run the model, change the name of the executable in the Slurm submission script; everything else should be the same as in the forward case. As above, at the end of the run you should have a set of `STDOUT.*` files that you can examine for any obvious problems. 
+
+##### Checkpointing for adjoint runs
+
+In an adjoint run, there is a balance between storage (i.e. saving the model state to disk) and recomputation (i.e. integrating the model forward from a stored state). Changing the `nchklev` parameters in the `tamc.h` file at compile time is how you control the relative balance between storage and recomputation. 
+
+A suggested strategy that has been used on a variety of HPC platforms is as follows:
+1. Set `nchklev_1` as large as possible, up to the size allowed by memory on your machine. (Use the `size` command to estimate the memory per process. This should be just a little bit less than the maximum allowed on the machine. On ARCHER2 this is 2 GB (standard) and 4 GB (high memory)).
+2. Next, set `nchklev_2` and `nchklev_3` to be large enough to accomodate the entire run. A common strategy is to set `nchklev_2 = nchklev_3 = sqrt(numsteps/nchklev_1) + 1`. 
+3. If the `nchklev_2` files get too big, then you may have to add a fourth level (i.e. `nchklev_4`), but this is unlikely. 
+
+This strategy allows you to keep as much in memory as possible, minimising the I/O requirements for the disk. This is useful, as I/O is often the bottleneck for MITgcm runs on HPC. 
+
+Another way to adjust performance is to adjust how tapelevel I/O is handled. This strategy performs well for most configurations:
+```
+C o tape settings
+#define ALLOW_AUTODIFF_WHTAPEIO
+#define AUTODIFF_USE_OLDSTORE_2D
+#define AUTODIFF_USE_OLDSTORE_3D
+#define EXCLUDE_WHIO_GLOBUFF_2D
+#define ALLOW_INIT_WHTAPEIO
+```
+
