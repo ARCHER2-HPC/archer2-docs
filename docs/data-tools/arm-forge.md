@@ -187,7 +187,7 @@ environments:
 For example, for `PrgEnv-gnu` the additional options required at link time
 are
 ```
--L{FORGE_ROOT}/map/lib/gnu/8.0 \
+-L${FORGE_ROOT}/map/lib/gnu/8.0 \
 -lmap-sampler-pmpi -lmap-sampler \
 -Wl,--eh-frame-hdr -Wl,-rpath=${FORGE_ROOT}/map/lib/gnu/8.0
 ```
