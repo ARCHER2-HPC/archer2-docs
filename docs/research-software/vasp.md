@@ -355,7 +355,7 @@ Performance summary:
  - AOCL 3.1 for BLAS/LAPACK/ScaLAPACK and FFTW
  - UCX for MPI transport layer
 
-| Nodes | MPI processes per node | Total MPI processes | NCORE | KPAR | 5.4.4.pl2 (4-cab system) |
+| Nodes | MPI processes per node | Total MPI processes | NCORE | KPAR | 6.3.0 (full system) |
 |------:|-----------------------:|--------------------:|------:|-----:|-------------------------:|
 |     1 |                    128 |                 128 |     4 |    2 |                    19000 |
 |     2 |                    128 |                 256 |     4 |    2 |                    10021 |
@@ -372,7 +372,7 @@ Performance summary:
  - HPE Cray LibSci 21.09 for BLAS/LAPACK/ScaLAPACK and FFTW 3.3.8
  - UCX for MPI transport layer
 
-| Nodes | MPI processes per node | Total MPI processes | NCORE | KPAR | 5.4.4.pl2 (4-cab system) |
+| Nodes | MPI processes per node | Total MPI processes | NCORE | KPAR | 5.4.4.pl2 (full system) |
 |------:|-----------------------:|--------------------:|------:|-----:|-------------------------:|
 |     1 |                    128 |                 128 |     4 |    2 |                    23417 |
 |     2 |                    128 |                 256 |     4 |    2 |                    12338 |
