@@ -4,11 +4,6 @@ This guide aims to quickly enable new users to get up and running on
 ARCHER2. It covers the process of getting an ARCHER2 account, logging in
 and running your first job.
 
-!!! important
-    This guide covers both the ARCHER2 4-cabinet system and the
-    ARCHER2 full system. Please ensure you follow the instructions
-    for the correct system.
-
 ## Request an account on ARCHER2
 
 !!! important
