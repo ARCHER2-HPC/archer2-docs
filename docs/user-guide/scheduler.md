@@ -1811,13 +1811,13 @@ Further examples of placement for heterogenenous jobs are given below.
 ### Heterogeneous jobs for a shared `MPI_COM_WORLD`
 
 !!! note
-   The directive `SBATCH hetjob` can no longer be used for jobs requiring
-   a shared `MPI_COMM_WORLD`
+    The directive `SBATCH hetjob` can no longer be used for jobs requiring
+    a shared `MPI_COMM_WORLD`
 
 !!! note
-   In this approach, each `hetjob` component must be on its own set of nodes.
-   You cannot use this approach to place different `hetjob` components on 
-   the same node.
+    In this approach, each `hetjob` component must be on its own set of nodes.
+    You cannot use this approach to place different `hetjob` components on 
+    the same node.
 
 If two or more heterogeneous components need to share a unique
 `MPI_COMM_WORLD`, a single `srun` invocation with the differrent
