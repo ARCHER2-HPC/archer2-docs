@@ -4512,15 +4512,15 @@ Further examples of placement for heterogenenous jobs are given below.</p>
 <h3 id="heterogeneous-jobs-for-a-shared-mpi_com_world">Heterogeneous jobs for a shared <code>MPI_COM_WORLD</code></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-</div>
 <p>The directive <code>SBATCH hetjob</code> can no longer be used for jobs requiring
-   a shared <code>MPI_COMM_WORLD</code></p>
+a shared <code>MPI_COMM_WORLD</code></p>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-</div>
 <p>In this approach, each <code>hetjob</code> component must be on its own set of nodes.
-   You cannot use this approach to place different <code>hetjob</code> components on 
-   the same node.</p>
+You cannot use this approach to place different <code>hetjob</code> components on 
+the same node.</p>
+</div>
 <p>If two or more heterogeneous components need to share a unique
 <code>MPI_COMM_WORLD</code>, a single <code>srun</code> invocation with the differrent
 components separated by a colon <code>:</code> should be used. Arguements
