@@ -4510,14 +4510,17 @@ a communicator size 8 (ranks 0-7). The second executable runs on
 two nodes also with communicator size 8 (ranks 0-7, 4 ranks per node).
 Further examples of placement for heterogenenous jobs are given below.</p>
 <h3 id="heterogeneous-jobs-for-a-shared-mpi_com_world">Heterogeneous jobs for a shared <code>MPI_COM_WORLD</code></h3>
-<div class="tabbed-set tabbed-alternate" data-tabs="15:1"><input checked="checked" id="__tabbed_15_1" name="__tabbed_15" type="radio" /><div class="tabbed-labels"><label for="__tabbed_15_1">Full system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The directive <code>SBATCH hetjob</code> can no longer be used for jobs requiring
-a shared <code>MPI_COMM_WORLD</code></p>
 </div>
+<p>The directive <code>SBATCH hetjob</code> can no longer be used for jobs requiring
+   a shared <code>MPI_COMM_WORLD</code></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+</div>
+<p>In this approach, each <code>hetjob</code> component must be on its own set of nodes.
+   You cannot use this approach to place different <code>hetjob</code> components on 
+   the same node.</p>
 <p>If two or more heterogeneous components need to share a unique
 <code>MPI_COMM_WORLD</code>, a single <code>srun</code> invocation with the differrent
 components separated by a colon <code>:</code> should be used. Arguements
@@ -4541,7 +4544,7 @@ communicator, we might run:</p>
 SHARED_ARGS=&quot;--distribution=block:block --hint=nomultithread&quot;
 
 srun --het-group=0 --nodes=1 --tasks-per-node=8 ${SHARED_ARGS} ./xthi-a : \
-     --het-group=1 --nodes=2 --tasks-per-node=4 ${SHARED_ARGS} ./xthi-b
+ --het-group=1 --nodes=2 --tasks-per-node=4 ${SHARED_ARGS} ./xthi-b
 </code></pre></div>
 <p>The output should confirm we have a single <code>MPI_COMM_WORLD</code> with
 a total of three nodes, <code>xthi-a</code> running on one and <code>xthi-b</code> on two,
@@ -4568,9 +4571,6 @@ Node    2, rank   13, thread   0, (affinity =    1)
 Node    2, rank   14, thread   0, (affinity =    2) 
 Node    2, rank   15, thread   0, (affinity =    3) 
 </code></pre></div></p>
-</div>
-</div>
-</div>
 <h3 id="heterogeneous-placement-for-mixed-mpiopenmp-work">Heterogeneous placement for mixed MPI/OpenMP work</h3>
 <p>Some care may be required for placement of tasks/threads in heterogeneous
 jobs in which the number of threads needs to be specified differently
@@ -4580,7 +4580,7 @@ for different components.</p>
 8 MPI tasks each with 16 OpenMP threads on one node. The second component
 runs 8 MPI tasks with one task per NUMA region on a second node; each
 task has one thread. An appropriate Slurm submission might be:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="16:1"><input checked="checked" id="__tabbed_16_1" name="__tabbed_16" type="radio" /><div class="tabbed-labels"><label for="__tabbed_16_1">Full system</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="15:1"><input checked="checked" id="__tabbed_15_1" name="__tabbed_15" type="radio" /><div class="tabbed-labels"><label for="__tabbed_15_1">Full system</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
@@ -4657,7 +4657,7 @@ other, higher-priority, jobs cannot be run. Although low priority jobs are not
 charged, you do need a valid, positive budget to be able to submit and run low
 priority jobs, i.e. you need at least 1 CU in your budget.</p>
 <p>Low priority access is always available and has the following limits:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="17:1"><input checked="checked" id="__tabbed_17_1" name="__tabbed_17" type="radio" /><div class="tabbed-labels"><label for="__tabbed_17_1">Full system</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="16:1"><input checked="checked" id="__tabbed_16_1" name="__tabbed_16" type="radio" /><div class="tabbed-labels"><label for="__tabbed_16_1">Full system</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <ul>
