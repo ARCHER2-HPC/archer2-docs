@@ -1810,66 +1810,70 @@ Further examples of placement for heterogenenous jobs are given below.
 
 ### Heterogeneous jobs for a shared `MPI_COM_WORLD`
 
-=== "Full system"
-    !!! note
-        The directive `SBATCH hetjob` can no longer be used for jobs requiring
-        a shared `MPI_COMM_WORLD`
-    
-    If two or more heterogeneous components need to share a unique
-    `MPI_COMM_WORLD`, a single `srun` invocation with the differrent
-    components separated by a colon `:` should be used. Arguements
-    to the individual components of the `srun` control the placement of
-    the tasks and threads for each component. For example, running the
-    same `xthi-a` and `xthi-b` executables as above but now in a shared
-    communicator, we might run:
-    
-    ```
-    #!/bin/bash
-    
-    #SBATCH --time=00:20:00
-    #SBATCH --exclusive
-    #SBATCH --export=none
-    #SBATCH --account=[...]
-    
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
-    
-    # We must specify correctly the total number of nodes required.
-    #SBATCH --nodes=3
-    
-    SHARED_ARGS="--distribution=block:block --hint=nomultithread"
-    
-    srun --het-group=0 --nodes=1 --tasks-per-node=8 ${SHARED_ARGS} ./xthi-a : \
-         --het-group=1 --nodes=2 --tasks-per-node=4 ${SHARED_ARGS} ./xthi-b
-    ```
-    
-    The output should confirm we have a single `MPI_COMM_WORLD` with
-    a total of three nodes, `xthi-a` running on one and `xthi-b` on two,
-    with ranks 0-15 extending across both executables.
-    ```
-    Node summary for    3 nodes:
-    Node    0, hostname nid002668, mpi   8, omp   1, executable xthi-a
-    Node    1, hostname nid002669, mpi   4, omp   1, executable xthi-b
-    Node    2, hostname nid002670, mpi   4, omp   1, executable xthi-b
-    MPI summary: 16 ranks 
-    Node    0, rank    0, thread   0, (affinity =    0) 
-    Node    0, rank    1, thread   0, (affinity =    1) 
-    Node    0, rank    2, thread   0, (affinity =    2) 
-    Node    0, rank    3, thread   0, (affinity =    3) 
-    Node    0, rank    4, thread   0, (affinity =    4) 
-    Node    0, rank    5, thread   0, (affinity =    5) 
-    Node    0, rank    6, thread   0, (affinity =    6) 
-    Node    0, rank    7, thread   0, (affinity =    7) 
-    Node    1, rank    8, thread   0, (affinity =    0) 
-    Node    1, rank    9, thread   0, (affinity =    1) 
-    Node    1, rank   10, thread   0, (affinity =    2) 
-    Node    1, rank   11, thread   0, (affinity =    3) 
-    Node    2, rank   12, thread   0, (affinity =    0) 
-    Node    2, rank   13, thread   0, (affinity =    1) 
-    Node    2, rank   14, thread   0, (affinity =    2) 
-    Node    2, rank   15, thread   0, (affinity =    3) 
-    
-    ```
+!!! note
+   The directive `SBATCH hetjob` can no longer be used for jobs requiring
+   a shared `MPI_COMM_WORLD`
+
+!!! note
+   In this approach, each `hetjob` component must be on its own set of nodes.
+   You cannot use this approach to place different `hetjob` components on 
+   the same node.
+
+If two or more heterogeneous components need to share a unique
+`MPI_COMM_WORLD`, a single `srun` invocation with the differrent
+components separated by a colon `:` should be used. Arguements
+to the individual components of the `srun` control the placement of
+the tasks and threads for each component. For example, running the
+same `xthi-a` and `xthi-b` executables as above but now in a shared
+communicator, we might run:
+
+```
+#!/bin/bash
+
+#SBATCH --time=00:20:00
+#SBATCH --exclusive
+#SBATCH --export=none
+#SBATCH --account=[...]
+
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+# We must specify correctly the total number of nodes required.
+#SBATCH --nodes=3
+
+SHARED_ARGS="--distribution=block:block --hint=nomultithread"
+
+srun --het-group=0 --nodes=1 --tasks-per-node=8 ${SHARED_ARGS} ./xthi-a : \
+ --het-group=1 --nodes=2 --tasks-per-node=4 ${SHARED_ARGS} ./xthi-b
+```
+
+The output should confirm we have a single `MPI_COMM_WORLD` with
+a total of three nodes, `xthi-a` running on one and `xthi-b` on two,
+with ranks 0-15 extending across both executables.
+```
+Node summary for    3 nodes:
+Node    0, hostname nid002668, mpi   8, omp   1, executable xthi-a
+Node    1, hostname nid002669, mpi   4, omp   1, executable xthi-b
+Node    2, hostname nid002670, mpi   4, omp   1, executable xthi-b
+MPI summary: 16 ranks 
+Node    0, rank    0, thread   0, (affinity =    0) 
+Node    0, rank    1, thread   0, (affinity =    1) 
+Node    0, rank    2, thread   0, (affinity =    2) 
+Node    0, rank    3, thread   0, (affinity =    3) 
+Node    0, rank    4, thread   0, (affinity =    4) 
+Node    0, rank    5, thread   0, (affinity =    5) 
+Node    0, rank    6, thread   0, (affinity =    6) 
+Node    0, rank    7, thread   0, (affinity =    7) 
+Node    1, rank    8, thread   0, (affinity =    0) 
+Node    1, rank    9, thread   0, (affinity =    1) 
+Node    1, rank   10, thread   0, (affinity =    2) 
+Node    1, rank   11, thread   0, (affinity =    3) 
+Node    2, rank   12, thread   0, (affinity =    0) 
+Node    2, rank   13, thread   0, (affinity =    1) 
+Node    2, rank   14, thread   0, (affinity =    2) 
+Node    2, rank   15, thread   0, (affinity =    3) 
+
+```
 
 ### Heterogeneous placement for mixed MPI/OpenMP work
 
