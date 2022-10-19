@@ -108,7 +108,7 @@ the following will run on a single node:
 #SBATCH --job-name=example_paraview_job
 #SBATCH --time=0:20:00
 #SBATCH --nodes=1
-#SBATCH --tasks-per-node=128
+#SBATCH --ntasks-per-node=128
 #SBATCH --cpus-per-task=1
 
 # Replace [budget code] below with your budget code (e.g. t01)

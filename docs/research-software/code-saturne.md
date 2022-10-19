@@ -65,7 +65,7 @@ over 4 nodes (128 x 4 = 512 cores) for a maximum of 20 minutes.
     #SBATCH --job-name=CSExample
     #SBATCH --time=0:20:0
     #SBATCH --nodes=4
-    #SBATCH --tasks-per-node=128
+    #SBATCH --ntasks-per-node=128
     #SBATCH --cpus-per-task=1
 
     # Replace [budget code] below with your project code (e.g. t01)

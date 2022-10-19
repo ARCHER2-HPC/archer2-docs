@@ -74,7 +74,7 @@ gdb4hpc. Consider that we are wanting to test an application called
 in two nodes. We would launch this in gdb4hpc by
     running:
 
-    dbg all> launch --launcher-args="--account=[budget code] --partition=standard --qos=standard --nodes=2 --tasks-per-node=128 --cpus-per-task=1 --exclusive --export=ALL" $my_prog{256} ./my_ex
+    dbg all> launch --launcher-args="--account=[budget code] --partition=standard --qos=standard --nodes=2 --ntasks-per-node=128 --cpus-per-task=1 --exclusive --export=ALL" $my_prog{256} ./my_ex
 
 Make sure to replace the `--account` input to your budget code (*e.g.*
 if you are using budget t01, that part should look like
@@ -149,7 +149,7 @@ In your interactive session, launch your executable as a background task
 running an executable called `my_exe` using 256 processes, you would
 run:
 
-    srun -n 256 --nodes=2 --tasks-per-node=128 --cpus-per-task=1 --time=01:00:00 --export=ALL \
+    srun -n 256 --nodes=2 --ntasks-per-node=128 --cpus-per-task=1 --time=01:00:00 --export=ALL \
                 --account=[budget code] --partition=standard --qos=standard ./my_exe &
 
 Make sure to replace the `--account` input to your budget code (*e.g.*
@@ -312,7 +312,7 @@ To run valgrind4hpc, first reserve the resources you will use with `salloc`.
 The following reservation request is for 2 nodes (256 physical cores) for 20 
 minutes on the short queue:
 
-    auser@uan01:> salloc --nodes=2 --tasks-per-node=128 --cpus-per-task=1 \
+    auser@uan01:> salloc --nodes=2 --ntasks-per-node=128 --cpus-per-task=1 \
                   --time=00:20:00 --partition=standard --qos=short \
                   --reservation=shortqos --hint=nomultithread \
                   --distribution=block:block --account=[budget code]
@@ -381,7 +381,7 @@ Then, launch your job using `srun` as a background task (by adding an
 executable called `my_exe` using 256 processes, you would
     run:
 
-    srun -n 256 --nodes=2 --tasks-per-node=128 --cpus-per-task=1 --time=01:00:00  --export=ALL\
+    srun -n 256 --nodes=2 --ntasks-per-node=128 --cpus-per-task=1 --time=01:00:00  --export=ALL\
                 --account=[budget code] --partition=standard --qos=standard./my_exe &
 
 !!! note
@@ -459,7 +459,7 @@ batch submission as follows:
 
 #SBATCH --job-name=test_job
 #SBATCH --nodes=1
-#SBATCH --tasks-per-node=128
+#SBATCH --ntasks-per-node=128
 #SBATCH --cpus-per-task=1
 #SBATCH --time=2:0:0
 
@@ -500,7 +500,7 @@ Then, launch your job using `srun` as a background task (by adding an
 executable called `my_exe` using 256 processes, you would
     run:
 
-    srun -n=256 --nodes=2 --tasks-per-node=128 --cpus-per-task=1 --time=01:00:00 --export=ALL \
+    srun -n=256 --nodes=2 --ntasks-per-node=128 --cpus-per-task=1 --time=01:00:00 --export=ALL \
                 --account=[budget code] --partition=standard --qos=standard ./my_exe &
 
 !!! note

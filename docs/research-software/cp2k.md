@@ -60,7 +60,7 @@ For example, the following script will run a CP2K job using 4 nodes
 
     #SBATCH --job-name=CP2K_test
     #SBATCH --nodes=4
-    #SBATCH --tasks-per-node=128
+    #SBATCH --ntasks-per-node=128
     #SBATCH --cpus-per-task=1
     #SBATCH --time=00:20:00
 
@@ -94,7 +94,7 @@ To run CP2K using MPI and OpenMP, load the `cp2k` module and use the
 
     #SBATCH --job-name=CP2K_test
     #SBATCH --nodes=4
-    #SBATCH --tasks-per-node=16
+    #SBATCH --ntasks-per-node=16
     #SBATCH --cpus-per-task=8
     #SBATCH --time=00:20:00
 

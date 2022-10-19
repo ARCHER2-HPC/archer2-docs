@@ -44,7 +44,7 @@ the standard partition. It assumes that the input file is called
 
     #SBATCH --job-name=NWChem_test
     #SBATCH --nodes=2
-    #SBATCH --tasks-per-node=128
+    #SBATCH --ntasks-per-node=128
     #SBATCH --cpus-per-task=1
     #SBATCH --time=00:20:00
 

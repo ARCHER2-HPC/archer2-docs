@@ -36,7 +36,7 @@ cores) with pure MPI.
 
     #SBATCH --job-name=mdrun_test
     #SBATCH --nodes=4
-    #SBATCH --tasks-per-node=128
+    #SBATCH --ntasks-per-node=128
     #SBATCH --cpus-per-task=1
     #SBATCH --time=00:20:00
 
@@ -63,7 +63,7 @@ OpenMP threads per MPI process.
     #!/bin/bash
     #SBATCH --job-name=mdrun_test
     #SBATCH --nodes=4
-    #SBATCH --tasks-per-node=16
+    #SBATCH --ntasks-per-node=16
     #SBATCH --cpus-per-task=8
     #SBATCH --time=00:20:00
 

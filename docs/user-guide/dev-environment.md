@@ -751,7 +751,7 @@ look like:
 #SBATCH --job-name=dgemv
 #SBATCH --time=0:20:0
 #SBATCH --nodes=1
-#SBATCH --tasks-per-node=1
+#SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=1
 
 # Replace the account code, partition and QoS with those you wish to use
@@ -798,7 +798,7 @@ directory as the job submission script) would be:
 #SBATCH --job-name=compile
 #SBATCH --time=00:20:00
 #SBATCH --nodes=1
-#SBATCH --tasks-per-node=1
+#SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=1
 
 # Replace the account code, partition and QoS with those you wish to use

@@ -56,7 +56,7 @@ For example, the following script will run a LAMMPS MD job using 4 nodes
 
     #SBATCH --job-name=lammps_test
     #SBATCH --nodes=4
-    #SBATCH --tasks-per-node=128
+    #SBATCH --ntasks-per-node=128
     #SBATCH --cpus-per-task=1
     #SBATCH --time=00:20:00
 

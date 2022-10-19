@@ -397,7 +397,7 @@ MPI processes in total).
 #SBATCH --job-name=singularity_parallel
 #SBATCH --time=0:10:0
 #SBATCH --nodes=2
-#SBATCH --tasks-per-node=128
+#SBATCH --ntasks-per-node=128
 #SBATCH --cpus-per-task=1
 
 # Replace [budget code] below with your budget code (e.g. t01)

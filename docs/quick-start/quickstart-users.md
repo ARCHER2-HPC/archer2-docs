@@ -378,7 +378,7 @@ Paste the following text into your job submission script, replacing
     
     #SBATCH --job-name=test_job
     #SBATCH --nodes=1
-    #SBATCH --tasks-per-node=128
+    #SBATCH --ntasks-per-node=128
     #SBATCH --cpus-per-task=1
     #SBATCH --time=0:5:0
     

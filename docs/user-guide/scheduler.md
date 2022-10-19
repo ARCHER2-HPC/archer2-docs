@@ -451,7 +451,7 @@ In addition, parallel jobs will also need to specify how many nodes,
 parallel processes and threads they require.
 
    - `--nodes=<nodes>` the number of nodes to use for the job.
-   - `--tasks-per-node=<processes per node>` the number of parallel
+   - `--ntasks-per-node=<processes per node>` the number of parallel
      processes (e.g. MPI ranks) per node.
    - `--cpus-per-task=1` if you are using parallel processes only with
      no threading then you should set the number of CPUs (cores) per
@@ -670,7 +670,7 @@ and 128 MPI ranks per node for 20 minutes would look like:
     #SBATCH --job-name=Example_MPI_Job
     #SBATCH --time=0:20:0
     #SBATCH --nodes=4
-    #SBATCH --tasks-per-node=128
+    #SBATCH --ntasks-per-node=128
     #SBATCH --cpus-per-task=1
 
     # Replace [budget code] below with your budget code (e.g. t01)
@@ -732,7 +732,7 @@ MPI process. This results in all 128 physical cores per node being used.
     #SBATCH --job-name=Example_MPI_Job
     #SBATCH --time=0:20:0
     #SBATCH --nodes=4
-    #SBATCH --tasks-per-node=8
+    #SBATCH --ntasks-per-node=8
     #SBATCH --cpus-per-task=16
 
     # Replace [budget code] below with your project code (e.g. t01)
@@ -784,7 +784,7 @@ per core and specifies 4 hours maximum runtime per subjob:
     #SBATCH --job-name=Example_Array_Job
     #SBATCH --time=04:00:00
     #SBATCH --nodes=1
-    #SBATCH --tasks-per-node=128
+    #SBATCH --ntasks-per-node=128
     #SBATCH --cpus-per-task=1
     #SBATCH --array=0-55
 
@@ -875,7 +875,7 @@ program that prints the process placement on the node it is running on.
     #SBATCH --job-name=multi_xthi
     #SBATCH --time=0:20:0
     #SBATCH --nodes=100
-    #SBATCH --tasks-per-node=128
+    #SBATCH --ntasks-per-node=128
     #SBATCH --cpus-per-task=1
 
     # Replace [budget code] below with your budget code (e.g. t01)
@@ -939,7 +939,7 @@ node you must be aware of a few things:
 
  - The `srun` command must specify any Slurm options that differ in value
    from those specified to `sbatch`. This typically means that you need 
-   to specify the `--nodes`, `--ntasks` and `--tasks-per-node` options to `srun`.
+   to specify the `--nodes`, `--ntasks` and `--ntasks-per-node` options to `srun`.
  - You will need to include the `--exact` flag to your `srun` command. With 
    this flag on, Slurm will ensure that the resources you request are assigned 
    to your subjob. Furthermore, if the resources are not currently available, 
@@ -980,7 +980,7 @@ this example would look like:
     #SBATCH --job-name=MultiSerialOnCompute
     #SBATCH --time=0:10:0
     #SBATCH --nodes=1
-    #SBATCH --tasks-per-node=128
+    #SBATCH --ntasks-per-node=128
     #SBATCH --cpus-per-task=1
 
     # Replace [budget code] below with your budget code (e.g. t01)
@@ -1004,7 +1004,7 @@ this example would look like:
     # of memory required. The amount of memory is given in MiB by default but other
     # units can be specified. If you do not know how much memory to specify, we 
     # recommend that you specify `--mem=1500M` (1,500 MiB).
-    srun --nodes=1 --ntasks=1 --tasks-per-node=1 \
+    srun --nodes=1 --ntasks=1 --ntasks-per-node=1 \
          --exact --mem=1500M xthi > placement${i}.txt &
     done
 
@@ -1027,7 +1027,7 @@ this example would look like:
     #SBATCH --job-name=MultiParallelOnCompute
     #SBATCH --time=0:10:0
     #SBATCH --nodes=1
-    #SBATCH --tasks-per-node=64
+    #SBATCH --ntasks-per-node=64
     #SBATCH --cpus-per-task=2
 
     # Replace [budget code] below with your budget code (e.g. t01)
@@ -1050,7 +1050,7 @@ this example would look like:
         # of memory required. The amount of memory is given in MiB by default but other
         # units can be specified. If you do not know how much memory to specify, we 
         # recommend that you specify `--mem=12500M` (12,500 MiB).
-        srun --nodes=1 --ntasks=8 --tasks-per-node=8 --cpus-per-task=2 \
+        srun --nodes=1 --ntasks=8 --ntasks-per-node=8 --cpus-per-task=2 \
 	     --exact --mem=12500M xthi > placement${i}.txt &
     done
 
@@ -1069,7 +1069,7 @@ one job with 64 MPI processes and 1 OpenMP process per thread; one job with
 threads  per job.
 
 To be able to change the number of MPI processes and OpenMP threads per 
-process, we will need to forgo using the `#SBATCH --tasks-per-node` and the 
+process, we will need to forgo using the `#SBATCH --ntasks-per-node` and the 
 `#SBATCH cpus-per-task` commands -- if you set these Slurm will not let you 
 alter the `OMP_NUM_THREADS` variable and you will not be able to change the 
 number of OpenMP threads per process between each job.
@@ -1141,7 +1141,7 @@ script for this example would look like:
     #SBATCH --job-name=MultiSerialOnComputes
     #SBATCH --time=0:10:0
     #SBATCH --nodes=2
-    #SBATCH --tasks-per-node=128
+    #SBATCH --ntasks-per-node=128
     #SBATCH --cpus-per-task=1
 
     # Replace [budget code] below with your budget code (e.g. t01)
@@ -1175,7 +1175,7 @@ script for this example would look like:
             # of memory required. The amount of memory is given in MiB by default but other
             # units can be specified. If you do not know how much memory to specify, we 
             # recommend that you specify `--mem=1500M` (1,500 MiB).
-            srun --nodelist=${nodeid} --nodes=1 --ntasks=1 --tasks-per-node=1 \
+            srun --nodelist=${nodeid} --nodes=1 --ntasks=1 --ntasks-per-node=1 \
 	         --exact --mem=1500M xthi > placement_${nodeid}_${i}.txt &
         done
     done
@@ -1206,7 +1206,7 @@ maximum number of tasks is reached. You can use the `xthi` program
 to verify this for MPI process placement:
 
 ```
-auser@ln04:/work/t01/t01/auser> salloc --nodes=2 --tasks-per-node=128 \
+auser@ln04:/work/t01/t01/auser> salloc --nodes=2 --ntasks-per-node=128 \
      --cpus-per-task=1 --time=0:10:0 --partition=standard --qos=short \
      --account=[your account]
 
@@ -1278,7 +1278,7 @@ to a *core complex* that shares an L3 cache), you would set:
 Here is the output from `xthi`:
 
 ```
-auser@ln04:/work/t01/t01/auser> salloc --nodes=2 --tasks-per-node=32 \
+auser@ln04:/work/t01/t01/auser> salloc --nodes=2 --ntasks-per-node=32 \
      --cpus-per-task=4 --time=0:10:0 --partition=standard --qos=short \
      --account=[your account]
 
@@ -1377,7 +1377,7 @@ single node, you would use the `--distribution=block:cyclic` option to `srun`. T
 of process placement can be beneficial when a code is memory bound.
 
 ```
-auser@ln04:/work/t01/t01/auser> salloc --nodes=2 --tasks-per-node=128 \
+auser@ln04:/work/t01/t01/auser> salloc --nodes=2 --ntasks-per-node=128 \
      --cpus-per-task=1 --time=0:10:0 --partition=standard --qos=short \
      --account=[your account]
 
@@ -1439,7 +1439,7 @@ If you wish to place processes round robin on *both* nodes and 16-core NUMA regi
 within in a node you would use `--distribution=cyclic:cyclic`:
 
 ```
-auser@ln04:/work/t01/t01/auser> salloc --nodes=2 --tasks-per-node=128 \
+auser@ln04:/work/t01/t01/auser> salloc --nodes=2 --ntasks-per-node=128 \
      --cpus-per-task=1 --time=0:10:0 --partition=standard --qos=short \
      --account=[your account]
 
@@ -1511,7 +1511,7 @@ the `--distribution=cyclic:cyclic` option to `srun`). Note, we do not specify th
 option to `srun` in this case as the environment variable is controlling placement:
 
 ```
-salloc --nodes=8 --tasks-per-node=2 --cpus-per-task=1 --time=0:10:0 --account=t01
+salloc --nodes=8 --ntasks-per-node=2 --cpus-per-task=1 --time=0:10:0 --account=t01
 
 salloc: Granted job allocation 24236
 salloc: Waiting for resource configuration
@@ -1601,7 +1601,7 @@ following command from the command line:
 
 === "Full system"
     ```bash
-    auser@ln01:> salloc --nodes=8 --tasks-per-node=128 --cpus-per-task=1 \
+    auser@ln01:> salloc --nodes=8 --ntasks-per-node=128 --cpus-per-task=1 \
                     --time=00:20:00 --partition=standard --qos=short \
                     --account=[budget code]
     ```
@@ -1843,8 +1843,8 @@ communicator, we might run:
 
 SHARED_ARGS="--distribution=block:block --hint=nomultithread"
 
-srun --het-group=0 --nodes=1 --tasks-per-node=8 ${SHARED_ARGS} ./xthi-a : \
- --het-group=1 --nodes=2 --tasks-per-node=4 ${SHARED_ARGS} ./xthi-b
+srun --het-group=0 --nodes=1 --ntasks-per-node=8 ${SHARED_ARGS} ./xthi-a : \
+ --het-group=1 --nodes=2 --ntasks-per-node=4 ${SHARED_ARGS} ./xthi-b
 ```
 
 The output should confirm we have a single `MPI_COMM_WORLD` with
@@ -1903,7 +1903,7 @@ task has one thread. An appropriate Slurm submission might be:
     #SBATCH --nodes=2
 
     SHARED_ARGS="--distribution=block:block --hint=nomultithread \
-                 --nodes=1 --tasks-per-node=8 --cpus-per-task=16"
+                 --nodes=1 --ntasks-per-node=8 --cpus-per-task=16"
 
     # Do not set OMP_NUM_THREADS in the calling environment
     

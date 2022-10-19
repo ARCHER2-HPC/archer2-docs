@@ -52,7 +52,7 @@ The following script will run a pure MPI NAMD MD job using 4 nodes (i.e.
 
     #SBATCH --job-name=namd-nosmp
     #SBATCH --nodes=4
-    #SBATCH --tasks-per-node=128
+    #SBATCH --ntasks-per-node=128
     #SBATCH --cpus-per-task=1
     #SBATCH --time=00:20:00
 
@@ -80,7 +80,7 @@ communication processes per node and 16 worker threads per communication process
     ```
     #!/bin/bash
     #SBATCH --job-name=namd-smp
-    #SBATCH --tasks-per-node=8
+    #SBATCH --ntasks-per-node=8
     #SBATCH --cpus-per-task=16
     #SBATCH --nodes=4
     #SBATCH --time=00:20:00
