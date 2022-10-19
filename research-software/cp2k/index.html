@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.0, mkdocs-material-8.5.6">
+      <meta name="generator" content="mkdocs-1.4.1, mkdocs-material-8.5.6">
     
     
       
@@ -1622,7 +1622,7 @@ Experts may also wish to compile their own versions of the code (see below for i
 
 #SBATCH --job-name=CP2K_test
 #SBATCH --nodes=4
-#SBATCH --tasks-per-node=128
+#SBATCH --ntasks-per-node=128
 #SBATCH --cpus-per-task=1
 #SBATCH --time=00:20:00
 
@@ -1656,7 +1656,7 @@ srun --hint=nomultithread --distribution=block:block cp2k.popt -i MYINPUT.inp
 
 #SBATCH --job-name=CP2K_test
 #SBATCH --nodes=4
-#SBATCH --tasks-per-node=16
+#SBATCH --ntasks-per-node=16
 #SBATCH --cpus-per-task=8
 #SBATCH --time=00:20:00
 

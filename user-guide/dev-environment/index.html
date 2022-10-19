@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.0, mkdocs-material-8.5.6">
+      <meta name="generator" content="mkdocs-1.4.1, mkdocs-material-8.5.6">
     
     
       
@@ -2794,7 +2794,7 @@ look like:</p>
 <span class="kp">#SBATCH --job-name=dgemv</span>
 <span class="kp">#SBATCH --time=0:20:0</span>
 <span class="kp">#SBATCH --nodes=1</span>
-<span class="kp">#SBATCH --tasks-per-node=1</span>
+<span class="kp">#SBATCH --ntasks-per-node=1</span>
 <span class="kp">#SBATCH --cpus-per-task=1</span>
 
 <span class="c1"># Replace the account code, partition and QoS with those you wish to use</span>
@@ -2838,7 +2838,7 @@ directory as the job submission script) would be:</p>
 #SBATCH --job-name=compile
 #SBATCH --time=00:20:00
 #SBATCH --nodes=1
-#SBATCH --tasks-per-node=1
+#SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=1
 
 # Replace the account code, partition and QoS with those you wish to use

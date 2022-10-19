@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.0, mkdocs-material-8.5.6">
+      <meta name="generator" content="mkdocs-1.4.1, mkdocs-material-8.5.6">
     
     
       
@@ -1583,7 +1583,7 @@ over 4 nodes (128 x 4 = 512 cores) for a maximum of 20 minutes.</p>
 #SBATCH --job-name=CSExample
 #SBATCH --time=0:20:0
 #SBATCH --nodes=4
-#SBATCH --tasks-per-node=128
+#SBATCH --ntasks-per-node=128
 #SBATCH --cpus-per-task=1
 
 # Replace [budget code] below with your project code (e.g. t01)

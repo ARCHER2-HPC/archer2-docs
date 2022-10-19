@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.0, mkdocs-material-8.5.6">
+      <meta name="generator" content="mkdocs-1.4.1, mkdocs-material-8.5.6">
     
     
       
@@ -1719,7 +1719,7 @@ gdb4hpc. Consider that we are wanting to test an application called
 <code>my_exe</code>, and that we want this to be launched across all 256 processes
 in two nodes. We would launch this in gdb4hpc by
     running:</p>
-<pre><code>dbg all&gt; launch --launcher-args="--account=[budget code] --partition=standard --qos=standard --nodes=2 --tasks-per-node=128 --cpus-per-task=1 --exclusive --export=ALL" $my_prog{256} ./my_ex
+<pre><code>dbg all&gt; launch --launcher-args="--account=[budget code] --partition=standard --qos=standard --nodes=2 --ntasks-per-node=128 --cpus-per-task=1 --exclusive --export=ALL" $my_prog{256} ./my_ex
 </code></pre>
 <p>Make sure to replace the <code>--account</code> input to your budget code (<em>e.g.</em>
 if you are using budget t01, that part should look like
@@ -1786,7 +1786,7 @@ a look at the STAT tool.</p>
 (by adding an <code>&amp;</code> at the end of the command). For example, if you are
 running an executable called <code>my_exe</code> using 256 processes, you would
 run:</p>
-<pre><code>srun -n 256 --nodes=2 --tasks-per-node=128 --cpus-per-task=1 --time=01:00:00 --export=ALL \
+<pre><code>srun -n 256 --nodes=2 --ntasks-per-node=128 --cpus-per-task=1 --time=01:00:00 --export=ALL \
             --account=[budget code] --partition=standard --qos=standard ./my_exe &amp;
 </code></pre>
 <p>Make sure to replace the <code>--account</code> input to your budget code (<em>e.g.</em>
@@ -1917,7 +1917,7 @@ where there has been a significant allocation or deallocation of memory.</p>
 <p>To run valgrind4hpc, first reserve the resources you will use with <code>salloc</code>. 
 The following reservation request is for 2 nodes (256 physical cores) for 20 
 minutes on the short queue:</p>
-<pre><code>auser@uan01:&gt; salloc --nodes=2 --tasks-per-node=128 --cpus-per-task=1 \
+<pre><code>auser@uan01:&gt; salloc --nodes=2 --ntasks-per-node=128 --cpus-per-task=1 \
               --time=00:20:00 --partition=standard --qos=short \
               --reservation=shortqos --hint=nomultithread \
               --distribution=block:block --account=[budget code]
@@ -1976,7 +1976,7 @@ locations for display.</p>
 <code>&amp;</code> at the end of the command). For example, if you are running an
 executable called <code>my_exe</code> using 256 processes, you would
     run:</p>
-<pre><code>srun -n 256 --nodes=2 --tasks-per-node=128 --cpus-per-task=1 --time=01:00:00  --export=ALL\
+<pre><code>srun -n 256 --nodes=2 --ntasks-per-node=128 --cpus-per-task=1 --time=01:00:00  --export=ALL\
             --account=[budget code] --partition=standard --qos=standard./my_exe &amp;
 </code></pre>
 <div class="admonition note">
@@ -2047,7 +2047,7 @@ batch submission as follows:</p>
 
 <span class="kp">#SBATCH --job-name=test_job</span>
 <span class="kp">#SBATCH --nodes=1</span>
-<span class="kp">#SBATCH --tasks-per-node=128</span>
+<span class="kp">#SBATCH --ntasks-per-node=128</span>
 <span class="kp">#SBATCH --cpus-per-task=1</span>
 <span class="kp">#SBATCH --time=2:0:0</span>
 
@@ -2083,7 +2083,7 @@ export ATP_ENABLED=1
 <code>&amp;</code> at the end of the command). For example, if you are running an
 executable called <code>my_exe</code> using 256 processes, you would
     run:</p>
-<pre><code>srun -n=256 --nodes=2 --tasks-per-node=128 --cpus-per-task=1 --time=01:00:00 --export=ALL \
+<pre><code>srun -n=256 --nodes=2 --ntasks-per-node=128 --cpus-per-task=1 --time=01:00:00 --export=ALL \
             --account=[budget code] --partition=standard --qos=standard ./my_exe &amp;
 </code></pre>
 <div class="admonition note">

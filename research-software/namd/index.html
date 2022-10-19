@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.0, mkdocs-material-8.5.6">
+      <meta name="generator" content="mkdocs-1.4.1, mkdocs-material-8.5.6">
     
     
       
@@ -1602,7 +1602,7 @@ are limited by high memory requirements.</p>
 
 #SBATCH --job-name=namd-nosmp
 #SBATCH --nodes=4
-#SBATCH --tasks-per-node=128
+#SBATCH --ntasks-per-node=128
 #SBATCH --cpus-per-task=1
 #SBATCH --time=00:20:00
 
@@ -1630,7 +1630,7 @@ communication processes per node and 16 worker threads per communication process
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 #SBATCH --job-name=namd-smp
-#SBATCH --tasks-per-node=8
+#SBATCH --ntasks-per-node=8
 #SBATCH --cpus-per-task=16
 #SBATCH --nodes=4
 #SBATCH --time=00:20:00

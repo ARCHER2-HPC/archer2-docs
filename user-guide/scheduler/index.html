@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.0, mkdocs-material-8.5.6">
+      <meta name="generator" content="mkdocs-1.4.1, mkdocs-material-8.5.6">
     
     
       
@@ -3242,7 +3242,7 @@ should be repeatable. We strongly recommend its use.</p>
 parallel processes and threads they require.</p>
 <ul>
 <li><code>--nodes=&lt;nodes&gt;</code> the number of nodes to use for the job.</li>
-<li><code>--tasks-per-node=&lt;processes per node&gt;</code> the number of parallel
+<li><code>--ntasks-per-node=&lt;processes per node&gt;</code> the number of parallel
      processes (e.g. MPI ranks) per node.</li>
 <li><code>--cpus-per-task=1</code> if you are using parallel processes only with
      no threading then you should set the number of CPUs (cores) per
@@ -3440,7 +3440,7 @@ and 128 MPI ranks per node for 20 minutes would look like:</p>
 <span class="kp">#SBATCH --job-name=Example_MPI_Job</span>
 <span class="kp">#SBATCH --time=0:20:0</span>
 <span class="kp">#SBATCH --nodes=4</span>
-<span class="kp">#SBATCH --tasks-per-node=128</span>
+<span class="kp">#SBATCH --ntasks-per-node=128</span>
 <span class="kp">#SBATCH --cpus-per-task=1</span>
 
 <span class="c1"># Replace [budget code] below with your budget code (e.g. t01)</span>
@@ -3500,7 +3500,7 @@ generate the correct thread pinning.</p>
 <span class="kp">#SBATCH --job-name=Example_MPI_Job</span>
 <span class="kp">#SBATCH --time=0:20:0</span>
 <span class="kp">#SBATCH --nodes=4</span>
-<span class="kp">#SBATCH --tasks-per-node=8</span>
+<span class="kp">#SBATCH --ntasks-per-node=8</span>
 <span class="kp">#SBATCH --cpus-per-task=16</span>
 
 <span class="c1"># Replace [budget code] below with your project code (e.g. t01)</span>
@@ -3549,7 +3549,7 @@ per core and specifies 4 hours maximum runtime per subjob:</p>
 <span class="kp">#SBATCH --job-name=Example_Array_Job</span>
 <span class="kp">#SBATCH --time=04:00:00</span>
 <span class="kp">#SBATCH --nodes=1</span>
-<span class="kp">#SBATCH --tasks-per-node=128</span>
+<span class="kp">#SBATCH --ntasks-per-node=128</span>
 <span class="kp">#SBATCH --cpus-per-task=1</span>
 <span class="kp">#SBATCH --array=0-55</span>
 
@@ -3627,7 +3627,7 @@ program that prints the process placement on the node it is running on.</p>
 <span class="kp">#SBATCH --job-name=multi_xthi</span>
 <span class="kp">#SBATCH --time=0:20:0</span>
 <span class="kp">#SBATCH --nodes=100</span>
-<span class="kp">#SBATCH --tasks-per-node=128</span>
+<span class="kp">#SBATCH --ntasks-per-node=128</span>
 <span class="kp">#SBATCH --cpus-per-task=1</span>
 
 <span class="c1"># Replace [budget code] below with your budget code (e.g. t01)</span>
@@ -3694,7 +3694,7 @@ node you must be aware of a few things:</p>
 <ul>
 <li>The <code>srun</code> command must specify any Slurm options that differ in value
    from those specified to <code>sbatch</code>. This typically means that you need 
-   to specify the <code>--nodes</code>, <code>--ntasks</code> and <code>--tasks-per-node</code> options to <code>srun</code>.</li>
+   to specify the <code>--nodes</code>, <code>--ntasks</code> and <code>--ntasks-per-node</code> options to <code>srun</code>.</li>
 <li>You will need to include the <code>--exact</code> flag to your <code>srun</code> command. With 
    this flag on, Slurm will ensure that the resources you request are assigned 
    to your subjob. Furthermore, if the resources are not currently available, 
@@ -3733,7 +3733,7 @@ this example would look like:</p>
 <span class="kp">#SBATCH --job-name=MultiSerialOnCompute</span>
 <span class="kp">#SBATCH --time=0:10:0</span>
 <span class="kp">#SBATCH --nodes=1</span>
-<span class="kp">#SBATCH --tasks-per-node=128</span>
+<span class="kp">#SBATCH --ntasks-per-node=128</span>
 <span class="kp">#SBATCH --cpus-per-task=1</span>
 
 <span class="c1"># Replace [budget code] below with your budget code (e.g. t01)</span>
@@ -3757,7 +3757,7 @@ module load xthi
 <span class="c1"># of memory required. The amount of memory is given in MiB by default but other</span>
 <span class="c1"># units can be specified. If you do not know how much memory to specify, we </span>
 <span class="c1"># recommend that you specify `--mem=1500M` (1,500 MiB).</span>
-<span class="nb">srun</span> --nodes<span class="o">=</span><span class="m">1</span> --ntasks<span class="o">=</span><span class="m">1</span> --tasks-per-node<span class="o">=</span><span class="m">1</span> <span class="se">\</span>
+<span class="nb">srun</span> --nodes<span class="o">=</span><span class="m">1</span> --ntasks<span class="o">=</span><span class="m">1</span> --ntasks-per-node<span class="o">=</span><span class="m">1</span> <span class="se">\</span>
      --exact --mem<span class="o">=</span>1500M xthi &gt; placement<span class="si">${</span><span class="nv">i</span><span class="si">}</span>.txt <span class="p">&amp;</span>
 <span class="k">done</span>
 
@@ -3780,7 +3780,7 @@ this example would look like:</p>
 <span class="kp">#SBATCH --job-name=MultiParallelOnCompute</span>
 <span class="kp">#SBATCH --time=0:10:0</span>
 <span class="kp">#SBATCH --nodes=1</span>
-<span class="kp">#SBATCH --tasks-per-node=64</span>
+<span class="kp">#SBATCH --ntasks-per-node=64</span>
 <span class="kp">#SBATCH --cpus-per-task=2</span>
 
 <span class="c1"># Replace [budget code] below with your budget code (e.g. t01)</span>
@@ -3803,7 +3803,7 @@ module load xthi
     <span class="c1"># of memory required. The amount of memory is given in MiB by default but other</span>
     <span class="c1"># units can be specified. If you do not know how much memory to specify, we </span>
     <span class="c1"># recommend that you specify `--mem=12500M` (12,500 MiB).</span>
-    <span class="nb">srun</span> --nodes<span class="o">=</span><span class="m">1</span> --ntasks<span class="o">=</span><span class="m">8</span> --tasks-per-node<span class="o">=</span><span class="m">8</span> --cpus-per-task<span class="o">=</span><span class="m">2</span> <span class="se">\</span>
+    <span class="nb">srun</span> --nodes<span class="o">=</span><span class="m">1</span> --ntasks<span class="o">=</span><span class="m">8</span> --ntasks-per-node<span class="o">=</span><span class="m">8</span> --cpus-per-task<span class="o">=</span><span class="m">2</span> <span class="se">\</span>
      --exact --mem<span class="o">=</span>12500M xthi &gt; placement<span class="si">${</span><span class="nv">i</span><span class="si">}</span>.txt <span class="p">&amp;</span>
 <span class="k">done</span>
 
@@ -3822,7 +3822,7 @@ one job with 64 MPI processes and 1 OpenMP process per thread; one job with
 4 OpenMP threads per job; and, one job with 1 MPI process and 16 OpenMP 
 threads  per job.</p>
 <p>To be able to change the number of MPI processes and OpenMP threads per 
-process, we will need to forgo using the <code>#SBATCH --tasks-per-node</code> and the 
+process, we will need to forgo using the <code>#SBATCH --ntasks-per-node</code> and the 
 <code>#SBATCH cpus-per-task</code> commands -- if you set these Slurm will not let you 
 alter the <code>OMP_NUM_THREADS</code> variable and you will not be able to change the 
 number of OpenMP threads per process between each job.</p>
@@ -3893,7 +3893,7 @@ script for this example would look like:</p>
 <span class="kp">#SBATCH --job-name=MultiSerialOnComputes</span>
 <span class="kp">#SBATCH --time=0:10:0</span>
 <span class="kp">#SBATCH --nodes=2</span>
-<span class="kp">#SBATCH --tasks-per-node=128</span>
+<span class="kp">#SBATCH --ntasks-per-node=128</span>
 <span class="kp">#SBATCH --cpus-per-task=1</span>
 
 <span class="c1"># Replace [budget code] below with your budget code (e.g. t01)</span>
@@ -3927,7 +3927,7 @@ module load xthi
         <span class="c1"># of memory required. The amount of memory is given in MiB by default but other</span>
         <span class="c1"># units can be specified. If you do not know how much memory to specify, we </span>
         <span class="c1"># recommend that you specify `--mem=1500M` (1,500 MiB).</span>
-        <span class="nb">srun</span> --nodelist<span class="o">=</span><span class="si">${</span><span class="nv">nodeid</span><span class="si">}</span> --nodes<span class="o">=</span><span class="m">1</span> --ntasks<span class="o">=</span><span class="m">1</span> --tasks-per-node<span class="o">=</span><span class="m">1</span> <span class="se">\</span>
+        <span class="nb">srun</span> --nodelist<span class="o">=</span><span class="si">${</span><span class="nv">nodeid</span><span class="si">}</span> --nodes<span class="o">=</span><span class="m">1</span> --ntasks<span class="o">=</span><span class="m">1</span> --ntasks-per-node<span class="o">=</span><span class="m">1</span> <span class="se">\</span>
          --exact --mem<span class="o">=</span>1500M xthi &gt; placement_<span class="si">${</span><span class="nv">nodeid</span><span class="si">}</span>_<span class="si">${</span><span class="nv">i</span><span class="si">}</span>.txt <span class="p">&amp;</span>
     <span class="k">done</span>
 <span class="k">done</span>
@@ -3955,7 +3955,7 @@ likely use the Slurm options approach.</p>
 <p>The default is to place processes sequentially on nodes until the
 maximum number of tasks is reached. You can use the <code>xthi</code> program
 to verify this for MPI process placement:</p>
-<div class="highlight"><pre><span></span><code>auser@ln04:/work/t01/t01/auser&gt; salloc --nodes=2 --tasks-per-node=128 \
+<div class="highlight"><pre><span></span><code>auser@ln04:/work/t01/t01/auser&gt; salloc --nodes=2 --ntasks-per-node=128 \
      --cpus-per-task=1 --time=0:10:0 --partition=standard --qos=short \
      --account=[your account]
 
@@ -4024,7 +4024,7 @@ to a <em>core complex</em> that shares an L3 cache), you would set:</p>
 <li><code>--cpus-per-task=4</code> Set a stride of 4 cores between each placed process</li>
 </ul>
 <p>Here is the output from <code>xthi</code>:</p>
-<div class="highlight"><pre><span></span><code>auser@ln04:/work/t01/t01/auser&gt; salloc --nodes=2 --tasks-per-node=32 \
+<div class="highlight"><pre><span></span><code>auser@ln04:/work/t01/t01/auser&gt; salloc --nodes=2 --ntasks-per-node=32 \
      --cpus-per-task=4 --time=0:10:0 --partition=standard --qos=short \
      --account=[your account]
 
@@ -4119,7 +4119,7 @@ then you should use the <code>--distribution</code> option to <code>srun</code> 
 <p>For example, to place processes sequentially on nodes but round-robin on the 16-core NUMA regions in a
 single node, you would use the <code>--distribution=block:cyclic</code> option to <code>srun</code>. This type
 of process placement can be beneficial when a code is memory bound.</p>
-<div class="highlight"><pre><span></span><code>auser@ln04:/work/t01/t01/auser&gt; salloc --nodes=2 --tasks-per-node=128 \
+<div class="highlight"><pre><span></span><code>auser@ln04:/work/t01/t01/auser&gt; salloc --nodes=2 --ntasks-per-node=128 \
      --cpus-per-task=1 --time=0:10:0 --partition=standard --qos=short \
      --account=[your account]
 
@@ -4178,7 +4178,7 @@ Node    1, rank  135, thread   0, (affinity =  112)
 </code></pre></div>
 <p>If you wish to place processes round robin on <em>both</em> nodes and 16-core NUMA regions
 within in a node you would use <code>--distribution=cyclic:cyclic</code>:</p>
-<div class="highlight"><pre><span></span><code>auser@ln04:/work/t01/t01/auser&gt; salloc --nodes=2 --tasks-per-node=128 \
+<div class="highlight"><pre><span></span><code>auser@ln04:/work/t01/t01/auser&gt; salloc --nodes=2 --ntasks-per-node=128 \
      --cpus-per-task=1 --time=0:10:0 --partition=standard --qos=short \
      --account=[your account]
 
@@ -4245,7 +4245,7 @@ other types of MPI task placement. For example, setting it to "0" results
 in a round-robin placement on both nodes and NUMA regions in a node (equivalent to
 the <code>--distribution=cyclic:cyclic</code> option to <code>srun</code>). Note, we do not specify the <code>--distribution</code>
 option to <code>srun</code> in this case as the environment variable is controlling placement:</p>
-<div class="highlight"><pre><span></span><code>salloc --nodes=8 --tasks-per-node=2 --cpus-per-task=1 --time=0:10:0 --account=t01
+<div class="highlight"><pre><span></span><code>salloc --nodes=8 --ntasks-per-node=2 --cpus-per-task=1 --time=0:10:0 --account=t01
 
 salloc: Granted job allocation 24236
 salloc: Waiting for resource configuration
@@ -4323,7 +4323,7 @@ following command from the command line:</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="12:1"><input checked="checked" id="__tabbed_12_1" name="__tabbed_12" type="radio" /><div class="tabbed-labels"><label for="__tabbed_12_1">Full system</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>auser@ln01:&gt; salloc --nodes<span class="o">=</span><span class="m">8</span> --tasks-per-node<span class="o">=</span><span class="m">128</span> --cpus-per-task<span class="o">=</span><span class="m">1</span> <span class="se">\</span>
+<div class="highlight"><pre><span></span><code>auser@ln01:&gt; salloc --nodes<span class="o">=</span><span class="m">8</span> --ntasks-per-node<span class="o">=</span><span class="m">128</span> --cpus-per-task<span class="o">=</span><span class="m">1</span> <span class="se">\</span>
                 --time<span class="o">=</span><span class="m">00</span>:20:00 --partition<span class="o">=</span>standard --qos<span class="o">=</span>short <span class="se">\</span>
                 --account<span class="o">=[</span>budget code<span class="o">]</span>
 </code></pre></div>
@@ -4543,8 +4543,8 @@ communicator, we might run:</p>
 
 SHARED_ARGS=&quot;--distribution=block:block --hint=nomultithread&quot;
 
-srun --het-group=0 --nodes=1 --tasks-per-node=8 ${SHARED_ARGS} ./xthi-a : \
- --het-group=1 --nodes=2 --tasks-per-node=4 ${SHARED_ARGS} ./xthi-b
+srun --het-group=0 --nodes=1 --ntasks-per-node=8 ${SHARED_ARGS} ./xthi-a : \
+ --het-group=1 --nodes=2 --ntasks-per-node=4 ${SHARED_ARGS} ./xthi-b
 </code></pre></div>
 <p>The output should confirm we have a single <code>MPI_COMM_WORLD</code> with
 a total of three nodes, <code>xthi-a</code> running on one and <code>xthi-b</code> on two,
@@ -4596,7 +4596,7 @@ task has one thread. An appropriate Slurm submission might be:</p>
 #SBATCH --nodes=2
 
 SHARED_ARGS=&quot;--distribution=block:block --hint=nomultithread \
-             --nodes=1 --tasks-per-node=8 --cpus-per-task=16&quot;
+             --nodes=1 --ntasks-per-node=8 --cpus-per-task=16&quot;
 
 # Do not set OMP_NUM_THREADS in the calling environment
 

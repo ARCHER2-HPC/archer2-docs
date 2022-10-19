@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.0, mkdocs-material-8.5.6">
+      <meta name="generator" content="mkdocs-1.4.1, mkdocs-material-8.5.6">
     
     
       
@@ -1787,7 +1787,7 @@ may only be using one core.</p>
 <span class="kp">#SBATCH --job-name=data_analysis</span>
 <span class="kp">#SBATCH --time=0:10:0</span>
 <span class="kp">#SBATCH --nodes=1</span>
-<span class="kp">#SBATCH --tasks-per-node=1</span>
+<span class="kp">#SBATCH --ntasks-per-node=1</span>
 <span class="kp">#SBATCH --cpus-per-task=1</span>
 
 <span class="kp">#SBATCH --account=[budget code]</span>
@@ -1816,7 +1816,7 @@ be found
 <div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Full system</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>auser@ln01:&gt; salloc --nodes<span class="o">=</span><span class="m">1</span> --tasks-per-node<span class="o">=</span><span class="m">1</span> --cpus-per-task<span class="o">=</span><span class="m">1</span> <span class="se">\</span>
+<div class="highlight"><pre><span></span><code>auser@ln01:&gt; salloc --nodes<span class="o">=</span><span class="m">1</span> --ntasks-per-node<span class="o">=</span><span class="m">1</span> --cpus-per-task<span class="o">=</span><span class="m">1</span> <span class="se">\</span>
               --time<span class="o">=</span><span class="m">00</span>:20:00 --partition<span class="o">=</span>standard --qos<span class="o">=</span>short <span class="se">\</span>
               --account<span class="o">=[</span>budget code<span class="o">]</span>
 </code></pre></div>
