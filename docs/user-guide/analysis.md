@@ -37,7 +37,7 @@ can also be used for data analysis.
     #SBATCH --job-name=data_analysis
     #SBATCH --time=0:10:0
     #SBATCH --nodes=1
-    #SBATCH --tasks-per-node=1
+    #SBATCH --ntasks-per-node=1
     #SBATCH --cpus-per-task=1
 
     #SBATCH --account=[budget code]
@@ -68,7 +68,7 @@ be found
 
 === "Full system"
     ```bash
-    auser@ln01:> salloc --nodes=1 --tasks-per-node=1 --cpus-per-task=1 \
+    auser@ln01:> salloc --nodes=1 --ntasks-per-node=1 --cpus-per-task=1 \
                   --time=00:20:00 --partition=standard --qos=short \
                   --account=[budget code]
     ```

@@ -49,7 +49,7 @@ tar -xvzf incns-taylor-green-vortex.tar.gz
     #!/bin/bash
     #SBATCH --job-name=nektar
     #SBATCH --nodes=1
-    #SBATCH --tasks-per-node=32
+    #SBATCH --ntasks-per-node=32
     #SBATCH --cpus-per-task=1
     #SBATCH --time=02:00:00
     

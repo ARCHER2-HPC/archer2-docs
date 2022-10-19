@@ -81,7 +81,7 @@ MPI tasks). Each MPI task is allocated one core (`--cpus-per-task=1`).
     #!/bin/bash
     
     #SBATCH --nodes=4
-    #SBATCH --tasks-per-node=128
+    #SBATCH --ntasks-per-node=128
     #SBATCH --cpus-per-task=1
     #SBATCH --distribution=block:block
     #SBATCH --hint=nomultithread

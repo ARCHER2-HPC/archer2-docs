@@ -85,7 +85,7 @@ each for up to one hour.
     #SBATCH --job-name=MITgcm-simulation
     #SBATCH --time=1:0:0
     #SBATCH --nodes=2
-    #SBATCH --tasks-per-node=128
+    #SBATCH --ntasks-per-node=128
     #SBATCH --cpus-per-task=1
 
     # Replace [budget code] below with your project code (e.g. t01)
@@ -139,7 +139,7 @@ This can also sometimes lead to performance increases.
     #SBATCH --job-name=MITgcm-hybrid-simulation
     #SBATCH --time=1:0:0
     #SBATCH --nodes=2
-    #SBATCH --tasks-per-node=16
+    #SBATCH --ntasks-per-node=16
     #SBATCH --cpus-per-task=4
 
     # Replace [budget code] below with your project code (e.g. t01)
@@ -272,7 +272,7 @@ To run on ARCHER2, submit a batch script to the Slurm scheduler. Here is an exam
     #SBATCH --job-name=ECCOv4r4-test
     #SBATCH --time=1:0:0
     #SBATCH --nodes=8
-    #SBATCH --tasks-per-node=12
+    #SBATCH --ntasks-per-node=12
     #SBATCH --cpus-per-task=1
     
     # Replace [budget code] below with your project code (e.g. t01)

@@ -116,7 +116,7 @@ variety of scenarios of using Python on the ARCHER2 compute nodes.
     
     #SBATCH --job-name=python_test
     #SBATCH --nodes=1
-    #SBATCH --tasks-per-node=1
+    #SBATCH --ntasks-per-node=1
     #SBATCH --cpus-per-task=1
     #SBATCH --time=00:10:00
     
@@ -156,7 +156,7 @@ cause a segmentation fault in your program when it reaches the line
     # Slurm job options (job-name, compute nodes, job time)
     #SBATCH --job-name=mpi4py_test
     #SBATCH --nodes=1
-    #SBATCH --tasks-per-node=2
+    #SBATCH --ntasks-per-node=2
     #SBATCH --cpus-per-task=1
     #SBATCH --time=0:10:0
     

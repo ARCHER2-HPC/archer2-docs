@@ -49,7 +49,7 @@ assumes that the input files have the file stem `text_calc`.
     # Request 2 nodes with 128 MPI tasks per node for 20 minutes
     #SBATCH --job-name=CASTEP
     #SBATCH --nodes=2
-    #SBATCH --tasks-per-node=128
+    #SBATCH --ntasks-per-node=128
     #SBATCH --cpus-per-task=1
     #SBATCH --time=00:20:00
     

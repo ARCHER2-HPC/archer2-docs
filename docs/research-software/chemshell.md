@@ -85,7 +85,7 @@ nodes (128x8 cores).
 
     #SBATCH --job-name=lammps_test
     #SBATCH --nodes=8
-    #SBATCH --tasks-per-node=128
+    #SBATCH --ntasks-per-node=128
     #SBATCH --cpus-per-task=1
     #SBATCH --time=00:20:00
 

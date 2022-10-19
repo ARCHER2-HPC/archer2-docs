@@ -112,7 +112,7 @@ Below is an example script for running Julia with mpi on the compute nodes
 #SBATCH --time=00:19:00
 
 #SBATCH --nodes=1
-#SBATCH --tasks-per-node=24
+#SBATCH --ntasks-per-node=24
 #SBATCH --cpus-per-task=1
 
 #SBATCH --qos=short

@@ -35,7 +35,7 @@ assumes that the input have the default names `control.in` and `geometry.in`.
     # Request 2 nodes with 128 MPI tasks per node for 20 minutes
     #SBATCH --job-name=FHI-aims
     #SBATCH --nodes=8
-    #SBATCH --tasks-per-node=128
+    #SBATCH --ntasks-per-node=128
     #SBATCH --cpus-per-task=1
     #SBATCH --time=00:20:00
     

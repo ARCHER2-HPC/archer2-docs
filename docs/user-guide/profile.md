@@ -46,7 +46,7 @@ suite.
 
     #SBATCH --job-name=CrayPat_test
     #SBATCH --nodes=4
-    #SBATCH --tasks-per-node=128
+    #SBATCH --ntasks-per-node=128
     #SBATCH --cpus-per-task=1
     #SBATCH --time=00:20:00
 

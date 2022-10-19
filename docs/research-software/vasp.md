@@ -107,7 +107,7 @@ cores).
 
     #SBATCH --job-name=VASP_test
     #SBATCH --nodes=16
-    #SBATCH --tasks-per-node=128
+    #SBATCH --ntasks-per-node=128
     #SBATCH --cpus-per-task=1
     #SBATCH --time=00:20:00
 
@@ -160,7 +160,7 @@ cores) using only MPI ranks and no OpenMP threading.
 
     #SBATCH --job-name=VASP_test
     #SBATCH --nodes=16
-    #SBATCH --tasks-per-node=128
+    #SBATCH --ntasks-per-node=128
     #SBATCH --cpus-per-task=1
     #SBATCH --time=00:20:00
 
