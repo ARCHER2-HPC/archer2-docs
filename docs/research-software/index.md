@@ -24,7 +24,6 @@ by third-parties rather than the ARCHER2 service are marked with *):
   - [CP2K](cp2k.md)
   - [CRYSTAL(*)](crystal.md)
   - [FHI-aims](fhi-aims.md)
-  - [FEniCS](fenics.md)
   - [GROMACS](gromacs.md)
   - [LAMMPS](lammps.md)
   - [MITgcm](mitgcm.md)
