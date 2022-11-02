@@ -7,7 +7,7 @@ require a license (which you, or your research group, need to supply).
 This section also contains information on research software contributed
 and/or supported by third parties (marked with a * in the list below).
 
-For centrally-supported packages, the version available will usually be
+For centrally supported packages, the version available will usually be
 the current stable release, to include major releases and significant
 updates. We will usually not maintain older versions and versions no
 longer supported by the developers of the package.
