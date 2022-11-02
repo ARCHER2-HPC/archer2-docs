@@ -26,28 +26,30 @@ effects on achieved performance.
 
 ### MPI environment variables
 
-There are a number of environment variables avalible to control aspects of MPI behavour on Archer2,
+There are a number of environment variables avaliable to control aspects of MPI behavour on ARCHER2,
 the set of options can be displayed by running,
 
 ```
-
 man info_mpi
-
 ```
-on the Archer2 login nodes. 
+on the ARCHER2 login nodes. 
 
 
-A couple of specific variabels to highlight are MPICH_OFI_STARTUP_CONNECT and MPICH_OFI_RMA_STARTUP_CONNECT.
+A couple of specific variables to highlight are MPICH_OFI_STARTUP_CONNECT and MPICH_OFI_RMA_STARTUP_CONNECT.
 
 When using the default OFI transport layer the connections between ranks are set-up as they are required. This allows for good performance while reducing memory requirements. However for jobs using all-to-all communication it might be better to generate these connections in a coordinated way at the start of the application. To enable this set the following environment variable:
 
+```
   export MPICH_OFI_STARTUP_CONNECT=1  
+```
 
-Additionally, RMA jobs requiring an all-to-all communication pattern on node it may be benefical to set up the connections between processes on a node in a coordinated fashion:
+Additionally, RMA jobs requiring an all-to-all communication pattern on node it may be beneficial to set up the connections between processes on a node in a coordinated fashion:
 
+```
   export MPICH_OFI_RMA_STARTUP_CONNECT=1
+```
 
-This option automaticaly enables MPICH_OFI_STARTUP_CONNECT.
+This option automatically enables MPICH_OFI_STARTUP_CONNECT.
 
 ### Synchronous vs asynchronous communications
 
