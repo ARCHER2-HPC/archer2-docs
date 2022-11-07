@@ -76,7 +76,6 @@ nav:
     - "CP2K": research-software/cp2k.md
     - "CRYSTAL": research-software/crystal.md
     - "FHI-aims": research-software/fhi-aims.md
-    - "FEniCS": research-software/fenics.md
     - "GROMACS": research-software/gromacs.md
     - "LAMMPS": research-software/lammps.md
     - "MITgcm": research-software/mitgcm.md
