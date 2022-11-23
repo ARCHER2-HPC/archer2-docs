@@ -2123,7 +2123,7 @@ the compute nodes. Since `/tmp` is part of the memory on the compute
 nodes, it can speed up the job startup time.
 
 ```
-sbcast --compress=lz4 /path/to/exe /tmp/exe
+sbcast --compress=none /path/to/exe /tmp/exe
 srun /tmp/exe
 ```
 
