@@ -4773,7 +4773,7 @@ system (where the executable resides) is slow or busy. The <code>sbcast</code>
 command, the executable can be copied to the <code>/tmp</code> directory on each of
 the compute nodes. Since <code>/tmp</code> is part of the memory on the compute
 nodes, it can speed up the job startup time.</p>
-<div class="highlight"><pre><span></span><code>sbcast --compress=lz4 /path/to/exe /tmp/exe
+<div class="highlight"><pre><span></span><code>sbcast --compress=none /path/to/exe /tmp/exe
 srun /tmp/exe
 </code></pre></div>
 <h3 id="huge-pages">Huge pages</h3>
