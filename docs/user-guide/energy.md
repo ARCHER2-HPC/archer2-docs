@@ -87,9 +87,9 @@ The available frequencies on the ARCHER2 processors along with the options and e
 
 | Frequency | Slurm option | Slurm environment variable |
 |----------:|--------------|----------------------------|
-| 2.25 GHz  | `--cpu-freq=2250000` | `export SLURM_REQ_CPU_FREQ=2250000` |
-| 2.00 GHz  | `--cpu-freq=2000000` | `export SLURM_REQ_CPU_FREQ=2000000` |
-| 1.50 GHz  | `--cpu-freq=1500000` | `export SLURM_REQ_CPU_FREQ=1500000` |
+| 2.25 GHz  | `--cpu-freq=2250000` | `export SLURM_CPU_FREQ_REQ=2250000` |
+| 2.00 GHz  | `--cpu-freq=2000000` | `export SLURM_CPU_FREQ_REQ=2000000` |
+| 1.50 GHz  | `--cpu-freq=1500000` | `export SLURM_CPU_FREQ_REQ=1500000` |
 
 For example, you can add the following option to your job submission script to set the CPU frequency
 to 2.0 GHz:
@@ -102,7 +102,7 @@ Alternatively, you could add the following line to your job submission script be
 to launch the application:
 
 ```
-export SLURM_REQ_CPU_FREQ=2000000
+export SLURM_CPU_FREQ_REQ=2000000
 ```
 
 !!! tip
@@ -112,15 +112,39 @@ export SLURM_REQ_CPU_FREQ=2000000
 
 Priority of frequency settings:
 
-- The default `SLURM_REQ_CPU_FREQ` setting set by the ARCHER2 service applies if no other mechnism 
+- The default `SLURM_CPU_FREQ_REQ` setting set by the ARCHER2 service applies if no other mechnism 
   is used to set the CPU frequency
 - Adding the `#SBATCH --cpu-freq=2000000` option to a job submission script overrides the default
   ARCHER2-wide environment setting for all `srun` commands within the job script.
-- Setting the `SLURM_REQ_CPU_FREQ` environment variable in a job script overrides options provided
+- Setting the `SLURM_CPU_FREQ_REQ` environment variable in a job script overrides options provided
   to `sbatch` for any subsequent `srun` commands in the job script.
 - Adding the `--cpu-freq=2000000` option to the `srun` launch command itself overrides all other
   options.
 
+### Default CPU frequency
+
+If you do not specify a CPU frequency then you will get the default setting for the ARCHER2 service.
+The table below lists the history of default CPU frequency settings on the ARCHER2 service
+
+| Date range | Default CPU frequency |
+|------------|-----------------------|
+| Nov 2021 - current date | Unspecified - defaults to 2.25 GHz |  
+
+### CPU frequency settings for centrally-installed software
+
+Most [centrally installed research software](../research-software/) (available via `module load`
+commands) uses the same default CPU frequency as set globally for all ARCHER2 users (see above
+for this value). However, a small number of software have performance that is significantly 
+degraded by using lower frequency settings and so the modules for these packages reset the 
+CPU frequency to the highest value (2.25 GHz). The packages that currently do this are:
+
+- [GROMACS](../research-software/gromacs.md)
+- [LAMMPS](../research-software/lammps.md)
+- [NAMD](../research-software/namd.md)
+
+!!! important
+    If you specify the CPU frequency in your job scripts using one of the mechanisms described
+    above *after* you have loaded the module, you will override the setting from the module.
 
 
 
