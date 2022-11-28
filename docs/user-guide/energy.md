@@ -67,7 +67,7 @@ On compute nodes, the raw energy counters and instantaneous power draw data are 
 There are a number of files in this directory, all the counter files include the current value and a timestamp.
 
 - power - Point-in-time power (Watts).
-- energy - Accumulated energy, in joules.
+- energy - Accumulated energy (Joules)
 - cpu_power - Point-in-time power (Watts) used by the CPU domain.
 - cpu_energy - The total energy (Joules) used by the CPU domain.
 - cpu*_temp - Temperature reading (Celsius) of the CPU domain - one file per CPU socket.
