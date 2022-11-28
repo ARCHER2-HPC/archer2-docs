@@ -42,6 +42,12 @@ you are interested in a `USER` package, we
 would encourage you to try to compile your own version and we can help
 out if necessary (see below).
 
+!!! important
+    The `lammps` modules reset the CPU frequency to the highest possible value
+    (2.25 GHz) as this generally achieves the best balance of performance to 
+    energy use. You can change this setting by following the instructions in the
+    [Energy use section](../user-guide/energy.md) of the User Guide.
+
 ## Running parallel LAMMPS jobs
 
 LAMMPS can exploit multiple nodes on ARCHER2 and will generally be run

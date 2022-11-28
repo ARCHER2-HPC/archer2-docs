@@ -14,10 +14,7 @@ is also file-compatible with AMBER, CHARMM, and X-PLOR.
   - [NAMD Tutorials](https://www.ks.uiuc.edu/Training/Tutorials/#namd)
 
 ## Using NAMD on ARCHER2
-!!! note
-    Our optimisation advice is based on the ARCHER2 4-cabinet preview
-    system with the same node architecture as the current ARCHER2 service
-    but a total of 1,024 compute nodes.
+
 
 NAMD is freely available to all ARCHER2 users.
 
@@ -31,6 +28,12 @@ or SMP (```namd/2.14```). The SMP (Shared Memory Parallelism) build of NAMD
 introduces threaded parallelism to address memory limitations. The no-SMP
 build will typically provide the best performance but most users will require
 SMP in order to cope with high memory requirements.
+
+!!! important
+    The `namd` modules reset the CPU frequency to the highest possible value
+    (2.25 GHz) as this generally achieves the best balance of performance to 
+    energy use. You can change this setting by following the instructions in the
+    [Energy use section](../user-guide/energy.md) of the User Guide.
 
 
 ### Running MPI only NAMD jobs
