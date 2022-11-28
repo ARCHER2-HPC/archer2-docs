@@ -560,8 +560,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/energy-monitoring/" class="md-nav__link">
-        Energy monitoring
+      <a href="../../user-guide/energy/" class="md-nav__link">
+        Energy use
       </a>
     </li>
   
@@ -1578,6 +1578,13 @@ Three versions are available:</p>
 <li>Parallel MPI/OpenMP, double precision: <code>gmx_mpi_d</code></li>
 <li>Serial, single precision: <code>gmx</code></li>
 </ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The <code>gromacs</code> modules reset the CPU frequency to the highest possible value
+(2.25 GHz) as this generally achieves the best balance of performance to 
+energy use. You can change this setting by following the instructions in the
+<a href="../../user-guide/energy/">Energy use section</a> of the User Guide.</p>
+</div>
 <h2 id="running-parallel-gromacs-jobs">Running parallel GROMACS jobs</h2>
 <h3 id="running-mpi-only-jobs">Running MPI only jobs</h3>
 <p>The following script will run a GROMACS MD job using 4 nodes (128x4

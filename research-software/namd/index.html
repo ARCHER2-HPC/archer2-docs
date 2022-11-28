@@ -560,8 +560,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/energy-monitoring/" class="md-nav__link">
-        Energy monitoring
+      <a href="../../user-guide/energy/" class="md-nav__link">
+        Energy use
       </a>
     </li>
   
@@ -1556,12 +1556,6 @@ is also file-compatible with AMBER, CHARMM, and X-PLOR.</p>
 <li><a href="https://www.ks.uiuc.edu/Training/Tutorials/#namd">NAMD Tutorials</a></li>
 </ul>
 <h2 id="using-namd-on-archer2">Using NAMD on ARCHER2</h2>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Our optimisation advice is based on the ARCHER2 4-cabinet preview
-system with the same node architecture as the current ARCHER2 service
-but a total of 1,024 compute nodes.</p>
-</div>
 <p>NAMD is freely available to all ARCHER2 users.</p>
 <div class="highlight"><pre><span></span><code>------------------- /work/y07/shared/archer2-lmod/apps/core --------------------
    namd/2.14-nosmp    namd/2.14 (D)
@@ -1571,6 +1565,13 @@ or SMP (<code>namd/2.14</code>). The SMP (Shared Memory Parallelism) build of NA
 introduces threaded parallelism to address memory limitations. The no-SMP
 build will typically provide the best performance but most users will require
 SMP in order to cope with high memory requirements.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The <code>namd</code> modules reset the CPU frequency to the highest possible value
+(2.25 GHz) as this generally achieves the best balance of performance to 
+energy use. You can change this setting by following the instructions in the
+<a href="../../user-guide/energy/">Energy use section</a> of the User Guide.</p>
+</div>
 <h3 id="running-mpi-only-namd-jobs">Running MPI only NAMD jobs</h3>
 <p>Using no-SMP NAMD will run jobs with only MPI processes and will not introduce
 additional threaded parallelism. This is the simplest approach to running
