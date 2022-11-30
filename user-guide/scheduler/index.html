@@ -3235,6 +3235,10 @@ parallel processes and threads they require.</p>
      parallel process to 1. <strong>Important:</strong> if you are using threading (e.g.
      with OpenMP) then you will need to change this option as described
      below.</li>
+<li><code>--cpu-freq=&lt;freq. in kHz&gt;</code> set the CPU frequency for the compute 
+     nodes. Valid values are <code>2250000</code> (2.25 GHz), <code>2000000</code> (2.0 GHz),
+     <code>1500000</code> (1.5 GHz). For more information on CPU frequency settings
+     and energy use see the <a href="../energy/">Energy use</a> section.</li>
 </ul>
 <p>For parallel jobs that use threading (e.g. OpenMP), you will also need
 to change the <code>--cpus-per-task</code> option.</p>
