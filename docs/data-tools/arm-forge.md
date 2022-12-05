@@ -37,20 +37,22 @@ the SLURM queue system. These steps should be performed in the `/work`
 file system on ARCHER2.
 
 It is recommended that these commands are performed in the top-level work
-file system directory for the user account: `${HOME/home/work}`.
+file system directory for the user account, i.e., `${HOME/home/work}`.
 ```bash
 module load arm/forge
 cd ${HOME/home/work}
 source ${FORGE_DIR}/config-init
 ```
-This will create a directory `${HOME/home/work}/.allinea` with the following files:
-```bash
-ls .allinea
-```
+This will create a directory `${HOME/home/work}/.allinea` that contains the following files.
 ```output
 system.config  user.config
 ```
 The directory will also store other relevant files when Forge is run.
+
+!!! warning
+    The `config-init` script will output a warning, `...failed to read system config`.
+    Please ignore: subsequent output should indicate that the new configuration
+    files have been created.
 
 ### Using DDT
 
@@ -112,8 +114,8 @@ ddt
 ```
 
 This should start a window as shown below. Click on the ddt panel on
-the left, and then on the *Run and debug a program* option. This
-will bring up the *Run* dialogue as shown.
+the left, and then on the ***Run and debug a program*** option. This
+will bring up the ***Run*** dialogue as shown.
 
 Note:
 
@@ -126,28 +128,28 @@ shown in small text at the lower left.
 
 ![Arm Forge window](./forge-ddt.png)
 
-In the *Application* sub panel of the *Run* dialogue, details of the
+In the ***Application*** sub panel of the ***Run*** dialogue, details of the
 executable, command line arguments or data files, the working directory
 and so on should be entered.
 
-Click the *MPI* checkbox and specifiy the MPI implementation which should
-be *SLURM (generic)*. This is done by clicking the *Details* button and
-then the *Change..* button. Choose the *SLURM (generic)* implementation
-from the MPI Implementation pull-down menu section and click *OK*. You
+Click the ***MPI*** checkbox and specifiy the MPI implementation which should
+be ***SLURM (generic)***. This is done by clicking the ***Details*** button and
+then the ***Change..*** button. Choose the ***SLURM (generic)*** implementation
+from the MPI Implementation pull-down menu section and click ***OK***. You
 can then specify the required number of nodes/processes and so on.
 
 Click the OpenMP checkbox and select the relevant number of threads
 (if there is no OpenMP in the application itself, select 1 thread).
 
-Click the *Submit to Queue* checkbox and then the associated *Configure*
+Click the ***Submit to Queue*** checkbox and then the associated ***Configure***
 button. A new dialogue of options will pop-up. In the top dialgoue box
-*Submission template file* enter `${FORGE_DIR}/templates/archer2.qtf`
-and click ok.
+***Submission template file*** enter `${FORGE_DIR}/templates/archer2.qtf`
+and click ***OK***.
 
 The file specified provides a template with many of the options required
 for a standard batch job. You will then need to click on the
-*Queue Parameters* button in the same section and specify
-the relevant project budget to use the queue system in the *Account*
+***Queue Parameters*** button in the same section and specify
+the relevant project budget to use the queue system in the ***Account***
 entry.
 
 The default queue template file configuration uses the short QoS with the
@@ -185,7 +187,7 @@ default Cray programming release, 21.04:
 For example, for `PrgEnv-gnu` the additional options required at link time
 are
 ```
--L${FORGE_ROOT}/map/libs/default/gnu \
+-L${FORGE_DIR}/map/libs/default/gnu \
 -lmap-sampler-pmpi -lmap-sampler \
 -Wl,--eh-frame-hdr -Wl,-rpath=${FORGE_DIR}/map/libs/default/gnu
 ```
@@ -207,7 +209,7 @@ Successful execution will generate a file with a `.map` extension.
 
 This `.map` file may be viewed via the GUI (start with either `map` or
 `forge`) by selecting the
-*Load a profile data file from a previous run* option. The resulting
+***Load a profile data file from a previous run*** option. The resulting
 file selection dialogue can then be used to specify the `.map` file.
 
 
@@ -215,26 +217,26 @@ file selection dialogue can then be used to specify the `.map` file.
 
 If one starts the Forge client on e.g., a laptop, one should see the
 main window as
-shown above. Select *Remote Launch* and then *Configure* from the
-pull-down menu. In the *Configure Remote Connections* dialgoue
-click *Add*. The following window should be displayed. Fill
-in the fields as shown. The *Connection Name* is just a tag
+shown above. Select ***Remote Launch*** and then ***Configure*** from the
+pull-down menu. In the ***Configure Remote Connections*** dialog box
+click ***Add***. The following window should be displayed. Fill
+in the fields as shown. The ***Connection Name*** is just a tag
 for convenience (useful if a number of different accounts are
-in use). The *Host Name* should be as shown with the appropriate
-`userid`. The *Remote Installation Directory* should be exactly as
-shown. The *Remote Script* is needed to execute additional environment
+in use). The ***Host Name*** should be as shown with the appropriate
+username. The ***Remote Installation Directory*** should be exactly as
+shown. The ***Remote Script*** is needed to execute additional environment
 commands on connection. A default script is provided in the location
 shown.
 ```
 /work/y07/shared/utils/core/arm/forge/latest/remote-init
 ```
 
-Other settings can be as shown. Remember to click *OK* when done.
+Other settings can be as shown. Remember to click ***OK*** when done.
 
 ![Remote Launch Settings](./forge-remote-launch.png)
 
 
-From the *Remote Launch* menu you should now see the new Connection
+From the ***Remote Launch*** menu you should now see the new Connection
 Name. Select this, and enter the relevant ssh passphase and machine
 password to connect. A remote connection will allow you to debug,
 or view a profile, as discussed above.
