@@ -2,7 +2,7 @@
 
 [Arm Forge](https://developer.arm.com/Tools%20and%20Software/Arm%20Forge)
 provides debugging and profiling tools for MPI parallel applications, and
-OpenMP or pthreads mutli-threaded applications (and also hydrid MPI/OpenMP).
+OpenMP or pthreads multi-threaded applications (and also hydrid MPI/OpenMP).
 The debugger and profiler are called DDT and MAP, respectively.
 
 ARCHER2 has a license for up to 64 nodes (8192 cores) shared between
@@ -58,7 +58,7 @@ The directory will also store other relevant files when Forge is run.
 
 DDT (**D**istributed **D**ebugging **T**ool) provides an easy-to-use graphical
 interface for source-level debugging of compiled C/C++ or Fortran codes.
-It can also be used for non-interactive debugging, and there
+It can be used for non-interactive debugging, and there
 is also some limited support for python debugging.
 
 #### Preparation
@@ -101,8 +101,7 @@ slow execution. The example given above uses the default
 `--mem-debug=fast` which should be a reasonable first choice.
 
 Execution will produce a `.html` format report which can be used
-to examine what the state of the execution was at the point of
-failure.
+to examine the state of execution at the point of failure.
 
 
 #### Interactive debugging: using the client to submit a batch job
@@ -113,7 +112,7 @@ module load arm/forge
 ddt
 ```
 
-This should start a window as shown below. Click on the ddt panel on
+This should start a window as shown below. Click on the ***DDT*** panel on
 the left, and then on the ***Run and debug a program*** option. This
 will bring up the ***Run*** dialogue as shown.
 
@@ -142,20 +141,17 @@ Click the ***OpenMP*** checkbox and select the relevant number of threads
 (if there is no OpenMP in the application itself, select 1 thread).
 
 Click the ***Submit to Queue*** checkbox and then the associated ***Configure***
-button. A new set of options will appear - in ***Submission template file***
-enter `${FORGE_DIR}/templates/archer2.qtf` and click ***OK***.
-
-The file specified provides a template with many of the options required
-for a standard batch job. You will then need to click on the
-***Queue Parameters*** button in the same section and specify
-the relevant project budget to use the queue system in the ***Account***
-entry.
+button. A new set of options will appear such as ***Submission template file***,
+where you can enter `${FORGE_DIR}/templates/archer2.qtf` and click ***OK***.
+This template file provides many of the options required for a standard batch job.
+You will then need to click on the ***Queue Parameters*** button in the same
+section and specify the relevant project budget, see the ***Account*** entry.
 
 The default queue template file configuration uses the short QoS with the
 standard time limit of 20 minutes. If something different is required,
-one can edit the settings. Alternatively, one can make a copy of the
-`archer2.qtf` file (e.g., in `${HOME/home/work}/.allinea`) and make the relevant
-changes. This new file can then be specifed in the dialog window.
+one can edit the settings. Alternatively, one can copy the `archer2.qtf` file
+(to `${HOME/home/work}/.allinea`) and make the relevant changes. This new 
+template file can then be specifed in the dialog window.
 
 There may be a short delay while the sbatch job starts. Debugging should
 then proceed as described in the Allinea documentation.
@@ -184,7 +180,7 @@ default Cray programming release, 21.04:
 - `PrgEnv-aocc`: `${FORGE_DIR}/map/libs/default/aocc`
 
 For example, for `PrgEnv-gnu` the additional options required at link time
-are
+are given below.
 ```
 -L${FORGE_DIR}/map/libs/default/gnu \
 -lmap-sampler-pmpi -lmap-sampler \
