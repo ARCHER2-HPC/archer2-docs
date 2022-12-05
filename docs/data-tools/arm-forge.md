@@ -128,23 +128,22 @@ shown in small text at the lower left.
 
 ![Arm Forge window](./forge-ddt.png)
 
-In the ***Application*** sub panel of the ***Run*** dialogue, details of the
+In the ***Application*** sub panel of the ***Run*** dialog box, details of the
 executable, command line arguments or data files, the working directory
 and so on should be entered.
 
-Click the ***MPI*** checkbox and specifiy the MPI implementation which should
-be ***SLURM (generic)***. This is done by clicking the ***Details*** button and
-then the ***Change..*** button. Choose the ***SLURM (generic)*** implementation
-from the MPI Implementation pull-down menu section and click ***OK***. You
-can then specify the required number of nodes/processes and so on.
+Click the ***MPI*** checkbox and specifiy the MPI implementation. This is done
+by clicking the ***Details*** button and then the ***Change*** button.
+Choose the ***SLURM (generic)*** implementation from the drop-down menu
+and click ***OK***. You can then specify the required number of nodes/processes
+and so on.
 
-Click the OpenMP checkbox and select the relevant number of threads
+Click the ***OpenMP*** checkbox and select the relevant number of threads
 (if there is no OpenMP in the application itself, select 1 thread).
 
 Click the ***Submit to Queue*** checkbox and then the associated ***Configure***
-button. A new dialogue of options will pop-up. In the top dialgoue box
-***Submission template file*** enter `${FORGE_DIR}/templates/archer2.qtf`
-and click ***OK***.
+button. A new set of options will appear - in ***Submission template file***
+enter `${FORGE_DIR}/templates/archer2.qtf` and click ***OK***.
 
 The file specified provides a template with many of the options required
 for a standard batch job. You will then need to click on the
@@ -210,7 +209,7 @@ Successful execution will generate a file with a `.map` extension.
 This `.map` file may be viewed via the GUI (start with either `map` or
 `forge`) by selecting the
 ***Load a profile data file from a previous run*** option. The resulting
-file selection dialogue can then be used to specify the `.map` file.
+file selection dialog box can then be used to locate the `.map` file.
 
 
 ### Connecting with the remote client
@@ -218,7 +217,7 @@ file selection dialogue can then be used to specify the `.map` file.
 If one starts the Forge client on e.g., a laptop, one should see the
 main window as
 shown above. Select ***Remote Launch*** and then ***Configure*** from the
-pull-down menu. In the ***Configure Remote Connections*** dialog box
+drop-down menu. In the ***Configure Remote Connections*** dialog box
 click ***Add***. The following window should be displayed. Fill
 in the fields as shown. The ***Connection Name*** is just a tag
 for convenience (useful if a number of different accounts are
@@ -244,7 +243,7 @@ or view a profile, as discussed above.
 If different commands are required on connection, a copy of the
 `remote-init` script can be placed in, e.g., `${HOME/home/work}/.allinea`
 and edited as necessary. The full path of the new script should then be
-specified in the remote launch settings dialogue.
+specified in the remote launch settings dialog box.
 Note that the script changes the directory to the `/work/` file system so
 that batch submissions via `sbatch` will not be rejected.
 
