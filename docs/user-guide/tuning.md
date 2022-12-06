@@ -30,10 +30,10 @@ There are a number of environment variables available to control aspects of MPI 
 the set of options can be displayed by running,
 
 ```
-man info_mpi
+man intro_mpi
 ```
-on the ARCHER2 login nodes. 
-
+o
+n the ARCHER2 login nodes. 
 
 A couple of specific variables to highlight are MPICH_OFI_STARTUP_CONNECT and MPICH_OFI_RMA_STARTUP_CONNECT.
 
