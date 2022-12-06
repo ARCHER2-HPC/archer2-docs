@@ -1649,10 +1649,10 @@
 <h2 id="arm-forge">Arm Forge</h2>
 <p><a href="https://developer.arm.com/Tools%20and%20Software/Arm%20Forge">Arm Forge</a>
 provides debugging and profiling tools for MPI parallel applications, and
-OpenMP or pthreads mutli-threaded applications (and also hydrid MPI/OpenMP).
+OpenMP or pthreads multi-threaded applications (and also hydrid MPI/OpenMP).
 The debugger and profiler are called DDT and MAP, respectively.</p>
 <p>ARCHER2 has a license for up to 64 nodes (8192 cores) shared between
-all users at any one time. (Note cores are counted by the license, not
+all users at any one time. (Note, cores are counted by the license, not
 MPI processes, threads, or any other software entity.)</p>
 <p>There are two ways of running the Arm user interface. If you have a good
 internet connection to ARCHER2, the GUI can be run on the front-end (with
@@ -1661,7 +1661,7 @@ Alternatively, one can download a copy of the Forge remote client to your
 laptop or desktop, and run it locally. The remote client should be used if
 at all possible.</p>
 <p>To download the remote client, see the
-<a href="https://developer.arm.com/downloads/-/arm-forge">Arm developer download pages</a>. Version 22.0.3 is known to work at the time of writing. Connecting with
+<a href="https://developer.arm.com/downloads/-/arm-forge">Arm developer download pages</a>. Version 22.1.1 is known to work at the time of writing. Connecting with
 the remote client is discussed below.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1677,37 +1677,39 @@ environment correctly so that it can, for example, interact with
 the SLURM queue system. These steps should be performed in the <code>/work</code>
 file system on ARCHER2.</p>
 <p>It is recommended that these commands are performed in the top-level work
-file system directory for the user account: <code>/work/project/project/${USER}</code>
-(where <code>project</code> is the relevant project). This directory will
-be referred to throughout as <code>${WORK}</code>.
+file system directory for the user account, i.e., <code>${HOME/home/work}</code>.
 <div class="highlight"><pre><span></span><code>module load arm/forge
-<span class="nb">cd</span> <span class="si">${</span><span class="nv">WORK</span><span class="si">}</span>
-<span class="nb">source</span> <span class="si">${</span><span class="nv">FORGE_ROOT</span><span class="si">}</span>/config-init
+<span class="nb">cd</span> <span class="si">${</span><span class="nv">HOME</span><span class="p">/home/work</span><span class="si">}</span>
+<span class="nb">source</span> <span class="si">${</span><span class="nv">FORGE_DIR</span><span class="si">}</span>/config-init
 </code></pre></div>
-This will create a directory <code>${WORK}/.allinea</code> with the following files:
-<div class="highlight"><pre><span></span><code>ls .allinea
-</code></pre></div>
+This will create a directory <code>${HOME/home/work}/.allinea</code> that contains the following files.
 <div class="highlight"><pre><span></span><code><span class="go">system.config  user.config</span>
 </code></pre></div>
 The directory will also store other relevant files when Forge is run.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The <code>config-init</code> script will output a warning, <code>...failed to read system config</code>.
+Please ignore: subsequent output should indicate that the new configuration
+files have been created.</p>
+</div>
 <h3 id="using-ddt">Using DDT</h3>
-<p>DDT ("distributed debugging tool") provides an easy-to-use graphical
+<p>DDT (<strong>D</strong>istributed <strong>D</strong>ebugging <strong>T</strong>ool) provides an easy-to-use graphical
 interface for source-level debugging of compiled C/C++ or Fortran codes.
-It can also be used for non-interactive debugging, and there
+It can be used for non-interactive debugging, and there
 is also some limited support for python debugging.</p>
 <h4 id="preparation">Preparation</h4>
 <p>To prepare your program for debugging, compile and link in the normal way
 but remember to include the <code>-g</code> compiler option to retain symbolic
 information in the executable. For some programs, it may be necessary
 to reduce the optimisation to <code>-O0</code> to obtain full and consistent
-information. (However, this in itself can change
-the behaviour of bugs, so some experimentation may be necessary.)</p>
+information. However, this in itself can change the behaviour of bugs,
+so some experimentation may be necessary.</p>
 <h4 id="post-mortem-debugging">Post-mortem debugging</h4>
 <p>A non-interactive method of debugging is available which allows information
 to be obtained on the state of the execution at the point of failure in a
 batch job.</p>
 <p>Such a job can be submitted to the batch system in the usual way. The
-relevant command to start the executable is, e.g.,:
+relevant command to start the executable is as follows.
 <div class="highlight"><pre><span></span><code><span class="c1"># ... SLURM batch commands as usual ...</span>
 
 module load arm/forge
@@ -1728,17 +1730,15 @@ required (here <code>--np 8</code>). For other options see, e.g., <code>ddt --he
 slow execution. The example given above uses the default
 <code>--mem-debug=fast</code> which should be a reasonable first choice.</p>
 <p>Execution will produce a <code>.html</code> format report which can be used
-to examine what the state of the execution was at the point of
-failure.</p>
+to examine the state of execution at the point of failure.</p>
 <h4 id="interactive-debugging-using-the-client-to-submit-a-batch-job">Interactive debugging: using the client to submit a batch job</h4>
-<p>Start the client interactively (for details of remote launch, see below),
-e.g.,
+<p>You can also start the client interactively (for details of remote launch, see below).
 <div class="highlight"><pre><span></span><code>module load arm/forge
 ddt
 </code></pre></div></p>
-<p>This should start a window as shown below. Click on the ddt panel on
-the left, and then on the "Run and debug a program" option. This
-will bring up the "Run" dialogue as shown.</p>
+<p>This should start a window as shown below. Click on the <strong><em>DDT</em></strong> panel on
+the left, and then on the <strong><em>Run and debug a program</em></strong> option. This
+will bring up the <strong><em>Run</em></strong> dialogue as shown.</p>
 <p>Note:</p>
 <ul>
 <li>
@@ -1751,30 +1751,27 @@ shown in small text at the lower left.</p>
 </li>
 </ul>
 <p><img alt="Arm Forge window" src="../forge-ddt.png" /></p>
-<p>In the "Application" sub panel of the "Run" dialogue, details of the
+<p>In the <strong><em>Application</em></strong> sub panel of the <strong><em>Run</em></strong> dialog box, details of the
 executable, command line arguments or data files, the working directory
-and so on should be arranged.</p>
-<p>Click the "MPI" checkbox and specifiy the MPI implemenation which should
-be "SLURM (generic)". This is done by clicking the "Details" button and
-then the "Change.." button. Choose the "SLURM (generic)" implementation
-from the MPI Implementation pull-down menu section and click "OK". You
-can then specify the required number of nodes/processes and so on.</p>
-<p>Click the OpenMP checkbox and select the relevant number of threads
+and so on should be entered.</p>
+<p>Click the <strong><em>MPI</em></strong> checkbox and specifiy the MPI implementation. This is done
+by clicking the <strong><em>Details</em></strong> button and then the <strong><em>Change</em></strong> button.
+Choose the <strong><em>SLURM (generic)</em></strong> implementation from the drop-down menu
+and click <strong><em>OK</em></strong>. You can then specify the required number of nodes/processes
+and so on.</p>
+<p>Click the <strong><em>OpenMP</em></strong> checkbox and select the relevant number of threads
 (if there is no OpenMP in the application itself, select 1 thread).</p>
-<p>Click the "Submit to Queue" checkbox and then the associated "Configure"
-button. A new dialogue of options will pop-up. In the top dialgoue box
-"Submission template file" enter <code>${FORGE_ROOT}/templates/archer2.qtf</code>
-and click ok.</p>
-<p>The file specified provides a template with many of the options required
-for a standard batch job. You will then need to click on the
-"Queue Parameters" button in the same section and specify
-the relevant project budget to use the queue system in the "Account"
-entry.</p>
+<p>Click the <strong><em>Submit to Queue</em></strong> checkbox and then the associated <strong><em>Configure</em></strong>
+button. A new set of options will appear such as <strong><em>Submission template file</em></strong>,
+where you can enter <code>${FORGE_DIR}/templates/archer2.qtf</code> and click <strong><em>OK</em></strong>.
+This template file provides many of the options required for a standard batch job.
+You will then need to click on the <strong><em>Queue Parameters</em></strong> button in the same
+section and specify the relevant project budget, see the <strong><em>Account</em></strong> entry.</p>
 <p>The default queue template file configuration uses the short QoS with the
 standard time limit of 20 minutes. If something different is required,
-one can edit the settings. Alternatively, one can make a copy of the
-<code>archer2.qtf</code> file (e.g., in <code>${WORK}/.allinea</code>) and make the relevant
-changes. This new file can then be specifed in the dialogue.</p>
+one can edit the settings. Alternatively, one can copy the <code>archer2.qtf</code> file
+(to <code>${HOME/home/work}/.allinea</code>) and make the relevant changes. This new 
+template file can then be specifed in the dialog window.</p>
 <p>There may be a short delay while the sbatch job starts. Debugging should
 then proceed as described in the Allinea documentation.</p>
 <h3 id="using-map">Using MAP</h3>
@@ -1785,19 +1782,22 @@ then proceed as described in the Allinea documentation.</p>
 <p>Compilation should take place as usual. However, an additional set of
 libraries is required at link time.</p>
 <p>The path to the additional libraries required will depend on the programming
-environment you are using. Here are the paths for each of the compiler
-environments:</p>
+environment you are using as well as the Cray programming release. Here are
+the paths for each of the compiler environments consistent with the current
+default Cray programming release, 21.04:</p>
 <ul>
-<li><code>PrgEnv-cray</code>: <code>${FORGE_ROOT}/map/lib/crayclang/10.0</code></li>
-<li><code>PrgEnv-gnu</code>: <code>${FORGE_ROOT}/map/lib/gnu/8.0</code></li>
-<li><code>PrgEnv-aocc</code>: <code>${FORGE_ROOT}/map/lib/aocc/3.0</code></li>
+<li><code>PrgEnv-cray</code>: <code>${FORGE_DIR}/map/libs/default/cray</code></li>
+<li><code>PrgEnv-gnu</code>: <code>${FORGE_DIR}/map/libs/default/gnu</code></li>
+<li><code>PrgEnv-aocc</code>: <code>${FORGE_DIR}/map/libs/default/aocc</code></li>
 </ul>
 <p>For example, for <code>PrgEnv-gnu</code> the additional options required at link time
-are
-<div class="highlight"><pre><span></span><code>-L${FORGE_ROOT}/map/lib/gnu/8.0 \
+are given below.
+<div class="highlight"><pre><span></span><code>-L${FORGE_DIR}/map/libs/default/gnu \
 -lmap-sampler-pmpi -lmap-sampler \
--Wl,--eh-frame-hdr -Wl,-rpath=${FORGE_ROOT}/map/lib/gnu/8.0
+-Wl,--eh-frame-hdr -Wl,-rpath=${FORGE_DIR}/map/libs/default/gnu
 </code></pre></div></p>
+<p>The MAP libraries for other Cray programming releases can be found under
+<code>${FORGE_DIR}/map/libs</code>.</p>
 <h4 id="generating-a-profile">Generating a profile</h4>
 <p>Submit a batch job in the usual way, and include the lines:
 <div class="highlight"><pre><span></span><code><span class="c1"># ... SLURM batch commands as usual ...</span>
@@ -1809,34 +1809,34 @@ map -n &lt;number of MPI processes&gt; --mpiargs<span class="o">=</span><span cl
 Successful execution will generate a file with a <code>.map</code> extension.</p>
 <p>This <code>.map</code> file may be viewed via the GUI (start with either <code>map</code> or
 <code>forge</code>) by selecting the
-"Load a profile data file from a previous run" option. The resulting
-file selection dialogue can then be used to specify the <code>.map</code> file.</p>
+<strong><em>Load a profile data file from a previous run</em></strong> option. The resulting
+file selection dialog box can then be used to locate the <code>.map</code> file.</p>
 <h3 id="connecting-with-the-remote-client">Connecting with the remote client</h3>
 <p>If one starts the Forge client on e.g., a laptop, one should see the
 main window as
-shown above. Select "Remote Launch" and then "Configure" from the
-pull-down menu. In the "Configure Remote Connections" dialgoue
-click "Add". The following window should be displayed. Fill
-in the fields as shown. The "Connection Name" is just a tag
+shown above. Select <strong><em>Remote Launch</em></strong> and then <strong><em>Configure</em></strong> from the
+drop-down menu. In the <strong><em>Configure Remote Connections</em></strong> dialog box
+click <strong><em>Add</em></strong>. The following window should be displayed. Fill
+in the fields as shown. The <strong><em>Connection Name</em></strong> is just a tag
 for convenience (useful if a number of different accounts are
-in use). The "Host Name" should be as shown with the appropriate
-<code>userid</code>. The "Remote Installation Directory" should be exactly as
-shown. The "Remote Script" is needed to execute additional environment
+in use). The <strong><em>Host Name</em></strong> should be as shown with the appropriate
+username. The <strong><em>Remote Installation Directory</em></strong> should be exactly as
+shown. The <strong><em>Remote Script</em></strong> is needed to execute additional environment
 commands on connection. A default script is provided in the location
-shown:
-<div class="highlight"><pre><span></span><code>/work/y07/shared/utils/core/arm/forge/22.0.2/remote-init
+shown.
+<div class="highlight"><pre><span></span><code>/work/y07/shared/utils/core/arm/forge/latest/remote-init
 </code></pre></div></p>
-<p>Other settings can be as shown. Remember to click "OK" when done.</p>
+<p>Other settings can be as shown. Remember to click <strong><em>OK</em></strong> when done.</p>
 <p><img alt="Remote Launch Settings" src="../forge-remote-launch.png" /></p>
-<p>From the "Remote Launch" menu you should now see the new Connection
+<p>From the <strong><em>Remote Launch</em></strong> menu you should now see the new Connection
 Name. Select this, and enter the relevant ssh passphase and machine
 password to connect. A remote connection will allow you to debug,
 or view a profile, as discussed above.</p>
 <p>If different commands are required on connection, a copy of the
 <code>remote-init</code> script can be placed in, e.g., <code>${HOME/home/work}/.allinea</code>
 and edited as necessary. The full path of the new script should then be
-specified in the remote launch settings dialogue.
-Note that the script changes directory to the <code>/work/</code> file system so
+specified in the remote launch settings dialog box.
+Note that the script changes the directory to the <code>/work/</code> file system so
 that batch submissions via <code>sbatch</code> will not be rejected.</p>
 <p>Finally, note that <code>ssh</code> may need to be configured so that it picks up
 the correct local public key file. This may be done, e.g., via the
