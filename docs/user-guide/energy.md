@@ -4,9 +4,8 @@ This section covers how to monitor energy use for your jobs on ARCHER2 and how t
 which allows some control over how much energy is consumed by jobs.
 
 !!! important
-    The default CPU frequency on ARCHER2 compute nodes is currently unset. This means that the cores will
-    run at the maximum frequency available - 2.25 GHz. We anticipate that the default CPU frequency will
-    be set to 2.0 GHz in early December 2022 to improve the energy efficiency of the ARCHER2 system.
+    The default CPU frequency on ARCHER2 compute nodes for jobs launched using `srun` is currently set
+    to 2.0 GHz. Information below describes how to control the CPU frequency using Slurm.
 
 ## Monitoring energy use
 
@@ -109,6 +108,10 @@ export SLURM_CPU_FREQ_REQ=2000000
     Testing by the ARCHER2 CSE team has shown that many software are most energy efficient when 2.0 GHz 
     is selected as the CPU frequency. Typically, users may see savings of 10-20% of the energy cost of
     a job for a reduction in performance of 1-5%.
+    
+    
+!!! important
+    The CPU frequency settings only affect applications launched using the `srun` command.
 
 Priority of frequency settings:
 
@@ -123,17 +126,19 @@ Priority of frequency settings:
 
 ### Default CPU frequency
 
-If you do not specify a CPU frequency then you will get the default setting for the ARCHER2 service.
+If you do not specify a CPU frequency then you will get the default setting for the ARCHER2 service
+when you lanch an application using `srun`.
 The table below lists the history of default CPU frequency settings on the ARCHER2 service
 
 | Date range | Default CPU frequency |
 |------------|-----------------------|
-| Nov 2021 - current date | Unspecified - defaults to 2.25 GHz |  
+| 12 Dec 2022 - current date | 2.0 GHz | 
+| Nov 2021 - 11 Dec 2022 | Unspecified - defaults to 2.25 GHz |  
 
-### CPU frequency settings for centrally-installed software
+### Slurm CPU frequency settings for centrally-installed software
 
 Most [centrally installed research software](../research-software/) (available via `module load`
-commands) uses the same default CPU frequency as set globally for all ARCHER2 users (see above
+commands) uses the same default Slurm CPU frequency as set globally for all ARCHER2 users (see above
 for this value). However, a small number of software have performance that is significantly 
 degraded by using lower frequency settings and so the modules for these packages reset the 
 CPU frequency to the highest value (2.25 GHz). The packages that currently do this are:
@@ -143,7 +148,7 @@ CPU frequency to the highest value (2.25 GHz). The packages that currently do th
 - [NAMD](../research-software/namd.md)
 
 !!! important
-    If you specify the CPU frequency in your job scripts using one of the mechanisms described
+    If you specify the Slurm CPU frequency in your job scripts using one of the mechanisms described
     above *after* you have loaded the module, you will override the setting from the module.
 
 
