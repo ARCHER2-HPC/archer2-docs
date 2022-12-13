@@ -638,8 +638,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#cpu-frequency-settings-for-centrally-installed-software" class="md-nav__link">
-    CPU frequency settings for centrally-installed software
+  <a href="#slurm-cpu-frequency-settings-for-centrally-installed-software" class="md-nav__link">
+    Slurm CPU frequency settings for centrally-installed software
   </a>
   
 </li>
@@ -1537,8 +1537,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#cpu-frequency-settings-for-centrally-installed-software" class="md-nav__link">
-    CPU frequency settings for centrally-installed software
+  <a href="#slurm-cpu-frequency-settings-for-centrally-installed-software" class="md-nav__link">
+    Slurm CPU frequency settings for centrally-installed software
   </a>
   
 </li>
@@ -1573,9 +1573,8 @@
 which allows some control over how much energy is consumed by jobs.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>The default CPU frequency on ARCHER2 compute nodes is currently unset. This means that the cores will
-run at the maximum frequency available - 2.25 GHz. We anticipate that the default CPU frequency will
-be set to 2.0 GHz in early December 2022 to improve the energy efficiency of the ARCHER2 system.</p>
+<p>The default CPU frequency on ARCHER2 compute nodes for jobs launched using <code>srun</code> is currently set
+to 2.0 GHz. Information below describes how to control the CPU frequency using Slurm.</p>
 </div>
 <h2 id="monitoring-energy-use">Monitoring energy use</h2>
 <p>The Slurm accounting database stores the total energy consumed by a job and you can also directly access
@@ -1674,6 +1673,10 @@ to launch the application:</p>
 is selected as the CPU frequency. Typically, users may see savings of 10-20% of the energy cost of
 a job for a reduction in performance of 1-5%.</p>
 </div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The CPU frequency settings only affect applications launched using the <code>srun</code> command.</p>
+</div>
 <p>Priority of frequency settings:</p>
 <ul>
 <li>The default <code>SLURM_CPU_FREQ_REQ</code> setting set by the ARCHER2 service applies if no other mechnism 
@@ -1686,7 +1689,8 @@ a job for a reduction in performance of 1-5%.</p>
   options.</li>
 </ul>
 <h3 id="default-cpu-frequency">Default CPU frequency</h3>
-<p>If you do not specify a CPU frequency then you will get the default setting for the ARCHER2 service.
+<p>If you do not specify a CPU frequency then you will get the default setting for the ARCHER2 service
+when you lanch an application using <code>srun</code>.
 The table below lists the history of default CPU frequency settings on the ARCHER2 service</p>
 <table>
 <thead>
@@ -1697,14 +1701,18 @@ The table below lists the history of default CPU frequency settings on the ARCHE
 </thead>
 <tbody>
 <tr>
-<td>Nov 2021 - current date</td>
+<td>12 Dec 2022 - current date</td>
+<td>2.0 GHz</td>
+</tr>
+<tr>
+<td>Nov 2021 - 11 Dec 2022</td>
 <td>Unspecified - defaults to 2.25 GHz</td>
 </tr>
 </tbody>
 </table>
-<h3 id="cpu-frequency-settings-for-centrally-installed-software">CPU frequency settings for centrally-installed software</h3>
+<h3 id="slurm-cpu-frequency-settings-for-centrally-installed-software">Slurm CPU frequency settings for centrally-installed software</h3>
 <p>Most <a href="../research-software/">centrally installed research software</a> (available via <code>module load</code>
-commands) uses the same default CPU frequency as set globally for all ARCHER2 users (see above
+commands) uses the same default Slurm CPU frequency as set globally for all ARCHER2 users (see above
 for this value). However, a small number of software have performance that is significantly 
 degraded by using lower frequency settings and so the modules for these packages reset the 
 CPU frequency to the highest value (2.25 GHz). The packages that currently do this are:</p>
@@ -1715,7 +1723,7 @@ CPU frequency to the highest value (2.25 GHz). The packages that currently do th
 </ul>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>If you specify the CPU frequency in your job scripts using one of the mechanisms described
+<p>If you specify the Slurm CPU frequency in your job scripts using one of the mechanisms described
 above <em>after</em> you have loaded the module, you will override the setting from the module.</p>
 </div>
 
