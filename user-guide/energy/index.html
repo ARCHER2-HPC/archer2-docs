@@ -1631,13 +1631,13 @@ job. </p>
 <li>raw_scan_hz - The power management scanning rate for all data in pm_counters.</li>
 </ul>
 <h2 id="controlling-cpu-frequency">Controlling CPU frequency</h2>
-<p>You can request specific CPU frequencies for compute nodes through Slurm options or environment variables.
+<p>You can request specific CPU frequencies (in kHz) for compute nodes through <code>srun</code> options or environment variables.
 The available frequencies on the ARCHER2 processors along with the options and environment variables:</p>
 <table>
 <thead>
 <tr>
 <th align="right">Frequency</th>
-<th>Slurm option</th>
+<th><code>srun</code> option</th>
 <th>Slurm environment variable</th>
 </tr>
 </thead>
@@ -1659,13 +1659,14 @@ The available frequencies on the ARCHER2 processors along with the options and e
 </tr>
 </tbody>
 </table>
-<p>For example, you can add the following option to your job submission script to set the CPU frequency
-to 2.0 GHz:</p>
-<div class="highlight"><pre><span></span><code>#SBATCH --cpu-freq=2000000
+<p>The only frequencies available on the processors on ARCHER2 are 1.5 GHz, 2.0 GHz and 2.25GHz.</p>
+<p>For example, you can add the following option to <code>srun</code> commands in your job submission scripts to set the CPU frequency
+to 2.25 GHz:</p>
+<div class="highlight"><pre><span></span><code>srun --cpu-freq=2250000 ...usual srun options and arguments...
 </code></pre></div>
 <p>Alternatively, you could add the following line to your job submission script before you use <code>srun</code>
 to launch the application:</p>
-<div class="highlight"><pre><span></span><code>export SLURM_CPU_FREQ_REQ=2000000
+<div class="highlight"><pre><span></span><code>export SLURM_CPU_FREQ_REQ=2250000
 </code></pre></div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -1681,13 +1682,17 @@ a job for a reduction in performance of 1-5%.</p>
 <ul>
 <li>The default <code>SLURM_CPU_FREQ_REQ</code> setting set by the ARCHER2 service applies if no other mechnism 
   is used to set the CPU frequency</li>
-<li>Adding the <code>#SBATCH --cpu-freq=2000000</code> option to a job submission script overrides the default
-  ARCHER2-wide environment setting for all <code>srun</code> commands within the job script.</li>
 <li>Setting the <code>SLURM_CPU_FREQ_REQ</code> environment variable in a job script overrides options provided
-  to <code>sbatch</code> for any subsequent <code>srun</code> commands in the job script.</li>
-<li>Adding the <code>--cpu-freq=2000000</code> option to the <code>srun</code> launch command itself overrides all other
+  the default environment variable setting for any subsequent <code>srun</code> commands in the job script.</li>
+<li>Adding the <code>--cpu-freq=&lt;freq in kHz&gt;</code> option to the <code>srun</code> launch command itself overrides all other
   options.</li>
 </ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Adding the <code>--cpu-freq=&lt;freq in kHz&gt;</code> option to <code>sbatch</code> (e.g. using <code>#SBATCH --cpu-freq=&lt;freq in kHz&gt;</code>
+will not change the CPU frequency of <code>srun</code> commands used in the job as the default setting for ARCHER2
+will override the <code>sbatch</code> option when the script runs.</p>
+</div>
 <h3 id="default-cpu-frequency">Default CPU frequency</h3>
 <p>If you do not specify a CPU frequency then you will get the default setting for the ARCHER2 service
 when you lanch an application using <code>srun</code>.
