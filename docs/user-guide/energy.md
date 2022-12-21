@@ -81,27 +81,29 @@ There are a number of files in this directory, all the counter files include the
 
 ## Controlling CPU frequency
 
-You can request specific CPU frequencies for compute nodes through Slurm options or environment variables.
+You can request specific CPU frequencies (in kHz) for compute nodes through `srun` options or environment variables.
 The available frequencies on the ARCHER2 processors along with the options and environment variables:
 
-| Frequency | Slurm option | Slurm environment variable |
+| Frequency | `srun` option | Slurm environment variable |
 |----------:|--------------|----------------------------|
 | 2.25 GHz  | `--cpu-freq=2250000` | `export SLURM_CPU_FREQ_REQ=2250000` |
 | 2.00 GHz  | `--cpu-freq=2000000` | `export SLURM_CPU_FREQ_REQ=2000000` |
 | 1.50 GHz  | `--cpu-freq=1500000` | `export SLURM_CPU_FREQ_REQ=1500000` |
 
-For example, you can add the following option to your job submission script to set the CPU frequency
-to 2.0 GHz:
+The only frequencies available on the processors on ARCHER2 are 1.5 GHz, 2.0 GHz and 2.25GHz.
+
+For example, you can add the following option to `srun` commands in your job submission scripts to set the CPU frequency
+to 2.25 GHz:
 
 ```
-#SBATCH --cpu-freq=2000000
+srun --cpu-freq=2250000 ...usual srun options and arguments...
 ```
 
 Alternatively, you could add the following line to your job submission script before you use `srun`
 to launch the application:
 
 ```
-export SLURM_CPU_FREQ_REQ=2000000
+export SLURM_CPU_FREQ_REQ=2250000
 ```
 
 !!! tip
@@ -117,12 +119,15 @@ Priority of frequency settings:
 
 - The default `SLURM_CPU_FREQ_REQ` setting set by the ARCHER2 service applies if no other mechnism 
   is used to set the CPU frequency
-- Adding the `#SBATCH --cpu-freq=2000000` option to a job submission script overrides the default
-  ARCHER2-wide environment setting for all `srun` commands within the job script.
 - Setting the `SLURM_CPU_FREQ_REQ` environment variable in a job script overrides options provided
-  to `sbatch` for any subsequent `srun` commands in the job script.
-- Adding the `--cpu-freq=2000000` option to the `srun` launch command itself overrides all other
+  the default environment variable setting for any subsequent `srun` commands in the job script.
+- Adding the `--cpu-freq=<freq in kHz>` option to the `srun` launch command itself overrides all other
   options.
+  
+!!! tip
+    Adding the `--cpu-freq=<freq in kHz>` option to `sbatch` (e.g. using `#SBATCH --cpu-freq=<freq in kHz>`
+    will not change the CPU frequency of `srun` commands used in the job as the default setting for ARCHER2
+    will override the `sbatch` option when the script runs.
 
 ### Default CPU frequency
 
