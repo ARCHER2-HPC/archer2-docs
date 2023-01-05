@@ -8,8 +8,14 @@
       
       
       
+      
+        <link rel="prev" href="../python/">
+      
+      
+        <link rel="next" href="../debug/">
+      
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.2">
     
     
       
@@ -17,11 +23,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.975780f9.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.f56500e0.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.2505c338.min.css">
-        
       
       
 
@@ -1736,10 +1741,9 @@
                 
                   
 
-  <a href="https://github.com/ARCHER2-HPC/archer2-docs/edit/main/docs/user-guide/analysis.md" title="Edit this page" class="md-content__button md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+  
+  
+
 
 
 <h1 id="data-analysis">Data analysis</h1>
@@ -1752,8 +1756,8 @@ run directly on the login nodes. However, please remember that the login
 nodes are a shared resource and should not be used for long-running 
 tasks.</p>
 <h4 id="example-running-an-r-script-on-a-login-node">Example: Running an R script on a login node</h4>
-<div class="highlight"><pre><span></span><code>module load cray-R
-Rscript example.R
+<div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>cray-R
+Rscript<span class="w"> </span>example.R
 </code></pre></div>
 <h2 id="using-the-compute-nodes">Using the compute nodes</h2>
 <p>If running on the login nodes is not feasible (e.g. due to memory
@@ -1780,9 +1784,9 @@ may only be using one core.</p>
 <span class="kp">#SBATCH --partition=standard</span>
 <span class="kp">#SBATCH --qos=standard</span>
 
-module load cray-R
+module<span class="w"> </span>load<span class="w"> </span>cray-R
 
-Rscript example.R
+Rscript<span class="w"> </span>example.R
 </code></pre></div>
 </div>
 </div>
@@ -1802,9 +1806,9 @@ be found
 <div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Full system</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>auser@ln01:&gt; salloc --nodes<span class="o">=</span><span class="m">1</span> --ntasks-per-node<span class="o">=</span><span class="m">1</span> --cpus-per-task<span class="o">=</span><span class="m">1</span> <span class="se">\</span>
-              --time<span class="o">=</span><span class="m">00</span>:20:00 --partition<span class="o">=</span>standard --qos<span class="o">=</span>short <span class="se">\</span>
-              --account<span class="o">=[</span>budget code<span class="o">]</span>
+<div class="highlight"><pre><span></span><code>auser@ln01:&gt;<span class="w"> </span>salloc<span class="w"> </span>--nodes<span class="o">=</span><span class="m">1</span><span class="w"> </span>--ntasks-per-node<span class="o">=</span><span class="m">1</span><span class="w"> </span>--cpus-per-task<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">              </span>--time<span class="o">=</span><span class="m">00</span>:20:00<span class="w"> </span>--partition<span class="o">=</span>standard<span class="w"> </span>--qos<span class="o">=</span>short<span class="w"> </span><span class="se">\</span>
+<span class="w">              </span>--account<span class="o">=[</span>budget<span class="w"> </span>code<span class="o">]</span>
 </code></pre></div>
 </div>
 </div>
@@ -1885,11 +1889,11 @@ would use something like:</p>
 <span class="c1"># Set the number of threads to 1</span>
 <span class="c1">#   This prevents any threaded system libraries from automatically </span>
 <span class="c1">#   using threading.</span>
-<span class="nb">export</span> <span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
 
-module load cray-python
+module<span class="w"> </span>load<span class="w"> </span>cray-python
 
-python my_analysis_script.py
+python<span class="w"> </span>my_analysis_script.py
 </code></pre></div>
 <h3 id="interactive-session-on-the-data-analysis-nodes">Interactive session on the data analysis nodes</h3>
 <p>There are two ways to start an interactive session on the data analysis nodes: 
@@ -1902,17 +1906,17 @@ section of the User and Best Practice Guide.</p>
 <p>You can reserve resources on a data analysis node using <code>salloc</code>. For
 example, to request 1 core and 4 GB of memory for 20 minutes, you 
 would use:</p>
-<div class="highlight"><pre><span></span><code>auser@ln01:~&gt; salloc --time<span class="o">=</span><span class="m">00</span>:20:00 --partition<span class="o">=</span>serial --qos<span class="o">=</span>serial <span class="se">\</span>
-                    --account<span class="o">=[</span>budget code<span class="o">]</span> --ntasks<span class="o">=</span><span class="m">1</span> <span class="se">\</span>
-                    --mem<span class="o">=</span>4G
+<div class="highlight"><pre><span></span><code>auser@ln01:~&gt;<span class="w"> </span>salloc<span class="w"> </span>--time<span class="o">=</span><span class="m">00</span>:20:00<span class="w"> </span>--partition<span class="o">=</span>serial<span class="w"> </span>--qos<span class="o">=</span>serial<span class="w"> </span><span class="se">\</span>
+<span class="w">                    </span>--account<span class="o">=[</span>budget<span class="w"> </span>code<span class="o">]</span><span class="w"> </span>--ntasks<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                    </span>--mem<span class="o">=</span>4G
 </code></pre></div>
 <p>When you submit this job, your terminal will display something like:</p>
-<div class="highlight"><pre><span></span><code>salloc: Pending job allocation <span class="m">523113</span>
-salloc: job <span class="m">523113</span> queued and waiting <span class="k">for</span> resources
-salloc: job <span class="m">523113</span> has been allocated resources
-salloc: Granted job allocation <span class="m">523113</span>
-salloc: Waiting <span class="k">for</span> resource configuration
-salloc: Nodes dvn01 are ready <span class="k">for</span> job
+<div class="highlight"><pre><span></span><code>salloc:<span class="w"> </span>Pending<span class="w"> </span>job<span class="w"> </span>allocation<span class="w"> </span><span class="m">523113</span>
+salloc:<span class="w"> </span>job<span class="w"> </span><span class="m">523113</span><span class="w"> </span>queued<span class="w"> </span>and<span class="w"> </span>waiting<span class="w"> </span><span class="k">for</span><span class="w"> </span>resources
+salloc:<span class="w"> </span>job<span class="w"> </span><span class="m">523113</span><span class="w"> </span>has<span class="w"> </span>been<span class="w"> </span>allocated<span class="w"> </span>resources
+salloc:<span class="w"> </span>Granted<span class="w"> </span>job<span class="w"> </span>allocation<span class="w"> </span><span class="m">523113</span>
+salloc:<span class="w"> </span>Waiting<span class="w"> </span><span class="k">for</span><span class="w"> </span>resource<span class="w"> </span>configuration
+salloc:<span class="w"> </span>Nodes<span class="w"> </span>dvn01<span class="w"> </span>are<span class="w"> </span>ready<span class="w"> </span><span class="k">for</span><span class="w"> </span>job
 
 auser@ln01:~&gt;
 </code></pre></div>
@@ -1931,10 +1935,10 @@ return you to your prompt before you issued the <code>salloc</code> command.</p>
 <p>You can get a command prompt directly on the data analysis nodes by
 using the <code>srun</code> command directly. For example, to reserve 1 core
 and 8 GB of memory, you would use:</p>
-<div class="highlight"><pre><span></span><code>auser@ln01:~&gt; srun   --time<span class="o">=</span><span class="m">00</span>:20:00 --partition<span class="o">=</span>serial --qos<span class="o">=</span>serial <span class="se">\</span>
-                    --account<span class="o">=[</span>budget code<span class="o">]</span>    <span class="se">\</span>
-                    --ntasks<span class="o">=</span><span class="m">1</span> --mem<span class="o">=</span>8G <span class="se">\</span>
-                    --pty /bin/bash
+<div class="highlight"><pre><span></span><code>auser@ln01:~&gt;<span class="w"> </span>srun<span class="w">   </span>--time<span class="o">=</span><span class="m">00</span>:20:00<span class="w"> </span>--partition<span class="o">=</span>serial<span class="w"> </span>--qos<span class="o">=</span>serial<span class="w"> </span><span class="se">\</span>
+<span class="w">                    </span>--account<span class="o">=[</span>budget<span class="w"> </span>code<span class="o">]</span><span class="w">    </span><span class="se">\</span>
+<span class="w">                    </span>--ntasks<span class="o">=</span><span class="m">1</span><span class="w"> </span>--mem<span class="o">=</span>8G<span class="w"> </span><span class="se">\</span>
+<span class="w">                    </span>--pty<span class="w"> </span>/bin/bash
 </code></pre></div>
 <p>The <code>--pty /bin/bash</code> will cause a new shell to be started on the data 
 analysis node. (This is perhaps closer to what
@@ -1950,9 +1954,9 @@ option to the <code>srun</code> command.</p>
 <p>You can view data on the data analysis nodes by starting an interactive 
 <code>srun</code> session with the <code>--x11</code> flag to export the X display back to
 your local system. For 1 core with * GB of memory:</p>
-<div class="highlight"><pre><span></span><code>auser@ln01:~&gt; srun   --time<span class="o">=</span><span class="m">00</span>:20:00 --partition<span class="o">=</span>serial --qos<span class="o">=</span>serial  <span class="se">\</span>
-                        --hint<span class="o">=</span>nomultithread --account<span class="o">=[</span>budget code<span class="o">]</span>    <span class="se">\</span>
-                        --ntasks<span class="o">=</span><span class="m">1</span> --mem<span class="o">=</span>8G --x11 --pty /bin/bash
+<div class="highlight"><pre><span></span><code>auser@ln01:~&gt;<span class="w"> </span>srun<span class="w">   </span>--time<span class="o">=</span><span class="m">00</span>:20:00<span class="w"> </span>--partition<span class="o">=</span>serial<span class="w"> </span>--qos<span class="o">=</span>serial<span class="w">  </span><span class="se">\</span>
+<span class="w">                        </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>--account<span class="o">=[</span>budget<span class="w"> </span>code<span class="o">]</span><span class="w">    </span><span class="se">\</span>
+<span class="w">                        </span>--ntasks<span class="o">=</span><span class="m">1</span><span class="w"> </span>--mem<span class="o">=</span>8G<span class="w"> </span>--x11<span class="w"> </span>--pty<span class="w"> </span>/bin/bash
 </code></pre></div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -1987,42 +1991,6 @@ section of the User and Best Practice Guide.</p>
       </main>
       
         <footer class="md-footer">
-  
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="../python/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Using Python" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Using Python
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="../debug/" class="md-footer__link md-footer__link--next" aria-label="Next: Debugging" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              Debugging
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -2076,12 +2044,11 @@ section of the User and Best Practice Guide.</p>
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "search": "../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "search": "../../assets/javascripts/workers/search.12658920.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      <script src="../../assets/javascripts/bundle.5cf534bf.min.js"></script>
       
-    
     
   </body>
 </html>

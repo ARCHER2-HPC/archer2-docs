@@ -8,8 +8,10 @@
       
       
       
+      
+      
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.2">
     
     
       
@@ -17,11 +19,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.975780f9.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.f56500e0.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.2505c338.min.css">
-        
       
       
 
@@ -1548,10 +1549,9 @@
                 
                   
 
-  <a href="https://github.com/ARCHER2-HPC/archer2-docs/edit/main/docs/research-software/cesm213_run.md" title="Edit this page" class="md-content__button md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+  
+  
+
 
 
 <h1 id="quick-start-cesm-model-workflow-cesm-213">Quick Start: CESM Model Workflow (CESM 2.1.3)</h1>
@@ -1589,7 +1589,7 @@ Variables presented as <code>$VAR</code> in this guide typically refer to variab
 <li><code>PROJECT</code> is you project code on ARCHER2.</li>
 </ul>
 <p>Here is an example on ARCHER2 with the CESM2 module loaded:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$</span>CIMEROOT/scripts/create_newcase --case <span class="nv">$CESM_ROOT</span>/runs/b.e20.B1850.f19_g17.test --compset B1850 --res f19_g17 --project n02
+<div class="highlight"><pre><span></span><code><span class="gp">$</span>CIMEROOT/scripts/create_newcase<span class="w"> </span>--case<span class="w"> </span><span class="nv">$CESM_ROOT</span>/runs/b.e20.B1850.f19_g17.test<span class="w"> </span>--compset<span class="w"> </span>B1850<span class="w"> </span>--res<span class="w"> </span>f19_g17<span class="w"> </span>--project<span class="w"> </span>n02
 </code></pre></div>
 <h3 id="2-setting-up-the-case-run-script">2. Setting up the case run script</h3>
 <p>Issuing the <a href="http://esmci.github.io/cime/versions/master/html/users_guide/setting-up-a-case.html">case.setup</a> command creates scripts needed to run the model along with namelist <code>user_nl_xxx</code> files, where xxx denotes the set of components for the given case configuration. Before invoking <strong>case.setup</strong>, modify the <code>env_mach_pes.xml</code> file in the case directory using the <a href="http://esmci.github.io/cime/versions/master/html/Tools_user/xmlchange.html">xmlchange</a> command as needed for the experiment.</p>
@@ -1633,7 +1633,7 @@ Variables presented as <code>$VAR</code> in this guide typically refer to variab
 <div class="highlight"><pre><span></span><code><span class="go">./xmlquery &lt;name_of_setting&gt;</span>
 </code></pre></div>
 <p>Adding the <code>-p</code> flag allows you to look up partial names, for example</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>./xmlquery -p JOB
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>./xmlquery<span class="w"> </span>-p<span class="w"> </span>JOB
 
 <span class="go">Output:</span>
 <span class="go">Results in group case.run</span>
@@ -1645,7 +1645,7 @@ Variables presented as <code>$VAR</code> in this guide typically refer to variab
 <span class="go">        JOB_WALLCLOCK_TIME: 0:20:00</span>
 </code></pre></div>
 <p>Here all parameters that match the <code>JOB</code> pattern are returned. It is worth noting that the parameters <code>JOB_QUEUE</code> and <code>JOB_WALLCLOCK_TIME</code> are present for both the <strong>case.run</strong> job and the <strong>case.st_archive</strong> job. To view just one of these, you can use the <code>--subgroup</code> flag:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>./xmlquery -p JOB --subgroup <span class="k">case</span>.run
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>./xmlquery<span class="w"> </span>-p<span class="w"> </span>JOB<span class="w"> </span>--subgroup<span class="w"> </span><span class="k">case</span>.run
 
 <span class="go">Output:</span>
 <span class="go">Results in group case.run</span>
@@ -1656,7 +1656,7 @@ Variables presented as <code>$VAR</code> in this guide typically refer to variab
 <div class="highlight"><pre><span></span><code><span class="go">./xmlchange &lt;name_of_setting&gt;=&lt;new_value&gt;</span>
 </code></pre></div>
 <p>For example to change the wallclock time for the <strong>case.run</strong> job to 30 minutes, without knowing the exact name, you could do</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>./xmlquery -p WALLCLOCK
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>./xmlquery<span class="w"> </span>-p<span class="w"> </span>WALLCLOCK
 
 <span class="go">Output:</span>
 <span class="go">Results in group case.run</span>
@@ -1665,9 +1665,9 @@ Variables presented as <code>$VAR</code> in this guide typically refer to variab
 <span class="go">Results in group case.st_archive</span>
 <span class="go">        JOB_WALLCLOCK_TIME: 0:20:00</span>
 
-<span class="gp">$ </span>./xmlchange <span class="nv">JOB_WALLCLOCK_TIME</span><span class="o">=</span><span class="m">00</span>:30:00 --subgroup <span class="k">case</span>.run
+<span class="gp">$ </span>./xmlchange<span class="w"> </span><span class="nv">JOB_WALLCLOCK_TIME</span><span class="o">=</span><span class="m">00</span>:30:00<span class="w"> </span>--subgroup<span class="w"> </span><span class="k">case</span>.run
 
-<span class="gp">$ </span>./xmlquery JOB_WALLCLOCK_TIME
+<span class="gp">$ </span>./xmlquery<span class="w"> </span>JOB_WALLCLOCK_TIME
 
 <span class="go">Output:</span>
 <span class="go">Results in group case.run</span>
@@ -1904,12 +1904,11 @@ This could have two causes:
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "search": "../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "search": "../../assets/javascripts/workers/search.12658920.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      <script src="../../assets/javascripts/bundle.5cf534bf.min.js"></script>
       
-    
     
   </body>
 </html>

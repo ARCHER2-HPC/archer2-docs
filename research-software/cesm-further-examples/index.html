@@ -8,8 +8,10 @@
       
       
       
+      
+      
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.2">
     
     
       
@@ -17,11 +19,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.975780f9.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.f56500e0.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.2505c338.min.css">
-        
       
       
 
@@ -1446,65 +1447,64 @@
                 
                   
 
-  <a href="https://github.com/ARCHER2-HPC/archer2-docs/edit/main/docs/research-software/cesm-further-examples.md" title="Edit this page" class="md-content__button md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+  
+  
+
 
 
 <h1 id="further-examples-cesm-213">Further Examples CESM 2.1.3</h1>
 <p>In the process of porting CESM 2.1.3 to ARCHER2, a set of 4 long runs were carried out. This page contains the four example cases which have been validated with longer runs. They vary in the numbers of cores or threads used, but included here are the PE layouts used in these validation runs, which can be used as a guide for other runs. While only these four compsets and grids have been validated, CESM2 is not bound to just these cases. Links to the UCAR/NCAR pages on configurations, compsets and grids are in the <a href="cesm213.md#useful-links">useful links</a> section of the CESM2.1.3 on ARCHER2 page, which can be used to find many of the defined compsets for CESM2.1.3.</p>
 <h2 id="atmosphere-only-f2000climo">Atmosphere-only / F2000climo</h2>
 <p>This compset uses the F09 grid which is roughly equivalent to a 1 degree resolution. On ARCHER2 with four nodes this configuration should give a throughput of around 7.8 simulated years per (wallclock) day (SYPD). The commands to set up and run the case are as follows:</p>
-<div class="highlight"><pre><span></span><code><span class="si">${</span><span class="nv">CIMEROOT</span><span class="si">}</span>/scripts/create_newcase --case <span class="o">[</span><span class="k">case</span> name<span class="o">]</span> --compset F2000climo --res f09_f09_mg17 --walltime <span class="o">[</span>enough time<span class="o">]</span> --project <span class="o">[</span>project code<span class="o">]</span>
-<span class="nb">cd</span> <span class="o">[</span><span class="k">case</span> directory<span class="o">]</span>
-./xmlchange <span class="nv">NTASKS</span><span class="o">=</span><span class="m">512</span>,NTASKS_ESP<span class="o">=</span><span class="m">1</span>
-<span class="o">[</span>Any other changes e.g. run length or resubmissions<span class="o">]</span>
+<div class="highlight"><pre><span></span><code><span class="si">${</span><span class="nv">CIMEROOT</span><span class="si">}</span>/scripts/create_newcase<span class="w"> </span>--case<span class="w"> </span><span class="o">[</span><span class="k">case</span><span class="w"> </span>name<span class="o">]</span><span class="w"> </span>--compset<span class="w"> </span>F2000climo<span class="w"> </span>--res<span class="w"> </span>f09_f09_mg17<span class="w"> </span>--walltime<span class="w"> </span><span class="o">[</span>enough<span class="w"> </span>time<span class="o">]</span><span class="w"> </span>--project<span class="w"> </span><span class="o">[</span>project<span class="w"> </span>code<span class="o">]</span>
+<span class="nb">cd</span><span class="w"> </span><span class="o">[</span><span class="k">case</span><span class="w"> </span>directory<span class="o">]</span>
+./xmlchange<span class="w"> </span><span class="nv">NTASKS</span><span class="o">=</span><span class="m">512</span>,NTASKS_ESP<span class="o">=</span><span class="m">1</span>
+<span class="o">[</span>Any<span class="w"> </span>other<span class="w"> </span>changes<span class="w"> </span>e.g.<span class="w"> </span>run<span class="w"> </span>length<span class="w"> </span>or<span class="w"> </span>resubmissions<span class="o">]</span>
 ./case.setup
 ./case.build
 ./case.submit
 </code></pre></div>
 <h2 id="slab-ocean-etest">Slab Ocean / ETEST</h2>
 <p>The slab ocean case is similar to the atmosphere-only case in terms of resources needed, as the slab ocean is inexpensive to simulate in comparison to the atmosphere. The setup detailed below uses two OMP threads, and more tasks than were used by the F2000climo case, and so a throughput of around 20 SYPD can be expected. Unlike F2000climo, but like most compsets, this is unsupported (meaning it has not been scientifically verified by NCAR personnel) and as such an extra argument is required when creating the case. The arguments for ROOTPE are to guard against poor decisions being automatically chosen with respect to resources.</p>
-<div class="highlight"><pre><span></span><code><span class="si">${</span><span class="nv">CIMEROOT</span><span class="si">}</span>/scripts/create_newcase --case <span class="o">[</span><span class="k">case</span> name<span class="o">]</span> --compset ETEST --res f09_g17 --walltime <span class="o">[</span>enough time<span class="o">]</span> --project <span class="o">[</span>project code<span class="o">]</span> --run-unsupported
-<span class="nb">cd</span> <span class="o">[</span><span class="k">case</span> directory<span class="o">]</span>
-./xmlchange <span class="nv">NTASKS</span><span class="o">=</span><span class="m">1024</span>,NTASKS_ESP<span class="o">=</span><span class="m">1</span>
-./xmlchange <span class="nv">NTHRDS</span><span class="o">=</span><span class="m">2</span>
-./xmlchange <span class="nv">ROOTPE_ICE</span><span class="o">=</span><span class="m">0</span>,ROOTPE_OCN<span class="o">=</span><span class="m">0</span>
-<span class="o">[</span>Any other changes e.g. run length or resubmissions<span class="o">]</span>
+<div class="highlight"><pre><span></span><code><span class="si">${</span><span class="nv">CIMEROOT</span><span class="si">}</span>/scripts/create_newcase<span class="w"> </span>--case<span class="w"> </span><span class="o">[</span><span class="k">case</span><span class="w"> </span>name<span class="o">]</span><span class="w"> </span>--compset<span class="w"> </span>ETEST<span class="w"> </span>--res<span class="w"> </span>f09_g17<span class="w"> </span>--walltime<span class="w"> </span><span class="o">[</span>enough<span class="w"> </span>time<span class="o">]</span><span class="w"> </span>--project<span class="w"> </span><span class="o">[</span>project<span class="w"> </span>code<span class="o">]</span><span class="w"> </span>--run-unsupported
+<span class="nb">cd</span><span class="w"> </span><span class="o">[</span><span class="k">case</span><span class="w"> </span>directory<span class="o">]</span>
+./xmlchange<span class="w"> </span><span class="nv">NTASKS</span><span class="o">=</span><span class="m">1024</span>,NTASKS_ESP<span class="o">=</span><span class="m">1</span>
+./xmlchange<span class="w"> </span><span class="nv">NTHRDS</span><span class="o">=</span><span class="m">2</span>
+./xmlchange<span class="w"> </span><span class="nv">ROOTPE_ICE</span><span class="o">=</span><span class="m">0</span>,ROOTPE_OCN<span class="o">=</span><span class="m">0</span>
+<span class="o">[</span>Any<span class="w"> </span>other<span class="w"> </span>changes<span class="w"> </span>e.g.<span class="w"> </span>run<span class="w"> </span>length<span class="w"> </span>or<span class="w"> </span>resubmissions<span class="o">]</span>
 ./case.setup
 ./case.build
 ./case.submit
 </code></pre></div>
 <h2 id="coupled-ocean-b1850">Coupled Ocean / B1850</h2>
 <p>Compsets with the <code>B</code> prefix are fully coupled, and actively simulate all components. As such, This case is more expensive to run, most especially the ocean component. This case can be set up to run on dedicated nodes by changing the <code>$ROOTPE</code> variables (run the ./pelayout command to check that you have things as you wish). This should give a throughput of just over 10 SYPD.</p>
-<div class="highlight"><pre><span></span><code><span class="si">${</span><span class="nv">CIMEROOT</span><span class="si">}</span>/scripts/create_newcase --case <span class="o">[</span><span class="k">case</span> name<span class="o">]</span> --compset B1850 --res f09_g17 --walltime <span class="o">[</span>enough time<span class="o">]</span> --project <span class="o">[</span>project name<span class="o">]</span>
-<span class="nb">cd</span> <span class="o">[</span><span class="k">case</span> directory<span class="o">]</span>
-./xmlchange <span class="nv">NTASKS_CPL</span><span class="o">=</span><span class="m">1024</span>,NTASKS_ICE<span class="o">=</span><span class="m">256</span>,NTASKS_LND<span class="o">=</span><span class="m">256</span>,NTASKS_GLC<span class="o">=</span><span class="m">128</span>,NTASKS_ROF<span class="o">=</span><span class="m">128</span>,NTASKS_WAV<span class="o">=</span><span class="m">256</span>,NTASKS_OCN<span class="o">=</span><span class="m">512</span>,NTASKS_ATM<span class="o">=</span><span class="m">1024</span>
-./xmlchange <span class="nv">ROOTPE_CPL</span><span class="o">=</span><span class="m">0</span>,ROOTPE_ICE<span class="o">=</span><span class="m">0</span>,ROOTPE_LND<span class="o">=</span><span class="m">256</span>,ROOTPE_GLC<span class="o">=</span><span class="m">512</span>,ROOTPE_ROF<span class="o">=</span><span class="m">640</span>,ROOTPE_WAV<span class="o">=</span><span class="m">768</span>,ROOTPE_OCN<span class="o">=</span><span class="m">1024</span>,ROOTPE_ATM<span class="o">=</span><span class="m">0</span>
-<span class="o">[</span>Any other changes e.g. run length or resubmissions<span class="o">]</span>
+<div class="highlight"><pre><span></span><code><span class="si">${</span><span class="nv">CIMEROOT</span><span class="si">}</span>/scripts/create_newcase<span class="w"> </span>--case<span class="w"> </span><span class="o">[</span><span class="k">case</span><span class="w"> </span>name<span class="o">]</span><span class="w"> </span>--compset<span class="w"> </span>B1850<span class="w"> </span>--res<span class="w"> </span>f09_g17<span class="w"> </span>--walltime<span class="w"> </span><span class="o">[</span>enough<span class="w"> </span>time<span class="o">]</span><span class="w"> </span>--project<span class="w"> </span><span class="o">[</span>project<span class="w"> </span>name<span class="o">]</span>
+<span class="nb">cd</span><span class="w"> </span><span class="o">[</span><span class="k">case</span><span class="w"> </span>directory<span class="o">]</span>
+./xmlchange<span class="w"> </span><span class="nv">NTASKS_CPL</span><span class="o">=</span><span class="m">1024</span>,NTASKS_ICE<span class="o">=</span><span class="m">256</span>,NTASKS_LND<span class="o">=</span><span class="m">256</span>,NTASKS_GLC<span class="o">=</span><span class="m">128</span>,NTASKS_ROF<span class="o">=</span><span class="m">128</span>,NTASKS_WAV<span class="o">=</span><span class="m">256</span>,NTASKS_OCN<span class="o">=</span><span class="m">512</span>,NTASKS_ATM<span class="o">=</span><span class="m">1024</span>
+./xmlchange<span class="w"> </span><span class="nv">ROOTPE_CPL</span><span class="o">=</span><span class="m">0</span>,ROOTPE_ICE<span class="o">=</span><span class="m">0</span>,ROOTPE_LND<span class="o">=</span><span class="m">256</span>,ROOTPE_GLC<span class="o">=</span><span class="m">512</span>,ROOTPE_ROF<span class="o">=</span><span class="m">640</span>,ROOTPE_WAV<span class="o">=</span><span class="m">768</span>,ROOTPE_OCN<span class="o">=</span><span class="m">1024</span>,ROOTPE_ATM<span class="o">=</span><span class="m">0</span>
+<span class="o">[</span>Any<span class="w"> </span>other<span class="w"> </span>changes<span class="w"> </span>e.g.<span class="w"> </span>run<span class="w"> </span>length<span class="w"> </span>or<span class="w"> </span>resubmissions<span class="o">]</span>
 ./case.setup
 ./case.build
 ./case.submit
 </code></pre></div>
 <p>You can also define the PE layout in terms of full nodes by using negative values. As such, for a <code>$MAX_MPITASKS_PER_NODE=128</code> and <code>$MAX_TASKS_PER_NODE=128</code>, the below is equivalent to the above:</p>
-<div class="highlight"><pre><span></span><code><span class="si">${</span><span class="nv">CIMEROOT</span><span class="si">}</span>/scripts/create_newcase --case <span class="o">[</span><span class="k">case</span> name<span class="o">]</span> --compset B1850 --res f09_g17 --walltime <span class="o">[</span>enough time<span class="o">]</span> --project <span class="o">[</span>project name<span class="o">]</span>
-<span class="nb">cd</span> <span class="o">[</span><span class="k">case</span> directory<span class="o">]</span>
-./xmlchange <span class="nv">NTASKS_CPL</span><span class="o">=</span>-8,NTASKS_ICE<span class="o">=</span>-2,NTASKS_LND<span class="o">=</span>-2,NTASKS_GLC<span class="o">=</span>-1,NTASKS_ROF<span class="o">=</span>-1,NTASKS_WAV<span class="o">=</span>-2,NTASKS_OCN<span class="o">=</span>-4,NTASKS_ATM<span class="o">=</span>-8
-./xmlchange <span class="nv">ROOTPE_CPL</span><span class="o">=</span><span class="m">0</span>,ROOTPE_ICE<span class="o">=</span><span class="m">0</span>,ROOTPE_LND<span class="o">=</span>-2,ROOTPE_GLC<span class="o">=</span>-4,ROOTPE_ROF<span class="o">=</span>-5,ROOTPE_WAV<span class="o">=</span>-6,ROOTPE_OCN<span class="o">=</span>-8,ROOTPE_ATM<span class="o">=</span><span class="m">0</span>
-<span class="o">[</span>Any other changes e.g. run length or resubmissions<span class="o">]</span>
+<div class="highlight"><pre><span></span><code><span class="si">${</span><span class="nv">CIMEROOT</span><span class="si">}</span>/scripts/create_newcase<span class="w"> </span>--case<span class="w"> </span><span class="o">[</span><span class="k">case</span><span class="w"> </span>name<span class="o">]</span><span class="w"> </span>--compset<span class="w"> </span>B1850<span class="w"> </span>--res<span class="w"> </span>f09_g17<span class="w"> </span>--walltime<span class="w"> </span><span class="o">[</span>enough<span class="w"> </span>time<span class="o">]</span><span class="w"> </span>--project<span class="w"> </span><span class="o">[</span>project<span class="w"> </span>name<span class="o">]</span>
+<span class="nb">cd</span><span class="w"> </span><span class="o">[</span><span class="k">case</span><span class="w"> </span>directory<span class="o">]</span>
+./xmlchange<span class="w"> </span><span class="nv">NTASKS_CPL</span><span class="o">=</span>-8,NTASKS_ICE<span class="o">=</span>-2,NTASKS_LND<span class="o">=</span>-2,NTASKS_GLC<span class="o">=</span>-1,NTASKS_ROF<span class="o">=</span>-1,NTASKS_WAV<span class="o">=</span>-2,NTASKS_OCN<span class="o">=</span>-4,NTASKS_ATM<span class="o">=</span>-8
+./xmlchange<span class="w"> </span><span class="nv">ROOTPE_CPL</span><span class="o">=</span><span class="m">0</span>,ROOTPE_ICE<span class="o">=</span><span class="m">0</span>,ROOTPE_LND<span class="o">=</span>-2,ROOTPE_GLC<span class="o">=</span>-4,ROOTPE_ROF<span class="o">=</span>-5,ROOTPE_WAV<span class="o">=</span>-6,ROOTPE_OCN<span class="o">=</span>-8,ROOTPE_ATM<span class="o">=</span><span class="m">0</span>
+<span class="o">[</span>Any<span class="w"> </span>other<span class="w"> </span>changes<span class="w"> </span>e.g.<span class="w"> </span>run<span class="w"> </span>length<span class="w"> </span>or<span class="w"> </span>resubmissions<span class="o">]</span>
 ./case.setup
 ./case.build
 ./case.submit
 </code></pre></div>
 <h2 id="waccm-x-fxhist">WACCM-X / FXHIST</h2>
 <p>The WACCM-X case needs care during the set up and running for a couple of reasons. Firstly, as mentioned in the <a href="../cesm213_run/#archiving-errors">known issues section on archiving errors</a> the short-term archiver can sometimes move too many files and thus create problems with resubmissions. Secondly, it can pick up other files in the cesm_inputdata directory, causing issues when running. WACCM-X is also comparatively very expensive, and so only has an expected throughput of a little over 1.5 SYPD, and that when on a coarser grid than above. The setup for running a WACCM-X case with approximately 2 degree resolution and no short-term archiving is</p>
-<div class="highlight"><pre><span></span><code><span class="si">${</span><span class="nv">CIMEROOT</span><span class="si">}</span>/scripts/create_newcase --case <span class="o">[</span><span class="k">case</span> name<span class="o">]</span> --compset FXHIST --res f19_f19_mg16 --walltime <span class="o">[</span>enough time<span class="o">]</span> --project <span class="o">[</span>project name<span class="o">]</span> --run-unsupported
-<span class="nb">cd</span> <span class="o">[</span><span class="k">case</span> directory<span class="o">]</span>
-./xmlchange <span class="nv">NTASKS</span><span class="o">=</span><span class="m">512</span>,NTASKS_ESP<span class="o">=</span><span class="m">1</span>
-./xmlchange <span class="nv">NTHRDS</span><span class="o">=</span><span class="m">2</span>
-./xmlchange <span class="nv">DOUT_S</span><span class="o">=</span>FALSE
-<span class="o">[</span>Any other changes e.g. run length or resubmissions<span class="o">]</span>
+<div class="highlight"><pre><span></span><code><span class="si">${</span><span class="nv">CIMEROOT</span><span class="si">}</span>/scripts/create_newcase<span class="w"> </span>--case<span class="w"> </span><span class="o">[</span><span class="k">case</span><span class="w"> </span>name<span class="o">]</span><span class="w"> </span>--compset<span class="w"> </span>FXHIST<span class="w"> </span>--res<span class="w"> </span>f19_f19_mg16<span class="w"> </span>--walltime<span class="w"> </span><span class="o">[</span>enough<span class="w"> </span>time<span class="o">]</span><span class="w"> </span>--project<span class="w"> </span><span class="o">[</span>project<span class="w"> </span>name<span class="o">]</span><span class="w"> </span>--run-unsupported
+<span class="nb">cd</span><span class="w"> </span><span class="o">[</span><span class="k">case</span><span class="w"> </span>directory<span class="o">]</span>
+./xmlchange<span class="w"> </span><span class="nv">NTASKS</span><span class="o">=</span><span class="m">512</span>,NTASKS_ESP<span class="o">=</span><span class="m">1</span>
+./xmlchange<span class="w"> </span><span class="nv">NTHRDS</span><span class="o">=</span><span class="m">2</span>
+./xmlchange<span class="w"> </span><span class="nv">DOUT_S</span><span class="o">=</span>FALSE
+<span class="o">[</span>Any<span class="w"> </span>other<span class="w"> </span>changes<span class="w"> </span>e.g.<span class="w"> </span>run<span class="w"> </span>length<span class="w"> </span>or<span class="w"> </span>resubmissions<span class="o">]</span>
 ./case.setup
 ./case.build
 ./case.submit
@@ -1579,12 +1579,11 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "search": "../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "search": "../../assets/javascripts/workers/search.12658920.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      <script src="../../assets/javascripts/bundle.5cf534bf.min.js"></script>
       
-    
     
   </body>
 </html>
