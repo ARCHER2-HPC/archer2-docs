@@ -16,7 +16,7 @@ ORCA is an ab initio quantum chemistry program package that contains modern elec
 
 ## Using ORCA on ARCHER2
 
-ORCA s available for academic use on ARCHER2 only. If you wish to use ORCA for commercial
+ORCA is available for academic use on ARCHER2 only. If you wish to use ORCA for commercial
 applications, you must contact the ORCA developers.
 
 ## Running parallel ORCA jobs
