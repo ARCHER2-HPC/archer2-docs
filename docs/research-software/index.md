@@ -13,8 +13,8 @@ updates. We will usually not maintain older versions and versions no
 longer supported by the developers of the package.
 
 The following sections provide details on access to each of the
-centrally installed packages (software that is installed or maintained
-by third-parties rather than the ARCHER2 service are marked with *):
+centrally installed packages (software that is not part of the
+fully-supported software stack are marked with *):
 
   - [CASINO(*)](casino.md)
   - [CASTEP](castep.md)
@@ -34,6 +34,7 @@ by third-parties rather than the ARCHER2 service are marked with *):
   - [NWChem](nwchem.md)
   - [ONETEP](onetep.md)
   - [OpenFOAM](openfoam.md)
+  - [ORCA(*)](orca.md)
   - [Quantum Espresso](qe.md)
   - [VASP](vasp.md)
 
