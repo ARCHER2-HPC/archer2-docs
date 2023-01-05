@@ -62,7 +62,7 @@ There are a number of different data storage types available to users:
 Each type of storage has different characteristics and policies, and is
 suitable for different types of use.
 
-There are also two different types of node available to users:
+There are also three different types of node available to users:
 
    - Login nodes
    - Compute nodes
@@ -76,7 +76,15 @@ different node types:
 |---------|-------------|---------------|---------------------|-----------|
 | /home   | yes         | no            | yes                 | Backed up |
 | /work   | yes         | yes           | yes                 | Not backed up, high performance |
-| RDFaaS  | yes         | no            | yes                 | Backed up, high performance. Only available for projects that moved from ARCHER to ARCHER2. |
+| RDFaaS  | yes         | no            | yes                 | Backed up |
+
+!!! important
+    Only the /work file systems are visible on the compute nodes. This means that
+    all data required by calculations at runtime (input data, application binaries,
+    software libraries, etc.) must be placed on /work file systems.
+    
+    You may see "file not found" errors if you try to access data on the /home
+    or RDFaaS file systems when running on the compute nodes.
 
 ### Home file systems
 
