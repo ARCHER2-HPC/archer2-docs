@@ -277,8 +277,8 @@ solid state storage directory at:
 
 #### Quotas on solid state file system
 
-You query quotas for the solid state file system in the same way as for the Work file
-systems.
+You query quotas for the solid state file system in the same way as
+[quotas on the work file systems](#quotas-on-the-work-file-systems).
 
 ### RDFaaS file systems
 
