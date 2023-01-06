@@ -81,7 +81,7 @@ different node types:
 | RDFaaS  | yes         | no            | yes                 | Backed up |
 
 !!! important
-    Only the /work file systems and the solid state (NVMe) file system are visible on
+    Only the work file systems and the solid state (NVMe) file system are visible on
     the compute nodes. This means that all data required by calculations at runtime
     (input data, application binaries, software libraries, etc.) must be placed on
     one of these file systems.
@@ -224,11 +224,11 @@ themselves using the `lfs quota` command. To do this:
 ### Solid state (NVMe) file system
 
 The solid state storage file system is a 1 PB high performance parallel Lustre file system
-similar to the /work file systems. However, unlike the /work file systems, all of the
+similar to the work file systems. However, unlike the work file systems, all of the
 disks are based solid state storage (NVMe) technology. This changes the performance characteristics of the 
-file system compared to the /work file systems. Testing by the ARCHER2 CSE team at
+file system compared to the work file systems. Testing by the ARCHER2 CSE team at
 EPCC has shown that you may see I/O performance improvements from the solid state
-storage compared to the standard Lustre file systems on ARCHER2 if your I/O model
+storage compared to the standard work Lustre file systems on ARCHER2 if your I/O model
 has the following characteristics or similar:
 
 - You read/write lots of files in parallel (e.g. your software uses a file-per-process
