@@ -57,6 +57,7 @@ There are a number of different data storage types available to users:
 
    - Home file systems
    - Work file systems
+   - Solid state (NVMe) file system
    - RDFaaS (RDF as a Service) file systems (`/epsrc` and `/general`)
 
 Each type of storage has different characteristics and policies, and is
@@ -76,12 +77,14 @@ different node types:
 |---------|-------------|---------------|---------------------|-----------|
 | /home   | yes         | no            | yes                 | Backed up |
 | /work   | yes         | yes           | yes                 | Not backed up, high performance |
+| Solid state (NVMe)   | yes         | yes           | yes                 | Not backed up, high performance |
 | RDFaaS  | yes         | no            | yes                 | Backed up |
 
 !!! important
-    Only the /work file systems are visible on the compute nodes. This means that
-    all data required by calculations at runtime (input data, application binaries,
-    software libraries, etc.) must be placed on /work file systems.
+    Only the work file systems and the solid state (NVMe) file system are visible on
+    the compute nodes. This means that all data required by calculations at runtime
+    (input data, application binaries, software libraries, etc.) must be placed on
+    one of these file systems.
     
     You may see "file not found" errors if you try to access data on the /home
     or RDFaaS file systems when running on the compute nodes.
@@ -136,9 +139,8 @@ All of these are high-performance, Lustre parallel file systems. They are
 designed to support data in large files. The performance for data stored
 in large numbers of small files is probably not going to be as good.
 
-These are the only file systems that are available on the compute nodes
-so all data read or written by jobs running on the compute nodes has to
-be hosted here.
+These file systems are available on the compute nodes and are the default
+location users should use for data required at runtime on the compute nodes.
 
 !!! warning
     There are no backups of any data on the work file systems. You should
@@ -156,7 +158,7 @@ sure that important data is always backed up elsewhere and that your
 work would not be significantly impacted if the data on the work file
 systems was lost.
 
-Large data sets can be moved to the RDF storage or transferred off the
+Large data sets can be moved to the RDFaaS storage or transferred off the
 ARCHER2 service entirely.
 
 If you have data on the work file systems that you are not going to need
@@ -219,44 +221,86 @@ themselves using the `lfs quota` command. To do this:
    pid 1009 is using default file quota setting
    ```
 
+### Solid state (NVMe) file system
 
-### RDFaaS file system
+The solid state storage file system is a 1 PB high performance parallel Lustre file system
+similar to the work file systems. However, unlike the work file systems, all of the
+disks are based solid state storage (NVMe) technology. This changes the performance characteristics of the 
+file system compared to the work file systems. Testing by the ARCHER2 CSE team at
+EPCC has shown that you may see I/O performance improvements from the solid state
+storage compared to the standard work Lustre file systems on ARCHER2 if your I/O model
+has the following characteristics or similar:
 
-The data that was available on the RDF `/epsrc` and `/general` file systems
-is available on ARCHER2 via the RDFaaS (RDF as a Service) file system. If 
-you have requested the same username in the same project as you had on 
-ARCHER then you will be able to access your data at either:
+- You read/write lots of files in parallel (e.g. your software uses a file-per-process
+  model or similar)
+- You use the [ADIOS 2](https://adios2.readthedocs.io/en/latest/) I/O system
+
+Data on the solid state (NVMe) file system is visible on the compute nodes
+
+!!! important
+    If you use MPI-IO approaches to reading/writing data - this includes parallel HDF5
+    and parallel NetCDF - then you very unlikely to see any performance improvements
+    from using the solid state storage over the standard parallel Lustre file systems
+    on ARCHER2.
+
+!!! warning
+    There are no backups of any data on the work file systems. You should
+    not rely on these file systems for long term storage.
+
+#### Access to the solid state file system
+
+Projects do not have access to the solid state file system by default. If you would like
+access to the solid state file system, you should contact the
+[ARCHER2 Service Desk](https://www.archer2.ac.uk/support-access/servicedesk.html) with a
+short description of why you want access, how much space you require and how long you
+require access for.
+
+!!! important
+    While we will endeavour to meet all reasonable requests for access, the capacity of the
+    solid state file system is limited and we may not be able to fulfil all requests.
+
+#### Location of directories
+
+If your project has been granted access to the solid state file system, you can find
+your directory on the file system at:
 
 ```
-/epsrc/<project-code>
+/mnt/lustre/a2fs-nvme/work/<project code>/<project code>/<username>
 ```
 
-or
+For example, if my username is `auser` and I am in project `t01`, I could find my 
+solid state storage directory at:
 
 ```
-/general/<project-code>
+/mnt/lustre/a2fs-nvme/work/t01/t01/auser
 ```
 
-depending on which file system it was in on the RDF file systems. For example,
-if your username is `auser` and you are in the `e05` project, then your RDF data
-will be on the RDFaaS file system at:
+#### Quotas on solid state file system
+
+You query quotas for the solid state file system in the same way as
+[quotas on the work file systems](#quotas-on-the-work-file-systems).
+
+### RDFaaS file systems
+
+The RDFaaS file systems provide additional capacity for projects to store data
+that is not currently required on the compute nodes but which is too large for
+the Home file systems.
+
+!!! tip
+    Not all projects on ARCHER2 have access to RDFaaS, if you do have access, this
+    will show up in the login account page on SAFE for your ARCHER2 login account.
+
+If you have access to RDFaaS, you will have a directory in one of two file systems:
+either `/epsrc` or `/general`.
+
+For example, if your username is `auser` and you are in the `e05` project, then
+your RDFaaS directory will be at:
 
 ```
 /epsrc/e05/e05/auser
 ```
 
-The RDFaaS file systems are only available on the ARCHER2 login nodes.
-
-!!! important
-    The data on the RDFaaS file system is currently available in **read-only
-    mode**. You need to transfer data from the RDFaaS file system to `/work`
-    (or `/home` if it is a small amount of data) if you wish to alter it or
-    use it on the compute nodes. You can, of course, also use `scp` to transfer
-    data from the RDFaaS file system to another system.
-
-!!! note
-    We plan to make the RDFaaS file system read/write once the full ARCHER2
-    service is available.
+The RDFaaS file systems are not available on the ARCHER2 compute nodes.
 
 !!! tip
     If you are having issues accessing data on the RDFaaS file system then 

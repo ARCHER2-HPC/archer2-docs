@@ -10,6 +10,7 @@ archiving and transferring data can be found in the
 The advice here is targetted at use of the parallel file
 systems available on the compute nodes on ARCHER2 (i.e. **Not**
 the home and RDFaaS file systems).
+
 ## Common I/O patterns
 
 There are number of I/O patterns that are frequently used in
@@ -38,6 +39,14 @@ stage to recombine potentially thousands of small files.
 
 In addition, having thousands of files open at once can overload the
 filesystem and lead to poor performance.
+
+!!! tip
+    The ARCHER2 solid state file system can give very high performance
+    when using this model of I/O
+
+The [ADIOS 2](https://adios2.readthedocs.io/en/latest/) I/O library
+uses an approach similar to file-per-process and so can achieve very
+good performance on modern parallel file systems.
 
 ### File-per-node (FPN)
 
@@ -225,5 +234,3 @@ Although this information comes from the MPI library, it is still
 useful for users of higher-level libraries such as HDF5 as they all
 call MPI-IO at the lowest level.
 
-!!! note
-    We will add additional advice on I/O profiling soon.
