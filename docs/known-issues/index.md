@@ -4,6 +4,9 @@ This section highlights known issues on ARCHER2, their potential
 impacts and any known workarounds. Many of these issues are under
 active investigation by HPE Cray and the wider service.
 
+!!! info
+    This page was last reviewed on 10 Jan 2023
+
 ## Open Issues
 
 ### OOM due to memory leak in libfabric (Added: 2022-02-23)
