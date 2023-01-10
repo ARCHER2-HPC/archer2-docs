@@ -28,16 +28,19 @@ any action you should expect to have to take following the upgrade.
 ## What are the impacts on users from the upgrade?
 
 During the upgrade process:
+
  - No login access
  - No access to any data on the system
 
 After the upgrade process:
+
  - Recompile and test code
  - No Python v2 available
 
 ## What software versions will be available after the upgrade?
 
 System software:
+
  - Cray OS (COS): TBC
  - Slingshot: TBC
  - Cray System Management (CSM): TBC
@@ -45,22 +48,27 @@ System software:
 ### Programming environment: 22.11
 
 Compilers:
+
  - CCE: TBC
  - GCC: TBC
  - AOCC: TBC
 
 Communication libraries:
+
  - Cray MPICH: TBC (supports OpenFabrics and UCX)
 
 Numerical libraries:
+
  - Cray LibSci: TBC
  - FFTW: TBC
 
 IO Libraries:
+
  - HDF5: TBC
  - NetCDF: TBC
 
 Tools:
+
  - Python: TBC
  - R: TBC
  - CrayPAT: TBC
