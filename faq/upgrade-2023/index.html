@@ -11,7 +11,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.3">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.4">
     
     
       
@@ -19,7 +19,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.6b71719e.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.9c788c91.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.2505c338.min.css">
@@ -1454,9 +1454,22 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#programming-environment-2211" class="md-nav__link">
-    Programming environment: 22.11
+  <a href="#programming-environment-2210" class="md-nav__link">
+    Programming environment: 22.10
   </a>
+  
+    <nav class="md-nav" aria-label="Programming environment: 22.10">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary-of-user-and-application-impact" class="md-nav__link">
+    Summary of user and application impact
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1485,13 +1498,24 @@
 
 
 <h1 id="archer2-upgrade-2023">ARCHER2 Upgrade: 2023</h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The information on this page represents our current best understanding of the
+upgrade but is subject to change and revision as more information becomes 
+available.</p>
+<p>Last updated: 2023-01-12</p>
+</div>
 <p>During the first half of 2023 ARCHER will go through a major software upgrade. This will
 upgrade the versions of the following components on the service:</p>
 <ul>
-<li>Base operating system - to Cray OS (COS) TBC based on SLES TBC</li>
-<li>Slingshot interconnect system software - to version TBC</li>
-<li>HPE Cray Programming Environment (PE) - to version TBC</li>
-<li>HPE Cray Management Software (CMS)</li>
+<li>Base operating system<ul>
+<li>Compute nodes: Cray OS (COS) 2.4.103 based on SLES 15 SP4</li>
+<li>Login nodes: UAN 2.5.7 based on SLES 15 SP4</li>
+</ul>
+</li>
+<li>Slingshot interconnect system software - to version 2.0.1</li>
+<li>HPE Cray Programming Environment (PE) - to version 22.10</li>
+<li>HPE Cray Management Software (CMS) - to version 1.3.1</li>
 </ul>
 <p>On this page we describe the background to the changes, the current
 information on the timeline, what impact the changes will have for users and
@@ -1518,44 +1542,72 @@ any action you should expect to have to take following the upgrade.</p>
 <p>After the upgrade process:</p>
 <ul>
 <li>Recompile and test code</li>
-<li>No Python v2 available</li>
+<li>No Python v2 available as part of supported software</li>
 </ul>
 <h2 id="what-software-versions-will-be-available-after-the-upgrade">What software versions will be available after the upgrade?</h2>
 <p>System software:</p>
 <ul>
-<li>Cray OS (COS): TBC</li>
-<li>Slingshot: TBC</li>
-<li>Cray System Management (CSM): TBC</li>
+<li>Base operating system<ul>
+<li>Compute nodes: Cray OS (COS) 2.4.103 based on SLES 15 SP4</li>
+<li>Login nodes: UAN 2.5.7 based on SLES 15 SP4</li>
 </ul>
-<h3 id="programming-environment-2211">Programming environment: 22.11</h3>
+</li>
+<li>Slingshot interconnect system software: 2.0.1</li>
+<li>HPE Cray Management Software (CMS): 1.3.1</li>
+</ul>
+<h3 id="programming-environment-2210">Programming environment: 22.10</h3>
 <p>Compilers:</p>
 <ul>
-<li>CCE: TBC</li>
-<li>GCC: TBC</li>
+<li>CCE: 14.0.4</li>
+<li>GCC: 12.1.0 (11.2.0, 10.2.0 also available)</li>
 <li>AOCC: TBC</li>
 </ul>
 <p>Communication libraries:</p>
 <ul>
-<li>Cray MPICH: TBC (supports OpenFabrics and UCX)</li>
+<li>Cray MPICH: 8.1.20 <ul>
+<li>Based on MPICH 3.4a2</li>
+<li>Supports OpenFabrics (OFI) and UCX</li>
+</ul>
+</li>
+<li>Cray OpenSHMEMX: 11.5.6</li>
 </ul>
 <p>Numerical libraries:</p>
 <ul>
-<li>Cray LibSci: TBC</li>
-<li>FFTW: TBC</li>
+<li>Cray LibSci: 22.10.1.2</li>
+<li>FFTW: 3.3.10.2</li>
 </ul>
 <p>IO Libraries:</p>
 <ul>
-<li>HDF5: TBC</li>
-<li>NetCDF: TBC</li>
+<li>HDF5: 1.12.2.1</li>
+<li>NetCDF: 4.9.0.1</li>
+<li>Parallel NetCDF: 1.12.3.1</li>
 </ul>
 <p>Tools:</p>
 <ul>
-<li>Python: TBC</li>
-<li>R: TBC</li>
-<li>CrayPAT: TBC</li>
-<li>gdb4hpc: TBC</li>
-<li>valgrind4hpc: TBC</li>
+<li>Python: 3.9.13<ul>
+<li>numpy: 1.21.5</li>
+<li>scipy: 1.6.2</li>
+<li>mpi4py: 3.1.3</li>
+<li>dask: 2022.2.1</li>
 </ul>
+</li>
+<li>R: 4.2.1.1</li>
+<li>CrayPAT/Perftools: 22.09.0</li>
+<li>gdb4hpc: 4.14.4</li>
+<li>valgrind4hpc: 2.12.10</li>
+<li>sanitizers4hpc: 1.0.2</li>
+<li>Lmod: 3.1.4</li>
+</ul>
+<h4 id="summary-of-user-and-application-impact">Summary of user and application impact</h4>
+<p>For full information, see <a href="https://github.com/PE-Cray/cpe-changelog/blob/main/ex/cpe-22.10-sles15-sp3-FullReleaseNotes.txt">CPE 22.10 Release Notes</a></p>
+<p><strong>CCE 14</strong></p>
+<p>C++ applications built using CCE 13 or earlier may need to be recompiled due to the significant
+changes that were necessary to implement C++17.  This is expected to be a one-time requirement.</p>
+<p>Some non-standard Cray Fortran extensions supporting shorthand notation for logical operations
+will be removed in a future release.  CCE 14 will issue warning messages when these are
+encountered, providing time to adapt the application to use standard Fortran.  </p>
+<p><strong>HPE Cray MPICH 8.1.20</strong></p>
+<p>Cray MPICH 8.1.20 can support only ~2040 simultaneous MPI communicators.</p>
 
 
   
