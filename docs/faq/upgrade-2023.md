@@ -46,6 +46,14 @@ After the upgrade process:
  - Recompile and test code
  - No Python v2 available as part of supported software
 
+Impact on allocations:
+
+ - TBC
+
+Impact on data on the service
+
+ - No data will be removed or moved as part of the upgrade
+
 ## What software versions will be available after the upgrade?
 
 System software:
