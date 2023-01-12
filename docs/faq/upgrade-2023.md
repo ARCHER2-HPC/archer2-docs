@@ -61,7 +61,7 @@ System software:
 Compilers:
 
  - CCE: 14.0.4
- - GCC: 12.1.0 (11.2.0, 10.2.0 also available)
+ - GCC: 12.1.0 (11.2.0, 10.3.0 also available)
  - AOCC: TBC
 
 Communication libraries:
