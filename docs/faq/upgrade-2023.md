@@ -62,7 +62,7 @@ Compilers:
 
  - CCE: 14.0.4
  - GCC: 12.1.0 (11.2.0, 10.3.0 also available)
- - AOCC: TBC
+ - AOCC: 3.2
 
 Communication libraries:
 
