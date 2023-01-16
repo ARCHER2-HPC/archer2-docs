@@ -15,7 +15,7 @@
         <link rel="next" href="../sw-environment/">
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.4">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.5">
     
     
       
@@ -23,7 +23,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.9c788c91.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.558e4712.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.2505c338.min.css">
@@ -148,7 +148,7 @@
           <div class="md-search-result__meta">
             Initializing search
           </div>
-          <ol class="md-search-result__list"></ol>
+          <ol class="md-search-result__list" role="presentation"></ol>
         </div>
       </div>
     </div>
@@ -2265,8 +2265,8 @@ on ARCHER2.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>There are no backups of any data on the work file systems. You should
-not rely on these file systems for long term storage.</p>
+<p>There are no backups of any data on the solid state (NVMe) file system. You should
+not rely on this file system for long term storage.</p>
 </div>
 <h4 id="access-to-the-solid-state-file-system">Access to the solid state file system</h4>
 <p>Projects do not have access to the solid state file system by default. If you would like
@@ -2291,6 +2291,12 @@ solid state storage directory at:</p>
 <h4 id="quotas-on-solid-state-file-system">Quotas on solid state file system</h4>
 <p>You query quotas for the solid state file system in the same way as
 <a href="#quotas-on-the-work-file-systems">quotas on the work file systems</a>.</p>
+<div class="admonition bug">
+<p class="admonition-title">Bug</p>
+<p>Usage and quotas of the solid state file system are not yet available
+in SAFE - you should use commands such as <code>lfs quota -hp $(id -g) .</code>
+to query quotas on the solid state file system. </p>
+</div>
 <h3 id="rdfaas-file-systems">RDFaaS file systems</h3>
 <p>The RDFaaS file systems provide additional capacity for projects to store data
 that is not currently required on the compute nodes but which is too large for
@@ -2751,7 +2757,7 @@ transfer, we could instead use the <code>scp</code> command,</p>
     <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "search": "../../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.ba449ae6.min.js"></script>
+      <script src="../../assets/javascripts/bundle.51d95adb.min.js"></script>
       
     
   </body>
