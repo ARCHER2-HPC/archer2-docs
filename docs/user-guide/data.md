@@ -244,8 +244,8 @@ Data on the solid state (NVMe) file system is visible on the compute nodes
     on ARCHER2.
 
 !!! warning
-    There are no backups of any data on the work file systems. You should
-    not rely on these file systems for long term storage.
+    There are no backups of any data on the solid state (NVMe) file system. You should
+    not rely on this file system for long term storage.
 
 #### Access to the solid state file system
 
@@ -279,6 +279,11 @@ solid state storage directory at:
 
 You query quotas for the solid state file system in the same way as
 [quotas on the work file systems](#quotas-on-the-work-file-systems).
+
+!!! bug
+    Usage and quotas of the solid state file system are not yet available
+    in SAFE - you should use commands such as `lfs quota -hp $(id -g) .`
+    to query quotas on the solid state file system. 
 
 ### RDFaaS file systems
 
