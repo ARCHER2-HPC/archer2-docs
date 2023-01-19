@@ -356,6 +356,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#slurm-cpufreqx-option-is-not-respected-when-used-with-sbatch-added-2023-01-18" class="md-nav__link">
+    Slurm --cpu=freq=X option is not respected when used with sbatch (Added: 2023-01-18)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#oom-due-to-memory-leak-in-libfabric-added-2022-02-23" class="md-nav__link">
     OOM due to memory leak in libfabric (Added: 2022-02-23)
   </a>
@@ -434,19 +441,6 @@
   <a href="#recently-resolved-issues" class="md-nav__link">
     Recently Resolved Issues
   </a>
-  
-    <nav class="md-nav" aria-label="Recently Resolved Issues">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#intel-mkl-libraries-fftw-gives-incorrect-results-added-2022-03-28" class="md-nav__link">
-    Intel MKL libraries: FFTW gives incorrect results (Added: 2022-03-28)
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1574,6 +1568,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#slurm-cpufreqx-option-is-not-respected-when-used-with-sbatch-added-2023-01-18" class="md-nav__link">
+    Slurm --cpu=freq=X option is not respected when used with sbatch (Added: 2023-01-18)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#oom-due-to-memory-leak-in-libfabric-added-2022-02-23" class="md-nav__link">
     OOM due to memory leak in libfabric (Added: 2022-02-23)
   </a>
@@ -1653,19 +1654,6 @@
     Recently Resolved Issues
   </a>
   
-    <nav class="md-nav" aria-label="Recently Resolved Issues">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#intel-mkl-libraries-fftw-gives-incorrect-results-added-2022-03-28" class="md-nav__link">
-    Intel MKL libraries: FFTW gives incorrect results (Added: 2022-03-28)
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
     </ul>
@@ -1693,9 +1681,17 @@ impacts and any known workarounds. Many of these issues are under
 active investigation by HPE Cray and the wider service.</p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
-<p>This page was last reviewed on 10 Jan 2023</p>
+<p>This page was last reviewed on 18 Jan 2023</p>
 </div>
 <h2 id="open-issues">Open Issues</h2>
+<h3 id="slurm-cpufreqx-option-is-not-respected-when-used-with-sbatch-added-2023-01-18">Slurm <code>--cpu=freq=X</code> option is not respected when used with <code>sbatch</code> (Added: 2023-01-18)</h3>
+<p>If you specify the CPU frequency using the <code>--cpu-freq</code> option with the <code>sbatch</code> command (either using the script <code>#SBATCH --cpu-freq=X</code>
+method or the <code>--cpu-freq=X</code> option directly) then this option will not be respected as the default
+setting for ARCHER2 (2.0 GHz) will override the option. You should specify the <code>--cpu-freq</code> option to <code>srun</code> directly
+instead within the job submission script. i.e.:</p>
+<div class="highlight"><pre><span></span><code>srun --cpu-freq=2250000 ...
+</code></pre></div>
+<p>You can find more information on <a href="/user-guide/energy/#controlling-cpu-frequency">setting the CPU frequency in the User Guide</a>.</p>
 <h3 id="oom-due-to-memory-leak-in-libfabric-added-2022-02-23">OOM due to memory leak in libfabric (Added: 2022-02-23)</h3>
 <p>There is an underlying memory leak in the version of libfabric on ARCHER2 (that comes as part of the underlying
 SLES operating system) which can cause jobs to fail with an OOM (Out Of Memory) error. This issue will be addressed
@@ -1796,12 +1792,6 @@ to try and workaround this error:</p>
 <pre><code>sbatch --export=ALL myjob.slurm
 </code></pre>
 <h2 id="recently-resolved-issues">Recently Resolved Issues</h2>
-<h3 id="intel-mkl-libraries-fftw-gives-incorrect-results-added-2022-03-28">Intel MKL libraries: FFTW gives incorrect results (Added: 2022-03-28)</h3>
-<p>Until recently, the Intel MKL library modules installed on ARCHER2 set environment variables
-to enable high-performance code paths. Unfortunately, recent investigations have revealed that
-these code paths resulted in incorrect results from the FFTW compenents of MKL. The modules
-were changed on 21 March 2022 to remove these environment variables and we have verified that
-the FFTW components of the MKL libraries now give the expected results.</p>
 
 
   
