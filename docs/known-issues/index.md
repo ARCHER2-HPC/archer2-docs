@@ -5,9 +5,24 @@ impacts and any known workarounds. Many of these issues are under
 active investigation by HPE Cray and the wider service.
 
 !!! info
-    This page was last reviewed on 10 Jan 2023
+    This page was last reviewed on 18 Jan 2023
 
 ## Open Issues
+
+### Slurm `--cpu=freq=X` option is not respected when used with `sbatch` (Added: 2023-01-18)
+
+If you specify the CPU frequency using the `--cpu-freq` option with the `sbatch` command (either using the script `#SBATCH --cpu-freq=X`
+method or the `--cpu-freq=X` option directly) then this option will not be respected as the default
+setting for ARCHER2 (2.0 GHz) will override the option. You should specify the `--cpu-freq` option to `srun` directly
+instead within the job submission script. i.e.:
+
+```
+srun --cpu-freq=2250000 ...
+```
+
+You can find more information on [setting the CPU frequency in the User Guide](/user-guide/energy/#controlling-cpu-frequency).
+
+
 
 ### OOM due to memory leak in libfabric (Added: 2022-02-23)
 
@@ -154,12 +169,6 @@ The option `--export=ALL` propagates all the environment variables from the logi
 
 ## Recently Resolved Issues
 
-### Intel MKL libraries: FFTW gives incorrect results (Added: 2022-03-28)
 
-Until recently, the Intel MKL library modules installed on ARCHER2 set environment variables
-to enable high-performance code paths. Unfortunately, recent investigations have revealed that
-these code paths resulted in incorrect results from the FFTW compenents of MKL. The modules
-were changed on 21 March 2022 to remove these environment variables and we have verified that
-the FFTW components of the MKL libraries now give the expected results.
 
 
