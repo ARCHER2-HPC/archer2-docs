@@ -83,7 +83,7 @@ Impact on allocations:
 
 Impact on data on the service
 
- - No data /home, /work, NVMe or RDFaaS will be removed or moved as part of the upgrade
+ - No data in /home, /work, NVMe or RDFaaS will be removed or moved as part of the upgrade
 
 ## What software versions will be available after the upgrade?
 
