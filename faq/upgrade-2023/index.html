@@ -11,7 +11,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.5">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.6">
     
     
       
@@ -1503,7 +1503,7 @@
 <p>The information on this page represents our current best understanding of the
 upgrade but is subject to change and revision as more information becomes 
 available.</p>
-<p>Last updated: 2023-01-12</p>
+<p>Last updated: 2023-01-24</p>
 </div>
 <p>During the first half of 2023 ARCHER will go through a major software upgrade. This will
 upgrade the versions of the following components on the service:</p>
@@ -1520,15 +1520,39 @@ upgrade the versions of the following components on the service:</p>
 <p>On this page we describe the background to the changes, the current
 information on the timeline, what impact the changes will have for users and
 any action you should expect to have to take following the upgrade.</p>
+<p>If you have any questions or concerns regarding the upgrade, please
+<a href="https://www.archer2.ac.uk/support-access/servicedesk.html">contact the ARCHER2 Service Desk</a>.</p>
 <h2 id="why-is-the-upgrade-happening">Why is the upgrade happening?</h2>
+<p>There are a number of reasons why ARCHER2 needs to go through this major software
+upgrade. All of these reasons are related to the fact that the current system
+software setup is out of date; due to this, maintenance of the service is very
+difficult and updating software within the current framework is not possible.
+Some specific issues are:</p>
 <ul>
-<li>Software is out of date</li>
-<li>Less access to security updates</li>
-<li>Improvements to upgradeability, maintainability and monitoring</li>
-<li>Improvements to interconnect reliability and performance</li>
-<li>General improvements</li>
+<li><em>Less access to security updates</em> - due to the out-of-date nature of the system
+   software on ARCHER2, the vendor (HPE) can no longer provide critical security
+   updates for the service.</li>
+<li><em>Improvements to interconnect reliability and performance</em> - the Slingshot interconnect
+   that links compute nodes together and to the high-performance Lustre file systems
+   is currently running an old version of management software that has a number of known
+   limitations and bugs. These affect our ability to monitor the health of the interconnect
+   and have led to reliability issues for calculations using large numbers of compute nodes.
+   Without a major system software upgrade, we cannot move to an up to date version of the
+   Slingshot software that addresses current limitations.</li>
+<li><em>Improvements to upgradeability, maintainability and monitoring</em> - the current system software
+   is based on a collection of early versions from the hardware vendor that do not provide
+   the system health monitoring characteristics of more recent versions or the ability to
+   flexibly update the system with low impact on user service that are available in more 
+   recent versions.</li>
+<li><em>Access to more recent compilers, software libraries and tools</em> - the current system
+   software does not provide the ability to access improvements in compilers and libraries
+   (both bug fixes and performance improvements) that are available from HPE. Once the 
+   system software is updated, the service will be able to access this improved software.</li>
 </ul>
 <h2 id="when-will-the-upgrade-happen-and-how-long-will-it-take">When will the upgrade happen and how long will it take?</h2>
+<p>This major software upgrade will involve a complete re-install of system software followed
+by a reinstatement of local configurations (e.g. Slurm, authentication services, SAFE integration)
+and so will require an extended period of downtime.</p>
 <ul>
 <li>Start: TBC</li>
 <li>Duration: TBC</li>
@@ -1541,8 +1565,12 @@ any action you should expect to have to take following the upgrade.</p>
 </ul>
 <p>After the upgrade process:</p>
 <ul>
-<li>Recompile and test code</li>
-<li>No Python v2 available as part of supported software</li>
+<li>Recompile and test code - as the new system will be based on a new OS version and
+   new versions of compilers and libraries we strongly recommend that all users recompile
+   and test all software on the service. The ARCHER2 CSE service will be recompiling all 
+   centrally installed software.</li>
+<li>Note: there will be no Python 2 installation available as part of supported software
+   following the upgrade. Python 3 will continue to be fully-supported.</li>
 </ul>
 <p>Impact on allocations:</p>
 <ul>
@@ -1550,7 +1578,7 @@ any action you should expect to have to take following the upgrade.</p>
 </ul>
 <p>Impact on data on the service</p>
 <ul>
-<li>No data will be removed or moved as part of the upgrade</li>
+<li>No data /home, /work, NVMe or RDFaaS will be removed or moved as part of the upgrade</li>
 </ul>
 <h2 id="what-software-versions-will-be-available-after-the-upgrade">What software versions will be available after the upgrade?</h2>
 <p>System software:</p>
