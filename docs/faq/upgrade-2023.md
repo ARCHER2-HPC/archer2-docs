@@ -21,6 +21,9 @@ On this page we describe the background to the changes, the current
 information on the timeline, what impact the changes will have for users and
 any action you should expect to have to take following the upgrade.
 
+If you have any questions or concerns regarding the upgrade, please
+[contact the ARCHER2 Service Desk](https://www.archer2.ac.uk/support-access/servicedesk.html).
+
 ## Why is the upgrade happening?
 
 There are a number of reasons why ARCHER2 needs to go through this major software
