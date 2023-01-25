@@ -32,9 +32,9 @@ software setup is out of date; due to this, maintenance of the service is very
 difficult and updating software within the current framework is not possible.
 Some specific issues are:
 
- - *Less access to security updates* - due to the out-of-date nature of the system
-   software on ARCHER2, the vendor (HPE) can no longer provide critical security
-   updates for the service.
+ - *Ongoing access to security updates* - due to the out-of-date nature of the system
+   software on ARCHER2, the vendor (HPE) can not provide security updates for the current
+   system software beyond the upgrade date.
  - *Improvements to interconnect reliability and performance* - the Slingshot interconnect
    that links compute nodes together and to the high-performance Lustre file systems
    is currently running an old version of management software that has a number of known
