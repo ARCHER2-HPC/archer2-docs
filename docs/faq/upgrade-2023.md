@@ -7,19 +7,12 @@
     
     Last updated: 2023-01-24
 
-During the first half of 2023 ARCHER will go through a major software upgrade. This will
-upgrade the versions of the following components on the service:
-
- - Base operating system
-    + Compute nodes: Cray OS (COS) 2.4.103 based on SLES 15 SP4
-    + Login nodes: UAN 2.5.7 based on SLES 15 SP4
- - Slingshot interconnect system software - to version 2.0.1
- - HPE Cray Programming Environment (PE) - to version 22.10
- - HPE Cray Management Software (CMS) - to version 1.3.1
+During the first half of 2023 ARCHER will go through a major software upgrade.
 
 On this page we describe the background to the changes, the current
-information on the timeline, what impact the changes will have for users and
-any action you should expect to have to take following the upgrade.
+information on the timeline, what impact the changes will have for users, any
+action you should expect to have to take following the upgrade and information
+on the versions on updated software.
 
 If you have any questions or concerns regarding the upgrade, please
 [contact the ARCHER2 Service Desk](https://www.archer2.ac.uk/support-access/servicedesk.html).
