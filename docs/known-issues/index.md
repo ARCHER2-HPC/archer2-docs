@@ -5,9 +5,20 @@ impacts and any known workarounds. Many of these issues are under
 active investigation by HPE Cray and the wider service.
 
 !!! info
-    This page was last reviewed on 18 Jan 2023
+    This page was last reviewed on 25 Jan 2023
 
 ## Open Issues
+
+### Incorrect answers using LibSci threaded `dgemm` (Added 2023-01-25)
+
+If the first matrix argument of `dgemm` is transposed with `'T'` then the threaded
+version can give incorrect results using the `cpe/21.04` module (which is the default as of 25th January 2023).
+
+This issue is fixed in `cpe/21.09`. Note that to activate this new
+environment requires an explicit change to `LD_LIBRARY_PATH` in
+addition to loading the newer `cpe` module. For details see [Using
+non-default versions of HPE Cray libraries on
+ARCHER2](https://docs.archer2.ac.uk/user-guide/dev-environment/#using-non-default-versions-of-hpe-cray-libraries-on-archer2).
 
 ### Slurm `--cpu=freq=X` option is not respected when used with `sbatch` (Added: 2023-01-18)
 
