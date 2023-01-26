@@ -5,7 +5,7 @@
     upgrade but is subject to change and revision as more information becomes 
     available.
     
-    Last updated: 2023-01-24
+    Last updated: 2023-01-26
 
 During the first half of 2023 ARCHER will go through a major software upgrade.
 
@@ -25,22 +25,22 @@ software setup is out of date; due to this, maintenance of the service is very
 difficult and updating software within the current framework is not possible.
 Some specific issues are:
 
- - *Ongoing access to security updates* - due to the out-of-date nature of the system
-   software on ARCHER2, the vendor (HPE) can not provide security updates for the current
-   system software beyond the upgrade.
- - *Improvements to interconnect reliability and performance* - the Slingshot interconnect
+ - *Ongoing access to security updates* -- the vendor (HPE) can not provide support for
+   security updates for the current system software on ARCHER2 indefinitely, this will
+   be an issue if we continue with the current release.
+ - *Improvements to interconnect reliability and performance* -- the Slingshot interconnect
    that links compute nodes together and to the high-performance Lustre file systems
    is currently running an old version of management software that has a number of known
    limitations and bugs. These affect our ability to monitor the health of the interconnect
    and have led to reliability issues for calculations using large numbers of compute nodes.
    Without a major system software upgrade, we cannot move to an up to date version of the
    Slingshot software that addresses current limitations.
- - *Improvements to upgradeability, maintainability and monitoring* - the current system software
+ - *Improvements to upgradeability, maintainability and monitoring* -- the current system software
    is based on a collection of early versions from the hardware vendor that do not provide
    the system health monitoring characteristics of more recent versions or the ability to
    flexibly update the system with low impact on user service that are available in more 
    recent versions.
- - *Access to more recent compilers, software libraries and tools* - the current system
+ - *Access to more recent compilers, software libraries and tools* -- the current system
    software does not provide the ability to access improvements in compilers and libraries
    (both bug fixes and performance improvements) that are available from HPE. Once the 
    system software is updated, the service will be able to access this improved software.
@@ -51,8 +51,8 @@ This major software upgrade will involve a complete re-install of system softwar
 by a reinstatement of local configurations (e.g. Slurm, authentication services, SAFE integration)
 and so will require an extended period of downtime.
 
- - Start: TBC
- - Duration: TBC
+ - Start: 14 April 2023
+ - End: Week beginning 8 May 2023 
 
 ## What are the impacts on users from the upgrade?
 
@@ -63,7 +63,7 @@ During the upgrade process:
 
 After the upgrade process:
 
- - Recompile and test code - as the new system will be based on a new OS version and
+ - Recompile and test code -- as the new system will be based on a new OS version and
    new versions of compilers and libraries we strongly recommend that all users recompile
    and test all software on the service. The ARCHER2 CSE service will be recompiling all 
    centrally installed software.
