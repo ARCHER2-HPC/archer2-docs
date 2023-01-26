@@ -8,7 +8,7 @@ systems are expanded as linear combinations of atom centred Gaussian
 functions. Powerful screening techniques are used to exploit real space
 locality. Restricted (Closed Shell) and Unrestricted (Spin-polarized)
 calculations can be performed with all-electron and valence-only basis sets
-with effective core pseudo-potentials. The current release is CRYSTAL17.
+with effective core pseudo-potentials. The current release is CRYSTAL23.
 
 !!! important
     CRYSTAL is not part of the officially supported
