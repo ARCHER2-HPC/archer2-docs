@@ -48,8 +48,12 @@ Some specific issues are:
 ## When will the upgrade happen and how long will it take?
 
 This major software upgrade will involve a complete re-install of system software followed
-by a reinstatement of local configurations (e.g. Slurm, authentication services, SAFE integration)
-and so will require an extended period of downtime.
+by a reinstatement of local configurations (e.g. Slurm, authentication services, SAFE integration).
+Unfortunately, this major work will require a long period of downtime but this has been planned
+with all service partners to minimise the outage and give as much notice to users as possble so
+that they can plan accordingly.
+
+The current outage dates are:
 
  - Start: 14 April 2023
  - End: Week beginning 8 May 2023 
