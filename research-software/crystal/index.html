@@ -771,12 +771,19 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#known-issues" class="md-nav__link">
-    Known Issues
+  <a href="#tips-and-known-issues" class="md-nav__link">
+    Tips and known issues
   </a>
   
-    <nav class="md-nav" aria-label="Known Issues">
+    <nav class="md-nav" aria-label="Tips and known issues">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cpu-frequency" class="md-nav__link">
+    CPU frequency
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#out-of-memory-errors" class="md-nav__link">
@@ -1527,12 +1534,19 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#known-issues" class="md-nav__link">
-    Known Issues
+  <a href="#tips-and-known-issues" class="md-nav__link">
+    Tips and known issues
   </a>
   
-    <nav class="md-nav" aria-label="Known Issues">
+    <nav class="md-nav" aria-label="Tips and known issues">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cpu-frequency" class="md-nav__link">
+    CPU frequency
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#out-of-memory-errors" class="md-nav__link">
@@ -1598,13 +1612,13 @@ request access through SAFE:</p>
 </ul>
 <p>Please have your license details to hand.</p>
 <h2 id="running-parallel-crystal-jobs">Running parallel CRYSTAL jobs</h2>
-<p>The following script will run a CRYSTAL job on the ARCHER2
-system using 256 cores (2 nodes). It assumes that the input file is tio2.d12</p>
+<p>The following script will run CRYSTAL using pure MPI for parallelisation
+using 256 MPI processes, 1 per core across 2 nodes. It
+assumes that the input file is tio2.d12</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="kp">#SBATCH --nodes=2</span>
-<span class="kp">#SBATCH --ntasks-per-node=128</span>
-<span class="kp">#SBATCH --cpus-per-task=1</span>
 <span class="kp">#SBATCH --time=0:20:00</span>
+<span class="kp">#SBATCH --ntasks-per-node=128</span>
 
 <span class="c1"># Replace [budget code] below with your project code (e.g. e05)</span>
 <span class="kp">#SBATCH --account=[budget code]</span>
@@ -1612,14 +1626,51 @@ system using 256 cores (2 nodes). It assumes that the input file is tio2.d12</p>
 <span class="kp">#SBATCH --qos=standard</span>
 
 module<span class="w"> </span>load<span class="w"> </span>other-software
-module<span class="w"> </span>load<span class="w"> </span>crystal
+module<span class="w"> </span>load<span class="w"> </span>crystal/23-1.0.1
+<span class="c1">#or for the previous version use</span>
+<span class="c1">#module load crystal/17-1.0.2</span>
 
 <span class="c1"># Change this to the name of your input file</span>
 cp<span class="w"> </span>tio2.d12<span class="w"> </span>INPUT
 
 <span class="nb">srun</span><span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>MPPcrystal
 </code></pre></div>
-<h2 id="known-issues">Known Issues</h2>
+<p>An equivalent 2 node job using MPI+OpenMP parallelism with 4 threads per
+MPI process, 64 MPI processes, 1 thread per core across 2 nodes would be:</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="kp">#SBATCH --nodes=2</span>
+<span class="kp">#SBATCH --time=0:20:00</span>
+<span class="kp">#SBATCH --ntasks-per-node=32</span>
+<span class="kp">#SBATCH --cpus-per-task=4</span>
+
+<span class="c1"># Replace [budget code] below with your project code (e.g. e05)</span>
+<span class="kp">#SBATCH --account=[budget code]</span>
+<span class="kp">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --qos=standard</span>
+
+module<span class="w"> </span>load<span class="w"> </span>other-software
+module<span class="w"> </span>load<span class="w"> </span>crystal/23-1.0.1
+
+<span class="c1"># Change this to the name of your input file</span>
+cp<span class="w"> </span>tio2.d12<span class="w"> </span>INPUT
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">4</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_PLACES</span><span class="o">=</span>cores
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_STACKSIZE</span><span class="o">=</span>16M
+
+<span class="nb">srun</span><span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>MPPcrystalOMP
+</code></pre></div>
+<h2 id="tips-and-known-issues">Tips and known issues</h2>
+<h3 id="cpu-frequency">CPU frequency</h3>
+<p>You should run some short (1 or 2 SCF cycles) jobs to test the scaling of your
+job so you can decide on the balance between cost to your budget and the time
+it takes to get a result. You now should include a few tests at different
+clock rates as part of this process.</p>
+<p>Based on a few simple tests we have run it is likely that jobs dominated by
+building the Kohn-Sham matrix (SHELLX+MONMO3+NUMDFT in the output) will see
+minimal energy savings and better performance at 2.25GHz. Jobs dominated by
+the ScaLapack calls (MPP_DIAG in the output) may show useful energy savings at
+2.0GHz.</p>
 <h3 id="out-of-memory-errors">Out-of-memory errors</h3>
 <p>Long-running jobs may encounter unexpected errors of the form
 <div class="highlight"><pre><span></span><code>slurmstepd: error: Detected 1 oom-kill event(s) in step 411502.0 cgroup.
