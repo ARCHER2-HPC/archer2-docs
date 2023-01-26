@@ -74,10 +74,6 @@ After the upgrade process:
  - Note: there will be no Python 2 installation available as part of supported software
    following the upgrade. Python 3 will continue to be fully-supported.
 
-Impact on allocations:
-
- - TBC
-
 Impact on data on the service
 
  - No data in /home, /work, NVMe or RDFaaS will be removed or moved as part of the upgrade
