@@ -5,7 +5,7 @@
     upgrade but is subject to change and revision as more information becomes 
     available.
     
-    Last updated: 2023-01-26
+    Last updated: 2023-02-08
 
 During the first half of 2023 ARCHER will go through a major software upgrade.
 
@@ -84,29 +84,29 @@ System software:
 
  - Base operating system
     + Compute nodes: Cray OS (COS) 2.4.103 based on SLES 15 SP4
-    + Login nodes: UAN 2.5.7 based on SLES 15 SP4
- - Slingshot interconnect system software: 2.0.1
+    + Login nodes: UAN 2.5.8 based on SLES 15 SP4
+ - Slingshot interconnect system software: 2.0.1-90
  - HPE Cray Management Software (CMS): 1.3.1
 
-### Programming environment: 22.10
+### Programming environment: 22.12
 
 Compilers:
 
- - CCE: 14.0.4
- - GCC: 12.1.0 (11.2.0, 10.3.0 also available)
+ - CCE: 15.0.0
+ - GCC: 12.2.0 (11.2.0, 10.3.0 also available)
  - AOCC: 3.2
 
 Communication libraries:
 
- - Cray MPICH: 8.1.20 
+ - Cray MPICH: 8.1.23 
     + Based on MPICH 3.4a2
     + Supports OpenFabrics (OFI) and UCX
-  - Cray OpenSHMEMX: 11.5.6
+  - Cray OpenSHMEMX: 11.5.7
 
 Numerical libraries:
 
- - Cray LibSci: 22.10.1.2
- - FFTW: 3.3.10.2
+ - Cray LibSci: 22.12.1.1
+ - FFTW: 3.3.10.3
 
 IO Libraries:
 
@@ -116,21 +116,21 @@ IO Libraries:
 
 Tools:
 
- - Python: 3.9.13
+ - Python: 3.9.13.1
     + numpy: 1.21.5
     + scipy: 1.6.2
     + mpi4py: 3.1.3
     + dask: 2022.2.1
  - R: 4.2.1.1
- - CrayPAT/Perftools: 22.09.0
- - gdb4hpc: 4.14.4
+ - CrayPAT/Perftools: 22.12.0
+ - gdb4hpc: 4.14.6
  - valgrind4hpc: 2.12.10
- - sanitizers4hpc: 1.0.2
+ - sanitizers4hpc: 1.0.4
  - Lmod: 3.1.4
 
 #### Summary of user and application impact
 
-For full information, see [CPE 22.10 Release Notes](https://github.com/PE-Cray/cpe-changelog/blob/main/ex/cpe-22.10-sles15-sp3-FullReleaseNotes.txt)
+For full information, see [CPE 22.12 Release Notes](https://github.com/PE-Cray/cpe-changelog/blob/main/ex/cpe-22.12-sles15-sp4-FullReleaseNotes.txt)
 
 **CCE 14**
 
@@ -141,7 +141,7 @@ Some non-standard Cray Fortran extensions supporting shorthand notation for logi
 will be removed in a future release.  CCE 14 will issue warning messages when these are
 encountered, providing time to adapt the application to use standard Fortran.  
 
-**HPE Cray MPICH 8.1.20**
+**HPE Cray MPICH 8.1.23**
 
-Cray MPICH 8.1.20 can support only ~2040 simultaneous MPI communicators.
+Cray MPICH 8.1.23 can support only ~2040 simultaneous MPI communicators.
 
