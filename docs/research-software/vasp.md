@@ -40,7 +40,7 @@ self-consistency cycle.
 If you have a VASP 5 or 6 licence and wish to have access to VASP on
 ARCHER2, please make a request via the SAFE, see:
 
-   - [How to request access to package groups](https://epcced.github.io/safe-docs/safe-for-users/#how-to-request-access-to-a-package-group)
+   - [How to request access to package groups](https://epcced.github.io/safe-docs/safe-for-users/#how-to-request-access-to-a-package-group-licensed-software-or-restricted-features)
 
 Please have your license details to hand.
 
