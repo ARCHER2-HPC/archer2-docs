@@ -29,7 +29,7 @@ with effective core pseudo-potentials. The current release is CRYSTAL23.
 CRYSTAL is only available to users who have a valid CRYSTAL license. You 
 request access through SAFE:
 
-- [How to request access to package groups](https://epcced.github.io/safe-docs/safe-for-users/#how-to-request-access-to-a-package-group)
+- [How to request access to package groups](https://epcced.github.io/safe-docs/safe-for-users/#how-to-request-access-to-a-package-group-licensed-software-or-restricted-features)
 
 Please have your license details to hand.
 
