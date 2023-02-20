@@ -1859,21 +1859,23 @@ then proceed as described in the Allinea documentation.</p>
 libraries is required at link time.</p>
 <p>The path to the additional libraries required will depend on the programming
 environment you are using as well as the Cray programming release. Here are
-the paths for each of the compiler environments consistent with the current
-default Cray programming release, 21.04:</p>
+the paths for each of the compiler environments consistent with the
+Cray Programming Release (CPE) 21.04 using the default OFI as the low-level
+comms protocol:</p>
 <ul>
-<li><code>PrgEnv-cray</code>: <code>${FORGE_DIR}/map/libs/default/cray</code></li>
-<li><code>PrgEnv-gnu</code>: <code>${FORGE_DIR}/map/libs/default/gnu</code></li>
-<li><code>PrgEnv-aocc</code>: <code>${FORGE_DIR}/map/libs/default/aocc</code></li>
+<li><code>PrgEnv-cray</code>: <code>${FORGE_DIR}/map/libs/default/cray/ofi</code></li>
+<li><code>PrgEnv-gnu</code>: <code>${FORGE_DIR}/map/libs/default/gnu/ofi</code></li>
+<li><code>PrgEnv-aocc</code>: <code>${FORGE_DIR}/map/libs/default/aocc/ofi</code></li>
 </ul>
 <p>For example, for <code>PrgEnv-gnu</code> the additional options required at link time
 are given below.
-<div class="highlight"><pre><span></span><code>-L${FORGE_DIR}/map/libs/default/gnu \
+<div class="highlight"><pre><span></span><code>-L${FORGE_DIR}/map/libs/default/gnu/ofi \
 -lmap-sampler-pmpi -lmap-sampler \
--Wl,--eh-frame-hdr -Wl,-rpath=${FORGE_DIR}/map/libs/default/gnu
+-Wl,--eh-frame-hdr -Wl,-rpath=${FORGE_DIR}/map/libs/default/gnu/ofi
 </code></pre></div></p>
 <p>The MAP libraries for other Cray programming releases can be found under
-<code>${FORGE_DIR}/map/libs</code>.</p>
+<code>${FORGE_DIR}/map/libs</code>. If you require MAP libraries built for the UCX
+comms protocol, simply replace <code>ofi</code> with <code>ucx</code> in the library path.</p>
 <h4 id="generating-a-profile">Generating a profile</h4>
 <p>Submit a batch job in the usual way, and include the lines:
 <div class="highlight"><pre><span></span><code><span class="c1"># ... SLURM batch commands as usual ...</span>
