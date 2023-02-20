@@ -182,23 +182,24 @@ libraries is required at link time.
 
 The path to the additional libraries required will depend on the programming
 environment you are using as well as the Cray programming release. Here are
-the paths for each of the compiler environments consistent with the current
-default Cray programming release, 21.04:
+the paths for each of the compiler environments consistent with the
+Cray Programming Release (CPE) 21.04 using OFI as the low-level comms protocol:
 
-- `PrgEnv-cray`: `${FORGE_DIR}/map/libs/default/cray`
-- `PrgEnv-gnu`: `${FORGE_DIR}/map/libs/default/gnu`
-- `PrgEnv-aocc`: `${FORGE_DIR}/map/libs/default/aocc`
+- `PrgEnv-cray`: `${FORGE_DIR}/map/libs/default/cray/ofi`
+- `PrgEnv-gnu`: `${FORGE_DIR}/map/libs/default/gnu/ofi`
+- `PrgEnv-aocc`: `${FORGE_DIR}/map/libs/default/aocc/ofi`
 
 For example, for `PrgEnv-gnu` the additional options required at link time
 are given below.
 ```
--L${FORGE_DIR}/map/libs/default/gnu \
+-L${FORGE_DIR}/map/libs/default/gnu/ofi \
 -lmap-sampler-pmpi -lmap-sampler \
--Wl,--eh-frame-hdr -Wl,-rpath=${FORGE_DIR}/map/libs/default/gnu
+-Wl,--eh-frame-hdr -Wl,-rpath=${FORGE_DIR}/map/libs/default/gnu/ofi
 ```
 
 The MAP libraries for other Cray programming releases can be found under
-`${FORGE_DIR}/map/libs`.
+`${FORGE_DIR}/map/libs`. And for each combination of CPE release and compiler,
+there also exist libraries built for the UCX low-level comms protocol.
 
 #### Generating a profile
 
