@@ -48,6 +48,7 @@ nav:
     - "Overview": quick-start/overview.md
     - "Quickstart for users": quick-start/quickstart-users.md
     - "Quickstart for developers": quick-start/quickstart-developers.md
+    - "Quickstart next steps": quick-start/quickstart-next-steps.md
   - "ARCHER2 Known Issues": known-issues/index.md
   - "ARCHER2 Frequently Asked Questions":
     - "General FAQ": faq/index.md
