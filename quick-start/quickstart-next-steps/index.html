@@ -9,13 +9,17 @@
       
       
       
+        <link rel="prev" href="../quickstart-developers/">
+      
+      
+        <link rel="next" href="../../known-issues/">
       
       <link rel="icon" href="../../favicon.ico">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.13">
     
     
       
-        <title>Main differences between ARCHER2 4-cabinet system and ARCHER2 full system - ARCHER2 User Documentation</title>
+        <title>Quickstart next steps - ARCHER2 User Documentation</title>
       
     
     
@@ -77,7 +81,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#main-differences-between-archer2-4-cabinet-system-and-archer2-full-system" class="md-skip">
+        <a href="#next-steps" class="md-skip">
           Skip to content
         </a>
       
@@ -109,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Main differences between ARCHER2 4-cabinet system and ARCHER2 full system
+              Quickstart next steps
             
           </span>
         </div>
@@ -231,14 +235,16 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
       
       
       
@@ -247,7 +253,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
           Quickstart
@@ -260,7 +266,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../quick-start/overview/" class="md-nav__link">
+      <a href="../overview/" class="md-nav__link">
         Overview
       </a>
     </li>
@@ -274,7 +280,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../quick-start/quickstart-users/" class="md-nav__link">
+      <a href="../quickstart-users/" class="md-nav__link">
         Quickstart for users
       </a>
     </li>
@@ -288,7 +294,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../quick-start/quickstart-developers/" class="md-nav__link">
+      <a href="../quickstart-developers/" class="md-nav__link">
         Quickstart for developers
       </a>
     </li>
@@ -300,11 +306,21 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../quick-start/quickstart-next-steps/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Quickstart next steps
       </a>
+      
     </li>
   
 
@@ -1480,28 +1496,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#for-all-users" class="md-nav__link">
-    For all users
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#for-users-compiling-and-developing-software-on-archer2" class="md-nav__link">
-    For users compiling and developing software on ARCHER2
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -1518,59 +1512,12 @@
   
 
 
-<h1 id="main-differences-between-archer2-4-cabinet-system-and-archer2-full-system">Main differences between ARCHER2 4-cabinet system and ARCHER2 full system</h1>
-<p>This section provides an overview of the main differences between
-the ARCHER2 4-cabinet system that all users have been using up until
-now and the full ARCHER2 system along with links to more information where 
-appropriate.</p>
-<h2 id="for-all-users">For all users</h2>
-<ul>
-<li>There are 5860 compute nodes in total on the full ARCHER2 system rather 
-  than just the 1024 on the 4-cabinet ARCHER2 system.</li>
-<li>Of the 5860 compute nodes, 584 are <em>high memory nodes</em>, these nodes have
-  512 GiB of memory rather than the 256 GiB available on standard memory
-  nodes.</li>
-<li>There are two data analysis nodes available and these are shared by multiple
-  users. When using these nodes, users typically request the number of cores
-  and the amount of memory they require (unlike compute nodes where you always
-  have access to all the cores and all the memory on a node and do not share
-  with any other users). See <a href="../../user-guide/analysis/">the Data Analysis section of the User Guide</a>
-  for more information.</li>
-<li>Software is provided by the <a href="https://lmod.readthedocs.io/">Lmod</a> module
-  system (on the 4-cabinet system, TCL environment modules are used instead). Many
-  commands are similar but there are some differences, see 
-  <a href="../../user-guide/sw-environment/">the Software Environment section of the User Guide</a>
-  for more information.</li>
-<li>Not all versions of all software have been ported over to the full system from
-  the 4-cabinet system, some older versions of software have not been installed.</li>
-<li>The scheduler layout has been expanded to provide more functionality and 
-  flexibility. You can find details of the new QoS available in
-  <a href="../../user-guide/scheduler/">the Submitting Jobs on ARCHER2 section of the User Guide</a>.</li>
-<li>You no longer need to specify <code>--reservation=shortqos</code> when using the 
-  <code>short</code> QoS.</li>
-<li>Jobs running in a reservation can now run for longer than the maximum wall time available
-  in any of the normal QoS defined in the scheduler. Reservations must use the <code>reservation</code>
-  QoS.</li>
-<li>You should no longer add the <code>module load epcc-job-env</code> command to job submission
-  scripts.</li>
-</ul>
-<h2 id="for-users-compiling-and-developing-software-on-archer2">For users compiling and developing software on ARCHER2</h2>
-<ul>
-<li>The HPE Programming Environment (PE) version has been updated to the
-  21.04 release with the 21.09 release also available. These releases make
-  newer versions of compilers and MPI libraries available.</li>
-<li>The change to Lmod modules means that some modules are hidden by default
-  until dependencies have been loaded (for example, you will not be able
-  to load the <code>cray-netcdf</code> or <code>cray-netcdf-hdf5parallel</code> modules until
-  you have loaded the appropriate <code>cray-hdf5</code> or <code>cray-hdf5-parallel</code> modules).
-  You can use the <code>module spider</code> command to see all available modules, including
-  hidden ones.</li>
-<li>There are two MPI transport layers available: OpenFabrics (OFI) and UCX.
-  In some cases, you may see performance and/or scaling improvements by switching
-  to UCX rather than the default OFI transport layer. For more information on
-  when to switch and how to switch, see
-  <a href="../../user-guide/dev-environment/">the Application Development Environment section of the User Guide</a></li>
-</ul>
+<h1 id="next-steps">Next Steps</h1>
+<p>Once you have set up your machine account and logged on, run a job or two and possibly updated and compiled your code: what next?</p>
+<p>There is still loads of support and advice available to you:</p>
+<p><a href="https://www.archer2.ac.uk/news/2022/05/18/where-to-start.html">Getting Started on ARCHER2</a> gives an overview of some of this help.</p>
+<p>Advice on how to <a href="https://www.archer2.ac.uk/support-access/access.html">Get Access</a> with different funding routes, and if your chosen route requires you to complete a Technical Assessment, we have advice on <a href="https://www.archer2.ac.uk/news/2022/08/03/technical-assessments.html">How to prepare a successful TA</a></p>
+<p>And we also have a comprehensive <a href="https://www.archer2.ac.uk/training/courses/">Training Programme</a> for all levels of experience and a wide range of different uses.  All our training is free for UK Academics and we have a list of <a href="https://www.archer2.ac.uk/training/#upcoming-training">upcoming training</a> and also all the <a href="https://www.archer2.ac.uk/training/materials/">materials and resources from previous training events</a>.</p>
 
 
   
