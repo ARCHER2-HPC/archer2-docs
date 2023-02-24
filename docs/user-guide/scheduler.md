@@ -252,7 +252,7 @@ Job priority on ARCHER2 depends on a number of different factors:
 
 Each of these factors is normalised to a value between 0 and 1, is multiplied
 with a weight and the resulting values combined to produce a priority for the job. 
-The current job priority formula on Tursa is:
+The current job priority formula on ARCHER2 is:
 
 ```
 Priority = [10000 * P(QoS)] + [500 * P(Age)] + [300 * P(Fairshare)] + [100 * P(size)]
