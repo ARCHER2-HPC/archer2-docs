@@ -347,6 +347,7 @@ Due to MODULEPATH changes, the following have been reloaded:
 
 | Option | Comment |  
 | ------ | ------- |
+| `-O<level>` | Optimisation levels: `-O0`, `-O1`, `-O2`, `-O3`, `-Ofast`. `-Ofast` is not recommended without careful regression testing on numerical output. |
 | `-std=<standard>` |	Default is gnu |
 | `-fallow-argument-mismatch` | Allow mismatched procedure arguments. This argument is required for compiling MPI Fortran code with GCC version 10 or greater if you are using the older MPI interfaces (see warning above) |
 | `-fbounds-check` | Use runtime checking of array indices |
@@ -416,10 +417,9 @@ Performance options:
 
 | Option | Comment |  
 | ------ | ------- |
-| `-Ofast` | Optimisation levels: -O0, -O1, -O2, -O3, -Ofast            |
+| `-Ofast` | Optimisation levels: `-O0`, `-O1`, `-O2`, `-O3`, `-Ofast`. `-Ofast` is not recommended without careful regression testing on numerical output.           |
 | `-ffp=level` | Floating point maths optimisations levels 0-4 \[2\]    |
 | `-flto` | Link time optimisation                                      |
-
 
 Miscellaneous options:
 
@@ -478,9 +478,6 @@ Due to MODULEPATH changes, the following have been reloaded:
   1) cray-mpich/8.1.4
 
 ```
-
-!!! note
-    Further details on AOCC will appear here as they become available.
 
 #### AOCC reference material
 
