@@ -272,7 +272,7 @@ The priority factors are:
   budget codes on the system, the lower the budget code fairshare value will be; and the more
   use you have made of the system recently relative to other users within your
   budget code, the lower your user fairshare value will be. The decay half life 
-  for fairshare on ARCHER2 is set to 14 days. [More information on the Slurm fairshare
+  for fairshare on ARCHER2 is set to 2 days. [More information on the Slurm fairshare
   algorithm](https://slurm.schedmd.com/fair_tree.html).
 - P(Size) - The priority based on the job size normalised to a value between 0 and 1.
   The maximum size is the total number of ARCHER2 compute nodes.
