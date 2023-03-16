@@ -2,7 +2,7 @@
 
 AMD Optimizing CPU Libraries (AOCL) are a set of numerical libraries optimized for AMD “Zen”-based processors, including EPYC, Ryzen Threadripper PRO, and Ryzen.
 
-AOCL is comprised of the following eight libraries:
+AOCL is comprised of eight libraries:
 - BLIS (BLAS Library)
 - libFLAME (LAPACK)
 - AMD-FFTW
@@ -32,7 +32,7 @@ module load aocl
 
 ### AOCC Programming Environment
 
-AOCL is only available with aocc/3.0.0.
+AOCL-3.1 is only available with aocc/3.0.0.
 
 ```
 module load PrgEnv-aocc
@@ -46,4 +46,5 @@ For more information on AOCL, please see: https://developer.amd.com/amd-aocl/#do
 
 # Version history..
 
-- Module `aocl/3.1` installed April 2022
+- `aocl/3.1` installed April 2022
+- `aocl/4.0` installed March 2023
