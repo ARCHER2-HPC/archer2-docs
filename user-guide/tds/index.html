@@ -1496,6 +1496,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#connecting-to-the-tds" class="md-nav__link">
+    Connecting to the TDS
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#slurm-scheduler-configuration" class="md-nav__link">
     Slurm scheduler configuration
   </a>
@@ -1558,6 +1565,16 @@ the entire system may be made unavailable or rebooted with little or no warning.
 </ul>
 </li>
 </ul>
+<h2 id="connecting-to-the-tds">Connecting to the TDS</h2>
+<p>You can only log into the TDS from an ARCHER2 login node. You should create an 
+SSH key pair on an ARCHER2 login node and add the public part to your ARCHER2 account
+in SAFE in the usual way.</p>
+<p>Once your new key pair is setup, you can then login to the TDS (from an ARCHER2 login
+node) with</p>
+<div class="highlight"><pre><span></span><code>ssh login-tds.archer2.ac.uk
+</code></pre></div>
+<p>You will require your SSH key passphrase and ARCHER2 account password to login to the
+TDS.</p>
 <h2 id="slurm-scheduler-configuration">Slurm scheduler configuration</h2>
 <ul>
 <li>Paritions available:<ul>
