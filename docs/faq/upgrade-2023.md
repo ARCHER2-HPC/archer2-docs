@@ -5,7 +5,7 @@
     upgrade but is subject to change and revision as more information becomes 
     available.
     
-    Last updated: 2023-02-08
+    Last updated: 2023-03-21
 
 During the first half of 2023 ARCHER will go through a major software upgrade.
 
@@ -93,7 +93,7 @@ System software:
 Compilers:
 
  - CCE: 15.0.0
- - GCC: 12.2.0 (11.2.0, 10.3.0 also available)
+ - GCC: 11.2.0 (10.3.0 also available)
  - AOCC: 3.2
 
 Communication libraries:
