@@ -22,6 +22,22 @@ what they can expect from the system.
     + /home file system: shared with ARCHER2 main system
     + /work file system: 224 TiB Lustre (2x MDT, 2x OST)
 
+## Connecting to the TDS
+
+You can only log into the TDS from an ARCHER2 login node. You should create an 
+SSH key pair on an ARCHER2 login node and add the public part to your ARCHER2 account
+in SAFE in the usual way.
+
+Once your new key pair is setup, you can then login to the TDS (from an ARCHER2 login
+node) with
+
+```
+ssh login-tds.archer2.ac.uk
+```
+
+You will require your SSH key passphrase and ARCHER2 account password to login to the
+TDS.
+
 ## Slurm scheduler configuration
 
  - Paritions available:
