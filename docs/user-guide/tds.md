@@ -20,7 +20,7 @@ what they can expect from the system.
 
  - Storage:
     + /home file system: shared with ARCHER2 main system
-    + /work file system: 224 TiB Lustre (2x MDT, 2x OST)
+    + /work file system: 224 TiB Lustre (2x MDT, 2x OST) - not shared with main system
 
 ## Connecting to the TDS
 
@@ -35,15 +35,17 @@ node) with
 ssh login-tds.archer2.ac.uk
 ```
 
-You will require your SSH key passphrase and ARCHER2 account password to login to the
-TDS.
+You will require your SSH key passphrase (for the new key pair you generated) and your
+usual ARCHER2 account password to login to the TDS.
 
 ## Slurm scheduler configuration
 
  - Paritions available:
-    + `workq`: includes all compute nodes
+    + `standard`: includes all compute nodes
+    + `highmem`: includes high memory compute nodes
  - QoS available:
-    + `normal`: no per-user or per-project limits
+    + `standard`: same limits as on ARCHER2 main system
+    + `highmem`: same limits as on ARCHER2 main system
 
 ## Known issues/notes
 
@@ -52,4 +54,8 @@ TDS.
     + ARCHER2 CSE service modules available but not all software installed on TDS `/work` file system - i.e. you may be able to load a module but the software it points to may not be available. Check if the software is actually installed before trying to use it.
 
  - GCC 12.2.0 (gcc/g++/gfortran) compiler has been shown to give incorrect numerical results for a number of software packages (VASP, CASTEP. CP2K). If you want to use this compiler version we recommend checking output carefully. We may remove this version from the PE software stack installed on the full system as part of the software upgrade.
+
+ - Singularity + MPI does not currently work - MPI executable in the Singularity container segfaults.
+
+ - Energy use data is not available from TDS compute nodes.
 
