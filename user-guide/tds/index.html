@@ -1561,7 +1561,7 @@ the entire system may be made unavailable or rebooted with little or no warning.
 <p>Storage:</p>
 <ul>
 <li>/home file system: shared with ARCHER2 main system</li>
-<li>/work file system: 224 TiB Lustre (2x MDT, 2x OST)</li>
+<li>/work file system: 224 TiB Lustre (2x MDT, 2x OST) - not shared with main system</li>
 </ul>
 </li>
 </ul>
@@ -1573,16 +1573,18 @@ in SAFE in the usual way.</p>
 node) with</p>
 <div class="highlight"><pre><span></span><code>ssh login-tds.archer2.ac.uk
 </code></pre></div>
-<p>You will require your SSH key passphrase and ARCHER2 account password to login to the
-TDS.</p>
+<p>You will require your SSH key passphrase (for the new key pair you generated) and your
+usual ARCHER2 account password to login to the TDS.</p>
 <h2 id="slurm-scheduler-configuration">Slurm scheduler configuration</h2>
 <ul>
 <li>Paritions available:<ul>
-<li><code>workq</code>: includes all compute nodes</li>
+<li><code>standard</code>: includes all compute nodes</li>
+<li><code>highmem</code>: includes high memory compute nodes</li>
 </ul>
 </li>
 <li>QoS available:<ul>
-<li><code>normal</code>: no per-user or per-project limits</li>
+<li><code>standard</code>: same limits as on ARCHER2 main system</li>
+<li><code>highmem</code>: same limits as on ARCHER2 main system</li>
 </ul>
 </li>
 </ul>
@@ -1597,6 +1599,12 @@ TDS.</p>
 </li>
 <li>
 <p>GCC 12.2.0 (gcc/g++/gfortran) compiler has been shown to give incorrect numerical results for a number of software packages (VASP, CASTEP. CP2K). If you want to use this compiler version we recommend checking output carefully. We may remove this version from the PE software stack installed on the full system as part of the software upgrade.</p>
+</li>
+<li>
+<p>Singularity + MPI does not currently work - MPI executable in the Singularity container segfaults.</p>
+</li>
+<li>
+<p>Energy use data is not available from TDS compute nodes.</p>
 </li>
 </ul>
 
