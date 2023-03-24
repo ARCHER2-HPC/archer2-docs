@@ -11,7 +11,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.3">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.4">
     
     
       
@@ -19,7 +19,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.c4a75a56.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.240905d7.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
@@ -1606,6 +1606,12 @@ usual ARCHER2 account password to login to the TDS.</p>
 <li>
 <p>Energy use data is not available from TDS compute nodes.</p>
 </li>
+<li>
+<p>Issues with <code>--cpus-per-task</code> Slurm option. If you set <code>--cpus-per-task</code> greater than <code>1</code> in your job submission script (e.g. using <code>#SBATCH</code> directives) then this option is not inhereted by <code>srun</code> commands in the job script. You need to repeat the option explicitly in the <code>srun</code> command (e.g. <code>srun --cpus-per-task=2 --hint=nomultithread --distribution=block:block</code>).</p>
+</li>
+<li>
+<p>Change in definition of a Slurm NUMA region. On the TDS, a Slurm NUMA region is 4 cores (corresponding to an Core CompleX CCX in the AMD EPYC Zen2 architecture). This means cyclic process placements on NUMA regions (e.g. <code>--distribution=block:cyclic</code>) will cycle over 4-core CCX. (On the main system, a Slurm NUMA region is 16 cores).</p>
+</li>
 </ul>
 
 
@@ -1686,7 +1692,7 @@ usual ARCHER2 account password to login to the TDS.</p>
     <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.efa0ade1.min.js"></script>
+      <script src="../../assets/javascripts/bundle.19047be9.min.js"></script>
       
     
   </body>
