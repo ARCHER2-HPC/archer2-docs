@@ -119,6 +119,10 @@ The SAFE web interface is used to provide your initial password for logging onto
 Documentation](https://epcced.github.io/safe-docs) for more details on requesting accounts and picking up passwords).
 
 !!! note
+    ARCHER2 account passwords are also sometimes referred to as LDAP
+    passwords by the system.
+
+!!! note
 
     You will be prompted to change your password the first time
     that you log in to ARCHER2. You may also change your password, at
