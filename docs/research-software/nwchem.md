@@ -34,7 +34,7 @@ submitting them to the
 
 The following script will run a NWChem job using 2 nodes (256 cores) in
 the standard partition. It assumes that the input file is called
-`test\_calc.nw`.
+`test_calc.nw`.
 
 === "Full system"
     ```
