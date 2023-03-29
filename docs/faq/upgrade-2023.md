@@ -5,7 +5,7 @@
     upgrade but is subject to change and revision as more information becomes 
     available.
     
-    Last updated: 2023-03-21
+    Last updated: 2023-03-29
 
 During the first half of 2023 ARCHER will go through a major software upgrade.
 
@@ -50,13 +50,13 @@ Some specific issues are:
 This major software upgrade will involve a complete re-install of system software followed
 by a reinstatement of local configurations (e.g. Slurm, authentication services, SAFE integration).
 Unfortunately, this major work will require a long period of downtime but this has been planned
-with all service partners to minimise the outage and give as much notice to users as possble so
+with all service partners to minimise the outage and give as much notice to users as possible so
 that they can plan accordingly.
 
 The current outage dates are:
 
- - Start: 14 April 2023
- - End: Week beginning 8 May 2023 
+ - Start: TBC May 2023
+ - End: 3-4 weeks after start date
 
 ## What are the impacts on users from the upgrade?
 
@@ -83,9 +83,9 @@ Impact on data on the service
 System software:
 
  - Base operating system
-    + Compute nodes: Cray OS (COS) 2.4.103 based on SLES 15 SP4
+    + Compute nodes: Cray OS (COS) 2.4.109 based on SLES 15 SP4
     + Login nodes: UAN 2.5.8 based on SLES 15 SP4
- - Slingshot interconnect system software: 2.0.1-90
+ - Slingshot interconnect system software: 2.0.2
  - HPE Cray Management Software (CMS): 1.3.1
 
 ### Programming environment: 22.12
@@ -132,13 +132,13 @@ Tools:
 
 For full information, see [CPE 22.12 Release Notes](https://github.com/PE-Cray/cpe-changelog/blob/main/ex/cpe-22.12-sles15-sp4-FullReleaseNotes.txt)
 
-**CCE 14**
+**CCE 15**
 
-C++ applications built using CCE 13 or earlier may need to be recompiled due to the significant
+C++ applications built using CCE 13 or earlier should be recompiled due to the significant
 changes that were necessary to implement C++17.  This is expected to be a one-time requirement.
 
 Some non-standard Cray Fortran extensions supporting shorthand notation for logical operations
-will be removed in a future release.  CCE 14 will issue warning messages when these are
+will be removed in a future release.  CCE 15 will issue warning messages when these are
 encountered, providing time to adapt the application to use standard Fortran.  
 
 **HPE Cray MPICH 8.1.23**
