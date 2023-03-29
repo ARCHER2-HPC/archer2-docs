@@ -1660,7 +1660,7 @@
 <p>The information on this page represents our current best understanding of the
 upgrade but is subject to change and revision as more information becomes 
 available.</p>
-<p>Last updated: 2023-03-21</p>
+<p>Last updated: 2023-03-29</p>
 </div>
 <p>During the first half of 2023 ARCHER will go through a major software upgrade.</p>
 <p>On this page we describe the background to the changes, the current
@@ -1700,12 +1700,12 @@ Some specific issues are:</p>
 <p>This major software upgrade will involve a complete re-install of system software followed
 by a reinstatement of local configurations (e.g. Slurm, authentication services, SAFE integration).
 Unfortunately, this major work will require a long period of downtime but this has been planned
-with all service partners to minimise the outage and give as much notice to users as possble so
+with all service partners to minimise the outage and give as much notice to users as possible so
 that they can plan accordingly.</p>
 <p>The current outage dates are:</p>
 <ul>
-<li>Start: 14 April 2023</li>
-<li>End: Week beginning 8 May 2023 </li>
+<li>Start: TBC May 2023</li>
+<li>End: 3-4 weeks after start date</li>
 </ul>
 <h2 id="what-are-the-impacts-on-users-from-the-upgrade">What are the impacts on users from the upgrade?</h2>
 <p>During the upgrade process:</p>
@@ -1730,11 +1730,11 @@ that they can plan accordingly.</p>
 <p>System software:</p>
 <ul>
 <li>Base operating system<ul>
-<li>Compute nodes: Cray OS (COS) 2.4.103 based on SLES 15 SP4</li>
+<li>Compute nodes: Cray OS (COS) 2.4.109 based on SLES 15 SP4</li>
 <li>Login nodes: UAN 2.5.8 based on SLES 15 SP4</li>
 </ul>
 </li>
-<li>Slingshot interconnect system software: 2.0.1-90</li>
+<li>Slingshot interconnect system software: 2.0.2</li>
 <li>HPE Cray Management Software (CMS): 1.3.1</li>
 </ul>
 <h3 id="programming-environment-2212">Programming environment: 22.12</h3>
@@ -1782,11 +1782,11 @@ that they can plan accordingly.</p>
 </ul>
 <h4 id="summary-of-user-and-application-impact">Summary of user and application impact</h4>
 <p>For full information, see <a href="https://github.com/PE-Cray/cpe-changelog/blob/main/ex/cpe-22.12-sles15-sp4-FullReleaseNotes.txt">CPE 22.12 Release Notes</a></p>
-<p><strong>CCE 14</strong></p>
-<p>C++ applications built using CCE 13 or earlier may need to be recompiled due to the significant
+<p><strong>CCE 15</strong></p>
+<p>C++ applications built using CCE 13 or earlier should be recompiled due to the significant
 changes that were necessary to implement C++17.  This is expected to be a one-time requirement.</p>
 <p>Some non-standard Cray Fortran extensions supporting shorthand notation for logical operations
-will be removed in a future release.  CCE 14 will issue warning messages when these are
+will be removed in a future release.  CCE 15 will issue warning messages when these are
 encountered, providing time to adapt the application to use standard Fortran.  </p>
 <p><strong>HPE Cray MPICH 8.1.23</strong></p>
 <p>Cray MPICH 8.1.23 can support only ~2040 simultaneous MPI communicators.</p>
