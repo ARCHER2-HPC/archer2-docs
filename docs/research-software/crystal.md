@@ -51,7 +51,7 @@ assumes that the input file is tio2.d12
 #SBATCH --qos=standard
 
 module load other-software
-module load crystal/23-1.0.1
+module load crystal/23-1.0.1-2
 #or for the previous version use
 #module load crystal/17-1.0.2
 
@@ -77,7 +77,7 @@ MPI process, 64 MPI processes, 1 thread per core across 2 nodes would be:
 #SBATCH --qos=standard
 
 module load other-software
-module load crystal/23-1.0.1
+module load crystal/23-1.0.1-2
 
 # Change this to the name of your input file
 cp tio2.d12 INPUT
