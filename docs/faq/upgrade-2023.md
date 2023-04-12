@@ -5,7 +5,7 @@
     upgrade but is subject to change and revision as more information becomes 
     available.
     
-    Last updated: 2023-03-29
+    Last updated: 2023-04-12
 
 During the first half of 2023 ARCHER will go through a major software upgrade.
 
@@ -55,7 +55,7 @@ that they can plan accordingly.
 
 The current outage dates are:
 
- - Start: TBC May 2023
+ - Start: TBC mid-May 2023
  - End: 3-4 weeks after start date
 
 ## What are the impacts on users from the upgrade?
