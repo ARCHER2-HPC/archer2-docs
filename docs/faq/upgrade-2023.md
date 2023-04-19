@@ -60,21 +60,58 @@ The current outage dates are:
 
 ## What are the impacts on users from the upgrade?
 
-During the upgrade process:
+### During the upgrade process
 
  - No login access
  - No access to any data on the system
 
-After the upgrade process:
+### After the upgrade process
 
- - Recompile and test code -- as the new system will be based on a new OS version and
-   new versions of compilers and libraries we strongly recommend that all users recompile
-   and test all software on the service. The ARCHER2 CSE service will be recompiling all 
-   centrally installed software.
- - Note: there will be no Python 2 installation available as part of supported software
-   following the upgrade. Python 3 will continue to be fully-supported.
+After the upgrade process there will be a number of changes that may require action from
+users
 
-Impact on data on the service
+#### Updated login node host keys
+
+If you previously logged into the ARCHER2 system before the upgrade you may see an error from SSH that looks like:
+
+```
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@       WARNING: POSSIBLE DNS SPOOFING DETECTED!          @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+The ECDSA host key for login.archer2.ac.uk has changed,
+and the key for the corresponding IP address 193.62.216.43
+has a different value. This could either mean that
+DNS SPOOFING is happening or the IP address for the host
+and its host key have changed at the same time.
+Offending key for IP in /Users/auser/.ssh/known_hosts:11
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the ECDSA key sent by the remote host is
+SHA256:UGS+LA8I46LqnD58WiWNlaUFY3uD1WFr+V8RCG09fUg.
+Please contact your system administrator.
+```
+
+If you see this, you should delete the offending host key from your ~/.ssh/known_hosts file
+(in the example above the offending line is line #11).
+
+The current login node host keys are always [documented in the User Guide](../user-guide/connecting.md#host-keys)
+
+#### Recompile and test software
+
+As the new system will be based on a new OS version and new versions of compilers and
+libraries we strongly recommend that all users recompile and test all software on the service.
+The ARCHER2 CSE service will be recompiling all centrally installed software.
+
+#### No Python 2 installation
+
+There will be no Python 2 installation available as part of supported software
+following the upgrade. Python 3 will continue to be fully-supported.
+
+### Impact on data on the service
 
  - No data in /home, /work, NVMe or RDFaaS will be removed or moved as part of the upgrade
 
