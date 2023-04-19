@@ -55,7 +55,7 @@ that they can plan accordingly.
 
 The current outage dates are:
 
- - Start: 19th May 2023
+ - Start: Expected to be 19th May 2023
  - End: 3-4 weeks after start date
 
 ## What are the impacts on users from the upgrade?
