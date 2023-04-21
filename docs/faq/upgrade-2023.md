@@ -5,7 +5,7 @@
     upgrade but is subject to change and revision as more information becomes 
     available.
     
-    Last updated: 2023-02-08
+    Last updated: 2023-04-17
 
 During the first half of 2023 ARCHER will go through a major software upgrade.
 
@@ -50,31 +50,68 @@ Some specific issues are:
 This major software upgrade will involve a complete re-install of system software followed
 by a reinstatement of local configurations (e.g. Slurm, authentication services, SAFE integration).
 Unfortunately, this major work will require a long period of downtime but this has been planned
-with all service partners to minimise the outage and give as much notice to users as possble so
+with all service partners to minimise the outage and give as much notice to users as possible so
 that they can plan accordingly.
 
 The current outage dates are:
 
- - Start: 14 April 2023
- - End: Week beginning 8 May 2023 
+ - Start: Expected to be 19th May 2023
+ - End: 3-4 weeks after start date
 
 ## What are the impacts on users from the upgrade?
 
-During the upgrade process:
+### During the upgrade process
 
  - No login access
  - No access to any data on the system
 
-After the upgrade process:
+### After the upgrade process
 
- - Recompile and test code -- as the new system will be based on a new OS version and
-   new versions of compilers and libraries we strongly recommend that all users recompile
-   and test all software on the service. The ARCHER2 CSE service will be recompiling all 
-   centrally installed software.
- - Note: there will be no Python 2 installation available as part of supported software
-   following the upgrade. Python 3 will continue to be fully-supported.
+After the upgrade process there will be a number of changes that may require action from
+users
 
-Impact on data on the service
+#### Updated login node host keys
+
+If you previously logged into the ARCHER2 system before the upgrade you may see an error from SSH that looks like:
+
+```
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@       WARNING: POSSIBLE DNS SPOOFING DETECTED!          @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+The ECDSA host key for login.archer2.ac.uk has changed,
+and the key for the corresponding IP address 193.62.216.43
+has a different value. This could either mean that
+DNS SPOOFING is happening or the IP address for the host
+and its host key have changed at the same time.
+Offending key for IP in /Users/auser/.ssh/known_hosts:11
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the ECDSA key sent by the remote host is
+SHA256:UGS+LA8I46LqnD58WiWNlaUFY3uD1WFr+V8RCG09fUg.
+Please contact your system administrator.
+```
+
+If you see this, you should delete the offending host key from your ~/.ssh/known_hosts file
+(in the example above the offending line is line #11).
+
+The current login node host keys are always [documented in the User Guide](../user-guide/connecting.md#host-keys)
+
+#### Recompile and test software
+
+As the new system will be based on a new OS version and new versions of compilers and
+libraries we strongly recommend that all users recompile and test all software on the service.
+The ARCHER2 CSE service will be recompiling all centrally installed software.
+
+#### No Python 2 installation
+
+There will be no Python 2 installation available as part of supported software
+following the upgrade. Python 3 will continue to be fully-supported.
+
+### Impact on data on the service
 
  - No data in /home, /work, NVMe or RDFaaS will be removed or moved as part of the upgrade
 
@@ -83,9 +120,9 @@ Impact on data on the service
 System software:
 
  - Base operating system
-    + Compute nodes: Cray OS (COS) 2.4.103 based on SLES 15 SP4
+    + Compute nodes: Cray OS (COS) 2.4.109 based on SLES 15 SP4
     + Login nodes: UAN 2.5.8 based on SLES 15 SP4
- - Slingshot interconnect system software: 2.0.1-90
+ - Slingshot interconnect system software: 2.0.2
  - HPE Cray Management Software (CMS): 1.3.1
 
 ### Programming environment: 22.12
@@ -93,7 +130,7 @@ System software:
 Compilers:
 
  - CCE: 15.0.0
- - GCC: 12.2.0 (11.2.0, 10.3.0 also available)
+ - GCC: 11.2.0 (10.3.0 also available)
  - AOCC: 3.2
 
 Communication libraries:
@@ -132,13 +169,13 @@ Tools:
 
 For full information, see [CPE 22.12 Release Notes](https://github.com/PE-Cray/cpe-changelog/blob/main/ex/cpe-22.12-sles15-sp4-FullReleaseNotes.txt)
 
-**CCE 14**
+**CCE 15**
 
-C++ applications built using CCE 13 or earlier may need to be recompiled due to the significant
+C++ applications built using CCE 13 or earlier should be recompiled due to the significant
 changes that were necessary to implement C++17.  This is expected to be a one-time requirement.
 
 Some non-standard Cray Fortran extensions supporting shorthand notation for logical operations
-will be removed in a future release.  CCE 14 will issue warning messages when these are
+will be removed in a future release.  CCE 15 will issue warning messages when these are
 encountered, providing time to adapt the application to use standard Fortran.  
 
 **HPE Cray MPICH 8.1.23**

@@ -35,7 +35,7 @@ The compute nodes each have 128 cores. They are dual socket nodes with two 64 co
 
 | Component          | Details                                            |
 |--------------------|----------------------------------------------------|
-| Processor          | 2x AMD Zen2 (Romes) EPYC 7742, 64-core, 2.25 Ghz   |
+| Processor          | 2x AMD Zen2 (Rome) EPYC 7742, 64-core, 2.25 Ghz   |
 | Cores per node     | 128                                                |
 | NUMA structure     | 8 NUMA regions per node (16 cores per NUMA region) |
 | Memory per node    | 256 GB (standard), 512 GB (high memory)            |
@@ -47,6 +47,10 @@ The compute nodes each have 128 cores. They are dual socket nodes with two 64 co
 | Network connection | 2x 100 Gb/s injection ports per node               |
 
 ![ARCHER2 node diagram](../images/archer2_full_node_diagram.png)
+
+More information on the architecture of the AMD EPYC Zen2 processors:
+
+* [HPC Tuning Guide for AMD EPYC 7002 Processors](https://www.amd.com/system/files/documents/amd-epyc-7002-tg-hpc-56827.pdf)
 
 
 ## Memory details
