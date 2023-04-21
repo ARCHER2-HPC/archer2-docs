@@ -9,13 +9,17 @@
       
       
       
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../arm-forge/">
       
       <link rel="icon" href="../../favicon.ico">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.6">
     
     
       
-        <title>Casino - ARCHER2 User Documentation</title>
+        <title>AMD uProf - ARCHER2 User Documentation</title>
       
     
     
@@ -76,6 +80,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#amd-prof" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -106,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Casino
+              AMD uProf
             
           </span>
         </div>
@@ -1314,14 +1323,16 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
       
       
       
@@ -1330,7 +1341,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_8">
           <span class="md-nav__icon md-icon"></span>
           Data Analysis and Tools
@@ -1343,7 +1354,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data-tools/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         Overview
       </a>
     </li>
@@ -1355,11 +1366,59 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../data-tools/amd-uprof/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          AMD uProf
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         AMD uProf
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#accessing-amd-prof-on-archer2" class="md-nav__link">
+    Accessing AMD &mu;Prof on ARCHER2
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-amd-prof" class="md-nav__link">
+    Using AMD &mu;Prof
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1371,7 +1430,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data-tools/arm-forge/" class="md-nav__link">
+      <a href="../arm-forge/" class="md-nav__link">
         Arm Forge
       </a>
     </li>
@@ -1385,7 +1444,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data-tools/julia/" class="md-nav__link">
+      <a href="../julia/" class="md-nav__link">
         Julia
       </a>
     </li>
@@ -1399,7 +1458,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data-tools/paraview/" class="md-nav__link">
+      <a href="../paraview/" class="md-nav__link">
         ParaView
       </a>
     </li>
@@ -1413,7 +1472,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data-tools/cray-r/" class="md-nav__link">
+      <a href="../cray-r/" class="md-nav__link">
         R
       </a>
     </li>
@@ -1427,7 +1486,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data-tools/visidata/" class="md-nav__link">
+      <a href="../visidata/" class="md-nav__link">
         VisiData
       </a>
     </li>
@@ -1488,6 +1547,30 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#accessing-amd-prof-on-archer2" class="md-nav__link">
+    Accessing AMD &mu;Prof on ARCHER2
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-amd-prof" class="md-nav__link">
+    Using AMD &mu;Prof
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1505,9 +1588,21 @@
   
 
 
-  <h1>Casino</h1>
-
-<p><a href="../../research-software/casino/">This page has moved</a></p>
+<h1 id="amd-prof">AMD &mu;Prof</h1>
+<p>AMD &mu;Prof (“MICRO-prof”) is a software profiling analysis tool for x86 applications
+running on Windows, Linux and FreeBSD operating systems and provides event information
+unique to the AMD “Zen”-based processors and AMD INSTINCT™ MI Series accelerators. AMD
+uProf enables the developer to better understand the limiters of application performance
+and evaluate improvements.</p>
+<h2 id="accessing-amd-prof-on-archer2">Accessing AMD &mu;Prof on ARCHER2</h2>
+<p>To gain access to the AMD&mu;Prof tools on ARCHER2, you must load the module:</p>
+<div class="highlight"><pre><span></span><code>module load amd-uprof
+</code></pre></div>
+<h2 id="using-amd-prof">Using AMD &mu;Prof</h2>
+<p>Please see the AMD documentation for information on how to use &mu;Prof:</p>
+<ul>
+<li><a href="https://www.amd.com/en/developer/uprof.html#documentation">AMD &mu;Prof documentation</a></li>
+</ul>
 
 
   
