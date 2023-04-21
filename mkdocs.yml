@@ -116,6 +116,7 @@ nav:
     - "Trilinos": software-libraries/trilinos.md
   - "Data Analysis and Tools":
     - "Overview": data-tools/index.md
+    - "AMD uProf": data-tools/amd-uprof.md
     - "Arm Forge": data-tools/arm-forge.md
     - "Julia": data-tools/julia.md
     - "ParaView": data-tools/paraview.md

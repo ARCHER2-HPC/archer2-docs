@@ -530,6 +530,12 @@ nid001922           127.35              256000              239872              
 
 The definitions of any variables discussed here and more usage information can be found in the man pages of `sstat` and `sacct`.
 
+## AMD &mu;Prof
+
+The AMD &mu;Prof tool provides capabilities for low-level profiling on AMD processors, see:
+
+- [AMD &mu;Prof](../data-tools/amd-uprof.md)
+
 ## Arm Forge
 
 The Arm Forge tool also provides profiling capabilities. See:
