@@ -49,6 +49,8 @@ There are 5,276 standard memory nodes and 584 high memory nodes.
 
 ![ARCHER2 node diagram](../images/archer2_full_node_diagram.png)
 
+Each socket contains eight *Core Complex Dies* (CCDs) and one I/O die (IOD). Each CCD contains two *Core Complexes* (CCXs). Each CCX has 4 cores and 16 MB of L3 cache. Thus, there are 64 cores per socket and 128 cores per node.
+
 More information on the architecture of the AMD EPYC Zen2 processors:
 
 * [HPC Tuning Guide for AMD EPYC 7002 Processors](https://www.amd.com/system/files/documents/amd-epyc-7002-tg-hpc-56827.pdf)
@@ -72,7 +74,7 @@ Within each socket, the eight processor dies are fabricated on a 7 nanometer (nm
 
 **2nd-generation Infinity Fabric technology:**
 
-Infinity Fabric technology is used for communication among different components throughout the node: within cores, between cores, between CCXs in a CCD, among CCDs in a socket, to the main memory and PCIe, and between the two sockets. The Rome processors are the first x86 systems to support 4th-generation PCIe, which delivers twice the I/O performance (to the Slingshot interconnect, storage, NVMe SSD, etc.) compared to 3rd-generation PCIe.
+Infinity Fabric technology is used for communication among different components throughout the node: within cores, between cores, between *core complexes* (CCX) in a *core complex die* (CCD), among CCDs in a socket, to the main memory and PCIe, and between the two sockets. The Rome processors are the first x86 systems to support 4th-generation PCIe, which delivers twice the I/O performance (to the Slingshot interconnect, storage, NVMe SSD, etc.) compared to 3rd-generation PCIe.
 
 ### Processor hierarchy
 
@@ -133,7 +135,7 @@ The Zen 2 microarchitecture places eight unified memory controllers in the centr
 
 With eight 3,200-GHz memory channels, an 8-byte read or write operation taking place per cycle per channel results in a maximum total memory bandwidth of 204.8 GB/s per socket.
 
-Each memory channel can be connected with up to two Double Data Rate (DDR) fourth-generation Dual In-line Memory Modules (DIMMs). On ARCHER2 standard memory nodes, each channel is connected to a single 16-GB DDR4 registered DIMM (RDIMM) with error correcting code (ECC) support leading to 128 GB per socket and 256 GB per node. For the high memory nodes, each channel is connected to a single 32-GB DDR4 registered DIMM (RDIMM) with error correcting code (ECC) support leading to 256 GB per socket and 512 GB per node.
+Each memory channel can be connected with up to two Double Data Rate (DDR) fourth-generation Dual In-line Memory Modules (DIMMs). On ARCHER2 standard memory nodes, each channel is connected to a single 16 GB DDR4 registered DIMM (RDIMM) with error correcting code (ECC) support leading to 128 GB per socket and 256 GB per node. For the high memory nodes, each channel is connected to a single 32 GB DDR4 registered DIMM (RDIMM) with error correcting code (ECC) support leading to 256 GB per socket and 512 GB per node.
 
 <!-- Need to confirm how this configured on ARCHER2
 
