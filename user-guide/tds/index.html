@@ -1623,7 +1623,7 @@ usual ARCHER2 account password to login to the TDS.</p>
 <p>Energy use data is not available from TDS compute nodes.</p>
 </li>
 <li>
-<p>Issues with <code>--cpus-per-task</code> Slurm option. If you set <code>--cpus-per-task</code> greater than <code>1</code> in your job submission script (e.g. using <code>#SBATCH</code> directives) then this option is not inhereted by <code>srun</code> commands in the job script. You need to repeat the option explicitly in the <code>srun</code> command (e.g. <code>srun --cpus-per-task=2 --hint=nomultithread --distribution=block:block</code>).</p>
+<p>Change of behaviour of the <code>--cpus-per-task</code> Slurm option. If you set <code>--cpus-per-task</code> greater than <code>1</code> in your job submission script (e.g. using <code>#SBATCH</code> directives) then this option is not inhereted by <code>srun</code> commands in the job script. You need to eithe set something like <code>export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK</code> or repeat the option explicitly in the <code>srun</code> command (e.g. <code>srun --cpus-per-task=$SLURM_CPUS_PER_TASK --hint=nomultithread --distribution=block:block</code>).</p>
 </li>
 <li>
 <p>Change in definition of a Slurm NUMA region. On the TDS, a Slurm NUMA region is 4 cores (corresponding to an Core CompleX CCX in the AMD EPYC Zen2 architecture). This means cyclic process placements on NUMA regions (e.g. <code>--distribution=block:cyclic</code>) will cycle over 4-core CCX. (On the main system, a Slurm NUMA region is 16 cores).</p>
