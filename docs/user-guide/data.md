@@ -692,6 +692,8 @@ We anticipate having this feature available soon. Please consult the
 module help (`module help gct/6.2`) for confirmation of when this work
 has been completed.
 
+See also the [Jasmin guide on Transfers from ARCHER2](https://help.jasmin.ac.uk/article/4997-transfers-from-archer2)
+
 ## SSH data transfer example: laptop/workstation to ARCHER2
 
 Here we have a short example demonstrating transfer of data directly
