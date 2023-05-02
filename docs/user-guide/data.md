@@ -687,10 +687,10 @@ a command line interface for moving data to and from GridFTP servers.
 Data transfers are managed by the `globus-url-copy` command. Full details
 concerning this command's use can be found in the [GCT 6.2 GridFTP User's Guide](https://gridcf.org/gct-docs/6.2/gridftp/user/index.html).
 
-Please note, the GCT module does *not* yet support parallel streams.
-We anticipate having this feature available soon. Please consult the
-module help (`module help gct/6.2`) for confirmation of when this work
-has been completed.
+!!! info
+    Further information on using GridFTP on ARCHER2 to transfer
+    data to the [JASMIN facility](https://www.jasmin.ac.uk) can be found
+    in [the JASMIN user documentation](https://help.jasmin.ac.uk/article/4997-transfers-from-archer2).
 
 ## SSH data transfer example: laptop/workstation to ARCHER2
 
