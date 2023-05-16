@@ -359,6 +359,24 @@ place any data you wish to share with other project members in this
 directory. For example, if your project code is x01 the inner shared
 folder would be located at `/work/x01/x01/shared`.
 
+### Sharing data with  ARCHER2 users within the same project group
+
+Some projects have [subprojects](#subprojects) (also often referred to as a 'project groups' or sub-budgets)   e.g. project e123 might have a project group e123-fred  for a sub-group of researchers working with Fred.
+
+Often project groups do not have a disk quota set, but if the project PI [does set up a group disk quota](https://epcced.github.io/safe-docs/safe-for-managers/#how-can-i-create-a-quota-for-a-project-group-or-move-space-between-quotas) e.g. for /work then additional directories are created:
+
+	/work/e123/e123-fred
+	/work/e123/e123-fred/shared
+	/work/e123/e123-fred/<user> (for every user in the group)
+
+and all members of the ```/work/e123/e123-fred``` group will be able to use the ```/work/e123/e123-fred/shared``` directory to share their files.
+
+!!! Note
+    If files are copied from their usual directories they will keep the original ownership. To grant ownership to the group:
+
+	```chown -R $USER:e123-fred /work/e123/e123-fred/ ...```
+
+
 ### Sharing data with all ARCHER2 users
 
 Each project also has an *outer* shared folder.:
@@ -402,7 +420,7 @@ the subdirectories below `my-shared-folder`.
 Every file has an *owner* group that specifies access permissions for users
 belonging to that group. It's usually the case that the group id is synonymous
 with the project code. Somewhat confusingly however, projects can contain
-groups of their own, called subprojects, which can be assigned disk space
+groups of their own, called [subprojects](#sharing-data-with-archer2-users-within-the-same-project-group), which can be assigned disk space
 quotas distinct from the project.
 
     chown -R $USER:x01-subproject /work/x01/x01-subproject/$USER/my-folder 
