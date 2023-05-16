@@ -15,7 +15,7 @@
         <link rel="next" href="../sw-environment/">
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.11">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.12">
     
     
       
@@ -660,6 +660,13 @@
           <li class="md-nav__item">
   <a href="#sharing-data-with-archer2-users-in-your-project" class="md-nav__link">
     Sharing data with ARCHER2 users in your project
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sharing-data-with-archer2-users-within-the-same-project-group" class="md-nav__link">
+    Sharing data with  ARCHER2 users within the same project group
   </a>
   
 </li>
@@ -1959,6 +1966,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#sharing-data-with-archer2-users-within-the-same-project-group" class="md-nav__link">
+    Sharing data with  ARCHER2 users within the same project group
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#sharing-data-with-all-archer2-users" class="md-nav__link">
     Sharing data with all ARCHER2 users
   </a>
@@ -2431,6 +2445,19 @@ folders that can be used for sharing data.</p>
 place any data you wish to share with other project members in this
 directory. For example, if your project code is x01 the inner shared
 folder would be located at <code>/work/x01/x01/shared</code>.</p>
+<h3 id="sharing-data-with-archer2-users-within-the-same-project-group">Sharing data with  ARCHER2 users within the same project group</h3>
+<p>Some projects have <a href="#subprojects">subprojects</a> (also often referred to as a 'project groups' or sub-budgets)   e.g. project e123 might have a project group e123-fred  for a sub-group of researchers working with Fred.</p>
+<p>Often project groups do not have a disk quota set, but if the project PI <a href="https://epcced.github.io/safe-docs/safe-for-managers/#how-can-i-create-a-quota-for-a-project-group-or-move-space-between-quotas">does set up a group disk quota</a> e.g. for /work then additional directories are created:</p>
+<pre><code>/work/e123/e123-fred
+/work/e123/e123-fred/shared
+/work/e123/e123-fred/&lt;user&gt; (for every user in the group)
+</code></pre>
+<p>and all members of the <code>/work/e123/e123-fred</code> group will be able to use the <code>/work/e123/e123-fred/shared</code> directory to share their files.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If files are copied from their usual directories they will keep the original ownership. To grant ownership to the group:</p>
+<p><code>chown -R $USER:e123-fred /work/e123/e123-fred/ ...</code></p>
+</div>
 <h3 id="sharing-data-with-all-archer2-users">Sharing data with all ARCHER2 users</h3>
 <p>Each project also has an <em>outer</em> shared folder.:</p>
 <pre><code>/work/[project code]/shared
@@ -2464,7 +2491,7 @@ the subdirectories below <code>my-shared-folder</code>.</p>
 <p>Every file has an <em>owner</em> group that specifies access permissions for users
 belonging to that group. It's usually the case that the group id is synonymous
 with the project code. Somewhat confusingly however, projects can contain
-groups of their own, called subprojects, which can be assigned disk space
+groups of their own, called <a href="#sharing-data-with-archer2-users-within-the-same-project-group">subprojects</a>, which can be assigned disk space
 quotas distinct from the project.</p>
 <pre><code>chown -R $USER:x01-subproject /work/x01/x01-subproject/$USER/my-folder
 </code></pre>
@@ -2844,7 +2871,7 @@ transfer, we could instead use the <code>scp</code> command,</p>
     <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.fac441b0.min.js"></script>
+      <script src="../../assets/javascripts/bundle.c2be25ad.min.js"></script>
       
     
   </body>
