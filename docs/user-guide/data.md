@@ -361,7 +361,7 @@ folder would be located at `/work/x01/x01/shared`.
 
 ### Sharing data with  ARCHER2 users within the same project group
 
-Some projects have sub-projects (also often referred to as a 'project groups' or sub-budgets)   e.g. project e123 might have a project group e123-fred  for a sub-group of researchers working with Fred.
+Some projects have [subprojects](#subprojects) (also often referred to as a 'project groups' or sub-budgets)   e.g. project e123 might have a project group e123-fred  for a sub-group of researchers working with Fred.
 
 Often project groups do not have a disk quota set, but if the project PI [does set up a group disk quota](https://epcced.github.io/safe-docs/safe-for-managers/#how-can-i-create-a-quota-for-a-project-group-or-move-space-between-quotas) e.g. for /work then additional directories are created:
 
@@ -372,9 +372,9 @@ Often project groups do not have a disk quota set, but if the project PI [does s
 and all members of the ```/work/e123/e123-fred``` group will be able to use the ```/work/e123/e123-fred/shared``` directory to share their files.
 
 !!! Note
-    If files are copied from their usual directories they will keep the original ownership (creating new files in a directory that has the correct ownership should be fine). To fix the ownership on copied files/directories, they would need to do:
+    If files are copied from their usual directories they will keep the original ownership. To grant ownership to the group:
 
-	chown -R $USER:e123-fred /work/e123/e123-fred/blah/blah/blah
+	```chown -R $USER:e123-fred /work/e123/e123-fred/ ...```
 
 
 ### Sharing data with all ARCHER2 users
