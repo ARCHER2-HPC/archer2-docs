@@ -1,11 +1,13 @@
 # ARCHER2 Upgrade: 2023
 
+## ARCHER2 Upgrade work begins on Friday 19th May 2023  14:00 BST
+
 !!! warning
     The information on this page represents our current best understanding of the
     upgrade but is subject to change and revision as more information becomes 
     available.
     
-    Last updated: 2023-04-17
+    Last updated: 2023-05-17
 
 During the first half of 2023 ARCHER will go through a major software upgrade.
 
