@@ -90,7 +90,7 @@ Next, you point `virtualenv` at the location where your local environment is to 
 
     virtualenv -p /opt/cray/pe/python/${CRAY_PYTHON_LEVEL}/bin/python ${PYTHONUSERBASE}
 
-    extend-venv-activate $${CRAY_PYTHON_LEVEL} {PYTHONUSERBASE}
+    extend-venv-activate ${CRAY_PYTHON_LEVEL} ${PYTHONUSERBASE}
 
 The `virtualenv` command creates an activate script for your local environment. The second command, `extend-venv-activate`, amends that script such
 that the centrally-installed `cray-python` module is always loaded in subsequent login sessions or job submissions, and unloaded whenever the virtual
@@ -122,11 +122,9 @@ you must first activate the environment, by adding the activation command to the
 
     #SBATCH --job-name=myvenv
     #SBATCH --nodes=2
-    #SBATCH --ntasks-per-node=4
-    #SBATCH --cpus-per-task=1
+    #SBATCH --ntasks-per-node=64
+    #SBATCH --cpus-per-task=2
     #SBATCH --time=00:10:00
-
-    # Replace [budget code] below with your project code (e.g. t01)
     #SBATCH --account=[budget code]
     #SBATCH --partition=standard
     #SBATCH --qos=standard
