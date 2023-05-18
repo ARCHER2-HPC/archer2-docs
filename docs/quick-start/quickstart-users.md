@@ -15,6 +15,11 @@ and running your first job.
 
 ### Obtain an account on the SAFE website
 
+!!! Warning
+    We have seen issues with Gmail blocking emails from SAFE so we recommend that users
+    use their institutional/work email address rather than Gmail addresses to register 
+    for SAFE accounts.
+
 The first step is to sign up for an account on the ARCHER2 SAFE website.
 The SAFE account is used to manage all of your login accounts, allowing
 you to report on your usage and quotas. To do this:
