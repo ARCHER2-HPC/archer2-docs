@@ -131,7 +131,7 @@ you must first activate the environment, by adding the activation command to the
 
     source /work/t01/t01/auser/myvenv/bin/activate
 
-    srun myvenv-script.py
+    srun python ${SLURM_SUBMIT_DIR}/myvenv-script.py
     ```
 
 Lastly, the environment being extended does not have to come from one of the centrally-installed `cray-python` modules.
