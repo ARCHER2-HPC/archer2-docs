@@ -7,7 +7,7 @@
     upgrade but is subject to change and revision as more information becomes 
     available.
     
-    Last updated: 2023-05-17
+    Last updated: 2023-05-19
 
 During the first half of 2023 ARCHER will go through a major software upgrade.
 
@@ -66,8 +66,11 @@ The current outage dates are:
 
  - No login access
  - No access to any data on the system
+ - Some of the SAFE functionality will be removed during the upgrade such as user account requests
 
 ### After the upgrade process
+
+The allocation periods (where appropriate) will be extended for the outage period. The changes will be in place when the service is returned.
 
 After the upgrade process there will be a number of changes that may require action from
 users
