@@ -169,19 +169,15 @@ variety of scenarios of using Python on the ARCHER2 compute nodes.
     ```
 
 !!! tip
-    If you have installed your own packages you will need to set `PATH` and
-    `PYTHONPATH` as described above within your job submission script in order
-    to accesss the commands and packages you have installed.
+    If you have installed your own packages you will need to activate your local Python
+    environment within your job submission script as shown in the previous example.
 
 ### Example mpi4py job submission script
 
-Programs that have been parallelised with mpi4py can be run on
-multiple processors on ARCHER2. A sample submission script is given
-below. The primary difference from the Python submission script in the
-previous section is that we must run the program using
-`srun python my_prog.py` instead of `python my_prog,py`. Failing to do so will 
-cause a segmentation fault in your program when it reaches the line
-"`from mpi4py import MPI`".
+Programs that have been parallelised with mpi4py can be run on multiple processors on ARCHER2.
+A sample submission script is given below. Unlike the serial Python submission script above,
+we must run the program using `srun python mpi4py_test.py` instead of merely `python mpi4py_test,py`.
+Failing to do so will result in Python running a single MPI rank only. 
 
 === "Full system"
     ```
@@ -265,7 +261,7 @@ Please follow these steps.
    ssh <username>@login.archer2.ac.uk -L<port_number>:<node_id>:<port_number>
    ```   
    where `<username>` is your username, and `<node_id>` is the id of the node you're 
-   currently on (for a login node, this will be `uan01`, or similar; on a compute 
+   currently on (for a login node, this will be `ln01`, or similar; on a compute 
    node, it will be a mix of numbers and letters). In our example, `<node_id>`
    is `nid001015`. Note, please use the same port number as that shown in the URL of
    step 3. This number may vary, likely values are 8888 or 8889.
