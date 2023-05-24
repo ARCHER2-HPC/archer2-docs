@@ -50,8 +50,8 @@ Sometimes, you may need to setup a local custom Python environment such that it 
 By extend, we mean being able to install packages locally that are not provided by `cray-python`. This is necessary because some Python
 packages such as `mpi4py` must be built specifically for the ARCHER2 system and so are best provided centrally.
 
-You can do this by creating a lightweight `virtual` environment where the local packages can be installed. Further, this environment
-is created on top of an existing Python installation, known as the environment's `base` Python.
+You can do this by creating a lightweight **virtual** environment where the local packages can be installed. Further, this environment
+is created on top of an existing Python installation, known as the environment's **base** Python.
 
 Select the base Python by loading the `cray-python` module that you wish to extend.
 
@@ -62,7 +62,7 @@ Next, create the virtual environment within a designated folder.
     python -m venv --system-site-packages /work/t01/t01/auser/myvenv
 
 In our example the environment is created within a `myvenv` folder located on `/work`, which means the environment will be accessible
-from the compute nodes. The `--system-site-packages` option ensures that this environment is based on the currently loaded `cray-python`
+from the compute nodes. The `--system-site-packages` option ensures this environment is based on the currently loaded `cray-python`
 module. See [https://docs.python.org/3/library/venv.html](https://docs.python.org/3/library/venv.html) for more details.
 
 You're now ready to *activate* your environment.
@@ -74,16 +74,17 @@ You're now ready to *activate* your environment.
     with your actual project code and username. Alternatively, you could enter `${HOME/home/work}` in place of `/work/t01/t01/auser`.
     That command fragment expands `${HOME}` and then replaces the `home` part with `work`.
 
-Installing packages to your local environment is as simple as `pip install <package name>`.
-And when you have finished installing packages, you can deactivate the environment by running the `deactivate` command.
-
-    (myvenv) auser@ln01:~> deactivate
-    auser@ln01:~> 
+Installing packages to your local environment is as simple as typing `pip install <package name>`.
 
 !!! tip
     The ARCHER2 compute nodes cannot access the `/home` file system, which means you may need to run
     `export XDG_CACHE_HOME=${HOME/home/work}` if you're working from within an interactive session as
     that export command will ensure the pip cache is located off `/work`.
+
+And when you have finished installing packages, you can deactivate the environment by running the `deactivate` command.
+
+    (myvenv) auser@ln01:~> deactivate
+    auser@ln01:~> 
 
 The packages you have installed will only be available once the local environment has been activated. So, when running code that requires these packages,
 you must first activate the environment, by adding the activation command to the submission script, as shown below.
