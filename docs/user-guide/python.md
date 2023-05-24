@@ -61,7 +61,7 @@ Next, create the virtual environment within a designated folder.
 
     python -m venv --system-site-packages /work/t01/t01/auser/myvenv
 
-In our example the environment is created within a `myvenv` folder located on `/work`, which means the environment will be accessible
+In our example, the environment is created within a `myvenv` folder located on `/work`, which means the environment will be accessible
 from the compute nodes. The `--system-site-packages` option ensures this environment is based on the currently loaded `cray-python`
 module. See [https://docs.python.org/3/library/venv.html](https://docs.python.org/3/library/venv.html) for more details.
 
