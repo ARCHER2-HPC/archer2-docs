@@ -61,9 +61,9 @@ Next, create the virtual environment within a designated folder.
 
     python -m venv --system-site-packages /work/t01/t01/auser/myvenv
 
-In our example the environment is created within a `myvenv` folder located on `\work`, which means the environment will be accessible
-from the compute nodes. The `--system-site-packages` options ensures that this environment is based on that provided by the currently
-loaded `cray-python` module. More details concerning the `venv` Python module can be found at [https://docs.python.org/3/library/venv.html](https://docs.python.org/3/library/venv.html).
+In our example the environment is created within a `myvenv` folder located on `/work`, which means the environment will be accessible
+from the compute nodes. The `--system-site-packages` option ensures that this environment is based on the currently loaded `cray-python`
+module. See [https://docs.python.org/3/library/venv.html](https://docs.python.org/3/library/venv.html) for more details.
 
 You're now ready to *activate* your environment.
 
@@ -74,8 +74,8 @@ You're now ready to *activate* your environment.
     with your actual project code and username. Alternatively, you could enter `${HOME/home/work}` in place of `/work/t01/t01/auser`.
     That command fragment expands `${HOME}` and then replaces the `home` part with `work`.
 
-After activating our environment, you can install packages locally using `pip install <package name>`.
-And when you have finished installing packages, your environment can be deactivated as follows.
+Installing packages to your local environment is as simple as `pip install <package name>`.
+And when you have finished installing packages, you can deactivate the environment by running the `deactivate` command.
 
     (myvenv) auser@ln01:~> deactivate
     auser@ln01:~> 
