@@ -50,70 +50,42 @@ Sometimes, you may need to setup a local custom Python environment such that it 
 By extend, we mean being able to install packages locally that are not provided by `cray-python`. This is necessary because some Python
 packages such as `mpi4py` must be built specifically for the ARCHER2 system and so are best provided centrally.
 
-First, you must load the `cray-python` module that you wish to extend.
+You can do this by creating a lightweight `virtual` environment where the local packages can be installed. Further, this environment
+is created on top of an existing Python installation, known as the environment's `base` Python.
+
+Select the base Python by loading the `cray-python` module that you wish to extend.
 
     auser@ln01:~> module load cray-python
 
-The *local* packages will be installed using `pip`. Now, as the `/home` file system is not available on the compute nodes,
-you will need to modify the default install location that `pip` uses to point to a location on `/work`. To do this, you set
-the `PYTHONUSERBASE` environment variable to point to the location on `/work` where you intend to install your local virtual
-Python environment, which we are calling `myvenv` for purposes of illustration.
+Next, create the virtual environment within a designated folder.
 
-    export PYTHONUSERBASE=/work/t01/t01/auser/myvenv
+    python -m venv --system-site-packages /work/t01/t01/auser/myvenv
 
-!!! tip
-    The path above uses a fictitious project code, `t01`, and username, `auser`. Please remember to replace those values
-    with your actual project code and username. Alternatively, you could enter `${HOME/home/work}` in place of `/work/t01/t01/auser`.
-    That command fragment expands `${HOME}` and then replaces the `home` part with `work`.
-
-You will also need to ensure that:
-
-1. the location of executables installed by `pip` are available on the command line by modifying the `PATH` environment variable;
-2. add to `PATH` the location of a special bash script called `extend-venv-activate` that will be used shortly.
-
-You can do this in the following way (after you have set `PYTHONUSERBASE` as described above).
-
-    export PATH=${PYTHONUSERBASE}/bin:/work/y07/shared/python/scripts:${PATH}
-
-Once you have done this, you can use `pip` to add packages to your local environment.
-
-    pip install --user <package_name>
-
-The `--user` flag ensures that packages are installed in the directory specified by `PYTHONUSERBASE`.
-
-However, before you start installing packages, we recommend that you first install `virtualenv` (or `pipenv` if you prefer).
-We will walk you through how to create and manage a virtual environment, but for further information, see [Pipenv and Virtual Environments](https://docs.python-guide.org/dev/virtualenvs/).
-
-    pip install --user virtualenv
-
-Next, you point `virtualenv` at the location where your local environment is to be installed.
-
-    virtualenv -p /opt/cray/pe/python/${CRAY_PYTHON_LEVEL}/bin/python ${PYTHONUSERBASE}
-
-    extend-venv-activate ${CRAY_PYTHON_LEVEL} ${PYTHONUSERBASE}
-
-The `virtualenv` command creates an activate script for your local environment. The second command, `extend-venv-activate`, amends that script such
-that the centrally-installed `cray-python` module is always loaded in subsequent login sessions or job submissions, and unloaded whenever the virtual
-environment is deactivated.
+In our example the environment is created within a `myvenv` folder located on `\work`, which means the environment will be accessible
+from the compute nodes. The `--system-site-packages` options ensures that this environment is based on that provided by the currently
+loaded `cray-python` module. More details concerning the `venv` Python module can be found at [https://docs.python.org/3/library/venv.html](https://docs.python.org/3/library/venv.html).
 
 You're now ready to *activate* your environment.
 
     source /work/t01/t01/auser/myvenv/bin/activate
 
-Once your environment is activated you will be able to install packages using `pip install <package name>`. Note, it is no longer necessary to use the `--user` option
-as activating the virtual environment ensures that all new packages are installed within `/work/t01/t01/auser/myvenv`.
+!!! tip
+    The `myvenv` path uses a fictitious project code, `t01`, and username, `auser`. Please remember to replace those values
+    with your actual project code and username. Alternatively, you could enter `${HOME/home/work}` in place of `/work/t01/t01/auser`.
+    That command fragment expands `${HOME}` and then replaces the `home` part with `work`.
+
+After activating our environment, you can install packages locally using `pip install <package name>`.
+And when you have finished installing packages, your environment can be deactivated as follows.
+
+    (myvenv) auser@ln01:~> deactivate
+    auser@ln01:~> 
 
 !!! tip
     The ARCHER2 compute nodes cannot access the `/home` file system, which means you may need to run
     `export XDG_CACHE_HOME=${HOME/home/work}` if you're working from within an interactive session as
     that export command will ensure the pip cache is located off `/work`.
 
-When you have finished installing packages, you can deactivate your environment by issuing the `deactivate` command.
-
-    (myvenv) auser@ln01:~> deactivate
-    auser@ln01:~> 
-
-The packages you have just installed locally will only be available once the local environment has been activated. So, when running code that requires these packages,
+The packages you have installed will only be available once the local environment has been activated. So, when running code that requires these packages,
 you must first activate the environment, by adding the activation command to the submission script, as shown below.
 
 === "Full system"
