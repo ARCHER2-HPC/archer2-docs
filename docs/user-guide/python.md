@@ -161,6 +161,11 @@ using `srun`. Failing to do so will result in Python running a single MPI rank o
     #SBATCH --account=[budget code]
     #SBATCH --partition=standard
     #SBATCH --qos=standard
+
+    # Set the number of threads to 1
+    #   This prevents any threaded system libraries from automatically
+    #   using threading.
+    export OMP_NUM_THREADS=1
     
     # Load the Python module
     module load cray-python
