@@ -161,7 +161,7 @@ are accessing:
     You will first be prompted for the passphrase associated with your SSH key pair. Once you have entered this passphrase successfully, you will then be prompted for your machine account password. You need to enter both credentials correctly to be able to access ARCHER2.
     
     !!! tip
-        If you previously logged into the 4-cabinet system with your account you may see an error 
+        If you logged into ARCHER2 with your account before the major upgrade in May/June 2023 you may see an error 
         from SSH that looks like
 
         ```
