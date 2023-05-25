@@ -74,7 +74,12 @@ You're now ready to *activate* your environment.
     with your actual project code and username. Alternatively, you could enter `${HOME/home/work}` in place of `/work/t01/t01/auser`.
     That command fragment expands `${HOME}` and then replaces the `home` part with `work`.
 
-Installing packages to your local environment is as simple as typing `pip install <package name>`.
+Installing packages to your local environment can now be done as follows.
+
+    (myvenv) auser@ln01:~> python -m pip install <package name>
+
+Running `pip` directly as in `pip install <package name>` will also work, but we show the `python -m` approach
+as this is consistent with the way the virtual environment was created.
 
 !!! tip
     The ARCHER2 compute nodes cannot access the `/home` file system, which means you may need to run
