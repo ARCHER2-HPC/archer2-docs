@@ -81,11 +81,6 @@ Installing packages to your local environment can now be done as follows.
 Running `pip` directly as in `pip install <package name>` will also work, but we show the `python -m` approach
 as this is consistent with the way the virtual environment was created.
 
-!!! tip
-    The ARCHER2 compute nodes cannot access the `/home` file system, which means you may need to run
-    `export XDG_CACHE_HOME=${HOME/home/work}` if you're working from within an interactive session as
-    that export command will ensure the pip cache is located off `/work`.
-
 And when you have finished installing packages, you can deactivate the environment by running the `deactivate` command.
 
     (myvenv) auser@ln01:~> deactivate
@@ -109,7 +104,7 @@ you must first activate the environment, by adding the activation command to the
 
     source /work/t01/t01/auser/myvenv/bin/activate
 
-    srun python ${SLURM_SUBMIT_DIR}/myvenv-script.py
+    srun --distribution=block:block --hint=nomultithread python ${SLURM_SUBMIT_DIR}/myvenv-script.py
     ```
 
 Lastly, the environment being extended does not have to come from one of the centrally-installed `cray-python` modules.
@@ -117,10 +112,7 @@ You could just as easily create a local virtual environment based on one of the 
 or `pytorch`. This means you would avoid having to install ML packages within your local area. Each of those ML
 modules is based on a `cray-python` module. For example, `tensorflow/2.7.0` is itself an extension of `cray-python/3.8.5.0`.
 
-## Running Python on the compute nodes
-
-In this section we provide example Python job submission scripts for a
-variety of scenarios of using Python on the ARCHER2 compute nodes.
+## Running Python
 
 ### Example serial Python submission script
 
@@ -129,16 +121,19 @@ variety of scenarios of using Python on the ARCHER2 compute nodes.
     #!/bin/bash --login
     
     #SBATCH --job-name=python_test
-    #SBATCH --nodes=1
-    #SBATCH --ntasks-per-node=1
-    #SBATCH --cpus-per-task=1
+    #SBATCH --ntasks=1
     #SBATCH --time=00:10:00
     
     # Replace [budget code] below with your project code (e.g. t01)
     #SBATCH --account=[budget code]
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
-    
+    #SBATCH --partition=serial
+    #SBATCH --qos=serial
+   
+    # Set the number of threads to 1
+    #   This prevents any threaded system libraries from automatically 
+    #   using threading.
+    export OMP_NUM_THREADS=1
+ 
     # Load the Python module
     module load cray-python
     
@@ -146,24 +141,19 @@ variety of scenarios of using Python on the ARCHER2 compute nodes.
     python python_test.py
     ```
 
-!!! tip
-    If you have installed your own packages you will need to activate your local Python
-    environment within your job submission script as shown in the previous example.
-
 ### Example mpi4py job submission script
 
-Programs that have been parallelised with mpi4py can be run on multiple processors on ARCHER2.
-A sample submission script is given below. Unlike the serial Python submission script above,
-we must run the program using `srun python mpi4py_test.py` instead of merely `python mpi4py_test,py`.
-Failing to do so will result in Python running a single MPI rank only. 
+Programs that have been parallelised with mpi4py can be run on the ARCHER2 compute nodes.
+Unlike the serial Python submission script however, we must launch the Python interpreter
+using `srun`. Failing to do so will result in Python running a single MPI rank only. 
 
 === "Full system"
     ```
     #!/bin/bash --login
     # Slurm job options (job-name, compute nodes, job time)
     #SBATCH --job-name=mpi4py_test
-    #SBATCH --nodes=1
-    #SBATCH --ntasks-per-node=2
+    #SBATCH --nodes=2
+    #SBATCH --ntasks-per-node=128
     #SBATCH --cpus-per-task=1
     #SBATCH --time=0:10:0
     
@@ -175,11 +165,14 @@ Failing to do so will result in Python running a single MPI rank only.
     # Load the Python module
     module load cray-python
     
-    # Run your Python programme
-    # Note that srun MUST be used to wrap the call to python, otherwise an error
-    # will occur
-    srun python mpi4py_test.py
+    # Run your Python program
+    srun --distribution=block:block --hint=nomultithread python mpi4py_test.py
     ```
+
+!!! tip
+    If you have installed your own packages you will need to activate your local Python
+    environment within your job submission script as shown at the end of
+    [Installing your own Python packages (with pip)](https://docs.archer2.ac.uk/user-guide/python/#installing-your-own-python-packages-with-pip).
 
 ## Using JupyterLab on ARCHER2
 
