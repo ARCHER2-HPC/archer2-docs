@@ -553,12 +553,15 @@ paths to the programming environment system libraries using RUNPATH.
 This ensures that the executable can find the correct runtime
 libraries without the matching software modules loaded.
 
+<!-- Not needed as only one PE at the moment
 !!! tip
     The RUNPATH setting in the executable only works for default versions
     of libraries. If you want to use non-default versions then you need
     to add some additional commands at compile time and in your job submission
     scripts. See the [Using non-default versions of HPE Cray libraries on ARCHER2](#using-non-default-versions-of-hpe-cray-libraries-on-archer2).
-    
+
+-->
+
 The library RUNPATH associated with an executable can be inspected via,
 e.g.,
 
