@@ -84,16 +84,16 @@ There are a number of files in this directory, all the counter files include the
 You can request specific CPU frequencies (in kHz) for compute nodes through `srun` options or environment variables.
 The available frequencies on the ARCHER2 processors along with the options and environment variables:
 
-| Frequency | `srun` option | Slurm environment variable |
-|----------:|--------------|----------------------------|
-| 2.25 GHz  | `--cpu-freq=2250000` | `export SLURM_CPU_FREQ_REQ=2250000` |
-| 2.00 GHz  | `--cpu-freq=2000000` | `export SLURM_CPU_FREQ_REQ=2000000` |
-| 1.50 GHz  | `--cpu-freq=1500000` | `export SLURM_CPU_FREQ_REQ=1500000` |
+| Frequency | `srun` option | Slurm environment variable | Turbo boost enabled? |
+|----------:|--------------|----------------------------|-------|
+| 2.25 GHz  | `--cpu-freq=2250000` | `export SLURM_CPU_FREQ_REQ=2250000` | Yes |
+| 2.00 GHz  | `--cpu-freq=2000000` | `export SLURM_CPU_FREQ_REQ=2000000` | No |
+| 1.50 GHz  | `--cpu-freq=1500000` | `export SLURM_CPU_FREQ_REQ=1500000` | No |
 
 The only frequencies available on the processors on ARCHER2 are 1.5 GHz, 2.0 GHz and 2.25GHz.
 
 For example, you can add the following option to `srun` commands in your job submission scripts to set the CPU frequency
-to 2.25 GHz:
+to 2.25 GHz (and also enable turbo boost):
 
 ```
 srun --cpu-freq=2250000 ...usual srun options and arguments...
@@ -107,9 +107,13 @@ export SLURM_CPU_FREQ_REQ=2250000
 ```
 
 !!! tip
-    Testing by the ARCHER2 CSE team has shown that many software are most energy efficient when 2.0 GHz 
-    is selected as the CPU frequency. Typically, users may see savings of 10-20% of the energy cost of
-    a job for a reduction in performance of 1-5%.
+    Testing by the ARCHER2 CSE team has shown that most software are most energy efficient when 2.0 GHz 
+    is selected as the CPU frequency.
+
+!!! tip
+    When the highest frequency (2.25 GHz) is selected this also enables frequency turbo boost. Experiments
+    on ARCHER2 have shown that under typical use, with all 128 cores heavily loaded, the processors
+    turbo boost up to around 2.8 GHz when the frequency is set to 2.25 GHz.
     
     
 !!! important
