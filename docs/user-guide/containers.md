@@ -145,25 +145,25 @@ An example job submission script to run a serial job that executes the
 runscript within a container based on the container image in the `hello-world.sif`
 file that we downloaded previously to an ARCHER2 login node would be as follows.
 
-=== "Full system"
-    ```bash
-    #!/bin/bash --login
-    
-    # Slurm job options (name, compute nodes, job time)
-    
-    #SBATCH --job-name=helloworld
-    #SBATCH --nodes=1
-    #SBATCH --ntasks-per-node=1
-    #SBATCH --cpus-per-task=1
-    #SBATCH --time=00:10:00
-    
-    #SBATCH --account=[budget code]
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
-    
-    # Run the serial executable
-    singularity run $SLURM_SUBMIT_DIR/hello-world.sif
-    ```
+
+```slurm
+#!/bin/bash --login
+
+# Slurm job options (name, compute nodes, job time)
+
+#SBATCH --job-name=helloworld
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=1
+#SBATCH --time=00:10:00
+
+#SBATCH --account=[budget code]
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+# Run the serial executable
+singularity run $SLURM_SUBMIT_DIR/hello-world.sif
+```
 
 You submit this in the usual way and the standard output and error
 should be written to `slurm-...`, where the output filename ends
@@ -218,6 +218,7 @@ docker build --platform linux/amd64 -t <username>/<image name>:<version> .
 ```
 
 Where:
+
 - `<username>` is your Docker Hub username
 - `<image name>` is the name of the container image you wish to create
 - `<version>` - specifies the version of the image you are creating (e.g. "latest", "v1")
