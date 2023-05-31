@@ -56,25 +56,27 @@ in exclusive mode using more than one node.
 For example, the following script will run a LAMMPS MD job using 4 nodes
 (128x4 cores) with MPI only.
 
-=== "Full system"
-    ```
-    #!/bin/bash
+```slurm
+#!/bin/bash
 
-    #SBATCH --job-name=lammps_test
-    #SBATCH --nodes=4
-    #SBATCH --ntasks-per-node=128
-    #SBATCH --cpus-per-task=1
-    #SBATCH --time=00:20:00
+#SBATCH --job-name=lammps_test
+#SBATCH --nodes=4
+#SBATCH --ntasks-per-node=128
+#SBATCH --cpus-per-task=1
+#SBATCH --time=00:20:00
 
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code] 
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code] 
+#SBATCH --partition=standard
+#SBATCH --qos=standard
 
-    module load lammps
+module load lammps
 
-    srun --distribution=block:block --hint=nomultithread lmp -i in.test -l out.test
-    ```
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+srun --distribution=block:block --hint=nomultithread lmp -i in.test -l out.test
+```
 
 ## Compiling LAMMPS
 

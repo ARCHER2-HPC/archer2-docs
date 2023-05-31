@@ -1,5 +1,8 @@
 # ORCA
 
+!!! warning
+    ORCA is not yet available on ARCHER2 following the major upgrade in May/June 2023.
+
 ORCA is an ab initio quantum chemistry program package that contains modern electronic structure methods including density functional theory, many-body perturbation, coupled cluster, multireference methods, and semi-empirical quantum chemistry methods. Its main field of application is larger molecules, transition metal complexes, and their spectroscopic properties. ORCA is developed in the research group of Frank Neese. The free version is available only for academic use at academic institutions.
 
 !!! important
