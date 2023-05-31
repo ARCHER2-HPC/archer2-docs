@@ -286,6 +286,14 @@ Other helpful commands are:
     module
   - `module show <modulename>` which displays the contents of the
     modulefile
+  - `module restore` which returns you to the default module setup as if
+    you had just logged in
+
+!!! tip 
+    You should not use the `module purge` command on ARCHER2 as this will
+    cause issues for the HPE Cray programming environment. If you wish to 
+    reset your modules, you should use the `module restore` command
+    instead.
 
 Points to be aware of include:
 

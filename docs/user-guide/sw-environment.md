@@ -32,6 +32,8 @@ documentation please see the [Lmod documentation](https://lmod.readthedocs.io/en
 The `module` command takes a subcommand to indicate what operation you
 wish to perform. Common subcommands are:
 
+   - `module restore` - Restore the default module setup (i.e. as if you had logged
+     out and back in again)
    - `module list [name]` - List modules currently loaded in your
      environment, optionally filtered by `[name]`
    - `module avail [name]` - List modules available, optionally
@@ -41,8 +43,6 @@ wish to perform. Common subcommands are:
    - `module load name` - Load the module called `name` into your
      environment
    - `module remove name` - Remove the module called `name` from your
-     environment
-   - `module swap old new` - Swap module `new` for module `old` in your
      environment
    - `module help name` - Show help information on module `name`
    - `module show name` - List what module `name` actually does to your
@@ -60,6 +60,12 @@ These are described in more detail below.
     scripts to setup the software to use in your jobs. Generally, if you
     load modules in interactive sessions, these loaded modules do not
     carry over into any job submission scripts.
+
+!!! important
+    You should not use the `module purge` command on ARCHER2 as this will
+    cause issues for the HPE Cray programming environment. If you wish to 
+    reset your modules, you should use the `module restore` command
+    instead.
 
 ### Information on the available modules
 
@@ -374,13 +380,6 @@ You did not need to specify the version of the loaded module in your
 current environment as this can be inferred as it will be the only one
 you have loaded.
 
-!!! tip
-    `module swap` is most commonly used on ARCHER2 to switch between
-    different compiler environments, for example, switching from 
-    the HPE Cray Compiler Environment (CCE, PrgEnv-cray) to the
-    Gnu compilers (GCC, PrgEnv-gnu). The available compiler environments
-    are discussed in more detail in the [Application Development Environment](dev-environment.md)
-    section.
 
 ## Shell environment overview
 
