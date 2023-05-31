@@ -54,6 +54,9 @@ suite.
     #SBATCH --partition=standard
     #SBATCH --qos=standard
 
+    export OMP_NUM_THREADS=1
+    export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
     # Launch the parallel program
     srun --hint=nomultithread --distribution=block:block mpi_test.x
     ```

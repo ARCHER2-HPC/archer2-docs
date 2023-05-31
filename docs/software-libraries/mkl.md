@@ -33,20 +33,15 @@ the environment variable `MKLROOT` which holds the location of the various MKL c
     Other programming environments may work but this is untested and unsupported
     on ARCHER2.
 
-!!! note
-    Loading the `mkl/19.5-281` module sets the environment variable `MKL_DEBUG_CPU_TYPE=5`
-    which is required to get good performance on AMD systems. More recent
-    versions of MKL do not support this option.
-
 ## Serial MKL with GCC
 
 Swap modules:
 
-=== Full system ===
-    ```
-    module load PrgEnv-gnu
-    module load mkl
-    ```
+
+```bash
+module load PrgEnv-gnu
+module load mkl
+```
 
 | Language | Compile options | Link options |
 |----------|-|-|
@@ -57,11 +52,11 @@ Swap modules:
 
 Swap modules:
 
-=== Full system ===
-    ```
-    module load PrgEnv-gnu
-    module load mkl
-    ```
+
+```bash
+module load PrgEnv-gnu
+module load mkl
+```
 
 | Language | Compile options | Link options |
 |----------|-|-|
@@ -72,11 +67,11 @@ Swap modules:
 
 Swap modules:
 
-=== Full system ===
-    ```
-    module load PrgEnv-gnu
-    module load mkl
-    ```
+
+```bash
+module load PrgEnv-gnu
+module load mkl
+```
 
 | Language | Compile options | Link options |
 |----------|-|-|

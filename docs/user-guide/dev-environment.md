@@ -22,13 +22,14 @@ You can see what compiler environments are available with:
 ```
 auser@uan01:~> module avail PrgEnv
 
------------------------------------------- /opt/cray/pe/lmod/modulefiles/core ------------------------------------------
-   PrgEnv-aocc/8.0.0 (D)    PrgEnv-cray/8.0.0 (L,D)    PrgEnv-gnu/8.0.0 (D)
-   PrgEnv-aocc/8.1.0        PrgEnv-cray/8.1.0          PrgEnv-gnu/8.1.0
+--------------------------------------- /opt/cray/pe/lmod/modulefiles/core ----------------------------------------
+   PrgEnv-aocc/8.3.3    PrgEnv-cray/8.3.3 (L)    PrgEnv-gnu/8.3.3
 
   Where:
    L:  Module is loaded
-   D:  Default Module
+
+Module defaults are chosen based on Find First Rules due to Name/Version/Version modules found in the module tree.
+See https://lmod.readthedocs.io/en/latest/060_locating.html for details.
 
 Use "module spider" to find all possible modules and extensions.
 Use "module keyword key1 key2 ..." to search for all possible modules matching any of the "keys".
@@ -40,52 +41,37 @@ Other software modules can be searched using the `module spider` command:
 ``` 
 auser@uan01:~> module spider
 
---------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------
 The following is a list of the modules and extensions currently available:
---------------------------------------------------------------------------------------------------------------------
-  PrgEnv-aocc: PrgEnv-aocc/8.0.0, PrgEnv-aocc/8.1.0
+---------------------------------------------------------------------------------------------------------------
+  PrgEnv-aocc: PrgEnv-aocc/8.3.3
 
-  PrgEnv-cray: PrgEnv-cray/8.0.0, PrgEnv-cray/8.1.0
+  PrgEnv-cray: PrgEnv-cray/8.3.3
 
-  PrgEnv-gnu: PrgEnv-gnu/8.0.0, PrgEnv-gnu/8.1.0
+  PrgEnv-gnu: PrgEnv-gnu/8.3.3
 
-  aocc: aocc/2.2.0.1, aocc/3.0.0
+  amd-uprof: amd-uprof/3.6.449
 
-  atp: atp/3.13.1, atp/3.14.5
+  aocc: aocc/3.2.0
 
-  cce: cce/11.0.4, cce/12.0.3
+  aocc-mixed: aocc-mixed/3.2.0
 
-  cpe: cpe/21.04, cpe/21.09
+  aocl: aocl/3.1, aocl/4.0
+
+  arm/forge: arm/forge/22.1.3
+
+  atp: atp/3.14.16
+
+  bolt: bolt/0.7, bolt/0.8
+
+  boost: boost/1.72.0, boost/1.81.0
+
+  castep: castep/22.11
+
+  cce: cce/15.0.0
 
 ...output trimmed...
 
-
-  perftools-lite-hbm: perftools-lite-hbm
-
-  perftools-lite-loops: perftools-lite-loops
-
-  perftools-preload: perftools-preload
-
-  settarg: settarg
-
-  valgrind4hpc: valgrind4hpc/2.11.1, valgrind4hpc/2.12.4
-
-  xpmem: xpmem/2.2.40-7.0.1.0_2.7__g1d7a24d.shasta
-
---------------------------------------------------------------------------------------------------------------------
-
-To learn more about a package execute:
-
-   $ module spider Foo
-
-where "Foo" is the name of a module.
-
-To find detailed information about a particular package you
-must specify the version if there is more than one version:
-
-   $ module spider Foo/11.1
-
---------------------------------------------------------------------------------------------------------------------
 
 ```
 
@@ -134,33 +120,38 @@ For example, at login, the default set of modules are:
 ``` 
 auser@ln03:~> module list
 
-Currently Loaded Modules:
-  1) cce/11.0.4              6) perftools-base/21.02.0
-  2) craype/2.7.6            7) xpmem/2.2.40-7.0.1.0_2.7__g1d7a24d.shasta
-  3) craype-x86-rome         8) cray-mpich/8.1.4
-  4) libfabric/1.11.0.4.71   9) cray-libsci/21.04.1.1
-  5) craype-network-ofi     10) PrgEnv-cray/8.0.0
+  1) craype-x86-rome                         6) cce/15.0.0             11) PrgEnv-cray/8.3.3
+  2) libfabric/1.12.1.2.2.0.0                7) craype/2.7.19          12) bolt/0.8
+  3) craype-network-ofi                      8) cray-dsmml/0.2.2       13) epcc-setup-env
+  4) perftools-base/22.12.0                  9) cray-mpich/8.1.23      14) load-epcc-module
+  5) xpmem/2.5.2-2.4_3.30__gd0f7936.shasta  10) cray-libsci/22.12.1.1
 
 ```
 
 from which we see the default compiler environment is Cray (indicated
-by `PrgEnv-cray` (at 10 in the list above) and the default compiler module
-is `cce/11.0.4` (at 1 in the list above). The compiler environment
+by `PrgEnv-cray` (at 11 in the list above) and the default compiler module
+is `cce/15.0.0` (at 6 in the list above). The compiler environment
 will give access to a consistent set of compiler, MPI library via
-`cray-mpich` (at 8), and other libraries e.g., `cray-libsci` (at 9 in
-the list above) infrastructure.
+`cray-mpich` (at 9), and other libraries e.g., `cray-libsci` (at 10 in
+the list above).
 
 ### Switching between compiler environments
 
 Switching between different compiler environments is achieved using the
-`module swap` command. For example, to switch from the default HPE Cray
+`module load` command. For example, to switch from the default HPE Cray
 (CCE) compiler environment to the GCC environment, you would use:
 
 ```
-auser@ln03:~> module swap PrgEnv-cray PrgEnv-gnu
+auser@ln03:~> module load PrgEnv-gnu
+
+Lmod is automatically replacing "cce/15.0.0" with "gcc/11.2.0".
+
+
+Lmod is automatically replacing "PrgEnv-cray/8.3.3" with "PrgEnv-gnu/8.3.3".
+
 
 Due to MODULEPATH changes, the following have been reloaded:
-  1) cray-mpich/8.1.4
+  1) cray-mpich/8.1.23
 
 ```
 
@@ -171,11 +162,11 @@ has been changed to the GCC environment:
 auser@ln03:~> module list
 
 Currently Loaded Modules:
-  1) gcc/10.2.0              6) perftools-base/21.02.0
-  2) craype/2.7.6            7) xpmem/2.2.40-7.0.1.0_2.7__g1d7a24d.shasta
-  3) craype-x86-rome         8) cray-mpich/8.1.4
-  4) libfabric/1.11.0.4.71   9) cray-libsci/21.04.1.1
-  5) craype-network-ofi     10) PrgEnv-gnu/8.0.0
+  1) craype-x86-rome                         6) bolt/0.8          11) cray-dsmml/0.2.2
+  2) libfabric/1.12.1.2.2.0.0                7) epcc-setup-env    12) cray-mpich/8.1.23
+  3) craype-network-ofi                      8) load-epcc-module  13) cray-libsci/22.12.1.1
+  4) perftools-base/22.12.0                  9) gcc/11.2.0        14) PrgEnv-gnu/8.3.3
+  5) xpmem/2.5.2-2.4_3.30__gd0f7936.shasta  10) craype/2.7.19
 
 
 ```
@@ -186,18 +177,24 @@ Within a given compiler environment, it is possible to swap to a
 different compiler version by swapping the relevant compiler module.
 To switch to the GNU compiler environment from the default HPE Cray compiler
 environment and than swap the version of GCC from the 11.2.0 default to 
-the older 10.2.0 version, you would use
+the older 10.3.0 version, you would use
 
 ```
-auser@ln03:~> module swap PrgEnv-cray PrgEnv-gnu
+auser@ln03:~> module load PrgEnv-gnu
+
+Lmod is automatically replacing "cce/15.0.0" with "gcc/11.2.0".
+
+
+Lmod is automatically replacing "PrgEnv-cray/8.3.3" with "PrgEnv-gnu/8.3.3".
+
 
 Due to MODULEPATH changes, the following have been reloaded:
-  1) cray-mpich/8.1.4
+  1) cray-mpich/8.1.23
 
-auser@ln03:~> module swap gcc gcc/11.2.0
+auser@ln03:~> module load gcc/10.3.0
 
 The following have been reloaded with a version change:
-  1) gcc/10.2.0 => gcc/11.2.0
+  1) gcc/11.2.0 => gcc/10.3.0
 
 ```
 
@@ -209,10 +206,12 @@ will show that your environment has been changed:
 auser@ln03:~> module list
 
 Currently Loaded Modules:
-  1) craype/2.7.6            5) perftools-base/21.02.0                      9) gcc/11.2.0
-  2) craype-x86-rome         6) xpmem/2.2.40-7.0.1.0_2.7__g1d7a24d.shasta  10) cray-mpich/8.1.4
-  3) libfabric/1.11.0.4.71   7) cray-libsci/21.04.1.1
-  4) craype-network-ofi      8) PrgEnv-gnu/8.0.0
+  1) craype-x86-rome                         6) bolt/0.8          11) cray-libsci/22.12.1.1
+  2) libfabric/1.12.1.2.2.0.0                7) epcc-setup-env    12) PrgEnv-gnu/8.3.3
+  3) craype-network-ofi                      8) load-epcc-module  13) gcc/10.3.0
+  4) perftools-base/22.12.0                  9) craype/2.7.19     14) cray-mpich/8.1.23
+  5) xpmem/2.5.2-2.4_3.30__gd0f7936.shasta  10) cray-dsmml/0.2.2
+
 
 ```
 
@@ -293,7 +292,7 @@ developers, particularly in the open source software domain. A portable,
 standard-conforming code should (in principle) compile in any of the
 three compiler environments.
 
-For users requiring specific compiler features, such as co-array
+For users requiring specific compiler features, such as coarray
 Fortran, the recommended starting point would be Cray. The following
 sections provide further details of the different compiler
 environments.
@@ -311,17 +310,18 @@ Switch the the GCC compiler environment from the default CCE (cray)
 compiler environment via:
 
 ```
-auser@ln03:~> module swap PrgEnv-cray PrgEnv-gnu
+auser@ln03:~> module load PrgEnv-gnu
+
+Lmod is automatically replacing "cce/15.0.0" with "gcc/11.2.0".
+
+
+Lmod is automatically replacing "PrgEnv-cray/8.3.3" with "PrgEnv-gnu/8.3.3".
+
 
 Due to MODULEPATH changes, the following have been reloaded:
-  1) cray-mpich/8.1.4
+  1) cray-mpich/8.1.23
 
 ```
-
-!!! bug
-    The `gcc/8.1.0` module is available on ARCHER2 but cannot be used as the
-    supporting scientific and system libraries are not available. You should
-    **not** use this version of GCC.
 
 !!! warning
     If you want to use GCC version 10 or greater to compile Fortran code,
@@ -396,7 +396,7 @@ need to issue any commands to enable CCE.
 !!! note
     The CCE Clang compiler uses a GCC 8 toolchain so only C++ standard
     library features available in GCC 8 will be available in CCE Clang.
-    You can add the compile option `--gcc-toolchain=/opt/gcc/10.2.0/snos`
+    You can add the compile option `--gcc-toolchain=/opt/gcc/11.2.0/snos`
     to use a more recent version of the C++ standard library if you
     wish.
 
@@ -411,7 +411,7 @@ Language, warning, Debugging options:
 | Option | Comment |  
 | ------ | ------- |
 | `-std=<standard>` | Default is `-std=gnu11` (`gnu++14` for C++) \[1\] |
-| `--gcc-toolchain=/opt/gcc/10.2.0/snos` | Use the GCC 10.2.0 toolchain instead of the default 8.1.0 version packaged with CCE |
+| `--gcc-toolchain=/opt/gcc/11.2.0/snos` | Use the GCC 11.2.0 toolchain instead of the default 8.1.0 version packaged with CCE |
 
 Performance options:
 
@@ -468,14 +468,20 @@ Miscellaneous options:
 The AMD Optimizing Compiler Collection (AOCC) is a clang-based optimising
 compiler. AOCC also includes a flang-based Fortran compiler.
 
-Switch the the AOCC compiler environment from the default CCE (cray)
+Load the AOCC compiler environment from the default CCE (cray)
 compiler environment via:
 
 ```
-auser@ln03:~> module swap PrgEnv-cray PrgEnv-aocc
+auser@ln03:~> module load PrgEnv-aocc
+
+Lmod is automatically replacing "cce/15.0.0" with "aocc/3.2.0".
+
+
+Lmod is automatically replacing "PrgEnv-cray/8.3.3" with "PrgEnv-aocc/8.3.3".
+
 
 Due to MODULEPATH changes, the following have been reloaded:
-  1) cray-mpich/8.1.4
+  1) cray-mpich/8.1.23
 
 ```
 
@@ -516,8 +522,8 @@ communications patterns such as occur in parallel FFTs.
        different modules in your Slurm script.
 
 ```
-module swap craype-network-ofi craype-network-ucx 
-module swap cray-mpich cray-mpich-ucx 
+module load craype-network-ucx 
+module load cray-mpich-ucx 
 ```
 
 The performance benefits will also vary depending on the number of
@@ -547,12 +553,15 @@ paths to the programming environment system libraries using RUNPATH.
 This ensures that the executable can find the correct runtime
 libraries without the matching software modules loaded.
 
+<!-- Not needed as only one PE at the moment
 !!! tip
     The RUNPATH setting in the executable only works for default versions
     of libraries. If you want to use non-default versions then you need
     to add some additional commands at compile time and in your job submission
     scripts. See the [Using non-default versions of HPE Cray libraries on ARCHER2](#using-non-default-versions-of-hpe-cray-libraries-on-archer2).
-    
+
+-->
+
 The library RUNPATH associated with an executable can be inspected via,
 e.g.,
 
@@ -571,6 +580,23 @@ first choice for access to software libraries if available.
     be found in the [Software libraries](../../software-libraries/)
     section of the user guide.
 
+
+## Available HPE Cray Programming Environment releases on ARCHER2
+
+ARCHER2 currently has the following HPE Cray Programming Environment releases available:
+
+- **22.12: Current default**
+
+You can find information, notes, and lists of changes for current and upcoming ARCHER2 
+HPE Cray programming environments in [the HPE Cray Programming Environment GitHub
+repository](https://github.com/PE-Cray).
+
+!!! tip
+    We recommend that users use the most recent version of the PE available to get
+    the latest improvements and bug fixes.
+
+<!-- Only one PE available at the moment
+
 ## Switching to a different HPE Cray Programming Environment release
 
 !!! important
@@ -584,6 +610,8 @@ Loading a `cpe` module will do the following:
 - The compiler version will be switched to the one from the selected PE
 - All HPE Cray PE modules will be updated so their default version is the
   one from the PE you have selected
+
+
 
 For example, if you have a code that uses the Gnu compiler environment, FFTW
 and NetCDF parallel libraries and you want to compile in the (non-default) 22.04
@@ -642,6 +670,8 @@ Currently Loaded Modules:
 Now you can go ahead and compile your software with the new programming
 environment.
 
+
+
 !!! important
     The `cpe` modules only change the versions of software modules provided
     as part of the HPE Cray programming environments. Any modules provided
@@ -660,22 +690,10 @@ to other HPE Cray modules when you change to a non-default version of the progra
 environment. Specifically, an additional step is required to make them available. Once
 you have loaded the `cpe` module, you may also need to load the `perftools-base` 
 module to be able to load and use the performance tools modules.
+
+
     
-### Available HPE Cray Programming Environment releases on ARCHER2
 
-ARCHER2 currently has the following HPE Cray Programming Environment releases available:
-
-- **21.04: Current default**
-- 21.09: available via `cpe/21.09` module
-- 22.04: available via `cpe/22.04` module
-
-You can find information, notes, and lists of changes for current and upcoming ARCHER2 
-HPE Cray programming environments in [the HPE Cray Programming Environment GitHub
-repository](https://github.com/PE-Cray).
-
-!!! tip
-    We recommend that users use the most recent version of the PE available to get
-    the latest improvements and bug fixes.
 
 ## Using non-default versions of HPE Cray libraries on ARCHER2
 
@@ -780,6 +798,8 @@ srun --hint=nomultithread --distribution=block:block dgemv.x
     You must setup the environment at both compile and run time otherwise
     you will end up using the default version of the library.
 
+-->
+
 ## Compiling on compute nodes
 
 Sometimes you may wish to compile in a batch job. For example, the compile process may take a long
@@ -811,11 +831,11 @@ make
 
 !!! note
     If you want to use a compiler environment other than the default then
-    you will need to add the `module swap` command before the `make` command.
-    e.g. to use the Gnu compiler environemnt:
+    you will need to add the `module load` command before the `make` command.
+    e.g. to use the GCC compiler environemnt:
     
     ```
-    module swap PrgEnv-cray PrgEnv-gnu
+    module load PrgEnv-gnu
     ```
 
 You can also use a compute node in an interactive way using `salloc`. Please see

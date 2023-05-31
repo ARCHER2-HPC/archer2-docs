@@ -314,7 +314,7 @@ minutes on the short queue:
 
     auser@uan01:> salloc --nodes=2 --ntasks-per-node=128 --cpus-per-task=1 \
                   --time=00:20:00 --partition=standard --qos=short \
-                  --reservation=shortqos --hint=nomultithread \
+                  --hint=nomultithread \
                   --distribution=block:block --account=[budget code]
 
 Once your allocation is ready, Use valgrind4hpc to run and profile your 
@@ -471,8 +471,11 @@ batch submission as follows:
 # Load additional modules
 module load cray-stat
 
+export OMP_NUM_THREADS=1
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
 # Launch job in background
-srun ./my_exe &
+srun --hint=nomultithread --distribution=block:block ./my_exe &
 
 sleep 3600 # Wait a sufficient time for job to hang, e.g. 1 hour
 

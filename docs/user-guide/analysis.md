@@ -31,23 +31,22 @@ can also be used for data analysis.
 
 #### Example: Running an R script on a compute node
 
-=== "Full system"
-    ```slurm
-    #!/bin/bash
-    #SBATCH --job-name=data_analysis
-    #SBATCH --time=0:10:0
-    #SBATCH --nodes=1
-    #SBATCH --ntasks-per-node=1
-    #SBATCH --cpus-per-task=1
+```slurm
+#!/bin/bash
+#SBATCH --job-name=data_analysis
+#SBATCH --time=0:10:0
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=1
 
-    #SBATCH --account=[budget code]
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
+#SBATCH --account=[budget code]
+#SBATCH --partition=standard
+#SBATCH --qos=standard
 
-    module load cray-R
+module load cray-R
 
-    Rscript example.R
-    ```
+Rscript example.R
+```
 
 
 An advantage of this method is that you can use
@@ -66,12 +65,12 @@ be found
 
 #### Example: Reserving a single node for 20 minutes for interactive analysis
 
-=== "Full system"
-    ```bash
-    auser@ln01:> salloc --nodes=1 --ntasks-per-node=1 --cpus-per-task=1 \
-                  --time=00:20:00 --partition=standard --qos=short \
-                  --account=[budget code]
-    ```
+
+```bash
+auser@ln01:> salloc --nodes=1 --ntasks-per-node=1 --cpus-per-task=1 \
+                --time=00:20:00 --partition=standard --qos=short \
+                --account=[budget code]
+```
 
 !!! note
     If you want to run for longer than 20 minutes, you will need to use
