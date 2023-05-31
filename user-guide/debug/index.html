@@ -15,7 +15,7 @@
         <link rel="next" href="../profile/">
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.13">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
     
     
       
@@ -23,10 +23,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.85bb2934.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.26e3688c.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.a6bdf11c.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ecc896b0.min.css">
       
       
 
@@ -2007,7 +2007,7 @@ The following reservation request is for 2 nodes (256 physical cores) for 20
 minutes on the short queue:</p>
 <pre><code>auser@uan01:&gt; salloc --nodes=2 --ntasks-per-node=128 --cpus-per-task=1 \
               --time=00:20:00 --partition=standard --qos=short \
-              --reservation=shortqos --hint=nomultithread \
+              --hint=nomultithread \
               --distribution=block:block --account=[budget code]
 </code></pre>
 <p>Once your allocation is ready, Use valgrind4hpc to run and profile your 
@@ -2147,8 +2147,11 @@ batch submission as follows:</p>
 <span class="c1"># Load additional modules</span>
 module<span class="w"> </span>load<span class="w"> </span>cray-stat
 
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
+
 <span class="c1"># Launch job in background</span>
-<span class="nb">srun</span><span class="w"> </span>./my_exe<span class="w"> </span><span class="p">&amp;</span>
+<span class="nb">srun</span><span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>./my_exe<span class="w"> </span><span class="p">&amp;</span>
 
 sleep<span class="w"> </span><span class="m">3600</span><span class="w"> </span><span class="c1"># Wait a sufficient time for job to hang, e.g. 1 hour</span>
 

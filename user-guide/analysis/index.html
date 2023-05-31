@@ -15,7 +15,7 @@
         <link rel="next" href="../debug/">
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.13">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
     
     
       
@@ -23,10 +23,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.85bb2934.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.26e3688c.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.a6bdf11c.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ecc896b0.min.css">
       
       
 
@@ -1868,9 +1868,6 @@ you will be charged for using the entire node, even though your analysis
 may only be using one core.</p>
 </div>
 <h4 id="example-running-an-r-script-on-a-compute-node">Example: Running an R script on a compute node</h4>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="kp">#SBATCH --job-name=data_analysis</span>
 <span class="kp">#SBATCH --time=0:10:0</span>
@@ -1886,9 +1883,6 @@ module<span class="w"> </span>load<span class="w"> </span>cray-R
 
 Rscript<span class="w"> </span>example.R
 </code></pre></div>
-</div>
-</div>
-</div>
 <p>An advantage of this method is that you can use
 <a href="https://docs.archer2.ac.uk/user-guide/scheduler/#job-chaining">Job chaining</a>
 to automate the process of analysing your output data once your compute
@@ -1901,16 +1895,10 @@ using a job submission script. More information on interactive jobs can
 be found
 <a href="https://docs.archer2.ac.uk/user-guide/scheduler/#interactive-jobs">here</a>.</p>
 <h4 id="example-reserving-a-single-node-for-20-minutes-for-interactive-analysis">Example: Reserving a single node for 20 minutes for interactive analysis</h4>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Full system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>auser@ln01:&gt;<span class="w"> </span>salloc<span class="w"> </span>--nodes<span class="o">=</span><span class="m">1</span><span class="w"> </span>--ntasks-per-node<span class="o">=</span><span class="m">1</span><span class="w"> </span>--cpus-per-task<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<span class="w">              </span>--time<span class="o">=</span><span class="m">00</span>:20:00<span class="w"> </span>--partition<span class="o">=</span>standard<span class="w"> </span>--qos<span class="o">=</span>short<span class="w"> </span><span class="se">\</span>
-<span class="w">              </span>--account<span class="o">=[</span>budget<span class="w"> </span>code<span class="o">]</span>
+<span class="w">                </span>--time<span class="o">=</span><span class="m">00</span>:20:00<span class="w"> </span>--partition<span class="o">=</span>standard<span class="w"> </span>--qos<span class="o">=</span>short<span class="w"> </span><span class="se">\</span>
+<span class="w">                </span>--account<span class="o">=[</span>budget<span class="w"> </span>code<span class="o">]</span>
 </code></pre></div>
-</div>
-</div>
-</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you want to run for longer than 20 minutes, you will need to use

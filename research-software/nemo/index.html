@@ -15,7 +15,7 @@
         <link rel="next" href="../nwchem/">
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.13">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
     
     
       
@@ -23,10 +23,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.85bb2934.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.26e3688c.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.a6bdf11c.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ecc896b0.min.css">
       
       
 
@@ -1728,36 +1728,36 @@ INFO:root:cores to be used= 100 (256)
 </code></pre></div>
 <p>This has reported that 2 nodes are needed with 100 active cores spread over
 256 cores. This will also have produced a submission script "myscript.slurm":</p>
-<div class="highlight"><pre><span></span><code>#!/bin/bash
-#SBATCH --job-name=nemo_test
-#SBATCH --time=00:10:00
-#SBATCH --account=n01
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="kp">#SBATCH --job-name=nemo_test</span>
+<span class="kp">#SBATCH --time=00:10:00</span>
+<span class="kp">#SBATCH --account=n01</span>
+<span class="kp">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --qos=standard</span>
 
-#SBATCH --nodes=2
-#SBATCH --ntasks-per-core=1
+<span class="kp">#SBATCH --nodes=2</span>
+<span class="kp">#SBATCH --ntasks-per-core=1</span>
 
-# Created by: mkslurm_hetjob -S 4 -s 16 -m 2 -C 96 -g 2 -N 128 -t 00:10:00 -a n01 -j nemo_test -v False
-module swap craype-network-ofi craype-network-ucx
-module swap cray-mpich cray-mpich-ucx
-module load cray-hdf5-parallel/1.12.0.7
-module load cray-netcdf-hdf5parallel/4.7.4.7
-export OMP_NUM_THREADS=1
+<span class="c1"># Created by: mkslurm_hetjob -S 4 -s 16 -m 2 -C 96 -g 2 -N 128 -t 00:10:00 -a n01 -j nemo_test -v False</span>
+module<span class="w"> </span>swap<span class="w"> </span>craype-network-ofi<span class="w"> </span>craype-network-ucx
+module<span class="w"> </span>swap<span class="w"> </span>cray-mpich<span class="w"> </span>cray-mpich-ucx
+module<span class="w"> </span>load<span class="w"> </span>cray-hdf5-parallel/1.12.0.7
+module<span class="w"> </span>load<span class="w"> </span>cray-netcdf-hdf5parallel/4.7.4.7
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
 
-cat &gt; myscript_wrapper.sh &lt;&lt; EOFB
-#!/bin/ksh
-#
-set -A map ./xios_server.exe ./nemo
-exec_map=( 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 )
-#
-exec \${map[\${exec_map[\$SLURM_PROCID]}]}
-##
-EOFB
-chmod u+x ./myscript_wrapper.sh
+cat<span class="w"> </span>&gt;<span class="w"> </span>myscript_wrapper.sh<span class="w"> </span><span class="s">&lt;&lt; EOFB</span>
+<span class="s">#!/bin/ksh</span>
+<span class="s">#</span>
+<span class="s">set -A map ./xios_server.exe ./nemo</span>
+<span class="s">exec_map=( 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 )</span>
+<span class="s">#</span>
+<span class="s">exec \${map[\${exec_map[\$SLURM_PROCID]}]}</span>
+<span class="s">##</span>
+<span class="s">EOFB</span>
+chmod<span class="w"> </span>u+x<span class="w"> </span>./myscript_wrapper.sh
 
-srun --mem-bind=local \
---ntasks=100 --ntasks-per-node=50 --cpu-bind=v,mask_cpu:0x1,0x10000,0x100000000,0x400000000,0x1000000000,0x4000000000,0x10000000000,0x40000000000,0x100000000000,0x400000000000,0x1000000000000,0x4000000000000,0x10000000000000,0x40000000000000,0x100000000000000,0x400000000000000,0x1000000000000000,0x4000000000000000,0x10000000000000000,0x40000000000000000,0x100000000000000000,0x400000000000000000,0x1000000000000000000,0x4000000000000000000,0x10000000000000000000,0x40000000000000000000,0x100000000000000000000,0x400000000000000000000,0x1000000000000000000000,0x4000000000000000000000,0x10000000000000000000000,0x40000000000000000000000,0x100000000000000000000000,0x400000000000000000000000,0x1000000000000000000000000,0x4000000000000000000000000,0x10000000000000000000000000,0x40000000000000000000000000,0x100000000000000000000000000,0x400000000000000000000000000,0x1000000000000000000000000000,0x4000000000000000000000000000,0x10000000000000000000000000000,0x40000000000000000000000000000,0x100000000000000000000000000000,0x400000000000000000000000000000,0x1000000000000000000000000000000,0x4000000000000000000000000000000,0x10000000000000000000000000000000,0x40000000000000000000000000000000 ./myscript_wrapper.sh
+<span class="nb">srun</span><span class="w"> </span>--mem-bind<span class="o">=</span><span class="nb">local</span><span class="w"> </span><span class="se">\</span>
+--ntasks<span class="o">=</span><span class="m">100</span><span class="w"> </span>--ntasks-per-node<span class="o">=</span><span class="m">50</span><span class="w"> </span>--cpu-bind<span class="o">=</span>v,mask_cpu:0x1,0x10000,0x100000000,0x400000000,0x1000000000,0x4000000000,0x10000000000,0x40000000000,0x100000000000,0x400000000000,0x1000000000000,0x4000000000000,0x10000000000000,0x40000000000000,0x100000000000000,0x400000000000000,0x1000000000000000,0x4000000000000000,0x10000000000000000,0x40000000000000000,0x100000000000000000,0x400000000000000000,0x1000000000000000000,0x4000000000000000000,0x10000000000000000000,0x40000000000000000000,0x100000000000000000000,0x400000000000000000000,0x1000000000000000000000,0x4000000000000000000000,0x10000000000000000000000,0x40000000000000000000000,0x100000000000000000000000,0x400000000000000000000000,0x1000000000000000000000000,0x4000000000000000000000000,0x10000000000000000000000000,0x40000000000000000000000000,0x100000000000000000000000000,0x400000000000000000000000000,0x1000000000000000000000000000,0x4000000000000000000000000000,0x10000000000000000000000000000,0x40000000000000000000000000000,0x100000000000000000000000000000,0x400000000000000000000000000000,0x1000000000000000000000000000000,0x4000000000000000000000000000000,0x10000000000000000000000000000000,0x40000000000000000000000000000000<span class="w"> </span>./myscript_wrapper.sh
 </code></pre></div>
 <p>Submitting this script in a directory with the nemo and xios_server.exe
 executables will run the desired MPMD job. The exec_map array shows the

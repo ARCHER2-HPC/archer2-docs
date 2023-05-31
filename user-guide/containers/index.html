@@ -15,7 +15,7 @@
         <link rel="next" href="../python/">
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.13">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
     
     
       
@@ -23,10 +23,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.85bb2934.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.26e3688c.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.a6bdf11c.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ecc896b0.min.css">
       
       
 
@@ -607,8 +607,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#getting-existing-images-onto-archer2" class="md-nav__link">
-    Getting existing images onto ARCHER2
+  <a href="#getting-existing-container-images-onto-archer2" class="md-nav__link">
+    Getting existing container images onto ARCHER2
   </a>
   
 </li>
@@ -647,16 +647,16 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#creating-your-own-singularity-images" class="md-nav__link">
-    Creating Your Own Singularity Images
+  <a href="#creating-your-own-singularity-container-images" class="md-nav__link">
+    Creating Your Own Singularity Container Images
   </a>
   
-    <nav class="md-nav" aria-label="Creating Your Own Singularity Images">
+    <nav class="md-nav" aria-label="Creating Your Own Singularity Container Images">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#building-singularity-images-using-docker-macoswindows" class="md-nav__link">
-    Building Singularity images using Docker (macOS/Windows)
+  <a href="#building-container-images-using-docker" class="md-nav__link">
+    Building container images using Docker
   </a>
   
 </li>
@@ -677,13 +677,6 @@
           <li class="md-nav__item">
   <a href="#building-an-image-with-mpi-from-scratch" class="md-nav__link">
     Building an image with MPI from scratch
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#creating-an-image-based-on-the-base-archer2-mpi-singularity-image" class="md-nav__link">
-    Creating an image based on the base ARCHER2 MPI Singularity image
   </a>
   
 </li>
@@ -1683,8 +1676,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#getting-existing-images-onto-archer2" class="md-nav__link">
-    Getting existing images onto ARCHER2
+  <a href="#getting-existing-container-images-onto-archer2" class="md-nav__link">
+    Getting existing container images onto ARCHER2
   </a>
   
 </li>
@@ -1723,16 +1716,16 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#creating-your-own-singularity-images" class="md-nav__link">
-    Creating Your Own Singularity Images
+  <a href="#creating-your-own-singularity-container-images" class="md-nav__link">
+    Creating Your Own Singularity Container Images
   </a>
   
-    <nav class="md-nav" aria-label="Creating Your Own Singularity Images">
+    <nav class="md-nav" aria-label="Creating Your Own Singularity Container Images">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#building-singularity-images-using-docker-macoswindows" class="md-nav__link">
-    Building Singularity images using Docker (macOS/Windows)
+  <a href="#building-container-images-using-docker" class="md-nav__link">
+    Building container images using Docker
   </a>
   
 </li>
@@ -1753,13 +1746,6 @@
           <li class="md-nav__item">
   <a href="#building-an-image-with-mpi-from-scratch" class="md-nav__link">
     Building an image with MPI from scratch
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#creating-an-image-based-on-the-base-archer2-mpi-singularity-image" class="md-nav__link">
-    Creating an image based on the base ARCHER2 MPI Singularity image
   </a>
   
 </li>
@@ -1822,27 +1808,26 @@ containerisation model rather than Singularity).</p>
 <li><a href="https://www.sylabs.io/docs/">Singularity documentation</a></li>
 </ul>
 <h2 id="about-singularity-containers-images">About Singularity Containers (Images)</h2>
-<p>Similar to Docker, a Singularity container (or, more commonly, <em>image</em>)
-is a self-contained software stack. As Singularity does not require a
-root-level daemon to run its images (as is required by Docker) it is
-suitable for use on multi-user HPC systems such as ARCHER2. Within the
-container/image, you have exactly the same permissions as you do in a
-standard login session on the system.</p>
-<p>In practice, this means that an image created on your local machine with
+<p>Similar to Docker, a Singularity container is a self-contained software stack.
+As Singularity does not require a root-level daemon to run its containers
+(as is required by Docker) it is suitable for use on multi-user HPC systems
+such as ARCHER2. Within the container, you have exactly the same permissions
+as you do in a standard login session on the system.</p>
+<p>In practice, this means that a container image created on your local machine with
 all your research software installed for local development will also run
 on ARCHER2.</p>
-<p>Pre-built images (such as those on <a href="http://hub.docker.com">DockerHub</a> or
+<p>Pre-built container images (such as those on <a href="http://hub.docker.com">DockerHub</a> or
 <a href="https://datasets.datalad.org/?dir=/shub/">SingularityHub archive</a> can simply be downloaded
 and used on ARCHER2 (or anywhere else Singularity is installed).</p>
-<p>Creating and modifying images requires root permission and so must be
+<p>Creating and modifying container images requires root permission and so must be
 done on a system where you have such access (in practice, this is
 usually within a virtual machine on your laptop/workstation).</p>
 <div class="admonition note singularityhub now read-only">
 <p class="admonition-title">Note</p>
-<p>SingularityHub was a publicly available cloud service for Singularity Containers active from 2016 to 2021. It built container recipes from Github repositories on Google Cloud, and containers were available via the command line Singularity or sregistry software. These containers are still available now in the <a href="https://datasets.datalad.org/?dir=/shub/">SingularityHub Archive</a></p>
+<p>SingularityHub was a publicly available cloud service for Singularity container images active from 2016 to 2021. It built container recipes from Github repositories on Google Cloud, and container images were available via the command line Singularity or sregistry software. These container images are still available now in the <a href="https://datasets.datalad.org/?dir=/shub/">SingularityHub Archive</a></p>
 </div>
 <h2 id="using-singularity-images-on-archer2">Using Singularity Images on ARCHER2</h2>
-<p>Singularity images can be used on ARCHER2 in a number of ways,
+<p>Singularity containers can be used on ARCHER2 in a number of ways,
 including:</p>
 <ul>
 <li>Interactively on the login nodes</li>
@@ -1851,36 +1836,36 @@ including:</p>
 <li>As parallel processes within a non-interactive batch script</li>
 </ul>
 <p>We provide information on each of these scenarios below. First,
-we describe briefly how to get existing images onto ARCHER2 so
-that you can use them.</p>
-<h3 id="getting-existing-images-onto-archer2">Getting existing images onto ARCHER2</h3>
-<p>Singularity images are files, so, if you already have an image,
+we describe briefly how to get existing container images onto ARCHER2 so
+that you can launch containers based on them.</p>
+<h3 id="getting-existing-container-images-onto-archer2">Getting existing container images onto ARCHER2</h3>
+<p>Singularity container images are files, so, if you already have a container image,
 you can use <code>scp</code> to copy the file to ARCHER2 as you would with
 any other file.</p>
-<p>If you wish to get a file from one of the container image repositories
+<p>If you wish to get a file from one of the container image repositories,
 then Singularity allows you to do this from ARCHER2 itself.</p>
-<p>For example, to retrieve an image from SingularityHub on ARCHER2 we can
+<p>For example, to retrieve a container image from SingularityHub on ARCHER2 we can
 simply issue a Singularity command to pull the image.</p>
 <pre><code>auser@ln03:~&gt; singularity pull hello-world.sif shub://vsoch/hello-world
 </code></pre>
-<p>The image located at the <code>shub</code> URI is written to a Singularity Image
+<p>The container image located at the <code>shub</code> URI is written to a Singularity Image
 File (SIF) called <code>hello-world.sif</code>.</p>
 <h3 id="interactive-use-on-the-login-nodes">Interactive use on the login nodes</h3>
-<p>Once you have an image file, using it on the login nodes in an
+<p>Once you have a container image file, launching a container based on the container image on the login nodes in an
 interactive way is extremely simple: you use the <code>singularity shell</code>
-command. Using the image we built in the example above:</p>
+command. Using the container image we built in the example above:</p>
 <pre><code>auser@ln03:~&gt; singularity shell hello-world.sif
 Singularity&gt;
 </code></pre>
-<p>Within a Singularity image your home directory will be available.</p>
-<p>Once you have finished using your image, you can return to the ARCHER2
+<p>Within a Singularity container your home directory will be available.</p>
+<p>Once you have finished using your container, you can return to the ARCHER2
 login node prompt with the <code>exit</code> command:</p>
 <pre><code>Singularity&gt; exit
 exit
 auser@ln03:~&gt;
 </code></pre>
 <h3 id="interactive-use-on-the-compute-nodes">Interactive use on the compute nodes</h3>
-<p>The process for using an image interactively on the compute nodes is
+<p>The process for using a container interactively on the compute nodes is
 very similar to that for the login nodes. The only difference is that
 you first have to submit an interactive serial job (from a location on
 <code>/work</code>) in order to get interactive access to the compute node.</p>
@@ -1896,7 +1881,7 @@ would use:</p>
 auser@nid00001:/work/t01/t01/auser&gt;
 </code></pre>
 <p>Note that the prompt has changed to show you are on a compute node. Now
-you can use the image in the same way as on the login node.</p>
+you can launch a container in the same way as on the login node.</p>
 <pre><code>auser@nid00001:/work/t01/t01/auser&gt; singularity shell hello-world.sif
 Singularity&gt; exit
 exit
@@ -1905,41 +1890,35 @@ auser@ln03:/work/t01/t01/auser&gt;
 </code></pre>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>We used <code>exit</code> to leave the interactive image shell and then
+<p>We used <code>exit</code> to leave the interactive container shell and then
 <code>exit</code> again to leave the interactive job on the compute node.</p>
 </div>
 <h3 id="serial-processes-within-a-non-interactive-batch-script">Serial processes within a non-interactive batch script</h3>
-<p>You can also use Singularity images within a non-interactive batch
-script as you would any other command. If your image contains a
+<p>You can also use Singularity containers within a non-interactive batch
+script as you would any other command. If your container image contains a
 <em>runscript</em> then you can use <code>singularity run</code> to execute the runscript
 in the job. You can also use <code>singularity exec</code> to execute arbitrary
-commands (or scripts) within the image.</p>
+commands (or scripts) within the container.</p>
 <p>An example job submission script to run a serial job that executes the
-runscript within the <code>hello-world.sif</code> image that we downloaded previously to an
-ARCHER2 login node would be as follows.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
+runscript within a container based on the container image in the <code>hello-world.sif</code>
+file that we downloaded previously to an ARCHER2 login node would be as follows.</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash --login</span>
 
 <span class="c1"># Slurm job options (name, compute nodes, job time)</span>
 
-<span class="c1">#SBATCH --job-name=helloworld</span>
-<span class="c1">#SBATCH --nodes=1</span>
-<span class="c1">#SBATCH --ntasks-per-node=1</span>
-<span class="c1">#SBATCH --cpus-per-task=1</span>
-<span class="c1">#SBATCH --time=00:10:00</span>
+<span class="kp">#SBATCH --job-name=helloworld</span>
+<span class="kp">#SBATCH --nodes=1</span>
+<span class="kp">#SBATCH --ntasks-per-node=1</span>
+<span class="kp">#SBATCH --cpus-per-task=1</span>
+<span class="kp">#SBATCH --time=00:10:00</span>
 
-<span class="c1">#SBATCH --account=[budget code]</span>
-<span class="c1">#SBATCH --partition=standard</span>
-<span class="c1">#SBATCH --qos=standard</span>
+<span class="kp">#SBATCH --account=[budget code]</span>
+<span class="kp">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --qos=standard</span>
 
 <span class="c1"># Run the serial executable</span>
 singularity<span class="w"> </span>run<span class="w"> </span><span class="nv">$SLURM_SUBMIT_DIR</span>/hello-world.sif
 </code></pre></div>
-</div>
-</div>
-</div>
 <p>You submit this in the usual way and the standard output and error
 should be written to <code>slurm-...</code>, where the output filename ends
 with the job number.</p>
@@ -1951,200 +1930,150 @@ preparation. In general though, Singularity can be run within the parallel job l
         app &lt;options&gt;
 </code></pre>
 <p>The code snippet above shows the launch command as having three nested parts, <code>srun</code>, the singularity environment
-and the containerized application.</p>
-<p>The Singularity image must be compatible with the MPI environment on the host; either, the containerized
+and the containerised application.</p>
+<p>The Singularity container image must be compatible with the MPI environment on the host; either, the containerised
 app has been built against the appropriate MPI libraries or the container itself contains an MPI library
 that is compatible with the host MPI. The latter situation is known as the <a href="https://sylabs.io/guides/3.7/user-guide/mpi.html#hybrid-model">hybrid model</a>;
 this is the approach taken in the sections that follow.</p>
-<h2 id="creating-your-own-singularity-images">Creating Your Own Singularity Images</h2>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This information is based on that in the <a href="https://carpentries-incubator.github.io/singularity-introduction/">Introduction to Singularity</a>
-lesson from the <a href="https://carpentries.org/community-lessons/#the-carpentries-incubator">Carpentries Incubator</a>. Citation
-J. Cohen and A. Turner. "Reproducible computational environments using containers: Introduction to Singularity". Version 2020.08a, 
-August 2020. Carpentries Incubator. https://github.com/carpentries-incubator/singularity-introduction</p>
-</div>
-<p>As we saw above, you can create Singularity images by importing from
+<h2 id="creating-your-own-singularity-container-images">Creating Your Own Singularity Container Images</h2>
+<p>As we saw above, you can create Singularity container images by importing from
 DockerHub or Singularity Hub on ARCHER2 itself. If you wish to create
-your own custom image using Singularity then you must install Singularity on a system
+your own custom container image to use with Singularity then you must use a system
 where you have root (or administrator) privileges - often your own
 laptop or workstation.</p>
-<p>There are three different options to install Singularity on your local
-system: install Docker and use the <a href="https://quay.io/repository/singularity/singularity?tab=tags">Docker Singularity image</a> to build
-Singularity containers, install a virtual machine that you can use to
-build Singularity images, or install Singularity on your local system.</p>
-<p>For macOS and Windows users we recommend installing Docker Desktop and
-using the official Singularity image to build your own images. For Linux
-users, we recommend installing Singularity directly on your local system.</p>
-<p>We cover the mechanism that uses Docker in more detail below for macOS
-and Windows users. If your local system is Linux, you can find
-information on installing Singularity on Linux distribution at:</p>
-<ul>
-<li><a href="https://sylabs.io/guides/3.7/admin-guide/installation.html#installation-on-linux">Installing Singularity on
-    Linux</a></li>
-</ul>
-<h3 id="building-singularity-images-using-docker-macoswindows">Building Singularity images using Docker (macOS/Windows)</h3>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>You should install Docker Desktop to allow you to build Singularity
-images using Docker. Instructions can be found at:</p>
-<ul>
-<li><a href="https://docs.docker.com/docker-for-windows/install/">Installing Docker Desktop on Windows Home/Professional</a> </li>
-<li><a href="https://docs.docker.com/docker-for-mac/install/">Installing Docker Desktop on macOS</a></li>
-</ul>
-</div>
-<p>Once you have installed Docker, you can build Singularity images with a
-command similar to:</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--privileged<span class="w"> </span>--rm<span class="w"> </span>-v<span class="w"> </span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>:/home/singularity<span class="w"> </span>quay.io/singularity/singularity:v3.7.0-slim<span class="w"> </span>build<span class="w"> </span>/home/singularity/my_image.sif<span class="w"> </span>/home/singularity/my_image.def
-</code></pre></div>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>You can setup an alias to the long <code>docker run</code> command above to make it easier
-to use. For example, if you are using bash or zsh you could use a command like
-<code>alias dsingularity="docker run -it --privileged --rm -v ${PWD}:/home/singularity quay.io/singularity/singularity:v3.7.0-slim"</code></p>
-</div>
-<p>For information on how to write Singularity image definition files, see the
-<a href="https://sylabs.io/guides/3.7/user-guide/definition_files.html">Singularity documentation</a>.</p>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>You can, of course, also get to a Singularity image via a Docker image
-(as Singularity can use images directly from the DockerHub). In this workflow
-you would create a Docker image, upload it to the DockerHub and then pull it
-using Singularity on ARCHER2.</p>
-</div>
-<h2 id="using-singularity-with-mpi-on-archer2">Using Singularity with MPI on ARCHER2</h2>
+<p>There are a number of different options to create container images on your local
+system to use with Singularity on ARCHER2. We are going to use Docker on our 
+local system to create the container image, push the new container image to
+Docker Hub and then use Singularity on ARCHER2 to convert the Docker container
+image to a Singularity container image SIF file.</p>
+<p>For macOS and Windows users we recommend installing Docker Desktop. For Linux
+users, we recommend installing Docker directly on your local system. See the
+Docker documentation for full details on how to install Docker Desktop/Docker.</p>
+<h3 id="building-container-images-using-docker">Building container images using Docker</h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This information is based on that in the <a href="https://carpentries-incubator.github.io/singularity-introduction/">Introduction to Singularity</a>
-lesson from the <a href="https://carpentries.org/community-lessons/#the-carpentries-incubator">Carpentries Incubator</a>. Citation
-J. Cohen and A. Turner. "Reproducible computational environments using containers: Introduction to Singularity". Version 2020.08a, 
-August 2020. Carpentries Incubator. https://github.com/carpentries-incubator/singularity-introduction</p>
+<p>We assume that you are familiar with using Docker in these instructions. You 
+can find an introduction to Docker at
+<a href="https://carpentries-incubator.github.io/docker-introduction/">Reproducible Computational Environments Using Containers: Introduction to Docker</a></p>
 </div>
+<p>As usual, you can build container images with a command similar to:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>--platform<span class="w"> </span>linux/amd64<span class="w"> </span>-t<span class="w"> </span>&lt;username&gt;/&lt;image<span class="w"> </span>name&gt;:&lt;version&gt;<span class="w"> </span>.
+</code></pre></div>
+<p>Where:</p>
+<ul>
+<li><code>&lt;username&gt;</code> is your Docker Hub username</li>
+<li><code>&lt;image name&gt;</code> is the name of the container image you wish to create</li>
+<li><code>&lt;version&gt;</code> - specifies the version of the image you are creating (e.g. "latest", "v1")</li>
+<li><code>.</code> is the <em>build context</em> - in this example it is the location of the Dockerfile</li>
+</ul>
+<p>Note, you should use the <code>--platform linux/amd64</code> option to ensure that the container
+image is compatible with the processor architecture on ARCHER2.</p>
+<h2 id="using-singularity-with-mpi-on-archer2">Using Singularity with MPI on ARCHER2</h2>
 <p>MPI on ARCHER2 is provided by the Cray MPICH libraries with the interface
 to the high-performance Slingshot interconnect provided via the OFI interface.
-Therefore, as per the <a href="https://sylabs.io/guides/3.7/user-guide/mpi.html#hybrid-model">Singularity MPI Hybrid model</a>, we will build our Singularity image such
-that it contains a version of the MPICH MPI library compiled with support for OFI.
-Below, we provide instructions on creating a container with
-a version of MPICH compiled in this way, but, for convenience, we 
-also provide a base image file that already has a suitable MPICH, and so, you
-can skip this step if you wish. Instructions on how to use this image as the
-base for your own images are also provided. Finally, we provide an 
+Therefore, as per the <a href="https://sylabs.io/guides/3.7/user-guide/mpi.html#hybrid-model">Singularity MPI Hybrid model</a>, we will build our container image such that it contains a version of the MPICH MPI library compiled with support for OFI.
+Below, we provide instructions on creating a container image with
+a version of MPICH compiled in this way. We then provide an 
 example of how to run a Singularity container with MPI over multiple 
 ARCHER2 compute nodes.</p>
 <h3 id="building-an-image-with-mpi-from-scratch">Building an image with MPI from scratch</h3>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>These instructions are based on those used in the <a href="https://carpentries-incubator.github.io/singularity-introduction/">Reproducible computational environments using containers: Introduction to Singularity</a>.</p>
-</div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Remember, all these steps should be executed on your local system where
-you have administrator privileges, <strong>not on ARCHER2</strong>.</p>
+you have administrator privileges and Docker installed, <strong>not on ARCHER2</strong>.</p>
 </div>
 <p>We will illustrate the process of building a Singularity image with MPI from
 scratch by building an image that contains MPI provided by MPICH and the OSU
-MPI benchmarks. In order to do this, we first need to download the source code
+MPI benchmarks. As part of the container image creation we need to download the source code
 for both MPICH and the OSU benchmarks. At the time of writing, the stable MPICH
 release is 3.4.2 and the stable OSU benchmark release is 5.8 - this may have
 changed by the time you are following these instructions.</p>
-<p>Go ahead and download the source code:</p>
-<div class="highlight"><pre><span></span><code>wget<span class="w"> </span>http://www.mpich.org/static/downloads/3.4.2/mpich-3.4.2.tar.gz
-wget<span class="w"> </span>https://mvapich.cse.ohio-state.edu/download/mvapich/osu-micro-benchmarks-5.8.tgz
+<p>First, create a Dockerfile that describes how to build the image:</p>
+<div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">ubuntu:20.04</span>
+
+<span class="k">ENV</span><span class="w"> </span><span class="nv">DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive
+
+<span class="c"># Install the necessary packages (from repo)</span>
+<span class="k">RUN</span><span class="w"> </span>apt-get<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--no-install-recommends<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>apt-utils<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>build-essential<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>curl<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>libcurl4-openssl-dev<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>libzmq3-dev<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>pkg-config<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>software-properties-common
+<span class="k">RUN</span><span class="w"> </span>apt-get<span class="w"> </span>clean
+<span class="k">RUN</span><span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>dkms
+<span class="k">RUN</span><span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>autoconf<span class="w"> </span>automake<span class="w"> </span>build-essential<span class="w"> </span>numactl<span class="w"> </span>libnuma-dev<span class="w"> </span>autoconf<span class="w"> </span>automake<span class="w"> </span>gcc<span class="w"> </span>g++<span class="w"> </span>git<span class="w"> </span>libtool
+
+<span class="c"># Download and build an ABI compatible MPICH</span>
+<span class="k">RUN</span><span class="w"> </span>curl<span class="w"> </span>-sSLO<span class="w"> </span>http://www.mpich.org/static/downloads/3.4.2/mpich-3.4.2.tar.gz<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span><span class="o">&amp;&amp;</span><span class="w"> </span>tar<span class="w"> </span>-xzf<span class="w"> </span>mpich-3.4.2.tar.gz<span class="w"> </span>-C<span class="w"> </span>/root<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>/root/mpich-3.4.2<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span><span class="o">&amp;&amp;</span><span class="w"> </span>./configure<span class="w"> </span>--prefix<span class="o">=</span>/usr<span class="w"> </span>--with-device<span class="o">=</span>ch4:ofi<span class="w"> </span>--disable-fortran<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span>-j8<span class="w"> </span>install<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span><span class="o">&amp;&amp;</span><span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/root/mpich-3.4.2<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span><span class="o">&amp;&amp;</span><span class="w"> </span>rm<span class="w"> </span>/mpich-3.4.2.tar.gz
+
+<span class="c"># OSU benchmarks</span>
+<span class="k">RUN</span><span class="w"> </span>curl<span class="w"> </span>-sSLO<span class="w"> </span>http://mvapich.cse.ohio-state.edu/download/mvapich/osu-micro-benchmarks-5.4.1.tar.gz<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span><span class="o">&amp;&amp;</span><span class="w"> </span>tar<span class="w"> </span>-xzf<span class="w"> </span>osu-micro-benchmarks-5.4.1.tar.gz<span class="w"> </span>-C<span class="w"> </span>/root<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>/root/osu-micro-benchmarks-5.4.1<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span><span class="o">&amp;&amp;</span><span class="w"> </span>./configure<span class="w"> </span>--prefix<span class="o">=</span>/usr/local<span class="w"> </span><span class="nv">CC</span><span class="o">=</span>/usr/bin/mpicc<span class="w"> </span><span class="nv">CXX</span><span class="o">=</span>/usr/bin/mpicxx<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>mpi<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span>-j8<span class="w"> </span>install<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span><span class="o">&amp;&amp;</span><span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/root/osu-micro-benchmarks-5.4.1<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span><span class="o">&amp;&amp;</span><span class="w"> </span>rm<span class="w"> </span>/osu-micro-benchmarks-5.4.1.tar.gz
+
+<span class="c"># Add the OSU benchmark executables to the PATH</span>
+<span class="k">ENV</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span>/usr/local/libexec/osu-micro-benchmarks/mpi/pt2pt:<span class="nv">$PATH</span>
+<span class="k">ENV</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span>/usr/local/libexec/osu-micro-benchmarks/mpi/collective:<span class="nv">$PATH</span>
+
+<span class="c"># path to mlx libraries in Ubuntu</span>
+<span class="k">ENV</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span>/usr/lib/libibverbs:<span class="nv">$LD_LIBRARY_PATH</span>
 </code></pre></div>
-<p>Now create a Singularity image definition file that describes how to build the
-image:</p>
-<div class="highlight"><pre><span></span><code>Bootstrap: docker
-From: ubuntu:20.04
-
-%files
-    /home/singularity/osu-micro-benchmarks-5.8.tar.gz /root/
-    /home/singularity/mpich-3.4.2.tar.gz /root/
-
-%environment
-    export SINGULARITY_MPICH_DIR=/usr
-
-%post
-    apt-get -y update &amp;&amp; DEBIAN_FRONTEND=noninteractive apt-get -y install build-essential libfabric-dev libibverbs-dev gfortran
-    cd /root
-    tar zxvf mpich-3.4.2.tar.gz &amp;&amp; cd mpich-3.4.2
-    echo &quot;Configuring and building MPICH...&quot;
-    ./configure --prefix=/usr --with-device=ch3:nemesis:ofi &amp;&amp; make -j2 &amp;&amp; make install
-    cd /root
-    tar zxvf osu-micro-benchmarks-5.8.tar.gz
-    cd osu-micro-benchmarks-5.8/
-    echo &quot;Configuring and building OSU Micro-Benchmarks...&quot;
-    ./configure --prefix=/usr/local/osu CC=/usr/bin/mpicc CXX=/usr/bin/mpicxx
-    make -j2 &amp;&amp; make install
-
-%runscript
-    exec /usr/local/osu/libexec/osu-micro-benchmarks/mpi/$*
-</code></pre></div>
-<p>A quick overview of what the above definition file is doing:</p>
+<p>A quick overview of what the above Dockerfile is doing:</p>
 <ul>
 <li>The image is being bootstrapped from the <code>ubuntu:20.04</code> Docker image.</li>
-<li>In the <code>%files</code> section: The OSU Micro-Benchmarks and MPICH tar files are copied from the current directory into the <code>/root</code> directory in the image.</li>
-<li>In the <code>%environment</code> section: Set an environment variable that will be available within all containers run from the generated image.</li>
-<li>In the <code>%post</code> section:<ul>
-<li>Ubuntu's <code>apt-get</code> package manager is used to update the package directory and then install the compilers and other libraries required for the MPICH build.</li>
-<li>The MPICH <code>.tar.gz</code> file is extracted and the configure, build and install steps are run. Note the use of the <code>--with-device</code> option to configure MPICH to use the correct driver to support improved communication performance on a high performance cluster.</li>
-<li>The OSU Micro-Benchmarks <code>tar.gz</code> file is extracted and the configure, build and install steps are run to build the benchmark code from source.</li>
+<li>The first set of <code>RUN</code> sections with <code>apt-get</code> commands: install the base packages required from the Ubunntu package repos</li>
+<li>MPICH install: downloads and compiles the MPICH 3.4.2 in a way that is compatible with Cray MPICH on ARCHER2</li>
+<li>OSU MPI benchmarks install: downloads and compiles the OSU micro benchmarks</li>
+<li><code>ENV</code> sections: add the OSU benchmark executables to the PATH so they can be executed in the container without specifying the full path; set the correct paths to the network libraries within the container.</li>
 </ul>
-</li>
-<li>In the <code>%runscript</code> section: A runscript is set up that will echo the rank number of the current process and then run the command provided as a command line argument.</li>
-</ul>
-<p><em>Note that the base path of the the executable to run is hardcoded in the run script</em>, so the command line parameter to provide when running a container based on this image is relative to this base path, for example, <code>startup/osu_hello</code>, <code>collective/osu_allgather</code>, <code>pt2pt/osu_latency</code>, <code>one-sided/osu_put_latency</code>.</p>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-<p>You can find more information on Singularity definition file syntax in the
-<a href="https://sylabs.io/guides/3.7/user-guide/definition_files.html">Singularity documentation</a>.</p>
-</div>
-<p>Now go ahead and build the Singularity image using Singularity via Docker:</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--privileged<span class="w"> </span>--rm<span class="w"> </span>-v<span class="w"> </span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>:/home/singularity<span class="w"> </span>quay.io/singularity/singularity:v3.7.0-slim<span class="w"> </span>build<span class="w"> </span>/home/singularity/osu_benchmarks.sif<span class="w"> </span>/home/singularity/osu_benchmarks.def
+<p>Now we can go ahead and build the container image using Docker (this assumes that
+you issue the command in the same directory as the Dockerfile you created based on
+the specification above):</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>--platform<span class="w"> </span>linux/amd64<span class="w"> </span>-t<span class="w"> </span>auser/osu-benchmarks:5.4.1<span class="w"> </span>.
 </code></pre></div>
-<p>Once you have successfully created your Singularity image file, <code>osu_benchmarks.sif</code>, use <code>scp</code> to 
-copy it to ARCHER2 and you can test as described in the section below.</p>
+<p>(Remember to change <code>auser</code> to your Dockerhub username.)</p>
+<p>Once you have successfully built your container image, you should push it to
+Dockerhub:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>push<span class="w"> </span>auser/osu-benchmarks:5.4.1
+</code></pre></div>
+<p>Finally, you need to use Singularity on ARCHER2 to convert the Docker container image
+to a Singularity container image file. Log into ARCHER2, move to the work file system
+and then use a command like:</p>
+<div class="highlight"><pre><span></span><code>auser@ln01:/work/t01/t01/auser&gt;<span class="w"> </span>singularity<span class="w"> </span>build<span class="w"> </span>osu-benchmarks_5.4.1.sif<span class="w"> </span>docker://auser/osu-benchmarks:5.4.1
+</code></pre></div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>You can setup an alias to the long <code>docker run</code> command above to make it easier
-to use. For example, if you are using bash or zsh you could use a command like
-<code>alias dsingularity="docker run -it --privileged --rm -v ${PWD}:/home/singularity quay.io/singularity/singularity:v3.7.0-slim"</code></p>
-</div>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>You can find a copy of the <code>osu_benchmarks.sif</code> image on ARCHER2 in the directory
+<p>You can find a copy of the <code>osu-benchmarks_5.4.1.sif</code> image on ARCHER2 in the directory
 <code>$EPCC_SINGULARITY_DIR</code> if you do not want to build it yourself but still want to
 test.</p>
 </div>
-<h3 id="creating-an-image-based-on-the-base-archer2-mpi-singularity-image">Creating an image based on the base ARCHER2 MPI Singularity image</h3>
-<p>We have built an image with MPICH 3.4.1 built against OFI that you can use as a base
-image to install further software and create your own images. The image can be found
-on ARCHER2 at <code>$EPCC_SINGULARITY_DIR/mpich_base.sif</code>.</p>
-<p>To use this image in your own image builds you should download it from ARCHER2 to the
-system where you are building your images. You can then add the following lines to 
-your image definition file to start from this base image:</p>
-<div class="highlight"><pre><span></span><code>Bootstrap: localimage
-From: /path/to/container/mpich_base.sif
-</code></pre></div>
-<p>(Remember to put the actual path to the <code>mpich_base.sif</code> image file that you have
-downloaded to your system.)</p>
 <h3 id="running-parallel-mpi-jobs-using-singularity-containers">Running parallel MPI jobs using Singularity containers</h3>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>These instructions assume you have a Singularity image uploaded to 
+<p>These instructions assume you have built a Singularity container image file on 
 ARCHER2 that includes MPI provided by MPICH with the OFI interface.
-See the sections above for how to create such images.</p>
+See the sections above for how to build such container images.</p>
 </div>
-<p>Once you have uploaded your Singularity image that includes MPICH built with
+<p>Once you have built your Singularity container image file that includes MPICH built with
 OFI for ARCHER2, you can use it to run parallel jobs in a similar way to
-non-Singularity jobs. The example job submission script below uses the image
+non-Singularity jobs. The example job submission script below uses the container image file
 we built above with MPICH and the OSU benchmarks to run the Allreduce benchmark
 on two nodes where all 128 cores on each node are used for MPI processes (so, 256
 MPI processes in total).</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Full system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block"></div>
-</div>
-</div>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
 <span class="c1"># Slurm job options (name, compute nodes, job time)</span>
@@ -2159,28 +2088,30 @@ MPI processes in total).</p>
 <span class="c1">#SBATCH --qos=standard</span>
 <span class="c1">#SBATCH --account=[budget code]</span>
 
-<span class="c1"># Set the number of threads to 1.</span>
-<span class="c1"># This prevents any threaded system libraries from automatically using threading.</span>
+<span class="c1"># Load the module to make the Cray MPICH ABI available</span>
+module<span class="w"> </span>load<span class="w"> </span>cray-mpich-abi
+
 <span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
 
 <span class="c1"># Set the LD_LIBRARY_PATH environment variable within the Singularity container</span>
 <span class="c1"># to ensure that it used the correct MPI libraries.</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">SINGULARITYENV_LD_LIBRARY_PATH</span><span class="o">=</span>/opt/cray/pe/mpich/8.1.4/ofi/gnu/9.1/lib-abi-mpich:/opt/cray/pe/pmi/6.0.10/lib:/opt/cray/libfabric/1.11.0.4.71/lib64:/usr/lib64/host:/usr/lib/x86_64-linux-gnu/libibverbs:/.singularity.d/libs:/opt/cray/pe/gcc-libs
+<span class="nb">export</span><span class="w"> </span><span class="nv">SINGULARITYENV_LD_LIBRARY_PATH</span><span class="o">=</span><span class="s2">&quot;/opt/cray/pe/mpich/8.1.23/ofi/gnu/9.1/lib-abi-mpich:/opt/cray/pe/mpich/8.1.23/gtl/lib:/opt/cray/libfabric/1.12.1.2.2.0.0/lib64:/opt/cray/pe/gcc-libs:/opt/cray/pe/gcc-libs:/opt/cray/pe/lib64:/opt/cray/pe/lib64:/opt/cray/xpmem/default/lib64:/usr/lib64/libibverbs:/usr/lib64:/usr/lib64&quot;</span>
 
 <span class="c1"># This makes sure HPE Cray Slingshot interconnect libraries are available</span>
 <span class="c1"># from inside the container.</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">SINGULARITY_BIND</span><span class="o">=</span><span class="s2">&quot;/opt/cray,/usr/lib64/libibverbs.so.1,/usr/lib64/librdmacm.so.1, /usr/lib64/libnl-3.so.200,/usr/lib64/libnl-route-3.so.200,/usr/lib64/libpals.so.0, /var/spool/slurmd/mpi_cray_shasta,/usr/lib64/libibverbs/libmlx5-rdmav25.so,/etc/libibverbs.d,/opt/gcc&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SINGULARITY_BIND</span><span class="o">=</span><span class="s2">&quot;/opt/cray,/var/spool,/opt/cray/pe/mpich/8.1.23/ofi/gnu/9.1/lib-abi-mpich:/opt/cray/pe/mpich/8.1.23/gtl/lib,/etc/host.conf,/etc/libibverbs.d/mlx5.driver,/etc/libnl/classid,/etc/resolv.conf,/opt/cray/libfabric/1.12.1.2.2.0.0/lib64/libfabric.so.1,/opt/cray/pe/gcc-libs/libatomic.so.1,/opt/cray/pe/gcc-libs/libgcc_s.so.1,/opt/cray/pe/gcc-libs/libgfortran.so.5,/opt/cray/pe/gcc-libs/libquadmath.so.0,/opt/cray/pe/lib64/libpals.so.0,/opt/cray/pe/lib64/libpmi2.so.0,/opt/cray/pe/lib64/libpmi.so.0,/opt/cray/xpmem/default/lib64/libxpmem.so.0,/run/munge/munge.socket.2,/usr/lib64/libibverbs/libmlx5-rdmav34.so,/usr/lib64/libibverbs.so.1,/usr/lib64/libkeyutils.so.1,/usr/lib64/liblnetconfig.so.4,/usr/lib64/liblustreapi.so,/usr/lib64/libmunge.so.2,/usr/lib64/libnl-3.so.200,/usr/lib64/libnl-genl-3.so.200,/usr/lib64/libnl-route-3.so.200,/usr/lib64/librdmacm.so.1,/usr/lib64/libyaml-0.so.2&quot;</span>
 
 <span class="c1"># Launch the parallel job.</span>
 srun<span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>singularity<span class="w"> </span>run<span class="w"> </span>osu_benchmarks.sif<span class="w"> </span><span class="se">\</span>
-<span class="w">        </span>collective/osu_allreduce
+<span class="w">    </span>singularity<span class="w"> </span>run<span class="w"> </span>osu-benchmarks_5.4.1.sif<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>osu_allreduce
 </code></pre></div>
 <p>The only changes from a standard submission script are:</p>
 <ul>
 <li>We set the environment variable <code>SINGULARITY_LD_LIBRARY_PATH</code> to ensure that the excutable can find the correct libraries are available within the container to be able to use HPE Cray Slingshot interconnect.</li>
 <li>We set the environment variable <code>SINGULARITY_BIND</code> to ensure that the correct libraries are available within the container to be able to use HPE Cray Slingshot interconnect.</li>
-<li><code>srun</code> calls the <code>singularity</code> software with the image file we created rather than the parallel program directly.</li>
+<li><code>srun</code> calls the <code>singularity</code> software with the container image file we created rather than the parallel program directly.</li>
 </ul>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
@@ -2189,27 +2120,31 @@ compute nodes.</p>
 </div>
 <p>If the job runs correctly, you should see output similar to the following in your <code>slurm-*.out</code> 
 file:</p>
-<div class="highlight"><pre><span></span><code># OSU MPI Allreduce Latency Test v5.7
+<div class="highlight"><pre><span></span><code>Lmod is automatically replacing &quot;cray-mpich/8.1.23&quot; with
+&quot;cray-mpich-abi/8.1.23&quot;.
+
+
+# OSU MPI Allreduce Latency Test v5.4.1
 # Size       Avg Latency(us)
-4                       6.81
-8                       6.86
-16                      6.90
-32                      7.09
-64                     10.79
-128                    10.97
-256                    13.07
-512                    15.50
-1024                   17.35
-2048                   22.49
-4096                   41.13
-8192                   54.00
-16384                  75.09
-32768                 120.40
-65536                 243.26
-131072                614.60
-262144                618.11
-524288                877.92
-1048576              2981.61
+4                       7.93
+8                       7.93
+16                      8.13
+32                      8.69
+64                      9.54
+128                    13.75
+256                    17.04
+512                    25.94
+1024                   29.43
+2048                   43.53
+4096                   46.53
+8192                   46.20
+16384                  55.85
+32768                  83.11
+65536                 136.90
+131072                257.13
+262144                486.50
+524288               1025.87
+1048576              2173.25
 </code></pre></div>
 
 

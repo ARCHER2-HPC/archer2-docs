@@ -15,7 +15,7 @@
         <link rel="next" href="../orca/">
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.13">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
     
     
       
@@ -23,10 +23,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.85bb2934.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.26e3688c.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.a6bdf11c.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ecc896b0.min.css">
       
       
 
@@ -997,13 +997,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#module-version-history" class="md-nav__link">
-    Module version history
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1607,13 +1600,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#module-version-history" class="md-nav__link">
-    Module version history
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1655,38 +1641,21 @@ most common are distributed by openfoam.org and openfoam.com.</p>
 <h2 id="using-openfoam-on-archer2">Using OpenFOAM on ARCHER2</h2>
 <p>OpenFOAM is released under a GPL v3 license and is freely available to
 all users on ARCHER2.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>auser@ln01&gt; module avail openfoam
---------------- /work/y07/shared/archer2-lmod/apps/core -----------------
-openfoam/com/v2106          openfoam/org/v9.20210903 (D)
-openfoam/org/v8.20200901
-</code></pre></div>
-</div>
-</div>
-</div>
 <p>Versions from openfoam.org are typically v8.0 etc and there is typically
 one release per year (in June; with a patch release in September).
 Versions from openfoam.com are e.g., v2106 (to be read as 2021 June) and
 there are typically two releases a year (one in June, and one in
 December).</p>
-<p>To use OpenFOAM on ARCHER2 you should first load the OpenFOAM module,
+<p>To use OpenFOAM on ARCHER2 you should first load an OpenFOAM module,
 e.g.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Full system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>user@ln01:&gt; module load PrgEnv-gnu
-user@ln01:&gt; module load openfoam/com/v2106
+<div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>PrgEnv-gnu
+module<span class="w"> </span>load<span class="w"> </span>openfoam/com/v2106
 </code></pre></div>
-</div>
-</div>
-</div>
 <p>The module defines only the base installation directory via the
 environment variable <code>FOAM_INSTALL_DIR</code>. After loading the module you
 need to source the <code>etc/bashrc</code> file provided by OpenFOAM, e.g.</p>
-<pre><code>user@ln01:&gt; source ${FOAM_INSTALL_DIR}/etc/bashrc
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nb">source</span><span class="w"> </span><span class="si">${</span><span class="nv">FOAM_INSTALL_DIR</span><span class="si">}</span>/etc/bashrc
+</code></pre></div>
 <p>You should then be able to use OpenFOAM. The above commands will also
 need to be added to any job/batch submission scripts you want to use to
 run OpenFOAM. Note that all the centrally installed versions of OpenFOAM
@@ -1702,67 +1671,39 @@ end is a shared resource.</p>
 <p>A typical SLURM job submission script for OpenFOAM is given here. This
 would request 4 nodes to run with 128 MPI tasks per node (a total of 512
 MPI tasks). Each MPI task is allocated one core (<code>--cpus-per-task=1</code>).</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Full system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>#!/bin/bash
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
-#SBATCH --nodes=4
-#SBATCH --ntasks-per-node=128
-#SBATCH --cpus-per-task=1
-#SBATCH --distribution=block:block
-#SBATCH --hint=nomultithread
-#SBATCH --time=00:10:00
+<span class="kp">#SBATCH --nodes=4</span>
+<span class="kp">#SBATCH --ntasks-per-node=128</span>
+<span class="kp">#SBATCH --cpus-per-task=1</span>
+<span class="kp">#SBATCH --distribution=block:block</span>
+<span class="kp">#SBATCH --hint=nomultithread</span>
+<span class="kp">#SBATCH --time=00:10:00</span>
 
-# Replace [budget code] below with your project code (e.g. t01)
-#SBATCH --account=[budget code] 
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+<span class="c1"># Replace [budget code] below with your project code (e.g. t01)</span>
+<span class="kp">#SBATCH --account=[budget code] </span>
+<span class="kp">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --qos=standard</span>
 
-# Load the appropriate module and source the OpenFOAM bashrc file
+<span class="c1"># Load the appropriate module and source the OpenFOAM bashrc file</span>
 
-module load openfoam/org/v8.20210901
+module<span class="w"> </span>load<span class="w"> </span>openfoam/org/v8.20210901
 
-source ${FOAM_INSTALL_DIR}/etc/bashrc
+<span class="nb">source</span><span class="w"> </span><span class="si">${</span><span class="nv">FOAM_INSTALL_DIR</span><span class="si">}</span>/etc/bashrc
 
-# Run OpenFOAM work, e.g.,
+<span class="c1"># Ensure the cpus-per-task option is propagated to srun commands</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
 
-srun interFoam -parallel
+<span class="c1"># Run OpenFOAM work, e.g.,</span>
+
+<span class="nb">srun</span><span class="w"> </span>-hint<span class="o">=</span>nomultithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>interFoam<span class="w"> </span>-parallel
 </code></pre></div>
-</div>
-</div>
-</div>
 <h2 id="compiling-openfoam">Compiling OpenFOAM</h2>
 <p>If you want to compile your own version of OpenFOAM, instructions are
 available for ARCHER2 at:</p>
 <ul>
 <li><a href="https://github.com/hpc-uk/build-instructions/tree/main/apps/OpenFOAM">Build instructions for OpenFOAM on GitHub</a></li>
 </ul>
-<h2 id="module-version-history">Module version history</h2>
-<p>The following centrally installed versions are available.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">Full system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<ul>
-<li>
-<p>Module <code>openfoam/com/v2106</code> installed October 2021 (Cray PE 21.04)</p>
-<p>Version v2106 (June 2021).
-See <a href="https://www.openfoam.com/news/main-news/openfoam-v2106">OpenFOAM.com website</a></p>
-</li>
-<li>
-<p>Module <code>openfoam/org/v9.20200903</code> installed October 2021 (Cray PE 21.09)</p>
-<p>Version 9 patch release 3rd September 2021.
-See <a href="https://openfoam.org/news/v9-patch/">OpenFOAM.org website</a></p>
-</li>
-<li>
-<p>Module <code>openfoam/org/v8.20200901</code> installed October 2021 (Cray PE 21.09)</p>
-<p>Version 8 patch release 1st September 2020.
-See <a href="https://openfoam.org/news/v8-patch/">OpenFOAM.org website</a></p>
-</li>
-</ul>
-</div>
-</div>
-</div>
 
 
   

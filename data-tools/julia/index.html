@@ -15,7 +15,7 @@
         <link rel="next" href="../paraview/">
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.13">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
     
     
       
@@ -23,10 +23,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.85bb2934.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.26e3688c.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.a6bdf11c.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ecc896b0.min.css">
       
       
 
@@ -1643,27 +1643,27 @@ folder. You should then add the folder to your system path so you can use the
 <code>julia</code> executable. Finally, you need to tell Julia to install any packages in
 the work directory as opposed to the default home directory,  which can only be
 accessed from the login nodes. This can be done with the following code</p>
-<div class="highlight"><pre><span></span><code>export WORK=/work/t01/t01/auser
-cd $WORK
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">WORK</span><span class="o">=</span>/work/t01/t01/auser
+<span class="nb">cd</span><span class="w"> </span><span class="nv">$WORK</span>
 
-wget https://julialang-s3.julialang.org/bin/linux/x64/1.6/julia-1.6.6-linux-x86_64.tar.gz
-tar zxvf julia-1.6.6-linux-x86_64.tar.gz
-rm ./julia-1.6.6-linux-x86_64.tar.gz
+wget<span class="w"> </span>https://julialang-s3.julialang.org/bin/linux/x64/1.6/julia-1.6.6-linux-x86_64.tar.gz
+tar<span class="w"> </span>zxvf<span class="w"> </span>julia-1.6.6-linux-x86_64.tar.gz
+rm<span class="w"> </span>./julia-1.6.6-linux-x86_64.tar.gz
 
-export PATH=&quot;$PATH:$WORK/julia-1.6.6/bin&quot;
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH</span><span class="s2">:</span><span class="nv">$WORK</span><span class="s2">/julia-1.6.6/bin&quot;</span>
 
-mkdir ./.julia
-export JULIA_DEPOT_PATH=&quot;$WORK/.julia&quot;
-export PATH=&quot;$PATH:$WORK/$JULIA_DEPOT_PATH/bin&quot;
+mkdir<span class="w"> </span>./.julia
+<span class="nb">export</span><span class="w"> </span><span class="nv">JULIA_DEPOT_PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$WORK</span><span class="s2">/.julia&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH</span><span class="s2">:</span><span class="nv">$WORK</span><span class="s2">/</span><span class="nv">$JULIA_DEPOT_PATH</span><span class="s2">/bin&quot;</span>
 </code></pre></div>
 <p>At this point you should have a working installation of Julia! The environment
 variables will however be cleared when you log out of the terminal. You can
 set them in the <code>.bashrc</code> file so that they're automatically defined every time
 you log in by adding the following lines to the end of the file <code>~/.bashrc</code></p>
-<div class="highlight"><pre><span></span><code>export WORK=&quot;/work/t01/t01/auser&quot;
-export JULIA_DEPOT_PATH=&quot;$WORK/.julia&quot;
-export PATH=&quot;$PATH:$WORK/julia-1.6.6/bin&quot;
-export PATH=&quot;$PATH:$JULIA_DEPOT_PATH/bin&quot;
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">WORK</span><span class="o">=</span><span class="s2">&quot;/work/t01/t01/auser&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">JULIA_DEPOT_PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$WORK</span><span class="s2">/.julia&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH</span><span class="s2">:</span><span class="nv">$WORK</span><span class="s2">/julia-1.6.6/bin&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH</span><span class="s2">:</span><span class="nv">$JULIA_DEPOT_PATH</span><span class="s2">/bin&quot;</span>
 </code></pre></div>
 <h2 id="installing-packages-and-using-environments">Installing packages and using environments</h2>
 <p>Julia has a built in package manager which can be used to install registered
@@ -1671,36 +1671,36 @@ packages quickly and easily. Like with many other high level programming
 languages we can make use of environments to control dependencies etc.</p>
 <p>To make an environment, first navigate to where you want your environment to be
 (ideally a subfolder of your <code>/work/</code> directory) and create an empty folder to
-store the environment in. Then launch Julia with the --project flag.
-<div class="highlight"><pre><span></span><code>cd $WORK
-mkdir ./MyTestEnv
-julia --project=$WORK/MyTestEnv
+store the environment in. Then launch Julia with the --project flag.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span><span class="nv">$WORK</span>
+mkdir<span class="w"> </span>./MyTestEnv
+julia<span class="w"> </span>--project<span class="o">=</span><span class="nv">$WORK</span>/MyTestEnv
 </code></pre></div>
-This launches Julia in the <code>MyTestEnv</code> environment. You can then install
-packages as usual using the normal commands in the Julia terminal. E.g.
-<div class="highlight"><pre><span></span><code>using Pkg
-Pkg.add(&quot;Oceananigans&quot;)
-</code></pre></div></p>
+<p>This launches Julia in the <code>MyTestEnv</code> environment. You can then install
+packages as usual using the normal commands in the Julia terminal. E.g.</p>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="n">Pkg</span>
+<span class="n">Pkg</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&quot;Oceananigans&quot;</span><span class="p">)</span>
+</code></pre></div>
 <h2 id="configuring-mpijl">Configuring MPI.jl</h2>
 <p>The <code>MPI.jl</code> package doesn't use the system MPICH implementation by default.
 You can set it up to do this by following the steps below. First you will need
 to load the <code>cray-mpich</code> module and define some environment variables (see <a href="https://juliaparallel.org/MPI.jl/stable/configuration/">here</a>
 for further details). Then you can launch Julia in an environment of your
-choice, ready to build.
-<div class="highlight"><pre><span></span><code>module load cray-mpich/8.1.4
-export JULIA_MPI_BINARY=&quot;system&quot;
-export JULIA_MPI_PATH=&quot;&quot;
-export JULIA_MPI_LIBRARY=&quot;/opt/cray/pe/mpich/8.1.4/ofi/cray/9.1/lib/libmpi.so&quot;
-export JULIA_MPIEXEC=&quot;srun&quot;
+choice, ready to build.</p>
+<div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>cray-mpich/8.1.4
+<span class="nb">export</span><span class="w"> </span><span class="nv">JULIA_MPI_BINARY</span><span class="o">=</span><span class="s2">&quot;system&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">JULIA_MPI_PATH</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">JULIA_MPI_LIBRARY</span><span class="o">=</span><span class="s2">&quot;/opt/cray/pe/mpich/8.1.4/ofi/cray/9.1/lib/libmpi.so&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">JULIA_MPIEXEC</span><span class="o">=</span><span class="s2">&quot;srun&quot;</span>
 
-julia --project=&lt;&lt;path to environment&gt;&gt;
+julia<span class="w"> </span>--project<span class="o">=</span>&lt;&lt;path<span class="w"> </span>to<span class="w"> </span>environment&gt;&gt;
 </code></pre></div>
-Once in the Julia terminal you can build the <code>MPI.jl</code> package using the
+<p>Once in the Julia terminal you can build the <code>MPI.jl</code> package using the
 following code. The final line installs the <code>mpiexecjl</code> command which should
-be used instead of <code>srun</code> to launch mpi processes.
-<div class="highlight"><pre><span></span><code>using Pkg
-Pkg.build(&quot;MPI&quot;; verbose=true)
-MPI.install_mpiexecjl(command = &quot;mpiexecjl&quot;, force = false, verbose = true)
+be used instead of <code>srun</code> to launch mpi processes.</p>
+<p><div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="n">Pkg</span>
+<span class="n">Pkg</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="s">&quot;MPI&quot;</span><span class="p">;</span><span class="w"> </span><span class="n">verbose</span><span class="o">=</span><span class="nb">true</span><span class="p">)</span>
+<span class="n">MPI</span><span class="o">.</span><span class="n">install_mpiexecjl</span><span class="p">(</span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;mpiexecjl&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">force</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"> </span><span class="n">verbose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">)</span>
 </code></pre></div>
 The <code>mpiexecjl</code> command will be installed in the directory that <code>JULIA_DEPOT_PATH</code>
 points too.</p>
@@ -1710,40 +1710,43 @@ points too.</p>
 </div>
 <h2 id="running-julia-on-the-compute-nodes">Running Julia on the compute nodes</h2>
 <p>Below is an example script for running Julia with mpi on the compute nodes</p>
-<div class="highlight"><pre><span></span><code>#!/bin/bash
-# Slurm job options (job-name, compute nodes, job time)
-#SBATCH --job-name=&lt;&lt;job-name&gt;&gt;
-#SBATCH --time=00:19:00
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="c1"># Slurm job options (job-name, compute nodes, job time)</span>
+<span class="kp">#SBATCH --job-name=&lt;&lt;job-name&gt;&gt;</span>
+<span class="kp">#SBATCH --time=00:19:00</span>
 
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=24
-#SBATCH --cpus-per-task=1
+<span class="kp">#SBATCH --nodes=1</span>
+<span class="kp">#SBATCH --ntasks-per-node=24</span>
+<span class="kp">#SBATCH --cpus-per-task=1</span>
 
-#SBATCH --qos=short
-#SBATCH --reservation=shortqos
+<span class="kp">#SBATCH --qos=short</span>
+<span class="kp">#SBATCH --reservation=shortqos</span>
 
-#SBATCH --account=&lt;&lt;your account&gt;&gt;
-#SBATCH --partition=standard
+<span class="kp">#SBATCH --account=&lt;&lt;your account&gt;&gt;</span>
+<span class="kp">#SBATCH --partition=standard</span>
 
-# Setup the job environment (this module needs to be loaded before any other modules)
-module load PrgEnv-cray
-module load cray-mpich/8.1.4
+<span class="c1"># Setup the job environment (this module needs to be loaded before any other modules)</span>
+module<span class="w"> </span>load<span class="w"> </span>PrgEnv-cray
+module<span class="w"> </span>load<span class="w"> </span>cray-mpich/8.1.4
 
-# Set the number of threads to 1
-#   This prevents any threaded system libraries from automatically
-#   using threading.
-export OMP_NUM_THREADS=1
-export JULIA_NUM_THREADS=1
+<span class="c1"># Set the number of threads to 1</span>
+<span class="c1">#   This prevents any threaded system libraries from automatically</span>
+<span class="c1">#   using threading.</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">JULIA_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
 
-# Define some paths
-export WORK=/work/t01/t01/auser
+<span class="c1"># Ensure the cpus-per-task option is propagated to srun commands</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
 
-export JULIA=&quot;$WORK/julia-1.6.6/bin/julia&quot;  # The julia executable
-export PATH=&quot;$PATH:$WORK/julia-1.6.6/bin&quot;  # The folder of the julia executable
-export JULIA_DEPOT_PATH=&quot;$WORK/.julia&quot;
-export MPIEXECJL=&quot;$JULIA_DEPOT_PATH/bin/mpiexecjl&quot;  # The path to the mpiexexjl executable
+<span class="c1"># Define some paths</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">WORK</span><span class="o">=</span>/work/t01/t01/auser
 
-$MPIEXECJL --project=$WORK/MyTestEnv -n 24 $JULIA ./MyMpiJuliaScript.jl
+<span class="nb">export</span><span class="w"> </span><span class="nv">JULIA</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$WORK</span><span class="s2">/julia-1.6.6/bin/julia&quot;</span><span class="w">  </span><span class="c1"># The julia executable</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH</span><span class="s2">:</span><span class="nv">$WORK</span><span class="s2">/julia-1.6.6/bin&quot;</span><span class="w">  </span><span class="c1"># The folder of the julia executable</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">JULIA_DEPOT_PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$WORK</span><span class="s2">/.julia&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">MPIEXECJL</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$JULIA_DEPOT_PATH</span><span class="s2">/bin/mpiexecjl&quot;</span><span class="w">  </span><span class="c1"># The path to the mpiexexjl executable</span>
+
+<span class="nv">$MPIEXECJL</span><span class="w"> </span>--project<span class="o">=</span><span class="nv">$WORK</span>/MyTestEnv<span class="w"> </span>-n<span class="w"> </span><span class="m">24</span><span class="w"> </span><span class="nv">$JULIA</span><span class="w"> </span>./MyMpiJuliaScript.jl
 </code></pre></div>
 <p>The above script uses MPI but you can also use multithreading instead by setitng the <code>JULIA_NUM_THREADS</code>
 environment variable.</p>

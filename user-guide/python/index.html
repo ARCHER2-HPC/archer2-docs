@@ -15,7 +15,7 @@
         <link rel="next" href="../analysis/">
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.13">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
     
     
       
@@ -23,10 +23,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.85bb2934.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.26e3688c.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.a6bdf11c.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ecc896b0.min.css">
       
       
 
@@ -1694,13 +1694,16 @@ in either of these scenarios.</p>
 used modules. If you wish to install additional Python modules, we
 recommend that you use the <code>pip</code> command <strong>after</strong> loading the
 <code>cray-python</code> module. This is described in more detail below.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Python 2 is not supported on ARCHER2 as it has been deprecated since
+the start of 2020. </p>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>When you log onto ARCHER2, no Python module is loaded by default. You
 will generally need to load the <code>cray-python</code> module to access the
-functionality described below. Running <code>python</code> without loading a module
-first will result in your using the operating system default Python
-which is likely not what you intend.</p>
+functionality described below.</p>
 </div>
 <h2 id="hpe-cray-python-distribution">HPE Cray Python distribution</h2>
 <p>The recommended way to use Python on ARCHER2 is to use the HPE Cray
@@ -1717,11 +1720,6 @@ include:</p>
 or in a submission script) using:</p>
 <pre><code>module load cray-python
 </code></pre>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>The HPE Cray Python distribution provides Python 3. There is no Python 2
-version as Python 2 is now deprecated.</p>
-</div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>The HPE Cray Python distribution is built using GCC compilers. If you wish
@@ -1782,21 +1780,16 @@ Once your environment is activated you will be able to install packages as usual
 <p>In this section we provide example Python job submission scripts for a
 variety of scenarios of using Python on the ARCHER2 compute nodes.</p>
 <h3 id="example-serial-python-submission-script">Example serial Python submission script</h3>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>#!/bin/bash --login
 
 #SBATCH --job-name=python_test
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=1
+#SBATCH --ntasks=1
 #SBATCH --time=00:10:00
 
 # Replace [budget code] below with your project code (e.g. t01)
 #SBATCH --account=[budget code]
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+#SBATCH --partition=serial
+#SBATCH --qos=serial
 
 # Load the Python module
 module load cray-python
@@ -1807,9 +1800,6 @@ source &lt;&lt;path to virtual environment&gt;&gt;/bin/activate
 # Run your Python progamme
 python python_test.py
 </code></pre></div>
-</div>
-</div>
-</div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>If you have installed your own packages you will need to set <code>PATH</code> and
@@ -1824,9 +1814,6 @@ previous section is that we must run the program using
 <code>srun python my_prog.py</code> instead of <code>python my_prog,py</code>. Failing to do so will 
 cause a segmentation fault in your program when it reaches the line
 "<code>from mpi4py import MPI</code>".</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Full system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>#!/bin/bash --login
 # Slurm job options (job-name, compute nodes, job time)
 #SBATCH --job-name=mpi4py_test
@@ -1843,14 +1830,14 @@ cause a segmentation fault in your program when it reaches the line
 # Load the Python module
 module load cray-python
 
+# Pass cpus-per-task setting to srun
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
 # Run your Python programme
 # Note that srun MUST be used to wrap the call to python, otherwise an error
 # will occur
-srun python mpi4py_test.py
+srun --hint=nomultithread --distribution=block:block python mpi4py_test.py
 </code></pre></div>
-</div>
-</div>
-</div>
 <h2 id="using-jupyterlab-on-archer2">Using JupyterLab on ARCHER2</h2>
 <p>It is possible to view and run Jupyter notebooks from both login nodes 
 and compute nodes on ARCHER2.</p>

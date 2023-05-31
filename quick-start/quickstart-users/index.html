@@ -15,7 +15,7 @@
         <link rel="next" href="../quickstart-developers/">
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.13">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
     
     
       
@@ -23,10 +23,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.85bb2934.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.26e3688c.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.a6bdf11c.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ecc896b0.min.css">
       
       
 
@@ -1933,8 +1933,7 @@ are accessing:</p>
 <p>You will first be prompted for the passphrase associated with your SSH key pair. Once you have entered this passphrase successfully, you will then be prompted for your machine account password. You need to enter both credentials correctly to be able to access ARCHER2.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>If you previously logged into the 4-cabinet system with your account you may see an error 
-from SSH that looks like</p>
+<p>If you previously logged into the ARCHER2 system before the major upgrade in May/June 2023 with your account you may see an error from SSH that looks like</p>
 <div class="highlight"><pre><span></span><code>@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @       WARNING: POSSIBLE DNS SPOOFING DETECTED!          @
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -2050,7 +2049,7 @@ available versions and variants of VASP may be found by running</p>
 <pre><code>module avail vasp
 </code></pre>
 <p>You will see that different versions are available for many modules. For
-example, <code>vasp/5/5.4.4.pl2</code> and <code>vasp/6/6.1.0</code> are two available versions of
+example, <code>vasp/5/5.4.4.pl2</code> and <code>vasp/6/6.3.2</code> are two available versions of
 VASP on the full system. Furthermore, a default version may be specified;
 this is used if no version is provided by the user.</p>
 <div class="admonition important">
@@ -2060,12 +2059,12 @@ You must have a valid licence to use licensed software on ARCHER2. Often
 you will need to request access through the SAFE. More on this below.</p>
 </div>
 <p>The <code>module load</code> command loads a module for use. Following the above,</p>
-<pre><code>module load vasp/5
+<pre><code>module load vasp/6
 </code></pre>
-<p>would load the default version of VASP 5, while</p>
-<pre><code>module load vasp/5/5.4.4.pl2
+<p>would load the default version of VASP 6, while</p>
+<pre><code>module load vasp/6/6.3.2
 </code></pre>
-<p>would specifically load version <code>5.4.4.pl2</code>. A loaded module may be unloaded
+<p>would specifically load version <code>6.3.2</code>. A loaded module may be unloaded
 through the identical <code>module remove</code> command, e.g.</p>
 <pre><code>module unload vasp
 </code></pre>
@@ -2080,7 +2079,16 @@ versions of a module may be swapped as follows:</p>
     module</li>
 <li><code>module show &lt;modulename&gt;</code> which displays the contents of the
     modulefile</li>
+<li><code>module restore</code> which returns you to the default module setup as if
+    you had just logged in</li>
 </ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You should not use the <code>module purge</code> command on ARCHER2 as this will
+cause issues for the HPE Cray programming environment. If you wish to 
+reset your modules, you should use the <code>module restore</code> command
+instead.</p>
+</div>
 <p>Points to be aware of include:</p>
 <ul>
 <li>Some modules will conflict with others. A simple example would be
@@ -2184,8 +2192,14 @@ above with your project code and replace the username
 # Load the xthi module to get access to the xthi program
 module load xthi
 
+# Recommended environment settings
+# Stop unintentional multi-threading within software libraries
+export OMP_NUM_THREADS=1
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
 # srun launches the parallel program based on the SBATCH options
-srun --distribution=block:block --hint=nomultithread xthi
+srun --distribution=block:block --hint=nomultithread xthi_mpi
 </code></pre></div>
 </div>
 </div>

@@ -15,7 +15,7 @@
         <link rel="next" href="../../research-software/">
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.13">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
     
     
       
@@ -23,10 +23,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.85bb2934.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.26e3688c.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.a6bdf11c.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ecc896b0.min.css">
       
       
 
@@ -1741,6 +1741,7 @@ The available frequencies on the ARCHER2 processors along with the options and e
 <th align="right">Frequency</th>
 <th><code>srun</code> option</th>
 <th>Slurm environment variable</th>
+<th>Turbo boost enabled?</th>
 </tr>
 </thead>
 <tbody>
@@ -1748,22 +1749,25 @@ The available frequencies on the ARCHER2 processors along with the options and e
 <td align="right">2.25 GHz</td>
 <td><code>--cpu-freq=2250000</code></td>
 <td><code>export SLURM_CPU_FREQ_REQ=2250000</code></td>
+<td>Yes</td>
 </tr>
 <tr>
 <td align="right">2.00 GHz</td>
 <td><code>--cpu-freq=2000000</code></td>
 <td><code>export SLURM_CPU_FREQ_REQ=2000000</code></td>
+<td>No</td>
 </tr>
 <tr>
 <td align="right">1.50 GHz</td>
 <td><code>--cpu-freq=1500000</code></td>
 <td><code>export SLURM_CPU_FREQ_REQ=1500000</code></td>
+<td>No</td>
 </tr>
 </tbody>
 </table>
 <p>The only frequencies available on the processors on ARCHER2 are 1.5 GHz, 2.0 GHz and 2.25GHz.</p>
 <p>For example, you can add the following option to <code>srun</code> commands in your job submission scripts to set the CPU frequency
-to 2.25 GHz:</p>
+to 2.25 GHz (and also enable turbo boost):</p>
 <div class="highlight"><pre><span></span><code>srun --cpu-freq=2250000 ...usual srun options and arguments...
 </code></pre></div>
 <p>Alternatively, you could add the following line to your job submission script before you use <code>srun</code>
@@ -1772,9 +1776,14 @@ to launch the application:</p>
 </code></pre></div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>Testing by the ARCHER2 CSE team has shown that many software are most energy efficient when 2.0 GHz 
-is selected as the CPU frequency. Typically, users may see savings of 10-20% of the energy cost of
-a job for a reduction in performance of 1-5%.</p>
+<p>Testing by the ARCHER2 CSE team has shown that most software are most energy efficient when 2.0 GHz 
+is selected as the CPU frequency.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>When the highest frequency (2.25 GHz) is selected this also enables frequency turbo boost. Experiments
+on ARCHER2 have shown that under typical use, with all 128 cores heavily loaded, the processors
+turbo boost up to around 2.8 GHz when the frequency is set to 2.25 GHz.</p>
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>

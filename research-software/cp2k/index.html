@@ -15,7 +15,7 @@
         <link rel="next" href="../crystal/">
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.13">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
     
     
       
@@ -23,10 +23,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.85bb2934.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.26e3688c.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.a6bdf11c.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ecc896b0.min.css">
       
       
 
@@ -1698,72 +1698,66 @@ Experts may also wish to compile their own versions of the code (see below for i
 <h2 id="running-parallel-cp2k-jobs">Running parallel CP2K jobs</h2>
 <h3 id="mpi-only-jobs">MPI only jobs</h3>
 <p>To run CP2K using MPI only, load the <code>cp2k</code> module and use the
-<code>cp2k.popt</code> executable.</p>
+<code>cp2k.psmp</code> executable.</p>
 <p>For example, the following script will run a CP2K job using 4 nodes
 (128x4 cores):</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>#!/bin/bash
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
-# Request 4 nodes using 128 cores per node for 128 MPI tasks per node.
+<span class="c1"># Request 4 nodes using 128 cores per node for 128 MPI tasks per node.</span>
 
-#SBATCH --job-name=CP2K_test
-#SBATCH --nodes=4
-#SBATCH --ntasks-per-node=128
-#SBATCH --cpus-per-task=1
-#SBATCH --time=00:20:00
+<span class="kp">#SBATCH --job-name=CP2K_test</span>
+<span class="kp">#SBATCH --nodes=4</span>
+<span class="kp">#SBATCH --ntasks-per-node=128</span>
+<span class="kp">#SBATCH --cpus-per-task=1</span>
+<span class="kp">#SBATCH --time=00:20:00</span>
 
-# Replace [budget code] below with your project code (e.g. t01)
-#SBATCH --account=[budget code]
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+<span class="c1"># Replace [budget code] below with your project code (e.g. t01)</span>
+<span class="kp">#SBATCH --account=[budget code]</span>
+<span class="kp">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --qos=standard</span>
 
-# Load the relevent CP2K module
-module load cp2k
+<span class="c1"># Load the relevent CP2K module</span>
+module<span class="w"> </span>load<span class="w"> </span>cp2k
 
-export OMP_NUM_THREADS=1
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
 
-srun --hint=nomultithread --distribution=block:block cp2k.popt -i MYINPUT.inp
+<span class="c1"># Ensure the cpus-per-task option is propagated to srun commands</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
+
+<span class="nb">srun</span><span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>cp2k.psmp<span class="w"> </span>-i<span class="w"> </span>MYINPUT.inp
 </code></pre></div>
-</div>
-</div>
-</div>
 <h3 id="mpiopenmp-hybrid-jobs">MPI/OpenMP hybrid jobs</h3>
 <p>To run CP2K using MPI and OpenMP, load the <code>cp2k</code> module and use the
 <code>cp2k.psmp</code> executable.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Full system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>#!/bin/bash
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
-# Request 4 nodes with 16 MPI tasks per node each using 8 threads;
-# note this means 128 MPI tasks in total.
-# Remember to replace [budget code] below with your account code,
-# e.g. &#39;--account=t01&#39;.
+<span class="c1"># Request 4 nodes with 16 MPI tasks per node each using 8 threads;</span>
+<span class="c1"># note this means 128 MPI tasks in total.</span>
+<span class="c1"># Remember to replace [budget code] below with your account code,</span>
+<span class="c1"># e.g. &#39;--account=t01&#39;.</span>
 
-#SBATCH --job-name=CP2K_test
-#SBATCH --nodes=4
-#SBATCH --ntasks-per-node=16
-#SBATCH --cpus-per-task=8
-#SBATCH --time=00:20:00
+<span class="kp">#SBATCH --job-name=CP2K_test</span>
+<span class="kp">#SBATCH --nodes=4</span>
+<span class="kp">#SBATCH --ntasks-per-node=16</span>
+<span class="kp">#SBATCH --cpus-per-task=8</span>
+<span class="kp">#SBATCH --time=00:20:00</span>
 
-#SBATCH --account=[budget code]
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+<span class="kp">#SBATCH --account=[budget code]</span>
+<span class="kp">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --qos=standard</span>
 
-# Load the relevant CP2K module
-module load cp2k
+<span class="c1"># Load the relevant CP2K module</span>
+module<span class="w"> </span>load<span class="w"> </span>cp2k
 
-# Ensure OMP_NUM_THREADS is consistent with cpus-per-task above
-export OMP_NUM_THREADS=8
-export OMP_PLACES=cores
+<span class="c1"># Ensure OMP_NUM_THREADS is consistent with cpus-per-task above</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">8</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_PLACES</span><span class="o">=</span>cores
 
-srun --hint=nomultithread --distribution=block:block cp2k.psmp -i MYINPUT.inp
+<span class="c1"># Ensure the cpus-per-task option is propagated to srun commands</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
+
+<span class="nb">srun</span><span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>cp2k.psmp<span class="w"> </span>-i<span class="w"> </span>MYINPUT.inp
 </code></pre></div>
-</div>
-</div>
-</div>
 <h2 id="compiling-cp2k">Compiling CP2K</h2>
 <p>The latest instructions for building CP2K on ARCHER2 may be found in
 the GitHub repository of build instructions:</p>

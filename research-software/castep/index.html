@@ -15,7 +15,7 @@
         <link rel="next" href="../cesm/">
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.13">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
     
     
       
@@ -23,10 +23,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.85bb2934.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.26e3688c.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.a6bdf11c.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ecc896b0.min.css">
       
       
 
@@ -1685,50 +1685,36 @@ ARCHER2, please make a request via the SAFE, see:</p>
 <h3 id="note-on-using-relativistic-j-dependent-pseudopotentials">Note on using Relativistic J-dependent pseudopotentials</h3>
 <p>These pseudopotentials cannot be generated on the fly by CASTEP and so are available in
 the following directory on ARCHER2:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block"></div>
-</div>
-</div>
 <div class="highlight"><pre><span></span><code>/work/y07/shared/apps/core/castep/pseudopotentials
 </code></pre></div>
 <h2 id="running-parallel-castep-jobs">Running parallel CASTEP jobs</h2>
 <p>The following script will run a CASTEP job using 2 nodes (256 cores). it
 assumes that the input files have the file stem <code>text_calc</code>.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Full system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>#!/bin/bash
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
-# Request 2 nodes with 128 MPI tasks per node for 20 minutes
-#SBATCH --job-name=CASTEP
-#SBATCH --nodes=2
-#SBATCH --ntasks-per-node=128
-#SBATCH --cpus-per-task=1
-#SBATCH --time=00:20:00
+<span class="c1"># Request 2 nodes with 128 MPI tasks per node for 20 minutes</span>
+<span class="kp">#SBATCH --job-name=CASTEP</span>
+<span class="kp">#SBATCH --nodes=2</span>
+<span class="kp">#SBATCH --ntasks-per-node=128</span>
+<span class="kp">#SBATCH --cpus-per-task=1</span>
+<span class="kp">#SBATCH --time=00:20:00</span>
 
-# Replace [budget code] below with your project code (e.g. t01)
-#SBATCH --account=[budget code]
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+<span class="c1"># Replace [budget code] below with your project code (e.g. t01)</span>
+<span class="kp">#SBATCH --account=[budget code]</span>
+<span class="kp">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --qos=standard</span>
 
-# Load the CASTEP module, avoid any unintentional OpenMP threading by
-# setting OMP_NUM_THREADS, and launch the code.
-module load castep
-export OMP_NUM_THREADS=1
-srun --distribution=block:block --hint=nomultithread castep.mpi test_calc
+<span class="c1"># Ensure the cpus-per-task option is propagated to srun commands</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
+
+<span class="c1"># Load the CASTEP module, avoid any unintentional OpenMP threading by</span>
+<span class="c1"># setting OMP_NUM_THREADS, and launch the code.</span>
+module<span class="w"> </span>load<span class="w"> </span>castep
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
+<span class="nb">srun</span><span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>castep.mpi<span class="w"> </span>test_calc
 </code></pre></div>
-</div>
-</div>
-</div>
 <h2 id="using-serial-castep-tools">Using serial CASTEP tools</h2>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Full system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
 <p>Serial CASTEP tools are available in the standard CASTEP module.</p>
-</div>
-</div>
-</div>
 <h2 id="compiling-castep">Compiling CASTEP</h2>
 <p>The latest instructions for building CASTEP on ARCHER2 may be found in
 the GitHub repository of build instructions:</p>

@@ -15,7 +15,7 @@
         <link rel="next" href="../julia/">
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.13">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
     
     
       
@@ -23,10 +23,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.85bb2934.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.26e3688c.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.a6bdf11c.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ecc896b0.min.css">
       
       
 
@@ -1779,25 +1779,25 @@ environment correctly so that it can, for example, interact with
 the SLURM queue system. These steps should be performed in the <code>/work</code>
 file system on ARCHER2.</p>
 <p>It is recommended that these commands are performed in the top-level work
-file system directory for the user account, i.e., <code>${/work/.../}</code>.
+file system directory for the user account, i.e., <code>${/work/.../}</code>.</p>
 <div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>arm/forge
 <span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">work</span><span class="p">/.../</span><span class="si">}</span>
 <span class="nb">source</span><span class="w"> </span><span class="si">${</span><span class="nv">FORGE_DIR</span><span class="si">}</span>/config-init
 </code></pre></div>
-This will create a directory <code>${/work/...}/.allinea</code> that contains the following files.
+<p>This will create a directory <code>${/work/...}/.allinea</code> that contains the following files.</p>
 <div class="highlight"><pre><span></span><code><span class="go">system.config  user.config</span>
 </code></pre></div>
-The directory will also store other relevant files when Forge is run.</p>
+<p>The directory will also store other relevant files when Forge is run.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>The <code>config-init</code> script will output a warning, <code>...failed to read system config</code>.
 Please ignore: subsequent output should indicate that the new configuration
 files have been created.</p>
 </div>
-<p>Once you have created this directory, you also need to modify the <code>system.config</code> file in the directory <code>${/work/.../.allinea}</code>, editing the line
+<p>Once you have created this directory, you also need to modify the <code>system.config</code> file in the directory <code>${/work/.../.allinea}</code>, editing the line</p>
 <div class="highlight"><pre><span></span><code>shared<span class="w"> </span><span class="nv">directory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>~
 </code></pre></div>
-To instead point to your <code>${/work/.../.allinea}</code> directory, i.e. if you are in the <code>z19</code> project, that would be:</p>
+<p>To instead point to your <code>${/work/.../.allinea}</code> directory, i.e. if you are in the <code>z19</code> project, that would be:</p>
 <div class="highlight"><pre><span></span><code>shared<span class="w"> </span><span class="nv">directory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>/work/z19/z19/<span class="nv">$USER</span>/.allinea
 </code></pre></div>
 <h3 id="using-ddt">Using DDT</h3>
@@ -1817,7 +1817,7 @@ so some experimentation may be necessary.</p>
 to be obtained on the state of the execution at the point of failure in a
 batch job.</p>
 <p>Such a job can be submitted to the batch system in the usual way. The
-relevant command to start the executable is as follows.
+relevant command to start the executable is as follows.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># ... SLURM batch commands as usual ...</span>
 
 module<span class="w"> </span>load<span class="w"> </span>arm/forge
@@ -1825,11 +1825,14 @@ module<span class="w"> </span>load<span class="w"> </span>arm/forge
 <span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">16</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">OMP_PLACES</span><span class="o">=</span>cores
 
+<span class="c1"># Ensure the cpus-per-task option is propagated to srun commands</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
+
 ddt<span class="w"> </span>--verbose<span class="w"> </span>--offline<span class="w"> </span>--mpi<span class="o">=</span>slurm<span class="w"> </span>--np<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--mem-debug<span class="o">=</span>fast<span class="w"> </span>--check-bounds<span class="o">=</span>before<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>./my_executable
 </code></pre></div>
-The parallel launch is delegated to <code>ddt</code> and the <code>--mpi=slurm</code> option
+<p>The parallel launch is delegated to <code>ddt</code> and the <code>--mpi=slurm</code> option
 indicates to <code>ddt</code> that the relevant queue system is SLURM
 (there is no explicit <code>srun</code>). It will also be
 necessary to state explicitly to <code>ddt</code> the number of processes
@@ -1840,10 +1843,10 @@ slow execution. The example given above uses the default
 <p>Execution will produce a <code>.html</code> format report which can be used
 to examine the state of execution at the point of failure.</p>
 <h4 id="interactive-debugging-using-the-client-to-submit-a-batch-job">Interactive debugging: using the client to submit a batch job</h4>
-<p>You can also start the client interactively (for details of remote launch, see below).
+<p>You can also start the client interactively (for details of remote launch, see below).</p>
 <div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>arm/forge
 ddt
-</code></pre></div></p>
+</code></pre></div>
 <p>This should start a window as shown below. Click on the <strong><em>DDT</em></strong> panel on
 the left, and then on the <strong><em>Run and debug a program</em></strong> option. This
 will bring up the <strong><em>Run</em></strong> dialogue as shown.</p>
@@ -1909,14 +1912,17 @@ are given below.
 <code>${FORGE_DIR}/map/libs</code>. If you require MAP libraries built for the UCX
 comms protocol, simply replace <code>ofi</code> with <code>ucx</code> in the library path.</p>
 <h4 id="generating-a-profile">Generating a profile</h4>
-<p>Submit a batch job in the usual way, and include the lines:
+<p>Submit a batch job in the usual way, and include the lines:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># ... SLURM batch commands as usual ...</span>
 
 module<span class="w"> </span>load<span class="w"> </span>arm/forge
 
+<span class="c1"># Ensure the cpus-per-task option is propagated to srun commands</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
+
 map<span class="w"> </span>-n<span class="w"> </span>&lt;number<span class="w"> </span>of<span class="w"> </span>MPI<span class="w"> </span>processes&gt;<span class="w"> </span>--mpiargs<span class="o">=</span><span class="s2">&quot;--hint=nomultithread --distribution=block:block&quot;</span><span class="w"> </span>--profile<span class="w"> </span>./my_executable
 </code></pre></div>
-Successful execution will generate a file with a <code>.map</code> extension.</p>
+<p>Successful execution will generate a file with a <code>.map</code> extension.</p>
 <p>This <code>.map</code> file may be viewed via the GUI (start with either <code>map</code> or
 <code>forge</code>) by selecting the
 <strong><em>Load a profile data file from a previous run</em></strong> option. The resulting
@@ -1933,9 +1939,9 @@ in use). The <strong><em>Host Name</em></strong> should be as shown with the app
 username. The <strong><em>Remote Installation Directory</em></strong> should be exactly as
 shown. The <strong><em>Remote Script</em></strong> is needed to execute additional environment
 commands on connection. A default script is provided in the location
-shown.
-<div class="highlight"><pre><span></span><code>/work/y07/shared/utils/core/arm/forge/latest/remote-init
-</code></pre></div></p>
+shown.</p>
+<div class="highlight"><pre><span></span><code><span class="go">/work/y07/shared/utils/core/arm/forge/latest/remote-init</span>
+</code></pre></div>
 <p>Other settings can be as shown. Remember to click <strong><em>OK</em></strong> when done.</p>
 <p><img alt="Remote Launch Settings" src="../forge-remote-launch.png" /></p>
 <p>From the <strong><em>Remote Launch</em></strong> menu you should now see the new Connection

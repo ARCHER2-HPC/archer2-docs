@@ -15,7 +15,7 @@
         <link rel="next" href="../cray-r/">
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.13">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
     
     
       
@@ -23,10 +23,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.85bb2934.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.26e3688c.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.a6bdf11c.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ecc896b0.min.css">
       
       
 
@@ -1715,23 +1715,26 @@ Client connected.
 <h3 id="using-batch-mode-pvbatch">Using batch-mode (pvbatch)</h3>
 <p>A pvbatch script can be run in a standard job script. For example
 the following will run on a single node:</p>
-<div class="highlight"><pre><span></span><code>#!/bin/bash
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
-# Slurm job options (job-name, compute nodes, job time)
-#SBATCH --job-name=example_paraview_job
-#SBATCH --time=0:20:00
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=128
-#SBATCH --cpus-per-task=1
+<span class="c1"># Slurm job options (job-name, compute nodes, job time)</span>
+<span class="kp">#SBATCH --job-name=example_paraview_job</span>
+<span class="kp">#SBATCH --time=0:20:00</span>
+<span class="kp">#SBATCH --nodes=1</span>
+<span class="kp">#SBATCH --ntasks-per-node=128</span>
+<span class="kp">#SBATCH --cpus-per-task=1</span>
 
-# Replace [budget code] below with your budget code (e.g. t01)
-#SBATCH --account=[budget code]             
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+<span class="c1"># Replace [budget code] below with your budget code (e.g. t01)</span>
+<span class="kp">#SBATCH --account=[budget code]             </span>
+<span class="kp">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --qos=standard</span>
 
-module load paraview
+module<span class="w"> </span>load<span class="w"> </span>paraview
 
-srun --distribution=block:block --hint=nomultithread pvbatch pvbatchscript.py
+<span class="c1"># Ensure the cpus-per-task option is propagated to srun commands</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
+
+<span class="nb">srun</span><span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>pvbatch<span class="w"> </span>pvbatchscript.py
 </code></pre></div>
 <h2 id="compiling-paraview">Compiling ParaView</h2>
 <p>The latest instructions for building ParaView on ARCHER2 may be found in

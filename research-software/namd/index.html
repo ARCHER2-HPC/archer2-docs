@@ -15,7 +15,7 @@
         <link rel="next" href="../nektarplusplus/">
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.13">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
     
     
       
@@ -23,10 +23,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.85bb2934.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.26e3688c.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.a6bdf11c.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ecc896b0.min.css">
       
       
 
@@ -1659,9 +1659,6 @@ is also file-compatible with AMBER, CHARMM, and X-PLOR.</p>
 </ul>
 <h2 id="using-namd-on-archer2">Using NAMD on ARCHER2</h2>
 <p>NAMD is freely available to all ARCHER2 users.</p>
-<div class="highlight"><pre><span></span><code>------------------- /work/y07/shared/archer2-lmod/apps/core --------------------
-   namd/2.14-nosmp    namd/2.14 (D)
-</code></pre></div>
 <p>ARCHER2 has two versions of NAMD available: no-SMP (<code>namd/2.14-nosmp</code>)
 or SMP (<code>namd/2.14</code>). The SMP (Shared Memory Parallelism) build of NAMD
 introduces threaded parallelism to address memory limitations. The no-SMP
@@ -1681,32 +1678,29 @@ NAMD jobs and is likely to give the best performance unless simulations
 are limited by high memory requirements.</p>
 <p>The following script will run a pure MPI NAMD MD job using 4 nodes (i.e.
 128x4 = 512 MPI parallel processes).</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>#!/bin/bash
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
-# Request four nodes to run a job of 512 MPI tasks with 128 MPI
-# tasks per node, here for maximum time 20 minutes.
+<span class="c1"># Request four nodes to run a job of 512 MPI tasks with 128 MPI</span>
+<span class="c1"># tasks per node, here for maximum time 20 minutes.</span>
 
-#SBATCH --job-name=namd-nosmp
-#SBATCH --nodes=4
-#SBATCH --ntasks-per-node=128
-#SBATCH --cpus-per-task=1
-#SBATCH --time=00:20:00
+<span class="kp">#SBATCH --job-name=namd-nosmp</span>
+<span class="kp">#SBATCH --nodes=4</span>
+<span class="kp">#SBATCH --ntasks-per-node=128</span>
+<span class="kp">#SBATCH --cpus-per-task=1</span>
+<span class="kp">#SBATCH --time=00:20:00</span>
 
-# Replace [budget code] below with your project code (e.g. t01)
-#SBATCH --account=[budget code]
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+<span class="c1"># Replace [budget code] below with your project code (e.g. t01)</span>
+<span class="kp">#SBATCH --account=[budget code]</span>
+<span class="kp">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --qos=standard</span>
 
-module load namd/2.14-nosmp
+module<span class="w"> </span>load<span class="w"> </span>namd/2.14-nosmp
 
-srun --distribution=block:block --hint=nomultithread namd2 input.namd
+<span class="c1"># Ensure the cpus-per-task option is propagated to srun commands</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
+
+<span class="nb">srun</span><span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>namd2<span class="w"> </span>input.namd
 </code></pre></div>
-</div>
-</div>
-</div>
 <h3 id="running-smp-namd-jobs">Running SMP NAMD jobs</h3>
 <p>If your jobs runs out of memory, then using the SMP version of NAMD will
 reduce the memory requirements. This involves launching a combination of
@@ -1714,52 +1708,50 @@ MPI processes for communication and worker threads which perform computation.</p
 <p>The following script will run a SMP NAMD MD job using 4 nodes with 8 MPI
 communication processes per node and 16 worker threads per communication process
 (i.e. a fully-occupied node with all 512 cores populated with processes).</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Full system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>#!/bin/bash
-#SBATCH --job-name=namd-smp
-#SBATCH --ntasks-per-node=8
-#SBATCH --cpus-per-task=16
-#SBATCH --nodes=4
-#SBATCH --time=00:20:00
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="kp">#SBATCH --job-name=namd-smp</span>
+<span class="kp">#SBATCH --ntasks-per-node=32</span>
+<span class="kp">#SBATCH --cpus-per-task=4</span>
+<span class="kp">#SBATCH --nodes=4</span>
+<span class="kp">#SBATCH --time=00:20:00</span>
 
-# Replace [budget code] below with your project code (e.g. t01)
-#SBATCH --account=[budget code]
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+<span class="c1"># Replace [budget code] below with your project code (e.g. t01)</span>
+<span class="kp">#SBATCH --account=[budget code]</span>
+<span class="kp">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --qos=standard</span>
 
-# Load the relevant modules
-module load namd
+<span class="c1"># Load the relevant modules</span>
+module<span class="w"> </span>load<span class="w"> </span>namd
 
-# Set procs per node (PPN) &amp; OMP_NUM_THREADS
-export PPN=$(($SLURM_CPUS_PER_TASK-1))
-export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
-export OMP_PLACES=cores
+<span class="c1"># Set procs per node (PPN) &amp; OMP_NUM_THREADS</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PPN</span><span class="o">=</span><span class="k">$((</span><span class="nv">$SLURM_CPUS_PER_TASK</span><span class="o">-</span><span class="m">1</span><span class="k">))</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_PLACES</span><span class="o">=</span>cores
 
-# Record PPN in the output file
-echo &quot;Number of worker threads PPN = $PPN&quot;
+<span class="c1"># Ensure the cpus-per-task option is propagated to srun commands</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
 
-# Run NAMD
-srun --distribution=block:block --hint=nomultithread namd2 +setcpuaffinity +ppn $PPN input.namd
+<span class="c1"># Record PPN in the output file</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Number of worker threads PPN = </span><span class="nv">$PPN</span><span class="s2">&quot;</span>
+
+<span class="c1"># Run NAMD</span>
+<span class="nb">srun</span><span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>namd2<span class="w"> </span>+setcpuaffinity<span class="w"> </span>+ppn<span class="w"> </span><span class="nv">$PPN</span><span class="w"> </span>input.namd
 </code></pre></div>
-</div>
-</div>
-</div>
 <p><strong>How do I choose an optimal choice of MPI processes and worker threads for my simulations?</strong>
 The optimal choice for the numbers of MPI processes and worker threads
 per node depends on the data set and the number of compute nodes. Before
 running large production jobs, it is worth experimenting with these parameters
 to find the optimal configuration for your simulation.</p>
-<p>We recommend that users match the ARCHER2 NUMA architecture, with 8 NUMA
-regions per node and 16 cores per region, to find the optimal balance of
-thread and process parallelism. For example, the above submission script
-specifies 8 MPI communication processes per node and 16 worker threads per
-communication process which places 1 MPI process per NUMA region on each node.</p>
+<p>We recommend that users match the ARCHER2 NUMA architecture to find the optimal
+balance of thread and process parallelism. The NUMA levels on ARCHER2 compute nodes
+are: 4 cores per CCX, 8 cores per CCD, 16 cores per memory controller, 64 cores per
+socket. For example, the above submission script
+specifies 32 MPI communication processes per node and 4 worker threads per
+communication process which places 1 MPI process per CCX on each node.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>To ensure fully occupied nodes with the SMP build of NAMD and match the NUMA
-region, the optimal values of (<code>tasks-per-node</code>, <code>cpus-per-task</code>) are likely
+layout, the optimal values of (<code>tasks-per-node</code>, <code>cpus-per-task</code>) are likely
 to be (32,4), (16,8) or (8,16).</p>
 </div>
 <p><strong>How do I choose a value for the +ppn flag?</strong>

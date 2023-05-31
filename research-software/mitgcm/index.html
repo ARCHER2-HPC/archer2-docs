@@ -15,7 +15,7 @@
         <link rel="next" href="../mo-unified-model/">
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.13">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
     
     
       
@@ -23,10 +23,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.85bb2934.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.26e3688c.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.a6bdf11c.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ecc896b0.min.css">
       
       
 
@@ -1822,30 +1822,18 @@ from the GitHub repository with the command</p>
 <pre><code>git clone https://github.com/MITgcm/MITgcm.git
 </code></pre>
 <p>You should then copy the ARCHER2 optfile into the MITgcm directories. You may use the files at the locations below for the 4-cabinet and full systems.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>cp<span class="w"> </span>/work/n02/shared/mjmn02/ECCOv4/cases/cce/cce1/scripts/dev_linux_amd64_cray_archer2<span class="w"> </span>MITgcm/tools/build_options/
 </code></pre></div>
-</div>
-</div>
-</div>
 <p>You should also set the following environment variables.
 <code>MITGCM_ROOTDIR</code> is used to locate the source code and should point to
 the top MITgcm directory. Optionally, adding the MITgcm tools directory
 to your <code>PATH</code> environment variable makes it easier to use tools such as
 <code>genmake2</code>, and the <code>MITGCM_OPT</code> environment variable makes it easier to
 refer to pass the optfile to <code>genmake2</code>.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Full system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>export MITGCM_ROOTDIR=/path/to/MITgcm
 export PATH=$MITGCM_ROOTDIR/tools:$PATH
 export MITGCM_OPT=$MITGCM_ROOTDIR/tools/build_options/dev_linux_amd64_cray_archer2
 </code></pre></div>
-</div>
-</div>
-</div>
 <p>When using <code>genmake2</code> to create the Makefile, you will need to specify the
 optfile to use. Other commonly used options might be to use extra source
 code with the <code>-mods</code> option, to enable MPI with <code>-mpi</code>, and to enable OpenMP with <code>-omp</code>. You might
@@ -1866,36 +1854,33 @@ make
 following which will allow it to run on the ARCHER2 compute nodes. This
 example would run a pure MPI MITgcm simulation over 2 nodes of 128 cores
 each for up to one hour.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Full system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>#!/bin/bash
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
-# Slurm job options (job-name, compute nodes, job time)
-#SBATCH --job-name=MITgcm-simulation
-#SBATCH --time=1:0:0
-#SBATCH --nodes=2
-#SBATCH --ntasks-per-node=128
-#SBATCH --cpus-per-task=1
+<span class="c1"># Slurm job options (job-name, compute nodes, job time)</span>
+<span class="kp">#SBATCH --job-name=MITgcm-simulation</span>
+<span class="kp">#SBATCH --time=1:0:0</span>
+<span class="kp">#SBATCH --nodes=2</span>
+<span class="kp">#SBATCH --ntasks-per-node=128</span>
+<span class="kp">#SBATCH --cpus-per-task=1</span>
 
-# Replace [budget code] below with your project code (e.g. t01)
-#SBATCH --account=[budget code] 
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+<span class="c1"># Replace [budget code] below with your project code (e.g. t01)</span>
+<span class="kp">#SBATCH --account=[budget code] </span>
+<span class="kp">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --qos=standard</span>
 
-# Set the number of threads to 1
-#   This prevents any threaded system libraries from automatically
-#   using threading.
-export OMP_NUM_THREADS=1
+<span class="c1"># Set the number of threads to 1</span>
+<span class="c1">#   This prevents any threaded system libraries from automatically</span>
+<span class="c1">#   using threading.</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
 
-# Launch the parallel job
-#   Using 256 MPI processes and 128 MPI processes per node
-#   srun picks up the distribution from the sbatch options
-srun --distribution=block:block --hint=nomultithread ./mitgcmuv
+<span class="c1"># Ensure the cpus-per-task option is propagated to srun commands</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
+
+<span class="c1"># Launch the parallel job</span>
+<span class="c1">#   Using 256 MPI processes and 128 MPI processes per node</span>
+<span class="c1">#   srun picks up the distribution from the sbatch options</span>
+<span class="nb">srun</span><span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>./mitgcmuv
 </code></pre></div>
-</div>
-</div>
-</div>
 <h3 id="hybrid-openmp-mpi">Hybrid OpenMP &amp; MPI</h3>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -1922,38 +1907,35 @@ below. This example will run MITgcm across 2 nodes, with each node using 16 MPI
 processes, and each process using 4 threads. Note that this would underpopulate
 the nodes — i.e. we will only be using 128 of the 256 cores available to us.
 This can also sometimes lead to performance increases.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">Full system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>#!/bin/bash
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
-# Slurm job options (job-name, compute nodes, job time)
-#SBATCH --job-name=MITgcm-hybrid-simulation
-#SBATCH --time=1:0:0
-#SBATCH --nodes=2
-#SBATCH --ntasks-per-node=16
-#SBATCH --cpus-per-task=4
+<span class="c1"># Slurm job options (job-name, compute nodes, job time)</span>
+<span class="kp">#SBATCH --job-name=MITgcm-hybrid-simulation</span>
+<span class="kp">#SBATCH --time=1:0:0</span>
+<span class="kp">#SBATCH --nodes=2</span>
+<span class="kp">#SBATCH --ntasks-per-node=16</span>
+<span class="kp">#SBATCH --cpus-per-task=4</span>
 
-# Replace [budget code] below with your project code (e.g. t01)
-#SBATCH --account=[budget code] 
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+<span class="c1"># Replace [budget code] below with your project code (e.g. t01)</span>
+<span class="kp">#SBATCH --account=[budget code] </span>
+<span class="kp">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --qos=standard</span>
 
-# Set the number of threads to 1
-#   This prevents any threaded system libraries from automatically
-#   using threading.
-export OMP_NUM_THREADS=4  # Set to number of threads per process
-export OMP_PLACES=&quot;cores(128)&quot;  # Set to total number of threads
-export OMP_PROC_BIND=true  # Required if we want to underpopulate nodes
+<span class="c1"># Set the number of threads to 1</span>
+<span class="c1">#   This prevents any threaded system libraries from automatically</span>
+<span class="c1">#   using threading.</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">4</span><span class="w">  </span><span class="c1"># Set to number of threads per process</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_PLACES</span><span class="o">=</span><span class="s2">&quot;cores(128)&quot;</span><span class="w">  </span><span class="c1"># Set to total number of threads</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_PROC_BIND</span><span class="o">=</span><span class="nb">true</span><span class="w">  </span><span class="c1"># Required if we want to underpopulate nodes</span>
 
-# Launch the parallel job
-#   Using 256 MPI processes and 128 MPI processes per node
-#   srun picks up the distribution from the sbatch options
-srun --distribution=block:block --hint=nomultithread ./mitgcmuv
+<span class="c1"># Ensure the cpus-per-task option is propagated to srun commands</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
+
+<span class="c1"># Launch the parallel job</span>
+<span class="c1">#   Using 256 MPI processes and 128 MPI processes per node</span>
+<span class="c1">#   srun picks up the distribution from the sbatch options</span>
+<span class="nb">srun</span><span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>./mitgcmuv
 </code></pre></div>
-</div>
-</div>
-</div>
 <p>One final note, is that you should remember to update the <code>eedata</code> file in the
 model's run directory to ensure the number of threads requested there match
 those requested in the job submission script.</p>
@@ -2033,30 +2015,33 @@ cp -p ../build/mitgcmuv .
 </code></pre>
 <p>For a short test run, edit the <code>nTimeSteps</code> variable in the file <code>data</code>. Comment out the default value and uncomment the line reading <code>nTimeSteps=8</code>. This is a useful test to make sure that the model can at least start up. </p>
 <p>To run on ARCHER2, submit a batch script to the Slurm scheduler. Here is an example submission script:</p>
-<pre><code>#!/bin/bash
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
-# Slurm job options (job-name, compute nodes, job time)
-#SBATCH --job-name=ECCOv4r4-test
-#SBATCH --time=1:0:0
-#SBATCH --nodes=8
-#SBATCH --ntasks-per-node=12
-#SBATCH --cpus-per-task=1
+<span class="c1"># Slurm job options (job-name, compute nodes, job time)</span>
+<span class="kp">#SBATCH --job-name=ECCOv4r4-test</span>
+<span class="kp">#SBATCH --time=1:0:0</span>
+<span class="kp">#SBATCH --nodes=8</span>
+<span class="kp">#SBATCH --ntasks-per-node=12</span>
+<span class="kp">#SBATCH --cpus-per-task=1</span>
 
-# Replace [budget code] below with your project code (e.g. t01)
-#SBATCH --account=[budget code] 
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+<span class="c1"># Replace [budget code] below with your project code (e.g. t01)</span>
+<span class="kp">#SBATCH --account=[budget code] </span>
+<span class="kp">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --qos=standard</span>
 
-# Set the number of threads to 1
-#   This prevents any threaded system libraries from automatically
-#   using threading.
-export OMP_NUM_THREADS=1
+<span class="c1"># Set the number of threads to 1</span>
+<span class="c1">#   This prevents any threaded system libraries from automatically</span>
+<span class="c1">#   using threading.</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
 
-# Launch the parallel job
-#   Using 256 MPI processes and 128 MPI processes per node
-#   srun picks up the distribution from the sbatch options
-srun --distribution=block:block --hint=nomultithread ./mitgcmuv
-</code></pre>
+<span class="c1"># Ensure the cpus-per-task option is propagated to srun commands</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
+
+<span class="c1"># Launch the parallel job</span>
+<span class="c1">#   Using 256 MPI processes and 128 MPI processes per node</span>
+<span class="c1">#   srun picks up the distribution from the sbatch options</span>
+<span class="nb">srun</span><span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>./mitgcmuv
+</code></pre></div>
 <p>This configuration uses 96 MPI processes at 12 MPI processes per node. Once the run has finished, in order to check that the run has successfully completed, check the end of one of the standard output files. </p>
 <pre><code>tail STDOUT.0000
 </code></pre>

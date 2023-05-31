@@ -15,7 +15,7 @@
         <link rel="next" href="../vasp/">
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.13">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
     
     
       
@@ -23,10 +23,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.85bb2934.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.26e3688c.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.a6bdf11c.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ecc896b0.min.css">
       
       
 
@@ -1649,9 +1649,6 @@ ARCHER2 users.</p>
 <h2 id="running-parallel-qe-jobs">Running parallel QE jobs</h2>
 <p>For example, the following script will run a QE <code>pw.x</code> job using 4 nodes
 (128x4 cores).</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>#!/bin/bash
 
 # Request 4 nodes to run a 512 MPI task job with 128 MPI tasks per node.
@@ -1671,11 +1668,14 @@ ARCHER2 users.</p>
 # Load the relevant Quantum Espresso module
 module load quantum_espresso
 
-srun pw.x &lt; test_calc.in
+# Set number of OpenMP threads to 1 to prevent multithreading by libraries
+export OMP_NUM_THREADS=1
+
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+srun --hint=nomultithread --distribution=block:block pw.x &lt; test_calc.in
 </code></pre></div>
-</div>
-</div>
-</div>
 <h2 id="hints-and-tips">Hints and tips</h2>
 <p>The QE module is set to load up the default QE-provided
 pseudo-potentials. If you wish to use non-default pseudo-potentials, you

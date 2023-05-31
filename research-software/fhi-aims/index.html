@@ -15,7 +15,7 @@
         <link rel="next" href="../gromacs/">
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.13">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
     
     
       
@@ -23,10 +23,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.85bb2934.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.26e3688c.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.a6bdf11c.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ecc896b0.min.css">
       
       
 
@@ -1641,33 +1641,30 @@ ARCHER2, please make a request via the SAFE, see:</p>
 <h2 id="running-parallel-fhi-aims-jobs">Running parallel FHI-aims jobs</h2>
 <p>The following script will run a FHI-aims job using 8 nodes (1024 cores). The script
 assumes that the input have the default names <code>control.in</code> and <code>geometry.in</code>.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>#!/bin/bash
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
-# Request 2 nodes with 128 MPI tasks per node for 20 minutes
-#SBATCH --job-name=FHI-aims
-#SBATCH --nodes=8
-#SBATCH --ntasks-per-node=128
-#SBATCH --cpus-per-task=1
-#SBATCH --time=00:20:00
+<span class="c1"># Request 2 nodes with 128 MPI tasks per node for 20 minutes</span>
+<span class="kp">#SBATCH --job-name=FHI-aims</span>
+<span class="kp">#SBATCH --nodes=8</span>
+<span class="kp">#SBATCH --ntasks-per-node=128</span>
+<span class="kp">#SBATCH --cpus-per-task=1</span>
+<span class="kp">#SBATCH --time=00:20:00</span>
 
-# Replace [budget code] below with your project code (e.g. t01)
-#SBATCH --account=[budget code]
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+<span class="c1"># Replace [budget code] below with your project code (e.g. t01)</span>
+<span class="kp">#SBATCH --account=[budget code]</span>
+<span class="kp">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --qos=standard</span>
 
-# Load the FHI-aims module, avoid any unintentional OpenMP threading by
-# setting OMP_NUM_THREADS, and launch the code.
-module load fhiaims
+<span class="c1"># Load the FHI-aims module, avoid any unintentional OpenMP threading by</span>
+<span class="c1"># setting OMP_NUM_THREADS, and launch the code.</span>
+module<span class="w"> </span>load<span class="w"> </span>fhiaims
 
-export OMP_NUM_THREADS=1
-srun --distribution=block:block --hint=nomultithread aims.mpi.x
+<span class="c1"># Ensure the cpus-per-task option is propagated to srun commands</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
+<span class="nb">srun</span><span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>aims.mpi.x
 </code></pre></div>
-</div>
-</div>
-</div>
 <h2 id="compiling-fhi-aims">Compiling FHI-aims</h2>
 <p>The latest instructions for building FHI-aims on ARCHER2 may be found in
 the GitHub repository of build instructions:</p>
