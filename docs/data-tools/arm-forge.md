@@ -38,15 +38,19 @@ file system on ARCHER2.
 
 It is recommended that these commands are performed in the top-level work
 file system directory for the user account, i.e., `${/work/.../}`.
+
 ```bash
 module load arm/forge
 cd ${work/.../}
 source ${FORGE_DIR}/config-init
 ```
+
 This will create a directory `${/work/...}/.allinea` that contains the following files.
+
 ```output
 system.config  user.config
 ```
+
 The directory will also store other relevant files when Forge is run.
 
 !!! warning
@@ -55,9 +59,11 @@ The directory will also store other relevant files when Forge is run.
     files have been created.
     
 Once you have created this directory, you also need to modify the `system.config` file in the directory `${/work/.../.allinea}`, editing the line
+
 ```bash
 shared directory = ~
 ```
+
 To instead point to your `${/work/.../.allinea}` directory, i.e. if you are in the `z19` project, that would be:
 
 ```bash
@@ -88,6 +94,7 @@ batch job.
 
 Such a job can be submitted to the batch system in the usual way. The
 relevant command to start the executable is as follows.
+
 ```slurm
 # ... SLURM batch commands as usual ...
 
@@ -96,10 +103,14 @@ module load arm/forge
 export OMP_NUM_THREADS=16
 export OMP_PLACES=cores
 
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
 ddt --verbose --offline --mpi=slurm --np 8 \
     --mem-debug=fast --check-bounds=before \
     ./my_executable
 ```
+
 The parallel launch is delegated to `ddt` and the `--mpi=slurm` option
 indicates to `ddt` that the relevant queue system is SLURM
 (there is no explicit `srun`). It will also be
@@ -117,6 +128,7 @@ to examine the state of execution at the point of failure.
 #### Interactive debugging: using the client to submit a batch job
 
 You can also start the client interactively (for details of remote launch, see below).
+
 ```bash
 module load arm/forge
 ddt
@@ -205,13 +217,18 @@ comms protocol, simply replace `ofi` with `ucx` in the library path.
 #### Generating a profile
 
 Submit a batch job in the usual way, and include the lines:
+
 ```slurm
 # ... SLURM batch commands as usual ...
 
 module load arm/forge
 
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
 map -n <number of MPI processes> --mpiargs="--hint=nomultithread --distribution=block:block" --profile ./my_executable
 ```
+
 Successful execution will generate a file with a `.map` extension.
 
 This `.map` file may be viewed via the GUI (start with either `map` or
@@ -234,7 +251,8 @@ username. The ***Remote Installation Directory*** should be exactly as
 shown. The ***Remote Script*** is needed to execute additional environment
 commands on connection. A default script is provided in the location
 shown.
-```
+
+```output
 /work/y07/shared/utils/core/arm/forge/latest/remote-init
 ```
 
