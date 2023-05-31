@@ -1,6 +1,6 @@
 # Further Examples CESM 2.1.3
 
-In the process of porting CESM 2.1.3 to ARCHER2, a set of 4 long runs were carried out. This page contains the four example cases which have been validated with longer runs. They vary in the numbers of cores or threads used, but included here are the PE layouts used in these validation runs, which can be used as a guide for other runs. While only these four compsets and grids have been validated, CESM2 is not bound to just these cases. Links to the UCAR/NCAR pages on configurations, compsets and grids are in the [useful links](cesm213.md#useful-links) section of the CESM2.1.3 on ARCHER2 page, which can be used to find many of the defined compsets for CESM2.1.3.
+In the process of porting CESM 2.1.3 to ARCHER2, a set of 4 long runs were carried out. This page contains the four example cases which have been validated with longer runs. They vary in the numbers of cores or threads used, but included here are the PE layouts used in these validation runs, which can be used as a guide for other runs. While only these four compsets and grids have been validated, CESM2 is not bound to just these cases. Links to the UCAR/NCAR pages on configurations, compsets and grids are in the [useful links](cesm.md#useful-links) section of the CESM2.1.3 on ARCHER2 page, which can be used to find many of the defined compsets for CESM2.1.3.
 
 ## Atmosphere-only / F2000climo
 
