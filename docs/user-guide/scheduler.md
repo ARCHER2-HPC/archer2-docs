@@ -1095,6 +1095,8 @@ this example would look like:
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=128
 #SBATCH --cpus-per-task=1
+#SBATCH --hint=nomultithread
+#SBATCH --distribution=block:block
 
 # Replace [budget code] below with your budget code (e.g. t01)
 #SBATCH --account=[budget code]  
