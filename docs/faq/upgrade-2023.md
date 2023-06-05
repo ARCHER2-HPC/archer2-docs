@@ -7,7 +7,7 @@
     upgrade but is subject to change and revision as more information becomes 
     available.
     
-    Last updated: 2023-05-19
+    Last updated: 2023-06-05
 
 During the first half of 2023 ARCHER will go through a major software upgrade.
 
@@ -120,6 +120,36 @@ following the upgrade. Python 3 will continue to be fully-supported.
 
  - No data in /home, /work, NVMe or RDFaaS will be removed or moved as part of the upgrade
 
+#### Slurm: cpus-per-task setting no longer inherited by `srun`
+
+Change in Slurm behaviour. The setting from the `--cpus-per-task` option to sbatch/salloc is
+no longer propagated by default to `srun` commands in the job script.
+
+This can lead to very poor performance due to oversubscription of cores with processes/threads
+if job submission scripts are not updated. The simplest workaround is to add the command:
+
+```bash
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+```
+
+before any srun commands in the script. You can also explicitly use the `--cpus-per-task` option
+to srun if you prefer.
+
+#### Change of Slurm "socket" definition
+
+This change only affects users who use a placement scheme where placement of processes on
+sockets is cyclic (e.g. `--distribution=block:cyclic`). The Slurm definition of a “socket”
+has changed. The previous setting on ARCHER2 was that a socket = 16 cores (all share a DRAM memory
+controller). On the updated ARCHER2, the setting of a socket = 4 cores (corresponding to a CCX -
+Core CompleX). Each CCX shares 16 MB L3 Cache.
+
+#### Changes to bind paths and library paths for Singularity with MPI
+
+The paths you need to bind and the `LD_LIBRARY_PATH` settings required to use Cray MPICH with MPI 
+in Singularity containers have changed. The updated settings are documented in the
+[Containers section](../user-guide/containers.md) of the User and Best Practice Guide. This
+also includes updated information on building containers with MPI to use on ARCHER2.
+
 ## What software versions will be available after the upgrade?
 
 System software:
@@ -170,7 +200,7 @@ Tools:
  - sanitizers4hpc: 1.0.4
  - Lmod: 3.1.4
 
-#### Summary of user and application impact
+#### Summary of user and application impact of PE software
 
 For full information, see [CPE 22.12 Release Notes](https://github.com/PE-Cray/cpe-changelog/blob/main/ex/cpe-22.12-sles15-sp4-FullReleaseNotes.txt)
 
