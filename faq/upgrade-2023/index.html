@@ -498,6 +498,33 @@
     Impact on data on the service
   </a>
   
+    <nav class="md-nav" aria-label="Impact on data on the service">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#slurm-cpus-per-task-setting-no-longer-inherited-by-srun" class="md-nav__link">
+    Slurm: cpus-per-task setting no longer inherited by srun
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#change-of-slurm-socket-definition" class="md-nav__link">
+    Change of Slurm "socket" definition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changes-to-bind-paths-and-library-paths-for-singularity-with-mpi" class="md-nav__link">
+    Changes to bind paths and library paths for Singularity with MPI
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -522,8 +549,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#summary-of-user-and-application-impact" class="md-nav__link">
-    Summary of user and application impact
+  <a href="#summary-of-user-and-application-impact-of-pe-software" class="md-nav__link">
+    Summary of user and application impact of PE software
   </a>
   
 </li>
@@ -1734,6 +1761,33 @@
     Impact on data on the service
   </a>
   
+    <nav class="md-nav" aria-label="Impact on data on the service">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#slurm-cpus-per-task-setting-no-longer-inherited-by-srun" class="md-nav__link">
+    Slurm: cpus-per-task setting no longer inherited by srun
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#change-of-slurm-socket-definition" class="md-nav__link">
+    Change of Slurm "socket" definition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changes-to-bind-paths-and-library-paths-for-singularity-with-mpi" class="md-nav__link">
+    Changes to bind paths and library paths for Singularity with MPI
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -1758,8 +1812,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#summary-of-user-and-application-impact" class="md-nav__link">
-    Summary of user and application impact
+  <a href="#summary-of-user-and-application-impact-of-pe-software" class="md-nav__link">
+    Summary of user and application impact of PE software
   </a>
   
 </li>
@@ -1799,7 +1853,7 @@
 <p>The information on this page represents our current best understanding of the
 upgrade but is subject to change and revision as more information becomes 
 available.</p>
-<p>Last updated: 2023-05-19</p>
+<p>Last updated: 2023-06-05</p>
 </div>
 <p>During the first half of 2023 ARCHER will go through a major software upgrade.</p>
 <p>On this page we describe the background to the changes, the current
@@ -1892,6 +1946,26 @@ following the upgrade. Python 3 will continue to be fully-supported.</p>
 <ul>
 <li>No data in /home, /work, NVMe or RDFaaS will be removed or moved as part of the upgrade</li>
 </ul>
+<h4 id="slurm-cpus-per-task-setting-no-longer-inherited-by-srun">Slurm: cpus-per-task setting no longer inherited by <code>srun</code></h4>
+<p>Change in Slurm behaviour. The setting from the <code>--cpus-per-task</code> option to sbatch/salloc is
+no longer propagated by default to <code>srun</code> commands in the job script.</p>
+<p>This can lead to very poor performance due to oversubscription of cores with processes/threads
+if job submission scripts are not updated. The simplest workaround is to add the command:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
+</code></pre></div>
+<p>before any srun commands in the script. You can also explicitly use the <code>--cpus-per-task</code> option
+to srun if you prefer.</p>
+<h4 id="change-of-slurm-socket-definition">Change of Slurm "socket" definition</h4>
+<p>This change only affects users who use a placement scheme where placement of processes on
+sockets is cyclic (e.g. <code>--distribution=block:cyclic</code>). The Slurm definition of a “socket”
+has changed. The previous setting on ARCHER2 was that a socket = 16 cores (all share a DRAM memory
+controller). On the updated ARCHER2, the setting of a socket = 4 cores (corresponding to a CCX -
+Core CompleX). Each CCX shares 16 MB L3 Cache.</p>
+<h4 id="changes-to-bind-paths-and-library-paths-for-singularity-with-mpi">Changes to bind paths and library paths for Singularity with MPI</h4>
+<p>The paths you need to bind and the <code>LD_LIBRARY_PATH</code> settings required to use Cray MPICH with MPI 
+in Singularity containers have changed. The updated settings are documented in the
+<a href="../../user-guide/containers/">Containers section</a> of the User and Best Practice Guide. This
+also includes updated information on building containers with MPI to use on ARCHER2.</p>
 <h2 id="what-software-versions-will-be-available-after-the-upgrade">What software versions will be available after the upgrade?</h2>
 <p>System software:</p>
 <ul>
@@ -1946,7 +2020,7 @@ following the upgrade. Python 3 will continue to be fully-supported.</p>
 <li>sanitizers4hpc: 1.0.4</li>
 <li>Lmod: 3.1.4</li>
 </ul>
-<h4 id="summary-of-user-and-application-impact">Summary of user and application impact</h4>
+<h4 id="summary-of-user-and-application-impact-of-pe-software">Summary of user and application impact of PE software</h4>
 <p>For full information, see <a href="https://github.com/PE-Cray/cpe-changelog/blob/main/ex/cpe-22.12-sles15-sp4-FullReleaseNotes.txt">CPE 22.12 Release Notes</a></p>
 <p><strong>CCE 15</strong></p>
 <p>C++ applications built using CCE 13 or earlier should be recompiled due to the significant
