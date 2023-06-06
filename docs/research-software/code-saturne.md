@@ -58,36 +58,38 @@ retained or removed.
 This script will run an MPI-only Code\_Saturne job using the default GCC build and UCX
 over 4 nodes (128 x 4 = 512 cores) for a maximum of 20 minutes.
 
-=== "Full system"
-    ```
-    #!/bin/bash
-    #SBATCH --export=none
-    #SBATCH --job-name=CSExample
-    #SBATCH --time=0:20:0
-    #SBATCH --nodes=4
-    #SBATCH --tasks-per-node=128
-    #SBATCH --cpus-per-task=1
+```slurm
+#!/bin/bash
+#SBATCH --export=none
+#SBATCH --job-name=CSExample
+#SBATCH --time=0:20:0
+#SBATCH --nodes=4
+#SBATCH --ntasks-per-node=128
+#SBATCH --cpus-per-task=1
 
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code]
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code]
+#SBATCH --partition=standard
+#SBATCH --qos=standard
 
-    # Load the GCC build of Code_Saturne 7.0.1
-    module load cpe/21.09
-    module load PrgEnv-gnu
-    module load code_saturne
+# Load the GCC build of Code_Saturne 7.0.1
+module load cpe/21.09
+module load PrgEnv-gnu
+module load code_saturne
 
-    # Switch to mpich-ucx implementation (see info note below)
-    module swap craype-network-ofi craype-network-ucx
-    module swap cray-mpich cray-mpich-ucx
+# Switch to mpich-ucx implementation (see info note below)
+module swap craype-network-ofi craype-network-ucx
+module swap cray-mpich cray-mpich-ucx
 
-    # Prevent threading.
-    export OMP_NUM_THREADS=1
+# Prevent threading.
+export OMP_NUM_THREADS=1
 
-    # Run solver.
-    srun --distribution=block:block --hint=nomultithread ./cs_solver --mpi $@
-    ```
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+# Run solver.
+srun --distribution=block:block --hint=nomultithread ./cs_solver --mpi $@
+```
 
 The script can then be submitted to the batch system with `sbatch`.
 

@@ -2,11 +2,11 @@
 
 [Arm Forge](https://developer.arm.com/Tools%20and%20Software/Arm%20Forge)
 provides debugging and profiling tools for MPI parallel applications, and
-OpenMP or pthreads mutli-threaded applications (and also hydrid MPI/OpenMP).
+OpenMP or pthreads multi-threaded applications (and also hydrid MPI/OpenMP).
 The debugger and profiler are called DDT and MAP, respectively.
 
 ARCHER2 has a license for up to 64 nodes (8192 cores) shared between
-all users at any one time. (Note cores are counted by the license, not
+all users at any one time. (Note, cores are counted by the license, not
 MPI processes, threads, or any other software entity.)
 
 There are two ways of running the Arm user interface. If you have a good
@@ -17,7 +17,7 @@ laptop or desktop, and run it locally. The remote client should be used if
 at all possible.
 
 To download the remote client, see the
-[Arm developer download pages](https://developer.arm.com/downloads/-/arm-forge). Version 22.0.3 is known to work at the time of writing. Connecting with
+[Arm developer download pages](https://developer.arm.com/downloads/-/arm-forge). Version 22.1.1 is known to work at the time of writing. Connecting with
 the remote client is discussed below.
 
 
@@ -37,28 +37,44 @@ the SLURM queue system. These steps should be performed in the `/work`
 file system on ARCHER2.
 
 It is recommended that these commands are performed in the top-level work
-file system directory for the user account: `/work/project/project/${USER}`
-(where `project` is the relevant project). This directory will
-be referred to throughout as `${WORK}`.
+file system directory for the user account, i.e., `${/work/.../}`.
+
 ```bash
 module load arm/forge
-cd ${WORK}
-source ${FORGE_ROOT}/config-init
+cd ${work/.../}
+source ${FORGE_DIR}/config-init
 ```
-This will create a directory `${WORK}/.allinea` with the following files:
-```bash
-ls .allinea
-```
+
+This will create a directory `${/work/...}/.allinea` that contains the following files.
+
 ```output
 system.config  user.config
 ```
+
 The directory will also store other relevant files when Forge is run.
+
+!!! warning
+    The `config-init` script will output a warning, `...failed to read system config`.
+    Please ignore: subsequent output should indicate that the new configuration
+    files have been created.
+    
+Once you have created this directory, you also need to modify the `system.config` file in the directory `${/work/.../.allinea}`, editing the line
+
+```bash
+shared directory = ~
+```
+
+To instead point to your `${/work/.../.allinea}` directory, i.e. if you are in the `z19` project, that would be:
+
+```bash
+shared directory = /work/z19/z19/$USER/.allinea
+```
 
 ### Using DDT
 
-DDT ("distributed debugging tool") provides an easy-to-use graphical
+DDT (**D**istributed **D**ebugging **T**ool) provides an easy-to-use graphical
 interface for source-level debugging of compiled C/C++ or Fortran codes.
-It can also be used for non-interactive debugging, and there
+It can be used for non-interactive debugging, and there
 is also some limited support for python debugging.
 
 #### Preparation
@@ -67,8 +83,8 @@ To prepare your program for debugging, compile and link in the normal way
 but remember to include the `-g` compiler option to retain symbolic
 information in the executable. For some programs, it may be necessary
 to reduce the optimisation to `-O0` to obtain full and consistent
-information. (However, this in itself can change
-the behaviour of bugs, so some experimentation may be necessary.)
+information. However, this in itself can change the behaviour of bugs,
+so some experimentation may be necessary.
 
 #### Post-mortem debugging
 
@@ -77,7 +93,8 @@ to be obtained on the state of the execution at the point of failure in a
 batch job.
 
 Such a job can be submitted to the batch system in the usual way. The
-relevant command to start the executable is, e.g.,:
+relevant command to start the executable is as follows.
+
 ```slurm
 # ... SLURM batch commands as usual ...
 
@@ -86,10 +103,14 @@ module load arm/forge
 export OMP_NUM_THREADS=16
 export OMP_PLACES=cores
 
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
 ddt --verbose --offline --mpi=slurm --np 8 \
     --mem-debug=fast --check-bounds=before \
     ./my_executable
 ```
+
 The parallel launch is delegated to `ddt` and the `--mpi=slurm` option
 indicates to `ddt` that the relevant queue system is SLURM
 (there is no explicit `srun`). It will also be
@@ -101,22 +122,21 @@ slow execution. The example given above uses the default
 `--mem-debug=fast` which should be a reasonable first choice.
 
 Execution will produce a `.html` format report which can be used
-to examine what the state of the execution was at the point of
-failure.
+to examine the state of execution at the point of failure.
 
 
 #### Interactive debugging: using the client to submit a batch job
 
-Start the client interactively (for details of remote launch, see below),
-e.g.,
+You can also start the client interactively (for details of remote launch, see below).
+
 ```bash
 module load arm/forge
 ddt
 ```
 
-This should start a window as shown below. Click on the ddt panel on
-the left, and then on the "Run and debug a program" option. This
-will bring up the "Run" dialogue as shown.
+This should start a window as shown below. Click on the ***DDT*** panel on
+the left, and then on the ***Run and debug a program*** option. This
+will bring up the ***Run*** dialogue as shown.
 
 Note:
 
@@ -129,35 +149,31 @@ shown in small text at the lower left.
 
 ![Arm Forge window](./forge-ddt.png)
 
-In the "Application" sub panel of the "Run" dialogue, details of the
+In the ***Application*** sub panel of the ***Run*** dialog box, details of the
 executable, command line arguments or data files, the working directory
-and so on should be arranged.
+and so on should be entered.
 
-Click the "MPI" checkbox and specifiy the MPI implemenation which should
-be "SLURM (generic)". This is done by clicking the "Details" button and
-then the "Change.." button. Choose the "SLURM (generic)" implementation
-from the MPI Implementation pull-down menu section and click "OK". You
-can then specify the required number of nodes/processes and so on.
+Click the ***MPI*** checkbox and specifiy the MPI implementation. This is done
+by clicking the ***Details*** button and then the ***Change*** button.
+Choose the ***SLURM (generic)*** implementation from the drop-down menu
+and click ***OK***. You can then specify the required number of nodes/processes
+and so on.
 
-Click the OpenMP checkbox and select the relevant number of threads
+Click the ***OpenMP*** checkbox and select the relevant number of threads
 (if there is no OpenMP in the application itself, select 1 thread).
 
-Click the "Submit to Queue" checkbox and then the associated "Configure"
-button. A new dialogue of options will pop-up. In the top dialgoue box
-"Submission template file" enter `${FORGE_ROOT}/templates/archer2.qtf`
-and click ok.
-
-The file specified provides a template with many of the options required
-for a standard batch job. You will then need to click on the
-"Queue Parameters" button in the same section and specify
-the relevant project budget to use the queue system in the "Account"
-entry.
+Click the ***Submit to Queue*** checkbox and then the associated ***Configure***
+button. A new set of options will appear such as ***Submission template file***,
+where you can enter `${FORGE_DIR}/templates/archer2.qtf` and click ***OK***.
+This template file provides many of the options required for a standard batch job.
+You will then need to click on the ***Queue Parameters*** button in the same
+section and specify the relevant project budget, see the ***Account*** entry.
 
 The default queue template file configuration uses the short QoS with the
 standard time limit of 20 minutes. If something different is required,
-one can edit the settings. Alternatively, one can make a copy of the
-`archer2.qtf` file (e.g., in `${WORK}/.allinea`) and make the relevant
-changes. This new file can then be specifed in the dialogue.
+one can edit the settings. Alternatively, one can copy the `archer2.qtf` file
+(to `${HOME/home/work}/.allinea`) and make the relevant changes. This new 
+template file can then be specifed in the dialog window.
 
 There may be a short delay while the sbatch job starts. Debugging should
 then proceed as described in the Allinea documentation.
@@ -177,63 +193,75 @@ Compilation should take place as usual. However, an additional set of
 libraries is required at link time.
 
 The path to the additional libraries required will depend on the programming
-environment you are using. Here are the paths for each of the compiler
-environments:
+environment you are using as well as the Cray programming release. Here are
+the paths for each of the compiler environments consistent with the
+Cray Programming Release (CPE) 21.04 using the default OFI as the low-level
+comms protocol:
 
-- `PrgEnv-cray`: `${FORGE_ROOT}/map/lib/crayclang/10.0`
-- `PrgEnv-gnu`: `${FORGE_ROOT}/map/lib/gnu/8.0`
-- `PrgEnv-aocc`: `${FORGE_ROOT}/map/lib/aocc/3.0`
+- `PrgEnv-cray`: `${FORGE_DIR}/map/libs/default/cray/ofi`
+- `PrgEnv-gnu`: `${FORGE_DIR}/map/libs/default/gnu/ofi`
+- `PrgEnv-aocc`: `${FORGE_DIR}/map/libs/default/aocc/ofi`
 
 For example, for `PrgEnv-gnu` the additional options required at link time
-are
+are given below.
 ```
--L{FORGE_ROOT}/map/lib/gnu/8.0 \
+-L${FORGE_DIR}/map/libs/default/gnu/ofi \
 -lmap-sampler-pmpi -lmap-sampler \
--Wl,--eh-frame-hdr -Wl,-rpath=${FORGE_ROOT}/map/lib/gnu/8.0
+-Wl,--eh-frame-hdr -Wl,-rpath=${FORGE_DIR}/map/libs/default/gnu/ofi
 ```
+
+The MAP libraries for other Cray programming releases can be found under
+`${FORGE_DIR}/map/libs`. If you require MAP libraries built for the UCX
+comms protocol, simply replace `ofi` with `ucx` in the library path.
 
 #### Generating a profile
 
 Submit a batch job in the usual way, and include the lines:
+
 ```slurm
 # ... SLURM batch commands as usual ...
 
 module load arm/forge
 
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
 map -n <number of MPI processes> --mpiargs="--hint=nomultithread --distribution=block:block" --profile ./my_executable
 ```
-Successful execution will generate a file with a ```.map``` extension.
+
+Successful execution will generate a file with a `.map` extension.
 
 This `.map` file may be viewed via the GUI (start with either `map` or
 `forge`) by selecting the
-"Load a profile data file from a previous run" option. The resulting
-file selection dialogue can then be used to specify the `.map` file.
+***Load a profile data file from a previous run*** option. The resulting
+file selection dialog box can then be used to locate the `.map` file.
 
 
 ### Connecting with the remote client
 
 If one starts the Forge client on e.g., a laptop, one should see the
 main window as
-shown above. Select "Remote Launch" and then "Configure" from the
-pull-down menu. In the "Configure Remote Connections" dialgoue
-click "Add". The following window should be displayed. Fill
-in the fields as shown. The "Connection Name" is just a tag
+shown above. Select ***Remote Launch*** and then ***Configure*** from the
+drop-down menu. In the ***Configure Remote Connections*** dialog box
+click ***Add***. The following window should be displayed. Fill
+in the fields as shown. The ***Connection Name*** is just a tag
 for convenience (useful if a number of different accounts are
-in use). The "Host Name" should be as shown with the appropriate
-`userid`. The "Remote Installation Directory" should be exactly as
-shown. The "Remote Script" is needed to execute additional environment
+in use). The ***Host Name*** should be as shown with the appropriate
+username. The ***Remote Installation Directory*** should be exactly as
+shown. The ***Remote Script*** is needed to execute additional environment
 commands on connection. A default script is provided in the location
-shown:
-```
-/work/y07/shared/utils/core/arm/forge/22.0.2/remote-init
+shown.
+
+```output
+/work/y07/shared/utils/core/arm/forge/latest/remote-init
 ```
 
-Other settings can be as shown. Remember to click "OK" when done.
+Other settings can be as shown. Remember to click ***OK*** when done.
 
 ![Remote Launch Settings](./forge-remote-launch.png)
 
 
-From the "Remote Launch" menu you should now see the new Connection
+From the ***Remote Launch*** menu you should now see the new Connection
 Name. Select this, and enter the relevant ssh passphase and machine
 password to connect. A remote connection will allow you to debug,
 or view a profile, as discussed above.
@@ -241,8 +269,8 @@ or view a profile, as discussed above.
 If different commands are required on connection, a copy of the
 `remote-init` script can be placed in, e.g., `${HOME/home/work}/.allinea`
 and edited as necessary. The full path of the new script should then be
-specified in the remote launch settings dialogue.
-Note that the script changes directory to the `/work/` file system so
+specified in the remote launch settings dialog box.
+Note that the script changes the directory to the `/work/` file system so
 that batch submissions via `sbatch` will not be rejected.
 
 Finally, note that `ssh` may need to be configured so that it picks up

@@ -52,7 +52,7 @@ Coward provides a tool to aid users in the construction submission scripts:
 
 ```
 /work/n01/shared/nemo/mkslurm_hetjob
-/work/n01/shared/nemo/mkslurm_hetjob_gnu
+/work/n01/shared/nemo/mkslurm_hetjob_Gnu
 ```
 
 Usage of the script:
@@ -100,7 +100,7 @@ INFO:root:cores to be used= 100 (256)
 This has reported that 2 nodes are needed with 100 active cores spread over
 256 cores. This will also have produced a submission script "myscript.slurm":
 
-```
+```slurm
 #!/bin/bash
 #SBATCH --job-name=nemo_test
 #SBATCH --time=00:10:00

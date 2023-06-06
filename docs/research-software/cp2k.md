@@ -47,35 +47,38 @@ Experts may also wish to compile their own versions of the code (see below for i
 ### MPI only jobs
 
 To run CP2K using MPI only, load the `cp2k` module and use the
-`cp2k.popt` executable.
+`cp2k.psmp` executable.
 
 For example, the following script will run a CP2K job using 4 nodes
 (128x4 cores):
 
-=== "Full system"
-    ```
-    #!/bin/bash
 
-    # Request 4 nodes using 128 cores per node for 128 MPI tasks per node.
+```slurm
+#!/bin/bash
 
-    #SBATCH --job-name=CP2K_test
-    #SBATCH --nodes=4
-    #SBATCH --tasks-per-node=128
-    #SBATCH --cpus-per-task=1
-    #SBATCH --time=00:20:00
+# Request 4 nodes using 128 cores per node for 128 MPI tasks per node.
 
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code]
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
+#SBATCH --job-name=CP2K_test
+#SBATCH --nodes=4
+#SBATCH --ntasks-per-node=128
+#SBATCH --cpus-per-task=1
+#SBATCH --time=00:20:00
 
-    # Load the relevent CP2K module
-    module load cp2k
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code]
+#SBATCH --partition=standard
+#SBATCH --qos=standard
 
-    export OMP_NUM_THREADS=1
+# Load the relevent CP2K module
+module load cp2k
 
-    srun --hint=nomultithread --distribution=block:block cp2k.popt -i MYINPUT.inp
-    ```
+export OMP_NUM_THREADS=1
+
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+srun --hint=nomultithread --distribution=block:block cp2k.psmp -i MYINPUT.inp
+```
 
 
 ### MPI/OpenMP hybrid jobs
@@ -83,36 +86,36 @@ For example, the following script will run a CP2K job using 4 nodes
 To run CP2K using MPI and OpenMP, load the `cp2k` module and use the
 `cp2k.psmp` executable.
 
-=== "Full system"
-    ```
-    #!/bin/bash
+```slurm
+#!/bin/bash
 
-    # Request 4 nodes with 16 MPI tasks per node each using 8 threads;
-    # note this means 128 MPI tasks in total.
-    # Remember to replace [budget code] below with your account code,
-    # e.g. '--account=t01'.
+# Request 4 nodes with 16 MPI tasks per node each using 8 threads;
+# note this means 128 MPI tasks in total.
+# Remember to replace [budget code] below with your account code,
+# e.g. '--account=t01'.
 
-    #SBATCH --job-name=CP2K_test
-    #SBATCH --nodes=4
-    #SBATCH --tasks-per-node=16
-    #SBATCH --cpus-per-task=8
-    #SBATCH --time=00:20:00
+#SBATCH --job-name=CP2K_test
+#SBATCH --nodes=4
+#SBATCH --ntasks-per-node=16
+#SBATCH --cpus-per-task=8
+#SBATCH --time=00:20:00
 
-    #SBATCH --account=[budget code]
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
+#SBATCH --account=[budget code]
+#SBATCH --partition=standard
+#SBATCH --qos=standard
 
-    # Load the relevant CP2K module
-    module load cp2k
+# Load the relevant CP2K module
+module load cp2k
 
-    # Ensure OMP_NUM_THREADS is consistent with cpus-per-task above
-    export OMP_NUM_THREADS=8
-    export OMP_PLACES=cores
+# Ensure OMP_NUM_THREADS is consistent with cpus-per-task above
+export OMP_NUM_THREADS=8
+export OMP_PLACES=cores
 
-    srun --hint=nomultithread --distribution=block:block cp2k.psmp -i MYINPUT.inp
-    ```
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 
-
+srun --hint=nomultithread --distribution=block:block cp2k.psmp -i MYINPUT.inp
+```
 
 ## Compiling CP2K
 

@@ -9,12 +9,14 @@ used modules. If you wish to install additional Python modules, we
 recommend that you use the `pip` command **after** loading the
 `cray-python` module. This is described in more detail below.
 
+!!! important
+    Python 2 is not supported on ARCHER2 as it has been deprecated since
+    the start of 2020. 
+
 !!! note
     When you log onto ARCHER2, no Python module is loaded by default. You
     will generally need to load the `cray-python` module to access the
-    functionality described below. Running `python` without loading a module
-    first will result in your using the operating system default Python
-    which is likely not what you intend.
+    functionality described below.
 
 ## HPE Cray Python distribution
 
@@ -33,10 +35,6 @@ The HPE Cray Python distribution can be loaded (either on the front-end
 or in a submission script) using:
 
     module load cray-python
-
-!!! tip
-    The HPE Cray Python distribution provides Python 3. There is no Python 2
-    version as Python 2 is now deprecated.
     
 !!! tip
     The HPE Cray Python distribution is built using GCC compilers. If you wish
@@ -110,30 +108,28 @@ variety of scenarios of using Python on the ARCHER2 compute nodes.
 
 ### Example serial Python submission script
 
-=== "Full system"
-    ```
-    #!/bin/bash --login
-    
-    #SBATCH --job-name=python_test
-    #SBATCH --nodes=1
-    #SBATCH --tasks-per-node=1
-    #SBATCH --cpus-per-task=1
-    #SBATCH --time=00:10:00
-    
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code]
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
-    
-    # Load the Python module
-    module load cray-python
-    
-    # If using a virtual environment
-    source <<path to virtual environment>>/bin/activate
-    
-    # Run your Python progamme
-    python python_test.py
-    ```
+
+```
+#!/bin/bash --login
+
+#SBATCH --job-name=python_test
+#SBATCH --ntasks=1
+#SBATCH --time=00:10:00
+
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code]
+#SBATCH --partition=serial
+#SBATCH --qos=serial
+
+# Load the Python module
+module load cray-python
+
+# If using a virtual environment
+source <<path to virtual environment>>/bin/activate
+
+# Run your Python progamme
+python python_test.py
+```
 
 !!! tip
     If you have installed your own packages you will need to set `PATH` and
@@ -150,29 +146,31 @@ previous section is that we must run the program using
 cause a segmentation fault in your program when it reaches the line
 "`from mpi4py import MPI`".
 
-=== "Full system"
-    ```
-    #!/bin/bash --login
-    # Slurm job options (job-name, compute nodes, job time)
-    #SBATCH --job-name=mpi4py_test
-    #SBATCH --nodes=1
-    #SBATCH --tasks-per-node=2
-    #SBATCH --cpus-per-task=1
-    #SBATCH --time=0:10:0
-    
-    # Replace [budget code] below with your budget code (e.g. t01)
-    #SBATCH --account=[budget code]
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
-    
-    # Load the Python module
-    module load cray-python
-    
-    # Run your Python programme
-    # Note that srun MUST be used to wrap the call to python, otherwise an error
-    # will occur
-    srun python mpi4py_test.py
-    ```
+```
+#!/bin/bash --login
+# Slurm job options (job-name, compute nodes, job time)
+#SBATCH --job-name=mpi4py_test
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=2
+#SBATCH --cpus-per-task=1
+#SBATCH --time=0:10:0
+
+# Replace [budget code] below with your budget code (e.g. t01)
+#SBATCH --account=[budget code]
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+# Load the Python module
+module load cray-python
+
+# Pass cpus-per-task setting to srun
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+# Run your Python programme
+# Note that srun MUST be used to wrap the call to python, otherwise an error
+# will occur
+srun --hint=nomultithread --distribution=block:block python mpi4py_test.py
+```
 
 ## Using JupyterLab on ARCHER2
 
@@ -294,7 +292,8 @@ cluster = SLURMCluster(cores=128,
                        project='z19',
                        walltime="01:00:00",
                        shebang="#!/bin/bash --login",
-                       local_directory='$PWD'
+                       local_directory='$PWD',
+                       interface='hsn0',
                        env_extra=['module load cray-python',
                                   'export PYTHONUSERBASE=/work/t01/t01/auser/.local/',
                                   'export PATH=$PYTHONUSERBASE/bin:$PATH',

@@ -40,7 +40,7 @@ self-consistency cycle.
 If you have a VASP 5 or 6 licence and wish to have access to VASP on
 ARCHER2, please make a request via the SAFE, see:
 
-   - [How to request access to package groups](https://epcced.github.io/safe-docs/safe-for-users/#how-to-request-access-to-a-package-group)
+   - [How to request access to package groups](https://epcced.github.io/safe-docs/safe-for-users/#how-to-request-access-to-a-package-group-licensed-software-or-restricted-features)
 
 Please have your license details to hand.
 
@@ -99,32 +99,34 @@ On ARCHER2, the VTST version of VASP 5 can be accessed by loading the modules wi
 The following script will run a VASP job using 2 nodes (128x2, 256 total
 cores).
 
-=== "Full system"
-    ```
-    #!/bin/bash
+```slurm
+#!/bin/bash
 
-    # Request 16 nodes (2048 MPI tasks at 128 tasks per node) for 20 minutes.   
+# Request 16 nodes (2048 MPI tasks at 128 tasks per node) for 20 minutes.   
 
-    #SBATCH --job-name=VASP_test
-    #SBATCH --nodes=16
-    #SBATCH --tasks-per-node=128
-    #SBATCH --cpus-per-task=1
-    #SBATCH --time=00:20:00
+#SBATCH --job-name=VASP_test
+#SBATCH --nodes=16
+#SBATCH --ntasks-per-node=128
+#SBATCH --cpus-per-task=1
+#SBATCH --time=00:20:00
 
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code] 
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code] 
+#SBATCH --partition=standard
+#SBATCH --qos=standard
 
-    # Load the VASP module
-    module load vasp/5
+# Load the VASP module
+module load vasp/5
 
-    # Avoid any unintentional OpenMP threading by setting OMP_NUM_THREADS
-    export OMP_NUM_THREADS=1
+# Avoid any unintentional OpenMP threading by setting OMP_NUM_THREADS
+export OMP_NUM_THREADS=1
 
-    # Launch the code.
-    srun --distribution=block:block --hint=nomultithread vasp_std
-    ```
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+# Launch the code - the distribution and hint options are important for performance
+srun --distribution=block:block --hint=nomultithread vasp_std
+```
 
 ### VASP 6
 
@@ -151,33 +153,35 @@ cores) using only MPI ranks and no OpenMP threading.
     MPI. We will add notes on performance and use of threading in VASP as
     information becomes available.
 
-=== "Full system"
+```slurm
+#!/bin/bash
 
-    ```
-    #!/bin/bash
+# Request 16 nodes (2048 MPI tasks at 128 tasks per node) for 20 minutes.   
 
-    # Request 16 nodes (2048 MPI tasks at 128 tasks per node) for 20 minutes.   
+#SBATCH --job-name=VASP_test
+#SBATCH --nodes=16
+#SBATCH --ntasks-per-node=128
+#SBATCH --cpus-per-task=1
+#SBATCH --time=00:20:00
 
-    #SBATCH --job-name=VASP_test
-    #SBATCH --nodes=16
-    #SBATCH --tasks-per-node=128
-    #SBATCH --cpus-per-task=1
-    #SBATCH --time=00:20:00
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code] 
+#SBATCH --partition=standard
+#SBATCH --qos=standard
 
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code] 
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
+# Load the VASP module
+module load vasp/6
 
-    # Load the VASP module
-    module load vasp/6
+# Avoid any unintentional OpenMP threading by setting OMP_NUM_THREADS
+export OMP_NUM_THREADS=1
 
-    # Avoid any unintentional OpenMP threading by setting OMP_NUM_THREADS
-    export OMP_NUM_THREADS=1
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 
-    # Launch the code.
-    srun --distribution=block:block --hint=nomultithread vasp_std
-    ```
+# Launch the code - the distribution and hint options are important for performance
+srun --distribution=block:block --hint=nomultithread vasp_std
+```
+
 ## Compiling VASP on ARCHER2
 
 If you wish to compile your own version of VASP on ARCHER2 (either VASP
@@ -355,7 +359,7 @@ Performance summary:
  - AOCL 3.1 for BLAS/LAPACK/ScaLAPACK and FFTW
  - UCX for MPI transport layer
 
-| Nodes | MPI processes per node | Total MPI processes | NCORE | KPAR | 5.4.4.pl2 (4-cab system) |
+| Nodes | MPI processes per node | Total MPI processes | NCORE | KPAR | 6.3.0 (full system) |
 |------:|-----------------------:|--------------------:|------:|-----:|-------------------------:|
 |     1 |                    128 |                 128 |     4 |    2 |                    19000 |
 |     2 |                    128 |                 256 |     4 |    2 |                    10021 |
@@ -372,7 +376,7 @@ Performance summary:
  - HPE Cray LibSci 21.09 for BLAS/LAPACK/ScaLAPACK and FFTW 3.3.8
  - UCX for MPI transport layer
 
-| Nodes | MPI processes per node | Total MPI processes | NCORE | KPAR | 5.4.4.pl2 (4-cab system) |
+| Nodes | MPI processes per node | Total MPI processes | NCORE | KPAR | 5.4.4.pl2 (full system) |
 |------:|-----------------------:|--------------------:|------:|-----:|-------------------------:|
 |     1 |                    128 |                 128 |     4 |    2 |                    23417 |
 |     2 |                    128 |                 256 |     4 |    2 |                    12338 |

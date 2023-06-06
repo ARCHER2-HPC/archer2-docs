@@ -23,6 +23,12 @@ Three versions are available:
   - Parallel MPI/OpenMP, double precision: `gmx_mpi_d`
   - Serial, single precision: `gmx`
 
+!!! important
+    The `gromacs` modules reset the CPU frequency to the highest possible value
+    (2.25 GHz) as this generally achieves the best balance of performance to 
+    energy use. You can change this setting by following the instructions in the
+    [Energy use section](../user-guide/energy.md) of the User Guide.
+
 ## Running parallel GROMACS jobs
 
 ### Running MPI only jobs
@@ -30,27 +36,29 @@ Three versions are available:
 The following script will run a GROMACS MD job using 4 nodes (128x4
 cores) with pure MPI.
 
-=== "Full system"
-    ```
-    #!/bin/bash
+```slurm
+#!/bin/bash
 
-    #SBATCH --job-name=mdrun_test
-    #SBATCH --nodes=4
-    #SBATCH --tasks-per-node=128
-    #SBATCH --cpus-per-task=1
-    #SBATCH --time=00:20:00
+#SBATCH --job-name=mdrun_test
+#SBATCH --nodes=4
+#SBATCH --ntasks-per-node=128
+#SBATCH --cpus-per-task=1
+#SBATCH --time=00:20:00
 
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code]
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code]
+#SBATCH --partition=standard
+#SBATCH --qos=standard
 
-    # Setup the environment
-    module load gromacs
+# Setup the environment
+module load gromacs
 
-    export OMP_NUM_THREADS=1 
-    srun --distribution=block:block --hint=nomultithread gmx_mpi mdrun -s test_calc.tpr
-    ```
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+export OMP_NUM_THREADS=1 
+srun --distribution=block:block --hint=nomultithread gmx_mpi mdrun -s test_calc.tpr
+```
 
 ### Running hybrid MPI/OpenMP jobs
 
@@ -58,26 +66,28 @@ The following script will run a GROMACS MD job using 4 nodes (128x4
 cores) with 6 MPI processes per node (24 MPI processes in total) and 6
 OpenMP threads per MPI process.
 
-=== "Full system"
-    ```
-    #!/bin/bash
-    #SBATCH --job-name=mdrun_test
-    #SBATCH --nodes=4
-    #SBATCH --tasks-per-node=16
-    #SBATCH --cpus-per-task=8
-    #SBATCH --time=00:20:00
+```slurm
+#!/bin/bash
+#SBATCH --job-name=mdrun_test
+#SBATCH --nodes=4
+#SBATCH --ntasks-per-node=16
+#SBATCH --cpus-per-task=8
+#SBATCH --time=00:20:00
 
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code]
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code]
+#SBATCH --partition=standard
+#SBATCH --qos=standard
 
-    # Setup the environment
-    module load gromacs
+# Setup the environment
+module load gromacs
 
-    export OMP_NUM_THREADS=8
-    srun --distribution=block:block --hint=nomultithread gmx_mpi mdrun -s test_calc.tpr
-    ```
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+export OMP_NUM_THREADS=8
+srun --distribution=block:block --hint=nomultithread gmx_mpi mdrun -s test_calc.tpr
+```
 
 ## Compiling Gromacs
 

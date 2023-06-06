@@ -34,31 +34,34 @@ submitting them to the
 
 The following script will run a NWChem job using 2 nodes (256 cores) in
 the standard partition. It assumes that the input file is called
-`test\_calc.nw`.
+`test_calc.nw`.
 
-=== "Full system"
-    ```
-    #!/bin/bash
+```slurm
+#!/bin/bash
 
-    # Request 2 nodes with 128 MPI tasks per node for 20 minutes
+# Request 2 nodes with 128 MPI tasks per node for 20 minutes
 
-    #SBATCH --job-name=NWChem_test
-    #SBATCH --nodes=2
-    #SBATCH --tasks-per-node=128
-    #SBATCH --cpus-per-task=1
-    #SBATCH --time=00:20:00
+#SBATCH --job-name=NWChem_test
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=128
+#SBATCH --cpus-per-task=1
+#SBATCH --time=00:20:00
 
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code] 
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code] 
+#SBATCH --partition=standard
+#SBATCH --qos=standard
 
-    # Load the NWChem module, avoid any unintentional OpenMP threading by
-    # setting OMP_NUM_THREADS, and launch the code.
-    module load nwchem
-    export OMP_NUM_THREADS=1
-    srun --distribution=block:block --hint=nomultithread nwchem test_calc
-    ```
+# Load the NWChem module, avoid any unintentional OpenMP threading by
+# setting OMP_NUM_THREADS, and launch the code.
+module load nwchem
+export OMP_NUM_THREADS=1
+
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+srun --distribution=block:block --hint=nomultithread nwchem test_calc
+```
 
 ## Compiling NWChem
 
