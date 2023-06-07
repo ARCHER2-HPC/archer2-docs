@@ -239,4 +239,19 @@ Default version in italics
 |   Quantum Espresso   |   *6.8*, 7.1   |
 |   VASP   |   5.4.4.pl2, 6.3.2, 6.4.1-vtst, *6.4.1*   |
 
+|   Software   |   Versions   |
+| --- | --- |
+|   AOCL   |   3.1, *4.0*   |
+|   Boost   |   1.81.0   |
+|   GSL   |   2.7   |
+|   HYPRE   |   2.18.0, *2.25.0*    |
+|   METIS/ParMETIS   |   5.1.0/4.0.3   |
+|   MUMPS   |   5.3.5, *5.5.1*   |
+|   PETSc   |   13.14.2, *13.18.5*   |
+|   PT/Scotch   |   6.1.0, *07.0.3*   |
+|   SLEPC   |   13.14.1, *13.18.3*   |
+|   SuperLU/SuperLU\_Dist   |   5.2.2 / 6.4.0, *8.1.2*   |
+|   Trilinos   |   12.18.1   |
+
+
 
