@@ -1,6 +1,6 @@
 # SuperLU and SuperLU_DIST
 
-SuperLU and SuperLU_DIST are libraies for the direct solution of large
+SuperLU and SuperLU_DIST are libraries for the direct solution of large
 sparse non-symmetric systems of linear equations, typically by factorisation
 and back-substitution. The libraries are provided by Lawrence Berkeley
 National Laboratory and are freely available under a slightly modified
@@ -30,19 +30,23 @@ location of the installation for a given programming environment.
 
 ### Version history
 
+=== "Upgrade 2023"
+
+    - Module `superlu/5.2.2` recompiled May 2023 (PE 22.12)
+
 === "Full system"
-    
+
     - Module `superlu/5.2.2` installed October 2021 (PE 21.04)
-    
+
 === "4-cabinet system"
-    
+
     - Module `superle/5.2.1` installed January 2021
 
 ## SuperLU_DIST
 
 - `module load superlu-dist`
 
-This modules provides the distrubuted memory parallel library SuperLU_DIST
+This modules provides the distributed memory parallel library SuperLU_DIST
 both with and without OpenMP.
 
 ### Compiling and linking SuperLU_DIST
@@ -63,12 +67,17 @@ as the root of the installation for the current programming environment.
 
 ### Version history
 
+=== "Upgrade 2023"
+
+    - Module `superlu-dist/8.1.2` installed as default May 2023 (PE 22.12)
+    - Module `superlu-dist/6.4.0` recompiled May 2023 (PE 22.12)
+
 === "Full system"
-    
+
     - Module `superlu-dist/6.4.0` installed October 2021 (PE 21.04)
-    
+
 === "4-cabinet system"
-    
+
     - Module `superlu-dist/6.1.1` installed January 2021
 
 
@@ -83,7 +92,7 @@ The current Archer2 supported version may be built via
 ```
 $ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
 $ cd pe-scripts
-$ git checkout modules-2021-10
+$ git checkout modules-2022-12
 $ ./sh/tpsl/superlu.sh --prefix=/path/to/install/location
 ```
 where the `--prefix` option controls the install destination.
