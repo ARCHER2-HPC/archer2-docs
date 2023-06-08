@@ -24,10 +24,10 @@ CP2K is available through the `cp2k` module. MPI only `cp2k.popt` and
 MPI/OpenMP Hybrid `cp2k.psmp` binaries are available.
 
 For ARCHER2, CP2K has been compiled with the following optional features:
-FFTW for fast Fourier transforms, `libint` to enable methods including
+`FFTW` for fast Fourier transforms, `libint` to enable methods including
 Hartree-Fock exchange, `libxc` to provide a wider choice of exchange-correlation
-functionals, ELPA for improved performance of matrix diagonalisation, PLUMED to
-allow enhanced sampling methods, and SIRIUS for plane wave computations.
+functionals, `ELPA` for improved performance of matrix diagonalisation, `PLUMED`
+to allow enhanced sampling methods.
 
 See
 [CP2K compile instructions](https://github.com/cp2k/cp2k/blob/master/INSTALL.md)
