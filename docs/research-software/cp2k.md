@@ -20,19 +20,14 @@ optimisation using NEB or dimer method.
 
 ## Using CP2K on ARCHER2
 
-CP2K is available through the `cp2k`
-module. MPI only `cp2k.popt` and MPI/OpenMP
-Hybrid `cp2k.psmp` binaries are available.
+CP2K is available through the `cp2k` module. MPI only `cp2k.popt` and
+MPI/OpenMP Hybrid `cp2k.psmp` binaries are available.
 
-For ARCHER2, CP2K has been compiled with the following optional
-features: FFTW for fast Fourier transforms,
-`libint` to enable methods including
-Hartree-Fock exchange, `libxsmm` for
-efficient small matrix multiplications,
-`libxc` to provide a wider choice of
-exchange-correlation functionals, ELPA for improved performance of
-matrix diagonalisation, PLUMED to allow enhanced sampling methods, and
-SIRIUS for plane wave computations.
+For ARCHER2, CP2K has been compiled with the following optional features:
+FFTW for fast Fourier transforms, `libint` to enable methods including
+Hartree-Fock exchange, `libxc` to provide a wider choice of exchange-correlation
+functionals, ELPA for improved performance of matrix diagonalisation, PLUMED to
+allow enhanced sampling methods, and SIRIUS for plane wave computations.
 
 See
 [CP2K compile instructions](https://github.com/cp2k/cp2k/blob/master/INSTALL.md)
@@ -123,4 +118,4 @@ The latest instructions for building CP2K on ARCHER2 may be found in
 the GitHub repository of build instructions:
 
    - [Build instructions for CP2K on
-     GitHub](https://github.com/hpc-uk/build-instructions/tree/main/apps/CP2K/ARCHER2-CP2K-7.1)
+     GitHub](https://github.com/hpc-uk/build-instructions/tree/main/apps/CP2K/ARCHER2-CP2K-2023.1)
