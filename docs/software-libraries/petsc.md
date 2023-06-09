@@ -26,14 +26,23 @@ root of the installation if this is required.
 
 ### Version history
 
+=== "Upgrade 2023"
+
+    - Module `petsc/3.18.5` installed as default May 2023 (PE 22.12)
+    - Module `petsc/3.14.2` recompiled May 2023 (PE 22.12)
+
+    Note: PETSc has a number of dependencies; where applicable, the
+    newer version of PETSc depends on the newer module version of each
+    relevant dependency. Check `module list` to be sure.
+
 === "Full system"
-    
+
     - Module `petsc/3.14.2` installed October 2021 (PE 21.04)
-    
+
 === "4-cabinet system"
-    
+
     - Module `petsc/3.13.3` installed January 2021
-    
+
     Known issues: PETSc is not currently available for `PrgEnv-aocc`.
     There is no HYPRE support in this version.
 
@@ -47,11 +56,11 @@ and include a number of dependencies to be built in the correct order:
 ```
 $ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
 $ cd pe-scripts
-$ git checkout modules-2021-10
+$ git checkout modules-2012-12
 $ ./sh/tpsl/metis.sh --prefix=/path/to/install/location
 $ ./sh/tpsl/parmetis.sh --prefix=/path/to/install/location
 $ ./sh/tpsl/hypre.sh --prefix=/path/to/install/location
-$ ./sh/tpsl/scotch.sh --prefix=/path/to/install/location
+$ ./sh/tpsl/scotchv7.sh --prefix=/path/to/install/location
 $ ./sh/tpsl/mumps.sh --prefix=/path/to/install/location
 $ ./sh/tpsl/superlu.sh --prefix=/path/to/install/location
 $ ./sh/tpsl/superlu-dist.sh --prefix=/path/to/install/location
@@ -61,16 +70,13 @@ $ ./sh/petsc.sh --prefix=/path/to/install/location
 ```
 The `--prefix` option indicating the install directory should be the
 same in all cases. See the Archer2 github repository for further
-details (and options).
+details (and options). This will compile version 3.18.5 against the
+latest module versions of each dependency.
 
 
 ## Resources
 
-PETSc [home page](https://www.mcs.anl.gov/petsc/)
+[PETSc home page](https://petsc.org/release/)
 
-PETSc [documentation](https://www.mcs.anl.gov/petsc/documentation/index.html)
+Current [PETSc documentation](https://petsc.org/release/manual/)
 (HTML)
-
-Current
-[user manual](https://www.mcs.anl.gov/petsc/petsc-current/docs/manual.pdf)
-(pdf)
