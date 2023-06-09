@@ -1171,6 +1171,20 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#resources" class="md-nav__link">
+    Resources
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-history" class="md-nav__link">
+    Version history
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1598,6 +1612,20 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#resources" class="md-nav__link">
+    Resources
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-history" class="md-nav__link">
+    Version history
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1627,34 +1655,39 @@
 - AMD Random Number Generator (RNG)
 - AMD Secure RNG
 - AOCL-Sparse</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>AOCL <code>3.1</code> and <code>4.0</code> are available. <code>3.1</code> is default. </p>
+</div>
+<h2 id="compiling-with-aocl">Compiling with AOCL</h2>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>AOCL does not currently support the Cray programming environment and is
+currently unavailable with <code>PrgEnv-cray</code> loaded.</p>
+</div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>The <code>cray-libsci</code> module is loaded by default for all users and this module
 also contains definitions of BLAS, LAPACK and ScaLAPACK routines that conflict
 with those in AOCL. The <code>aocl</code> module automatically unloads <code>cray-libsci</code>.</p>
 </div>
-<h2 id="compiling-with-aocl">Compiling with AOCL</h2>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>AOCL is currently unavailable for the Cray programming environments (<code>PrgEnv-cray</code>).
-This is untested and currently unsupported on ARCHER2.</p>
-</div>
 <h3 id="gnu-programming-environment">GNU Programming Environment</h3>
+<p>AOCL <code>3.1</code> and <code>4.0</code> is available for all versions of the GCC compilers: <code>gcc/11.2.0</code> and <code>gcc/10.3.0</code></p>
 <div class="highlight"><pre><span></span><code>module load PrgEnv-gnu
 module load aocl
 </code></pre></div>
 <h3 id="aocc-programming-environment">AOCC Programming Environment</h3>
-<p>AOCL-3.1 is only available with aocc/3.0.0.</p>
+<p>AOCL <code>3.1</code> and <code>4.0</code> is available for all versions of the AOCC compilers: <code>aocc/3.2.0</code>.</p>
 <div class="highlight"><pre><span></span><code>module load PrgEnv-aocc
-module swap aocc/2.2.0.1 aocc/3.0.0
 module load aocl
 </code></pre></div>
-<h1 id="resources">Resources</h1>
+<h2 id="resources">Resources</h2>
 <p>For more information on AOCL, please see: https://developer.amd.com/amd-aocl/#documentation</p>
-<h1 id="version-history">Version history..</h1>
+<h2 id="version-history">Version history</h2>
+<p>Current modules:</p>
 <ul>
-<li><code>aocl/3.1</code> installed April 2022</li>
-<li><code>aocl/4.0</code> installed March 2023</li>
+<li><code>aocl/3.1</code> installed June 2023</li>
+<li><code>aocl/4.0</code> installed June 2023</li>
 </ul>
 
 
