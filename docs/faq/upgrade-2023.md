@@ -7,7 +7,7 @@
     upgrade but is subject to change and revision as more information becomes 
     available.
     
-    Last updated: 2023-06-05
+    Last updated: 2023-06-07
 
 During the first half of 2023 ARCHER will go through a major software upgrade.
 
@@ -58,7 +58,7 @@ that they can plan accordingly.
 The current outage dates are:
 
  - Start: 14:00 BST, 19th May 2023
- - End: 3-4 weeks after start date
+ - End: Week beginning 12 June 2023 (concrete date to be communicated as soon as possible)
 
 ## What are the impacts on users from the upgrade?
 
@@ -159,6 +159,7 @@ System software:
     + Login nodes: UAN 2.5.8 based on SLES 15 SP4
  - Slingshot interconnect system software: 2.0.2
  - HPE Cray Management Software (CMS): 1.3.1
+ - ARCHER2 CSE supported software
 
 ### Programming environment: 22.12
 
@@ -216,4 +217,41 @@ encountered, providing time to adapt the application to use standard Fortran.
 **HPE Cray MPICH 8.1.23**
 
 Cray MPICH 8.1.23 can support only ~2040 simultaneous MPI communicators.
+
+### CSE supported software
+
+Default version in italics
+
+|   Software   |   Versions   |
+| --- | --- |
+|   CASTEP   |   22.11, *23.11*   |
+|   Code\_Saturne   |   7.0.1   |
+|   ChemShell/PyChemShell   |   3.7.1/21.0.3   |
+|   CP2K   |   2023.1   |
+|   FHI-aims   |   221103   |
+|   GROMACS   |   2022.4   |
+|   LAMMPS   |   17\_FEB\_2023   |
+|   NAMD   |   2.14   |
+|   Nektar++   |   5.2.0   |
+|   NWChem   |   7.0.2  |
+|   ONETEP   |   6.9.1.0   |
+|   OpenFOAM   |   v10.20230119 (.org), v2212 (.com)   |
+|   Quantum Espresso   |   *6.8*, 7.1   |
+|   VASP   |   5.4.4.pl2, 6.3.2, 6.4.1-vtst, *6.4.1*   |
+
+|   Software   |   Versions   |
+| --- | --- |
+|   AOCL   |   3.1, *4.0*   |
+|   Boost   |   1.81.0   |
+|   GSL   |   2.7   |
+|   HYPRE   |   2.18.0, *2.25.0*    |
+|   METIS/ParMETIS   |   5.1.0/4.0.3   |
+|   MUMPS   |   5.3.5, *5.5.1*   |
+|   PETSc   |   13.14.2, *13.18.5*   |
+|   PT/Scotch   |   6.1.0, *07.0.3*   |
+|   SLEPC   |   13.14.1, *13.18.3*   |
+|   SuperLU/SuperLU\_Dist   |   5.2.2 / 6.4.0, *8.1.2*   |
+|   Trilinos   |   12.18.1   |
+
+
 
