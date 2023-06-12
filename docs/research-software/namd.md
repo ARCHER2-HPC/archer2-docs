@@ -97,15 +97,17 @@ export PPN=$(($SLURM_CPUS_PER_TASK-1))
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 export OMP_PLACES=cores
 
-# Ensure the cpus-per-task option is propagated to srun commands
-export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
-
 # Record PPN in the output file
 echo "Number of worker threads PPN = $PPN"
 
 # Run NAMD
 srun --distribution=block:block --hint=nomultithread namd2 +setcpuaffinity +ppn $PPN input.namd
 ```
+
+!!! important
+    Please do not set `SRUN_CPUS_PER_TASK` when running the SMP version of NAMD.
+    Otherwise, Charm++ will be unable to pin processes to CPUs, causing NAMD to abort
+    with errors such as `Couldn't bind to cpuset 0x00000010,,,0x0: Invalid argument`.
 
 **How do I choose an optimal choice of MPI processes and worker threads for my simulations?**
 The optimal choice for the numbers of MPI processes and worker threads
