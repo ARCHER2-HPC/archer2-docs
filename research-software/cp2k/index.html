@@ -1677,18 +1677,13 @@ optimisation using NEB or dimer method.</p>
 <li><a href="https://www.cp2k.org/faq">CP2K FAQs</a></li>
 </ul>
 <h2 id="using-cp2k-on-archer2">Using CP2K on ARCHER2</h2>
-<p>CP2K is available through the <code>cp2k</code>
-module. MPI only <code>cp2k.popt</code> and MPI/OpenMP
-Hybrid <code>cp2k.psmp</code> binaries are available.</p>
-<p>For ARCHER2, CP2K has been compiled with the following optional
-features: FFTW for fast Fourier transforms,
-<code>libint</code> to enable methods including
-Hartree-Fock exchange, <code>libxsmm</code> for
-efficient small matrix multiplications,
-<code>libxc</code> to provide a wider choice of
-exchange-correlation functionals, ELPA for improved performance of
-matrix diagonalisation, PLUMED to allow enhanced sampling methods, and
-SIRIUS for plane wave computations.</p>
+<p>CP2K is available through the <code>cp2k</code> module. MPI only <code>cp2k.popt</code> and
+MPI/OpenMP Hybrid <code>cp2k.psmp</code> binaries are available.</p>
+<p>For ARCHER2, CP2K has been compiled with the following optional features:
+<code>FFTW</code> for fast Fourier transforms, <code>libint</code> to enable methods including
+Hartree-Fock exchange, <code>libxc</code> to provide a wider choice of exchange-correlation
+functionals, <code>ELPA</code> for improved performance of matrix diagonalisation, <code>PLUMED</code>
+to allow enhanced sampling methods.</p>
 <p>See
 <a href="https://github.com/cp2k/cp2k/blob/master/INSTALL.md">CP2K compile instructions</a>
 for a full list of optional features.</p>
@@ -1762,7 +1757,7 @@ module<span class="w"> </span>load<span class="w"> </span>cp2k
 <p>The latest instructions for building CP2K on ARCHER2 may be found in
 the GitHub repository of build instructions:</p>
 <ul>
-<li><a href="https://github.com/hpc-uk/build-instructions/tree/main/apps/CP2K/ARCHER2-CP2K-7.1">Build instructions for CP2K on
+<li><a href="https://github.com/hpc-uk/build-instructions/tree/main/apps/CP2K/ARCHER2-CP2K-2023.1">Build instructions for CP2K on
      GitHub</a></li>
 </ul>
 
