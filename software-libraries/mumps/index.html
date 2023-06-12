@@ -1635,7 +1635,7 @@
 a 'multifrontal' method and is developed largely at CERFCAS,
 ENS Lyon, IRIT Toulouse, INRIA, and the University of Bordeaux.
 It is provided free of charge and is largely under a CeCILL-C
-lisence.</p>
+license.</p>
 <h2 id="compiling-and-linking-with-mumps">Compiling and linking with MUMPS</h2>
 <ul>
 <li><code>module load mumps</code></li>
@@ -1650,8 +1650,16 @@ included at the compile stage.</p>
 <p>The <code>mumps</code> module defines <code>MUMPS_DIR</code> which locates the root of the
 installation for the current programming environment.</p>
 <h3 id="version-history">Version history</h3>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label><label for="__tabbed_1_2">4-cabinet system</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Upgrade 2023</label><label for="__tabbed_1_2">Full system</label><label for="__tabbed_1_3">4-cabinet system</label></div>
 <div class="tabbed-content">
+<div class="tabbed-block">
+<ul>
+<li>Module <code>mumps/5.5.1</code> installed as default May 2023 (PE 22.12)</li>
+<li>Module <code>mumps/5.3.5</code> recompiled May 2023 (PE 22.12)</li>
+</ul>
+<p>Note: <code>mumps/5.5.1</code> uses <code>scotch/7.0.3</code> while <code>mumps/5.3.5</code> uses
+<code>scotch/6.1.0</code>.</p>
+</div>
 <div class="tabbed-block">
 <ul>
 <li>Module <code>mumps/5.3.5</code> installed October 2021 (PE 21.04)</li>
@@ -1671,19 +1679,20 @@ The OpenMP version in <code>PrgEnv-aocc</code> is not available at the moment.</
 a script available from the Archer githug repository.
 <div class="highlight"><pre><span></span><code>$ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
 $ cd pe-scripts
-$ git checkout modules-2021-10
+$ git checkout modules-2022-12
 $ ./sh/tpsl/metis.sh --prefix=/path/to/install/location
 $ ./sh/tpsl/parmetis.sh --prefix=/path/to/install/location
-$ ./sh/tpsl/scotch.sh --prefix=/path/to/install/location
+$ ./sh/tpsl/scotchv7.sh --prefix=/path/to/install/location
 $ ./sh/tpsl/mumps.sh --prefix=/path/to/install/location
 </code></pre></div>
 where the <code>--prefix</code> option should be the same for MUMPS at
-the three dependecies (Metis, Parmetis, and Scotch). See the
-Archer2 <a href="https://github.com/ARCHER2-HPC/pe-scripts/tree/cse-develop">github repository</a>
+the three dependencies (Metis, Parmetis, and Scotch Version 7).
+See the Archer2 <a href="https://github.com/ARCHER2-HPC/pe-scripts/tree/cse-develop">github repository</a>
 for further options and details.</p>
 <h2 id="resources">Resources</h2>
-<p>The MUMPS <a href="http://mumps.enseeiht.fr">home page</a></p>
-<p>MUMPS <a href="http://mumps.enseeiht.fr/doc/userguide_5.4.1.pdf">user manual</a> (pdf)</p>
+<p>The <a href="https://mumps-solver.org/index.php">MUMPS home page</a></p>
+<p>MUMPS <a href="https://mumps-solver.org/doc/userguide_5.6.0.pdf">user manual</a>
+(Version 5.6, pdf)</p>
 
 
   
