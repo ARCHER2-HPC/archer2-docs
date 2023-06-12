@@ -1131,22 +1131,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#compiling-and-linking-against-adios" class="md-nav__link">
-    Compiling and linking against ADIOS
-  </a>
-  
-    <nav class="md-nav" aria-label="Compiling and linking against ADIOS">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#version-history" class="md-nav__link">
     Version history
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1154,6 +1141,19 @@
   <a href="#compile-your-own-version" class="md-nav__link">
     Compile your own version
   </a>
+  
+    <nav class="md-nav" aria-label="Compile your own version">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-adios" class="md-nav__link">
+    Using ADIOS
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1579,22 +1579,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#compiling-and-linking-against-adios" class="md-nav__link">
-    Compiling and linking against ADIOS
-  </a>
-  
-    <nav class="md-nav" aria-label="Compiling and linking against ADIOS">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#version-history" class="md-nav__link">
     Version history
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1602,6 +1589,19 @@
   <a href="#compile-your-own-version" class="md-nav__link">
     Compile your own version
   </a>
+  
+    <nav class="md-nav" aria-label="Compile your own version">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-adios" class="md-nav__link">
+    Using ADIOS
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1633,29 +1633,17 @@
 <h1 id="adios">ADIOS</h1>
 <p>The Adaptable I/O System (ADIOS) is developed at Oak Ridge National
 Laboratory and is freely available under a BSD license.</p>
-<h2 id="compiling-and-linking-against-adios">Compiling and linking against ADIOS</h2>
-<ul>
-<li><code>module load adios</code></li>
-</ul>
-<p>Adios is available in both serial and parallel versions.</p>
-<p>Configuration details for ADIOS are obtained via the utility
-<code>adios_config</code> which is available in the <code>PATH</code> once the
-<code>adios</code> module is loaded. For example, to recover the compiler
-options required to provide serial C include files, issue:
-<div class="highlight"><pre><span></span><code>$ adios_config -s -c
-</code></pre></div>
-Use <code>adios_config --help</code> for a summary of options.</p>
-<p>To compile and link applciation, such statements can be embedded in a
-Makefile via, e.g., 
-<div class="highlight"><pre><span></span><code>ADIOS_INC := $(shell adios_config -s -c)
-ADIOS_CLIB := $(shell adios_config -s -l)
-</code></pre></div>
-See the ADIOS user manual for further details and examples.</p>
-<p>The <code>adios</code> module defines the environment variable <code>ADIOS_DIR</code>
-which will be appropriate for the current programming environment
-when the <code>adios</code> module is loaded.</p>
-<h3 id="version-history">Version history</h3>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label><label for="__tabbed_1_2">4-cabinet system</label></div>
+<h2 id="version-history">Version history</h2>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Upgrade 2023</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</div>
+<p>The central installation of ADIOS (version 1) has been removed
+as it is no longer actively developed.
+A central installation of ADIOS (version 2) will be considered
+as a replacement.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Full system</label><label for="__tabbed_2_2">4-cabinet system</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <ul>
@@ -1671,16 +1659,30 @@ when the <code>adios</code> module is loaded.</p>
 </div>
 <h2 id="compile-your-own-version">Compile your own version</h2>
 <p>The Archer2 github repository provides a script which can be used to
-build ADIOS as for the currently supported version, e.g.,:
+build ADIOS (version 1), e.g.,:
 <div class="highlight"><pre><span></span><code>$ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
 $ cd pe-scripts
-$ git checkout modules-2021-10
+$ git checkout modules-2022-12
 $ module load cray-hdf5-parallel
 $ ./sh/adios.sh --prefix=/path/to/install/location
 </code></pre></div>
 where the <code>--prefix</code> option determines the install location. See the Archer2
 <a href="https://github.com/ARCHER2-HPC/pe-scripts/tree/cse-develop">github repository</a>
 for further details and options.</p>
+<h3 id="using-adios">Using ADIOS</h3>
+<p>Configuration details for ADIOS are obtained via the utility
+<code>adios_config</code> which should be available in the <code>PATH</code> once
+ADIOS is installed. For example, to recover the compiler
+options required to provide serial C include files, issue:
+<div class="highlight"><pre><span></span><code>$ adios_config -s -c
+</code></pre></div>
+Use <code>adios_config --help</code> for a summary of options.</p>
+<p>To compile and link application, such statements can be embedded in a
+Makefile via, e.g.,
+<div class="highlight"><pre><span></span><code>ADIOS_INC := $(shell adios_config -s -c)
+ADIOS_CLIB := $(shell adios_config -s -l)
+</code></pre></div>
+See the ADIOS user manual for further details and examples.</p>
 <h2 id="resources">Resources</h2>
 <p>The ADIOS <a href="https://csmd.ornl.gov/adios">home page</a></p>
 <p>ADIOS <a href="http://users.nccs.gov/~pnorbert/ADIOS-UsersManual-1.10.0.pdf">user manual</a> (v1.10 pdf version)</p>
