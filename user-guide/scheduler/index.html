@@ -3930,6 +3930,8 @@ this example would look like:</p>
 <span class="kp">#SBATCH --nodes=1</span>
 <span class="kp">#SBATCH --ntasks-per-node=128</span>
 <span class="kp">#SBATCH --cpus-per-task=1</span>
+<span class="kp">#SBATCH --hint=nomultithread</span>
+<span class="kp">#SBATCH --distribution=block:block</span>
 
 <span class="c1"># Replace [budget code] below with your budget code (e.g. t01)</span>
 <span class="kp">#SBATCH --account=[budget code]  </span>
@@ -3977,6 +3979,8 @@ this example would look like:</p>
 <span class="kp">#SBATCH --nodes=1</span>
 <span class="kp">#SBATCH --ntasks-per-node=64</span>
 <span class="kp">#SBATCH --cpus-per-task=2</span>
+<span class="kp">#SBATCH --hint=nomultithread</span>
+<span class="kp">#SBATCH --distribution=block:block</span>
 
 <span class="c1"># Replace [budget code] below with your budget code (e.g. t01)</span>
 <span class="kp">#SBATCH --account=[budget code]  </span>
