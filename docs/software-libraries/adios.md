@@ -48,7 +48,7 @@ $ adios_config -s -c
 ```
 Use `adios_config --help` for a summary of options.
 
-To compile and link applciation, such statements can be embedded in a
+To compile and link application, such statements can be embedded in a
 Makefile via, e.g.,
 ```
 ADIOS_INC := $(shell adios_config -s -c)
