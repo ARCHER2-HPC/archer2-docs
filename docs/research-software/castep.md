@@ -32,43 +32,44 @@ Please have your license details to hand.
 These pseudopotentials cannot be generated on the fly by CASTEP and so are available in
 the following directory on ARCHER2:
 
-=== "Full system"
-   ```
-   /work/y07/shared/apps/core/castep/pseudopotentials
-   ```
+```
+/work/y07/shared/apps/core/castep/pseudopotentials
+```
 
 ## Running parallel CASTEP jobs
 
 The following script will run a CASTEP job using 2 nodes (256 cores). it
 assumes that the input files have the file stem `text_calc`.
 
-=== "Full system"
-    ```
-    #!/bin/bash
-    
-    # Request 2 nodes with 128 MPI tasks per node for 20 minutes
-    #SBATCH --job-name=CASTEP
-    #SBATCH --nodes=2
-    #SBATCH --ntasks-per-node=128
-    #SBATCH --cpus-per-task=1
-    #SBATCH --time=00:20:00
-    
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code]
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
-    
-    # Load the CASTEP module, avoid any unintentional OpenMP threading by
-    # setting OMP_NUM_THREADS, and launch the code.
-    module load castep
-    export OMP_NUM_THREADS=1
-    srun --distribution=block:block --hint=nomultithread castep.mpi test_calc
-    ```
+
+```slurm
+#!/bin/bash
+
+# Request 2 nodes with 128 MPI tasks per node for 20 minutes
+#SBATCH --job-name=CASTEP
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=128
+#SBATCH --cpus-per-task=1
+#SBATCH --time=00:20:00
+
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code]
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+# Load the CASTEP module, avoid any unintentional OpenMP threading by
+# setting OMP_NUM_THREADS, and launch the code.
+module load castep
+export OMP_NUM_THREADS=1
+srun --distribution=block:block --hint=nomultithread castep.mpi test_calc
+```
 
 ## Using serial CASTEP tools
 
-=== "Full system"
-    Serial CASTEP tools are available in the standard CASTEP module.
+Serial CASTEP tools are available in the standard CASTEP module.
 
 ## Compiling CASTEP
 

@@ -66,17 +66,11 @@ As an example, after logging in you may wish to use GCC as your compiler
 suite. Running `module load PrgEnv-gnu` will replace the default CCE (Cray)
 environment with the GNU environment. It will also unload the `cce`
 module and load the default version of the `gcc` module; at the time of
-writing, this is GCC 10.2.0. If you need to use a different version of
-GCC, for example 9.3.0, you would follow up with `module swap gcc
-gcc/9.3.0`. At this point you may invoke the compiler wrappers and they
+writing, this is GCC 11.2.0. If you need to use a different version of
+GCC, for example 10.3.0, you would follow up with `module load
+gcc/10.3.0`. At this point you may invoke the compiler wrappers and they
 will correctly use the HPE libraries and tools in conjunction with GCC
-9.3.0.
-
-!!! warning
-    The `gcc/8.1.0` module
-    is available on ARCHER2 but cannot be used as the
-    supporting scientific and system libraries are not available. You should
-    **not** use this version of GCC.
+10.3.0.
 
 When choosing the compiler environment, a big factor will likely be
 which compilers you have previously used for your code's development.
@@ -159,27 +153,34 @@ the `RUNPATH` by default. This means that the paths to the runtime
 libraries are encoded into the executable so you do not need to load the
 compiler environment in your job submission scripts.
 
-### Using RPATHs to link
+### Using RUNPATHs to link
 
 The default behaviour of a dynamically linked executable will be to
 allow the linker to provide the libraries it needs at runtime by
-searching the paths in the `LD_LIBRARY_PATH` environment variable. This
+searching the paths in the `LD_LIBRARY_PATH` environment  and then
+by searching the paths in the `RUNPATH` variable setting of the binary. This
 is flexible in that it allows an executable to use newly installed
 library versions without rebuilding, but in some cases you may prefer to
-bake the paths to specific libraries into the executable, keeping them
+bake the paths to specific libraries into the executable `RUNPATH`, keeping them
 constant. While the libraries are still dynamically loaded at run time,
 from the end user's point of view the resulting behaviour will be
 similar to that of a statically compiled executable in that they will
 not need to concern themselves with ensuring the linker will be able to
 find the libraries.
 
-This is achieved by providing RPATHs to the compiler as options. To set
-the compiler wrappers to do this, you can set the following environment
-variable.
+This is achieved by providing additional paths to add to `RUNPATH` to the
+compiler as options. To set the compiler wrappers to do this, you can set
+the following environment variable.
 
     export CRAY_ADD_RPATH=yes
 
-You can also provide RPATHs directly to the compilers using the
+### Using RPATHs to link
+
+`RPATH` differs from `RUNPATH` in that it searches RPATH directories for
+libraries *before* searching the paths in `LD_LIBRARY_PATH` so they cannot
+be overridden in the same way at runtime.
+
+You can provide RPATHs directly to the compilers using the
 `-Wl,-rpath=<path-to-directory>` flag, where the provided path is to the
 directory containing the libraries which are themselves typically
 specified with flags of the type `-l<library-name>`.

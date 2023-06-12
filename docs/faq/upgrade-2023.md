@@ -1,11 +1,13 @@
 # ARCHER2 Upgrade: 2023
 
+## ARCHER2 Upgrade work begins on Friday 19th May 2023  14:00 BST
+
 !!! warning
     The information on this page represents our current best understanding of the
     upgrade but is subject to change and revision as more information becomes 
     available.
     
-    Last updated: 2023-04-17
+    Last updated: 2023-06-12
 
 During the first half of 2023 ARCHER will go through a major software upgrade.
 
@@ -55,8 +57,8 @@ that they can plan accordingly.
 
 The current outage dates are:
 
- - Start: 14:00 BST, 19th May 2023
- - End: 3-4 weeks after start date
+ - Start: 14:00 BST, Fri 19th May 2023
+ - End: 12:00 BST, Mon 12th June 2023
 
 ## What are the impacts on users from the upgrade?
 
@@ -64,8 +66,11 @@ The current outage dates are:
 
  - No login access
  - No access to any data on the system
+ - Some of the SAFE functionality will be removed during the upgrade such as user account requests
 
 ### After the upgrade process
+
+The allocation periods (where appropriate) will be extended for the outage period. The changes will be in place when the service is returned.
 
 After the upgrade process there will be a number of changes that may require action from
 users
@@ -115,6 +120,36 @@ following the upgrade. Python 3 will continue to be fully-supported.
 
  - No data in /home, /work, NVMe or RDFaaS will be removed or moved as part of the upgrade
 
+#### Slurm: cpus-per-task setting no longer inherited by `srun`
+
+Change in Slurm behaviour. The setting from the `--cpus-per-task` option to sbatch/salloc is
+no longer propagated by default to `srun` commands in the job script.
+
+This can lead to very poor performance due to oversubscription of cores with processes/threads
+if job submission scripts are not updated. The simplest workaround is to add the command:
+
+```bash
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+```
+
+before any srun commands in the script. You can also explicitly use the `--cpus-per-task` option
+to srun if you prefer.
+
+#### Change of Slurm "socket" definition
+
+This change only affects users who use a placement scheme where placement of processes on
+sockets is cyclic (e.g. `--distribution=block:cyclic`). The Slurm definition of a “socket”
+has changed. The previous setting on ARCHER2 was that a socket = 16 cores (all share a DRAM memory
+controller). On the updated ARCHER2, the setting of a socket = 4 cores (corresponding to a CCX -
+Core CompleX). Each CCX shares 16 MB L3 Cache.
+
+#### Changes to bind paths and library paths for Singularity with MPI
+
+The paths you need to bind and the `LD_LIBRARY_PATH` settings required to use Cray MPICH with MPI 
+in Singularity containers have changed. The updated settings are documented in the
+[Containers section](../user-guide/containers.md) of the User and Best Practice Guide. This
+also includes updated information on building containers with MPI to use on ARCHER2.
+
 ## What software versions will be available after the upgrade?
 
 System software:
@@ -124,6 +159,7 @@ System software:
     + Login nodes: UAN 2.5.8 based on SLES 15 SP4
  - Slingshot interconnect system software: 2.0.2
  - HPE Cray Management Software (CMS): 1.3.1
+ - ARCHER2 CSE supported software
 
 ### Programming environment: 22.12
 
@@ -165,7 +201,7 @@ Tools:
  - sanitizers4hpc: 1.0.4
  - Lmod: 3.1.4
 
-#### Summary of user and application impact
+#### Summary of user and application impact of PE software
 
 For full information, see [CPE 22.12 Release Notes](https://github.com/PE-Cray/cpe-changelog/blob/main/ex/cpe-22.12-sles15-sp4-FullReleaseNotes.txt)
 
@@ -181,4 +217,41 @@ encountered, providing time to adapt the application to use standard Fortran.
 **HPE Cray MPICH 8.1.23**
 
 Cray MPICH 8.1.23 can support only ~2040 simultaneous MPI communicators.
+
+### CSE supported software
+
+Default version in italics
+
+|   Software   |   Versions   |
+| --- | --- |
+|   CASTEP   |   22.11, *23.11*   |
+|   Code\_Saturne   |   7.0.1   |
+|   ChemShell/PyChemShell   |   3.7.1/21.0.3   |
+|   CP2K   |   2023.1   |
+|   FHI-aims   |   221103   |
+|   GROMACS   |   2022.4   |
+|   LAMMPS   |   17\_FEB\_2023   |
+|   NAMD   |   2.14   |
+|   Nektar++   |   5.2.0   |
+|   NWChem   |   7.0.2  |
+|   ONETEP   |   6.9.1.0   |
+|   OpenFOAM   |   v10.20230119 (.org), v2212 (.com)   |
+|   Quantum Espresso   |   *6.8*, 7.1   |
+|   VASP   |   5.4.4.pl2, 6.3.2, 6.4.1-vtst, *6.4.1*   |
+
+|   Software   |   Versions   |
+| --- | --- |
+|   AOCL   |   3.1, *4.0*   |
+|   Boost   |   1.81.0   |
+|   GSL   |   2.7   |
+|   HYPRE   |   2.18.0, *2.25.0*    |
+|   METIS/ParMETIS   |   5.1.0/4.0.3   |
+|   MUMPS   |   5.3.5, *5.5.1*   |
+|   PETSc   |   13.14.2, *13.18.5*   |
+|   PT/Scotch   |   6.1.0, *07.0.3*   |
+|   SLEPC   |   13.14.1, *13.18.3*   |
+|   SuperLU/SuperLU\_Dist   |   5.2.2 / 6.4.0, *8.1.2*   |
+|   Trilinos   |   12.18.1   |
+
+
 

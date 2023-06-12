@@ -100,7 +100,7 @@ INFO:root:cores to be used= 100 (256)
 This has reported that 2 nodes are needed with 100 active cores spread over
 256 cores. This will also have produced a submission script "myscript.slurm":
 
-```
+```slurm
 #!/bin/bash
 #SBATCH --job-name=nemo_test
 #SBATCH --time=00:10:00

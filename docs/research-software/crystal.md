@@ -1,5 +1,8 @@
 # CRYSTAL
 
+!!! warning
+    CRYSTAL is not yet available on the upgraded ARCHER2 system
+
 CRYSTAL is a general-purpose program for the study of crystalline solids. The
 CRYSTAL program computes the electronic structure of periodic systems within
 Hartree Fock, density functional or various hybrid approximations (global,
@@ -44,6 +47,7 @@ assumes that the input file is tio2.d12
 #SBATCH --nodes=2
 #SBATCH --time=0:20:00
 #SBATCH --ntasks-per-node=128
+#SBATCH --cpus-per-task=1
 
 # Replace [budget code] below with your project code (e.g. e05)
 #SBATCH --account=[budget code]
@@ -52,8 +56,9 @@ assumes that the input file is tio2.d12
 
 module load other-software
 module load crystal/23-1.0.1-2
-#or for the previous version use
-#module load crystal/17-1.0.2
+
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 
 # Change this to the name of your input file
 cp tio2.d12 INPUT
@@ -78,6 +83,9 @@ MPI process, 64 MPI processes, 1 thread per core across 2 nodes would be:
 
 module load other-software
 module load crystal/23-1.0.1-2
+
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 
 # Change this to the name of your input file
 cp tio2.d12 INPUT
