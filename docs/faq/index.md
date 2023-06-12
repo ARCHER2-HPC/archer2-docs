@@ -77,9 +77,9 @@ large number of processor on ARCHER2 nodes means that there is slightly less
 memory per processor. This can result in jobs that ran fine on ARCHER failing
 because they use up all of the node memory. We recommend that you try running
 the same job on underpopulated nodes. This can be done by editing reducing the
-``--tasks-per-node`` in your Slurm submission script. Please lower it to half
-of its value when it fails (so if you have ``--tasks-per-node=128``, reduce it
-to ``--tasks-per-node=64``).
+``--ntasks-per-node`` in your Slurm submission script. Please lower it to half
+of its value when it fails (so if you have ``--ntasks-per-node=128``, reduce it
+to ``--ntasks-per-node=64``).
 
 If the problem persists on underpopulated node, this may be a result of a
 known issue with the underlying libfabric on ARCHER2. You can find more information

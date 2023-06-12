@@ -33,10 +33,10 @@ from the GitHub repository with the command
 
 You should then copy the ARCHER2 optfile into the MITgcm directories. You may use the files at the locations below for the 4-cabinet and full systems.
 
-=== "Full system"
-    ```bash
-    cp /work/n02/shared/mjmn02/ECCOv4/cases/cce/cce1/scripts/dev_linux_amd64_cray_archer2 MITgcm/tools/build_options/
-    ```
+
+```bash
+cp /work/n02/shared/mjmn02/ECCOv4/cases/cce/cce1/scripts/dev_linux_amd64_cray_archer2 MITgcm/tools/build_options/
+```
   
 You should also set the following environment variables.
 `MITGCM_ROOTDIR` is used to locate the source code and should point to
@@ -45,12 +45,11 @@ to your `PATH` environment variable makes it easier to use tools such as
 `genmake2`, and the `MITGCM_OPT` environment variable makes it easier to
 refer to pass the optfile to `genmake2`.
 
-=== "Full system"
-    ```
-    export MITGCM_ROOTDIR=/path/to/MITgcm
-    export PATH=$MITGCM_ROOTDIR/tools:$PATH
-    export MITGCM_OPT=$MITGCM_ROOTDIR/tools/build_options/dev_linux_amd64_cray_archer2
-    ```
+```
+export MITGCM_ROOTDIR=/path/to/MITgcm
+export PATH=$MITGCM_ROOTDIR/tools:$PATH
+export MITGCM_OPT=$MITGCM_ROOTDIR/tools/build_options/dev_linux_amd64_cray_archer2
+```
 
 When using `genmake2` to create the Makefile, you will need to specify the
 optfile to use. Other commonly used options might be to use extra source
@@ -77,33 +76,35 @@ following which will allow it to run on the ARCHER2 compute nodes. This
 example would run a pure MPI MITgcm simulation over 2 nodes of 128 cores
 each for up to one hour.
 
-=== "Full system"
-    ```
-    #!/bin/bash
+```slurm
+#!/bin/bash
 
-    # Slurm job options (job-name, compute nodes, job time)
-    #SBATCH --job-name=MITgcm-simulation
-    #SBATCH --time=1:0:0
-    #SBATCH --nodes=2
-    #SBATCH --tasks-per-node=128
-    #SBATCH --cpus-per-task=1
+# Slurm job options (job-name, compute nodes, job time)
+#SBATCH --job-name=MITgcm-simulation
+#SBATCH --time=1:0:0
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=128
+#SBATCH --cpus-per-task=1
 
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code] 
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code] 
+#SBATCH --partition=standard
+#SBATCH --qos=standard
 
-    # Set the number of threads to 1
-    #   This prevents any threaded system libraries from automatically
-    #   using threading.
-    export OMP_NUM_THREADS=1
+# Set the number of threads to 1
+#   This prevents any threaded system libraries from automatically
+#   using threading.
+export OMP_NUM_THREADS=1
 
-    # Launch the parallel job
-    #   Using 256 MPI processes and 128 MPI processes per node
-    #   srun picks up the distribution from the sbatch options
-    srun --distribution=block:block --hint=nomultithread ./mitgcmuv
-    
-    ```
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+# Launch the parallel job
+#   Using 256 MPI processes and 128 MPI processes per node
+#   srun picks up the distribution from the sbatch options
+srun --distribution=block:block --hint=nomultithread ./mitgcmuv
+
+```
 
 ### Hybrid OpenMP & MPI
 !!! warning
@@ -131,35 +132,37 @@ processes, and each process using 4 threads. Note that this would underpopulate
 the nodes — i.e. we will only be using 128 of the 256 cores available to us.
 This can also sometimes lead to performance increases.
 
-=== "Full system"
-    ```
-    #!/bin/bash
+```slurm
+#!/bin/bash
 
-    # Slurm job options (job-name, compute nodes, job time)
-    #SBATCH --job-name=MITgcm-hybrid-simulation
-    #SBATCH --time=1:0:0
-    #SBATCH --nodes=2
-    #SBATCH --tasks-per-node=16
-    #SBATCH --cpus-per-task=4
+# Slurm job options (job-name, compute nodes, job time)
+#SBATCH --job-name=MITgcm-hybrid-simulation
+#SBATCH --time=1:0:0
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=16
+#SBATCH --cpus-per-task=4
 
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code] 
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code] 
+#SBATCH --partition=standard
+#SBATCH --qos=standard
 
-    # Set the number of threads to 1
-    #   This prevents any threaded system libraries from automatically
-    #   using threading.
-    export OMP_NUM_THREADS=4  # Set to number of threads per process
-    export OMP_PLACES="cores(128)"  # Set to total number of threads
-    export OMP_PROC_BIND=true  # Required if we want to underpopulate nodes
+# Set the number of threads to 1
+#   This prevents any threaded system libraries from automatically
+#   using threading.
+export OMP_NUM_THREADS=4  # Set to number of threads per process
+export OMP_PLACES="cores(128)"  # Set to total number of threads
+export OMP_PROC_BIND=true  # Required if we want to underpopulate nodes
 
-    # Launch the parallel job
-    #   Using 256 MPI processes and 128 MPI processes per node
-    #   srun picks up the distribution from the sbatch options
-    srun --distribution=block:block --hint=nomultithread ./mitgcmuv
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 
-    ```
+# Launch the parallel job
+#   Using 256 MPI processes and 128 MPI processes per node
+#   srun picks up the distribution from the sbatch options
+srun --distribution=block:block --hint=nomultithread ./mitgcmuv
+
+```
 
 One final note, is that you should remember to update the `eedata` file in the
 model's run directory to ensure the number of threads requested there match
@@ -222,10 +225,6 @@ The steps for building the ECCOv4-r4 instance of MITgcm are very similar to thos
     mkdir build
     cd build
 
-If you haven't already, copy the ARCHER2 optfile into the MITgcm directories:
-
-    cp /work/n02/shared/mjmn02/ECCOv4/cases/cce/cce1/scripts/dev_linux_amd64_cray_archer2 MITgcm/tools/build_options/
-
 Load the NetCDF modules:
 
     module load cray-hdf5
@@ -270,29 +269,34 @@ For a short test run, edit the ``nTimeSteps`` variable in the file ``data``. Com
 
 To run on ARCHER2, submit a batch script to the Slurm scheduler. Here is an example submission script:
 
-    #!/bin/bash
-    
-    # Slurm job options (job-name, compute nodes, job time)
-    #SBATCH --job-name=ECCOv4r4-test
-    #SBATCH --time=1:0:0
-    #SBATCH --nodes=8
-    #SBATCH --tasks-per-node=12
-    #SBATCH --cpus-per-task=1
-    
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code] 
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
-    
-    # Set the number of threads to 1
-    #   This prevents any threaded system libraries from automatically
-    #   using threading.
-    export OMP_NUM_THREADS=1
-    
-    # Launch the parallel job
-    #   Using 256 MPI processes and 128 MPI processes per node
-    #   srun picks up the distribution from the sbatch options
-    srun --distribution=block:block --hint=nomultithread ./mitgcmuv
+```slurm
+#!/bin/bash
+
+# Slurm job options (job-name, compute nodes, job time)
+#SBATCH --job-name=ECCOv4r4-test
+#SBATCH --time=1:0:0
+#SBATCH --nodes=8
+#SBATCH --ntasks-per-node=12
+#SBATCH --cpus-per-task=1
+
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code] 
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+# Set the number of threads to 1
+#   This prevents any threaded system libraries from automatically
+#   using threading.
+export OMP_NUM_THREADS=1
+
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+# Launch the parallel job
+#   Using 256 MPI processes and 128 MPI processes per node
+#   srun picks up the distribution from the sbatch options
+srun --distribution=block:block --hint=nomultithread ./mitgcmuv
+```
 
 This configuration uses 96 MPI processes at 12 MPI processes per node. Once the run has finished, in order to check that the run has successfully completed, check the end of one of the standard output files. 
 
@@ -348,3 +352,30 @@ The source code will be packaged and forwarded to the FastOpt servers, where it 
     cp -p ../build_ad/mitgcmuv_ad .
     
 To run the model, change the name of the executable in the Slurm submission script; everything else should be the same as in the forward case. As above, at the end of the run you should have a set of `STDOUT.*` files that you can examine for any obvious problems. 
+
+
+##### Compile time errors
+
+If TAF compilation fails with an error like `failed to convert GOTPCREL relocation;
+relink with --no-relax` then add the following line to the FFLAGS options: `-Wl,--no-relax`.
+
+##### Checkpointing for adjoint runs
+
+In an adjoint run, there is a balance between storage (i.e. saving the model state to disk) and recomputation (i.e. integrating the model forward from a stored state). Changing the `nchklev` parameters in the `tamc.h` file at compile time is how you control the relative balance between storage and recomputation. 
+
+A suggested strategy that has been used on a variety of HPC platforms is as follows:
+1. Set `nchklev_1` as large as possible, up to the size allowed by memory on your machine. (Use the `size` command to estimate the memory per process. This should be just a little bit less than the maximum allowed on the machine. On ARCHER2 this is 2 GB (standard) and 4 GB (high memory)).
+2. Next, set `nchklev_2` and `nchklev_3` to be large enough to accomodate the entire run. A common strategy is to set `nchklev_2 = nchklev_3 = sqrt(numsteps/nchklev_1) + 1`. 
+3. If the `nchklev_2` files get too big, then you may have to add a fourth level (i.e. `nchklev_4`), but this is unlikely. 
+
+This strategy allows you to keep as much in memory as possible, minimising the I/O requirements for the disk. This is useful, as I/O is often the bottleneck for MITgcm runs on HPC. 
+
+Another way to adjust performance is to adjust how tapelevel I/O is handled. This strategy performs well for most configurations:
+```
+C o tape settings
+#define ALLOW_AUTODIFF_WHTAPEIO
+#define AUTODIFF_USE_OLDSTORE_2D
+#define AUTODIFF_USE_OLDSTORE_3D
+#define EXCLUDE_WHIO_GLOBUFF_2D
+#define ALLOW_INIT_WHTAPEIO
+```

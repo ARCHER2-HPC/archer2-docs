@@ -28,29 +28,31 @@ Please have your license details to hand.
 The following script will run a FHI-aims job using 8 nodes (1024 cores). The script
 assumes that the input have the default names `control.in` and `geometry.in`.
 
-=== "Full system"
-    ```
-    #!/bin/bash
-    
-    # Request 2 nodes with 128 MPI tasks per node for 20 minutes
-    #SBATCH --job-name=FHI-aims
-    #SBATCH --nodes=8
-    #SBATCH --tasks-per-node=128
-    #SBATCH --cpus-per-task=1
-    #SBATCH --time=00:20:00
-    
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code]
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
-    
-    # Load the FHI-aims module, avoid any unintentional OpenMP threading by
-    # setting OMP_NUM_THREADS, and launch the code.
-    module load fhiaims
+```slurm
+#!/bin/bash
 
-    export OMP_NUM_THREADS=1
-    srun --distribution=block:block --hint=nomultithread aims.mpi.x
-    ```
+# Request 2 nodes with 128 MPI tasks per node for 20 minutes
+#SBATCH --job-name=FHI-aims
+#SBATCH --nodes=8
+#SBATCH --ntasks-per-node=128
+#SBATCH --cpus-per-task=1
+#SBATCH --time=00:20:00
+
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code]
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+# Load the FHI-aims module, avoid any unintentional OpenMP threading by
+# setting OMP_NUM_THREADS, and launch the code.
+module load fhiaims
+
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+export OMP_NUM_THREADS=1
+srun --distribution=block:block --hint=nomultithread aims.mpi.x
+```
 
 ## Compiling FHI-aims
 

@@ -14,5 +14,5 @@ users or provides useful notes on software that is not installed centrally.
 ## Research Software
 
  - [CASINO](../research-software/casino.md)
- - [CESM 2.1.3](../research-software/cesm213.md)
+ - [CESM](../research-software/cesm.md)
  - [CRYSTAL](../research-software/crystal.md)

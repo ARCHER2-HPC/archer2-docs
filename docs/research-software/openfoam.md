@@ -52,7 +52,7 @@ Versions from openfoam.com are e.g., v2106 (to be read as 2021 June) and
 there are typically two releases a year (one in June, and one in
 December).
 
-To use OpenFOAM on ARCHER2 you should first load the OpenFOAM module,
+To use OpenFOAM on ARCHER2 you should first load an OpenFOAM module,
 e.g.
 
 ```
@@ -66,7 +66,9 @@ The module defines only the base installation directory via the
 environment variable `FOAM_INSTALL_DIR`. After loading the module you
 need to source the `etc/bashrc` file provided by OpenFOAM, e.g.
 
-    user@ln01:> source ${FOAM_INSTALL_DIR}/etc/bashrc
+```bash
+source ${FOAM_INSTALL_DIR}/etc/bashrc
+```
 
 You should then be able to use OpenFOAM. The above commands will also
 need to be added to any job/batch submission scripts you want to use to

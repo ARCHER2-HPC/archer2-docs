@@ -4,7 +4,36 @@ This section highlights known issues on ARCHER2, their potential
 impacts and any known workarounds. Many of these issues are under
 active investigation by HPE Cray and the wider service.
 
+!!! info
+    This page was last reviewed on 25 Jan 2023
+
 ## Open Issues
+
+### Incorrect answers using LibSci threaded `dgemm` (Added 2023-01-25)
+
+If the first matrix argument of `dgemm` is transposed with `'T'` then the threaded
+version can give incorrect results using the `cpe/21.04` module (which is the default as of 25th January 2023).
+
+This issue is fixed in `cpe/21.09`. Note that to activate this new
+environment requires an explicit change to `LD_LIBRARY_PATH` in
+addition to loading the newer `cpe` module. For details see [Using
+non-default versions of HPE Cray libraries on
+ARCHER2](https://docs.archer2.ac.uk/user-guide/dev-environment/#using-non-default-versions-of-hpe-cray-libraries-on-archer2).
+
+### Slurm `--cpu=freq=X` option is not respected when used with `sbatch` (Added: 2023-01-18)
+
+If you specify the CPU frequency using the `--cpu-freq` option with the `sbatch` command (either using the script `#SBATCH --cpu-freq=X`
+method or the `--cpu-freq=X` option directly) then this option will not be respected as the default
+setting for ARCHER2 (2.0 GHz) will override the option. You should specify the `--cpu-freq` option to `srun` directly
+instead within the job submission script. i.e.:
+
+```
+srun --cpu-freq=2250000 ...
+```
+
+You can find more information on [setting the CPU frequency in the User Guide](/user-guide/energy/#controlling-cpu-frequency).
+
+
 
 ### OOM due to memory leak in libfabric (Added: 2022-02-23)
 
@@ -80,7 +109,6 @@ environment on ARCHER2.
 
 There are several outstanding issues for the centrally installed Research Software:
 
-- **PyChemShell** is not yet available. We are working with the code developers to address this.
 - **PLUMED** is not yet available. Currently, we recommend affected users to install a local version of the software.
 
 Users should also check individual software pages, for known limitations/ caveats, for the use of software on the Cray EX platform and Cray Linux Environment.
@@ -152,12 +180,6 @@ The option `--export=ALL` propagates all the environment variables from the logi
 
 ## Recently Resolved Issues
 
-### Intel MKL libraries: FFTW gives incorrect results (Added: 2022-03-28)
 
-Until recently, the Intel MKL library modules installed on ARCHER2 set environment variables
-to enable high-performance code paths. Unfortunately, recent investigations have revealed that
-these code paths resulted in incorrect results from the FFTW compenents of MKL. The modules
-were changed on 21 March 2022 to remove these environment variables and we have verified that
-the FFTW components of the MKL libraries now give the expected results.
 
 

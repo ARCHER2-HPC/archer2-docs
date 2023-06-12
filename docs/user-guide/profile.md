@@ -46,13 +46,16 @@ suite.
 
     #SBATCH --job-name=CrayPat_test
     #SBATCH --nodes=4
-    #SBATCH --tasks-per-node=128
+    #SBATCH --ntasks-per-node=128
     #SBATCH --cpus-per-task=1
     #SBATCH --time=00:20:00
 
     #SBATCH --account=[budget code]
     #SBATCH --partition=standard
     #SBATCH --qos=standard
+
+    export OMP_NUM_THREADS=1
+    export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 
     # Launch the parallel program
     srun --hint=nomultithread --distribution=block:block mpi_test.x
@@ -529,6 +532,12 @@ nid001922           127.35              256000              239872              
 ### Further help with Slurm
 
 The definitions of any variables discussed here and more usage information can be found in the man pages of `sstat` and `sacct`.
+
+## AMD &mu;Prof
+
+The AMD &mu;Prof tool provides capabilities for low-level profiling on AMD processors, see:
+
+- [AMD &mu;Prof](../data-tools/amd-uprof.md)
 
 ## Arm Forge
 

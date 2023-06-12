@@ -3,7 +3,8 @@ theme:
   favicon: favicon.ico
   logo: images/archer2_white_transparent.png
   palette:
-    scheme: teal
+    primary: teal
+    accent: teal
   features:
     - tabs
   icon:
@@ -48,8 +49,11 @@ nav:
     - "Overview": quick-start/overview.md
     - "Quickstart for users": quick-start/quickstart-users.md
     - "Quickstart for developers": quick-start/quickstart-developers.md
+    - "Quickstart next steps": quick-start/quickstart-next-steps.md
   - "ARCHER2 Known Issues": known-issues/index.md
-  - "ARCHER2 Frequently Asked Questions": faq/index.md
+  - "ARCHER2 Frequently Asked Questions":
+    - "General FAQ": faq/index.md
+    - "ARCHER2 Upgrade 2023": faq/upgrade-2023.md
   - "User and Best Practice Guide":
     - "Overview": user-guide/index.md
     - "Hardware": user-guide/hardware.md
@@ -65,7 +69,7 @@ nav:
     - "Debugging": user-guide/debug.md
     - "Profiling": user-guide/profile.md
     - "Performance tuning": user-guide/tuning.md
-    - "Energy monitoring": user-guide/energy-monitoring.md
+    - "Energy use": user-guide/energy.md
   - "Research Software":
     - "Overview": research-software/index.md
     - "CASINO": research-software/casino.md
@@ -76,7 +80,6 @@ nav:
     - "CP2K": research-software/cp2k.md
     - "CRYSTAL": research-software/crystal.md
     - "FHI-aims": research-software/fhi-aims.md
-    - "FEniCS": research-software/fenics.md
     - "GROMACS": research-software/gromacs.md
     - "LAMMPS": research-software/lammps.md
     - "MITgcm": research-software/mitgcm.md
@@ -87,6 +90,7 @@ nav:
     - "NWChem": research-software/nwchem.md
     - "ONETEP": research-software/onetep.md
     - "OpenFOAM": research-software/openfoam.md
+    - "ORCA": research-software/orca.md
     - "Quantum Espresso": research-software/qe.md
     - "VASP": research-software/vasp.md
   - "Software Libraries":
@@ -113,6 +117,7 @@ nav:
     - "Trilinos": software-libraries/trilinos.md
   - "Data Analysis and Tools":
     - "Overview": data-tools/index.md
+    - "AMD uProf": data-tools/amd-uprof.md
     - "Arm Forge": data-tools/arm-forge.md
     - "Julia": data-tools/julia.md
     - "ParaView": data-tools/paraview.md

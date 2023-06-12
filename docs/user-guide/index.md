@@ -20,7 +20,7 @@ The User and Best Practice Guide contains the following sections:
   - [Profiling](profile.md)
   - [Performance tuning](tuning.md)
   - [ARCHER2 hardware](hardware.md)
-  - [Energy monitoring](energy-monitoring.md)
+  - [Energy use](energy.md)
   
   
 

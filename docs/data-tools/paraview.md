@@ -101,14 +101,14 @@ A pvbatch script can be run in a standard job script. For example
 the following will run on a single node:
 
 
-```
+```slurm
 #!/bin/bash
 
 # Slurm job options (job-name, compute nodes, job time)
 #SBATCH --job-name=example_paraview_job
 #SBATCH --time=0:20:00
 #SBATCH --nodes=1
-#SBATCH --tasks-per-node=128
+#SBATCH --ntasks-per-node=128
 #SBATCH --cpus-per-task=1
 
 # Replace [budget code] below with your budget code (e.g. t01)
@@ -118,7 +118,10 @@ the following will run on a single node:
 
 module load paraview
 
-srun --mpi=pmi2 pvbatch pvbatchscript.py
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+srun --distribution=block:block --hint=nomultithread pvbatch pvbatchscript.py
 ```
 
 ## Compiling ParaView

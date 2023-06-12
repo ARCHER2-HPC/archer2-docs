@@ -10,3 +10,4 @@ available which are meant to be followed in sequence.
   - [Quickstart for developers](quickstart-developers.md): Covers additional topics around compiling
     your own programs on ARCHER2, debugging and profiling. If you are not going to be compiling your
     own programs on ARCHER2, you do not need to follow this guide.
+  - [Next steps](quickstart-next-steps.md): Covers the range of support available, getting funding and time on ARCHER2 and the training programme and resources.

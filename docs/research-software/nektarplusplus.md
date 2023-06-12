@@ -44,31 +44,33 @@ wget https://doc.nektar.info/tutorials/latest/incns/taylor-green-vortex/incns-ta
 tar -xvzf incns-taylor-green-vortex.tar.gz
 ```
 
-=== "Full system"
-    ```bash
-    #!/bin/bash
-    #SBATCH --job-name=nektar
-    #SBATCH --nodes=1
-    #SBATCH --tasks-per-node=32
-    #SBATCH --cpus-per-task=1
-    #SBATCH --time=02:00:00
-    
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code] 
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
+```slurm
+#!/bin/bash
+#SBATCH --job-name=nektar
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=32
+#SBATCH --cpus-per-task=1
+#SBATCH --time=02:00:00
 
-    module load nektar
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code] 
+#SBATCH --partition=standard
+#SBATCH --qos=standard
 
-    export OMP_NUM_THREADS=1
+module load nektar
 
-    NEK_INPUT_PATH=/path/to/work/dir/incns-taylor-green-vortex/completed/solver64
+export OMP_NUM_THREADS=1
 
-    srun --distribution=block:cyclic --hint=nomultithread \
-        ${NEK_DIR}/bin/IncNavierStokesSolver \
-            ${NEK_INPUT_PATH}/TGV64_mesh.xml \
-            ${NEK_INPUT_PATH}/TGV64_conditions.xml
-    ```
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+NEK_INPUT_PATH=/path/to/work/dir/incns-taylor-green-vortex/completed/solver64
+
+srun --distribution=block:cyclic --hint=nomultithread \
+    ${NEK_DIR}/bin/IncNavierStokesSolver \
+        ${NEK_INPUT_PATH}/TGV64_mesh.xml \
+        ${NEK_INPUT_PATH}/TGV64_conditions.xml
+```
 
 ## Compiling Nektar++
 

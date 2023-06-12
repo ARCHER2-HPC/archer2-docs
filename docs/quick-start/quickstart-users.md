@@ -4,11 +4,6 @@ This guide aims to quickly enable new users to get up and running on
 ARCHER2. It covers the process of getting an ARCHER2 account, logging in
 and running your first job.
 
-!!! important
-    This guide covers both the ARCHER2 4-cabinet system and the
-    ARCHER2 full system. Please ensure you follow the instructions
-    for the correct system.
-
 ## Request an account on ARCHER2
 
 !!! important
@@ -19,6 +14,11 @@ and running your first job.
     authentication steps below.
 
 ### Obtain an account on the SAFE website
+
+!!! Warning
+    We have seen issues with Gmail blocking emails from SAFE so we recommend that users
+    use their institutional/work email address rather than Gmail addresses to register 
+    for SAFE accounts.
 
 The first step is to sign up for an account on the ARCHER2 SAFE website.
 The SAFE account is used to manage all of your login accounts, allowing
@@ -131,9 +131,9 @@ are accessing:
 
 === "Full system"
     You will first be prompted for the passphrase associated with your SSH key pair. Once you have entered this passphrase successfully, you will then be prompted for your machine account password. You need to enter both credentials correctly to be able to access ARCHER2.
+
     !!! tip
-        If you previously logged into the 4-cabinet system with your account you may see an error 
-        from SSH that looks like
+        If you previously logged into the ARCHER2 system before the major upgrade in May/June 2023 with your account you may see an error from SSH that looks like
 
         ```
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -252,7 +252,7 @@ available versions and variants of VASP may be found by running
     module avail vasp
 
 You will see that different versions are available for many modules. For
-example, `vasp/5/5.4.4.pl2` and `vasp/6/6.1.0` are two available versions of
+example, `vasp/5/5.4.4.pl2` and `vasp/6/6.3.2` are two available versions of
 VASP on the full system. Furthermore, a default version may be specified;
 this is used if no version is provided by the user.
 
@@ -263,13 +263,13 @@ this is used if no version is provided by the user.
 
 The `module load` command loads a module for use. Following the above,
 
-    module load vasp/5
+    module load vasp/6
 
-would load the default version of VASP 5, while
+would load the default version of VASP 6, while
 
-    module load vasp/5/5.4.4.pl2
+    module load vasp/6/6.3.2
 
-would specifically load version `5.4.4.pl2`. A loaded module may be unloaded
+would specifically load version `6.3.2`. A loaded module may be unloaded
 through the identical `module remove` command, e.g.
 
     module unload vasp
@@ -286,6 +286,14 @@ Other helpful commands are:
     module
   - `module show <modulename>` which displays the contents of the
     modulefile
+  - `module restore` which returns you to the default module setup as if
+    you had just logged in
+
+!!! tip 
+    You should not use the `module purge` command on ARCHER2 as this will
+    cause issues for the HPE Cray programming environment. If you wish to 
+    reset your modules, you should use the `module restore` command
+    instead.
 
 Points to be aware of include:
 
@@ -383,7 +391,7 @@ Paste the following text into your job submission script, replacing
     
     #SBATCH --job-name=test_job
     #SBATCH --nodes=1
-    #SBATCH --tasks-per-node=128
+    #SBATCH --ntasks-per-node=128
     #SBATCH --cpus-per-task=1
     #SBATCH --time=0:5:0
     
@@ -394,9 +402,15 @@ Paste the following text into your job submission script, replacing
     
     # Load the xthi module to get access to the xthi program
     module load xthi
+
+    # Recommended environment settings
+    # Stop unintentional multi-threading within software libraries
+    export OMP_NUM_THREADS=1
+    # Ensure the cpus-per-task option is propagated to srun commands
+    export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
     
     # srun launches the parallel program based on the SBATCH options
-    srun --distribution=block:block --hint=nomultithread xthi
+    srun --distribution=block:block --hint=nomultithread xthi_mpi
     ```
 
 ## Submit your job to the queue

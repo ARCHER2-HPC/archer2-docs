@@ -104,7 +104,7 @@ The following script will run a CASINO job using 16 nodes (2048 cores).
 # Request 16 nodes with 128 MPI tasks per node for 20 minutes
 #SBATCH --job-name=CASINO
 #SBATCH --nodes=16
-#SBATCH --tasks-per-node=128
+#SBATCH --ntasks-per-node=128
 #SBATCH --cpus-per-task=1
 #SBATCH --time=00:20:00
 
@@ -120,6 +120,9 @@ module load cray-mpich-ucx
 
 # Set CASINO to share memory across 16 core blocks
 export CASINO_NUMABLK=16
+
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 
 # Set the location of the CASINO executable - this must be on /work
 #   Replace this with the path to your compiled CASINO binary

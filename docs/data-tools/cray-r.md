@@ -124,22 +124,17 @@ using R on the ARCHER2 compute nodes.
 
 ### Serial R submission script
 
-```
+```slurm
 #!/bin/bash --login
 
 #SBATCH --job-name=r_test
-#SBATCH --nodes=1
-#SBATCH --tasks-per-node=1
-#SBATCH --cpus-per-task=1
+#SBATCH --ntasks=1
 #SBATCH --time=00:10:00
 
 # Replace [budget code] below with your project code (e.g., t01)
 #SBATCH --account=[budget code]
-#SBATCH --partition=standard
-#SBATCH --qos=standard
-
-# Setup the batch environment
-module load epcc-job-env
+#SBATCH --partition=serial
+#SBATCH --qos=serial
 
 # Load the R module
 module load cray-R
