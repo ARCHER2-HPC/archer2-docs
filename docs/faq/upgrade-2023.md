@@ -7,7 +7,7 @@
     upgrade but is subject to change and revision as more information becomes 
     available.
     
-    Last updated: 2023-06-07
+    Last updated: 2023-06-12
 
 During the first half of 2023 ARCHER will go through a major software upgrade.
 
@@ -57,8 +57,8 @@ that they can plan accordingly.
 
 The current outage dates are:
 
- - Start: 14:00 BST, 19th May 2023
- - End: Week beginning 12 June 2023 (concrete date to be communicated as soon as possible)
+ - Start: 14:00 BST, Fri 19th May 2023
+ - End: 12:00 BST, Mon 12th June 2023
 
 ## What are the impacts on users from the upgrade?
 
