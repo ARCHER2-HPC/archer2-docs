@@ -995,6 +995,46 @@
     Compiling OpenFOAM
   </a>
   
+    <nav class="md-nav" aria-label="Compiling OpenFOAM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#extensions-to-openfoam" class="md-nav__link">
+    Extensions to OpenFOAM
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#module-version-history" class="md-nav__link">
+    Module version history
+  </a>
+  
+    <nav class="md-nav" aria-label="Module version history">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#upgrade-2023" class="md-nav__link">
+    Upgrade 2023
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#full-system" class="md-nav__link">
+    Full system
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1598,6 +1638,46 @@
     Compiling OpenFOAM
   </a>
   
+    <nav class="md-nav" aria-label="Compiling OpenFOAM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#extensions-to-openfoam" class="md-nav__link">
+    Extensions to OpenFOAM
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#module-version-history" class="md-nav__link">
+    Module version history
+  </a>
+  
+    <nav class="md-nav" aria-label="Module version history">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#upgrade-2023" class="md-nav__link">
+    Upgrade 2023
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#full-system" class="md-nav__link">
+    Full system
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1634,13 +1714,32 @@ most common are distributed by openfoam.org and openfoam.com.</p>
 <h2 id="useful-links">Useful Links</h2>
 <ul>
 <li><a href="https://openfoam.org">OpenFOAM website (.org)</a></li>
-<li><a href="https://cfd.direct/openfoam/user-guide/">OpenFOAM documentation</a></li>
+<li><a href="https://cfd.direct/openfoam/user-guide/">OpenFOAM documentation (.org)</a></li>
 <li><a href="https://www.openfoam.com">OpenFOAM website (.com)</a></li>
-<li><a href="https://www.openfoam.com/documentation/">OpenFOAM documentation</a></li>
+<li><a href="https://www.openfoam.com/documentation/">OpenFOAM documentation (.com)</a></li>
 </ul>
 <h2 id="using-openfoam-on-archer2">Using OpenFOAM on ARCHER2</h2>
 <p>OpenFOAM is released under a GPL v3 license and is freely available to
 all users on ARCHER2.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Upgrade 2023</label><label for="__tabbed_1_2">Full system</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>auser@ln01&gt; module avail openfoam
+--------------- /work/y07/shared/archer2-lmod/apps/core -----------------
+openfoam/com/v2106        openfoam/org/v9.20210903
+openfoam/com/v2212 (D)    openfoam/org/v10.20230119 (D)
+</code></pre></div>
+<p>Note: the older versions were recompiled under PE22.12 in April 2023.</p>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>auser@ln01&gt; module avail openfoam
+--------------- /work/y07/shared/archer2-lmod/apps/core -----------------
+openfoam/com/v2106          openfoam/org/v9.20210903 (D)
+openfoam/org/v8.20200901
+</code></pre></div>
+</div>
+</div>
+</div>
 <p>Versions from openfoam.org are typically v8.0 etc and there is typically
 one release per year (in June; with a patch release in September).
 Versions from openfoam.com are e.g., v2106 (to be read as 2021 June) and
@@ -1648,10 +1747,12 @@ there are typically two releases a year (one in June, and one in
 December).</p>
 <p>To use OpenFOAM on ARCHER2 you should first load an OpenFOAM module,
 e.g.</p>
-<div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>PrgEnv-gnu
-module<span class="w"> </span>load<span class="w"> </span>openfoam/com/v2106
+<div class="highlight"><pre><span></span><code>user@ln01:&gt; module load PrgEnv-gnu
+user@ln01:&gt; module load openfoam/com/v2106
 </code></pre></div>
-<p>The module defines only the base installation directory via the
+<p>(Note that the <code>openfoam</code> module will automatically load <code>PrgEnv-gnu</code>
+if it is not already active.)
+The module defines only the base installation directory via the
 environment variable <code>FOAM_INSTALL_DIR</code>. After loading the module you
 need to source the <code>etc/bashrc</code> file provided by OpenFOAM, e.g.</p>
 <div class="highlight"><pre><span></span><code><span class="nb">source</span><span class="w"> </span><span class="si">${</span><span class="nv">FOAM_INSTALL_DIR</span><span class="si">}</span>/etc/bashrc
@@ -1660,7 +1761,7 @@ need to source the <code>etc/bashrc</code> file provided by OpenFOAM, e.g.</p>
 need to be added to any job/batch submission scripts you want to use to
 run OpenFOAM. Note that all the centrally installed versions of OpenFOAM
 are compiled under <code>PrgEnv-gnu</code>.</p>
-<p>Note there are no default module versions specificied. It is recommended to
+<p>Note there are no default module versions specified. It is recommended to
 use a fully qualified module name (with the exact version, as in the
 example above).</p>
 <h2 id="running-parallel-openfoam-jobs">Running parallel OpenFOAM jobs</h2>
@@ -1671,38 +1772,119 @@ end is a shared resource.</p>
 <p>A typical SLURM job submission script for OpenFOAM is given here. This
 would request 4 nodes to run with 128 MPI tasks per node (a total of 512
 MPI tasks). Each MPI task is allocated one core (<code>--cpus-per-task=1</code>).</p>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Upgrade 2023</label><label for="__tabbed_2_2">Full system</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>#!/bin/bash
 
-<span class="kp">#SBATCH --nodes=4</span>
-<span class="kp">#SBATCH --ntasks-per-node=128</span>
-<span class="kp">#SBATCH --cpus-per-task=1</span>
-<span class="kp">#SBATCH --distribution=block:block</span>
-<span class="kp">#SBATCH --hint=nomultithread</span>
-<span class="kp">#SBATCH --time=00:10:00</span>
+#SBATCH --nodes=4
+#SBATCH --tasks-per-node=128
+#SBATCH --cpus-per-task=1
+#SBATCH --distribution=block:block
+#SBATCH --hint=nomultithread
+#SBATCH --time=00:10:00
 
-<span class="c1"># Replace [budget code] below with your project code (e.g. t01)</span>
-<span class="kp">#SBATCH --account=[budget code] </span>
-<span class="kp">#SBATCH --partition=standard</span>
-<span class="kp">#SBATCH --qos=standard</span>
+#SBATCH --partition=standard
+#SBATCH --qos=standard
 
-<span class="c1"># Load the appropriate module and source the OpenFOAM bashrc file</span>
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 
-module<span class="w"> </span>load<span class="w"> </span>openfoam/org/v8.20210901
+# Load the appropriate module and source the OpenFOAM bashrc file
 
-<span class="nb">source</span><span class="w"> </span><span class="si">${</span><span class="nv">FOAM_INSTALL_DIR</span><span class="si">}</span>/etc/bashrc
+module load openfoam/org/v10.20230119
 
-<span class="c1"># Ensure the cpus-per-task option is propagated to srun commands</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
+source ${FOAM_INSTALL_DIR}/etc/bashrc
 
-<span class="c1"># Run OpenFOAM work, e.g.,</span>
+# Run OpenFOAM work, e.g.,
 
-<span class="nb">srun</span><span class="w"> </span>-hint<span class="o">=</span>nomultithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>interFoam<span class="w"> </span>-parallel
+srun interFoam -parallel
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+
+#SBATCH --nodes=4
+#SBATCH --tasks-per-node=128
+#SBATCH --cpus-per-task=1
+#SBATCH --distribution=block:block
+#SBATCH --hint=nomultithread
+#SBATCH --time=00:10:00
+
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code]
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+# Load the appropriate module and source the OpenFOAM bashrc file
+
+module load openfoam/org/v8.20210901
+
+source ${FOAM_INSTALL_DIR}/etc/bashrc
+
+# Run OpenFOAM work, e.g.,
+
+srun interFoam -parallel
+</code></pre></div>
+</div>
+</div>
+</div>
 <h2 id="compiling-openfoam">Compiling OpenFOAM</h2>
 <p>If you want to compile your own version of OpenFOAM, instructions are
 available for ARCHER2 at:</p>
 <ul>
 <li><a href="https://github.com/hpc-uk/build-instructions/tree/main/apps/OpenFOAM">Build instructions for OpenFOAM on GitHub</a></li>
+</ul>
+<h3 id="extensions-to-openfoam">Extensions to OpenFOAM</h3>
+<p>Many packages extend the central OpenFOAM functionality in some way. However,
+there is no
+completely standardised way in which this works. Some packages assume
+they have write access to the main OpenFOAM installation. If this is
+the case, you must install your own version before continuing. This
+can be done on an individual basis, or a per-project basis using the
+project shared directories.</p>
+<h2 id="module-version-history">Module version history</h2>
+<p>The following centrally installed versions are available.</p>
+<h3 id="upgrade-2023">Upgrade 2023</h3>
+<ul>
+<li>
+<p>Module <code>openfoam/com/v2212</code> installed as default April 2023 (PE 22.12).
+  This is version v2212 (December 2022).
+  See the <a href="https://www.openfoam.com/news/main-news/openfoam-v2212">OpenFOAM.com v2212 release announcement</a></p>
+</li>
+<li>
+<p>Module <code>openfoam/com/v2106</code> was recompiled April 2023 (PE 22.12).
+  This is version v2106 (June 2021).
+  See the <a href="https://www.openfoam.com/news/main-news/openfoam-v2106">OpenFOAM.com v2106 release announcement</a></p>
+</li>
+<li>
+<p>Module <code>openfoam/org/v10.20230119</code> installed as default April 2023 (PE 22.12)
+  This is version 10 patch release 19th January 2023.
+  See <a href="https://openfoam.org/news/v10-patch/">version 10 patch news</a></p>
+</li>
+<li>
+<p>Module <code>openfoam/org/v9.20210903</code> was recompiled April 2023 (PE 22.12).
+  This is version 9 patch release 3rd September 2021.
+  See <a href="https://openfoam.org/news/v9-patch/">version 9 patch release news</a>.</p>
+</li>
+</ul>
+<h3 id="full-system">Full system</h3>
+<ul>
+<li>
+<p>Module <code>openfoam/com/v2106</code> installed October 2021 (Cray PE 21.04).
+  Version v2106 (June 2021).
+  See <a href="https://www.openfoam.com/news/main-news/openfoam-v2106">OpenFOAM.com website</a></p>
+</li>
+<li>
+<p>Module <code>openfoam/org/v9.20200903</code> installed October 2021 (Cray PE 21.09).
+  Version 9 patch release 3rd September 2021.
+  See <a href="https://openfoam.org/news/v9-patch/">OpenFOAM.org website</a></p>
+</li>
+<li>
+<p>Module <code>openfoam/org/v8.20200901</code> installed October 2021 (Cray PE 21.09).
+  Version 8 patch release 1st September 2020.
+  See <a href="https://openfoam.org/news/v8-patch/">OpenFOAM.org website</a></p>
+</li>
 </ul>
 
 
