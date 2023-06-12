@@ -1633,7 +1633,7 @@
 <h1 id="hypre">HYPRE</h1>
 <p>HYPRE is a library of linear solvers for structured and unstructured
 problems with a particular emphasis on multigrid. It is a product of
-the Lawrence Livermore National Laboratory and is distrubted under
+the Lawrence Livermore National Laboratory and is distributed under
 either the MIT license or the Apache license.</p>
 <h2 id="compiling-and-linking-with-hypre">Compiling and linking with HYPRE</h2>
 <ul>
@@ -1650,8 +1650,14 @@ in the compile or link stage.</p>
 will show the root of the installation for the current programming
 environment if required.</p>
 <h3 id="version-history">Version history</h3>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label><label for="__tabbed_1_2">4-cabinet system</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Upgrade 2023</label><label for="__tabbed_1_2">Full system</label><label for="__tabbed_1_3">4-cabinet system</label></div>
 <div class="tabbed-content">
+<div class="tabbed-block">
+<ul>
+<li>module <code>hypre/2.25.0</code> installed as default May 2023 (PE 22.12)</li>
+<li>module <code>hypre/2.18.0</code> recompiled and installed May 2023 (PE 22.12)</li>
+</ul>
+</div>
 <div class="tabbed-block">
 <ul>
 <li>Module <code>hypre/2.18.0</code> installed October 2021 (PE 21.04)</li>
@@ -1669,7 +1675,7 @@ environment if required.</p>
 from the Archer2 repository:
 <div class="highlight"><pre><span></span><code>$ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
 $ cd pe-scripts
-$ git checkout modules-2021-10
+$ git checkout modules-2022-12
 $ ./sh/tpsl/hypre.sh --prefix=/path/to/install/location
 </code></pre></div>
 where the <code>--prefix</code> option determines the install directory. See the
