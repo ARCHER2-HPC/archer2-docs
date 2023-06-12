@@ -1645,12 +1645,18 @@ way. The appropriate include files and library paths will be
 inserted automatically. Trilinos is build with OpenPM enabled.</p>
 <p>The <code>trilinos</code> module defines the environment variable <code>TRILINOS_DIR</code>
 as the root of the installation for the current programming environment.</p>
-<p>Trilinos also provides a small number of stand-alone execuables which
+<p>Trilinos also provides a small number of stand-alone executables which
 are available via the standard <code>PATH</code> mechanism while the module is
 loaded.</p>
 <h3 id="version-history">Version history</h3>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Full system</label><label for="__tabbed_1_2">4-cabinet system</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Upgrade 2023</label><label for="__tabbed_1_2">Full system</label><label for="__tabbed_1_3">4-cabinet system</label></div>
 <div class="tabbed-content">
+<div class="tabbed-block">
+<ul>
+<li>Module <code>trilinos/12.18.1</code> recompiled May 2023 (PE 22.12)</li>
+</ul>
+<p>Note that Trilinos is not currently available for <code>PrgEnv-aocc</code>.</p>
+</div>
 <div class="tabbed-block">
 <ul>
 <li>Module <code>trilinos/12.18.1</code> installed October 2021 (PE 21.04)</li>
@@ -1684,7 +1690,7 @@ for Trilinos is available at the <a href="https://github.com/ARCHER2-HPC/pe-scri
 will build a static-only version of the libraries.
 <div class="highlight"><pre><span></span><code>$ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
 $ cd pe-scripts
-$ git checkout modules-2021-10
+$ git checkout modules-2022-12
 $ ...
 $ ./sh/trilinos.sh --prefix=/path/to/install/location
 </code></pre></div>
