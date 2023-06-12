@@ -1728,15 +1728,18 @@ module<span class="w"> </span>load<span class="w"> </span>namd
 <span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">OMP_PLACES</span><span class="o">=</span>cores
 
-<span class="c1"># Ensure the cpus-per-task option is propagated to srun commands</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
-
 <span class="c1"># Record PPN in the output file</span>
 <span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Number of worker threads PPN = </span><span class="nv">$PPN</span><span class="s2">&quot;</span>
 
 <span class="c1"># Run NAMD</span>
 <span class="nb">srun</span><span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>namd2<span class="w"> </span>+setcpuaffinity<span class="w"> </span>+ppn<span class="w"> </span><span class="nv">$PPN</span><span class="w"> </span>input.namd
 </code></pre></div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Please do not set <code>SRUN_CPUS_PER_TASK</code> when running the SMP version of NAMD.
+Otherwise, Charm++ will be unable to pin processes to CPUs, causing NAMD to abort
+with errors such as <code>Couldn't bind to cpuset 0x00000010,,,0x0: Invalid argument</code>.</p>
+</div>
 <p><strong>How do I choose an optimal choice of MPI processes and worker threads for my simulations?</strong>
 The optimal choice for the numbers of MPI processes and worker threads
 per node depends on the data set and the number of compute nodes. Before
