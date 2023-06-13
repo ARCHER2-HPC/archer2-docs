@@ -108,9 +108,17 @@ you must first activate the environment, by adding the activation command to the
     ```
 
 Lastly, the environment being extended does not have to come from one of the centrally-installed `cray-python` modules.
-You could just as easily create a local virtual environment based on one of the Machine Learning (ML) modules, e.g., `tensorflow`
-or `pytorch`. This means you would avoid having to install ML packages within your local area. Each of those ML
-modules is based on a `cray-python` module. For example, `tensorflow/2.7.0` is itself an extension of `cray-python/3.8.5.0`.
+You can also create a local virtual environment based on one of the Machine Learning (ML) modules, e.g., `tensorflow`
+or `pytorch`. One extra command is required; it is issued immediately after the `python -m venv ...` command.
+
+    extend-venv-activate /work/t01/t01/auser/myvenv
+
+The `extend-venv-activate` command merely adds some extra commands to the virtual environment's `activate` script,
+ensuring that the python packages will be gathered from the local virtual environment, the ML module and the
+`cray-python` base module. All this means you would avoid having to install ML packages within your local area.
+
+!!! note
+    The ML modules are themselves based on `cray-python`. For example, `tensorflow/2.12.0` is based the `cray-python/3.9.13.1` module.
 
 ## Running Python
 
