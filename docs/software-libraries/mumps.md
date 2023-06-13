@@ -4,7 +4,7 @@ MUMPS is a parallel solver for large sparse systems and features
 a 'multifrontal' method and is developed largely at CERFCAS,
 ENS Lyon, IRIT Toulouse, INRIA, and the University of Bordeaux.
 It is provided free of charge and is largely under a CeCILL-C
-lisence.
+license.
 
 
 ## Compiling and linking with MUMPS
@@ -27,14 +27,22 @@ installation for the current programming environment.
 
 ### Version history
 
+=== "Upgrade 2023"
+
+    - Module `mumps/5.5.1` installed as default May 2023 (PE 22.12)
+    - Module `mumps/5.3.5` recompiled May 2023 (PE 22.12)
+
+    Note: `mumps/5.5.1` uses `scotch/7.0.3` while `mumps/5.3.5` uses
+    `scotch/6.1.0`.
+
 === "Full system"
-    
+
     - Module `mumps/5.3.5` installed October 2021 (PE 21.04)
-    
+
 === "4-cabinet system"
-    
+
     - Module `mumps/5.2.1` installed January 2021
-    
+
     Known issues:
     The OpenMP version in `PrgEnv-aocc` is not available at the moment.
 
@@ -46,20 +54,21 @@ a script available from the Archer githug repository.
 ```
 $ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
 $ cd pe-scripts
-$ git checkout modules-2021-10
+$ git checkout modules-2022-12
 $ ./sh/tpsl/metis.sh --prefix=/path/to/install/location
 $ ./sh/tpsl/parmetis.sh --prefix=/path/to/install/location
-$ ./sh/tpsl/scotch.sh --prefix=/path/to/install/location
+$ ./sh/tpsl/scotchv7.sh --prefix=/path/to/install/location
 $ ./sh/tpsl/mumps.sh --prefix=/path/to/install/location
 ```
 where the `--prefix` option should be the same for MUMPS at
-the three dependecies (Metis, Parmetis, and Scotch). See the
-Archer2 [github repository](https://github.com/ARCHER2-HPC/pe-scripts/tree/cse-develop)
+the three dependencies (Metis, Parmetis, and Scotch Version 7).
+See the Archer2 [github repository](https://github.com/ARCHER2-HPC/pe-scripts/tree/cse-develop)
 for further options and details.
 
 
 ## Resources
 
-The MUMPS [home page](http://mumps.enseeiht.fr)
+The [MUMPS home page](https://mumps-solver.org/index.php)
 
-MUMPS [user manual](http://mumps.enseeiht.fr/doc/userguide_5.4.1.pdf) (pdf)
+MUMPS [user manual](https://mumps-solver.org/doc/userguide_5.6.0.pdf)
+(Version 5.6, pdf)

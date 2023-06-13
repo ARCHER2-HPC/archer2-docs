@@ -11,7 +11,7 @@ of sparse matrices. These libraries coming broadly under the label of
 
 Metis is the sequential library for partitioning problems; it also
 supplies a number of simple stand-alone utility programs to access the Metis
-API for graph and mesh partioning, and graph and mesh manipulation. The
+API for graph and mesh partitioning, and graph and mesh manipulation. The
 stand alone programs typically read a graph or mesh from file which must
 be in "metis" format.
 
@@ -65,13 +65,18 @@ after the change of compiler version.
 
 ### Module version history
 
+=== "Upgrade 2023"
+
+    - module `metis/5.1.0` recompiled and installed May 2023 (PE22.12)
+    - module `partmetis/4.0.3` recompiled and installed May 2023 (PE22.12)
+
 === "Full system"
-    
+
     - module `metis/5.1.0` installed October 2021 (PE21.04)
     - module `parmetis/4.0.3` installed January 2021 (PE21.04)
-    
+
 === "4-cabinet system"
-    
+
     - module `metis/5.1.0` installed January 2021
     - module `parmetis/4.0.3` installed January 2021
 
@@ -87,7 +92,7 @@ The latest Archer2 version of Metis can be installed
 ```
 $ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
 $ cd pe-scripts
-$ git checkout modules-2021-10
+$ git checkout modules-2022-12
 $ ./sh/tpsl/metis.sh --prefix=/path/to/install/location
 ```
 
