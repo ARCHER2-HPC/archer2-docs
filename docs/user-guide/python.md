@@ -5,7 +5,7 @@ and also as an analysis tool. This section describes how to use Python
 in either of these scenarios.
 
 The Python installations on ARCHER2 contain some of the most commonly
-used modules. If you wish to install additional Python modules, we
+used packages. If you wish to install additional Python packages, we
 recommend that you use the `pip` command **after** loading the
 `cray-python` module. This is described in more detail below.
 
@@ -136,6 +136,7 @@ ensuring that the python packages will be gathered from the local virtual enviro
 #SBATCH --qos=serial
    
 # Load the Python module, ...
+module load cray-python
 
 # ..., or, if using local virtual environment
 source <<path to virtual environment>>/bin/activate
