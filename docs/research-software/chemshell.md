@@ -81,20 +81,23 @@ The following script will run a pure MPI Tcl-based ChemShell job using 8
 nodes (128x8 cores).
 
 ```
-    #!/bin/bash
+#!/bin/bash
 
-    #SBATCH --job-name=lammps_test
-    #SBATCH --nodes=8
-    #SBATCH --ntasks-per-node=128
-    #SBATCH --cpus-per-task=1
-    #SBATCH --time=00:20:00
+#SBATCH --job-name=lammps_test
+#SBATCH --nodes=8
+#SBATCH --ntasks-per-node=128
+#SBATCH --cpus-per-task=1
+#SBATCH --time=00:20:00
 
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code] 
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code] 
+#SBATCH --partition=standard
+#SBATCH --qos=standard
 
-    module load tcl-chemshell/3.7.1
+module load tcl-chemshell/3.7.1
 
-    srun --distribution=block:block --hint=nomultithread chemsh.x input.chm
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+srun --distribution=block:block --hint=nomultithread chemsh.x input.chm
 ```

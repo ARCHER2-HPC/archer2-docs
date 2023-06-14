@@ -32,7 +32,7 @@ paraview client running on your own computer.
 
 !!! note 
     You should make sure the version of ParaView you have installed locally is the same as 
-    the one on ARCHER2 (version 5.9.1).
+    the one on ARCHER2 (version 5.10.1).
 
 The following instructions are for running pvserver in an interactive job. 
 Start an iteractive job using:
@@ -101,7 +101,7 @@ A pvbatch script can be run in a standard job script. For example
 the following will run on a single node:
 
 
-```
+```slurm
 #!/bin/bash
 
 # Slurm job options (job-name, compute nodes, job time)
@@ -117,6 +117,9 @@ the following will run on a single node:
 #SBATCH --qos=standard
 
 module load paraview
+
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 
 srun --distribution=block:block --hint=nomultithread pvbatch pvbatchscript.py
 ```

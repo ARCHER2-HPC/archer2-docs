@@ -21,29 +21,34 @@ ARCHER2 users.
 For example, the following script will run a QE `pw.x` job using 4 nodes
 (128x4 cores).
 
-=== "Full system"
-    ```
-    #!/bin/bash
+```
+#!/bin/bash
 
-    # Request 4 nodes to run a 512 MPI task job with 128 MPI tasks per node.
-    # The maximum walltime limit is set to be 20 minutes.
+# Request 4 nodes to run a 512 MPI task job with 128 MPI tasks per node.
+# The maximum walltime limit is set to be 20 minutes.
 
-    #SBATCH --job-name=qe_test
-    #SBATCH --nodes=4
-    #SBATCH --ntasks-per-node=128
-    #SBATCH --cpus-per-task=1
-    #SBATCH --time=00:20:00
+#SBATCH --job-name=qe_test
+#SBATCH --nodes=4
+#SBATCH --ntasks-per-node=128
+#SBATCH --cpus-per-task=1
+#SBATCH --time=00:20:00
 
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code] 
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code] 
+#SBATCH --partition=standard
+#SBATCH --qos=standard
 
-    # Load the relevant Quantum Espresso module
-    module load quantum_espresso
+# Load the relevant Quantum Espresso module
+module load quantum_espresso
 
-    srun pw.x < test_calc.in
-    ```
+# Set number of OpenMP threads to 1 to prevent multithreading by libraries
+export OMP_NUM_THREADS=1
+
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+srun --hint=nomultithread --distribution=block:block pw.x < test_calc.in
+```
 
 ## Hints and tips
 

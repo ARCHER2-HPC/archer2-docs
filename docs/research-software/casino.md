@@ -121,6 +121,9 @@ module load cray-mpich-ucx
 # Set CASINO to share memory across 16 core blocks
 export CASINO_NUMABLK=16
 
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
 # Set the location of the CASINO executable - this must be on /work
 #   Replace this with the path to your compiled CASINO binary
 CASINO_EXE=/work/t01/t01/auser/CASINO/bin_qmc/linuxpc-gcc-slurm-parallel.archer2/Shm/opt/casino

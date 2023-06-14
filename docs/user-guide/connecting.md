@@ -161,7 +161,7 @@ are accessing:
     You will first be prompted for the passphrase associated with your SSH key pair. Once you have entered this passphrase successfully, you will then be prompted for your machine account password. You need to enter both credentials correctly to be able to access ARCHER2.
     
     !!! tip
-        If you previously logged into the 4-cabinet system with your account you may see an error 
+        If you logged into ARCHER2 with your account before the major upgrade in May/June 2023 you may see an error 
         from SSH that looks like
 
         ```
@@ -230,15 +230,15 @@ Adding the host keys to your SSH configuration file provides an extra level of s
 
 ### login.archer2.ac.uk
 
-```
-login.archer2.ac.uk ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEnMeFf1TPZ4pbupWeD4IeahEeeqJMAhrCv1znyQGAL45yOIArVltscW8GNhzfaWk5vKb9sIAm2mJZPc3b7te3c=
-    
-login.archer2.ac.uk ssh-rsa  AAAAB3NzaC1yc2EAAAADAQABAAABAQCZKpFN25u13uSTOun8jOKEO+4Y/98DW9/8dxoGYOf8Q7qZEyQUGk5QUuJCiB7ZzCOJ01Lxl+ghYpQ13oiebZWkTWUdypSCBH5f4/y5z+f87fDqOjkHKhpYb90RlpbP+Ik+6IapQOTYKGBPFfwkbp2LYh3ktV7ocpKVCNst0k5IELNufNBgsGNFYNyRYIR6hHoH2kUqDvrN8IXf8085vKbKdMQPdAtIEX7sOX+UNUpR/46zcAyn8VRn/CGA5WA39nKKOiPzJn8pFtKDUmme/DA9/Y+Z/jJS55coHxV81Qws5WYmg7bzgVDkZJvtzQ6haJAOhsWNYzNtrEwNNDCc610z
-    
-login.archer2.ac.uk ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII/OY5bYUBnnLr0B7keiT97WtzSGtTsTexpgmxkdCI+b
-```
  
- 
+
+```
+login.archer2.ac.uk ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBANu9BQJ1UFr4nwy8X5seIPgCnBl1TKc8XBq2YVY65qS53QcpzjZAH53/CtvyWkyGcmY8/PWsJo9sXHqzXVSkzk=
+
+login.archer2.ac.ukssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDFGGByIrskPayB5xRm3vkWoEc5bVtTCi0oTGslD8m+M1Sc/v2IV6FxaEVXGwO9ErQwrtFQRj0KameLS3Jn0LwQ13Tw+vTXV0bsKyGgEu2wW+BSDijGpbxRZXZrg30TltZXd4VkTuWiE6kyhJ6qiIIR0nwfDblijGy3u079gM5Om/Q2wydwh0iAASRzkqldL5bKDb14Vliy7tCT3TJXI49+qIagWUhNEzyN1j2oK/2n3JdflT4/anQ4jUywVG4D1Tor/evEeSa3h5++gbtgAXZaCtlQbBxwckmTetXqnlI+pvkF0AAuS18Bh+hdmvT1+xW0XLv7CMA64HfR93XgQIIuPqFAS1p+HuJkmk4xFAdwrzjnpYAiU5Apkq+vx3W957/LULzZkeiFQY2Y3CY9oPVR8WBmGKXOOBifhl2Hvd51fH1wd0Lw7Zph53NcVSQQhdDUVhgsPJA3M/+UlqoAMEB/V6ESE2z6yrXVfNjDNbbgA1K548EYpyNR8z4eRtZOoi0=
+
+login.archer2.ac.uk ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINyptPmidGmIBYHPcTwzgXknVPrMyHptwBgSbMcoZgh5
+```
 
 Host key verification can fail if this key is out of date, a problem which can be fixed by removing the offending entry in `~/.ssh/known_hosts` and replacing it with the new key published here.  We recommend users should check this page for any key updates and not just accept a new key from the server without confirmation.
 

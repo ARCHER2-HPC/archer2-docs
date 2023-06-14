@@ -61,6 +61,9 @@ extension in the working directory.
 
 export OMP_NUM_THREADS=8              # Repeat the value from 'cpus-per-task' here.
 
+# Ensure the cpus-per-task option is propagated to srun commands
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
 # Set up the job environment, loading the ONETEP module.
 # The module automatically sets OMP_PLACES, OMP_PROC_BIND and FI_MR_CACHE_MAX_COUNT.
 # To use a different binary, replace this line with either (drop the leading '#')
