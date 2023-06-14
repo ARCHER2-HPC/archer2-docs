@@ -1,15 +1,24 @@
 ## Arm Forge
 
-[Arm Forge](https://developer.arm.com/Tools%20and%20Software/Arm%20Forge)
+
+!!! note
+    What were Arm Forge products (DDT and MAP) were acquired by Linaro in 2023.
+    We may continue to refer to "Arm Forge" to prevent confusion,
+    particularly in the context of module files.
+    However, relevant links are now to the
+    [Linaro web site](https://www.linaroforge.com/)
+
+
+[Linaro Forge](https://www.linaroforge.com/)
 provides debugging and profiling tools for MPI parallel applications, and
 OpenMP or pthreads multi-threaded applications (and also hydrid MPI/OpenMP).
 The debugger and profiler are called DDT and MAP, respectively.
 
-ARCHER2 has a license for up to 64 nodes (8192 cores) shared between
+ARCHER2 has a license for up to 16 nodes (2048 cores) shared between
 all users at any one time. (Note, cores are counted by the license, not
 MPI processes, threads, or any other software entity.)
 
-There are two ways of running the Arm user interface. If you have a good
+There are two ways of running the Forge user interface. If you have a good
 internet connection to ARCHER2, the GUI can be run on the front-end (with
 an X-connection).
 Alternatively, one can download a copy of the Forge remote client to your
@@ -17,15 +26,10 @@ laptop or desktop, and run it locally. The remote client should be used if
 at all possible.
 
 To download the remote client, see the
-[Arm developer download pages](https://developer.arm.com/downloads/-/arm-forge). Version 22.1.1 is known to work at the time of writing. Connecting with
+[Arm developer download pages](https://www.linaroforge.com/downloadForge/).
+Version 22.1.1 is known to work at the time of writing. Connecting with
 the remote client is discussed below.
 
-
-!!! note
-    Arm Forge is a commercial package for which CSE has a licence until
-    April 2023. Availability of Forge beyond April 2023 will depend on
-    continued funding for the license. Therefore, please let us know if
-    Arm Forge is useful in your work.
 
 
 ### One time set-up for using Forge
@@ -57,7 +61,7 @@ The directory will also store other relevant files when Forge is run.
     The `config-init` script will output a warning, `...failed to read system config`.
     Please ignore: subsequent output should indicate that the new configuration
     files have been created.
-    
+
 Once you have created this directory, you also need to modify the `system.config` file in the directory `${/work/.../.allinea}`, editing the line
 
 ```bash
@@ -153,7 +157,7 @@ In the ***Application*** sub panel of the ***Run*** dialog box, details of the
 executable, command line arguments or data files, the working directory
 and so on should be entered.
 
-Click the ***MPI*** checkbox and specifiy the MPI implementation. This is done
+Click the ***MPI*** checkbox and specify the MPI implementation. This is done
 by clicking the ***Details*** button and then the ***Change*** button.
 Choose the ***SLURM (generic)*** implementation from the drop-down menu
 and click ***OK***. You can then specify the required number of nodes/processes
@@ -172,8 +176,8 @@ section and specify the relevant project budget, see the ***Account*** entry.
 The default queue template file configuration uses the short QoS with the
 standard time limit of 20 minutes. If something different is required,
 one can edit the settings. Alternatively, one can copy the `archer2.qtf` file
-(to `${HOME/home/work}/.allinea`) and make the relevant changes. This new 
-template file can then be specifed in the dialog window.
+(to `${HOME/home/work}/.allinea`) and make the relevant changes. This new
+template file can then be specified in the dialog window.
 
 There may be a short delay while the sbatch job starts. Debugging should
 then proceed as described in the Allinea documentation.
@@ -280,5 +284,5 @@ local `.ssh/config` configuration file.
 ## Useful links
 
 
-  - [Arm Forge User Guide](https://developer.arm.com/documentation/101136/latest/)
+  - [Forge User Guide](https://www.linaroforge.com/documentation/)
   - More information on [X-window connections to ARCHER2](https://docs.archer2.ac.uk/user-guide/connecting/#logging-in).
