@@ -424,22 +424,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#archer2-upgrade-work-begins-on-friday-19th-may-2023-1400-bst" class="md-nav__link">
-    ARCHER2 Upgrade work begins on Friday 19th May 2023  14:00 BST
+  <a href="#why-did-the-upgrade-happen" class="md-nav__link">
+    Why did the upgrade happen?
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#why-is-the-upgrade-happening" class="md-nav__link">
-    Why is the upgrade happening?
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#when-will-the-upgrade-happen-and-how-long-will-it-take" class="md-nav__link">
-    When will the upgrade happen and how long will it take?
+  <a href="#when-did-the-upgrade-happen-and-how-long-did-it-take" class="md-nav__link">
+    When did the upgrade happen and how long did it take?
   </a>
   
 </li>
@@ -518,6 +511,13 @@
           <li class="md-nav__item">
   <a href="#changes-to-bind-paths-and-library-paths-for-singularity-with-mpi" class="md-nav__link">
     Changes to bind paths and library paths for Singularity with MPI
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#amd-prof-not-available" class="md-nav__link">
+    AMD &mu;Prof not available
   </a>
   
 </li>
@@ -1694,22 +1694,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#archer2-upgrade-work-begins-on-friday-19th-may-2023-1400-bst" class="md-nav__link">
-    ARCHER2 Upgrade work begins on Friday 19th May 2023  14:00 BST
+  <a href="#why-did-the-upgrade-happen" class="md-nav__link">
+    Why did the upgrade happen?
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#why-is-the-upgrade-happening" class="md-nav__link">
-    Why is the upgrade happening?
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#when-will-the-upgrade-happen-and-how-long-will-it-take" class="md-nav__link">
-    When will the upgrade happen and how long will it take?
+  <a href="#when-did-the-upgrade-happen-and-how-long-did-it-take" class="md-nav__link">
+    When did the upgrade happen and how long did it take?
   </a>
   
 </li>
@@ -1792,6 +1785,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#amd-prof-not-available" class="md-nav__link">
+    AMD &mu;Prof not available
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1861,55 +1861,45 @@
 
 
 <h1 id="archer2-upgrade-2023">ARCHER2 Upgrade: 2023</h1>
-<h2 id="archer2-upgrade-work-begins-on-friday-19th-may-2023-1400-bst">ARCHER2 Upgrade work begins on Friday 19th May 2023  14:00 BST</h2>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>The information on this page represents our current best understanding of the
-upgrade but is subject to change and revision as more information becomes 
-available.</p>
-<p>Last updated: 2023-06-12</p>
-</div>
-<p>During the first half of 2023 ARCHER will go through a major software upgrade.</p>
-<p>On this page we describe the background to the changes, the current
-information on the timeline, what impact the changes will have for users, any
-action you should expect to have to take following the upgrade and information
+<p>During the first half of 2023 ARCHER went through a major software upgrade.</p>
+<p>On this page we describe the background to the changes what impact the changes have had for users, any
+action you should expect to take following the upgrade and information
 on the versions on updated software.</p>
-<p>If you have any questions or concerns regarding the upgrade, please
+<p>If you have any questions or concerns, please
 <a href="https://www.archer2.ac.uk/support-access/servicedesk.html">contact the ARCHER2 Service Desk</a>.</p>
-<h2 id="why-is-the-upgrade-happening">Why is the upgrade happening?</h2>
-<p>There are a number of reasons why ARCHER2 needs to go through this major software
-upgrade. All of these reasons are related to the fact that the current system
-software setup is out of date; due to this, maintenance of the service is very
-difficult and updating software within the current framework is not possible.
-Some specific issues are:</p>
+<h2 id="why-did-the-upgrade-happen">Why did the upgrade happen?</h2>
+<p>There are a number of reasons why ARCHER2 needed to go through this major software
+upgrade. All of these reasons are related to the fact that the previous system
+software setup was out of date; due to this, maintenance of the service was very
+difficult and updating software within the current framework was not possible.
+Some specific issues were:</p>
 <ul>
-<li><em>Ongoing access to security updates</em> -- the vendor (HPE) can not provide support for
-   security updates for the current system software on ARCHER2 indefinitely, this will
-   be an issue if we continue with the current release.</li>
+<li><em>Ongoing access to security updates</em> -- the vendor (HPE) could not provide support for
+   security updates for the previous system software on ARCHER2 indefinitely, this would have
+   been an issue if we had continued with the previous release.</li>
 <li><em>Improvements to interconnect reliability and performance</em> -- the Slingshot interconnect
    that links compute nodes together and to the high-performance Lustre file systems
-   is currently running an old version of management software that has a number of known
-   limitations and bugs. These affect our ability to monitor the health of the interconnect
-   and have led to reliability issues for calculations using large numbers of compute nodes.
-   Without a major system software upgrade, we cannot move to an up to date version of the
-   Slingshot software that addresses current limitations.</li>
-<li><em>Improvements to upgradeability, maintainability and monitoring</em> -- the current system software
-   is based on a collection of early versions from the hardware vendor that do not provide
+   was running an old version of management software that had a number of known
+   limitations and bugs. These affected our ability to monitor the health of the interconnect
+   and led to reliability issues for calculations using large numbers of compute nodes.
+   Without the major system software upgrade, we could not move to an up to date version of the
+   Slingshot software that addressed these limitations.</li>
+<li><em>Improvements to upgradeability, maintainability and monitoring</em> -- the previous system software
+   was based on a collection of early versions from the hardware vendor that did not provide
    the system health monitoring characteristics of more recent versions or the ability to
-   flexibly update the system with low impact on user service that are available in more 
+   flexibly update the system with low impact on user service that were available in more 
    recent versions.</li>
-<li><em>Access to more recent compilers, software libraries and tools</em> -- the current system
-   software does not provide the ability to access improvements in compilers and libraries
-   (both bug fixes and performance improvements) that are available from HPE. Once the 
-   system software is updated, the service will be able to access this improved software.</li>
+<li><em>Access to more recent compilers, software libraries and tools</em> -- the previous system
+   software did not provide the ability to access improvements in compilers and libraries
+   (both bug fixes and performance improvements) that were available from HPE.</li>
 </ul>
-<h2 id="when-will-the-upgrade-happen-and-how-long-will-it-take">When will the upgrade happen and how long will it take?</h2>
-<p>This major software upgrade will involve a complete re-install of system software followed
+<h2 id="when-did-the-upgrade-happen-and-how-long-did-it-take">When did the upgrade happen and how long did it take?</h2>
+<p>This major software upgrade involved a complete re-install of system software followed
 by a reinstatement of local configurations (e.g. Slurm, authentication services, SAFE integration).
-Unfortunately, this major work will require a long period of downtime but this has been planned
+Unfortunately, this major work required a long period of downtime but this was planned
 with all service partners to minimise the outage and give as much notice to users as possible so
-that they can plan accordingly.</p>
-<p>The current outage dates are:</p>
+that they could plan accordingly.</p>
+<p>The outage dates were:</p>
 <ul>
 <li>Start: 14:00 BST, Fri 19th May 2023</li>
 <li>End: 12:00 BST, Mon 12th June 2023</li>
@@ -1922,9 +1912,8 @@ that they can plan accordingly.</p>
 <li>Some of the SAFE functionality will be removed during the upgrade such as user account requests</li>
 </ul>
 <h3 id="after-the-upgrade-process">After the upgrade process</h3>
-<p>The allocation periods (where appropriate) will be extended for the outage period. The changes will be in place when the service is returned.</p>
-<p>After the upgrade process there will be a number of changes that may require action from
-users</p>
+<p>The allocation periods (where appropriate) were extended for the outage period. The changes were in place when the service was returned.</p>
+<p>After the upgrade process there are a number of changes that may require action from users</p>
 <h4 id="updated-login-node-host-keys">Updated login node host keys</h4>
 <p>If you previously logged into the ARCHER2 system before the upgrade you may see an error from SSH that looks like:</p>
 <div class="highlight"><pre><span></span><code>@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -1950,15 +1939,15 @@ Please contact your system administrator.
 (in the example above the offending line is line #11).</p>
 <p>The current login node host keys are always <a href="../../user-guide/connecting/#host-keys">documented in the User Guide</a></p>
 <h4 id="recompile-and-test-software">Recompile and test software</h4>
-<p>As the new system will be based on a new OS version and new versions of compilers and
+<p>As the new system is based on a new OS version and new versions of compilers and
 libraries we strongly recommend that all users recompile and test all software on the service.
-The ARCHER2 CSE service will be recompiling all centrally installed software.</p>
+The ARCHER2 CSE service recompiled all centrally installed software.</p>
 <h4 id="no-python-2-installation">No Python 2 installation</h4>
-<p>There will be no Python 2 installation available as part of supported software
-following the upgrade. Python 3 will continue to be fully-supported.</p>
+<p>There is no Python 2 installation available as part of supported software
+following the upgrade. Python 3 continues to be fully-supported.</p>
 <h3 id="impact-on-data-on-the-service">Impact on data on the service</h3>
 <ul>
-<li>No data in /home, /work, NVMe or RDFaaS will be removed or moved as part of the upgrade</li>
+<li>No data in /home, /work, NVMe or RDFaaS was removed or moved as part of the upgrade</li>
 </ul>
 <h4 id="slurm-cpus-per-task-setting-no-longer-inherited-by-srun">Slurm: cpus-per-task setting no longer inherited by <code>srun</code></h4>
 <p>Change in Slurm behaviour. The setting from the <code>--cpus-per-task</code> option to sbatch/salloc is
@@ -1980,6 +1969,9 @@ Core CompleX). Each CCX shares 16 MB L3 Cache.</p>
 in Singularity containers have changed. The updated settings are documented in the
 <a href="../../user-guide/containers/">Containers section</a> of the User and Best Practice Guide. This
 also includes updated information on building containers with MPI to use on ARCHER2.</p>
+<h4 id="amd-prof-not-available">AMD &mu;Prof not available</h4>
+<p>The AMD &mu;Prof tool is not available on the upgraded system yet. We are working to get this 
+fixed as soon as possible.</p>
 <h2 id="what-software-versions-will-be-available-after-the-upgrade">What software versions will be available after the upgrade?</h2>
 <p>System software:</p>
 <ul>
