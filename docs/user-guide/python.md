@@ -89,23 +89,24 @@ And when you have finished installing packages, you can deactivate the environme
 The packages you have installed will only be available once the local environment has been activated. So, when running code that requires these packages,
 you must first activate the environment, by adding the activation command to the submission script, as shown below.
 
-=== "Full system"
-    ```
-    #!/bin/bash --login
+```
+#!/bin/bash --login
 
-    #SBATCH --job-name=myvenv
-    #SBATCH --nodes=2
-    #SBATCH --ntasks-per-node=64
-    #SBATCH --cpus-per-task=2
-    #SBATCH --time=00:10:00
-    #SBATCH --account=[budget code]
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
+#SBATCH --job-name=myvenv
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=64
+#SBATCH --cpus-per-task=2
+#SBATCH --time=00:10:00
+#SBATCH --account=[budget code]
+#SBATCH --partition=standard
+#SBATCH --qos=standard
 
-    source /work/t01/t01/auser/myvenv/bin/activate
+source /work/t01/t01/auser/myvenv/bin/activate
 
-    srun --distribution=block:block --hint=nomultithread python ${SLURM_SUBMIT_DIR}/myvenv-script.py
-    ```
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+srun --distribution=block:block --hint=nomultithread python ${SLURM_SUBMIT_DIR}/myvenv-script.py
+```
 
 Lastly, the environment being extended does not have to come from one of the centrally-installed `cray-python` modules.
 You can also create a local virtual environment based on one of the Machine Learning (ML) modules, e.g., `tensorflow`
@@ -124,30 +125,27 @@ ensuring that the python packages will be gathered from the local virtual enviro
 
 ### Example serial Python submission script
 
-=== "Full system"
-    ```
-    #!/bin/bash --login
+```
+#!/bin/bash --login
     
-    #SBATCH --job-name=python_test
-    #SBATCH --ntasks=1
-    #SBATCH --time=00:10:00
+#SBATCH --job-name=python_test
+#SBATCH --ntasks=1
+#SBATCH --time=00:10:00
     
-    # Replace [budget code] below with your project code (e.g. t01)
-    #SBATCH --account=[budget code]
-    #SBATCH --partition=serial
-    #SBATCH --qos=serial
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code]
+#SBATCH --partition=serial
+#SBATCH --qos=serial
    
-    # Set the number of threads to 1
-    #   This prevents any threaded system libraries from automatically 
-    #   using threading.
-    export OMP_NUM_THREADS=1
- 
-    # Load the Python module
-    module load cray-python
+# Load the Python module, ...
+module load cray-python
+
+# ..., or, if using local virtual environment
+source <<path to virtual environment>>/bin/activate
     
-    # Run your Python progamme
-    python python_test.py
-    ```
+# Run your Python program
+python python_test.py
+```
 
 ### Example mpi4py job submission script
 
@@ -155,32 +153,34 @@ Programs that have been parallelised with mpi4py can be run on the ARCHER2 compu
 Unlike the serial Python submission script however, we must launch the Python interpreter
 using `srun`. Failing to do so will result in Python running a single MPI rank only. 
 
-=== "Full system"
-    ```
-    #!/bin/bash --login
-    # Slurm job options (job-name, compute nodes, job time)
-    #SBATCH --job-name=mpi4py_test
-    #SBATCH --nodes=2
-    #SBATCH --ntasks-per-node=128
-    #SBATCH --cpus-per-task=1
-    #SBATCH --time=0:10:0
+```
+#!/bin/bash --login
+# Slurm job options (job-name, compute nodes, job time)
+#SBATCH --job-name=mpi4py_test
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=128
+#SBATCH --cpus-per-task=1
+#SBATCH --time=0:10:0
     
-    # Replace [budget code] below with your budget code (e.g. t01)
-    #SBATCH --account=[budget code]
-    #SBATCH --partition=standard
-    #SBATCH --qos=standard
+# Replace [budget code] below with your budget code (e.g. t01)
+#SBATCH --account=[budget code]
+#SBATCH --partition=standard
+#SBATCH --qos=standard
 
-    # Set the number of threads to 1
-    #   This prevents any threaded system libraries from automatically
-    #   using threading.
-    export OMP_NUM_THREADS=1
-    
-    # Load the Python module
-    module load cray-python
-    
-    # Run your Python program
-    srun --distribution=block:block --hint=nomultithread python mpi4py_test.py
-    ```
+# Load the Python module, ...
+module load cray-python
+
+# ..., or, if using local virtual environment
+source <<path to virtual environment>>/bin/activate
+
+# Pass cpus-per-task setting to srun
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+# Run your Python program
+#   Note that srun MUST be used to wrap the call to python,
+#   otherwise and error will occur
+srun --distribution=block:block --hint=nomultithread python mpi4py_test.py
+```
 
 !!! tip
     If you have installed your own packages you will need to activate your local Python
