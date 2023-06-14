@@ -606,25 +606,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#adding-your-own-packages" class="md-nav__link">
-    Adding your own packages
+  <a href="#installing-your-own-python-packages-with-pip" class="md-nav__link">
+    Installing your own Python packages (with pip)
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#setting-up-virtual-environments" class="md-nav__link">
-    Setting up virtual environments
+  <a href="#running-python" class="md-nav__link">
+    Running Python
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#running-python-on-the-compute-nodes" class="md-nav__link">
-    Running Python on the compute nodes
-  </a>
-  
-    <nav class="md-nav" aria-label="Running Python on the compute nodes">
+    <nav class="md-nav" aria-label="Running Python">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1614,25 +1607,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#adding-your-own-packages" class="md-nav__link">
-    Adding your own packages
+  <a href="#installing-your-own-python-packages-with-pip" class="md-nav__link">
+    Installing your own Python packages (with pip)
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#setting-up-virtual-environments" class="md-nav__link">
-    Setting up virtual environments
+  <a href="#running-python" class="md-nav__link">
+    Running Python
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#running-python-on-the-compute-nodes" class="md-nav__link">
-    Running Python on the compute nodes
-  </a>
-  
-    <nav class="md-nav" aria-label="Running Python on the compute nodes">
+    <nav class="md-nav" aria-label="Running Python">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1727,58 +1713,71 @@ to compile your own Python, C/C++ or Fortran code to use with HPE Cray
 Python, you should ensure that you compile using <code>PrgEnv-gnu</code> to make sure
 they are compatible.</p>
 </div>
-<h2 id="adding-your-own-packages">Adding your own packages</h2>
-<p>If the packages you require are not included in the HPE Cray Python
-distribution, further packages can be added using <code>pip</code>. However, as the
-/home file systems are not available on the compute nodes, you will need
-to modify the default install location that <code>pip</code> uses to point to a
-location on the /work file systems (by default, <code>pip</code> installs into
-<code>$HOME/.local</code>). To do this, you set the <code>PYTHONUSERBASE</code> environment
-variable to point to a location on /work, for example:</p>
-<pre><code>export PYTHONUSERBASE=/work/t01/t01/auser/.local
+<h2 id="installing-your-own-python-packages-with-pip">Installing your own Python packages (with pip)</h2>
+<p>Sometimes, you may need to setup a local custom Python environment such that it extends a centrally-installed <code>cray-python</code> module.
+By extend, we mean being able to install packages locally that are not provided by <code>cray-python</code>. This is necessary because some Python
+packages such as <code>mpi4py</code> must be built specifically for the ARCHER2 system and so are best provided centrally.</p>
+<p>You can do this by creating a lightweight <strong>virtual</strong> environment where the local packages can be installed. Further, this environment
+is created on top of an existing Python installation, known as the environment's <strong>base</strong> Python.</p>
+<p>Select the base Python by loading the <code>cray-python</code> module that you wish to extend.</p>
+<pre><code>auser@ln01:~&gt; module load cray-python
 </code></pre>
-<p>You will also need to ensure that:</p>
-<ol>
-<li>the location of commands installed by <code>pip</code> are available on the command
-   line by modifying the <code>PATH</code> environment variable;</li>
-<li>any packages you install are available to Python by modifying the 
-   <code>PYTHONPATH</code> environment variable.</li>
-</ol>
-<p>You can do this in the following way (once you have set <code>PYTHONUSERBASE</code> as described
-above):</p>
-<pre><code>export PATH=$PYTHONUSERBASE/bin:$PATH
-export PYTHONPATH=$PYTHONUSERBASE/lib/python3.8/site-packages:$PYTHONPATH
+<p>Next, create the virtual environment within a designated folder.</p>
+<pre><code>python -m venv --system-site-packages /work/t01/t01/auser/myvenv
 </code></pre>
-<p>We would recommend adding all three of these commands to your <code>$HOME/.bashrc</code>
-file to ensure they are set by default when you log in to ARCHER2.</p>
-<p>Once, you have done this, you can use <code>pip</code> to add packages on top of the HPE 
-Cray Python environment. This can be done using:</p>
-<pre><code>module load cray-python
-pip install --user &lt;package_name&gt;
+<p>In our example, the environment is created within a <code>myvenv</code> folder located on <code>/work</code>, which means the environment will be accessible
+from the compute nodes. The <code>--system-site-packages</code> option ensures this environment is based on the currently loaded <code>cray-python</code>
+module. See <a href="https://docs.python.org/3/library/venv.html">https://docs.python.org/3/library/venv.html</a> for more details.</p>
+<p>You're now ready to <em>activate</em> your environment.</p>
+<pre><code>source /work/t01/t01/auser/myvenv/bin/activate
 </code></pre>
-<p>This uses the <code>--user</code> flag to ensure the packages are installed in
-the directory specified by <code>PYTHONUSERBASE</code>.</p>
-<h2 id="setting-up-virtual-environments">Setting up virtual environments</h2>
-<p>We recommend that you use the <code>pipenv</code> and/or <code>virtualenv</code> packages to
-manage your Python environments. A summary of how to get a virtual environment set up is contained in the below, but for further information, see:</p>
-<ul>
-<li><a href="https://docs.python-guide.org/dev/virtualenvs/">Pipenv and Virtual
-     Environments</a></li>
-</ul>
-<p>Sometimes, you may need several different versions of the same package installed, for example, due to dependency issues. Virtual environments allow you to manage these conflicting requirements. The first step is to run the commands contained in the above section so that you can install the <code>virtualenv</code> package which will manage your environments. To install <code>virtualenv</code> run:
-<div class="highlight"><pre><span></span><code>pip install --user virtualenv  # The --user flag indicates this should be installed in the user&#39;s package folder
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The <code>myvenv</code> path uses a fictitious project code, <code>t01</code>, and username, <code>auser</code>. Please remember to replace those values
+with your actual project code and username. Alternatively, you could enter <code>${HOME/home/work}</code> in place of <code>/work/t01/t01/auser</code>.
+That command fragment expands <code>${HOME}</code> and then replaces the <code>home</code> part with <code>work</code>.</p>
+</div>
+<p>Installing packages to your local environment can now be done as follows.</p>
+<pre><code>(myvenv) auser@ln01:~&gt; python -m pip install &lt;package name&gt;
+</code></pre>
+<p>Running <code>pip</code> directly as in <code>pip install &lt;package name&gt;</code> will also work, but we show the <code>python -m</code> approach
+as this is consistent with the way the virtual environment was created.</p>
+<p>And when you have finished installing packages, you can deactivate the environment by running the <code>deactivate</code> command.</p>
+<pre><code>(myvenv) auser@ln01:~&gt; deactivate
+auser@ln01:~&gt;
+</code></pre>
+<p>The packages you have installed will only be available once the local environment has been activated. So, when running code that requires these packages,
+you must first activate the environment, by adding the activation command to the submission script, as shown below.</p>
+<div class="highlight"><pre><span></span><code>#!/bin/bash --login
+
+#SBATCH --job-name=myvenv
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=64
+#SBATCH --cpus-per-task=2
+#SBATCH --time=00:10:00
+#SBATCH --account=[budget code]
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+
+source /work/t01/t01/auser/myvenv/bin/activate
+
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+srun --distribution=block:block --hint=nomultithread python ${SLURM_SUBMIT_DIR}/myvenv-script.py
 </code></pre></div>
-Next you must create a folder for the virtual environment's files to live in and tell <code>virtualenv</code> to set this folder up for storing virtual environment 'stuff'. This is done by running the command
-<div class="highlight"><pre><span></span><code>mkdir /work/t01/t01/auser/&lt;&lt;name of your virtual environment&gt;&gt;  # Create the folder
-virtualenv -p /opt/cray/pe/python/3.8.5.0/bin/python /work/t01/t01/asuser/&lt;&lt;name of your virtual environment&gt;&gt;  # -p flag means use this python interpreter
-</code></pre></div>
-Finally, you're ready to <code>activate</code> your environment. This is done by running
-<div class="highlight"><pre><span></span><code>source /work/t01/t01/auser/&lt;&lt;name of your virtual environment&gt;&gt;/bin/activate
-</code></pre></div>
-Once your environment is activated you will be able to install packages as usual using <code>pip install &lt;&lt;package name&gt;&gt;</code>. These packages will only be available within this environment. When running code that requires these packages you must activate the environment, by adding the above <code>source ... activate</code> line of code to any submission scripts.</p>
-<h2 id="running-python-on-the-compute-nodes">Running Python on the compute nodes</h2>
-<p>In this section we provide example Python job submission scripts for a
-variety of scenarios of using Python on the ARCHER2 compute nodes.</p>
+<p>Lastly, the environment being extended does not have to come from one of the centrally-installed <code>cray-python</code> modules.
+You can also create a local virtual environment based on one of the Machine Learning (ML) modules, e.g., <code>tensorflow</code>
+or <code>pytorch</code>. One extra command is required; it is issued immediately after the <code>python -m venv ...</code> command.</p>
+<pre><code>extend-venv-activate /work/t01/t01/auser/myvenv
+</code></pre>
+<p>The <code>extend-venv-activate</code> command merely adds some extra commands to the virtual environment's <code>activate</code> script,
+ensuring that the python packages will be gathered from the local virtual environment, the ML module and from the
+<code>cray-python</code> base module. All this means you would avoid having to install ML packages within your local area.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The ML modules are themselves based on <code>cray-python</code>. For example, <code>tensorflow/2.12.0</code> is based on the <code>cray-python/3.9.13.1</code> module.</p>
+</div>
+<h2 id="running-python">Running Python</h2>
 <h3 id="example-serial-python-submission-script">Example serial Python submission script</h3>
 <div class="highlight"><pre><span></span><code>#!/bin/bash --login
 
@@ -1791,34 +1790,23 @@ variety of scenarios of using Python on the ARCHER2 compute nodes.</p>
 #SBATCH --partition=serial
 #SBATCH --qos=serial
 
-# Load the Python module
-module load cray-python
+# Load the Python module, ...
 
-# If using a virtual environment
+# ..., or, if using local virtual environment
 source &lt;&lt;path to virtual environment&gt;&gt;/bin/activate
 
-# Run your Python progamme
+# Run your Python program
 python python_test.py
 </code></pre></div>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>If you have installed your own packages you will need to set <code>PATH</code> and
-<code>PYTHONPATH</code> as described above within your job submission script in order
-to accesss the commands and packages you have installed.</p>
-</div>
 <h3 id="example-mpi4py-job-submission-script">Example mpi4py job submission script</h3>
-<p>Programs that have been parallelised with mpi4py can be run on
-multiple processors on ARCHER2. A sample submission script is given
-below. The primary difference from the Python submission script in the
-previous section is that we must run the program using
-<code>srun python my_prog.py</code> instead of <code>python my_prog,py</code>. Failing to do so will 
-cause a segmentation fault in your program when it reaches the line
-"<code>from mpi4py import MPI</code>".</p>
+<p>Programs that have been parallelised with mpi4py can be run on the ARCHER2 compute nodes.
+Unlike the serial Python submission script however, we must launch the Python interpreter
+using <code>srun</code>. Failing to do so will result in Python running a single MPI rank only. </p>
 <div class="highlight"><pre><span></span><code>#!/bin/bash --login
 # Slurm job options (job-name, compute nodes, job time)
 #SBATCH --job-name=mpi4py_test
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=2
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=128
 #SBATCH --cpus-per-task=1
 #SBATCH --time=0:10:0
 
@@ -1827,17 +1815,26 @@ cause a segmentation fault in your program when it reaches the line
 #SBATCH --partition=standard
 #SBATCH --qos=standard
 
-# Load the Python module
+# Load the Python module, ...
 module load cray-python
+
+# ..., or, if using local virtual environment
+source &lt;&lt;path to virtual environment&gt;&gt;/bin/activate
 
 # Pass cpus-per-task setting to srun
 export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 
-# Run your Python programme
-# Note that srun MUST be used to wrap the call to python, otherwise an error
-# will occur
-srun --hint=nomultithread --distribution=block:block python mpi4py_test.py
+# Run your Python program
+#   Note that srun MUST be used to wrap the call to python,
+#   otherwise your code will run serially
+srun --distribution=block:block --hint=nomultithread python mpi4py_test.py
 </code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you have installed your own packages you will need to activate your local Python
+environment within your job submission script as shown at the end of
+<a href="https://docs.archer2.ac.uk/user-guide/python/#installing-your-own-python-packages-with-pip">Installing your own Python packages (with pip)</a>.</p>
+</div>
 <h2 id="using-jupyterlab-on-archer2">Using JupyterLab on ARCHER2</h2>
 <p>It is possible to view and run Jupyter notebooks from both login nodes 
 and compute nodes on ARCHER2.</p>
@@ -1893,7 +1890,7 @@ jupyter lab --ip=0.0.0.0 --no-browser
    <div class="highlight"><pre><span></span><code>ssh &lt;username&gt;@login.archer2.ac.uk -L&lt;port_number&gt;:&lt;node_id&gt;:&lt;port_number&gt;
 </code></pre></div>
    where <code>&lt;username&gt;</code> is your username, and <code>&lt;node_id&gt;</code> is the id of the node you're 
-   currently on (for a login node, this will be <code>uan01</code>, or similar; on a compute 
+   currently on (for a login node, this will be <code>ln01</code>, or similar; on a compute 
    node, it will be a mix of numbers and letters). In our example, <code>&lt;node_id&gt;</code>
    is <code>nid001015</code>. Note, please use the same port number as that shown in the URL of
    step 3. This number may vary, likely values are 8888 or 8889.</p>
