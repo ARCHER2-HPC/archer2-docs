@@ -438,27 +438,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#archer-home-data" class="md-nav__link">
-    ARCHER /home Data
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#archer-work-data" class="md-nav__link">
-    ARCHER /work Data
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#rdf-data" class="md-nav__link">
-    RDF Data
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#undeleteable-file-nfsxxxxxxxxxxx" class="md-nav__link">
     Undeleteable file .nfsXXXXXXXXXXX
   </a>
@@ -481,13 +460,6 @@
           <li class="md-nav__item">
   <a href="#oom-error-on-archer2" class="md-nav__link">
     OOM error on ARCHER2
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#qstat-qsub-command-not-found" class="md-nav__link">
-    qstat, qsub 'Command not found'
   </a>
   
 </li>
@@ -1675,27 +1647,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#archer-home-data" class="md-nav__link">
-    ARCHER /home Data
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#archer-work-data" class="md-nav__link">
-    ARCHER /work Data
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#rdf-data" class="md-nav__link">
-    RDF Data
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#undeleteable-file-nfsxxxxxxxxxxx" class="md-nav__link">
     Undeleteable file .nfsXXXXXXXXXXX
   </a>
@@ -1718,13 +1669,6 @@
           <li class="md-nav__item">
   <a href="#oom-error-on-archer2" class="md-nav__link">
     OOM error on ARCHER2
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#qstat-qsub-command-not-found" class="md-nav__link">
-    qstat, qsub 'Command not found'
   </a>
   
 </li>
@@ -1773,30 +1717,6 @@
 <p><strong>Q.</strong> I created a machine account on ARCHER2 for a training course, but now I want to use that machine username for my main ARCHER2 project, and the system will not let me, saying "that name is already in use".  How can I re-use that username.</p>
 <p><strong>A.</strong>  Send an email to the <a href="mailto:support@archer2.ac.uk">service desk</a>, letting us know the username and project that you set up previously, and asking for that account and any associated data to be deleted.  Once deleted, you can then re-use that username to request an account in your main ARCHER2 project.</p>
 <h2 id="data">Data</h2>
-<h3 id="archer-home-data">ARCHER /home Data</h3>
-<p><strong>Q.</strong> What is happening to data on <code>/home</code> on ARCHER and how can I access it from ARCHER2?</p>
-<p><strong>A.</strong> Our systems team have completed the final copy of the ARCHER <code>/home</code> filesystem and this is now available on ARCHER2.</p>
-<p>If your home directory on ARCHER was: <br>&nbsp;&nbsp;&nbsp;&nbsp;
-      <code>/home/[project]/[group]/[username]</code></p>
-<p>Then this data should be available on ARCHER2 at:<br>&nbsp;&nbsp;&nbsp;&nbsp;
-      <code>/home/archer-home-backup/[project]/[group]/[username]</code></p>
-<p>This data is read-only and cannot be edited.</p>
-<p>You should be able to read the data provided you requested the same username and the same project when creating your ARCHER2 account.</p>
-<p>If this is not the case and you still need some of this data please contact the Service Desk, <a href="mailto:support@archer2.ac.uk">support@archer2.ac.uk</a>.</p>
-<p>This backup will not be retained indefinitely so please copy any files you need to your ARCHER2 home directory as soon as you can.</p>
-<h3 id="archer-work-data">ARCHER /work Data</h3>
-<p><strong>Q.</strong> What is happening to data on <code>/work</code> on ARCHER?</p>
-<p><strong>A.</strong> The hardware is being dismantled. All users are responsible for the transfer of any ARCHER <code>/work</code> data that they wish to keep.</p>
-<p>There will be <strong>no</strong> access to <code>/work</code> after 0800 on Wednesday 27th January 2021.</p>
-<h3 id="rdf-data">RDF Data</h3>
-<p><strong>Q.</strong> What is happening to data on the RDF (<code>/epsrc</code> and <code>/general</code>) and how can I access data on the RDF from ARCHER2?</p>
-<p><strong>A.</strong> The RDF data is now available on RDF as a Service (RDFaaS).<br />
-ARCHER2 users can access the data from the ARCHER2 User Access Nodes (UANs) using</p>
-<p><code>cd /epsrc/your_project_code</code> <br />
-<code>cd /general/your_project_code</code></p>
-<p>The data was initially read-only but RDFaaS is now available for read and write access.</p>
-<p><strong>Note</strong>: as previously notified, <code>/nerc</code> is no longer available</p>
-<p>If the data you wish to access is from an old ARCHER project which is not on ARCHER2, then please contact the Service Desk (<a href="mailto:support@archer2.ac.uk">support@archer2.ac.uk</a>) and we can make arrangements so that you are able to access the data.  </p>
 <h3 id="undeleteable-file-nfsxxxxxxxxxxx">Undeleteable file .nfsXXXXXXXXXXX</h3>
 <p><strong>Q.</strong>  I have a file called .nfsXXXXXXXXXXX (where XXXXXXXXXXX is a long hexadecimal string) in my /home folder but I can't delete it.</p>
 <p><strong>A.</strong> This file will have been created during a file copy which failed.  Trying to delete it will give an error "Device or resource busy", even though the copy has ended and no active task is locking it.</p>
@@ -1804,26 +1724,12 @@ ARCHER2 users can access the data from the ARCHER2 User Access Nodes (UANs) usin
 <p>will remove it.</p>
 <h2 id="running-on-archer2">Running on ARCHER2</h2>
 <h3 id="oom-error-on-archer2">OOM error on ARCHER2</h3>
-<p><strong>Q.</strong> Why is my code, which worked fine on ARCHER, failing on ARCHER2 with an
-out of memory (OOM) error?</p>
-<p><strong>A.</strong> While each ARCHER2 node has more memory than an ARCHER node, the
-large number of processor on ARCHER2 nodes means that there is slightly less
-memory per processor. This can result in jobs that ran fine on ARCHER failing
-because they use up all of the node memory. We recommend that you try running
+<p><strong>Q.</strong> Why is my code failing on ARCHER2 with an out of memory (OOM) error?</p>
+<p><strong>A.</strong> You are requesting too much memory per process. We recommend that you try running
 the same job on underpopulated nodes. This can be done by editing reducing the
 <code>--ntasks-per-node</code> in your Slurm submission script. Please lower it to half
 of its value when it fails (so if you have <code>--ntasks-per-node=128</code>, reduce it
 to <code>--ntasks-per-node=64</code>).</p>
-<p>If the problem persists on underpopulated node, this may be a result of a
-known issue with the underlying libfabric on ARCHER2. You can find more information
-on this issue (including a temporary workaround) in the
-<a href="https://docs.archer2.ac.uk/known-issues/">Known Issues</a> section.</p>
-<h3 id="qstat-qsub-command-not-found">qstat, qsub 'Command not found'</h3>
-<p><strong>Q.</strong> Commands such as <code>qstat</code> and <code>qsub</code> don't work - I get a "command not found" message - what am I doing wrong?</p>
-<p><strong>A.</strong> <code>qstat</code> and <code>qsub</code> were commands to access the PBS queue management system on ARCHER.</p>
-<p>ARCHER2 uses Slurm instead of PBS - you can do all the same kinds of things but the commands are different.</p>
-<p>The <a href="https://docs.archer2.ac.uk/user-guide/scheduler/">Running jobs documentation</a> includes an
-<a href="https://docs.archer2.ac.uk/user-guide/scheduler/#basic-slurm-commands">introduction to Slurm commands</a>.</p>
 <h3 id="checking-budgets">Checking budgets</h3>
 <p><strong>Q.</strong>  How can I check which budget code(s) I can use?</p>
 <p><strong>A.</strong>  You can check in <a href="https://safe.epcc.ed.ac.uk">SAFE</a> by selecting <code>Login accounts</code> from the menu, select the login account you want to query.</p>
