@@ -6,8 +6,8 @@ in either of these scenarios.
 
 The Python installations on ARCHER2 contain some of the most commonly
 used packages. If you wish to install additional Python packages, we
-recommend that you use the `pip` command **after** loading the
-`cray-python` module. This is described in more detail below.
+recommend that you use the `pip` command, see the section entitled
+[Installing your own Python packages (with pip)](python/#installing-your-own-python-packages-with-pip).
 
 !!! important
     Python 2 is not supported on ARCHER2 as it has been deprecated since
@@ -183,7 +183,7 @@ srun --distribution=block:block --hint=nomultithread python mpi4py_test.py
 !!! tip
     If you have installed your own packages you will need to activate your local Python
     environment within your job submission script as shown at the end of
-    [Installing your own Python packages (with pip)](https://docs.archer2.ac.uk/user-guide/python/#installing-your-own-python-packages-with-pip).
+    [Installing your own Python packages (with pip)](python/#installing-your-own-python-packages-with-pip).
 
 
 ## Using JupyterLab on ARCHER2
