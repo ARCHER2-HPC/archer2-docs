@@ -2,7 +2,6 @@
 
 Mesa is an open-source implementation of OpenGL, Vulkan, and other graphics API to vendor-specific hardware drivers.
 
-
 ## Compiling with Mesa
 
 - `module load mesa`
@@ -23,7 +22,7 @@ if required.
 
 ## Compiling your own version
 
-Build recipe for this module can be found at the [HPC-UK github repo](https://github.com/hpc-uk/build-instructions/blob/main/libs/mesa/ARCHER2_mesa_21.0.1.md)
+Build recipe for this module can be found at the [HPC-UK github repo](https://github.com/hpc-uk/build-instructions/tree/main/libs/mesa)
 
 ## Resources
 
