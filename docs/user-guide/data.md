@@ -710,6 +710,43 @@ concerning this command's use can be found in the [GCT 6.2 GridFTP User's Guide]
     data to the [JASMIN facility](https://www.jasmin.ac.uk) can be found
     in [the JASMIN user documentation](https://help.jasmin.ac.uk/article/4997-transfers-from-archer2).
 
+### Data transfer using `rclone`
+
+[Rclone](https://rclone.org/) is a command-line program to manage files on cloud
+storage. You can transfer files directly to/from cloud storage services, such as
+MS OneDrive and Dropbox. The program preserves timestamps and verifies checksums
+at all times.
+
+First of all, you must download and unzip `rclone` on ARCHER2:
+```bash
+wget https://downloads.rclone.org/v1.62.2/rclone-v1.62.2-linux-amd64.zip
+unzip rclone-v1.62.2-linux-amd64.zip
+cd rclone-v1.62.2-linux-amd64/
+```
+
+The previous code snippet uses rclone v1.62.2, which was the latest version when
+these instructions were written.
+
+Configure rclone using `./rclone config`. Tested cloud storages include:
+- [Microsoft OneDrive.](https://rclone.org/onedrive/)
+- [Dropbox.](https://rclone.org/dropbox/)
+
+Please note that you need a token to connect from ARCHER2 to the cloud service.
+You need a web browser to get the token. The recommendation is to run rclone
+in your laptop using `rclone authorize`, get the token, and then copy the token
+from your laptop to ARCHER2. The rclone website contains further instructions on
+[configuring rclone on a remote machine without web browser.](https://rclone.org/remote_setup/)
+
+Once all the above is done, you're ready to go. If you want to copy a directory,
+please use:
+
+```rclone copy <archer2_directory> remote:<cloud_directory>```
+
+Please note that "remote" is the name that you have chosen when running
+`rclone config`. To copy files, please use:
+
+```rclone copyto <archer2_file> remote:<cloud_file>```
+
 ## SSH data transfer example: laptop/workstation to ARCHER2
 
 Here we have a short example demonstrating transfer of data directly
