@@ -108,6 +108,7 @@ nav:
     - "HYPRE": software-libraries/hypre.md
     - "Matio": software-libraries/matio.md
     - "Intel MKL": software-libraries/mkl.md
+    - "MESA": software-libraries/mesa.md
     - "MUMPS": software-libraries/mumps.md
     - "PETSc": software-libraries/petsc.md
     - "Metis/Parmetis": software-libraries/metis.md
