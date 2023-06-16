@@ -2,28 +2,33 @@
 
 Gitlab is a DevOps platform that combines a git hosting service as well as a powerful CI/CD (continuous integration/continuous development) framework. 
 
-This page explains how to run CI/CD jobs on ARCHER2 while keeping the integration with gitlab-ci. Your gitlab repository will communicate with ARCHER2 via the `gitlab-runner`, an executable constantly running on ARCHER2. It is responsible for authenticating to the gitlab repository, retrieving the source code, running jobs -either locally or using slurm-, and finally sending artefacts and results back to the gitlab user interface.
+This page explains how to run CI/CD jobs on ARCHER2 while keeping the integration with gitlab-ci. Your gitlab repository will communicate with ARCHER2 via the ``gitlab-runner``, an executable constantly running on ARCHER2. It is responsible for authenticating to the gitlab repository, retrieving the source code, running jobs -either locally or using slurm-, and finally sending artefacts and results back to the gitlab user interface.
 
-To achieve this, the `gitlab-runner` needs to be always running (idling most of the time) with an access to the internet and be able to submit jobs. On ARCHER2 this will be done by running it on the serial queue.
+To achieve this, the ``gitlab-runner`` needs to be always running (idling most of the time) with an access to the internet and be able to submit jobs. On ARCHER2 this will be done by running it on the serial queue.
 
 !!! note 
     You should make sure that you trust everyone with write access to your gitlab repository, setting up this CI/CD means that they will be able to run ARCHER2 jobs with your account/budget.
 
+## Useful links
+
+  - [Gitlab-ci documentation](https://docs.gitlab.com/ee/ci/)
+  - [Example gitlab repository with CI/CD](https://git.ecdf.ed.ac.uk/slemaire/cse-ci-tests)
+
 ## Initial setup
 
-All the tools associated to gitlab-ci are accessible in the module `gitlab-ci` that should be loaded with:
+All the tools associated to gitlab-ci are accessible in the module ``gitlab-ci`` that should be loaded with:
 
 ```sh
-$ module load gitlab-ci
+module load gitlab-ci
 ```
 
 ### Runner registration
-For this step you will need the *url* of your gitlab instance as well as your repository *registration token*, both of which can be retrieved by going in:
+This step authenticate your gitlab repository with the ``gitlab-runner`` on ARCHER2. For it you will need the *url* of your gitlab instance as well as your repository *registration token*, both of which can be retrieved by going in:
 **Settings -> CI/CD**, then **expand** the **runners** item. And you will find both in the **Specific runners** box.
 
-Then, run
+Once you have them at hand, run
 ```sh
-$ gitlab-runner register
+gitlab-runner register
 ```
 
 and reply to the prompts:
@@ -34,12 +39,12 @@ and reply to the prompts:
 - note: ` `
 - executor: `custom`
 
-If successful it should now read: `Runner registered successfully.` 
+If successful it should now read: **Runner registered successfully.** 
 Since you likely want to be able run `untagged` jobs you have to enable it on gitlab's interface. In **Settings -> CI/CD**, expand **runners** and edit the newly created **ARCHER2** line and tick the box named **Run untagged jobs**.
 
 ### Configuration
 
-Once the runner is registered, a configuration file is placed in `~/.gitlab-runner/config.toml`. You will need to edit it and add the `config_exec` and `run_exec` lines like in the example below. Also make sure you edit/add the `concurent` lines to allow multiple job to be run simultaneously.
+Once the runner is registered, a configuration file is placed in `~/.gitlab-runner/config.toml`. You will need to edit it and add the `config_exec` and `run_exec` lines like in the example below. Also make sure you edit/add the `concurrent` lines to allow multiple job to be run simultaneously.
 
 ```toml
 concurrent = 10
@@ -80,9 +85,7 @@ gitlab-runner run
 Because the `serial` queue is limited to 24h long jobs, the jobfile present in the gitlab-ci module will resubmit itself to be continuously running. The path of the jobfile is written in the environment variable `$GITLAB_CI_JOBFILE`. It can be run with:
 
 ```sh
-$ module load gitlab-ci
-
-$ sbatch $GITLAB_CI_JOBFILE
+sbatch $GITLAB_CI_JOBFILE
 ```
 
 
@@ -160,10 +163,11 @@ The supported list of slurm parameter is:
 | `--qos`             | `SLURM_qos`           |
 | `--exclusive`       | `SLURM_exclusive`     |
 
-> **Note:** only strings can be passed as a variable reliably, so make sure to use double quotes (`"`) around `TRUE`/`FALSE`, and `00:02:00` for example or they won't be interpreted properly.
+!!! note 
+    Only strings can be passed as a variable reliably, so make sure to use double quotes (`"`) around `TRUE`/`FALSE`, and `00:02:00` for example or they won't be interpreted properly.
 
 
 #### Example repository
-The repository at https://git.ecdf.ed.ac.uk/slemaire/cse-ci-tests serves can be used as an example for building an application and running it on the compute node.
+The repository at https://git.ecdf.ed.ac.uk/slemaire/cse-ci-tests can be used as an example for building an application and running it on the compute node.
 
 
