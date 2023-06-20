@@ -1,61 +1,50 @@
 # ARCHER2 Upgrade: 2023
 
-## ARCHER2 Upgrade work begins on Friday 19th May 2023  14:00 BST
+During the first half of 2023 ARCHER went through a major software upgrade.
 
-!!! warning
-    The information on this page represents our current best understanding of the
-    upgrade but is subject to change and revision as more information becomes 
-    available.
-    
-    Last updated: 2023-06-12
-
-During the first half of 2023 ARCHER will go through a major software upgrade.
-
-On this page we describe the background to the changes, the current
-information on the timeline, what impact the changes will have for users, any
-action you should expect to have to take following the upgrade and information
+On this page we describe the background to the changes what impact the changes have had for users, any
+action you should expect to take following the upgrade and information
 on the versions on updated software.
 
-If you have any questions or concerns regarding the upgrade, please
+If you have any questions or concerns, please
 [contact the ARCHER2 Service Desk](https://www.archer2.ac.uk/support-access/servicedesk.html).
 
-## Why is the upgrade happening?
+## Why did the upgrade happen?
 
-There are a number of reasons why ARCHER2 needs to go through this major software
-upgrade. All of these reasons are related to the fact that the current system
-software setup is out of date; due to this, maintenance of the service is very
-difficult and updating software within the current framework is not possible.
-Some specific issues are:
+There are a number of reasons why ARCHER2 needed to go through this major software
+upgrade. All of these reasons are related to the fact that the previous system
+software setup was out of date; due to this, maintenance of the service was very
+difficult and updating software within the current framework was not possible.
+Some specific issues were:
 
- - *Ongoing access to security updates* -- the vendor (HPE) can not provide support for
-   security updates for the current system software on ARCHER2 indefinitely, this will
-   be an issue if we continue with the current release.
+ - *Ongoing access to security updates* -- the vendor (HPE) could not provide support for
+   security updates for the previous system software on ARCHER2 indefinitely, this would have
+   been an issue if we had continued with the previous release.
  - *Improvements to interconnect reliability and performance* -- the Slingshot interconnect
    that links compute nodes together and to the high-performance Lustre file systems
-   is currently running an old version of management software that has a number of known
-   limitations and bugs. These affect our ability to monitor the health of the interconnect
-   and have led to reliability issues for calculations using large numbers of compute nodes.
-   Without a major system software upgrade, we cannot move to an up to date version of the
-   Slingshot software that addresses current limitations.
- - *Improvements to upgradeability, maintainability and monitoring* -- the current system software
-   is based on a collection of early versions from the hardware vendor that do not provide
+   was running an old version of management software that had a number of known
+   limitations and bugs. These affected our ability to monitor the health of the interconnect
+   and led to reliability issues for calculations using large numbers of compute nodes.
+   Without the major system software upgrade, we could not move to an up to date version of the
+   Slingshot software that addressed these limitations.
+ - *Improvements to upgradeability, maintainability and monitoring* -- the previous system software
+   was based on a collection of early versions from the hardware vendor that did not provide
    the system health monitoring characteristics of more recent versions or the ability to
-   flexibly update the system with low impact on user service that are available in more 
+   flexibly update the system with low impact on user service that were available in more 
    recent versions.
- - *Access to more recent compilers, software libraries and tools* -- the current system
-   software does not provide the ability to access improvements in compilers and libraries
-   (both bug fixes and performance improvements) that are available from HPE. Once the 
-   system software is updated, the service will be able to access this improved software.
+ - *Access to more recent compilers, software libraries and tools* -- the previous system
+   software did not provide the ability to access improvements in compilers and libraries
+   (both bug fixes and performance improvements) that were available from HPE.
 
-## When will the upgrade happen and how long will it take?
+## When did the upgrade happen and how long did it take?
 
-This major software upgrade will involve a complete re-install of system software followed
+This major software upgrade involved a complete re-install of system software followed
 by a reinstatement of local configurations (e.g. Slurm, authentication services, SAFE integration).
-Unfortunately, this major work will require a long period of downtime but this has been planned
+Unfortunately, this major work required a long period of downtime but this was planned
 with all service partners to minimise the outage and give as much notice to users as possible so
-that they can plan accordingly.
+that they could plan accordingly.
 
-The current outage dates are:
+The outage dates were:
 
  - Start: 14:00 BST, Fri 19th May 2023
  - End: 12:00 BST, Mon 12th June 2023
@@ -70,10 +59,9 @@ The current outage dates are:
 
 ### After the upgrade process
 
-The allocation periods (where appropriate) will be extended for the outage period. The changes will be in place when the service is returned.
+The allocation periods (where appropriate) were extended for the outage period. The changes were in place when the service was returned.
 
-After the upgrade process there will be a number of changes that may require action from
-users
+After the upgrade process there are a number of changes that may require action from users
 
 #### Updated login node host keys
 
@@ -107,18 +95,18 @@ The current login node host keys are always [documented in the User Guide](../us
 
 #### Recompile and test software
 
-As the new system will be based on a new OS version and new versions of compilers and
+As the new system is based on a new OS version and new versions of compilers and
 libraries we strongly recommend that all users recompile and test all software on the service.
-The ARCHER2 CSE service will be recompiling all centrally installed software.
+The ARCHER2 CSE service recompiled all centrally installed software.
 
 #### No Python 2 installation
 
-There will be no Python 2 installation available as part of supported software
-following the upgrade. Python 3 will continue to be fully-supported.
+There is no Python 2 installation available as part of supported software
+following the upgrade. Python 3 continues to be fully-supported.
 
 ### Impact on data on the service
 
- - No data in /home, /work, NVMe or RDFaaS will be removed or moved as part of the upgrade
+ - No data in /home, /work, NVMe or RDFaaS was removed or moved as part of the upgrade
 
 #### Slurm: cpus-per-task setting no longer inherited by `srun`
 
@@ -149,6 +137,11 @@ The paths you need to bind and the `LD_LIBRARY_PATH` settings required to use Cr
 in Singularity containers have changed. The updated settings are documented in the
 [Containers section](../user-guide/containers.md) of the User and Best Practice Guide. This
 also includes updated information on building containers with MPI to use on ARCHER2.
+
+#### AMD &mu;Prof not available
+
+The AMD &mu;Prof tool is not available on the upgraded system yet. We are working to get this 
+fixed as soon as possible.
 
 ## What software versions will be available after the upgrade?
 

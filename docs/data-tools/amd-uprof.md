@@ -1,5 +1,9 @@
 # AMD &mu;Prof
 
+!!! warning
+    AMD &mu;Prof is not yet available on the upgraded ARCHER2 system. We are working to make the
+    tool available as soon as possible.
+
 AMD &mu;Prof (“MICRO-prof”) is a software profiling analysis tool for x86 applications
 running on Windows, Linux and FreeBSD operating systems and provides event information
 unique to the AMD “Zen”-based processors and AMD INSTINCT™ MI Series accelerators. AMD

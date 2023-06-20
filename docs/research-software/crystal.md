@@ -1,7 +1,5 @@
 # CRYSTAL
 
-!!! warning
-    CRYSTAL is not yet available on the upgraded ARCHER2 system
 
 CRYSTAL is a general-purpose program for the study of crystalline solids. The
 CRYSTAL program computes the electronic structure of periodic systems within
