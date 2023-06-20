@@ -26,7 +26,7 @@ laptop or desktop, and run it locally. The remote client should be used if
 at all possible.
 
 To download the remote client, see the
-[Arm developer download pages](https://www.linaroforge.com/downloadForge/).
+[Forge developer download pages](https://www.linaroforge.com/downloadForge/).
 Version 22.1.1 is known to work at the time of writing. Connecting with
 the remote client is discussed below.
 
@@ -41,15 +41,16 @@ the SLURM queue system. These steps should be performed in the `/work`
 file system on ARCHER2.
 
 It is recommended that these commands are performed in the top-level work
-file system directory for the user account, i.e., `${/work/.../}`.
+file system directory for the user account, i.e., `${HOME/home/work}`.
 
 ```bash
 module load arm/forge
-cd ${work/.../}
+cd ${HOME/home/work}
 source ${FORGE_DIR}/config-init
 ```
 
-This will create a directory `${/work/...}/.allinea` that contains the following files.
+This will create a directory `${HOME/home/work}/.allinea` that contains the
+following files.
 
 ```output
 system.config  user.config
@@ -62,13 +63,13 @@ The directory will also store other relevant files when Forge is run.
     Please ignore: subsequent output should indicate that the new configuration
     files have been created.
 
-Once you have created this directory, you also need to modify the `system.config` file in the directory `${/work/.../.allinea}`, editing the line
+Once you have created this directory, you also need to modify the `system.config` file in the directory `${HOME/home/work/.allinea}`, editing the line
 
 ```bash
 shared directory = ~
 ```
 
-To instead point to your `${/work/.../.allinea}` directory, i.e. if you are in the `z19` project, that would be:
+To instead point to your `${HOME/home/work/.allinea}` directory, i.e. if you are in the `z19` project, that would be:
 
 ```bash
 shared directory = /work/z19/z19/$USER/.allinea
@@ -151,7 +152,7 @@ the left-hand side;
 shown in small text at the lower left.
 
 
-![Arm Forge window](./forge-ddt.png)
+![Forge window](./forge-ddt.png)
 
 In the ***Application*** sub panel of the ***Run*** dialog box, details of the
 executable, command line arguments or data files, the working directory
