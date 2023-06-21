@@ -27,6 +27,7 @@ $ gitlab-runner register
 ```
 
 and reply to the prompts:
+
 - gitlab instance url: `https://....`
 - registration token: `xxx-xxxxxxxxxxxx`
 - description: `ARCHER2`
@@ -160,7 +161,9 @@ The supported list of slurm parameter is:
 | `--qos`             | `SLURM_qos`           |
 | `--exclusive`       | `SLURM_exclusive`     |
 
-> **Note:** only strings can be passed as a variable reliably, so make sure to use double quotes (`"`) around `TRUE`/`FALSE`, and `00:02:00` for example or they won't be interpreted properly.
+
+!!! note 
+    Only strings can be passed as a variable reliably, so make sure to use double quotes (`"`) around `TRUE`/`FALSE`, and `00:02:00` for example or they won't be interpreted properly.
 
 
 #### Example repository
