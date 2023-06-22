@@ -120,7 +120,7 @@ nav:
     - "Overview": data-tools/index.md
     - "AMD uProf": data-tools/amd-uprof.md
     - "Arm Forge": data-tools/arm-forge.md
-    - "Gitlab-ci": data-tools/gitlab-ci.md
+    - "Gitlab CI/CD": data-tools/gitlab-ci.md
     - "Julia": data-tools/julia.md
     - "ParaView": data-tools/paraview.md
     - "R": data-tools/cray-r.md
