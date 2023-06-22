@@ -43,6 +43,9 @@ small problems if the `metis` module is loaded.
 The `metis` module defines the environment variable `METIS_DIR` which
 indicates the current location of the Metis installation.
 
+Note the `metis` and `parmetis` libraries (and dependent modules)
+have been compiled with the default 32-bit integer indexing, and
+4-byte floating point options.
 
 ## Parmetis
 
@@ -112,10 +115,4 @@ for further details and options.
 
 ## Resources
 
-  - [Metis at George Karypis' site](http://glaros.dtc.umn.edu/gkhome/views/metis)
-
-  - [Metis homepage](http://glaros.dtc.umn.edu/gkhome/views/metis/overview)
-  - [Metis manual (pdf)](http://glaros.dtc.umn.edu/gkhome/fetch/sw/metis/manual.pdf)
-
-  - [Parmetis homepage](http://glaros.dtc.umn.edu/gkhome/metis/parmetis/overview)
-  - [Parmetis manual (pdf)](http://glaros.dtc.umn.edu/gkhome/fetch/sw/parmetis/manual.pdf)
+-- [Metis and Parmetis at github](https://github.com/KarypisLab)
