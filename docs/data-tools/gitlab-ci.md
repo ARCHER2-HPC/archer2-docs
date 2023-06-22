@@ -78,6 +78,7 @@ shutdown_timeout = 0
 CI/CD jobs need the `gitlab-runner` to be continuously running, which is done using the `serial` queue on ARCHER2. And, because the `serial` queue is limited to 24h long jobs, the jobfile available in the gitlab-ci module will resubmit itself to be continuously running. The path of the jobfile is written in the environment variable `$GITLAB_CI_JOBFILE` so the `gitlab-runner` can be submitted and run with:
 
 ```sh
+module load gitlab-ci
 sbatch $GITLAB_CI_JOBFILE
 ```
 
