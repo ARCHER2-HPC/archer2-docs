@@ -1,18 +1,18 @@
 # Gitlab CI/CD
 
-Gitlab is a DevOps platform that combines a git hosting service as well as a powerful CI/CD (continuous integration/continuous development) framework. 
+[Gitlab](https://gitlab.com) is a DevOps platform that combines a git hosting service as well as a powerful CI/CD (continuous integration/continuous development) framework. 
 
-This page explains how to run CI/CD jobs on ARCHER2 while keeping the integration with gitlab-ci. Your gitlab repository will communicate with ARCHER2 via the ``gitlab-runner``, an executable constantly running on ARCHER2. It is responsible for authenticating to the gitlab repository, retrieving the source code, running jobs -either locally or using slurm-, and finally sending artefacts and results back to the gitlab user interface.
+This page explains how to run CI/CD jobs on ARCHER2 while keeping the integration with gitlab-ci. Your gitlab repository will communicate with ARCHER2 via the `gitlab-runner`, an executable constantly running on ARCHER2. It is responsible for authenticating to the gitlab repository, retrieving the source code, running jobs -either locally or using slurm-, and finally sending artefacts and results back to the gitlab server and accessible via its user interface.
 
 To achieve this, the ``gitlab-runner`` needs to be always running (idling most of the time) with an access to the internet and be able to submit jobs. On ARCHER2 this will be done by running it on the serial queue.
 
 !!! note 
-    You should make sure that you trust everyone with write access to your gitlab repository, setting up this CI/CD means that they will be able to run ARCHER2 jobs with your account/budget.
+    Make sure that you trust every user havin write access to your repository as setting up this CI/CD means they will be able to run ARCHER2 jobs using your account/budget.
 
 ## Useful links
 
   - [Gitlab-ci documentation](https://docs.gitlab.com/ee/ci/)
-  - [Example gitlab repository with CI/CD](https://git.ecdf.ed.ac.uk/slemaire/cse-ci-tests)
+  - [Example gitlab repository with CI/CD on ARCHER2](https://git.ecdf.ed.ac.uk/slemaire/cse-ci-tests)
 
 ## Initial setup
 
@@ -23,7 +23,7 @@ module load gitlab-ci
 ```
 
 ### Runner registration
-This step authenticate your gitlab repository with the ``gitlab-runner`` on ARCHER2. For it you will need the *url* of your gitlab instance as well as your repository *registration token*, both of which can be retrieved by going in:
+This step authenticates your gitlab repository with the ``gitlab-runner`` on ARCHER2. For it you will need the *url* of your gitlab instance as well as your repository *registration token*, both of which can be retrieved by going in:
 **Settings -> CI/CD**, then **expand** the **runners** item. And you will find both in the **Specific runners** box.
 
 Once you have them at hand, run
@@ -33,19 +33,21 @@ gitlab-runner register
 
 and reply to the prompts:
 
-- gitlab instance url: `https://....`
-- registration token: `xxx-xxxxxxxxxxxx`
+- *gitlab instance url*: `https://....`
+- *registration token*: `xxx-xxxxxxxxxxxx`
 - description: `ARCHER2`
 - tag: `hpc,slurm`
 - note: ` `
-- executor: `custom`
+- *executor*: `custom`
+
+(items in *italic* cannot be freely choosen).
 
 If successful it should now read: **Runner registered successfully.** 
 Since you likely want to be able run `untagged` jobs you have to enable it on gitlab's interface. In **Settings -> CI/CD**, expand **runners** and edit the newly created **ARCHER2** line and tick the box named **Run untagged jobs**.
 
 ### Configuration
 
-Once the runner is registered, a configuration file is placed in `~/.gitlab-runner/config.toml`. You will need to edit it and add the `config_exec` and `run_exec` lines like in the example below. Also make sure you edit/add the `concurrent` lines to allow multiple job to be run simultaneously.
+Once the runner is registered, a configuration file is placed in `~/.gitlab-runner/config.toml`. You will need to edit it and add the `config_exec` and `run_exec` lines like in the example below. Also make sure you edit/add the two `concurrent` lines to allow multiple jobs to be run simultaneously.
 
 ```toml
 concurrent = 10
@@ -73,7 +75,7 @@ shutdown_timeout = 0
 
 ## Launch gitlab-runner
 
-CI/CD jobs need the `gitlab-runner` to be continuously running on ARCHER2 which is done using the `serial` queue. However, because the `serial` queue is limited to 24h long jobs, the jobfile present in the gitlab-ci module will resubmit itself to be continuously running. The path of the jobfile is written in the environment variable `$GITLAB_CI_JOBFILE` so the `gitlab-runner` can be submutted and run with:
+CI/CD jobs need the `gitlab-runner` to be continuously running, which is done using the `serial` queue on ARCHER2. And, because the `serial` queue is limited to 24h long jobs, the jobfile available in the gitlab-ci module will resubmit itself to be continuously running. The path of the jobfile is written in the environment variable `$GITLAB_CI_JOBFILE` so the `gitlab-runner` can be submitted and run with:
 
 ```sh
 sbatch $GITLAB_CI_JOBFILE
@@ -85,10 +87,10 @@ sbatch $GITLAB_CI_JOBFILE
 
 ## Repository configuration
 
-Because some gitlab CI jobs will be run by slurm, additional parameters and variables are needed in your repository `.gitlab-ci.yml`.
+Because gitlab CI jobs will be run by slurm, additional parameters and variables are needed in your repository `.gitlab-ci.yml`.
 
 #### With slurm
-Here is an example configuration for running a job with slurm. Make sure you adapt the `account` field with your project code:
+Here is an example configuration for running a CI job with slurm. Make sure you adapt the `account` field with your project code:
 ```yaml
 test-slurm:
   variables:
@@ -106,7 +108,7 @@ test-slurm:
 ```
 
 #### Without slurm (login node/serial queue)
-If a job doesn't need to be submitted to the compute node but can be run directly on the login node/serial queue, one just need to set `ON_COMPUTE` to `FALSE`.
+If a job doesn't need to be submitted to the compute node but can be run directly where the `gitlan-runner` is running, one just need to set `ON_COMPUTE` to `FALSE`.
 
 ```yaml
 test-local:
@@ -117,7 +119,7 @@ test-local:
 ```
 
 #### Complete example
-Finally, like any variable in the `.gitlab-ci.yml` they can be defined globally instead of locally per test, or even outside the `gitlab-ci.yml` file. Here is a more realistic complete example: 
+Finally, like any variable in the `.gitlab-ci.yml`, slurm variables can be defined globally instead of locally per test, or even outside the `gitlab-ci.yml` file. Here is a more realistic complete example: 
 
 ```yaml
 variables:
@@ -163,5 +165,4 @@ The supported list of slurm parameter is:
 
 #### Example repository
 The repository at https://git.ecdf.ed.ac.uk/slemaire/cse-ci-tests can be used as an example for building an application and running it on the compute node.
-
 
