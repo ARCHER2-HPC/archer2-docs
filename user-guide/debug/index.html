@@ -15,7 +15,7 @@
         <link rel="next" href="../profile/">
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.16">
     
     
       
@@ -1781,7 +1781,7 @@
     documentation.)</li>
 </ul>
 <h2 id="arm-forge">Arm Forge</h2>
-<p>The Arm Forge tool provides the DDT parallel debugger. See:</p>
+<p>The Arm Forge tool (now Linaro Forge) provides the DDT parallel debugger. See:</p>
 <ul>
 <li><a href="../../data-tools/arm-forge/">ARCHER2 Arm Forge documentation</a></li>
 </ul>
@@ -2016,16 +2016,16 @@ where there has been a significant allocation or deallocation of memory.</p>
 <p>First, load <code>valgrind4hpc</code>:</p>
 <pre><code>module load valgrind4hpc
 </code></pre>
-<p>To run valgrind4hpc, first reserve the resources you will use with <code>salloc</code>. 
-The following reservation request is for 2 nodes (256 physical cores) for 20 
+<p>To run valgrind4hpc, first reserve the resources you will use with <code>salloc</code>.
+The following reservation request is for 2 nodes (256 physical cores) for 20
 minutes on the short queue:</p>
 <pre><code>auser@uan01:&gt; salloc --nodes=2 --ntasks-per-node=128 --cpus-per-task=1 \
               --time=00:20:00 --partition=standard --qos=short \
               --hint=nomultithread \
               --distribution=block:block --account=[budget code]
 </code></pre>
-<p>Once your allocation is ready, Use valgrind4hpc to run and profile your 
-executable. To test an executable called <code>my_executable</code> that requires two 
+<p>Once your allocation is ready, Use valgrind4hpc to run and profile your
+executable. To test an executable called <code>my_executable</code> that requires two
 arguments <code>arg1</code> and <code>arg2</code> on 2 nodes and 256 processes, run:</p>
 <pre><code>valgrind4hpc --tool=memcheck --num-ranks=256 my_executable -- arg1 arg2
 </code></pre>
@@ -2143,15 +2143,14 @@ of the executable you  ran):</p>
 <p>To see the graph, you will need to have exported your X display when logging in.</p>
 </div>
 <p>Larger jobs may spend significant time queueing, requiring
-submission as a batch job. In this case the above can be adapted for
-batch submission as follows:</p>
+submission as a batch job. In this case, a slightly different
+invocation is illustrated as follows:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash --login</span>
 
-<span class="kp">#SBATCH --job-name=test_job</span>
 <span class="kp">#SBATCH --nodes=1</span>
 <span class="kp">#SBATCH --ntasks-per-node=128</span>
 <span class="kp">#SBATCH --cpus-per-task=1</span>
-<span class="kp">#SBATCH --time=2:0:0</span>
+<span class="kp">#SBATCH --time=02:00:00</span>
 
 <span class="c1"># Replace [budget code] below with your project code (e.g. t01)</span>
 <span class="kp">#SBATCH --account=[budget code]</span>
@@ -2164,20 +2163,18 @@ module<span class="w"> </span>load<span class="w"> </span>cray-stat
 <span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
 
-<span class="c1"># Launch job in background</span>
-<span class="nb">srun</span><span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>./my_exe<span class="w"> </span><span class="p">&amp;</span>
+<span class="c1"># This environment variable is required</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">CTI_SLURM_OVERRIDE_MC</span><span class="o">=</span><span class="m">1</span>
 
-sleep<span class="w"> </span><span class="m">3600</span><span class="w"> </span><span class="c1"># Wait a sufficient time for job to hang, e.g. 1 hour</span>
+<span class="c1"># Request that stat sleeps for 3600 seconds before attaching</span>
+<span class="c1"># to our executable which we launch with command introduced</span>
+<span class="c1"># with -C:</span>
 
-<span class="c1"># Find PID and run STAT</span>
-<span class="nv">pid</span><span class="o">=</span><span class="k">$(</span>ps<span class="w"> </span>-u<span class="w"> </span><span class="si">${</span><span class="nv">USER</span><span class="si">}</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\ </span><span class="w"> </span><span class="c1"># Get all USER PIDs</span>
-<span class="w">        </span>grep<span class="w"> </span><span class="nb">srun</span><span class="w">     </span><span class="p">|</span><span class="w"> </span><span class="se">\ </span><span class="w"> </span><span class="c1"># Find all the sruns</span>
-<span class="w">        </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span><span class="w">     </span><span class="p">|</span><span class="w"> </span><span class="se">\ </span><span class="w"> </span><span class="c1"># We want the first one</span>
-<span class="w">        </span>awk<span class="w"> </span><span class="s1">&#39;{print $1;}&#39;</span><span class="k">)</span><span class="w"> </span><span class="c1"># The PID is the first &quot;word&quot; in the line</span>
-stat-cl<span class="w"> </span>-i<span class="w"> </span><span class="nv">$pid</span>
+stat-cl<span class="w"> </span>-s<span class="w"> </span><span class="m">3600</span><span class="w"> </span>-C<span class="w"> </span><span class="nb">srun</span><span class="w"> </span>--unbuffered<span class="w"> </span>./my_exe
 </code></pre></div>
 <p>If the job is hanging it will continue to run until the wall clock
-exceeds the requested time.</p>
+exceeds the requested time. Use the <code>stat-view</code> utility to
+inspect the results, as discussed above.</p>
 <h2 id="atp">ATP</h2>
 <p>To enable ATP you should load the atp module and set the <code>ATP_ENABLED</code>
 environment variable to 1 on the login node:</p>
@@ -2287,7 +2284,7 @@ logging in.</p>
     <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.b4d07000.min.js"></script>
+      <script src="../../assets/javascripts/bundle.a51614de.min.js"></script>
       
     
   </body>
