@@ -73,22 +73,15 @@ shutdown_timeout = 0
 
 ## Launch gitlab-runner
 
-CI/CD jobs need the `gitlab-runner` to be continuously running on ARCHER2. This can be done by having a terminal open at all time, or having the runner inside a job in the serial queue. The former should only be used for the first setup and to debug the workflow, once everything is working as expected an always running job can be used.
-
-### Interactively
-For quick debugging of the runner and the workflow itself, it is often more convinient to run `gitlab-runner` directly from the login node interactively. This can be done with:
-```sh
-gitlab-runner run
-```
-
-### In a job (serial queue)
-
-Because the `serial` queue is limited to 24h long jobs, the jobfile present in the gitlab-ci module will resubmit itself to be continuously running. The path of the jobfile is written in the environment variable `$GITLAB_CI_JOBFILE`. It can be run with:
+CI/CD jobs need the `gitlab-runner` to be continuously running on ARCHER2 which is done using the `serial` queue. However, because the `serial` queue is limited to 24h long jobs, the jobfile present in the gitlab-ci module will resubmit itself to be continuously running. The path of the jobfile is written in the environment variable `$GITLAB_CI_JOBFILE` so the `gitlab-runner` can be submutted and run with:
 
 ```sh
 sbatch $GITLAB_CI_JOBFILE
 ```
 
+!!! note
+    For initial setup and debugging, the login node can be used for running the gitlab-runner. This can be done using `gitlab-runner run`.
+    
 
 ## Repository configuration
 
