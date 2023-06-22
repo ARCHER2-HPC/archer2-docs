@@ -1763,29 +1763,31 @@
   <h1>Arm Forge</h1>
 
 <h2 id="arm-forge">Arm Forge</h2>
-<p><a href="https://developer.arm.com/Tools%20and%20Software/Arm%20Forge">Arm Forge</a>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>What were Arm Forge products (DDT and MAP) were acquired by Linaro in 2023.
+We may continue to refer to "Arm Forge" to prevent confusion,
+particularly in the context of module files.
+However, relevant links are now to the
+<a href="https://www.linaroforge.com/">Linaro web site</a></p>
+</div>
+<p><a href="https://www.linaroforge.com/">Linaro Forge</a>
 provides debugging and profiling tools for MPI parallel applications, and
 OpenMP or pthreads multi-threaded applications (and also hydrid MPI/OpenMP).
 The debugger and profiler are called DDT and MAP, respectively.</p>
-<p>ARCHER2 has a license for up to 64 nodes (8192 cores) shared between
+<p>ARCHER2 has a license for up to 16 nodes (2048 cores) shared between
 all users at any one time. (Note, cores are counted by the license, not
 MPI processes, threads, or any other software entity.)</p>
-<p>There are two ways of running the Arm user interface. If you have a good
+<p>There are two ways of running the Forge user interface. If you have a good
 internet connection to ARCHER2, the GUI can be run on the front-end (with
 an X-connection).
 Alternatively, one can download a copy of the Forge remote client to your
 laptop or desktop, and run it locally. The remote client should be used if
 at all possible.</p>
 <p>To download the remote client, see the
-<a href="https://developer.arm.com/downloads/-/arm-forge">Arm developer download pages</a>. Version 22.1.1 is known to work at the time of writing. Connecting with
+<a href="https://www.linaroforge.com/downloadForge/">Forge developer download pages</a>.
+Version 22.1.1 is known to work at the time of writing. Connecting with
 the remote client is discussed below.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Arm Forge is a commercial package for which CSE has a licence until
-April 2023. Availability of Forge beyond April 2023 will depend on
-continued funding for the license. Therefore, please let us know if
-Arm Forge is useful in your work.</p>
-</div>
 <h3 id="one-time-set-up-for-using-forge">One time set-up for using Forge</h3>
 <p>A preliminary step is required to set up the necessary
 Forge configuration files that allow DDT and MAP to initialise its
@@ -1793,12 +1795,13 @@ environment correctly so that it can, for example, interact with
 the SLURM queue system. These steps should be performed in the <code>/work</code>
 file system on ARCHER2.</p>
 <p>It is recommended that these commands are performed in the top-level work
-file system directory for the user account, i.e., <code>${/work/.../}</code>.</p>
+file system directory for the user account, i.e., <code>${HOME/home/work}</code>.</p>
 <div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>arm/forge
-<span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">work</span><span class="p">/.../</span><span class="si">}</span>
+<span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="p">/home/work</span><span class="si">}</span>
 <span class="nb">source</span><span class="w"> </span><span class="si">${</span><span class="nv">FORGE_DIR</span><span class="si">}</span>/config-init
 </code></pre></div>
-<p>This will create a directory <code>${/work/...}/.allinea</code> that contains the following files.</p>
+<p>This will create a directory <code>${HOME/home/work}/.allinea</code> that contains the
+following files.</p>
 <div class="highlight"><pre><span></span><code><span class="go">system.config  user.config</span>
 </code></pre></div>
 <p>The directory will also store other relevant files when Forge is run.</p>
@@ -1808,10 +1811,10 @@ file system directory for the user account, i.e., <code>${/work/.../}</code>.</p
 Please ignore: subsequent output should indicate that the new configuration
 files have been created.</p>
 </div>
-<p>Once you have created this directory, you also need to modify the <code>system.config</code> file in the directory <code>${/work/.../.allinea}</code>, editing the line</p>
+<p>Once you have created this directory, you also need to modify the <code>system.config</code> file in the directory <code>${HOME/home/work/.allinea}</code>, editing the line</p>
 <div class="highlight"><pre><span></span><code>shared<span class="w"> </span><span class="nv">directory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>~
 </code></pre></div>
-<p>To instead point to your <code>${/work/.../.allinea}</code> directory, i.e. if you are in the <code>z19</code> project, that would be:</p>
+<p>To instead point to your <code>${HOME/home/work/.allinea}</code> directory, i.e. if you are in the <code>z19</code> project, that would be:</p>
 <div class="highlight"><pre><span></span><code>shared<span class="w"> </span><span class="nv">directory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>/work/z19/z19/<span class="nv">$USER</span>/.allinea
 </code></pre></div>
 <h3 id="using-ddt">Using DDT</h3>
@@ -1875,11 +1878,11 @@ the left-hand side;</p>
 shown in small text at the lower left.</p>
 </li>
 </ul>
-<p><img alt="Arm Forge window" src="../forge-ddt.png" /></p>
+<p><img alt="Forge window" src="../forge-ddt.png" /></p>
 <p>In the <strong><em>Application</em></strong> sub panel of the <strong><em>Run</em></strong> dialog box, details of the
 executable, command line arguments or data files, the working directory
 and so on should be entered.</p>
-<p>Click the <strong><em>MPI</em></strong> checkbox and specifiy the MPI implementation. This is done
+<p>Click the <strong><em>MPI</em></strong> checkbox and specify the MPI implementation. This is done
 by clicking the <strong><em>Details</em></strong> button and then the <strong><em>Change</em></strong> button.
 Choose the <strong><em>SLURM (generic)</em></strong> implementation from the drop-down menu
 and click <strong><em>OK</em></strong>. You can then specify the required number of nodes/processes
@@ -1895,8 +1898,8 @@ section and specify the relevant project budget, see the <strong><em>Account</em
 <p>The default queue template file configuration uses the short QoS with the
 standard time limit of 20 minutes. If something different is required,
 one can edit the settings. Alternatively, one can copy the <code>archer2.qtf</code> file
-(to <code>${HOME/home/work}/.allinea</code>) and make the relevant changes. This new 
-template file can then be specifed in the dialog window.</p>
+(to <code>${HOME/home/work}/.allinea</code>) and make the relevant changes. This new
+template file can then be specified in the dialog window.</p>
 <p>There may be a short delay while the sbatch job starts. Debugging should
 then proceed as described in the Allinea documentation.</p>
 <h3 id="using-map">Using MAP</h3>
@@ -1973,7 +1976,7 @@ the correct local public key file. This may be done, e.g., via the
 local <code>.ssh/config</code> configuration file.</p>
 <h2 id="useful-links">Useful links</h2>
 <ul>
-<li><a href="https://developer.arm.com/documentation/101136/latest/">Arm Forge User Guide</a></li>
+<li><a href="https://www.linaroforge.com/documentation/">Forge User Guide</a></li>
 <li>More information on <a href="https://docs.archer2.ac.uk/user-guide/connecting/#logging-in">X-window connections to ARCHER2</a>.</li>
 </ul>
 
