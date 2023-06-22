@@ -13,5 +13,5 @@ OpenMP or pthreads mutli-threaded applications (and also hydrid MPI/OpenMP)
 - [ParaView](paraview.md): A data visualisation and analysis package 
 - [R](cray-r.md): The R statistical language
 - [VisiData](visidata.md): An interactive multitool for tabular data
-- [Gitlab-ci](gitlab-ci.md): Gitlab continuous integration support
+- [Gitlab CI/CD](gitlab-ci.md): Gitlab continuous integration support
 
