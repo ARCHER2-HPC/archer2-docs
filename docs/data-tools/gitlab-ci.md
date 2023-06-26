@@ -6,9 +6,6 @@ This page explains how to run CI/CD jobs on ARCHER2 while keeping the integratio
 
 To achieve this, the ``gitlab-runner`` needs to be always running (idling most of the time) with an access to the internet and be able to submit jobs. On ARCHER2 this will be done by running it on the serial queue.
 
-!!! note 
-    Make sure that you trust every user havin write access to your repository as setting up this CI/CD means they will be able to run ARCHER2 jobs using your account/budget.
-
 ## Useful links
 
   - [Gitlab-ci documentation](https://docs.gitlab.com/ee/ci/)
@@ -48,6 +45,7 @@ Since you likely want to be able run `untagged` jobs you have to enable it on gi
 ### Configuration
 
 Once the runner is registered, a configuration file is placed in `~/.gitlab-runner/config.toml`. You will need to edit it and add the `config_exec` and `run_exec` lines like in the example below. Also make sure you edit/add the two `concurrent` lines to allow multiple jobs to be run simultaneously.
+Finally, you have to specify the email address associated to your gitlab account inside the `run_args` parameter. This will ensure that you are the only authorised user to run pipelines with your ARCHER2 account.
 
 ```toml
 concurrent = 10
@@ -69,6 +67,7 @@ shutdown_timeout = 0
     concurrent = 10
     config_exec = "gitlab-ci-config.sh"
     run_exec = "gitlab-ci-run.py"
+    run_args = [ "YOUR_EMAIL_ADDRESS" ]
 ```
 
 
