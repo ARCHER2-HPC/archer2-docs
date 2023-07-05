@@ -15,7 +15,7 @@
         <link rel="next" href="../io/">
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.16">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.18">
     
     
       
@@ -4633,7 +4633,7 @@ and counts as (in this case) two separate jobs from the point of
 QoS limits.</p>
 <p>Consider a case where we have two executables which may both be parallel (in
 that they use MPI), both run at the same time, and communicate with each
-other by some means other than MPI. In the following example, we run two
+other using MPI or by some other means. In the following example, we run two
 different executables, <code>xthi-a</code> and <code>xthi-b</code>, both of which must finish
 before the jobs completes.</p>
 <p><div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
@@ -4655,7 +4655,6 @@ before the jobs completes.</p>
 
 <span class="kp">#SBATCH --nodes=2</span>
 <span class="kp">#SBATCH --ntasks-per-node=4</span>
-
 
 <span class="c1"># Run two executables with separate MPI_COMM_WORLD</span>
 
@@ -4711,6 +4710,12 @@ Here we have the first executable running on one node with
 a communicator size 8 (ranks 0-7). The second executable runs on
 two nodes also with communicator size 8 (ranks 0-7, 4 ranks per node).
 Further examples of placement for heterogenenous jobs are given below.</p>
+<p>Finally, if your workflow requires the different heterogeneous jobs to
+communicate via MPI, but without sharing their <code>MPI_COM_WORLD</code>, you will need
+to export two new variables before your <code>srun</code> commands as defined below:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">PMI_UNIVERSE_SIZE</span><span class="o">=</span><span class="m">3</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">MPICH_SINGLE_HOST_ENABLED</span><span class="o">=</span><span class="m">0</span>
+</code></pre></div>
 <h3 id="heterogeneous-jobs-for-a-shared-mpi_com_world">Heterogeneous jobs for a shared <code>MPI_COM_WORLD</code></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -5107,10 +5112,10 @@ value to obtain more information on huge pages use.</p>
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "search": "../../assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.a51614de.min.js"></script>
+      <script src="../../assets/javascripts/bundle.220ee61c.min.js"></script>
       
     
   </body>
