@@ -108,7 +108,7 @@ test-slurm:
 ```
 
 #### Without slurm (login node/serial queue)
-If a job doesn't need to be submitted to the compute node but can be run directly where the `gitlan-runner` is running, one just need to set `ON_COMPUTE` to `FALSE`.
+If a job doesn't need to be submitted to the compute node but can be run directly where the `gitlab-runner` is running, one just need to set `ON_COMPUTE` to `FALSE`.
 
 ```yaml
 test-local:
