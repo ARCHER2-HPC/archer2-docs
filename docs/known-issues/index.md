@@ -5,20 +5,20 @@ impacts and any known workarounds. Many of these issues are under
 active investigation by HPE Cray and the wider service.
 
 !!! info
-    This page was last reviewed on 25 Jan 2023
+    This page was last reviewed on 13 Jul 2023
+
+## Recent issues
+
+### Modules (Added 2023-07-13)
+
+The centrally installed modules `matplotlib/3.4.3`, `scons/4.3.0`, and
+`seaborn/0.11.2` are out-of-date and inoperative. They will be removed
+in the near future. If you need this functionality, it is recommended
+to install the packages locally using `pip` following the process detailed
+in the section on [installing your own python packages](/user-guide/python/#installing-your-own-python-packages-with-pip).
+
 
 ## Open Issues
-
-### Incorrect answers using LibSci threaded `dgemm` (Added 2023-01-25)
-
-If the first matrix argument of `dgemm` is transposed with `'T'` then the threaded
-version can give incorrect results using the `cpe/21.04` module (which is the default as of 25th January 2023).
-
-This issue is fixed in `cpe/21.09`. Note that to activate this new
-environment requires an explicit change to `LD_LIBRARY_PATH` in
-addition to loading the newer `cpe` module. For details see [Using
-non-default versions of HPE Cray libraries on
-ARCHER2](https://docs.archer2.ac.uk/user-guide/dev-environment/#using-non-default-versions-of-hpe-cray-libraries-on-archer2).
 
 ### Slurm `--cpu=freq=X` option is not respected when used with `sbatch` (Added: 2023-01-18)
 
@@ -39,7 +39,7 @@ You can find more information on [setting the CPU frequency in the User Guide](/
 
 There is an underlying memory leak in the version of libfabric on ARCHER2 (that comes as part of the underlying
 SLES operating system) which can cause jobs to fail with an OOM (Out Of Memory) error. This issue will be addressed
-in a future upgrade of the ARCHER2 operating system. You can workaround this issue by setting the following 
+in a future upgrade of the ARCHER2 operating system. You can workaround this issue by setting the following
 environment variable in your job submission scripts:
 
 ```
@@ -55,7 +55,7 @@ should be requesting too much memory then please
 ### Default FFTW library points to Intel Haswell version rather than AMD Rome at runtime (Added: 2022-02-23)
 
 By default, and at runtime, the standard FFTW library version (from the module `cray-fftw`) will link to a version of the
-FFTW library optimised for the Intel Haswell architecture rather than the AMD EPYC architecture. This does not cause 
+FFTW library optimised for the Intel Haswell architecture rather than the AMD EPYC architecture. This does not cause
 errors as the instruction set is compatible between the two architectures but may not provide optimal performance. The
 performance differences observed have been small (&lt; 5%) but if you want to ensure that applications using the `cray-fftw`
 module use the correct version of the libraries at runtime, you should add the following lines to your job submission
@@ -66,52 +66,12 @@ module load cray-fftw
 export LD_LIBRARY_PATH=$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH
 ```
 
-The issue arises because the compilers encode a default path to libraries (`/opt/cray/pe/lib64`) into the `RUNPATH` of 
+The issue arises because the compilers encode a default path to libraries (`/opt/cray/pe/lib64`) into the `RUNPATH` of
 the executable so that you do not need to load all the library module dependencies at runtime. The libraries that the
-executable finds at `/opt/cray/pe/lib64` are soft links to the default versions of the libraries. There is an error in 
+executable finds at `/opt/cray/pe/lib64` are soft links to the default versions of the libraries. There is an error in
 the soft link to the FFTW libraries in this directory such they point to the Haswell version of the FFTW libraries rather
 than the AMD EPYC (Rome) versions of the libraries.
 
-### Occasionally user jobs can cause compute nodes to crash (Added: 2021-11-22)
-
-In rare circumstances, it is possible for a user job to crash the compute nodes on which it is running. This is only evident to the user as a failed job: there is no obvious sign that the nodes have crashed. Therefore, if we identify a user whose jobs are causing nodes to crash, we may need to work with them to stop this happening.
-
-The underlying issue is resolved in an update to the compute-node operating system (Shasta Version 1.5), which is expected to be rolled out to the main system early in 2022.
-
-In the meantime, users who experience this issue are advised to try disabling XPMEM in their application. The ARCHER2 CSE team can provide advice on how to do this. You can contact the  CSE team via the [service desk](https://www.archer2.ac.uk/support-access/servicedesk.html).
-
-
-### Dask Python package missing dependencies (Added: 2021-11-22)
-
-The Dask Python package is missing some dependencies on the latest Programming
-Environment (21.09). This can be worked around either by using the default
-Programming Environment (21.04), or by following the [instructions](https://docs.archer2.ac.uk/user-guide/python/#adding-your-own-packages)
-to install dask in your own user space.
-
-### Warning when compiling Fortran code with CCE and MPI_F08 interface (Added: 2021-11-18)
-
-When you compile Fortran code using the MPI F08 interface (i.e. `use mpi_f08`) using the default version
-of CCE (11.0.4) you will see warnings similar to:
-
-```
-  use mpi_f08
-      ^       
-ftn-1753 crayftn: WARNING INTERFACE_MPI, File = interface_mpi_mod.f90, Line = 8, Column = 7 
-  File "/opt/cray/pe/mpich/8.1.4/ofi/cray/9.1/include/MPI_F08.mod" containing [sub]module information for "MPI_F08" was created with a previous compiler release.  It will not be supported by the next major release.  It is version 110 from release 9.0.
-```
-
-These warnings can be safely ignored as they do not affect the functioning of the code. If
-you wish to avoid the warnings, you can compile using the more recent CCE version (12.0.3)
-on the system. To switch to this version, use `module load cpe/21.09` from the default
-environment on ARCHER2.
-
-### Research Software
-
-There are several outstanding issues for the centrally installed Research Software:
-
-- **PLUMED** is not yet available. Currently, we recommend affected users to install a local version of the software.
-
-Users should also check individual software pages, for known limitations/ caveats, for the use of software on the Cray EX platform and Cray Linux Environment.
 
 ### Issues with RPATH for non-default library versions
 
@@ -162,16 +122,6 @@ export UCX_IB_REG_METHODS=direct
 !!! note
     Setting this flag may have an impact on code performance.
 
-### AOCC compiler fails to compile with NetCDF (Added: 2021-11-18)
-
-There is currently a problem with the module file which means cray-netcdf-hdf5parallel will not operate correctly in PrgEnv-aocc. An example of the error seen is:  
-
-```
-F90-F-0004-Corrupt or Old Module file /opt/cray/pe/netcdf-hdf5parallel/4.7.4.3/crayclang/9.1/include/netcdf.mod (netcdf.F90: 8)
-```
-
-The current workaround for this is to load module epcc-netcdf-hdf5parallel instead if PrgEnv-aocc is required.
-
 ### Slurm  `--export` option does not work in job submission script
 
 The option `--export=ALL` propagates all the environment variables from the login node to the compute node. If you include the option in the job submission script, it is wrongly ignored by Slurm. The current workaround is to include the option when the job submission script is launched. For instance:
@@ -179,7 +129,3 @@ The option `--export=ALL` propagates all the environment variables from the logi
     sbatch --export=ALL myjob.slurm
 
 ## Recently Resolved Issues
-
-
-
-
