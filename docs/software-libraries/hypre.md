@@ -2,7 +2,7 @@
 
 HYPRE is a library of linear solvers for structured and unstructured
 problems with a particular emphasis on multigrid. It is a product of
-the Lawrence Livermore National Laboratory and is distrubted under
+the Lawrence Livermore National Laboratory and is distributed under
 either the MIT license or the Apache license.
 
 
@@ -26,12 +26,17 @@ environment if required.
 
 ### Version history
 
+=== "Upgrade 2023"
+
+    - module `hypre/2.25.0` installed as default May 2023 (PE 22.12)
+    - module `hypre/2.18.0` recompiled and installed May 2023 (PE 22.12)
+
 === "Full system"
-    
+
     - Module `hypre/2.18.0` installed October 2021 (PE 21.04)
-    
+
 === "4-cabinet system"
-    
+
     - Module `hypre/2.18.0` installed January 2021
 
 ## Compiling your own version
@@ -41,7 +46,7 @@ from the Archer2 repository:
 ```
 $ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
 $ cd pe-scripts
-$ git checkout modules-2021-10
+$ git checkout modules-2022-12
 $ ./sh/tpsl/hypre.sh --prefix=/path/to/install/location
 ```
 where the `--prefix` option determines the install directory. See the

@@ -53,11 +53,9 @@ Please have your license details to hand.
 To access VASP you should load the appropriate `vasp` module in your job
 submission scripts.
 
-### VASP 5
+To load the default version of VASP, you would use:
 
-To load the default version of VASP 5, you would use:
-
-    module load vasp/5
+    module load vasp
 
 Once loaded, the executables are called:
 
@@ -69,89 +67,13 @@ Once the module has been loaded, you can access the LDA and PBE
 pseudopotentials for VASP on ARCHER2 at:
 
     $VASP_PSPOT_DIR
-
-#### VASP Transition State Tools (VTST)
-
-As well as the standard VASP 5 modules, we provide versions of VASP 5 with the
-[VASP Transition State Tools (VTST)](http://theory.cm.utexas.edu/vtsttools/) from
-the University of Texas added. The VTST version adds various functionality to VASP
-and provides additional scripts to use with VASP. Additional functionality includes:
-
-- Climbing Image NEB: method for finding reaction pathways between two stable states.
-- Dimer: method for finding reaction pathways when only one state is known.
-- Lanczos: provides an alternative way to find the lowest mode and find saddle points.
-- Optimisers: provides an alternative way to find the lowest mode and find saddle points.
-- Dynamical Matrix: uses finite difference to find normal modes and reaction prefactors.
-
-Full details of these methods and the provided scripts can be found on
-[the VTST website](http://theory.cm.utexas.edu/vtsttools/).
-
-On ARCHER2, the VTST version of VASP 5 can be accessed by loading the modules with
-`VTST` in the module name, for example:
-
-=== "Full system"
-    ```
-    module load vasp/5/5.4.4.pl2-vtst
-    ```
-
-#### Example VASP 5 job submission script
-
-The following script will run a VASP job using 2 nodes (128x2, 256 total
-cores).
-
-```slurm
-#!/bin/bash
-
-# Request 16 nodes (2048 MPI tasks at 128 tasks per node) for 20 minutes.   
-
-#SBATCH --job-name=VASP_test
-#SBATCH --nodes=16
-#SBATCH --ntasks-per-node=128
-#SBATCH --cpus-per-task=1
-#SBATCH --time=00:20:00
-
-# Replace [budget code] below with your project code (e.g. t01)
-#SBATCH --account=[budget code] 
-#SBATCH --partition=standard
-#SBATCH --qos=standard
-
-# Load the VASP module
-module load vasp/5
-
-# Avoid any unintentional OpenMP threading by setting OMP_NUM_THREADS
-export OMP_NUM_THREADS=1
-
-# Ensure the cpus-per-task option is propagated to srun commands
-export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
-
-# Launch the code - the distribution and hint options are important for performance
-srun --distribution=block:block --hint=nomultithread vasp_std
-```
-
-### VASP 6
-
-To load the default version of VASP 6, you would use:
-
-    module load vasp/6
-
-Once loaded, the executables are called:
-
-  - `vasp_std` - Multiple k-point version
-  - `vasp_gam` - GAMMA-point only version
-  - `vasp_ncl` - Non-collinear version
-
-Once the module has been loaded, you can access the LDA and PBE
-pseudopotentials for VASP on ARCHER2 at:
-
-    $VASP_PSPOT_DIR
-
-The following script will run a VASP job using 2 nodes (128x2, 256 total
-cores) using only MPI ranks and no OpenMP threading.
 
 !!! tip
     VASP 6 can make use of OpenMP threads in addition to running with pure
     MPI. We will add notes on performance and use of threading in VASP as
     information becomes available.
+    
+Example VASP submission script
 
 ```slurm
 #!/bin/bash
@@ -180,6 +102,31 @@ export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 
 # Launch the code - the distribution and hint options are important for performance
 srun --distribution=block:block --hint=nomultithread vasp_std
+```
+
+
+#### VASP Transition State Tools (VTST)
+
+As well as the standard VASP 5 modules, we provide versions of VASP 5 with the
+[VASP Transition State Tools (VTST)](http://theory.cm.utexas.edu/vtsttools/) from
+the University of Texas added. The VTST version adds various functionality to VASP
+and provides additional scripts to use with VASP. Additional functionality includes:
+
+- Climbing Image NEB: method for finding reaction pathways between two stable states.
+- Dimer: method for finding reaction pathways when only one state is known.
+- Lanczos: provides an alternative way to find the lowest mode and find saddle points.
+- Optimisers: provides an alternative way to find the lowest mode and find saddle points.
+- Dynamical Matrix: uses finite difference to find normal modes and reaction prefactors.
+
+Full details of these methods and the provided scripts can be found on
+[the VTST website](http://theory.cm.utexas.edu/vtsttools/).
+
+On ARCHER2, the VTST version of VASP 5 can be accessed by loading the modules with
+`VTST` in the module name, for example:
+
+
+```
+module load vasp/6/6.4.1-vtst
 ```
 
 ## Compiling VASP on ARCHER2
@@ -209,6 +156,9 @@ module load vasp/6
 module load craype-network-ofi
 module load cray-mpich
 ```
+
+
+<!-- Temporarily removed peformance tips while they are updated
 
 ### Performance tips
 
@@ -311,23 +261,6 @@ Performance summary:
 |    32 |                     64 |                2048 |    64 |                 131 |
 |    64 |                     64 |                4096 |    64 |                  82 |
 
-#### Full system, 5.4.4.pl2
-
- - `vasp/5/5.4.4.pl2` module
- - GCC 11.2.0
- - HPE Cray LibSci 21.09 for BLAS/LAPACK/ScaLAPACK and FFTW 3.3.8.11
- - UCX for MPI transport layer
-
-| Nodes | MPI processes per node | Total MPI processes | NCORE | 5.4.4.pl2 (full system) |
-|------:|-----------------------:|--------------------:|------:|------------------------:|
-|     1 |                     64 |                  64 |    64 |                    3428 |
-|     2 |                     64 |                 128 |    64 |                    1615 |
-|     4 |                     64 |                 256 |    64 |                     823 |
-|     8 |                     64 |                 512 |    64 |                     429 |
-|    16 |                     64 |                1024 |    64 |                     231 |
-|    32 |                     64 |                2048 |    64 |                     135 |
-|    64 |                     64 |                4096 |    64 |                      79 |
-
 
 ### CdTe Supercell, hybrid DFT functional. 8 k-points, 65 atoms
 
@@ -369,20 +302,5 @@ Performance summary:
 |    32 |                     64 |                2048 |    16 |    2 |                     1340 |
 |    64 |                     64 |                4096 |    16 |    2 |                      908 |
 
-#### Full system, 5.4.4.pl2
-
- - `vasp/5/5.4.4.pl2` module
- - GCC 11.2.0
- - HPE Cray LibSci 21.09 for BLAS/LAPACK/ScaLAPACK and FFTW 3.3.8
- - UCX for MPI transport layer
-
-| Nodes | MPI processes per node | Total MPI processes | NCORE | KPAR | 5.4.4.pl2 (full system) |
-|------:|-----------------------:|--------------------:|------:|-----:|-------------------------:|
-|     1 |                    128 |                 128 |     4 |    2 |                    23417 |
-|     2 |                    128 |                 256 |     4 |    2 |                    12338 |
-|     4 |                    128 |                 512 |     4 |    2 |                     6751 |
-|     8 |                    128 |                1024 |     4 |    2 |                     3676 |
-|    16 |                     64 |                1024 |    16 |    2 |                     2136 |
-|    32 |                     64 |                2048 |    16 |    2 |                     1266 |
-|    64 |                     64 |                4096 |    16 |    2 |                      806 |
+-->
 

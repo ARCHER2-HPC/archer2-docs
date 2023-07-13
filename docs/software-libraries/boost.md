@@ -27,12 +27,17 @@ if this information is needed.
 
 ### Version history
 
+=== "Upgrade 2023"
+
+    - Module `boost/1.81.0` installed May 2023 (PE 22.12)
+    - Module `boost/1.72.0` recompiled May 2023 (PE 22.12)
+
 === "Full system"
-    
+
     - Module `boost/1.72` installed October 2021 (PE 21.04)
-    
+
 === "4-cabinet system"
-    
+
     - Module `boost/1.72.0` installed January 2021
 
 
@@ -69,4 +74,3 @@ libraries compiled is specified in the `boost.sh` script. See the
 [5]: https://www.boost.org
 [6]: https://www.boost.org/doc/libs/1_75_0/libs/libraries.htm
 [7]: https://github.com/boostorg
-
