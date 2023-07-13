@@ -29,7 +29,7 @@ The following debugging tools are available on ARCHER2:
 
 ## Arm Forge
 
-The Arm Forge tool provides the DDT parallel debugger. See:
+The Arm Forge tool (now Linaro Forge) provides the DDT parallel debugger. See:
 
 - [ARCHER2 Arm Forge documentation](../data-tools/arm-forge.md)
 
@@ -213,9 +213,9 @@ As it is attaching, gdb4hpc will output text to screen that looks like:
     Waiting for debug servers to attach to MRNet communications network...
     Timeout in 400 seconds. Please wait for the attach to complete.
     Number of dbgsrvs connected: [0];  Timeout Counter: [1]
-    
+
     ...
-    
+
     Finalizing setup...
     Attach complete.
     Current rank location:
@@ -308,8 +308,8 @@ First, load `valgrind4hpc`:
 
     module load valgrind4hpc
 
-To run valgrind4hpc, first reserve the resources you will use with `salloc`. 
-The following reservation request is for 2 nodes (256 physical cores) for 20 
+To run valgrind4hpc, first reserve the resources you will use with `salloc`.
+The following reservation request is for 2 nodes (256 physical cores) for 20
 minutes on the short queue:
 
     auser@uan01:> salloc --nodes=2 --ntasks-per-node=128 --cpus-per-task=1 \
@@ -317,8 +317,8 @@ minutes on the short queue:
                   --hint=nomultithread \
                   --distribution=block:block --account=[budget code]
 
-Once your allocation is ready, Use valgrind4hpc to run and profile your 
-executable. To test an executable called `my_executable` that requires two 
+Once your allocation is ready, Use valgrind4hpc to run and profile your
+executable. To test an executable called `my_executable` that requires two
 arguments `arg1` and `arg2` on 2 nodes and 256 processes, run:
 
     valgrind4hpc --tool=memcheck --num-ranks=256 my_executable -- arg1 arg2
@@ -426,12 +426,12 @@ You will get an output that looks like this:
     Resumed!
     Pausing the application...
     Paused!
-    
+
     ...
-    
+
     Detaching from application...
     Detached!
-    
+
     Results written to $PATH_TO_RUN_DIRECTORY/stat_results/my_exe.0000
 
 Once STAT is finished, you can kill the srun job using `scancel`
@@ -449,19 +449,18 @@ This produces a graph displaying all the different places within the program tha
 
 !!! note
     To see the graph, you will need to have exported your X display when logging in.
-    
+
 Larger jobs may spend significant time queueing, requiring
-submission as a batch job. In this case the above can be adapted for
-batch submission as follows:
+submission as a batch job. In this case, a slightly different
+invocation is illustrated as follows:
 
 ```slurm
 #!/bin/bash --login
 
-#SBATCH --job-name=test_job
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=128
 #SBATCH --cpus-per-task=1
-#SBATCH --time=2:0:0
+#SBATCH --time=02:00:00
 
 # Replace [budget code] below with your project code (e.g. t01)
 #SBATCH --account=[budget code]
@@ -474,21 +473,21 @@ module load cray-stat
 export OMP_NUM_THREADS=1
 export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 
-# Launch job in background
-srun --hint=nomultithread --distribution=block:block ./my_exe &
+# This environment variable is required
+export CTI_SLURM_OVERRIDE_MC=1
 
-sleep 3600 # Wait a sufficient time for job to hang, e.g. 1 hour
+# Request that stat sleeps for 3600 seconds before attaching
+# to our executable which we launch with command introduced
+# with -C:
 
-# Find PID and run STAT
-pid=$(ps -u ${USER} | \  # Get all USER PIDs
-        grep srun     | \  # Find all the sruns
-        head -n 1     | \  # We want the first one
-        awk '{print $1;}') # The PID is the first "word" in the line
-stat-cl -i $pid
+stat-cl -s 3600 -C srun --unbuffered ./my_exe
+
 ```
-    
+
 If the job is hanging it will continue to run until the wall clock
-exceeds the requested time.
+exceeds the requested time. Use the `stat-view` utility to
+inspect the results, as discussed above.
+
 
 ## ATP
 
@@ -522,4 +521,3 @@ and view the merged stack trace using:
 !!! note
     To see the graph, you will need to have exported your X display when
     logging in.
-

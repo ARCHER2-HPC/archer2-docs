@@ -1860,7 +1860,7 @@ QoS limits.
 
 Consider a case where we have two executables which may both be parallel (in
 that they use MPI), both run at the same time, and communicate with each
-other by some means other than MPI. In the following example, we run two
+other using MPI or by some other means. In the following example, we run two
 different executables, `xthi-a` and `xthi-b`, both of which must finish
 before the jobs completes.
 
@@ -1884,7 +1884,6 @@ before the jobs completes.
 
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=4
-
 
 # Run two executables with separate MPI_COMM_WORLD
 
@@ -1946,6 +1945,16 @@ Here we have the first executable running on one node with
 a communicator size 8 (ranks 0-7). The second executable runs on
 two nodes also with communicator size 8 (ranks 0-7, 4 ranks per node).
 Further examples of placement for heterogenenous jobs are given below.
+
+
+Finally, if your workflow requires the different heterogeneous jobs to
+communicate via MPI, but without sharing their `MPI_COM_WORLD`, you will need
+to export two new variables before your `srun` commands as defined below:
+
+```bash
+export PMI_UNIVERSE_SIZE=3
+export MPICH_SINGLE_HOST_ENABLED=0
+```
 
 
 ### Heterogeneous jobs for a shared `MPI_COM_WORLD`
