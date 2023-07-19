@@ -15,7 +15,7 @@
         <link rel="next" href="../scotch/">
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.18">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.19">
     
     
       
@@ -23,7 +23,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.26e3688c.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.eebd395e.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ecc896b0.min.css">
@@ -1758,6 +1758,9 @@ supplied without OpenMP. These may then be run on the front end for
 small problems if the <code>metis</code> module is loaded.</p>
 <p>The <code>metis</code> module defines the environment variable <code>METIS_DIR</code> which
 indicates the current location of the Metis installation.</p>
+<p>Note the <code>metis</code> and <code>parmetis</code> libraries (and dependent modules)
+have been compiled with the default 32-bit integer indexing, and
+4-byte floating point options.</p>
 <h2 id="parmetis">Parmetis</h2>
 <ul>
 <li><code>module load parmetis</code></li>
@@ -1817,21 +1820,7 @@ location. See the
 <a href="https://github.com/ARCHER2-HPC/pe-scripts/tree/cse-develop">Archer2 repository</a>
 for further details and options.</p>
 <h2 id="resources">Resources</h2>
-<ul>
-<li>
-<p><a href="http://glaros.dtc.umn.edu/gkhome/views/metis">Metis at George Karypis' site</a></p>
-</li>
-<li>
-<p><a href="http://glaros.dtc.umn.edu/gkhome/views/metis/overview">Metis homepage</a></p>
-</li>
-<li>
-<p><a href="http://glaros.dtc.umn.edu/gkhome/fetch/sw/metis/manual.pdf">Metis manual (pdf)</a></p>
-</li>
-<li>
-<p><a href="http://glaros.dtc.umn.edu/gkhome/metis/parmetis/overview">Parmetis homepage</a></p>
-</li>
-<li><a href="http://glaros.dtc.umn.edu/gkhome/fetch/sw/parmetis/manual.pdf">Parmetis manual (pdf)</a></li>
-</ul>
+<p>-- <a href="https://github.com/KarypisLab">Metis and Parmetis at github</a></p>
 
 
   
