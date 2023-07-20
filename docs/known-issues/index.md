@@ -5,22 +5,24 @@ impacts and any known workarounds. Many of these issues are under
 active investigation by HPE Cray and the wider service.
 
 !!! info
-    This page was last reviewed on 25 Jan 2023
+    This page was last reviewed on 20 July 2023
 
 ## Open Issues
 
-### Incorrect answers using LibSci threaded `dgemm` (Added 2023-01-25)
+### Excessive memory use when using UCX communications protocol (Added: 2023-07-20)
 
-If the first matrix argument of `dgemm` is transposed with `'T'` then the threaded
-version can give incorrect results using the `cpe/21.04` module (which is the default as of 25th January 2023).
+We have seen cases when using the (non-default) UCX communications protocol where the peak in memory use is
+much higher than would be expected. This leads to jobs failing unexpectedly with an OOM (Out Of Memory) error.
+The workaround is to use Open Fabrics (OFI) communication protocol instead. OFI is the deafult protocol on 
+ARCHER2 and so does not usually need to be explicitly loaded; but if you have UCX loaded, you can switch to
+OFI by adding the following lines to your submission script before you run your application:
 
-This issue is fixed in `cpe/21.09`. Note that to activate this new
-environment requires an explicit change to `LD_LIBRARY_PATH` in
-addition to loading the newer `cpe` module. For details see [Using
-non-default versions of HPE Cray libraries on
-ARCHER2](https://docs.archer2.ac.uk/user-guide/dev-environment/#using-non-default-versions-of-hpe-cray-libraries-on-archer2).
+```
+module load craype-network-ofi
+module load cray-mpich
+```
 
-### Slurm `--cpu=freq=X` option is not respected when used with `sbatch` (Added: 2023-01-18)
+### Slurm `--cpu-freq=X` option is not respected when used with `sbatch` (Added: 2023-01-18)
 
 If you specify the CPU frequency using the `--cpu-freq` option with the `sbatch` command (either using the script `#SBATCH --cpu-freq=X`
 method or the `--cpu-freq=X` option directly) then this option will not be respected as the default
@@ -33,77 +35,6 @@ srun --cpu-freq=2250000 ...
 
 You can find more information on [setting the CPU frequency in the User Guide](/user-guide/energy/#controlling-cpu-frequency).
 
-
-
-### OOM due to memory leak in libfabric (Added: 2022-02-23)
-
-There is an underlying memory leak in the version of libfabric on ARCHER2 (that comes as part of the underlying
-SLES operating system) which can cause jobs to fail with an OOM (Out Of Memory) error. This issue will be addressed
-in a future upgrade of the ARCHER2 operating system. You can workaround this issue by setting the following 
-environment variable in your job submission scripts:
-
-```
-export FI_MR_CACHE_MAX_COUNT=0
-```
-
-This may come with a performance penalty (though in many cases, we have not seen a noticeable performance impact).
-
-If you continue to see OOM errors after setting this environment variable and do not believe that your application
-should be requesting too much memory then please
-[contact the service desk](https://www.archer2.ac.uk/support-access/servicedesk.html)
-
-### Default FFTW library points to Intel Haswell version rather than AMD Rome at runtime (Added: 2022-02-23)
-
-By default, and at runtime, the standard FFTW library version (from the module `cray-fftw`) will link to a version of the
-FFTW library optimised for the Intel Haswell architecture rather than the AMD EPYC architecture. This does not cause 
-errors as the instruction set is compatible between the two architectures but may not provide optimal performance. The
-performance differences observed have been small (&lt; 5%) but if you want to ensure that applications using the `cray-fftw`
-module use the correct version of the libraries at runtime, you should add the following lines to your job submission
-script:
-
-```
-module load cray-fftw
-export LD_LIBRARY_PATH=$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH
-```
-
-The issue arises because the compilers encode a default path to libraries (`/opt/cray/pe/lib64`) into the `RUNPATH` of 
-the executable so that you do not need to load all the library module dependencies at runtime. The libraries that the
-executable finds at `/opt/cray/pe/lib64` are soft links to the default versions of the libraries. There is an error in 
-the soft link to the FFTW libraries in this directory such they point to the Haswell version of the FFTW libraries rather
-than the AMD EPYC (Rome) versions of the libraries.
-
-### Occasionally user jobs can cause compute nodes to crash (Added: 2021-11-22)
-
-In rare circumstances, it is possible for a user job to crash the compute nodes on which it is running. This is only evident to the user as a failed job: there is no obvious sign that the nodes have crashed. Therefore, if we identify a user whose jobs are causing nodes to crash, we may need to work with them to stop this happening.
-
-The underlying issue is resolved in an update to the compute-node operating system (Shasta Version 1.5), which is expected to be rolled out to the main system early in 2022.
-
-In the meantime, users who experience this issue are advised to try disabling XPMEM in their application. The ARCHER2 CSE team can provide advice on how to do this. You can contact the  CSE team via the [service desk](https://www.archer2.ac.uk/support-access/servicedesk.html).
-
-
-### Dask Python package missing dependencies (Added: 2021-11-22)
-
-The Dask Python package is missing some dependencies on the latest Programming
-Environment (21.09). This can be worked around either by using the default
-Programming Environment (21.04), or by following the [instructions](https://docs.archer2.ac.uk/user-guide/python/#adding-your-own-packages)
-to install dask in your own user space.
-
-### Warning when compiling Fortran code with CCE and MPI_F08 interface (Added: 2021-11-18)
-
-When you compile Fortran code using the MPI F08 interface (i.e. `use mpi_f08`) using the default version
-of CCE (11.0.4) you will see warnings similar to:
-
-```
-  use mpi_f08
-      ^       
-ftn-1753 crayftn: WARNING INTERFACE_MPI, File = interface_mpi_mod.f90, Line = 8, Column = 7 
-  File "/opt/cray/pe/mpich/8.1.4/ofi/cray/9.1/include/MPI_F08.mod" containing [sub]module information for "MPI_F08" was created with a previous compiler release.  It will not be supported by the next major release.  It is version 110 from release 9.0.
-```
-
-These warnings can be safely ignored as they do not affect the functioning of the code. If
-you wish to avoid the warnings, you can compile using the more recent CCE version (12.0.3)
-on the system. To switch to this version, use `module load cpe/21.09` from the default
-environment on ARCHER2.
 
 ### Research Software
 
