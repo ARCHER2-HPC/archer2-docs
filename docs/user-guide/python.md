@@ -106,6 +106,11 @@ export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 srun --distribution=block:block --hint=nomultithread python ${SLURM_SUBMIT_DIR}/myvenv-script.py
 ```
 
+!!! tip
+    If you find that a module you've installed to a virtual environment on `/work` isn't found when running a job, it may be that it was previously installed to the default location of `$HOME/.local` which is not mounted on the compute nodes. This can be an issue as `pip` will reuse any modules found at this default location rather than reinstall them into a virtual environment. Thus, even if the virtual environment is on `/work`, a module you've asked for may actually be located on `/home`.
+
+    You can check a module's install location and its dependencies with `pip show`, for example `pip show matplotlib`. You may then run `pip uninstall matplotlib` while no virtual environment is active to uninstall it from `$HOME/.local`, and then re-run `pip install matplotlib` while your virtual environment on `/work` is active to reinstall it there. You will need to do this for any modules installed on `/home` that will use either directly or indirectly. Remember you can check all your installed modules with `pip list`.
+
 Lastly, the environment being extended does not have to come from one of the centrally-installed `cray-python` modules.
 You can also create a local virtual environment based on one of the Machine Learning (ML) modules, e.g., `tensorflow`
 or `pytorch`. One extra command is required; it is issued immediately after the `python -m venv ...` command.
