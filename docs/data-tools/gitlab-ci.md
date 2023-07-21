@@ -6,6 +6,9 @@ This page explains how to run CI/CD jobs on ARCHER2 while keeping the integratio
 
 To achieve this, the ``gitlab-runner`` needs to be always running (idling most of the time) with an access to the internet and be able to submit jobs. On ARCHER2 this will be done by running it on the serial queue.
 
+![Gitlab-ci integration with ARCHER2](../images/gitlab-ci_export.svg)
+
+
 ## Useful links
 
   - [Gitlab-ci documentation](https://docs.gitlab.com/ee/ci/)
