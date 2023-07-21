@@ -157,6 +157,7 @@ The supported list of slurm parameter is:
 | `--nodes`           | `SLURM_nodes`         |
 | `--tasks-per-node`  | `SLURM_tasks_per_node`|
 | `--cpus-per-task`   | `SLURM_cpus_per_task` |
+| `--ntasks`          | `SLURM_ntasks`        |
 | `--account`         | `SLURM_account`       |
 | `--partition`       | `SLURM_partition`     |
 | `--qos`             | `SLURM_qos`           |
