@@ -449,9 +449,9 @@ of the HPE documentation:
 
 Also available is an MPI-based wrapper library for reading Power Management (PM) counters.
 These counters record such properties as point-in-time power, cumulative energy use and temperature,
-see the link for further details.
+see the link below for further details.
 
-- [pm_mpi_lib](../data-tools/pm-mpi-lib.md)
+- [Power Management MPI Library](../data-tools/pm-mpi-lib.md)
 
 
 ## Performance and profiling data in Slurm
