@@ -14,7 +14,7 @@ library is lightweight, containing just four functions, and is intended to be st
 to use. Once you've decided where in your code you wish to record counter values, you can
 control which counters are read at runtime by setting the `PAT_RT_PERFCTR` environment
 variable in the job submission script. As your code executes, the specified counters
-will be read at various points. After each reading, the counter values are summed by rank 0,
+will be read at various points. After each reading, the counter values are summed by rank 0
 (via an MPI reduction) before being output to a log file.
 
 You can discover which counters are available on ARCHER2 compute nodes by submitting the
