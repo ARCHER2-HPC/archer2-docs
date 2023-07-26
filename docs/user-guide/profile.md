@@ -456,7 +456,7 @@ library is lightweight, containing just four functions, and is intended to be st
 to use. Once you've defined the hooks in your code for recording counter values, you can
 control which counters are read at runtime by setting the `PAT_RT_PERFCTR` environment
 variable in the job submission script. As your code executes, the defined set of counters
-will be read at various points. After each reading, the counter values are summed by rank 0,
+will be read at various points. After each reading, the counter values are summed by rank 0
 (via an MPI reduction) before being output to a log file.
 
 Further information along with test harnesses and example scripts can be found by reading
