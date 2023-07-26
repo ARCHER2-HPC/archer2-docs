@@ -447,6 +447,13 @@ of the HPE documentation:
 
 * [HPE Performance Analysis Tools User Guide](https://support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&docId=a00123563en_us)
 
+Also available is an MPI-based wrapper library for reading Power Management (PM) counters.
+These counters record such properties as point-in-time power, cumulative energy use and temperature,
+see the link for further details.
+
+- [pm_mpi_lib](../data-tools/pm-mpi-lib.md)
+
+
 ## Performance and profiling data in Slurm
 
 Slurm commands on the login nodes can be used to quickly and simply retrieve
