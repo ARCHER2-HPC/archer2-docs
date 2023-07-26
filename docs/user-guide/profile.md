@@ -459,8 +459,8 @@ variable in the job submission script. As your code executes, the defined set of
 will be read at various points. After each reading, the counter values are summed by rank 0,
 (via an MPI reduction) before being output to a log file.
 
-Further information along with test harnesses and example scripts can be found in
-the [PAT MPI Library readme file](https://github.com/cresta-eu/pat_mpi_lib/blob/master/README.md).
+Further information along with test harnesses and example scripts can be found by reading
+the [PAT MPI Library readme file](https://github.com/cresta-eu/pat_mpi_lib).
 
 
 ### More information on hardware counters
