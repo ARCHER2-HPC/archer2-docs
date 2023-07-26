@@ -58,5 +58,8 @@ As of July 2023, the Cray Programming Environment (CPE), PAPI and libfabric vers
 on ARCHER2, were `22.12`, `6.0.0.17` and `1.12.1.2.2.0.0` respectively; these versions may change in
 the future.
 
+Alternatively, You can run `pat_help counters rome` from a login node to check the availability of
+individual counters.
+
 Further information on `papi_mpi_lib` along with test harnesses and example scripts can be found by reading
 the [PAPI MPI Library readme file](https://github.com/cresta-eu/papi_mpi_lib).
