@@ -1796,10 +1796,10 @@ of `srun` is required to launch a parallel job in the allocation.
 
 !!! note
     When using `srun` within an interactive `srun` session, you will need to 
-    include the `--oversubscribe` flag and specify the number of cores you want 
+    include both the `--overlap` and `--oversubscribe` flags, and specify the number of cores you want 
     to use:
     ```
-    auser@nid001261:/work/t01/t01/auser> srun --oversubscribe --distribution=block:block \
+    auser@nid001261:/work/t01/t01/auser> srun --overlap --oversubscribe --distribution=block:block \
                     --hint=nomultithread --ntasks=128 ./my_mpi_executable.x
     ```
 
