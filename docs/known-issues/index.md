@@ -13,7 +13,7 @@ active investigation by HPE Cray and the wider service.
 
 We have seen cases when using the (non-default) UCX communications protocol where the peak in memory use is
 much higher than would be expected. This leads to jobs failing unexpectedly with an OOM (Out Of Memory) error.
-The workaround is to use Open Fabrics (OFI) communication protocol instead. OFI is the deafult protocol on 
+The workaround is to use Open Fabrics (OFI) communication protocol instead. OFI is the default protocol on 
 ARCHER2 and so does not usually need to be explicitly loaded; but if you have UCX loaded, you can switch to
 OFI by adding the following lines to your submission script before you run your application:
 
