@@ -13,7 +13,7 @@ active investigation by HPE Cray and the wider service.
 
 We have seen cases when using the (non-default) UCX communications protocol where the peak in memory use is
 much higher than would be expected. This leads to jobs failing unexpectedly with an OOM (Out Of Memory) error.
-The workaround is to use Open Fabrics (OFI) communication protocol instead. OFI is the deafult protocol on 
+The workaround is to use Open Fabrics (OFI) communication protocol instead. OFI is the default protocol on 
 ARCHER2 and so does not usually need to be explicitly loaded; but if you have UCX loaded, you can switch to
 OFI by adding the following lines to your submission script before you run your application:
 
@@ -21,6 +21,11 @@ OFI by adding the following lines to your submission script before you run your 
 module load craype-network-ofi
 module load cray-mpich
 ```
+
+It can be very useful to track the memory usage of your job as it
+runs, for example to see whether there is high usage on all nodes, or a single node, if usage increases gradually or rapidly etc.
+
+Here are [instructions](https://github.com/ARCHER2-HPC/checkmem) on how to do this using a couple of small scripts.
 
 ### Slurm `--cpu-freq=X` option is not respected when used with `sbatch` (Added: 2023-01-18)
 
