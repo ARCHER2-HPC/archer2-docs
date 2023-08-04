@@ -15,7 +15,7 @@
         <link rel="next" href="../energy/">
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.19">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.1.21">
     
     
       
@@ -2064,7 +2064,7 @@ optimisation is to call them as infrequently as possible!</p>
     e.g. every ten iterations, even although this means that your
     program could run for up to 9 extra iterations.</li>
 <li>If possible, group data into a single buffer and call a single
-    reduction with count > 1; two reductions with count = 1 will take
+    reduction with count &gt; 1; two reductions with count = 1 will take
     almost exactly twice as long as a single reduction with count = 2.</li>
 <li>For example, if you only need to output a sequence of summed data at
     the end of the run, store the partial totals in an array and do a
