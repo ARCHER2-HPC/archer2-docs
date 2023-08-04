@@ -22,6 +22,11 @@ module load craype-network-ofi
 module load cray-mpich
 ```
 
+It can be very useful to track the memory usage of your job as it
+runs, for example to see whether there is high usage on all nodes, or a single node, if it usage increases gradually or rapidly etc.
+
+Here are (instructions)[https://github.com/ARCHER2-HPC/checkmem] on how to do this using a couple of small scripts.
+
 ### Slurm `--cpu-freq=X` option is not respected when used with `sbatch` (Added: 2023-01-18)
 
 If you specify the CPU frequency using the `--cpu-freq` option with the `sbatch` command (either using the script `#SBATCH --cpu-freq=X`
