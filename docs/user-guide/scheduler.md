@@ -1803,6 +1803,11 @@ of `srun` is required to launch a parallel job in the allocation.
                     --hint=nomultithread --ntasks=128 ./my_mpi_executable.x
     ```
 
+Without `--overlap` the second `srun` will block until the first one
+has completed. Since your interactive session was launched with `srun`
+this means it will never actually start -- you will get repeated
+warnings that "Requested nodes are busy".
+
 When finished, type `exit` to relinquish the allocation and control will
 be returned to the front end.
 
