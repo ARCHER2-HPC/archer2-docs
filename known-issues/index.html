@@ -1724,12 +1724,15 @@ active investigation by HPE Cray and the wider service.</p>
 <h3 id="excessive-memory-use-when-using-ucx-communications-protocol-added-2023-07-20">Excessive memory use when using UCX communications protocol (Added: 2023-07-20)</h3>
 <p>We have seen cases when using the (non-default) UCX communications protocol where the peak in memory use is
 much higher than would be expected. This leads to jobs failing unexpectedly with an OOM (Out Of Memory) error.
-The workaround is to use Open Fabrics (OFI) communication protocol instead. OFI is the deafult protocol on 
+The workaround is to use Open Fabrics (OFI) communication protocol instead. OFI is the default protocol on 
 ARCHER2 and so does not usually need to be explicitly loaded; but if you have UCX loaded, you can switch to
 OFI by adding the following lines to your submission script before you run your application:</p>
 <div class="highlight"><pre><span></span><code>module load craype-network-ofi
 module load cray-mpich
 </code></pre></div>
+<p>It can be very useful to track the memory usage of your job as it
+runs, for example to see whether there is high usage on all nodes, or a single node, if usage increases gradually or rapidly etc.</p>
+<p>Here are <a href="https://github.com/ARCHER2-HPC/checkmem">instructions</a> on how to do this using a couple of small scripts.</p>
 <h3 id="slurm-cpu-freqx-option-is-not-respected-when-used-with-sbatch-added-2023-01-18">Slurm <code>--cpu-freq=X</code> option is not respected when used with <code>sbatch</code> (Added: 2023-01-18)</h3>
 <p>If you specify the CPU frequency using the <code>--cpu-freq</code> option with the <code>sbatch</code> command (either using the script <code>#SBATCH --cpu-freq=X</code>
 method or the <code>--cpu-freq=X</code> option directly) then this option will not be respected as the default
