@@ -4583,12 +4583,16 @@ of <code>srun</code> is required to launch a parallel job in the allocation.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>When using <code>srun</code> within an interactive <code>srun</code> session, you will need to 
-include the <code>--oversubscribe</code> flag and specify the number of cores you want 
+include both the <code>--overlap</code> and <code>--oversubscribe</code> flags, and specify the number of cores you want 
 to use:
-<div class="highlight"><pre><span></span><code>auser@nid001261:/work/t01/t01/auser&gt; srun --oversubscribe --distribution=block:block \
+<div class="highlight"><pre><span></span><code>auser@nid001261:/work/t01/t01/auser&gt; srun --overlap --oversubscribe --distribution=block:block \
                 --hint=nomultithread --ntasks=128 ./my_mpi_executable.x
 </code></pre></div></p>
 </div>
+<p>Without <code>--overlap</code> the second <code>srun</code> will block until the first one
+has completed. Since your interactive session was launched with <code>srun</code>
+this means it will never actually start -- you will get repeated
+warnings that "Requested nodes are busy".</p>
 <p>When finished, type <code>exit</code> to relinquish the allocation and control will
 be returned to the front end.</p>
 <p>By default, the interactive shell will retain the environment of the
