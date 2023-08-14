@@ -2202,28 +2202,28 @@ different node types:</p>
 <td>yes</td>
 <td>no</td>
 <td>yes</td>
-<td>Backed up</td>
+<td>Incremental backup</td>
 </tr>
 <tr>
 <td>/work</td>
 <td>yes</td>
 <td>yes</td>
 <td>yes</td>
-<td>Not backed up, high performance</td>
+<td>No backup, high performance</td>
 </tr>
 <tr>
 <td>Solid state (NVMe)</td>
 <td>yes</td>
 <td>yes</td>
 <td>yes</td>
-<td>Not backed up, high performance</td>
+<td>No backup, high performance</td>
 </tr>
 <tr>
 <td>RDFaaS</td>
 <td>yes</td>
 <td>no</td>
 <td>yes</td>
-<td>Backed up</td>
+<td>Disaster recovery backup</td>
 </tr>
 </tbody>
 </table>
@@ -2408,6 +2408,12 @@ to query quotas on the solid state file system. </p>
 <p>The RDFaaS file systems provide additional capacity for projects to store data
 that is not currently required on the compute nodes but which is too large for
 the Home file systems.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The RDFaaS file systems are backed up for disaster recovery purposes only (e.g.
+loss of the whole file system) so it is not possible to recover individual files
+if they are deleted by mistake or otherwise lost.</p>
+</div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>Not all projects on ARCHER2 have access to RDFaaS, if you do have access, this
