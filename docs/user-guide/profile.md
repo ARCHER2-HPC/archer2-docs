@@ -352,10 +352,6 @@ phase with Apprentice2.
 
 ## Hardware Performance Counters
 
-!!! note
-    A limited number of hardware performance counters are currently available
-    on the ARCHER2 compute nodes. We are working to make more available.
-
 Hardware performance counters can be used to monitor CPU and power events on
 ARCHER2 compute nodes. The monitoring and reporting of hardware counter events is 
 integrated with *CrayPat* - users should use CrayPat as described earlier in this
