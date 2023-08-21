@@ -436,6 +436,29 @@ set in the job submission script):
   CrayPat Overhead : Time      0.2%           
 ```
 
+### Using the CrayPAT API to gather hardware counter data
+
+The CrayPAT API features a particular function, `PAT_counters`, that allows you to
+obtain the values of specific hardware counters at specific points within your code.
+
+For convenience, we have developed an MPI-based wrapper for this aspect of the CrayPAT
+API, called `pat_mpi_lib`, which can be found via the link below.
+
+[https://github.com/cresta-eu/pat_mpi_lib](https://github.com/cresta-eu/pat_mpi_lib)
+
+The PAT MPI Library makes it possible to monitor a user-defined set of hardware performance
+counters during the execution of an MPI code running across *multiple* compute nodes. The
+library is lightweight, containing just four functions, and is intended to be straightforward
+to use. Once you've defined the hooks in your code for recording counter values, you can
+control which counters are read at runtime by setting the `PAT_RT_PERFCTR` environment
+variable in the job submission script. As your code executes, the defined set of counters
+will be read at various points. After each reading, the counter values are summed by rank 0
+(via an MPI reduction) before being output to a log file.
+
+Further information along with test harnesses and example scripts can be found by reading
+the [PAT MPI Library readme file](https://github.com/cresta-eu/pat_mpi_lib).
+
+
 ### More information on hardware counters
 
 More information on using hardware counters can be found in the appropriate section
