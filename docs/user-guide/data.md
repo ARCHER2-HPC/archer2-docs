@@ -75,10 +75,10 @@ different node types:
 
 | Storage | Login Nodes | Compute Nodes | Data analysis nodes | Notes     | 
 |---------|-------------|---------------|---------------------|-----------|
-| /home   | yes         | no            | yes                 | Backed up |
-| /work   | yes         | yes           | yes                 | Not backed up, high performance |
-| Solid state (NVMe)   | yes         | yes           | yes                 | Not backed up, high performance |
-| RDFaaS  | yes         | no            | yes                 | Backed up |
+| /home   | yes         | no            | yes                 | Incremental backup |
+| /work   | yes         | yes           | yes                 | No backup, high performance |
+| Solid state (NVMe)   | yes         | yes           | yes                 | No backup, high performance |
+| RDFaaS  | yes         | no            | yes                 | Disaster recovery backup |
 
 !!! important
     Only the work file systems and the solid state (NVMe) file system are visible on
@@ -290,6 +290,11 @@ You query quotas for the solid state file system in the same way as
 The RDFaaS file systems provide additional capacity for projects to store data
 that is not currently required on the compute nodes but which is too large for
 the Home file systems.
+
+!!! warning
+    The RDFaaS file systems are backed up for disaster recovery purposes only (e.g.
+    loss of the whole file system) so it is not possible to recover individual files
+    if they are deleted by mistake or otherwise lost.
 
 !!! tip
     Not all projects on ARCHER2 have access to RDFaaS, if you do have access, this
