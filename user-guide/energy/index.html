@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.0">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.1">
     
     
       
@@ -1965,6 +1965,26 @@
   
   
     <li class="md-nav__item">
+      <a href="../../data-tools/pm-mpi-lib/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Energy Counters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../data-tools/julia/" class="md-nav__link">
         
   
@@ -2244,6 +2264,14 @@ job. </p>
 <li>power_cap - Current power cap limit in Watts; 0 indicates no capping.</li>
 <li>raw_scan_hz - The power management scanning rate for all data in pm_counters.</li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There exists an MPI-based wrapper library that can gather the <code>pm</code> counter values at runtime via a simple
+set of function calls. See the link below for details.</p>
+<ul>
+<li><a href="../../data-tools/pm-mpi-lib/">Power Management MPI Library</a></li>
+</ul>
+</div>
 <h2 id="controlling-cpu-frequency">Controlling CPU frequency</h2>
 <p>You can request specific CPU frequencies (in kHz) for compute nodes through <code>srun</code> options or environment variables.
 The available frequencies on the ARCHER2 processors along with the options and environment variables:</p>
