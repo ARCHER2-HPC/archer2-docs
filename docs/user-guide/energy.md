@@ -79,6 +79,12 @@ There are a number of files in this directory, all the counter files include the
 - power_cap - Current power cap limit in Watts; 0 indicates no capping.
 - raw_scan_hz - The power management scanning rate for all data in pm_counters.
 
+!!! note
+    There exists an MPI-based wrapper library that can gather the `pm` counter values at runtime via a simple
+    set of function calls. See the link below for details.
+
+    - [Power Management MPI Library](../data-tools/pm-mpi-lib.md)
+
 ## Controlling CPU frequency
 
 You can request specific CPU frequencies (in kHz) for compute nodes through `srun` options or environment variables.
