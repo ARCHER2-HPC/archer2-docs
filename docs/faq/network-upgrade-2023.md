@@ -25,7 +25,7 @@ We will notify users if we are able to complete this work ahead of schedule.
 
  - No login access
  - No access to any data on the system
-
+- The SAFE will be available during the outage but there will be reduced functionality due to the unavailability of the connection to ARCHER2 such as resetting of passwords or new account creation. 
 
 ### Submitting new work, and running work
 
