@@ -12,10 +12,10 @@ If you have any questions or concerns, please
 ## When will the upgrade happen and how long will it take?
 
 
-The outage dates will be:
+### The outage dates will be:
 
- - Start: 14:00 BST, Monday 18th September 2023
- - Scheduled End: 12:00 BST, Wednesday 20th September 2023
+ - Start:  Monday 18th September 2023
+ - Scheduled End:  Wednesday 20th September 2023
 
 ## What are the impacts on users from the upgrade?
 
@@ -24,4 +24,11 @@ The outage dates will be:
  - No login access
  - No access to any data on the system
  - Some of the SAFE functionality will be removed during the upgrade such as user account requests
+
+### Submitting new work, and running work
+
+- With no login access, it will not be possible to submit new jobs to the queues
+- Jobs will continue to run, and queued work will be started as usual
+
+We will therefore be encouraging users to submit jobs to the queues in the period prior to the work, so that ARCHER2 can continue to run jobs during the outage.
 
