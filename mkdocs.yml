@@ -53,8 +53,7 @@ nav:
   - "ARCHER2 Known Issues": known-issues/index.md
   - "ARCHER2 Frequently Asked Questions":
     - "General FAQ": faq/index.md
-    - "ARCHER2 Upgrade 2023": faq/upgrade-2023.md
-    - "ARCHER2 Network Upgrade 2023": faq/network-upgrade-2023.md
+    - "ARCHER2 data centre network upgrade 2023": faq/network-upgrade-2023.md
   - "User and Best Practice Guide":
     - "Overview": user-guide/index.md
     - "Hardware": user-guide/hardware.md
