@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.3">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.5">
     
     
       
@@ -2455,7 +2455,7 @@ module<span class="w"> </span>load<span class="w"> </span>arm/forge
 <span class="c1"># Ensure the cpus-per-task option is propagated to srun commands</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
 
-map<span class="w"> </span>-n<span class="w"> </span>&lt;number<span class="w"> </span>of<span class="w"> </span>MPI<span class="w"> </span>processes&gt;<span class="w"> </span>--mpiargs<span class="o">=</span><span class="s2">&quot;--hint=nomultithread --distribution=block:block&quot;</span><span class="w"> </span>--profile<span class="w"> </span>./my_executable
+map<span class="w"> </span>-n<span class="w"> </span>&lt;number<span class="w"> </span>of<span class="w"> </span>MPI<span class="w"> </span>processes&gt;<span class="w"> </span>--mpi<span class="o">=</span>slurm<span class="w"> </span>--mpiargs<span class="o">=</span><span class="s2">&quot;--hint=nomultithread --distribution=block:block&quot;</span><span class="w"> </span>--profile<span class="w"> </span>./my_executable
 </code></pre></div>
 <p>Successful execution will generate a file with a <code>.map</code> extension.</p>
 <p>This <code>.map</code> file may be viewed via the GUI (start with either <code>map</code> or
