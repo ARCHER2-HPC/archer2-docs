@@ -12,7 +12,7 @@ If you have any questions or concerns, please
 
 ### The outage dates will be:
 
- - Start:  Monday 18th September 2023
+ - Start:  Monday 18th September 2023  09:00
  - Scheduled End:  Friday 22nd September 2023
 
 We will notify users if we are able to complete this work ahead of schedule and restore 
@@ -31,6 +31,7 @@ ARCHER2 access earlier than expected.
 
 - With no login access, it will not be possible to submit new jobs to the queues
 - Jobs will continue to run, and queued jobs will be started as usual
+- Serial QoS will not be available.
 
 We will therefore be encouraging users to submit jobs in the period prior to the work, so that
 your work can continue on the system during the upgrade process.
