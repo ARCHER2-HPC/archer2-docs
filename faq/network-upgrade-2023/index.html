@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.5">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.8">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.0e669242.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.046329b4.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.85d0ee34.min.css">
@@ -530,6 +530,13 @@
           <li class="md-nav__item">
   <a href="#submitting-new-work-and-running-work" class="md-nav__link">
     Submitting new work, and running work
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relaxing-of-queue-limits" class="md-nav__link">
+    Relaxing of queue limits
   </a>
   
 </li>
@@ -2165,6 +2172,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#relaxing-of-queue-limits" class="md-nav__link">
+    Relaxing of queue limits
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2214,10 +2228,15 @@ ARCHER2 access earlier than expected.</p>
 <ul>
 <li>With no login access, it will not be possible to submit new jobs to the queues</li>
 <li>Jobs will continue to run, and queued jobs will be started as usual</li>
-<li>Serial QoS will not be available.</li>
+<li>Serial QoS will not be available. However, serial jobs can be submitted using the standard and low-priority queues.</li>
 </ul>
 <p>We will therefore be encouraging users to submit jobs in the period prior to the work, so that
 your work can continue on the system during the upgrade process.</p>
+<h3 id="relaxing-of-queue-limits">Relaxing of queue limits</h3>
+<p>In preparation for the Data Centre Network (DCN) upgrade we have relaxed the queue limits on all the QoS’s, so that users can submit a significantly larger number of jobs to ARCHER2. These changes are intended to allow users to submit jobs that they wish to run during the upgrade, in advance of the start of the upgrade. The changes will be in place until the end of the Data Centre Network upgrade.</p>
+<p>For the low priority QoS, as well as relaxing the number of jobs you can submit, we have also increased the maximum job length to 48 hours and the maximum number of nodes per job to 5,860, so users can submit using their own allocation or using the low-priority QoS.</p>
+<p>Can we encourage users to make use of these changes, this is a good opportunity for users to queue and run a greater number of jobs than usual. The relaxation of limits on the low-priority queue also offers an opportunity to run a wider range of jobs through this queue than is normally possible.</p>
+<p>Due to the unavailability of the DCN, users will not be able to connect to ARCHER2 via the login nodes during the upgrade. The serial QoS will be disabled during the upgrade period. However, serial jobs can be submitted using the standard and low-priority queues.</p>
 
 
   
@@ -2297,7 +2316,7 @@ your work can continue on the system during the upgrade process.</p>
     <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.78eede0e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.dff1b7c8.min.js"></script>
       
     
   </body>
