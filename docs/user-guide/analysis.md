@@ -8,7 +8,7 @@ overview of the different options for doing so.
 
 The easiest way to run non-computationally intensive data analysis is to
 run directly on the login nodes. However, please remember that the login
-nodes are a shared resource and should not be used for long-running 
+nodes are a shared resource and should not be used for long-running
 tasks.
 
 #### Example: Running an R script on a login node
@@ -50,7 +50,7 @@ Rscript example.R
 
 
 An advantage of this method is that you can use
-[Job chaining](https://docs.archer2.ac.uk/user-guide/scheduler/#job-chaining)
+[Job chaining](https://docs.archer2.ac.uk/user-guide/scheduler/#chains-of-jobs)
 to automate the process of analysing your output data once your compute
 job has finished.
 
@@ -74,34 +74,34 @@ auser@ln01:> salloc --nodes=1 --ntasks-per-node=1 --cpus-per-task=1 \
 
 !!! note
     If you want to run for longer than 20 minutes, you will need to use
-    a different QoS as the maximum runtime for the `short` QoS is 
+    a different QoS as the maximum runtime for the `short` QoS is
     20 mins.
 
 ## Data analysis nodes
 
 The data analysis nodes on the ARCHER2 system are designed for large
-compilations, post-calculation analysis and data manipulation. They should 
-be used for jobs which are too small to require a whole compute node, but 
-which would have an adverse impact on the operation of the login nodes if 
+compilations, post-calculation analysis and data manipulation. They should
+be used for jobs which are too small to require a whole compute node, but
+which would have an adverse impact on the operation of the login nodes if
 they were run interactively.
 
-Unlike compute nodes, the data analysis nodes are able to access the home, 
-work, and the RDFaaS file systems. They can also 
-be used to transfer data from a remote system to ARCHER2 and vice versa 
-(using e.g. `scp` or `rsync`). This can be useful when transferring large 
+Unlike compute nodes, the data analysis nodes are able to access the home,
+work, and the RDFaaS file systems. They can also
+be used to transfer data from a remote system to ARCHER2 and vice versa
+(using e.g. `scp` or `rsync`). This can be useful when transferring large
 amounts of data that might take hours to complete.
 
 ### Requesting resources on the data analysis nodes using Slurm
 
-The ARCHER2 data analysis nodes can be reached by using the `serial` 
-partition and the `serial` QoS. Unlike other nodes on ARCHER2, you may 
-only request part of a single node and you will likely be sharing the node 
+The ARCHER2 data analysis nodes can be reached by using the `serial`
+partition and the `serial` QoS. Unlike other nodes on ARCHER2, you may
+only request part of a single node and you will likely be sharing the node
 with other users.
 
-The data analysis nodes are set up such that you can specify the number of 
-cores you want to use (up to 32 physical cores) and the amount of memory you 
-want for your job (up to 125 GB). You can have multiple jobs running on the 
-data analysis nodes at the same time, but the total number of cores used by 
+The data analysis nodes are set up such that you can specify the number of
+cores you want to use (up to 32 physical cores) and the amount of memory you
+want for your job (up to 125 GB). You can have multiple jobs running on the
+data analysis nodes at the same time, but the total number of cores used by
 those jobs cannot exceed 32, and the
 total memory used by jobs currently running from a single user cannot exceed
 125 GB -- any jobs above this limit will remain pending until your previous
@@ -120,19 +120,19 @@ cores only, and 1 core when specifying the memory only.
     per-core default memory allocation is slightly less than 2 GB.
 
 !!! note
-    When running on the data analysis nodes, you must always specify either 
-    the number of cores you want, the amount of memory you want, or both. 
+    When running on the data analysis nodes, you must always specify either
+    the number of cores you want, the amount of memory you want, or both.
     The examples shown below specify the number of cores with the `--ntasks`
-    flag and the memory with the `--mem` flag. If you are only wanting to 
+    flag and the memory with the `--mem` flag. If you are only wanting to
     specify one of the two, please remember to delete the other one.
 
 #### Example: Running a serial batch script on the data analysis nodes
 
-A Slurm batch script for the data analysis nodes looks very similar to 
-one for the compute nodes. The main differences are that you need to use 
+A Slurm batch script for the data analysis nodes looks very similar to
+one for the compute nodes. The main differences are that you need to use
 `--partition=serial` and `--qos=serial`, specify the number of tasks
 (rather than the number of nodes) and/or specify the amount of memory
-you want. For example, to use a single core and 4 GB of memory, you 
+you want. For example, to use a single core and 4 GB of memory, you
 would use something like:
 
 ```slurm
@@ -144,16 +144,16 @@ would use something like:
 #SBATCH --ntasks=1
 
 # Replace [budget code] below with your budget code (e.g. t01)
-#SBATCH --account=[budget code]             
+#SBATCH --account=[budget code]
 #SBATCH --partition=serial
 #SBATCH --qos=serial
 
-# Define memory required for this jobs. By default, you would 
+# Define memory required for this jobs. By default, you would
 # get just under 2 GB, but you can ask for up to 125 GB.
 #SBATCH --mem=4G
 
 # Set the number of threads to 1
-#   This prevents any threaded system libraries from automatically 
+#   This prevents any threaded system libraries from automatically
 #   using threading.
 export OMP_NUM_THREADS=1
 
@@ -164,25 +164,25 @@ python my_analysis_script.py
 
 ### Interactive session on the data analysis nodes
 
-There are two ways to start an interactive session on the data analysis nodes: 
-you can either use `salloc` to reserve a part of a data analysis node for interactive 
-jobs; or, you can use `srun` to open a terminal on the node and run things on the 
-node directly. You can find out more information on the advantages and disadvantages 
-of both of these methods in the [Running jobs on ARCHER2](scheduler.md#Interactive Jobs) 
+There are two ways to start an interactive session on the data analysis nodes:
+you can either use `salloc` to reserve a part of a data analysis node for interactive
+jobs; or, you can use `srun` to open a terminal on the node and run things on the
+node directly. You can find out more information on the advantages and disadvantages
+of both of these methods in the [Running jobs on ARCHER2](scheduler.md#Interactive Jobs)
 section of the User and Best Practice Guide.
 
 #### Using `salloc` for interactive access
 
 You can reserve resources on a data analysis node using `salloc`. For
-example, to request 1 core and 4 GB of memory for 20 minutes, you 
+example, to request 1 core and 4 GB of memory for 20 minutes, you
 would use:
 
-```bash 
+```bash
 auser@ln01:~> salloc --time=00:20:00 --partition=serial --qos=serial \
                     --account=[budget code] --ntasks=1 \
                     --mem=4G
 ```
-    
+
 When you submit this job, your terminal will display something like:
 
 ```bash
@@ -195,14 +195,14 @@ salloc: Nodes dvn01 are ready for job
 
 auser@ln01:~>
 ```
-    
+
 It may take some time for your interactive job to start. Once it runs
 you will enter a standard interactive terminal session (a new shell).
 Note that this shell is still on the front end (the prompt has not
 changed). Whilst the interactive session lasts you will be able to run
-jobs on the data analysis nodes by issuing the `srun` command directly at 
+jobs on the data analysis nodes by issuing the `srun` command directly at
 your command prompt. The maximum number of cores and memory you can use
-is limited by resources requested in the `salloc` command (or by the 
+is limited by resources requested in the `salloc` command (or by the
 defaults if you did not explicitly ask for particular amounts of resource).
 
 Your session will end when you hit the requested walltime. If you wish
@@ -215,14 +215,14 @@ You can get a command prompt directly on the data analysis nodes by
 using the `srun` command directly. For example, to reserve 1 core
 and 8 GB of memory, you would use:
 
-```bash 
+```bash
 auser@ln01:~> srun   --time=00:20:00 --partition=serial --qos=serial \
                     --account=[budget code]    \
                     --ntasks=1 --mem=8G \
                     --pty /bin/bash
 ```
 
-The `--pty /bin/bash` will cause a new shell to be started on the data 
+The `--pty /bin/bash` will cause a new shell to be started on the data
 analysis node. (This is perhaps closer to what
 many people consider an 'interactive' job than the method using the
 `salloc` method described above.)
@@ -238,19 +238,19 @@ option to the `srun` command.
 
 #### Visualising data using the data analysis nodes using X
 
-You can view data on the data analysis nodes by starting an interactive 
+You can view data on the data analysis nodes by starting an interactive
 `srun` session with the `--x11` flag to export the X display back to
 your local system. For 1 core with * GB of memory:
 
-```bash 
+```bash
 auser@ln01:~> srun   --time=00:20:00 --partition=serial --qos=serial  \
                         --hint=nomultithread --account=[budget code]    \
                         --ntasks=1 --mem=8G --x11 --pty /bin/bash
 ```
-    
+
 
 !!! tip
-    Data visualisation on ARCHER2 is only possible if you used the `-X` 
+    Data visualisation on ARCHER2 is only possible if you used the `-X`
     or `-Y` flag to the `ssh` command when when logging in to the system.
 
 ## Using Singularity

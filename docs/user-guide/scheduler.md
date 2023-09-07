@@ -25,7 +25,7 @@ submission scripts.
 
 ### CUs
 
-Time used on ARCHER2 is measured in CUs.  
+Time used on ARCHER2 is measured in CUs.
 1 CU = 1 Node Hour for a standard 128 core node.
 
 The [CU calculator](https://www.archer2.ac.uk/support-access/cu-calc.html) will help you to calculate the CU cost for your jobs.
@@ -35,9 +35,9 @@ The [CU calculator](https://www.archer2.ac.uk/support-access/cu-calc.html) will 
 You can check in [SAFE](https://safe.epcc.ed.ac.uk) by selecting `Login accounts` from the menu, select the login account you want to query.
 
 Under `Login account details` you will see each of the budget codes you have access to listed e.g.
-`e123 resources` and then under Resource Pool to the right of this, a note of the remaining budget in CUs. 
+`e123 resources` and then under Resource Pool to the right of this, a note of the remaining budget in CUs.
 
-When logged in to the machine you can also use the command 
+When logged in to the machine you can also use the command
 
     sacctmgr show assoc where user=$LOGNAME format=account,user,maxtresmins
 
@@ -83,13 +83,13 @@ partitions. Without any options, `sinfo` lists the status of all
 resources and partitions, e.g.
 
 ```bash
-auser@ln01:~> sinfo 
+auser@ln01:~> sinfo
 
-PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST 
+PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
 standard     up 1-00:00:00    105  down* nid[001006,...,002014]
 standard     up 1-00:00:00     12  drain nid[001016,...,001969]
-standard     up 1-00:00:00      5   resv nid[001000,001002-001004,001114] 
-standard     up 1-00:00:00    683  alloc nid[001001,...,001970-001991] 
+standard     up 1-00:00:00      5   resv nid[001000,001002-001004,001114]
+standard     up 1-00:00:00    683  alloc nid[001001,...,001970-001991]
 standard     up 1-00:00:00    214   idle nid[001022-001023,...,002015-002023]
 standard     up 1-00:00:00      2   down nid[001021,001050]
 ```
@@ -251,7 +251,7 @@ Job priority on ARCHER2 depends on a number of different factors:
  - Your current fairshare factor
 
 Each of these factors is normalised to a value between 0 and 1, is multiplied
-with a weight and the resulting values combined to produce a priority for the job. 
+with a weight and the resulting values combined to produce a priority for the job.
 The current job priority formula on ARCHER2 is:
 
 ```
@@ -266,12 +266,12 @@ The priority factors are:
 - P(Age) - The priority based on the job age normalised to a value between 0 and 1.
   The maximum raw value is 14 days (where P(Age) = 1).
 - P(Fairshare) - The fairshare priority normalised to a value between 0 and 1. Your
-  fairshare priority is determined by a combination of your budget code fairshare 
-  value and your user fairshare value within that budget code. The more use that 
-  the budget code you are using has made of the system recently relative to other 
+  fairshare priority is determined by a combination of your budget code fairshare
+  value and your user fairshare value within that budget code. The more use that
+  the budget code you are using has made of the system recently relative to other
   budget codes on the system, the lower the budget code fairshare value will be; and the more
   use you have made of the system recently relative to other users within your
-  budget code, the lower your user fairshare value will be. The decay half life 
+  budget code, the lower your user fairshare value will be. The decay half life
   for fairshare on ARCHER2 is set to 2 days. [More information on the Slurm fairshare
   algorithm](https://slurm.schedmd.com/fair_tree.html).
 - P(Size) - The priority based on the job size normalised to a value between 0 and 1.
@@ -305,12 +305,12 @@ Some common problems are listed below, with a suggestion about
 the likely cause:
 
 * ``sbatch: unrecognized option <text>``
-  
+
     One of your options is invalid or has a typo. ``man sbatch`` to help.
 
 
 * ``error: Batch job submission failed: No partition specified or system default partition``
-  
+
     A ``--partition=`` option is missing. You must specify the partition
     (see the list above). This is most often ``--partition=standard``.
 
@@ -342,7 +342,7 @@ the likely cause:
 * ``error: QOSMaxWallDurationPerJobLimit``
     ``error: Batch job submission failed: Job violates accounting/QOS policy``
     ``(job submit limit, user's size and/or time limits)``
-  
+
     The script has probably specified a time limit which is too long for
     the corresponding QoS. E.g., the time limit for the short QoS
     is 20 minutes.
@@ -464,10 +464,10 @@ parallel processes and threads they require.
      no threading and you want to use all 128 cores on the node then you
      should set the number of CPUs (cores) per parallel process to 1.
      **Important:** if you are using threading (e.g. with OpenMP) or
-     you want to use less than 128 cores per node (e.g. to access more 
+     you want to use less than 128 cores per node (e.g. to access more
      memory or memory bandwidth per core) then you will need to change
      this option as described below.
-   - `--cpu-freq=<freq. in kHz>` set the CPU frequency for the compute 
+   - `--cpu-freq=<freq. in kHz>` set the CPU frequency for the compute
      nodes. Valid values are `2250000` (2.25 GHz), `2000000` (2.0 GHz),
      `1500000` (1.5 GHz). For more information on CPU frequency settings
      and energy use see the [Energy use](energy.md) section.
@@ -486,7 +486,7 @@ For jobs using threading:
 
 For jobs using less than 128 cores per node:
    - `--cpus-per-task=<stride between placement of processes>` the stride
-     between the parallel processes. For example, if oyu want to double the
+     between the parallel processes. For example, if you want to double the
      memory and memory bandwidth per process on an ARCHER2 compute node you
      would want to place 64 processes per node and leave an empty core between
      each process you would set `--cpus-per-task=2` and `--ntasks-per-node=64`.
@@ -496,12 +496,12 @@ For jobs using less than 128 cores per node:
     your job submission script to pass the `--cpus-per-task` setting from
     the job script to the `srun` command. (Alternatively, you could use
     the `--cpus-per-task` option in the srun command itself.) If you do not do
-    this then the placement of processes/threads will be incorrect and you 
-    will likely see poor performance of your application. 
+    this then the placement of processes/threads will be incorrect and you
+    will likely see poor performance of your application.
 
 ### Options for jobs on the data analysis nodes
 
-The data analysis nodes are shared between all users and can be used to 
+The data analysis nodes are shared between all users and can be used to
 run jobs that require small numbers of cores and/or access to an external
 network to transfer data. These jobs are often **serial jobs** that only
 require a single core.
@@ -524,13 +524,13 @@ submission scripts) can be found in the
 If you are running parallel jobs, your job submission script should
 contain one or more `srun` commands to launch the parallel executable
 across the compute nodes. In most cases you will want to add the options
-`--distribution=block:block` and `--hint=nomultithread` to your 
-`srun` command to ensure you get the correct pinning of processes to 
+`--distribution=block:block` and `--hint=nomultithread` to your
+`srun` command to ensure you get the correct pinning of processes to
 cores on a compute node.
 
 !!! warning
     If you do not add the `--distribution=block:block` and `--hint=nomultithread`
-    options to your `srun` command the default process placement 
+    options to your `srun` command the default process placement
     may lead to a drop in performance for your jobs on ARCHER2.
 
 A brief explanation of these options:
@@ -553,59 +553,59 @@ SlurmdParameters=l3cache_as_socket
 ```
 
 The effect of this setting is to define a Slurm socket as a unit that has a shared
-L3 cache. On ARCHER2, this means that each Slurm "socket" corresponds to a 4-core 
+L3 cache. On ARCHER2, this means that each Slurm "socket" corresponds to a 4-core
 CCX (Core CompleX). For a more detailed discussion on the hardware and the memory/cache
 layout see [the Hardware section](hardware.md).
 
 The effect of this setting can be illustrated by using the `xthi` program to report
 placement when we select a cyclic distribution of processes across sockets from srun
-(`--distribution=block:cyclic`). As you can see from the output from `xthi` included 
-below, the `cyclic` per-socket distribution results in sequential MPI processes being 
+(`--distribution=block:cyclic`). As you can see from the output from `xthi` included
+below, the `cyclic` per-socket distribution results in sequential MPI processes being
 placed on every 4th core (i.e. cyclic placement across CCX).
 
 ```
 Node summary for    1 nodes:
 Node    0, hostname nid000006, mpi 128, omp   1, executable xthi_mpi
-MPI summary: 128 ranks 
-Node    0, rank    0, thread   0, (affinity =    0) 
-Node    0, rank    1, thread   0, (affinity =    4) 
-Node    0, rank    2, thread   0, (affinity =    8) 
-Node    0, rank    3, thread   0, (affinity =   12) 
-Node    0, rank    4, thread   0, (affinity =   16) 
-Node    0, rank    5, thread   0, (affinity =   20) 
-Node    0, rank    6, thread   0, (affinity =   24) 
-Node    0, rank    7, thread   0, (affinity =   28) 
-Node    0, rank    8, thread   0, (affinity =   32) 
-Node    0, rank    9, thread   0, (affinity =   36) 
-Node    0, rank   10, thread   0, (affinity =   40) 
-Node    0, rank   11, thread   0, (affinity =   44) 
-Node    0, rank   12, thread   0, (affinity =   48) 
-Node    0, rank   13, thread   0, (affinity =   52) 
-Node    0, rank   14, thread   0, (affinity =   56) 
-Node    0, rank   15, thread   0, (affinity =   60) 
-Node    0, rank   16, thread   0, (affinity =   64) 
-Node    0, rank   17, thread   0, (affinity =   68) 
-Node    0, rank   18, thread   0, (affinity =   72) 
-Node    0, rank   19, thread   0, (affinity =   76) 
-Node    0, rank   20, thread   0, (affinity =   80) 
-Node    0, rank   21, thread   0, (affinity =   84) 
-Node    0, rank   22, thread   0, (affinity =   88) 
-Node    0, rank   23, thread   0, (affinity =   92) 
-Node    0, rank   24, thread   0, (affinity =   96) 
-Node    0, rank   25, thread   0, (affinity =  100) 
-Node    0, rank   26, thread   0, (affinity =  104) 
-Node    0, rank   27, thread   0, (affinity =  108) 
-Node    0, rank   28, thread   0, (affinity =  112) 
-Node    0, rank   29, thread   0, (affinity =  116) 
-Node    0, rank   30, thread   0, (affinity =  120) 
-Node    0, rank   31, thread   0, (affinity =  124) 
-Node    0, rank   32, thread   0, (affinity =    1) 
-Node    0, rank   33, thread   0, (affinity =    5) 
-Node    0, rank   34, thread   0, (affinity =    9) 
-Node    0, rank   35, thread   0, (affinity =   13) 
-Node    0, rank   36, thread   0, (affinity =   17) 
-Node    0, rank   37, thread   0, (affinity =   21) 
-Node    0, rank   38, thread   0, (affinity =   25) 
+MPI summary: 128 ranks
+Node    0, rank    0, thread   0, (affinity =    0)
+Node    0, rank    1, thread   0, (affinity =    4)
+Node    0, rank    2, thread   0, (affinity =    8)
+Node    0, rank    3, thread   0, (affinity =   12)
+Node    0, rank    4, thread   0, (affinity =   16)
+Node    0, rank    5, thread   0, (affinity =   20)
+Node    0, rank    6, thread   0, (affinity =   24)
+Node    0, rank    7, thread   0, (affinity =   28)
+Node    0, rank    8, thread   0, (affinity =   32)
+Node    0, rank    9, thread   0, (affinity =   36)
+Node    0, rank   10, thread   0, (affinity =   40)
+Node    0, rank   11, thread   0, (affinity =   44)
+Node    0, rank   12, thread   0, (affinity =   48)
+Node    0, rank   13, thread   0, (affinity =   52)
+Node    0, rank   14, thread   0, (affinity =   56)
+Node    0, rank   15, thread   0, (affinity =   60)
+Node    0, rank   16, thread   0, (affinity =   64)
+Node    0, rank   17, thread   0, (affinity =   68)
+Node    0, rank   18, thread   0, (affinity =   72)
+Node    0, rank   19, thread   0, (affinity =   76)
+Node    0, rank   20, thread   0, (affinity =   80)
+Node    0, rank   21, thread   0, (affinity =   84)
+Node    0, rank   22, thread   0, (affinity =   88)
+Node    0, rank   23, thread   0, (affinity =   92)
+Node    0, rank   24, thread   0, (affinity =   96)
+Node    0, rank   25, thread   0, (affinity =  100)
+Node    0, rank   26, thread   0, (affinity =  104)
+Node    0, rank   27, thread   0, (affinity =  108)
+Node    0, rank   28, thread   0, (affinity =  112)
+Node    0, rank   29, thread   0, (affinity =  116)
+Node    0, rank   30, thread   0, (affinity =  120)
+Node    0, rank   31, thread   0, (affinity =  124)
+Node    0, rank   32, thread   0, (affinity =    1)
+Node    0, rank   33, thread   0, (affinity =    5)
+Node    0, rank   34, thread   0, (affinity =    9)
+Node    0, rank   35, thread   0, (affinity =   13)
+Node    0, rank   36, thread   0, (affinity =   17)
+Node    0, rank   37, thread   0, (affinity =   21)
+Node    0, rank   38, thread   0, (affinity =   25)
 
 ...output trimmed...
 ```
@@ -698,8 +698,8 @@ inconsistencies.
 
 An example of the sort of output the tool can give would be:
 
-    auser@ln01:/work/t01/t01/auser> checkScript submit.slurm 
-    
+    auser@ln01:/work/t01/t01/auser> checkScript submit.slurm
+
     ===========================================================================
     checkScript
     ---------------------------------------------------------------------------
@@ -708,7 +708,7 @@ An example of the sort of output the tool can give would be:
     This is free software, and you are welcome to redistribute it
     under certain conditions.
     ===========================================================================
-    
+
     Script details
     ---------------
            User: auser
@@ -718,7 +718,7 @@ An example of the sort of output the tool can give would be:
       Partition: standard (ok)
             QoS: standard (ok)
     Combination:          (ok)
-    
+
     Requested resources
     -------------------
              nodes =              3                     (ok)
@@ -727,13 +727,13 @@ An example of the sort of output the tool can give would be:
     cores per node =            128                     (ok)
     OpenMP defined =           True                     (ok)
           walltime =          1:0:0                     (ok)
-    
+
     CU Usage Estimate (if full job time used)
     ------------------------------------------
                           CU =          3.000
-    
-    
-    
+
+
+
     checkScript finished: 0 warning(s) and 0 error(s).
 
 ## Checking scripts and estimating start time with `--test-only`
@@ -767,12 +767,12 @@ and 128 MPI ranks per node for 20 minutes would look like:
 #SBATCH --cpus-per-task=1
 
 # Replace [budget code] below with your budget code (e.g. t01)
-#SBATCH --account=[budget code]             
+#SBATCH --account=[budget code]
 #SBATCH --partition=standard
 #SBATCH --qos=standard
 
 # Set the number of threads to 1
-#   This prevents any threaded system libraries from automatically 
+#   This prevents any threaded system libraries from automatically
 #   using threading.
 export OMP_NUM_THREADS=1
 
@@ -834,7 +834,7 @@ MPI process. This results in all 128 physical cores per node being used.
 #SBATCH --cpus-per-task=16
 
 # Replace [budget code] below with your project code (e.g. t01)
-#SBATCH --account=[budget code] 
+#SBATCH --account=[budget code]
 #SBATCH --partition=standard
 #SBATCH --qos=standard
 
@@ -892,7 +892,7 @@ per core and specifies 4 hours maximum runtime per subjob:
 #SBATCH --array=0-55
 
 # Replace [budget code] below with your budget code (e.g. t01)
-#SBATCH --account=[budget code]  
+#SBATCH --account=[budget code]
 #SBATCH --partition=standard
 #SBATCH --qos=standard
 
@@ -903,7 +903,7 @@ per core and specifies 4 hours maximum runtime per subjob:
 export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 
 # Set the number of threads to 1
-#   This prevents any threaded system libraries from automatically 
+#   This prevents any threaded system libraries from automatically
 #   using threading.
 export OMP_NUM_THREADS=1
 
@@ -916,39 +916,114 @@ Job arrays are submitted using `sbatch` in the same way as for standard
 jobs:
 
 ```
-sbatch job_script.pbs 
+sbatch job_script.pbs
 ```
 
-## Job chaining
+## Expressing dependencies between jobs
+
+SLURM allows one to express dependencies between jobs using the `--dependency`
+(or `-d`) option. This allows the start of execution of the dependent job
+to be delayed until some condition involving a current or previous job, or
+set of jobs, has been satisfied. A simple example might be:
+```
+$ sbatch --dependency=4394150 myscript.sh
+Submitted batch job 4394325
+```
+This states that the execution of the new batch job should not start until
+job 4394150 has completed/terminated. Here, completion/termination is the
+only condition. The new job 4394325 should appear in the pending state with
+reason `(Dependency)` assuming 4394150 is still running.
+
+A dependency may be of a different _type_, of which there are a number
+of different possibilities. If we explicitly include the default type
+`afterany` in the example above, we would have
+```
+$ sbatch --dependency=afterany:4394150 myscript.sh
+Submitted batch job 4394325
+```
+This emphasises that the first job may complete with any exit code,
+and still satisfy the dependency.
+If we wanted a dependent job which would only become eligible for
+execution following successful completion of the dependency,
+we would use `afterok`:
+```
+$ sbatch --dependency=afterok:4394150 myscript.sh
+Submitted batch job 4394325
+```
+This means that should the dependency fail with non-zero exit
+code, the dependent job will be in a state where it will never run.
+This may appear in `squeue` as `(DependencyNeverSatisfied)` as the reason.
+Such jobs will need to be cancelled.
+
+The general form of the dependency list is `<type:job_id[:job_id] [,type:job_id ...]>` where a dependency may include one or more jobs, with one or more types.
+If a list is comma-separated, all the dependencies must be satisfied before the
+dependent job becomes eligible. The use of `?` as the list separator implies
+that any of the dependencies is sufficient.
+
+Useful type options include `afterany`, `afterok`, and `afternotok`. For the
+last case, the dependency is only satisfied if there is non-zero exit code
+(the opposite of `afterok`). See the current SLURM documentation for a full
+list of possibilities.
+
+### Chains of jobs
+
+### Fixed number of jobs
 
 Job dependencies can be used to construct complex pipelines or chain
 together long simulations requiring multiple steps.
 
-!!! hint
-    The `--parsable` option to `sbatch` can simplify working with job
-    dependencies. It returns the job ID in a format that can be used as the
-    input to other commands.
-
-For example:
-
+For example, if we have just two jobs, the following shell script extract
+will submit the second dependent on the first, irrespective of actual job
+ID:
 ```
 jobid=$(sbatch --parsable first_job.sh)
-sbatch --dependency=afterok:$jobid second_job.sh
+sbatch --dependency=afterok:${jobid} second_job.sh
 ```
+where we have used the `--parsable` option to `sbatch` to return
+just the new job ID (without the `Submitted batch job`).
 
-or for a longer chain:
-
+This can be extended to a longer chain as required:
 ```
 jobid1=$(sbatch --parsable first_job.sh)
-jobid2=$(sbatch --parsable --dependency=afterok:$jobid1 second_job.sh)
-jobid3=$(sbatch --parsable --dependency=afterok:$jobid1 third_job.sh)
-sbatch --dependency=afterok:$jobid2,afterok:$jobid3 last_job.sh
+jobid2=$(sbatch --parsable --dependency=afterok:${jobid1} second_job.sh)
+jobid3=$(sbatch --parsable --dependency=afterok:${jobid1} third_job.sh)
+sbatch --dependency=afterok:$jobid2,afterok:${jobid3} last_job.sh
 ```
+Note jobs 2 and 3 are dependent on job 1 (only), but the final job is
+dependent on both jobs 2 and 3.
+
+
+### Number of jobs not know in advance
+
+This automation may be taken a step further to a case where a
+submission script propagates itself. E.g., a script might include
+```
+#SBATCH ...
+
+sbatch --dependency=afterok:${SLURM_JOB_ID} thisscript.sh
+
+# work here...
+srun ...
+```
+where the original submission of the script will submit a new instance
+of itself dependent on its own successful completion. This can be useful
+in situations
+where, e.g., simulations with checkpoint/restart need to continue until
+some criterion is met. Some care may be required to ensure the script
+logic is correct in determining the criterion for stopping: it is
+best to start with a small/short test example.
+Incorrect logic and/or errors may lead to a rapid proliferation of
+submitted jobs.
+
+Termination of such chains needs to be arranged either via appropriate
+logic in the script, or manual intervention to cancel pending jobs when
+no longer required.
+
 
 ## Using multiple `srun` commands in a single job script
 
 You can use multiple `srun` commands within in a Slurm job submission script
-to allow you to use the resource requested more flexibly. For example, you 
+to allow you to use the resource requested more flexibly. For example, you
 could run a collection of smaller jobs within the requested resources or
 you could even subdivide nodes if your individual calculations do not scale
 up to use all 128 cores on a node.
@@ -956,7 +1031,7 @@ up to use all 128 cores on a node.
 In this guide we will cover two scenarios:
 
  1. Subdividing the job into multiple full-node or multi-node subjobs, e.g.
-    requesting 100 nodes and running 100, 1-node subjobs or 50, 2-node 
+    requesting 100 nodes and running 100, 1-node subjobs or 50, 2-node
     subjobs.
  2. Subdividing the job into multiple subjobs that each use a fraction of a
     node, e.g. requesting 2 nodes and running 256, 1-core subjobs or 16,
@@ -964,16 +1039,16 @@ In this guide we will cover two scenarios:
 
 ### Running multiple, full-node subjobs within a larger job
 
-When subdivding a larger job into smaller subjobs you typically need to 
+When subdivding a larger job into smaller subjobs you typically need to
 overwrite the `--nodes` option to `srun` and add the `--ntasks` option
 to ensure that each subjob runs on the correct number of nodes and that
 subjobs are placed correctly onto separate nodes.
 
 For example, we will show how to request 100 nodes and then run 100
 separate 1-node jobs, each of which use 128 MPI processes and which
-run on a different compute node. We start by showing 
+run on a different compute node. We start by showing
 the job script that would achieve this and then explain how this works
-and the options used. In our case, we will run 100 copies of the `xthi` 
+and the options used. In our case, we will run 100 copies of the `xthi`
 program that prints the process placement on the node it is running on.
 
 ```slurm
@@ -987,7 +1062,7 @@ program that prints the process placement on the node it is running on.
 #SBATCH --cpus-per-task=1
 
 # Replace [budget code] below with your budget code (e.g. t01)
-#SBATCH --account=[budget code]             
+#SBATCH --account=[budget code]
 #SBATCH --partition=standard
 #SBATCH --qos=standard
 
@@ -1001,7 +1076,7 @@ module load xthi
 export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 
 # Set the number of threads to 1
-#   This prevents any threaded system libraries from automatically 
+#   This prevents any threaded system libraries from automatically
 #   using threading.
 export OMP_NUM_THREADS=1
 
@@ -1038,34 +1113,34 @@ As the ARCHER2 nodes contain a large number of cores (128 per node) it
 may sometimes be useful to be able to run multiple executables on a single
 node. For example, you may want to run 128 copies of a serial executable or
 Python script; or, you may want to run multiple copies of parallel executables
-that use fewer than 128 cores each. This use model is possible using 
+that use fewer than 128 cores each. This use model is possible using
 multiple `srun` commands in a job script on ARCHER2
 
 !!! note
     You can never share a compute node with another user. Although you can
-    use `srun` to place multiple copies of an executable or script on a 
+    use `srun` to place multiple copies of an executable or script on a
     compute node, you still have exclusive use of that node. The minimum
     amount of resources you can reserve for your use on ARCHER2 is a single
     node.
 
-When using `srun` to place multiple executables or scripts on a compute 
+When using `srun` to place multiple executables or scripts on a compute
 node you must be aware of a few things:
 
  - The `srun` command must specify any Slurm options that differ in value
-   from those specified to `sbatch`. This typically means that you need 
+   from those specified to `sbatch`. This typically means that you need
    to specify the `--nodes`, `--ntasks` and `--ntasks-per-node` options to `srun`.
- - You will need to include the `--exact` flag to your `srun` command. With 
-   this flag on, Slurm will ensure that the resources you request are assigned 
-   to your subjob. Furthermore, if the resources are not currently available, 
-   Slurm will output a message letting you know that this is the case and 
-   stall the launch of this subjob until enough of your previous subjobs have 
+ - You will need to include the `--exact` flag to your `srun` command. With
+   this flag on, Slurm will ensure that the resources you request are assigned
+   to your subjob. Furthermore, if the resources are not currently available,
+   Slurm will output a message letting you know that this is the case and
+   stall the launch of this subjob until enough of your previous subjobs have
    completed to free up the resources for this subjob.
- - You will need to define the memory required by each subjob with the 
-   `--mem=<amount of memory>` flag. The amount of memory is given in MiB 
-   by default but other units can be specified. If you do not know how 
-   much memory to specify, we recommend that you specify 1500M (1,500 MiB) 
+ - You will need to define the memory required by each subjob with the
+   `--mem=<amount of memory>` flag. The amount of memory is given in MiB
+   by default but other units can be specified. If you do not know how
+   much memory to specify, we recommend that you specify 1500M (1,500 MiB)
    per core being used.
- - You will need to place each `srun` command into the background and 
+ - You will need to place each `srun` command into the background and
    then use the `wait` command at the end of the submission script to
    make sure it does not exit before the commands are complete.
  - If you want to use more than one node in the job and use multiple `srun`
@@ -1073,11 +1148,11 @@ node you must be aware of a few things:
    to pass the node ID to the `srun` commands otherwise Slurm will oversubscribe
    cores on the first node.
 
-Below, we provide four examples or running multiple subjobs in a node: 
-one that runs 128 serial processes across a single node; one that runs 8 
-subjobs each of which use 8 MPI processes with 2 OpenMP threads per MPI 
-process; one that runs four inhomogeneous jobs, each of which requires a 
-different number of MPI processes and OpenMP threads per process; and one 
+Below, we provide four examples or running multiple subjobs in a node:
+one that runs 128 serial processes across a single node; one that runs 8
+subjobs each of which use 8 MPI processes with 2 OpenMP threads per MPI
+process; one that runs four inhomogeneous jobs, each of which requires a
+different number of MPI processes and OpenMP threads per process; and one
 that runs 256 serial processes across two nodes.
 
 #### Example 1: 128 serial tasks running on a single node
@@ -1099,7 +1174,7 @@ this example would look like:
 #SBATCH --distribution=block:block
 
 # Replace [budget code] below with your budget code (e.g. t01)
-#SBATCH --account=[budget code]  
+#SBATCH --account=[budget code]
 #SBATCH --partition=standard
 #SBATCH --qos=standard
 
@@ -1107,7 +1182,7 @@ this example would look like:
 module load xthi
 
 # Set the number of threads to 1
-#   This prevents any threaded system libraries from automatically 
+#   This prevents any threaded system libraries from automatically
 #   using threading.
 export OMP_NUM_THREADS=1
 
@@ -1121,9 +1196,9 @@ export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 for i in $(seq 1 128)
 do
 # Launch subjob overriding job settings as required and in the background
-# Make sure to change the amount specified by the `--mem=` flag to the amount 
+# Make sure to change the amount specified by the `--mem=` flag to the amount
 # of memory required. The amount of memory is given in MiB by default but other
-# units can be specified. If you do not know how much memory to specify, we 
+# units can be specified. If you do not know how much memory to specify, we
 # recommend that you specify `--mem=1500M` (1,500 MiB).
 srun --nodes=1 --ntasks=1 --ntasks-per-node=1 \
       --exact --mem=1500M xthi > placement${i}.txt &
@@ -1153,7 +1228,7 @@ this example would look like:
 #SBATCH --distribution=block:block
 
 # Replace [budget code] below with your budget code (e.g. t01)
-#SBATCH --account=[budget code]  
+#SBATCH --account=[budget code]
 #SBATCH --partition=standard
 #SBATCH --qos=standard
 
@@ -1168,9 +1243,9 @@ for i in $(seq 1 8)
 do
     echo $j $i
     # Launch subjob overriding job settings as required and in the background
-    # Make sure to change the amount specified by the `--mem=` flag to the amount 
+    # Make sure to change the amount specified by the `--mem=` flag to the amount
     # of memory required. The amount of memory is given in MiB by default but other
-    # units can be specified. If you do not know how much memory to specify, we 
+    # units can be specified. If you do not know how much memory to specify, we
     # recommend that you specify `--mem=12500M` (12,500 MiB).
     srun --nodes=1 --ntasks=8 --ntasks-per-node=8 --cpus-per-task=2 \
     --exact --mem=12500M xthi > placement${i}.txt &
@@ -1179,28 +1254,28 @@ done
 # Wait for all subjobs to finish
 wait
 ```
-    
+
 #### Example 3: Running inhomogeneous subjobs on one node
 
-For our third example, we will run 4 subjobs, each running the `xthi` program 
-(which prints process/thread placement) across 1 node. Our subjobs will each 
+For our third example, we will run 4 subjobs, each running the `xthi` program
+(which prints process/thread placement) across 1 node. Our subjobs will each
 run with a different number of MPI processes and OpenMP threads. We will run:
-one job with 64 MPI processes and 1 OpenMP process per thread; one job with 
-16 MPI processes and 2 threads per process; one job with 4 MPI processes and 
-4 OpenMP threads per job; and, one job with 1 MPI process and 16 OpenMP 
+one job with 64 MPI processes and 1 OpenMP process per thread; one job with
+16 MPI processes and 2 threads per process; one job with 4 MPI processes and
+4 OpenMP threads per job; and, one job with 1 MPI process and 16 OpenMP
 threads  per job.
 
-To be able to change the number of MPI processes and OpenMP threads per 
-process, we will need to forgo using the `#SBATCH --ntasks-per-node` and the 
-`#SBATCH cpus-per-task` commands -- if you set these Slurm will not let you 
-alter the `OMP_NUM_THREADS` variable and you will not be able to change the 
+To be able to change the number of MPI processes and OpenMP threads per
+process, we will need to forgo using the `#SBATCH --ntasks-per-node` and the
+`#SBATCH cpus-per-task` commands -- if you set these Slurm will not let you
+alter the `OMP_NUM_THREADS` variable and you will not be able to change the
 number of OpenMP threads per process between each job.
 
-Before each `srun` command, you will need to define the number of OpenMP 
-threads per process you want by changing the `OMP_NUM_THREADS` variable. 
-Furthermore, for each `srun` command, you will need to set the `--ntasks` flag 
-to equal the number of MPI processes you want to use. You will also need to 
-set the `--cpus-per-task` flag to equal the number of OpenMP threads per 
+Before each `srun` command, you will need to define the number of OpenMP
+threads per process you want by changing the `OMP_NUM_THREADS` variable.
+Furthermore, for each `srun` command, you will need to set the `--ntasks` flag
+to equal the number of MPI processes you want to use. You will also need to
+set the `--cpus-per-task` flag to equal the number of OpenMP threads per
 process you want to use.
 
 ```slurm
@@ -1213,7 +1288,7 @@ process you want to use.
 #SBATCH --distribution=block:block
 
 # Replace [budget code] below with your budget code (e.g. t01)
-#SBATCH --account=[budget code]  
+#SBATCH --account=[budget code]
 #SBATCH --partition=standard
 #SBATCH --qos=standard
 
@@ -1251,7 +1326,7 @@ For our fourth example, we will run 256 single-core copies of the `xthi` program
 prints process/thread placement) across two ARCHER2 compute nodes with each
 copy of `xthi` pinned to a different core. We will illustrate a mechanism for getting the
 node IDs to pass to `srun` as this is required to ensure that the individual subjobs are
-assigned to the correct node. This mechanism uses the `scontrol` command to turn the 
+assigned to the correct node. This mechanism uses the `scontrol` command to turn the
 nodelist from `sbatch` into a format we can use as input to `srun`. The job submission
 script for this example would look like:
 
@@ -1265,7 +1340,7 @@ script for this example would look like:
 #SBATCH --cpus-per-task=1
 
 # Replace [budget code] below with your budget code (e.g. t01)
-#SBATCH --account=[budget code]  
+#SBATCH --account=[budget code]
 #SBATCH --partition=standard
 #SBATCH --qos=standard
 
@@ -1273,7 +1348,7 @@ script for this example would look like:
 module load xthi
 
 # Set the number of threads to 1
-#   This prevents any threaded system libraries from automatically 
+#   This prevents any threaded system libraries from automatically
 #   using threading.
 export OMP_NUM_THREADS=1
 
@@ -1297,9 +1372,9 @@ do
     for i in $(seq 1 128)
     do
         # Launch subjob overriding job settings as required and in the background
-        # Make sure to change the amount specified by the `--mem=` flag to the amount 
+        # Make sure to change the amount specified by the `--mem=` flag to the amount
         # of memory required. The amount of memory is given in MiB by default but other
-        # units can be specified. If you do not know how much memory to specify, we 
+        # units can be specified. If you do not know how much memory to specify, we
         # recommend that you specify `--mem=1500M` (1,500 MiB).
         srun --nodelist=${nodeid} --nodes=1 --ntasks=1 --ntasks-per-node=1 \
         --exact --mem=1500M xthi > placement_${nodeid}_${i}.txt &
@@ -1351,22 +1426,22 @@ auser@ln04:/work/t01/t01/auser> srun --distribution=block:block --hint=nomultith
 Node summary for    2 nodes:
 Node    0, hostname nid002526, mpi 128, omp   1, executable xthi
 Node    1, hostname nid002527, mpi 128, omp   1, executable xthi
-MPI summary: 256 ranks 
-Node    0, rank    0, thread   0, (affinity =    0) 
-Node    0, rank    1, thread   0, (affinity =    1) 
-Node    0, rank    2, thread   0, (affinity =    2) 
-Node    0, rank    3, thread   0, (affinity =    3) 
+MPI summary: 256 ranks
+Node    0, rank    0, thread   0, (affinity =    0)
+Node    0, rank    1, thread   0, (affinity =    1)
+Node    0, rank    2, thread   0, (affinity =    2)
+Node    0, rank    3, thread   0, (affinity =    3)
 
 ...output trimmed...
 
-Node    0, rank  124, thread   0, (affinity =  124) 
-Node    0, rank  125, thread   0, (affinity =  125) 
-Node    0, rank  126, thread   0, (affinity =  126) 
-Node    0, rank  127, thread   0, (affinity =  127) 
-Node    1, rank  128, thread   0, (affinity =    0) 
-Node    1, rank  129, thread   0, (affinity =    1) 
-Node    1, rank  130, thread   0, (affinity =    2) 
-Node    1, rank  131, thread   0, (affinity =    3) 
+Node    0, rank  124, thread   0, (affinity =  124)
+Node    0, rank  125, thread   0, (affinity =  125)
+Node    0, rank  126, thread   0, (affinity =  126)
+Node    0, rank  127, thread   0, (affinity =  127)
+Node    1, rank  128, thread   0, (affinity =    0)
+Node    1, rank  129, thread   0, (affinity =    1)
+Node    1, rank  130, thread   0, (affinity =    2)
+Node    1, rank  131, thread   0, (affinity =    3)
 
 ...output trimmed...
 ```
@@ -1378,17 +1453,17 @@ Node    1, rank  131, thread   0, (affinity =    3)
     To get good performance out of MPI collective operations, MPI processes
     should be placed sequentially on cores as in the standard placement described
     above.
-    
+
 ### Setting process placement using Slurm options
 
 #### For underpopulation of nodes with processes
 
 When you are using fewer processes than cores on compute nodes (i.e. &lt; 128 processes
-per node) the basic Slurm options (usually supplied in your script as options to `sbatch`) for 
+per node) the basic Slurm options (usually supplied in your script as options to `sbatch`) for
 process placement are:
 
  - `--ntasks-per-node=X` Place *X* processes on each node
- - `--cpus-per-task=Y` Set a stride of *Y* cores between each placed process. If you specify this 
+ - `--cpus-per-task=Y` Set a stride of *Y* cores between each placed process. If you specify this
   option in a job submission script (queued using `sbatch`) or via `salloc` they you will also need
   to set `export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK` to ensure the setting is passed to `srun`
   commands in the script or allocation.
@@ -1427,71 +1502,71 @@ auser@ln04:/work/t01/t01/auser> srun --distribution=block:block --hint=nomultith
 Node summary for    2 nodes:
 Node    0, hostname nid002526, mpi  32, omp   1, executable xthi
 Node    1, hostname nid002527, mpi  32, omp   1, executable xthi
-MPI summary: 64 ranks 
-Node    0, rank    0, thread   0, (affinity =  0-3) 
-Node    0, rank    1, thread   0, (affinity =  4-7) 
-Node    0, rank    2, thread   0, (affinity = 8-11) 
-Node    0, rank    3, thread   0, (affinity = 12-15) 
-Node    0, rank    4, thread   0, (affinity = 16-19) 
-Node    0, rank    5, thread   0, (affinity = 20-23) 
-Node    0, rank    6, thread   0, (affinity = 24-27) 
-Node    0, rank    7, thread   0, (affinity = 28-31) 
-Node    0, rank    8, thread   0, (affinity = 32-35) 
-Node    0, rank    9, thread   0, (affinity = 36-39) 
-Node    0, rank   10, thread   0, (affinity = 40-43) 
-Node    0, rank   11, thread   0, (affinity = 44-47) 
-Node    0, rank   12, thread   0, (affinity = 48-51) 
-Node    0, rank   13, thread   0, (affinity = 52-55) 
-Node    0, rank   14, thread   0, (affinity = 56-59) 
-Node    0, rank   15, thread   0, (affinity = 60-63) 
-Node    0, rank   16, thread   0, (affinity = 64-67) 
-Node    0, rank   17, thread   0, (affinity = 68-71) 
-Node    0, rank   18, thread   0, (affinity = 72-75) 
-Node    0, rank   19, thread   0, (affinity = 76-79) 
-Node    0, rank   20, thread   0, (affinity = 80-83) 
-Node    0, rank   21, thread   0, (affinity = 84-87) 
-Node    0, rank   22, thread   0, (affinity = 88-91) 
-Node    0, rank   23, thread   0, (affinity = 92-95) 
-Node    0, rank   24, thread   0, (affinity = 96-99) 
-Node    0, rank   25, thread   0, (affinity = 100-103) 
-Node    0, rank   26, thread   0, (affinity = 104-107) 
-Node    0, rank   27, thread   0, (affinity = 108-111) 
-Node    0, rank   28, thread   0, (affinity = 112-115) 
-Node    0, rank   29, thread   0, (affinity = 116-119) 
-Node    0, rank   30, thread   0, (affinity = 120-123) 
-Node    0, rank   31, thread   0, (affinity = 124-127) 
-Node    1, rank   32, thread   0, (affinity =  0-3) 
-Node    1, rank   33, thread   0, (affinity =  4-7) 
-Node    1, rank   34, thread   0, (affinity = 8-11) 
-Node    1, rank   35, thread   0, (affinity = 12-15) 
-Node    1, rank   36, thread   0, (affinity = 16-19) 
-Node    1, rank   37, thread   0, (affinity = 20-23) 
-Node    1, rank   38, thread   0, (affinity = 24-27) 
-Node    1, rank   39, thread   0, (affinity = 28-31) 
-Node    1, rank   40, thread   0, (affinity = 32-35) 
-Node    1, rank   41, thread   0, (affinity = 36-39) 
-Node    1, rank   42, thread   0, (affinity = 40-43) 
-Node    1, rank   43, thread   0, (affinity = 44-47) 
-Node    1, rank   44, thread   0, (affinity = 48-51) 
-Node    1, rank   45, thread   0, (affinity = 52-55) 
-Node    1, rank   46, thread   0, (affinity = 56-59) 
-Node    1, rank   47, thread   0, (affinity = 60-63) 
-Node    1, rank   48, thread   0, (affinity = 64-67) 
-Node    1, rank   49, thread   0, (affinity = 68-71) 
-Node    1, rank   50, thread   0, (affinity = 72-75) 
-Node    1, rank   51, thread   0, (affinity = 76-79) 
-Node    1, rank   52, thread   0, (affinity = 80-83) 
-Node    1, rank   53, thread   0, (affinity = 84-87) 
-Node    1, rank   54, thread   0, (affinity = 88-91) 
-Node    1, rank   55, thread   0, (affinity = 92-95) 
-Node    1, rank   56, thread   0, (affinity = 96-99) 
-Node    1, rank   57, thread   0, (affinity = 100-103) 
-Node    1, rank   58, thread   0, (affinity = 104-107) 
-Node    1, rank   59, thread   0, (affinity = 108-111) 
-Node    1, rank   60, thread   0, (affinity = 112-115) 
-Node    1, rank   61, thread   0, (affinity = 116-119) 
-Node    1, rank   62, thread   0, (affinity = 120-123) 
-Node    1, rank   63, thread   0, (affinity = 124-127) 
+MPI summary: 64 ranks
+Node    0, rank    0, thread   0, (affinity =  0-3)
+Node    0, rank    1, thread   0, (affinity =  4-7)
+Node    0, rank    2, thread   0, (affinity = 8-11)
+Node    0, rank    3, thread   0, (affinity = 12-15)
+Node    0, rank    4, thread   0, (affinity = 16-19)
+Node    0, rank    5, thread   0, (affinity = 20-23)
+Node    0, rank    6, thread   0, (affinity = 24-27)
+Node    0, rank    7, thread   0, (affinity = 28-31)
+Node    0, rank    8, thread   0, (affinity = 32-35)
+Node    0, rank    9, thread   0, (affinity = 36-39)
+Node    0, rank   10, thread   0, (affinity = 40-43)
+Node    0, rank   11, thread   0, (affinity = 44-47)
+Node    0, rank   12, thread   0, (affinity = 48-51)
+Node    0, rank   13, thread   0, (affinity = 52-55)
+Node    0, rank   14, thread   0, (affinity = 56-59)
+Node    0, rank   15, thread   0, (affinity = 60-63)
+Node    0, rank   16, thread   0, (affinity = 64-67)
+Node    0, rank   17, thread   0, (affinity = 68-71)
+Node    0, rank   18, thread   0, (affinity = 72-75)
+Node    0, rank   19, thread   0, (affinity = 76-79)
+Node    0, rank   20, thread   0, (affinity = 80-83)
+Node    0, rank   21, thread   0, (affinity = 84-87)
+Node    0, rank   22, thread   0, (affinity = 88-91)
+Node    0, rank   23, thread   0, (affinity = 92-95)
+Node    0, rank   24, thread   0, (affinity = 96-99)
+Node    0, rank   25, thread   0, (affinity = 100-103)
+Node    0, rank   26, thread   0, (affinity = 104-107)
+Node    0, rank   27, thread   0, (affinity = 108-111)
+Node    0, rank   28, thread   0, (affinity = 112-115)
+Node    0, rank   29, thread   0, (affinity = 116-119)
+Node    0, rank   30, thread   0, (affinity = 120-123)
+Node    0, rank   31, thread   0, (affinity = 124-127)
+Node    1, rank   32, thread   0, (affinity =  0-3)
+Node    1, rank   33, thread   0, (affinity =  4-7)
+Node    1, rank   34, thread   0, (affinity = 8-11)
+Node    1, rank   35, thread   0, (affinity = 12-15)
+Node    1, rank   36, thread   0, (affinity = 16-19)
+Node    1, rank   37, thread   0, (affinity = 20-23)
+Node    1, rank   38, thread   0, (affinity = 24-27)
+Node    1, rank   39, thread   0, (affinity = 28-31)
+Node    1, rank   40, thread   0, (affinity = 32-35)
+Node    1, rank   41, thread   0, (affinity = 36-39)
+Node    1, rank   42, thread   0, (affinity = 40-43)
+Node    1, rank   43, thread   0, (affinity = 44-47)
+Node    1, rank   44, thread   0, (affinity = 48-51)
+Node    1, rank   45, thread   0, (affinity = 52-55)
+Node    1, rank   46, thread   0, (affinity = 56-59)
+Node    1, rank   47, thread   0, (affinity = 60-63)
+Node    1, rank   48, thread   0, (affinity = 64-67)
+Node    1, rank   49, thread   0, (affinity = 68-71)
+Node    1, rank   50, thread   0, (affinity = 72-75)
+Node    1, rank   51, thread   0, (affinity = 76-79)
+Node    1, rank   52, thread   0, (affinity = 80-83)
+Node    1, rank   53, thread   0, (affinity = 84-87)
+Node    1, rank   54, thread   0, (affinity = 88-91)
+Node    1, rank   55, thread   0, (affinity = 92-95)
+Node    1, rank   56, thread   0, (affinity = 96-99)
+Node    1, rank   57, thread   0, (affinity = 100-103)
+Node    1, rank   58, thread   0, (affinity = 104-107)
+Node    1, rank   59, thread   0, (affinity = 108-111)
+Node    1, rank   60, thread   0, (affinity = 112-115)
+Node    1, rank   61, thread   0, (affinity = 116-119)
+Node    1, rank   62, thread   0, (affinity = 120-123)
+Node    1, rank   63, thread   0, (affinity = 124-127)
 ```
 
 !!! tip
@@ -1526,42 +1601,42 @@ auser@ln04:/work/t01/t01/auser> srun --distribution=block:cyclic --hint=nomultit
 Node summary for    2 nodes:
 Node    0, hostname nid002616, mpi 128, omp   1, executable xthi
 Node    1, hostname nid002621, mpi 128, omp   1, executable xthi
-MPI summary: 256 ranks 
-Node    0, rank    0, thread   0, (affinity =    0) 
-Node    0, rank    1, thread   0, (affinity =   16) 
-Node    0, rank    2, thread   0, (affinity =   32) 
-Node    0, rank    3, thread   0, (affinity =   48) 
-Node    0, rank    4, thread   0, (affinity =   64) 
-Node    0, rank    5, thread   0, (affinity =   80) 
-Node    0, rank    6, thread   0, (affinity =   96) 
-Node    0, rank    7, thread   0, (affinity =  112) 
-Node    0, rank    8, thread   0, (affinity =    1) 
-Node    0, rank    9, thread   0, (affinity =   17) 
-Node    0, rank   10, thread   0, (affinity =   33) 
-Node    0, rank   11, thread   0, (affinity =   49) 
-Node    0, rank   12, thread   0, (affinity =   65) 
-Node    0, rank   13, thread   0, (affinity =   81) 
-Node    0, rank   14, thread   0, (affinity =   97) 
+MPI summary: 256 ranks
+Node    0, rank    0, thread   0, (affinity =    0)
+Node    0, rank    1, thread   0, (affinity =   16)
+Node    0, rank    2, thread   0, (affinity =   32)
+Node    0, rank    3, thread   0, (affinity =   48)
+Node    0, rank    4, thread   0, (affinity =   64)
+Node    0, rank    5, thread   0, (affinity =   80)
+Node    0, rank    6, thread   0, (affinity =   96)
+Node    0, rank    7, thread   0, (affinity =  112)
+Node    0, rank    8, thread   0, (affinity =    1)
+Node    0, rank    9, thread   0, (affinity =   17)
+Node    0, rank   10, thread   0, (affinity =   33)
+Node    0, rank   11, thread   0, (affinity =   49)
+Node    0, rank   12, thread   0, (affinity =   65)
+Node    0, rank   13, thread   0, (affinity =   81)
+Node    0, rank   14, thread   0, (affinity =   97)
 Node    0, rank   15, thread   0, (affinity =  113
 
 ...output trimmed...
 
-Node    0, rank  120, thread   0, (affinity =   15) 
-Node    0, rank  121, thread   0, (affinity =   31) 
-Node    0, rank  122, thread   0, (affinity =   47) 
-Node    0, rank  123, thread   0, (affinity =   63) 
-Node    0, rank  124, thread   0, (affinity =   79) 
-Node    0, rank  125, thread   0, (affinity =   95) 
-Node    0, rank  126, thread   0, (affinity =  111) 
-Node    0, rank  127, thread   0, (affinity =  127) 
-Node    1, rank  128, thread   0, (affinity =    0) 
-Node    1, rank  129, thread   0, (affinity =   16) 
-Node    1, rank  130, thread   0, (affinity =   32) 
-Node    1, rank  131, thread   0, (affinity =   48) 
-Node    1, rank  132, thread   0, (affinity =   64) 
-Node    1, rank  133, thread   0, (affinity =   80) 
-Node    1, rank  134, thread   0, (affinity =   96) 
-Node    1, rank  135, thread   0, (affinity =  112) 
+Node    0, rank  120, thread   0, (affinity =   15)
+Node    0, rank  121, thread   0, (affinity =   31)
+Node    0, rank  122, thread   0, (affinity =   47)
+Node    0, rank  123, thread   0, (affinity =   63)
+Node    0, rank  124, thread   0, (affinity =   79)
+Node    0, rank  125, thread   0, (affinity =   95)
+Node    0, rank  126, thread   0, (affinity =  111)
+Node    0, rank  127, thread   0, (affinity =  127)
+Node    1, rank  128, thread   0, (affinity =    0)
+Node    1, rank  129, thread   0, (affinity =   16)
+Node    1, rank  130, thread   0, (affinity =   32)
+Node    1, rank  131, thread   0, (affinity =   48)
+Node    1, rank  132, thread   0, (affinity =   64)
+Node    1, rank  133, thread   0, (affinity =   80)
+Node    1, rank  134, thread   0, (affinity =   96)
+Node    1, rank  135, thread   0, (affinity =  112)
 
 ...output trimmed...
 ```
@@ -1590,49 +1665,49 @@ auser@ln04:/work/t01/t01/auser> srun --distribution=cyclic:cyclic --hint=nomulti
 Node summary for    2 nodes:
 Node    0, hostname nid002616, mpi 128, omp   1, executable xthi
 Node    1, hostname nid002621, mpi 128, omp   1, executable xthi
-MPI summary: 256 ranks 
-Node    0, rank    0, thread   0, (affinity =    0) 
-Node    0, rank    2, thread   0, (affinity =   16) 
-Node    0, rank    4, thread   0, (affinity =   32) 
-Node    0, rank    6, thread   0, (affinity =   48) 
-Node    0, rank    8, thread   0, (affinity =   64) 
-Node    0, rank   10, thread   0, (affinity =   80) 
-Node    0, rank   12, thread   0, (affinity =   96) 
-Node    0, rank   14, thread   0, (affinity =  112) 
-Node    0, rank   16, thread   0, (affinity =    1) 
-Node    0, rank   18, thread   0, (affinity =   17) 
-Node    0, rank   20, thread   0, (affinity =   33) 
-Node    0, rank   22, thread   0, (affinity =   49) 
-Node    0, rank   24, thread   0, (affinity =   65) 
-Node    0, rank   26, thread   0, (affinity =   81) 
-Node    0, rank   28, thread   0, (affinity =   97) 
-Node    0, rank   30, thread   0, (affinity =  113) 
+MPI summary: 256 ranks
+Node    0, rank    0, thread   0, (affinity =    0)
+Node    0, rank    2, thread   0, (affinity =   16)
+Node    0, rank    4, thread   0, (affinity =   32)
+Node    0, rank    6, thread   0, (affinity =   48)
+Node    0, rank    8, thread   0, (affinity =   64)
+Node    0, rank   10, thread   0, (affinity =   80)
+Node    0, rank   12, thread   0, (affinity =   96)
+Node    0, rank   14, thread   0, (affinity =  112)
+Node    0, rank   16, thread   0, (affinity =    1)
+Node    0, rank   18, thread   0, (affinity =   17)
+Node    0, rank   20, thread   0, (affinity =   33)
+Node    0, rank   22, thread   0, (affinity =   49)
+Node    0, rank   24, thread   0, (affinity =   65)
+Node    0, rank   26, thread   0, (affinity =   81)
+Node    0, rank   28, thread   0, (affinity =   97)
+Node    0, rank   30, thread   0, (affinity =  113)
 
 ...output trimmed...
 
-Node    1, rank    1, thread   0, (affinity =    0) 
-Node    1, rank    3, thread   0, (affinity =   16) 
-Node    1, rank    5, thread   0, (affinity =   32) 
-Node    1, rank    7, thread   0, (affinity =   48) 
-Node    1, rank    9, thread   0, (affinity =   64) 
-Node    1, rank   11, thread   0, (affinity =   80) 
-Node    1, rank   13, thread   0, (affinity =   96) 
-Node    1, rank   15, thread   0, (affinity =  112) 
-Node    1, rank   17, thread   0, (affinity =    1) 
-Node    1, rank   19, thread   0, (affinity =   17) 
-Node    1, rank   21, thread   0, (affinity =   33) 
-Node    1, rank   23, thread   0, (affinity =   49) 
-Node    1, rank   25, thread   0, (affinity =   65) 
-Node    1, rank   27, thread   0, (affinity =   81) 
-Node    1, rank   29, thread   0, (affinity =   97) 
-Node    1, rank   31, thread   0, (affinity =  113) 
+Node    1, rank    1, thread   0, (affinity =    0)
+Node    1, rank    3, thread   0, (affinity =   16)
+Node    1, rank    5, thread   0, (affinity =   32)
+Node    1, rank    7, thread   0, (affinity =   48)
+Node    1, rank    9, thread   0, (affinity =   64)
+Node    1, rank   11, thread   0, (affinity =   80)
+Node    1, rank   13, thread   0, (affinity =   96)
+Node    1, rank   15, thread   0, (affinity =  112)
+Node    1, rank   17, thread   0, (affinity =    1)
+Node    1, rank   19, thread   0, (affinity =   17)
+Node    1, rank   21, thread   0, (affinity =   33)
+Node    1, rank   23, thread   0, (affinity =   49)
+Node    1, rank   25, thread   0, (affinity =   65)
+Node    1, rank   27, thread   0, (affinity =   81)
+Node    1, rank   29, thread   0, (affinity =   97)
+Node    1, rank   31, thread   0, (affinity =  113)
 
 ...output trimmed...
 ```
 
 Remember, MPI collective performance is generally much worse if processes are not placed
 sequentially on a node (so adjacent MPI ranks are as close to each other as possible). This
-is the reason that the default recommended placement on ARCHER2 is sequential rather than 
+is the reason that the default recommended placement on ARCHER2 is sequential rather than
 round-robin.
 
 ### `MPICH_RANK_REORDER_METHOD` for MPI process placement
@@ -1660,23 +1735,23 @@ srun --hint=nomultithread xthi
 Node summary for    2 nodes:
 Node    0, hostname nid002616, mpi 128, omp   1, executable xthi
 Node    1, hostname nid002621, mpi 128, omp   1, executable xthi
-MPI summary: 256 ranks 
-Node    0, rank    0, thread   0, (affinity =    0) 
-Node    0, rank    2, thread   0, (affinity =   16) 
-Node    0, rank    4, thread   0, (affinity =   32) 
-Node    0, rank    6, thread   0, (affinity =   48) 
-Node    0, rank    8, thread   0, (affinity =   64) 
-Node    0, rank   10, thread   0, (affinity =   80) 
-Node    0, rank   12, thread   0, (affinity =   96) 
-Node    0, rank   14, thread   0, (affinity =  112) 
-Node    0, rank   16, thread   0, (affinity =    1) 
-Node    0, rank   18, thread   0, (affinity =   17) 
-Node    0, rank   20, thread   0, (affinity =   33) 
-Node    0, rank   22, thread   0, (affinity =   49) 
-Node    0, rank   24, thread   0, (affinity =   65) 
-Node    0, rank   26, thread   0, (affinity =   81) 
-Node    0, rank   28, thread   0, (affinity =   97) 
-Node    0, rank   30, thread   0, (affinity =  113) 
+MPI summary: 256 ranks
+Node    0, rank    0, thread   0, (affinity =    0)
+Node    0, rank    2, thread   0, (affinity =   16)
+Node    0, rank    4, thread   0, (affinity =   32)
+Node    0, rank    6, thread   0, (affinity =   48)
+Node    0, rank    8, thread   0, (affinity =   64)
+Node    0, rank   10, thread   0, (affinity =   80)
+Node    0, rank   12, thread   0, (affinity =   96)
+Node    0, rank   14, thread   0, (affinity =  112)
+Node    0, rank   16, thread   0, (affinity =    1)
+Node    0, rank   18, thread   0, (affinity =   17)
+Node    0, rank   20, thread   0, (affinity =   33)
+Node    0, rank   22, thread   0, (affinity =   49)
+Node    0, rank   24, thread   0, (affinity =   65)
+Node    0, rank   26, thread   0, (affinity =   81)
+Node    0, rank   28, thread   0, (affinity =   97)
+Node    0, rank   30, thread   0, (affinity =  113)
 
 ...output trimmed...
 ```
@@ -1754,14 +1829,14 @@ you will enter a standard interactive terminal session (a new shell).
 Note that this shell is still on the front end (the prompt has not
 change). Whilst the interactive session lasts you will be able to run
 parallel jobs on the compute nodes by issuing the `srun
---distribution=block:block --hint=nomultithread` command directly at 
+--distribution=block:block --hint=nomultithread` command directly at
 your command prompt using the same syntax as you would inside a job
 script. The maximum number of nodes you can use is limited by resources
 requested in the `salloc` command.
 
 !!! important
     If you wish the `cpus-per-task` option to `salloc` to propagate to `srun`
-    commands in the allocation, you will need to use the command 
+    commands in the allocation, you will need to use the command
     `export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK` before you issue any
     `srun` commands.
 
@@ -1795,8 +1870,8 @@ One can now issue shell commands in the usual way. A further invocation
 of `srun` is required to launch a parallel job in the allocation.
 
 !!! note
-    When using `srun` within an interactive `srun` session, you will need to 
-    include both the `--overlap` and `--oversubscribe` flags, and specify the number of cores you want 
+    When using `srun` within an interactive `srun` session, you will need to
+    include both the `--overlap` and `--oversubscribe` flags, and specify the number of cores you want
     to use:
     ```
     auser@nid001261:/work/t01/t01/auser> srun --overlap --oversubscribe --distribution=block:block \
@@ -1832,7 +1907,7 @@ the case were two or more executables share `MPI_COMM_WORLD`.
 The essential feature of a heterogeneous job here is to create a single batch
 submission which specifies the resource requirements for the individual
 components. Schematically, we would use
-    
+
 ```slurm
 #!/bin/bash
 
@@ -1857,8 +1932,8 @@ token `#SBATCH hetjob` (note this is not a normal option and is not
 
 Such a job will appear in the scheduler as, e.g.,
 ```
-           50098+0  standard qscript-    user  PD       0:00      1 (None) 
-           50098+1  standard qscript-    user  PD       0:00      2 (None) 
+           50098+0  standard qscript-    user  PD       0:00      1 (None)
+           50098+1  standard qscript-    user  PD       0:00      2 (None)
 ```
 and counts as (in this case) two separate jobs from the point of
 QoS limits.
@@ -1970,12 +2045,12 @@ export MPICH_SINGLE_HOST_ENABLED=0
 
 !!! note
     In this approach, each `hetjob` component must be on its own set of nodes.
-    You cannot use this approach to place different `hetjob` components on 
+    You cannot use this approach to place different `hetjob` components on
     the same node.
 
 If two or more heterogeneous components need to share a unique
-`MPI_COMM_WORLD`, a single `srun` invocation with the differrent
-components separated by a colon `:` should be used. Arguements
+`MPI_COMM_WORLD`, a single `srun` invocation with the different
+components separated by a colon `:` should be used. Arguments
 to the individual components of the `srun` control the placement of
 the tasks and threads for each component. For example, running the
 same `xthi-a` and `xthi-b` executables as above but now in a shared
@@ -2009,23 +2084,23 @@ Node summary for    3 nodes:
 Node    0, hostname nid002668, mpi   8, omp   1, executable xthi-a
 Node    1, hostname nid002669, mpi   4, omp   1, executable xthi-b
 Node    2, hostname nid002670, mpi   4, omp   1, executable xthi-b
-MPI summary: 16 ranks 
-Node    0, rank    0, thread   0, (affinity =    0) 
-Node    0, rank    1, thread   0, (affinity =    1) 
-Node    0, rank    2, thread   0, (affinity =    2) 
-Node    0, rank    3, thread   0, (affinity =    3) 
-Node    0, rank    4, thread   0, (affinity =    4) 
-Node    0, rank    5, thread   0, (affinity =    5) 
-Node    0, rank    6, thread   0, (affinity =    6) 
-Node    0, rank    7, thread   0, (affinity =    7) 
-Node    1, rank    8, thread   0, (affinity =    0) 
-Node    1, rank    9, thread   0, (affinity =    1) 
-Node    1, rank   10, thread   0, (affinity =    2) 
-Node    1, rank   11, thread   0, (affinity =    3) 
-Node    2, rank   12, thread   0, (affinity =    0) 
-Node    2, rank   13, thread   0, (affinity =    1) 
-Node    2, rank   14, thread   0, (affinity =    2) 
-Node    2, rank   15, thread   0, (affinity =    3) 
+MPI summary: 16 ranks
+Node    0, rank    0, thread   0, (affinity =    0)
+Node    0, rank    1, thread   0, (affinity =    1)
+Node    0, rank    2, thread   0, (affinity =    2)
+Node    0, rank    3, thread   0, (affinity =    3)
+Node    0, rank    4, thread   0, (affinity =    4)
+Node    0, rank    5, thread   0, (affinity =    5)
+Node    0, rank    6, thread   0, (affinity =    6)
+Node    0, rank    7, thread   0, (affinity =    7)
+Node    1, rank    8, thread   0, (affinity =    0)
+Node    1, rank    9, thread   0, (affinity =    1)
+Node    1, rank   10, thread   0, (affinity =    2)
+Node    1, rank   11, thread   0, (affinity =    3)
+Node    2, rank   12, thread   0, (affinity =    0)
+Node    2, rank   13, thread   0, (affinity =    1)
+Node    2, rank   14, thread   0, (affinity =    2)
+Node    2, rank   15, thread   0, (affinity =    3)
 
 ```
 
@@ -2040,7 +2115,7 @@ In the following we have two components, again using `xthi-a` and
 8 MPI tasks each with 16 OpenMP threads on one node. The second component
 runs 8 MPI tasks with one task per NUMA region on a second node; each
 task has one thread. An appropriate Slurm submission might be:
- 
+
 ```slurm
 #!/bin/bash
 
@@ -2065,7 +2140,7 @@ srun --het-group=0 ${SHARED_ARGS} --export=all,OMP_NUM_THREADS=16 ./xthi-a : \
       --het-group=1 ${SHARED_ARGS} --export=all,OMP_NUM_THREADS=1  ./xthi-b
 
 ```
-    
+
 The important point here is that `OMP_NUM_THREADS` must not be set
 in the environment that calls `srun` in order that the different
 specifications for the separate groups via `--export` on the `srun`
@@ -2113,6 +2188,7 @@ Here we can see the eight MPI tasks from `xthi-a` each running with
 sixteen OpenMP threads. Then the 8 MPI tasks with no threading from
 `xthi-b` are spaced across the cores on the second node, one per NUMA region.
 
+
 ## Low priority access
 
 Low priority jobs are not charged against your allocation but will only run when
@@ -2128,7 +2204,7 @@ Low priority access is always available and has the following limits:
   - Maximum runtime of 24 hours
 
 You submit a low priority job on ARCHER2 by using the `lowpriority` QoS. For example,
-you would usually have the following line in your job submission script sbatch 
+you would usually have the following line in your job submission script sbatch
 options:
 
 ```slurm
@@ -2164,7 +2240,7 @@ To request a reservation you complete a form on SAFE:
 
  1. [Log into SAFE](https://safe.epcc.ed.ac.uk)
  2. Under the "Login accounts" menu, choose the "Request reservation" option
-  
+
 On the first page, you need to provide the following:
 
  - The start time and date of the reservation.
@@ -2244,7 +2320,7 @@ placement, you would use the following option in your job:
 #SBATCH --switches=1@360
 ```
 
-You can request multiple groups using this option if you are using 
+You can request multiple groups using this option if you are using
 more nodes than are in a single group to maximise the number of
 nodes that share electrical connetions in the job. For example, to
 request 4 groups (maximum of 512 nodes) and have this as an absolute
@@ -2257,7 +2333,7 @@ constraint with no timeout, you would use:
 !!! danger
     When specifying the number of groups take care to request enough
     groups to satisfy the requested number of nodes. If the number
-    is too low then an unneccesary delay will be added due to the
+    is too low then an unnecessary delay will be added due to the
     unsatisfiable request.
 
     A useful heuristic to ensure this is the case is to ensure that
@@ -2308,7 +2384,7 @@ And also load the same huge pages module at runtime.
     libhugetlbfs [nid0000xx:xxxxx]: WARNING: New heap segment map at 0x10000000 failed: Cannot allocate memory``
 
 By default, The verbosity level of libhugetlbfs `HUGETLB_VERBOSE` is set
-to `0` on ARCHER2 to surpress debugging messages. Users can adjust this
+to `0` on ARCHER2 to suppress debugging messages. Users can adjust this
 value to obtain more information on huge pages use.
 
 #### When to Use Huge Pages
