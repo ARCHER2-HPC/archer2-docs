@@ -23,31 +23,21 @@ module load gitlab-ci
 ```
 
 ### Runner registration
-This step authenticates your gitlab repository with the ``gitlab-runner`` on ARCHER2. For it you will need the *url* of your gitlab instance as well as your repository *registration token*, both of which can be retrieved by going in:
-**Settings -> CI/CD**, then **expand** the **runners** item. And you will find both in the **Specific runners** box.
 
-Once you have them at hand, run
-```sh
-gitlab-runner register
-```
+This step authenticates your gitlab repository with the ``gitlab-runner`` on ARCHER2. Go to **Settings -> CI/CD**, then **expand** the **Runners** item. Under **Project runners** click **New project runner**.
+Select **Linux**, add tags if you want or tick **Run untagged jobs** if you want all the CI jobs to be run on ARCHER2. Finish by clicking on **Create runner**.
 
-and reply to the prompts:
+You can now run the command that is displayed in the **Step 1** section (`gitlab-runner register --url....`). You will be prompted for several questions. Reply as follow:
 
-- *gitlab instance url*: `https://....`
-- *registration token*: `xxx-xxxxxxxxxxxx`
-- description: `ARCHER2`
-- tag: `hpc,slurm`
-- note: ` `
-- *executor*: `custom`
+- *Enter the GitLab instance URL*: just hit enter as the default is already selected
+- Enter a name for the runner: `ARCHER2`
+- *Enter an executor*: `custom`
 
-(items in *italic* cannot be freely choosen).
-
-If successful it should now read: **Runner registered successfully.** 
-Since you likely want to be able run `untagged` jobs you have to enable it on gitlab's interface. In **Settings -> CI/CD**, expand **runners** and edit the newly created **ARCHER2** line and tick the box named **Run untagged jobs**.
+If successful it should now read: **Runner registered successfully.**
 
 ### Configuration
 
-Once the runner is registered, a configuration file is placed in `~/.gitlab-runner/config.toml`. You will need to edit it and add the `config_exec` and `run_exec` lines like in the example below. Also make sure you edit/add the two `concurrent` lines to allow multiple jobs to be run simultaneously.
+Once the runner is registered, a configuration file is created in `~/.gitlab-runner/config.toml`. You will need to edit it and add the `config_exec` and `run_exec` lines like in the example below. Also make sure you edit/add the two `concurrent` lines to allow multiple jobs to be run simultaneously.
 Finally, you have to specify the email address associated to your gitlab account inside the `run_args` parameter. This will ensure that you are the only authorised user to run pipelines with your ARCHER2 account.
 
 ```toml
