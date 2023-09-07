@@ -31,8 +31,18 @@ ARCHER2 access earlier than expected.
 
 - With no login access, it will not be possible to submit new jobs to the queues
 - Jobs will continue to run, and queued jobs will be started as usual
-- Serial QoS will not be available.
+- Serial QoS will not be available. However, serial jobs can be submitted using the standard and low-priority queues.
 
 We will therefore be encouraging users to submit jobs in the period prior to the work, so that
 your work can continue on the system during the upgrade process.
 
+
+###  Relaxing of queue limits
+
+In preparation for the Data Centre Network (DCN) upgrade we have relaxed the queue limits on all the QoS’s, so that users can submit a significantly larger number of jobs to ARCHER2. These changes are intended to allow users to submit jobs that they wish to run during the upgrade, in advance of the start of the upgrade. The changes will be in place until the end of the Data Centre Network upgrade.
+
+For the low priority QoS, as well as relaxing the number of jobs you can submit, we have also increased the maximum job length to 48 hours and the maximum number of nodes per job to 5,860, so users can submit using their own allocation or using the low-priority QoS.
+
+Can we encourage users to make use of these changes, this is a good opportunity for users to queue and run a greater number of jobs than usual. The relaxation of limits on the low-priority queue also offers an opportunity to run a wider range of jobs through this queue than is normally possible.
+
+Due to the unavailability of the DCN, users will not be able to connect to ARCHER2 via the login nodes during the upgrade. The serial QoS will be disabled during the upgrade period. However, serial jobs can be submitted using the standard and low-priority queues.
