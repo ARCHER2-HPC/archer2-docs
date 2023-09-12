@@ -2235,6 +2235,102 @@ your work can continue on the system during the upgrade process.</p>
 <h3 id="relaxing-of-queue-limits">Relaxing of queue limits</h3>
 <p>In preparation for the Data Centre Network (DCN) upgrade we have relaxed the queue limits on all the QoS’s, so that users can submit a significantly larger number of jobs to ARCHER2. These changes are intended to allow users to submit jobs that they wish to run during the upgrade, in advance of the start of the upgrade. The changes will be in place until the end of the Data Centre Network upgrade.</p>
 <p>For the low priority QoS, as well as relaxing the number of jobs you can submit, we have also increased the maximum job length to 48 hours and the maximum number of nodes per job to 5,860, so users can submit using their own allocation or using the low-priority QoS.</p>
+<table>
+<thead>
+<tr>
+<th>QoS</th>
+<th>Max Nodes Per Job</th>
+<th>Max Walltime</th>
+<th>Jobs Queued</th>
+<th>Jobs Running</th>
+<th>Partition(s)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>standard</td>
+<td>1024</td>
+<td>24 hrs</td>
+<td><strong>320</strong></td>
+<td>16</td>
+<td>standard</td>
+<td>Maximum of 1024 nodes in use by any one user at any time</td>
+</tr>
+<tr>
+<td>highmem</td>
+<td>256</td>
+<td>24 hrs</td>
+<td><strong>80</strong></td>
+<td>16</td>
+<td>highmem</td>
+<td>Maximum of 512 nodes in use by any one user at any time</td>
+</tr>
+<tr>
+<td>taskfarm</td>
+<td>16</td>
+<td>24 hrs</td>
+<td><strong>640</strong></td>
+<td>32</td>
+<td>standard</td>
+<td>Maximum of 256 nodes in use by any one user at any time</td>
+</tr>
+<tr>
+<td>short</td>
+<td>32</td>
+<td>20 mins</td>
+<td><strong>80</strong></td>
+<td>4</td>
+<td>standard</td>
+<td></td>
+</tr>
+<tr>
+<td>long</td>
+<td>64</td>
+<td>48 hrs</td>
+<td><strong>80</strong></td>
+<td>16</td>
+<td>standard</td>
+<td>Minimum walltime of 24 hrs, maximum 512 nodes in use by any one user at any time, maximum of 2048 nodes in use by QoS</td>
+</tr>
+<tr>
+<td>largescale</td>
+<td>5860</td>
+<td>12 hrs</td>
+<td><strong>160</strong></td>
+<td>1</td>
+<td>standard</td>
+<td>Minimum job size of 1025 nodes</td>
+</tr>
+<tr>
+<td>lowpriority</td>
+<td><strong>5,860</strong></td>
+<td><strong>48 hrs</strong></td>
+<td><strong>320</strong></td>
+<td>16</td>
+<td>standard</td>
+<td>Jobs not charged but requires at least 1 CU in budget to use.</td>
+</tr>
+<tr>
+<td>serial</td>
+<td><strong>disabled</strong></td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>reservation</td>
+<td><strong>not available</strong></td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <p>Can we encourage users to make use of these changes, this is a good opportunity for users to queue and run a greater number of jobs than usual. The relaxation of limits on the low-priority queue also offers an opportunity to run a wider range of jobs through this queue than is normally possible.</p>
 <p>Due to the unavailability of the DCN, users will not be able to connect to ARCHER2 via the login nodes during the upgrade. The serial QoS will be disabled during the upgrade period. However, serial jobs can be submitted using the standard and low-priority queues.</p>
 
