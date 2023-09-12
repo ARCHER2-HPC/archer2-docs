@@ -43,6 +43,19 @@ In preparation for the Data Centre Network (DCN) upgrade we have relaxed the que
 
 For the low priority QoS, as well as relaxing the number of jobs you can submit, we have also increased the maximum job length to 48 hours and the maximum number of nodes per job to 5,860, so users can submit using their own allocation or using the low-priority QoS.
 
+| QoS        | Max Nodes Per Job | Max Walltime | Jobs Queued | Jobs Running | Partition(s) | Notes |
+| ---------- | ----------------- | ------------ | ----------- | ------------ | ------------ | ------|
+| standard   | 1024               | 24 hrs       |  **320**          | 16           | standard     | Maximum of 1024 nodes in use by any one user at any time |
+| highmem   | 256               | 24 hrs       |  **80**          | 16           | highmem     | Maximum of 512 nodes in use by any one user at any time |
+| taskfarm   | 16               | 24 hrs       |  **640**          | 32           | standard     | Maximum of 256 nodes in use by any one user at any time |
+| short      | 32                 | 20 mins      |  **80**           | 4            | standard     | |
+| long       | 64                | 48 hrs       | **80**          | 16           | standard     | Minimum walltime of 24 hrs, maximum 512 nodes in use by any one user at any time, maximum of 2048 nodes in use by QoS |
+| largescale | 5860               | 12 hrs        |**160**           | 1            | standard     | Minimum job size of 1025 nodes |
+| lowpriority |  **5,860**               |   **48 hrs**       | **320**           | 16            | standard     | Jobs not charged but requires at least 1 CU in budget to use. |
+| serial | **disabled**   | -       | -          | -           | -    | - |
+| reservation | **not available**  | -       | -           | -           | -   |  |
+
+
 Can we encourage users to make use of these changes, this is a good opportunity for users to queue and run a greater number of jobs than usual. The relaxation of limits on the low-priority queue also offers an opportunity to run a wider range of jobs through this queue than is normally possible.
 
 Due to the unavailability of the DCN, users will not be able to connect to ARCHER2 via the login nodes during the upgrade. The serial QoS will be disabled during the upgrade period. However, serial jobs can be submitted using the standard and low-priority queues.
