@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.8">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.3.1">
     
     
       
@@ -2383,7 +2383,7 @@ overview of the different options for doing so.</p>
 <h2 id="using-the-login-nodes">Using the login nodes</h2>
 <p>The easiest way to run non-computationally intensive data analysis is to
 run directly on the login nodes. However, please remember that the login
-nodes are a shared resource and should not be used for long-running 
+nodes are a shared resource and should not be used for long-running
 tasks.</p>
 <h4 id="example-running-an-r-script-on-a-login-node">Example: Running an R script on a login node</h4>
 <div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>cray-R
@@ -2416,7 +2416,7 @@ module<span class="w"> </span>load<span class="w"> </span>cray-R
 Rscript<span class="w"> </span>example.R
 </code></pre></div>
 <p>An advantage of this method is that you can use
-<a href="https://docs.archer2.ac.uk/user-guide/scheduler/#job-chaining">Job chaining</a>
+<a href="https://docs.archer2.ac.uk/user-guide/scheduler/#chains-of-jobs">Job chaining</a>
 to automate the process of analysing your output data once your compute
 job has finished.</p>
 <h2 id="using-interactive-jobs">Using interactive jobs</h2>
@@ -2434,29 +2434,29 @@ be found
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you want to run for longer than 20 minutes, you will need to use
-a different QoS as the maximum runtime for the <code>short</code> QoS is 
+a different QoS as the maximum runtime for the <code>short</code> QoS is
 20 mins.</p>
 </div>
 <h2 id="data-analysis-nodes">Data analysis nodes</h2>
 <p>The data analysis nodes on the ARCHER2 system are designed for large
-compilations, post-calculation analysis and data manipulation. They should 
-be used for jobs which are too small to require a whole compute node, but 
-which would have an adverse impact on the operation of the login nodes if 
+compilations, post-calculation analysis and data manipulation. They should
+be used for jobs which are too small to require a whole compute node, but
+which would have an adverse impact on the operation of the login nodes if
 they were run interactively.</p>
-<p>Unlike compute nodes, the data analysis nodes are able to access the home, 
-work, and the RDFaaS file systems. They can also 
-be used to transfer data from a remote system to ARCHER2 and vice versa 
-(using e.g. <code>scp</code> or <code>rsync</code>). This can be useful when transferring large 
+<p>Unlike compute nodes, the data analysis nodes are able to access the home,
+work, and the RDFaaS file systems. They can also
+be used to transfer data from a remote system to ARCHER2 and vice versa
+(using e.g. <code>scp</code> or <code>rsync</code>). This can be useful when transferring large
 amounts of data that might take hours to complete.</p>
 <h3 id="requesting-resources-on-the-data-analysis-nodes-using-slurm">Requesting resources on the data analysis nodes using Slurm</h3>
-<p>The ARCHER2 data analysis nodes can be reached by using the <code>serial</code> 
-partition and the <code>serial</code> QoS. Unlike other nodes on ARCHER2, you may 
-only request part of a single node and you will likely be sharing the node 
+<p>The ARCHER2 data analysis nodes can be reached by using the <code>serial</code>
+partition and the <code>serial</code> QoS. Unlike other nodes on ARCHER2, you may
+only request part of a single node and you will likely be sharing the node
 with other users.</p>
-<p>The data analysis nodes are set up such that you can specify the number of 
-cores you want to use (up to 32 physical cores) and the amount of memory you 
-want for your job (up to 125 GB). You can have multiple jobs running on the 
-data analysis nodes at the same time, but the total number of cores used by 
+<p>The data analysis nodes are set up such that you can specify the number of
+cores you want to use (up to 32 physical cores) and the amount of memory you
+want for your job (up to 125 GB). You can have multiple jobs running on the
+data analysis nodes at the same time, but the total number of cores used by
 those jobs cannot exceed 32, and the
 total memory used by jobs currently running from a single user cannot exceed
 125 GB -- any jobs above this limit will remain pending until your previous
@@ -2475,18 +2475,18 @@ per-core default memory allocation is slightly less than 2 GB.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>When running on the data analysis nodes, you must always specify either 
-the number of cores you want, the amount of memory you want, or both. 
+<p>When running on the data analysis nodes, you must always specify either
+the number of cores you want, the amount of memory you want, or both.
 The examples shown below specify the number of cores with the <code>--ntasks</code>
-flag and the memory with the <code>--mem</code> flag. If you are only wanting to 
+flag and the memory with the <code>--mem</code> flag. If you are only wanting to
 specify one of the two, please remember to delete the other one.</p>
 </div>
 <h4 id="example-running-a-serial-batch-script-on-the-data-analysis-nodes">Example: Running a serial batch script on the data analysis nodes</h4>
-<p>A Slurm batch script for the data analysis nodes looks very similar to 
-one for the compute nodes. The main differences are that you need to use 
+<p>A Slurm batch script for the data analysis nodes looks very similar to
+one for the compute nodes. The main differences are that you need to use
 <code>--partition=serial</code> and <code>--qos=serial</code>, specify the number of tasks
 (rather than the number of nodes) and/or specify the amount of memory
-you want. For example, to use a single core and 4 GB of memory, you 
+you want. For example, to use a single core and 4 GB of memory, you
 would use something like:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
@@ -2496,16 +2496,16 @@ would use something like:</p>
 <span class="kp">#SBATCH --ntasks=1</span>
 
 <span class="c1"># Replace [budget code] below with your budget code (e.g. t01)</span>
-<span class="kp">#SBATCH --account=[budget code]             </span>
+<span class="kp">#SBATCH --account=[budget code]</span>
 <span class="kp">#SBATCH --partition=serial</span>
 <span class="kp">#SBATCH --qos=serial</span>
 
-<span class="c1"># Define memory required for this jobs. By default, you would </span>
+<span class="c1"># Define memory required for this jobs. By default, you would</span>
 <span class="c1"># get just under 2 GB, but you can ask for up to 125 GB.</span>
 <span class="kp">#SBATCH --mem=4G</span>
 
 <span class="c1"># Set the number of threads to 1</span>
-<span class="c1">#   This prevents any threaded system libraries from automatically </span>
+<span class="c1">#   This prevents any threaded system libraries from automatically</span>
 <span class="c1">#   using threading.</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
 
@@ -2514,15 +2514,15 @@ module<span class="w"> </span>load<span class="w"> </span>cray-python
 python<span class="w"> </span>my_analysis_script.py
 </code></pre></div>
 <h3 id="interactive-session-on-the-data-analysis-nodes">Interactive session on the data analysis nodes</h3>
-<p>There are two ways to start an interactive session on the data analysis nodes: 
-you can either use <code>salloc</code> to reserve a part of a data analysis node for interactive 
-jobs; or, you can use <code>srun</code> to open a terminal on the node and run things on the 
-node directly. You can find out more information on the advantages and disadvantages 
-of both of these methods in the <a href="../scheduler/#Interactive Jobs">Running jobs on ARCHER2</a> 
+<p>There are two ways to start an interactive session on the data analysis nodes:
+you can either use <code>salloc</code> to reserve a part of a data analysis node for interactive
+jobs; or, you can use <code>srun</code> to open a terminal on the node and run things on the
+node directly. You can find out more information on the advantages and disadvantages
+of both of these methods in the <a href="../scheduler/#Interactive Jobs">Running jobs on ARCHER2</a>
 section of the User and Best Practice Guide.</p>
 <h4 id="using-salloc-for-interactive-access">Using <code>salloc</code> for interactive access</h4>
 <p>You can reserve resources on a data analysis node using <code>salloc</code>. For
-example, to request 1 core and 4 GB of memory for 20 minutes, you 
+example, to request 1 core and 4 GB of memory for 20 minutes, you
 would use:</p>
 <div class="highlight"><pre><span></span><code>auser@ln01:~&gt;<span class="w"> </span>salloc<span class="w"> </span>--time<span class="o">=</span><span class="m">00</span>:20:00<span class="w"> </span>--partition<span class="o">=</span>serial<span class="w"> </span>--qos<span class="o">=</span>serial<span class="w"> </span><span class="se">\</span>
 <span class="w">                    </span>--account<span class="o">=[</span>budget<span class="w"> </span>code<span class="o">]</span><span class="w"> </span>--ntasks<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
@@ -2542,9 +2542,9 @@ auser@ln01:~&gt;
 you will enter a standard interactive terminal session (a new shell).
 Note that this shell is still on the front end (the prompt has not
 changed). Whilst the interactive session lasts you will be able to run
-jobs on the data analysis nodes by issuing the <code>srun</code> command directly at 
+jobs on the data analysis nodes by issuing the <code>srun</code> command directly at
 your command prompt. The maximum number of cores and memory you can use
-is limited by resources requested in the <code>salloc</code> command (or by the 
+is limited by resources requested in the <code>salloc</code> command (or by the
 defaults if you did not explicitly ask for particular amounts of resource).</p>
 <p>Your session will end when you hit the requested walltime. If you wish
 to finish before this you should use the <code>exit</code> command - this will
@@ -2558,7 +2558,7 @@ and 8 GB of memory, you would use:</p>
 <span class="w">                    </span>--ntasks<span class="o">=</span><span class="m">1</span><span class="w"> </span>--mem<span class="o">=</span>8G<span class="w"> </span><span class="se">\</span>
 <span class="w">                    </span>--pty<span class="w"> </span>/bin/bash
 </code></pre></div>
-<p>The <code>--pty /bin/bash</code> will cause a new shell to be started on the data 
+<p>The <code>--pty /bin/bash</code> will cause a new shell to be started on the data
 analysis node. (This is perhaps closer to what
 many people consider an 'interactive' job than the method using the
 <code>salloc</code> method described above.)</p>
@@ -2569,7 +2569,7 @@ be returned to the front end.</p>
 parent. If you want a clean shell, remember to specify the <code>--export=none</code>
 option to the <code>srun</code> command.</p>
 <h4 id="visualising-data-using-the-data-analysis-nodes-using-x">Visualising data using the data analysis nodes using X</h4>
-<p>You can view data on the data analysis nodes by starting an interactive 
+<p>You can view data on the data analysis nodes by starting an interactive
 <code>srun</code> session with the <code>--x11</code> flag to export the X display back to
 your local system. For 1 core with * GB of memory:</p>
 <div class="highlight"><pre><span></span><code>auser@ln01:~&gt;<span class="w"> </span>srun<span class="w">   </span>--time<span class="o">=</span><span class="m">00</span>:20:00<span class="w"> </span>--partition<span class="o">=</span>serial<span class="w"> </span>--qos<span class="o">=</span>serial<span class="w">  </span><span class="se">\</span>
@@ -2578,7 +2578,7 @@ your local system. For 1 core with * GB of memory:</p>
 </code></pre></div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>Data visualisation on ARCHER2 is only possible if you used the <code>-X</code> 
+<p>Data visualisation on ARCHER2 is only possible if you used the <code>-X</code>
 or <code>-Y</code> flag to the <code>ssh</code> command when when logging in to the system.</p>
 </div>
 <h2 id="using-singularity">Using Singularity</h2>
