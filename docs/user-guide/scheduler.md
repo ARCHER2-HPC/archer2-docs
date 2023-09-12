@@ -1002,14 +1002,18 @@ schematically,
 ```
 #SBATCH ...
 
+# submit new job here ...
 sbatch --dependency=afterok:${SLURM_JOB_ID} thisscript.sh
 
-# work here...
+# perform work here...
 srun ...
 ```
 where the original submission of the script will submit a new instance
-of itself dependent on its own successful completion. This can be useful
-in situations
+of itself dependent on its own successful completion. This is done via
+the SLURM environment variable `SLURM_JOB_ID` which holds the id of the
+current job. One could defer the `sbatch` until the end of the script to
+avoid the dependency never being satisfied if the work associated with the
+`srun` fails. This approach can be useful in situations
 where, e.g., simulations with checkpoint/restart need to continue until
 some criterion is met. Some care may be required to ensure the script
 logic is correct in determining the criterion for stopping: it is
