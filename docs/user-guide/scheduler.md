@@ -935,7 +935,7 @@ only condition. The new job 4394325 should appear in the pending state with
 reason `(Dependency)` assuming 4394150 is still running.
 
 A dependency may be of a different _type_, of which there are a number
-of different possibilities. If we explicitly include the default type
+of relevant possibilities. If we explicitly include the default type
 `afterany` in the example above, we would have
 ```
 $ sbatch --dependency=afterany:4394150 myscript.sh
@@ -967,7 +967,7 @@ list of possibilities.
 
 ### Chains of jobs
 
-### Fixed number of jobs
+#### Fixed number of jobs
 
 Job dependencies can be used to construct complex pipelines or chain
 together long simulations requiring multiple steps.
@@ -982,21 +982,23 @@ sbatch --dependency=afterok:${jobid} second_job.sh
 where we have used the `--parsable` option to `sbatch` to return
 just the new job ID (without the `Submitted batch job`).
 
-This can be extended to a longer chain as required:
+This can be extended to a longer chain as required. E.g.:
 ```
 jobid1=$(sbatch --parsable first_job.sh)
 jobid2=$(sbatch --parsable --dependency=afterok:${jobid1} second_job.sh)
 jobid3=$(sbatch --parsable --dependency=afterok:${jobid1} third_job.sh)
-sbatch --dependency=afterok:$jobid2,afterok:${jobid3} last_job.sh
+sbatch --dependency=afterok:${jobid2},afterok:${jobid3} last_job.sh
 ```
 Note jobs 2 and 3 are dependent on job 1 (only), but the final job is
-dependent on both jobs 2 and 3.
+dependent on both jobs 2 and 3. This allows quite general workflows to
+be constructed.
 
 
-### Number of jobs not know in advance
+#### Number of jobs not known in advance
 
 This automation may be taken a step further to a case where a
-submission script propagates itself. E.g., a script might include
+submission script propagates itself. E.g., a script might include,
+schematically,
 ```
 #SBATCH ...
 
