@@ -3231,9 +3231,9 @@ command should be executed in the directory containing the source
 file/directory.</p>
 <p>If you want to request a different encryption algorithm add the <code>-c
 [algorithm-name]</code> flag to the <code>scp</code> options. For example, to use the
-(usually faster) <em>arcfour</em> encryption algorithm you would
+(usually faster) <em>aes128-ctr</em> encryption algorithm you would
     use:</p>
-<pre><code>scp [options] -c arcfour source user@login.archer2.ac.uk:[destination]
+<pre><code>scp [options] -c aes128-ctr source user@login.archer2.ac.uk:[destination]
 </code></pre>
 <p>(Remember to replace <code>user</code> with your ARCHER2 username in the example
 above.)</p>
@@ -3259,7 +3259,7 @@ file/directory.</p>
 <p>Additional flags can be specified for the underlying <code>ssh</code> command by
 using a quoted string as the argument of the <code>-e</code> flag.
     e.g.</p>
-<pre><code>rsync [options] -e "ssh -c arcfour" source user@login.archer2.ac.uk:[destination]
+<pre><code>rsync [options] -e "ssh -c aes128-ctr" source user@login.archer2.ac.uk:[destination]
 </code></pre>
 <p>(Remember to replace <code>user</code> with your ARCHER2 username in the example
 above.)</p>
@@ -3310,13 +3310,13 @@ single archive file using the following command:</p>
 <code>rsync</code> to allow the transfer to be recommenced without needing to start
 again, in the event of a loss of connection or other failure. For example, using
 the SSH key in the file <code>~/.ssh/id_RSA_A2</code> on our local system:</p>
-<pre><code>rsync -Pv -e"ssh -c arcfour -i $HOME/.ssh/id_RSA_A2" ./all_my_files.tar.gz otbz19@login.archer2.ac.uk:/work/z19/z19/otbz19/
+<pre><code>rsync -Pv -e"ssh -c aes128-ctr -i $HOME/.ssh/id_RSA_A2" ./all_my_files.tar.gz otbz19@login.archer2.ac.uk:/work/z19/z19/otbz19/
 </code></pre>
 <p>Note the use of the <code>-P</code> flag to allow partial transfer -- the same
 command could be used to restart the transfer after a loss of
 connection. The <code>-e</code> flag allows specification of the ssh command - we
 have used this to add the location of the identity file. 
-The <code>-c</code> option specifies the cipher to be used as <code>archfour</code> which has been found to increase performance
+The <code>-c</code> option specifies the cipher to be used as <code>aes128-ctr</code> which has been found to increase performance
 Unfortunately
 the <code>~</code> shortcut is not correctly expanded, so we have specified the
 full path. We move our research archive to our project work directory on
@@ -3327,7 +3327,7 @@ ARCHER2.</p>
 </div>
 <p>If we were unconcerned about being able to restart an interrupted
 transfer, we could instead use the <code>scp</code> command,</p>
-<pre><code>scp -c aes128-gcm@openssh.com -i ~/.ssh/id_RSA_A2 all_my_files.tar.gz otbz19@login.archer2.ac.uk:/work/z19/z19/otbz19/
+<pre><code>scp -c aes128-ctr -i ~/.ssh/id_RSA_A2 all_my_files.tar.gz otbz19@login.archer2.ac.uk:/work/z19/z19/otbz19/
 </code></pre>
 <p>but <code>rsync</code> is recommended for larger transfers.</p>
 
