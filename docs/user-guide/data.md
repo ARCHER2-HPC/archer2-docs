@@ -654,10 +654,10 @@ file/directory.
 
 If you want to request a different encryption algorithm add the `-c
 [algorithm-name]` flag to the `scp` options. For example, to use the
-(usually faster) *arcfour* encryption algorithm you would
+(usually faster) *aes128-ctr* encryption algorithm you would
     use:
 
-    scp [options] -c arcfour source user@login.archer2.ac.uk:[destination]
+    scp [options] -c aes128-ctr source user@login.archer2.ac.uk:[destination]
 
 (Remember to replace `user` with your ARCHER2 username in the example
 above.)
@@ -691,7 +691,7 @@ Additional flags can be specified for the underlying `ssh` command by
 using a quoted string as the argument of the `-e` flag.
     e.g.
 
-    rsync [options] -e "ssh -c arcfour" source user@login.archer2.ac.uk:[destination]
+    rsync [options] -e "ssh -c aes128-ctr" source user@login.archer2.ac.uk:[destination]
 
 (Remember to replace `user` with your ARCHER2 username in the example
 above.)
@@ -747,13 +747,13 @@ We then initiate the data transfer from our system to ARCHER2, here using
 again, in the event of a loss of connection or other failure. For example, using
 the SSH key in the file `~/.ssh/id_RSA_A2` on our local system:
 
-    rsync -Pv -e"ssh -c arcfour -i $HOME/.ssh/id_RSA_A2" ./all_my_files.tar.gz otbz19@login.archer2.ac.uk:/work/z19/z19/otbz19/
+    rsync -Pv -e"ssh -c aes128-ctr -i $HOME/.ssh/id_RSA_A2" ./all_my_files.tar.gz otbz19@login.archer2.ac.uk:/work/z19/z19/otbz19/
 
 Note the use of the `-P` flag to allow partial transfer -- the same
 command could be used to restart the transfer after a loss of
 connection. The `-e` flag allows specification of the ssh command - we
 have used this to add the location of the identity file. 
-The `-c` option specifies the cipher to be used as `archfour` which has been found to increase performance
+The `-c` option specifies the cipher to be used as `aes128-ctr` which has been found to increase performance
 Unfortunately
 the `~` shortcut is not correctly expanded, so we have specified the
 full path. We move our research archive to our project work directory on
@@ -765,6 +765,6 @@ ARCHER2.
 If we were unconcerned about being able to restart an interrupted
 transfer, we could instead use the `scp` command,
 
-    scp -c aes128-gcm@openssh.com -i ~/.ssh/id_RSA_A2 all_my_files.tar.gz otbz19@login.archer2.ac.uk:/work/z19/z19/otbz19/
+    scp -c aes128-ctr -i ~/.ssh/id_RSA_A2 all_my_files.tar.gz otbz19@login.archer2.ac.uk:/work/z19/z19/otbz19/
 
 but `rsync` is recommended for larger transfers.
