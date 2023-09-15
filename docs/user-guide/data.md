@@ -749,6 +749,11 @@ Please note that "remote" is the name that you have chosen when running
 
 ```rclone copyto <archer2_file> remote:<cloud_file>```
 
+!!! note
+    If the session times out while the data transfer takes place, adding the
+    `-vv` flag to an rclone transfer forces rclone to output to the terminal and
+    therefore avoids triggering the timeout process.
+
 ## SSH data transfer example: laptop/workstation to ARCHER2
 
 Here we have a short example demonstrating transfer of data directly
