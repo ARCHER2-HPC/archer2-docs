@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.3.1">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.3.2">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.046329b4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.30068a00.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.85d0ee34.min.css">
@@ -868,6 +868,13 @@
           <li class="md-nav__item">
   <a href="#data-transfer-via-gridftp" class="md-nav__link">
     Data transfer via GridFTP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-transfer-using-rclone" class="md-nav__link">
+    Data transfer using rclone
   </a>
   
 </li>
@@ -2606,6 +2613,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#data-transfer-using-rclone" class="md-nav__link">
+    Data transfer using rclone
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3280,6 +3294,40 @@ concerning this command's use can be found in the <a href="https://gridcf.org/gc
 <p>Further information on using GridFTP on ARCHER2 to transfer
 data to the <a href="https://www.jasmin.ac.uk">JASMIN facility</a> can be found
 in <a href="https://help.jasmin.ac.uk/article/4997-transfers-from-archer2">the JASMIN user documentation</a>.</p>
+</div>
+<h3 id="data-transfer-using-rclone">Data transfer using <code>rclone</code></h3>
+<p><a href="https://rclone.org/">Rclone</a> is a command-line program to manage files on cloud
+storage. You can transfer files directly to/from cloud storage services, such as
+MS OneDrive and Dropbox. The program preserves timestamps and verifies checksums
+at all times.</p>
+<p>First of all, you must download and unzip <code>rclone</code> on ARCHER2:
+<div class="highlight"><pre><span></span><code>wget<span class="w"> </span>https://downloads.rclone.org/v1.62.2/rclone-v1.62.2-linux-amd64.zip
+unzip<span class="w"> </span>rclone-v1.62.2-linux-amd64.zip
+<span class="nb">cd</span><span class="w"> </span>rclone-v1.62.2-linux-amd64/
+</code></pre></div></p>
+<p>The previous code snippet uses rclone v1.62.2, which was the latest version when
+these instructions were written.</p>
+<p>Configure rclone using <code>./rclone config</code>. This will guide you through an
+interactive setup process where you can make a new remote (called <code>remote</code>).
+See the following for detailed instructions for:
+- <a href="https://rclone.org/onedrive/">Microsoft OneDrive.</a>
+- <a href="https://rclone.org/dropbox/">Dropbox.</a></p>
+<p>Please note that a token is required to connect from ARCHER2 to the cloud service.
+You need a web browser to get the token. The recommendation is to run rclone
+in your laptop using <code>rclone authorize</code>, get the token, and then copy the token
+from your laptop to ARCHER2. The rclone website contains further instructions on
+<a href="https://rclone.org/remote_setup/">configuring rclone on a remote machine without web browser.</a></p>
+<p>Once all the above is done, you're ready to go. If you want to copy a directory,
+please use:</p>
+<p><code>rclone copy &lt;archer2_directory&gt; remote:&lt;cloud_directory&gt;</code></p>
+<p>Please note that "remote" is the name that you have chosen when running
+<code>rclone config</code>. To copy files, please use:</p>
+<p><code>rclone copyto &lt;archer2_file&gt; remote:&lt;cloud_file&gt;</code></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the session times out while the data transfer takes place, adding the
+<code>-vv</code> flag to an rclone transfer forces rclone to output to the terminal and
+therefore avoids triggering the timeout process.</p>
 </div>
 <h2 id="ssh-data-transfer-example-laptopworkstation-to-archer2">SSH data transfer example: laptop/workstation to ARCHER2</h2>
 <p>Here we have a short example demonstrating transfer of data directly
