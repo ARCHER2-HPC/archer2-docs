@@ -735,8 +735,9 @@ these instructions were written.
 Configure rclone using `./rclone config`. This will guide you through an
 interactive setup process where you can make a new remote (called `remote`).
 See the following for detailed instructions for:
-- [Microsoft OneDrive.](https://rclone.org/onedrive/)
-- [Dropbox.](https://rclone.org/dropbox/)
+
+   - [Microsoft OneDrive.](https://rclone.org/onedrive/)
+   - [Dropbox.](https://rclone.org/dropbox/)
 
 Please note that a token is required to connect from ARCHER2 to the cloud service.
 You need a web browser to get the token. The recommendation is to run rclone
