@@ -1,5 +1,7 @@
 # ARCHER2 data centre network upgrade: 2023
 
+
+
 During September 2023 the data centre that houses ARCHER2 will be undergoing a 
 major network upgrade.
 
@@ -13,7 +15,7 @@ If you have any questions or concerns, please
 ### The outage dates will be:
 
  - Start:  Monday 18th September 2023  09:00
- - Scheduled End:  Friday 22nd September 2023
+ -  Ended:  Friday 22nd September 2023  11.55
 
 We will notify users if we are able to complete this work ahead of schedule and restore 
 ARCHER2 access earlier than expected.
