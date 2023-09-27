@@ -75,10 +75,10 @@ different node types:
 
 | Storage | Login Nodes | Compute Nodes | Data analysis nodes | Notes     | 
 |---------|-------------|---------------|---------------------|-----------|
-| /home   | yes         | no            | yes                 | Backed up |
-| /work   | yes         | yes           | yes                 | Not backed up, high performance |
-| Solid state (NVMe)   | yes         | yes           | yes                 | Not backed up, high performance |
-| RDFaaS  | yes         | no            | yes                 | Backed up |
+| /home   | yes         | no            | yes                 | Incremental backup |
+| /work   | yes         | yes           | yes                 | No backup, high performance |
+| Solid state (NVMe)   | yes         | yes           | yes                 | No backup, high performance |
+| RDFaaS  | yes         | no            | yes                 | Disaster recovery backup |
 
 !!! important
     Only the work file systems and the solid state (NVMe) file system are visible on
@@ -290,6 +290,11 @@ You query quotas for the solid state file system in the same way as
 The RDFaaS file systems provide additional capacity for projects to store data
 that is not currently required on the compute nodes but which is too large for
 the Home file systems.
+
+!!! warning
+    The RDFaaS file systems are backed up for disaster recovery purposes only (e.g.
+    loss of the whole file system) so it is not possible to recover individual files
+    if they are deleted by mistake or otherwise lost.
 
 !!! tip
     Not all projects on ARCHER2 have access to RDFaaS, if you do have access, this
@@ -649,7 +654,7 @@ file/directory.
 
 If you want to request a different encryption algorithm add the `-c
 [algorithm-name]` flag to the `scp` options. For example, to use the
-(usually faster) *arcfour* encryption algorithm you would
+(usually faster) *aes128-ctr* encryption algorithm you would
     use:
 
     scp [options] -c aes128-ctr source user@login.archer2.ac.uk:[destination]
@@ -686,7 +691,7 @@ Additional flags can be specified for the underlying `ssh` command by
 using a quoted string as the argument of the `-e` flag.
     e.g.
 
-    rsync [options] -e "ssh -c arcfour" source user@login.archer2.ac.uk:[destination]
+    rsync [options] -e "ssh -c aes128-ctr" source user@login.archer2.ac.uk:[destination]
 
 (Remember to replace `user` with your ARCHER2 username in the example
 above.)
@@ -709,6 +714,51 @@ concerning this command's use can be found in the [GCT 6.2 GridFTP User's Guide]
     Further information on using GridFTP on ARCHER2 to transfer
     data to the [JASMIN facility](https://www.jasmin.ac.uk) can be found
     in [the JASMIN user documentation](https://help.jasmin.ac.uk/article/4997-transfers-from-archer2).
+
+### Data transfer using `rclone`
+
+[Rclone](https://rclone.org/) is a command-line program to manage files on cloud
+storage. You can transfer files directly to/from cloud storage services, such as
+MS OneDrive and Dropbox. The program preserves timestamps and verifies checksums
+at all times.
+
+First of all, you must download and unzip `rclone` on ARCHER2:
+```bash
+wget https://downloads.rclone.org/v1.62.2/rclone-v1.62.2-linux-amd64.zip
+unzip rclone-v1.62.2-linux-amd64.zip
+cd rclone-v1.62.2-linux-amd64/
+```
+
+The previous code snippet uses rclone v1.62.2, which was the latest version when
+these instructions were written.
+
+Configure rclone using `./rclone config`. This will guide you through an
+interactive setup process where you can make a new remote (called `remote`).
+See the following for detailed instructions for:
+
+   - [Microsoft OneDrive.](https://rclone.org/onedrive/)
+   - [Dropbox.](https://rclone.org/dropbox/)
+
+Please note that a token is required to connect from ARCHER2 to the cloud service.
+You need a web browser to get the token. The recommendation is to run rclone
+in your laptop using `rclone authorize`, get the token, and then copy the token
+from your laptop to ARCHER2. The rclone website contains further instructions on
+[configuring rclone on a remote machine without web browser.](https://rclone.org/remote_setup/)
+
+Once all the above is done, you're ready to go. If you want to copy a directory,
+please use:
+
+```rclone copy <archer2_directory> remote:<cloud_directory>```
+
+Please note that "remote" is the name that you have chosen when running
+`rclone config`. To copy files, please use:
+
+```rclone copyto <archer2_file> remote:<cloud_file>```
+
+!!! note
+    If the session times out while the data transfer takes place, adding the
+    `-vv` flag to an rclone transfer forces rclone to output to the terminal and
+    therefore avoids triggering the timeout process.
 
 ## SSH data transfer example: laptop/workstation to ARCHER2
 
@@ -742,13 +792,13 @@ We then initiate the data transfer from our system to ARCHER2, here using
 again, in the event of a loss of connection or other failure. For example, using
 the SSH key in the file `~/.ssh/id_RSA_A2` on our local system:
 
-    rsync -Pv -e"ssh -c aes128-gcm@openssh.com -i $HOME/.ssh/id_RSA_A2" ./all_my_files.tar.gz otbz19@login.archer2.ac.uk:/work/z19/z19/otbz19/
+    rsync -Pv -e"ssh -c aes128-ctr -i $HOME/.ssh/id_RSA_A2" ./all_my_files.tar.gz otbz19@login.archer2.ac.uk:/work/z19/z19/otbz19/
 
 Note the use of the `-P` flag to allow partial transfer -- the same
 command could be used to restart the transfer after a loss of
 connection. The `-e` flag allows specification of the ssh command - we
 have used this to add the location of the identity file. 
-The `-c` option specifies the cipher to be used as `aes128-gcm` which has been found to increase performance
+The `-c` option specifies the cipher to be used as `aes128-ctr` which has been found to increase performance
 Unfortunately
 the `~` shortcut is not correctly expanded, so we have specified the
 full path. We move our research archive to our project work directory on
@@ -760,6 +810,6 @@ ARCHER2.
 If we were unconcerned about being able to restart an interrupted
 transfer, we could instead use the `scp` command,
 
-    scp -c aes128-gcm@openssh.com -i ~/.ssh/id_RSA_A2 all_my_files.tar.gz otbz19@login.archer2.ac.uk:/work/z19/z19/otbz19/
+    scp -c aes128-ctr -i ~/.ssh/id_RSA_A2 all_my_files.tar.gz otbz19@login.archer2.ac.uk:/work/z19/z19/otbz19/
 
 but `rsync` is recommended for larger transfers.

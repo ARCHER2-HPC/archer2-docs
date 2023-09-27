@@ -22,8 +22,7 @@ and core level spectra.
 If you have a CASTEP licence and wish to have access to CASTEP on
 ARCHER2, please make a request via the SAFE, see:
 
-   - [How to request access to package
-     groups]([https://epcced.github.io/safe-docs/safe-for-users/#how-to-request-access-to-a-package-group](https://epcced.github.io/safe-docs/safe-for-users/#how-to-request-access-to-a-package-group-licensed-software-or-restricted-features)
+   - [How to request access to package groups](https://epcced.github.io/safe-docs/safe-for-users/#how-to-request-access-to-a-package-group-licensed-software-or-restricted-features)
 
 Please have your license details to hand.
 
