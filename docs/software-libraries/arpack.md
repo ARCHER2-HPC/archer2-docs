@@ -20,12 +20,17 @@ installation for the current programming environment.
 
 ### Version history
 
+=== "Upgrade 2023"
+
+    - The central module version is under review, and not available.
+      Please consider using the instructions below to install your own version.
+
 === "Full system"
-    
+
     - Module `arpack-ng/3.8.0` installed October 2021 (PE 21.04)
-    
+
 === "4-cabinet system"
-    
+
     - Not available
 
 
@@ -36,16 +41,16 @@ a script available from the Archer githug repository.
 ```
 $ git clone https://github.com/ARCHER2-HPC/pe-scripts.git
 $ cd pe-scripts
-$ git checkout modules-2021-10
+$ git checkout modules-2022-12
 $ ./sh/arpack-ng.sh --prefix=/path/to/install/location
 ```
 where the `--prefix` specifies a suitable location. See the
 Archer2 [github repository](https://github.com/ARCHER2-HPC/pe-scripts/tree/cse-develop)
-for further options and details.
+for further options and details. Note that the build process
+runs the tests, for which an `salloc` allocation is required to
+allow the parallel tests to run correctly.
 
 
 ## Resources
-
-[Original ARPACK page](https://www.caam.rice.edu/software/ARPACK/)
 
 [ARPACK-NG github site](https://github.com/opencollab/arpack-ng/)
