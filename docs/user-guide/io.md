@@ -142,8 +142,8 @@ Following sections describe the settings in more detail.
 
 #### File-Per-Process (FPP)
 
-We regularly run tests of FPP write performance on ARCHER2 /work Lustre file 
-systems using the [benchio]() software in the following configuration:
+We regularly run tests of FPP write performance on ARCHER2 `/work`` Lustre file 
+systems using the [benchio](https://github.com/EPCCed/epcc-reframe/tree/main/tests/synth/benchio) software in the following configuration:
 
 - Number of MPI processes writing: 2048 (16 nodes each with 128 processes)
 - Amount of data written: 65,536 MiB (32 MiB per process)
@@ -166,8 +166,8 @@ Typical write performance:
 
 #### Single Shared File with collective writes (SSF)
 
-We regularly run tests of FPP write performance on ARCHER2 /work Lustre file 
-systems using the [benchio]() software in the following configuration:
+We regularly run tests of FPP write performance on ARCHER2 `/work`` Lustre file 
+systems using the [benchio](https://github.com/EPCCed/epcc-reframe/tree/main/tests/synth/benchio) software in the following configuration:
 
 - Number of MPI processes writing: 2048 (16 nodes each with 128 processes)
 - Amount of data written: 65,536 MiB (32 MiB per process)
