@@ -4,8 +4,8 @@ This section covers how to monitor energy use for your jobs on ARCHER2 and how t
 which allows some control over how much energy is consumed by jobs.
 
 !!! important
-    The default CPU frequency on ARCHER2 compute nodes for jobs launched using `srun` is currently set
-    to 2.0 GHz. Information below describes how to control the CPU frequency using Slurm.
+    The default CPU frequency cap on ARCHER2 compute nodes for jobs launched using `srun` is currently set
+    to 2.0 GHz. Information below describes how to control the CPU frequency cap using Slurm.
 
 ## Monitoring energy use
 
@@ -87,8 +87,8 @@ There are a number of files in this directory, all the counter files include the
 
 ## Controlling CPU frequency
 
-You can request specific CPU frequencies (in kHz) for compute nodes through `srun` options or environment variables.
-The available frequencies on the ARCHER2 processors along with the options and environment variables:
+You can request specific CPU frequency caps (in kHz) for compute nodes through `srun` options or environment variables.
+The available frequency caps on the ARCHER2 processors along with the options and environment variables:
 
 | Frequency | `srun` option | Slurm environment variable | Turbo boost enabled? |
 |----------:|--------------|----------------------------|-------|
@@ -96,7 +96,18 @@ The available frequencies on the ARCHER2 processors along with the options and e
 | 2.00 GHz  | `--cpu-freq=2000000` | `export SLURM_CPU_FREQ_REQ=2000000` | No |
 | 1.50 GHz  | `--cpu-freq=1500000` | `export SLURM_CPU_FREQ_REQ=1500000` | No |
 
-The only frequencies available on the processors on ARCHER2 are 1.5 GHz, 2.0 GHz and 2.25GHz.
+The only frequency caps available on the processors on ARCHER2 are 1.5 GHz, 2.0 GHz and 2.25GHz+turbo.
+
+!!! important
+    Setting the CPU frequency cap in this way sets the *maximum* frequency that the processors can use.
+    In practice, the individual cores may select different frequencies up to the value you have set depending
+    on the workload on the processor.
+
+!!! important
+    When you select the highest frequency value (2.25 GHz), you also enable turbo boost and so
+    the processor is free to set the CPU frequency to values above 2.25 GHz if possible within
+    the power and thermal limits of the processor. We see that, with turbo boost enabled,
+    the processors typically boost to around 2.8 GHz even when performing compute-intensive work.
 
 For example, you can add the following option to `srun` commands in your job submission scripts to set the CPU frequency
 to 2.25 GHz (and also enable turbo boost):
