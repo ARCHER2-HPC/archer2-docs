@@ -2243,7 +2243,7 @@ job. </p>
 <p>There are a number of files in this directory, all the counter files include the current value and a timestamp.</p>
 <ul>
 <li>power - Point-in-time power (Watts).</li>
-<li>energy - Accumulated energy (Joules)</li>
+<li>energy - Accumulated energy (Joules).</li>
 <li>cpu_power - Point-in-time power (Watts) used by the CPU domain.</li>
 <li>cpu_energy - The total energy (Joules) used by the CPU domain.</li>
 <li>cpu*_temp - Temperature reading (Celsius) of the CPU domain - one file per CPU socket.</li>
@@ -2256,6 +2256,16 @@ job. </p>
 <li>power_cap - Current power cap limit in Watts; 0 indicates no capping.</li>
 <li>raw_scan_hz - The power management scanning rate for all data in pm_counters.</li>
 </ul>
+<p>This documentation is from the official HPE documentation:</p>
+<ul>
+<li><a href="https://support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&amp;docId=dp00002748en_us">HPE Cray Operating System Administration Guide: CSM on HPE Cray EX
+Systems</a></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The overall <code>power</code> and <code>energy</code> counters include all on-node systems. The major components
+are the CPU (processor), memory and Slingshot network interface controller (NIC).</p>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>There exists an MPI-based wrapper library that can gather the <code>pm</code> counter values at runtime via a simple
