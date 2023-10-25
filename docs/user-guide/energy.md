@@ -135,11 +135,6 @@ export SLURM_CPU_FREQ_REQ=2250000
 !!! tip
     Testing by the ARCHER2 CSE team has shown that most software are most energy efficient when 2.0 GHz 
     is selected as the CPU frequency.
-
-!!! tip
-    When the highest frequency (2.25 GHz) is selected this also enables frequency turbo boost. Experiments
-    on ARCHER2 have shown that under typical use, with all 128 cores heavily loaded, the processors
-    turbo boost up to around 2.8 GHz when the frequency is set to 2.25 GHz.
     
     
 !!! important
