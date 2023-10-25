@@ -66,7 +66,7 @@ On compute nodes, the raw energy counters and instantaneous power draw data are 
 There are a number of files in this directory, all the counter files include the current value and a timestamp.
 
 - power - Point-in-time power (Watts).
-- energy - Accumulated energy (Joules)
+- energy - Accumulated energy (Joules).
 - cpu_power - Point-in-time power (Watts) used by the CPU domain.
 - cpu_energy - The total energy (Joules) used by the CPU domain.
 - cpu*_temp - Temperature reading (Celsius) of the CPU domain - one file per CPU socket.
@@ -78,6 +78,15 @@ There are a number of files in this directory, all the counter files include the
 - version - Version number for power management counter support.
 - power_cap - Current power cap limit in Watts; 0 indicates no capping.
 - raw_scan_hz - The power management scanning rate for all data in pm_counters.
+
+This documentation is from the official HPE documentation:
+
+- [HPE Cray Operating System Administration Guide: CSM on HPE Cray EX
+Systems](https://support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&docId=dp00002748en_us)
+
+!!! tip
+    The overall `power` and `energy` counters include all on-node systems. The major components
+    are the CPU (processor), memory and Slingshot network interface controller (NIC).
 
 !!! note
     There exists an MPI-based wrapper library that can gather the `pm` counter values at runtime via a simple
