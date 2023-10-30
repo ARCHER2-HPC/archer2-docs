@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.6">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.7">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.35e1ed30.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.4b4a2bd9.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.356b1318.min.css">
@@ -3926,6 +3926,13 @@ that they wish to charge the job too with the option:</p>
      <code>t01</code> or <code>t01-test</code>. You can see which budget codes you can charge
      to in SAFE.</li>
 </ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>You <strong>must</strong> specify an acount code for your job otherwise it will
+fail to submit with the error: <code>sbatch: error: Batch job submission failed: Invalid account or account/partition combination specified</code>.
+(This error can also mean that you have specified a budget that
+has run out of resources.)</p>
+</div>
 <p>Other common options that are used are:</p>
 <ul>
 <li><code>--time=&lt;hh:mm:ss&gt;</code> the maximum walltime for your job. <em>e.g.</em> For
