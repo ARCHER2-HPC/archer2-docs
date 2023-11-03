@@ -7,7 +7,7 @@ Information on the file systems, directory layouts, quotas,
 archiving and transferring data can be found in the
 [Data management and transfer section](data.md).
 
-The advice here is targetted at use of the parallel file
+The advice here is targeted at use of the parallel file
 systems available on the compute nodes on ARCHER2 (i.e. **Not**
 the home and RDFaaS file systems).
 
@@ -249,16 +249,16 @@ For example, to set a stripe size of 4 MiB for the existing directory
 
     auser@ln03:~> lfs setstripe -S 4m -c -1 resdir/
 
-### Environement variables
+### Environment variables
 
-These environment variables typically only have an impact for the case 
+The following environment variables typically only have an impact for the case 
 when you using Single Shared Files with collective communications.
 As mentioned above, it is very important to use collective calls when
 doing parallel I/O to a single shared file.
 
 However, with the default settings, parallel I/O on multiple nodes can
-currently give poor performance. We recommend always setting the
-following environment variables in your SLURM batch script when 
+currently give poor performance. We recommend always setting these
+environment variables in your SLURM batch script when 
 you are using the SSF I/O pattern:
 
   export FI_OFI_RXM_SAR_LIMIT=64K
@@ -304,9 +304,9 @@ variable in your Slurm script
 Amongst other things, this will give you information on how many
 independent and collective I/O operations were issued. If you see a
 large number of independent operations compared to collectives, this
-indicates that you have inefficient I/O patterns and you should check that you are calling your parallel I/O library correctly.
+indicates that you have inefficient I/O patterns and you should check
+that you are calling your parallel I/O library correctly.
 
 Although this information comes from the MPI library, it is still
 useful for users of higher-level libraries such as HDF5 as they all
 call MPI-IO at the lowest level.
-
