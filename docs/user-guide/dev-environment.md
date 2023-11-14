@@ -411,7 +411,7 @@ Language, warning, Debugging options:
 | Option | Comment |  
 | ------ | ------- |
 | `-std=<standard>` | Default is `-std=gnu11` (`gnu++14` for C++) \[1\] |
-| `--gcc-toolchain=/opt/gcc/11.2.0/snos` | Use the GCC 11.2.0 toolchain instead of the default 8.1.0 version packaged with CCE |
+| `--gcc-toolchain=/opt/cray/pe/gcc/12.2.0/snos` | Use the GCC 12.2.0 toolchain instead of the default 11.2.0 version packaged with CCE |
 
 Performance options:
 
