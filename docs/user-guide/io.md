@@ -7,7 +7,7 @@ Information on the file systems, directory layouts, quotas,
 archiving and transferring data can be found in the
 [Data management and transfer section](data.md).
 
-The advice here is targetted at use of the parallel file
+The advice here is targeted at use of the parallel file
 systems available on the compute nodes on ARCHER2 (i.e. **Not**
 the home and RDFaaS file systems).
 
@@ -96,7 +96,7 @@ This section provides information on getting the best performance out of
 the parallel `/work` file systems on ARCHER2 when writing data,
 particularly using parallel I/O patterns.
 
-### Lustre
+### Lustre technology
 
 The ARCHER2 `/work` file systems use Lustre as a parallel file system
 technology. It has many disk units (called Object Storage Targets or
@@ -105,6 +105,88 @@ that it appears to the user as a single file system.  The Lustre file
 system provides POSIX semantics (changes on one node are immediately
 visible on other nodes) and can support very high data rates for
 appropriate I/O patterns.
+
+In order to achieve good performance on the ARCHER2 Lustre file systems,
+you need to make sure your IO is configured correctly for the type
+of I/O you want to do. In the following sections we describe how to 
+do this.
+
+### Summary: achieving best I/O performance
+
+The configuration you should use depends on the type of I/O you are
+performing. Here, we summarise the settings for two of the I/O patterns
+described above: File-Per-Process (FPP, including using ADIOS2) and
+Single Share File with collective writes (SSF).
+
+Following sections describe the settings in more detail.
+
+#### File-Per-Process (FPP)
+
+- Optimal file system: NVMe-based Lustre
+- Stripe count: single stripe (`-c 1`), this is the default on ARCHER2
+- Stripe size: little impact on performance - default (1 MiB) is fine
+- Environment variables: none required
+- MPI transport protocol choice: N/A
+
+#### Single Shared File with collective writes (SSF)
+
+- Optimal file system: no difference between NVMe and HDD-based file systems
+- Stripe count: Maximum striping (`-c -1`)
+- Stripe size: little impact on performance - default (1 MiB) is fine
+- Environment variables:
+    * `export FI_OFI_RXM_SAR_LIMIT=64K`
+    * `export MPICH_MPIIO_HINTS="*:cray_cb_write_lock_mode=2,*:cray_cb_nodes_multiplier=4”`
+- MPI transport protocol choice: UCX, if possible
+
+### Summary: typical I/O performance on ARCHER2
+
+#### File-Per-Process (FPP)
+
+We regularly run tests of FPP write performance on ARCHER2 `/work`` Lustre file 
+systems using the [benchio](https://github.com/EPCCed/epcc-reframe/tree/main/tests/synth/benchio) software in the following configuration:
+
+- Number of MPI processes writing: 2048 (16 nodes each with 128 processes)
+- Amount of data written: 65,536 MiB (32 MiB per process)
+- Striping: stripe count = 1; stripe size = 1 MiB
+- Environment variables: none
+- MPI transport protocol: OFI
+
+Typical write performance:
+
+- NVMe-based file system:
+    - Maximum: 200 GiB/s
+    - Upper quartile: 180 GiB/s
+    - Median: 150 GiB/s
+    - Lower quartile: 135 GiB/s
+- HDD-based file system:
+    - Maximum: 170 GiB/s
+    - Upper quartile: 160 GiB/s
+    - Median: 90 GiB/s
+    - Lower quartile: 30 GiB/s
+
+#### Single Shared File with collective writes (SSF)
+
+We regularly run tests of FPP write performance on ARCHER2 `/work`` Lustre file 
+systems using the [benchio](https://github.com/EPCCed/epcc-reframe/tree/main/tests/synth/benchio) software in the following configuration:
+
+- Number of MPI processes writing: 2048 (16 nodes each with 128 processes)
+- Amount of data written: 65,536 MiB (32 MiB per process)
+- Striping: stripe count = -1 (maximum striping); stripe size = 1 MiB
+- Environment variables: `FI_OFI_RXM_SAR_LIMIT=64K`, `MPICH_MPIIO_HINTS="*:cray_cb_write_lock_mode=2,*:cray_cb_nodes_multiplier=4”`
+- MPI transport protocol: UCX
+
+Typical write performance:
+
+- NVMe-based file system:
+    - Maximum: 20 GiB/s
+    - Upper quartile: 11 GiB/s
+    - Median: 10 GiB/s
+    - Lower quartile: 9 GiB/s
+- HDD-based file system:
+    - Maximum: 22 GiB/s
+    - Upper quartile: 12 GiB/s
+    - Median: 10 GiB/s
+    - Lower quartile: 8 GiB/s
 
 ### Striping
 
@@ -146,7 +228,7 @@ created directory `resdir`:
     resdir
     stripe_count:   1 stripe_size:    1048576 stripe_offset:  -1 
 
-#### Setting Custom Striping Configurations
+#### Setting custom striping configurations
 
 Users can set stripe settings for a directory (or file) using the
 `lfs setstripe` command. The options for `lfs setstripe` are:
@@ -167,32 +249,26 @@ For example, to set a stripe size of 4 MiB for the existing directory
 
     auser@ln03:~> lfs setstripe -S 4m -c -1 resdir/
 
-### Recommended ARCHER2 I/O settings
+### Environment variables
 
+The following environment variables typically only have an impact for the case 
+when you using Single Shared Files with collective communications.
 As mentioned above, it is very important to use collective calls when
 doing parallel I/O to a single shared file.
 
 However, with the default settings, parallel I/O on multiple nodes can
-currently give poor performance. We recommend always setting the
-following environment variable in your SLURM batch script:
+currently give poor performance. We recommend always setting these
+environment variables in your SLURM batch script when 
+you are using the SSF I/O pattern:
 
-    export FI_OFI_RXM_SAR_LIMIT=64K
+  export FI_OFI_RXM_SAR_LIMIT=64K
+  export MPICH_MPIIO_HINTS="*:cray_cb_write_lock_mode=2,*:cray_cb_nodes_multiplier=4”
 
-Although I/O requirements vary significantly between different
-applications, the following settings should be good in most cases:
+<!-- TODO: add description of what these settings do -->
 
-  - If each process or node is writing to its own individual file then
-    the default settings (unstriped files) should give good
-    performance.
+### MPI transport protocol
 
-  - If processes are writing to a single shared file (e.g. using
-    MPI-IO, HDF5 or NetCDF), set the appropriate directories to be
-    fully striped: `lfs setstripe -c -1 resdir`. On ARCHER2 this will
-    use all of the 12 OSTs.
-
-#### Alternative MPI library
-
-Setting the environment variable `FI_OFI_RXM_SAR_LIMIT` can improve
+Setting the environment variables described above can improve
 the performance of MPI collectives when handling large amounts of
 data, which in turn can improve collective file I/O. An alternative is
 to use the non-default UCX implementation of the MPI library as an
@@ -206,7 +282,7 @@ To switch library version see [the Application Development Environment section o
     before and after the switch. It is possible that other functions
     may run slower even if the I/O performance improves.
 
-## I/O Profiling
+## I/O profiling
 
 If you are concerned about your I/O performance, you should quantify
 your transfer rates in terms of GB/s of data read or written to
@@ -228,9 +304,9 @@ variable in your Slurm script
 Amongst other things, this will give you information on how many
 independent and collective I/O operations were issued. If you see a
 large number of independent operations compared to collectives, this
-indicates that you have inefficient I/O patterns and you should check that you are calling your parallel I/O library correctly.
+indicates that you have inefficient I/O patterns and you should check
+that you are calling your parallel I/O library correctly.
 
 Although this information comes from the MPI library, it is still
 useful for users of higher-level libraries such as HDF5 as they all
 call MPI-IO at the lowest level.
-
