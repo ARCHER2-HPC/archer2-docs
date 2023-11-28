@@ -4,8 +4,8 @@ This section covers how to monitor energy use for your jobs on ARCHER2 and how t
 which allows some control over how much energy is consumed by jobs.
 
 !!! important
-    The default CPU frequency on ARCHER2 compute nodes for jobs launched using `srun` is currently set
-    to 2.0 GHz. Information below describes how to control the CPU frequency using Slurm.
+    The default CPU frequency cap on ARCHER2 compute nodes for jobs launched using `srun` is currently set
+    to 2.0 GHz. Information below describes how to control the CPU frequency cap using Slurm.
 
 ## Monitoring energy use
 
@@ -66,7 +66,7 @@ On compute nodes, the raw energy counters and instantaneous power draw data are 
 There are a number of files in this directory, all the counter files include the current value and a timestamp.
 
 - power - Point-in-time power (Watts).
-- energy - Accumulated energy (Joules)
+- energy - Accumulated energy (Joules).
 - cpu_power - Point-in-time power (Watts) used by the CPU domain.
 - cpu_energy - The total energy (Joules) used by the CPU domain.
 - cpu*_temp - Temperature reading (Celsius) of the CPU domain - one file per CPU socket.
@@ -79,6 +79,15 @@ There are a number of files in this directory, all the counter files include the
 - power_cap - Current power cap limit in Watts; 0 indicates no capping.
 - raw_scan_hz - The power management scanning rate for all data in pm_counters.
 
+This documentation is from the official HPE documentation:
+
+- [HPE Cray Operating System Administration Guide: CSM on HPE Cray EX
+Systems](https://support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&docId=dp00002748en_us)
+
+!!! tip
+    The overall `power` and `energy` counters include all on-node systems. The major components
+    are the CPU (processor), memory and Slingshot network interface controller (NIC).
+
 !!! note
     There exists an MPI-based wrapper library that can gather the `pm` counter values at runtime via a simple
     set of function calls. See the link below for details.
@@ -87,8 +96,8 @@ There are a number of files in this directory, all the counter files include the
 
 ## Controlling CPU frequency
 
-You can request specific CPU frequencies (in kHz) for compute nodes through `srun` options or environment variables.
-The available frequencies on the ARCHER2 processors along with the options and environment variables:
+You can request specific CPU frequency caps (in kHz) for compute nodes through `srun` options or environment variables.
+The available frequency caps on the ARCHER2 processors along with the options and environment variables:
 
 | Frequency | `srun` option | Slurm environment variable | Turbo boost enabled? |
 |----------:|--------------|----------------------------|-------|
@@ -96,7 +105,18 @@ The available frequencies on the ARCHER2 processors along with the options and e
 | 2.00 GHz  | `--cpu-freq=2000000` | `export SLURM_CPU_FREQ_REQ=2000000` | No |
 | 1.50 GHz  | `--cpu-freq=1500000` | `export SLURM_CPU_FREQ_REQ=1500000` | No |
 
-The only frequencies available on the processors on ARCHER2 are 1.5 GHz, 2.0 GHz and 2.25GHz.
+The only frequency caps available on the processors on ARCHER2 are 1.5 GHz, 2.0 GHz and 2.25GHz+turbo.
+
+!!! important
+    Setting the CPU frequency cap in this way sets the *maximum* frequency that the processors can use.
+    In practice, the individual cores may select different frequencies up to the value you have set depending
+    on the workload on the processor.
+
+!!! important
+    When you select the highest frequency value (2.25 GHz), you also enable turbo boost and so
+    the processor is free to set the CPU frequency to values above 2.25 GHz if possible within
+    the power and thermal limits of the processor. We see that, with turbo boost enabled,
+    the processors typically boost to around 2.8 GHz even when performing compute-intensive work.
 
 For example, you can add the following option to `srun` commands in your job submission scripts to set the CPU frequency
 to 2.25 GHz (and also enable turbo boost):
@@ -115,11 +135,6 @@ export SLURM_CPU_FREQ_REQ=2250000
 !!! tip
     Testing by the ARCHER2 CSE team has shown that most software are most energy efficient when 2.0 GHz 
     is selected as the CPU frequency.
-
-!!! tip
-    When the highest frequency (2.25 GHz) is selected this also enables frequency turbo boost. Experiments
-    on ARCHER2 have shown that under typical use, with all 128 cores heavily loaded, the processors
-    turbo boost up to around 2.8 GHz when the frequency is set to 2.25 GHz.
     
     
 !!! important
