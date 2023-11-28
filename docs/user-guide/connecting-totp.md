@@ -110,22 +110,27 @@ Then:
 Once you have done this, your SSH key will be added to your ARCHER2 account.
 
 
-### MFA Time-based one-time password
+### MFA Time-based one-time passcode (TOTP code)
 
-Remember, you will need to use both an SSH key and Time-based one-time password to log into ARCHER2 so you will
-also need to [set up your TOTP](https://epcced.github.io/safe-docs/safe-for-users/#how-to-turn-on-mfa-on-your-machine-account) before you can log into ARCHER2. 
+Remember, you will need to use both an SSH key and time-based one-time passcode to log into ARCHER2 so you will
+also need to [set up a method for generating a TOTP code](https://epcced.github.io/safe-docs/safe-for-users/#how-to-turn-on-mfa-on-your-machine-account) before you can log into ARCHER2. 
 
 
-!!! Note
+### First login: password required
 
-    When you **first** log into ARCHER2, you will be prompted to change your initial password. This is a three step process:
+!!! Important
+    You will **not** use your password when logging on to ARCHER2 after the first login for a new account.
 
-    1.  When promoted to enter your *ldap password*: Enter the password  which you [retrieve from SAFE](https://epcced.github.io/safe-docs/safe-for-users/#how-can-i-pick-up-my-password-for-the-service-machine)
-    2.  When prompted to enter your new password: type in a new password
-    3.  When prompted to re-enter the new password: re-enter the new password
+As an additional security measure, you will also need to use a password from SAFE for your first login to ARCHER2
+with a new account. When you log into ARCHER2 for the first time with a new account, you will be prompted to change
+your initial password. This is a three step process:
 
-    Your password has now been changed<br>
-	You will **not** use your password when logging on to ARCHER2 after the initial logon.
+1.  When promoted to enter your *ldap password*: Enter the password  which you [retrieve from SAFE](https://epcced.github.io/safe-docs/safe-for-users/#how-can-i-pick-up-my-password-for-the-service-machine)
+2.  When prompted to enter your new password: type in a new password
+3.  When prompted to re-enter the new password: re-enter the new password
+
+Your password has now been changed. You will no longer need this password to log into ARCHER2 from this point
+forwards, you will use your SSH key and TOTP code as described above.
 
 
 
