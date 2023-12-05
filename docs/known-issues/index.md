@@ -5,9 +5,14 @@ impacts and any known workarounds. Many of these issues are under
 active investigation by HPE Cray and the wider service.
 
 !!! info
-    This page was last reviewed on 20 July 2023
+    This page was last reviewed on 9 November 2023
 
 ## Open Issues
+
+### e-mail alerts from Slurm do not work (Added: 2023-11-09)
+
+Email alerts from Slurm (`--mail-type` and `--mail-user` options) do not produce emails to users. We are investigating
+with Universtiy of Edinburgh Information Services to enable this Slurm feature in the future.
 
 ### Excessive memory use when using UCX communications protocol (Added: 2023-07-20)
 

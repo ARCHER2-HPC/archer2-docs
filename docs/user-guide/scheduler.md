@@ -429,6 +429,12 @@ that they wish to charge the job too with the option:
      `t01` or `t01-test`. You can see which budget codes you can charge
      to in SAFE.
 
+!!! important
+    You **must** specify an acount code for your job otherwise it will
+    fail to submit with the error: `sbatch: error: Batch job submission failed: Invalid account or account/partition combination specified`.
+    (This error can also mean that you have specified a budget that
+    has run out of resources.)
+
 Other common options that are used are:
 
    - `--time=<hh:mm:ss>` the maximum walltime for your job. *e.g.* For
