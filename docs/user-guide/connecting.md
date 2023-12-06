@@ -51,7 +51,8 @@ Once installed, start MobaXterm and then click "Start local terminal".
 
 ## Access credentials
 
-To access ARCHER2, you need to use two sets of credentials: a password **and** an SSH key pair protected by a passphrase. You can find more detailed instructions on how to set up your credentials to access ARCHER2 from Windows, MacOS and Linux below.
+To access ARCHER2, you need to use two sets of credentials: your   SSH
+key pair protected by a passphrase **and** a Time-based one-time password. You can find more detailed instructions on how to set up your credentials to access ARCHER2 from Windows, MacOS and Linux below.
 
 ### SSH Key Pairs
 
@@ -108,6 +109,33 @@ Then:
 
 Once you have done this, your SSH key will be added to your ARCHER2 account.
 
+
+### MFA Time-based one-time passcode (TOTP code)
+
+Remember, you will need to use both an SSH key and time-based one-time passcode to log into ARCHER2 so you will
+also need to [set up a method for generating a TOTP code](https://epcced.github.io/safe-docs/safe-for-users/#how-to-turn-on-mfa-on-your-machine-account) before you can log into ARCHER2. 
+
+
+### First login: password required
+
+!!! Important
+    You will **not** use your password when logging on to ARCHER2 after the first login for a new account.
+
+As an additional security measure, you will also need to use a password from SAFE for your first login to ARCHER2
+with a new account. When you log into ARCHER2 for the first time with a new account, you will be prompted to change
+your initial password. This is a three step process:
+
+1.  When promoted to enter your *ldap password*: Enter the password  which you [retrieve from SAFE](https://epcced.github.io/safe-docs/safe-for-users/#how-can-i-pick-up-my-password-for-the-service-machine)
+2.  When prompted to enter your new password: type in a new password
+3.  When prompted to re-enter the new password: re-enter the new password
+
+Your password has now been changed. You will no longer need this password to log into ARCHER2 from this point
+forwards, you will use your SSH key and TOTP code as described above.
+
+
+
+<!--
+
 Remember, you need both an SSH key and a password to log in to ARCHER2. You will need to collect an initial password before you can log into ARCHER2. We cover this next.
 
 !!! note
@@ -122,6 +150,7 @@ Documentation](https://epcced.github.io/safe-docs) for more details on requestin
     ARCHER2 account passwords are also sometimes referred to as LDAP
     passwords by the system.
 
+
 !!! note
 
     You will be prompted to change your password the first time
@@ -129,6 +158,8 @@ Documentation](https://epcced.github.io/safe-docs) for more details on requestin
     any time, on ARCHER2, using the `passwd` command. This change is
     not be reflected in SAFE so, if you forget your password, you
     should use SAFE to request a new one-shot password.
+-->
+
 
 ## SSH Clients
 
@@ -330,18 +361,7 @@ connect to the login node, the output should include:
 there could be a problem with your Internet connection, or the login
 node could be unavailable.
 
-### Password
 
-If you are having trouble entering your password, consider using a
-password manager, from which you can copy and paste it. If you need to
-reset your password, instructions for doing so can be found in [the
-SAFE
-documentation](https://epcced.github.io/safe-docs/safe-for-users/\#reset\_machine)
-
-Windows users should note that the `Ctrl+V` shortcut does not work to paste in to
-PuTTY, MobaXterm, or PowerShell. Instead use `Shift+Ins` to paste.
-Alternatively, right-click and select 'Paste' in PuTTY and MobaXterm, or
-simply right-click to paste in PowerShell.
 
 ### SSH key
 
@@ -426,6 +446,11 @@ and private key files, as well as the containing folder.
     owner permission strings as binary numbers, then converting them to
     decimal. For example the permission string `-rwx------` becomes
     `111 000 000` -\> `700`.
+
+
+### MFA
+
+If your TOTP passcode is being consistently rejected, you can [remove MFA from your account](https://epcced.github.io/safe-docs/safe-for-users/#mfa_off) and then [re-enable it](https://epcced.github.io/safe-docs/safe-for-users/#mfa).
 
 ### SSH verbose output
 
