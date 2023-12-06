@@ -395,15 +395,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#collecting-your-archer2-password" class="md-nav__link">
-    <span class="md-ellipsis">
-      Collecting your ARCHER2 password
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -415,6 +406,21 @@
       Login to ARCHER2
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Login to ARCHER2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mfa-time-based-one-time-password" class="md-nav__link">
+    <span class="md-ellipsis">
+      MFA Time-based one-time password
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2355,15 +2361,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#collecting-your-archer2-password" class="md-nav__link">
-    <span class="md-ellipsis">
-      Collecting your ARCHER2 password
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -2375,6 +2372,21 @@
       Login to ARCHER2
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Login to ARCHER2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mfa-time-based-one-time-password" class="md-nav__link">
+    <span class="md-ellipsis">
+      MFA Time-based one-time password
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2582,27 +2594,31 @@ you can log into ARCHER2 for the first time. We cover this next.</p>
 <p class="admonition-title">Note</p>
 <p>If you want to connect to ARCHER2 from more than one machine, e.g. from your home laptop as well as your work laptop, you should generate an ssh key on each machine, and add each of the public keys into SAFE.  </p>
 </div>
-<h3 id="collecting-your-archer2-password">Collecting your ARCHER2 password</h3>
-<p>You should now collect your ARCHER2 password:</p>
-<ol>
-<li><a href="https://safe.epcc.ed.ac.uk">Log into SAFE</a></li>
-<li>Use the <em>Login accounts</em> menu to select your new login account</li>
-<li>Use the <em>View Login Account Password</em> button to view your single-use
-    ARCHER2 password</li>
-</ol>
-<p>This password is generated randomly by the software. It's best to
+<!--
+### Collecting your ARCHER2 password
+
+You should now collect your ARCHER2 password:
+
+1.  [Log into SAFE](https://safe.epcc.ed.ac.uk)
+2.  Use the *Login accounts* menu to select your new login account
+3.  Use the *View Login Account Password* button to view your single-use
+    ARCHER2 password
+
+This password is generated randomly by the software. It's best to
 copy-and-paste it across when you log in to ARCHER2. After you login,
 you will immediately be prompted to begin the process of changing your
 password. You should now enter the initial password again, and then you
 will be prompted for your new, easy-to-remember password. Your new
-password should conform to the <a href="https://www.archer2.ac.uk/about/policies/passwords_usernames.html">ARCHER2 Password
-Policy</a>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The <em>View Login Account Password</em> option within SAFE will continue to
-display your old initial password. Your SAFE account has no knowledge of
-your new machine account password.</p>
-</div>
+password should conform to the [ARCHER2 Password
+Policy](https://www.archer2.ac.uk/about/policies/passwords_usernames.html).
+
+!!! note
+    The *View Login Account Password* option within SAFE will continue to
+    display your old initial password. Your SAFE account has no knowledge of
+    your new machine account password.
+
+-->
+
 <h2 id="login-to-archer2">Login to ARCHER2</h2>
 <p>To log into ARCHER2 you should use the address:</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Full system</label></div>
@@ -2655,18 +2671,19 @@ example, if your key is in a file called <code>keys/id_rsa_archer2</code> you wo
 use the command <code>ssh -i keys/id_rsa_archer2
 username@login.archer2.ac.uk</code> to log in.</p>
 </div>
+<h3 id="mfa-time-based-one-time-password">MFA Time-based one-time password</h3>
+<p>Remember, you will need to use both an SSH key and Time-based one-time password to log into ARCHER2 so you will
+also need to <a href="https://epcced.github.io/safe-docs/safe-for-users/#how-to-turn-on-mfa-on-your-machine-account">set up your TOTP</a> before you can log into ARCHER2.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>When you first log into ARCHER2, you will be prompted to change your
-initial password. This is a three step process:</p>
+<p>When you <strong>first</strong> log into ARCHER2, you will be prompted to change your initial password. This is a three step process:</p>
 <ol>
-<li>When prompted to enter your <em>ldap password</em>: re-enter the password
-    you retrieved from SAFE</li>
+<li>When promoted to enter your <em>ldap password</em>: Enter the password  which you <a href="https://epcced.github.io/safe-docs/safe-for-users/#how-can-i-pick-up-my-password-for-the-service-machine">retrieve from SAFE</a></li>
 <li>When prompted to enter your new password: type in a new password</li>
-<li>When prompted to re-enter the new password: re-enter the new
-    password</li>
+<li>When prompted to re-enter the new password: re-enter the new password</li>
 </ol>
-<p>Your password has now been changed.</p>
+<p>Your password has now been changed<br>
+You will <strong>not</strong> use your password when logging on to ARCHER2 after the initial logon.</p>
 </div>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
