@@ -663,9 +663,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#initial-passwords" class="md-nav__link">
+  <a href="#mfa-time-based-one-time-passcode-totp-code" class="md-nav__link">
     <span class="md-ellipsis">
-      Initial passwords
+      MFA Time-based one-time passcode (TOTP code)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#first-login-password-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      First login: password required
     </span>
   </a>
   
@@ -762,18 +771,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#password" class="md-nav__link">
+  <a href="#ssh-key" class="md-nav__link">
     <span class="md-ellipsis">
-      Password
+      SSH key
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#ssh-key" class="md-nav__link">
+  <a href="#mfa" class="md-nav__link">
     <span class="md-ellipsis">
-      SSH key
+      MFA
     </span>
   </a>
   
@@ -2467,9 +2476,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#initial-passwords" class="md-nav__link">
+  <a href="#mfa-time-based-one-time-passcode-totp-code" class="md-nav__link">
     <span class="md-ellipsis">
-      Initial passwords
+      MFA Time-based one-time passcode (TOTP code)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#first-login-password-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      First login: password required
     </span>
   </a>
   
@@ -2566,18 +2584,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#password" class="md-nav__link">
+  <a href="#ssh-key" class="md-nav__link">
     <span class="md-ellipsis">
-      Password
+      SSH key
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#ssh-key" class="md-nav__link">
+  <a href="#mfa" class="md-nav__link">
     <span class="md-ellipsis">
-      SSH key
+      MFA
     </span>
   </a>
   
@@ -2686,7 +2704,8 @@ features of this program after installation (Windows will warn you if the built-
 </ul>
 </div>
 <h2 id="access-credentials">Access credentials</h2>
-<p>To access ARCHER2, you need to use two sets of credentials: a password <strong>and</strong> an SSH key pair protected by a passphrase. You can find more detailed instructions on how to set up your credentials to access ARCHER2 from Windows, MacOS and Linux below.</p>
+<p>To access ARCHER2, you need to use two sets of credentials: your   SSH
+key pair protected by a passphrase <strong>and</strong> a Time-based one-time password. You can find more detailed instructions on how to set up your credentials to access ARCHER2 from Windows, MacOS and Linux below.</p>
 <h3 id="ssh-key-pairs">SSH Key Pairs</h3>
 <p>You will need to generate an SSH key pair protected by a passphrase to access ARCHER2.</p>
 <p>Using a <a href="#command-line-terminal">terminal</a> (the command line), set up a key pair that contains
@@ -2734,27 +2753,50 @@ by following the instructions at:</p>
 <li>Click <em>Add</em> to associate the public SSH key with your account.</li>
 </ol>
 <p>Once you have done this, your SSH key will be added to your ARCHER2 account.</p>
-<p>Remember, you need both an SSH key and a password to log in to ARCHER2. You will need to collect an initial password before you can log into ARCHER2. We cover this next.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If you want to connect to ARCHER2 from more than one machine---for example, from your home laptop as well as your work laptop---you should generate an SSH key on each machine, and add each of the public keys into SAFE.</p>
+<h3 id="mfa-time-based-one-time-passcode-totp-code">MFA Time-based one-time passcode (TOTP code)</h3>
+<p>Remember, you will need to use both an SSH key and time-based one-time passcode to log into ARCHER2 so you will
+also need to <a href="https://epcced.github.io/safe-docs/safe-for-users/#how-to-turn-on-mfa-on-your-machine-account">set up a method for generating a TOTP code</a> before you can log into ARCHER2. </p>
+<h3 id="first-login-password-required">First login: password required</h3>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>You will <strong>not</strong> use your password when logging on to ARCHER2 after the first login for a new account.</p>
 </div>
-<h3 id="initial-passwords">Initial passwords</h3>
-<p>The SAFE web interface is used to provide your initial password for logging onto ARCHER2 (see the <a href="https://epcced.github.io/safe-docs">SAFE
-Documentation</a> for more details on requesting accounts and picking up passwords).</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>ARCHER2 account passwords are also sometimes referred to as LDAP
-passwords by the system.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>You will be prompted to change your password the first time
-that you log in to ARCHER2. You may also change your password, at
-any time, on ARCHER2, using the <code>passwd</code> command. This change is
-not be reflected in SAFE so, if you forget your password, you
-should use SAFE to request a new one-shot password.</p>
-</div>
+<p>As an additional security measure, you will also need to use a password from SAFE for your first login to ARCHER2
+with a new account. When you log into ARCHER2 for the first time with a new account, you will be prompted to change
+your initial password. This is a three step process:</p>
+<ol>
+<li>When promoted to enter your <em>ldap password</em>: Enter the password  which you <a href="https://epcced.github.io/safe-docs/safe-for-users/#how-can-i-pick-up-my-password-for-the-service-machine">retrieve from SAFE</a></li>
+<li>When prompted to enter your new password: type in a new password</li>
+<li>When prompted to re-enter the new password: re-enter the new password</li>
+</ol>
+<p>Your password has now been changed. You will no longer need this password to log into ARCHER2 from this point
+forwards, you will use your SSH key and TOTP code as described above.</p>
+<!--
+
+Remember, you need both an SSH key and a password to log in to ARCHER2. You will need to collect an initial password before you can log into ARCHER2. We cover this next.
+
+!!! note
+    If you want to connect to ARCHER2 from more than one machine---for example, from your home laptop as well as your work laptop---you should generate an SSH key on each machine, and add each of the public keys into SAFE.
+
+### Initial passwords
+
+The SAFE web interface is used to provide your initial password for logging onto ARCHER2 (see the [SAFE
+Documentation](https://epcced.github.io/safe-docs) for more details on requesting accounts and picking up passwords).
+
+!!! note
+    ARCHER2 account passwords are also sometimes referred to as LDAP
+    passwords by the system.
+
+
+!!! note
+
+    You will be prompted to change your password the first time
+    that you log in to ARCHER2. You may also change your password, at
+    any time, on ARCHER2, using the `passwd` command. This change is
+    not be reflected in SAFE so, if you forget your password, you
+    should use SAFE to request a new one-shot password.
+-->
+
 <h2 id="ssh-clients">SSH Clients</h2>
 <p>As noted above, you interact with ARCHER2, over an encrypted
 communication channel (specifically, Secure Shell version 2
@@ -2930,16 +2972,6 @@ connect to the login node, the output should include:</p>
 <p>(the ping time '38ms' is not important). If not all packets are received
 there could be a problem with your Internet connection, or the login
 node could be unavailable.</p>
-<h3 id="password">Password</h3>
-<p>If you are having trouble entering your password, consider using a
-password manager, from which you can copy and paste it. If you need to
-reset your password, instructions for doing so can be found in <a href="https://epcced.github.io/safe-docs/safe-for-users/#reset_machine">the
-SAFE
-documentation</a></p>
-<p>Windows users should note that the <code>Ctrl+V</code> shortcut does not work to paste in to
-PuTTY, MobaXterm, or PowerShell. Instead use <code>Shift+Ins</code> to paste.
-Alternatively, right-click and select 'Paste' in PuTTY and MobaXterm, or
-simply right-click to paste in PowerShell.</p>
 <h3 id="ssh-key">SSH key</h3>
 <p>If you get the error message <code>Permission denied (publickey)</code>, this may
 indicate a problem with your SSH key. Some things to check:</p>
@@ -3045,6 +3077,8 @@ owner permission strings as binary numbers, then converting them to
 decimal. For example the permission string <code>-rwx------</code> becomes
 <code>111 000 000</code> -&gt; <code>700</code>.</p>
 </div>
+<h3 id="mfa">MFA</h3>
+<p>If your TOTP passcode is being consistently rejected, you can <a href="https://epcced.github.io/safe-docs/safe-for-users/#mfa_off">remove MFA from your account</a> and then <a href="https://epcced.github.io/safe-docs/safe-for-users/#mfa">re-enable it</a>.</p>
 <h3 id="ssh-verbose-output">SSH verbose output</h3>
 <p>The verbose-debugging output from <code>ssh</code> can be very useful for
 diagnosing issues. In particular, it can be used to distinguish
