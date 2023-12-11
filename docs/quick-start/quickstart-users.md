@@ -97,6 +97,7 @@ you can log into ARCHER2 for the first time. We cover this next.
 !!! note
     If you want to connect to ARCHER2 from more than one machine, e.g. from your home laptop as well as your work laptop, you should generate an ssh key on each machine, and add each of the public keys into SAFE.  
 
+<!--
 ### Collecting your ARCHER2 password
 
 You should now collect your ARCHER2 password:
@@ -118,6 +119,9 @@ Policy](https://www.archer2.ac.uk/about/policies/passwords_usernames.html).
     The *View Login Account Password* option within SAFE will continue to
     display your old initial password. Your SAFE account has no knowledge of
     your new machine account password.
+
+-->
+
 
 ## Login to ARCHER2
 
@@ -167,17 +171,24 @@ are accessing:
     use the command `ssh -i keys/id_rsa_archer2
     username@login.archer2.ac.uk` to log in.
 
+
+### MFA Time-based one-time password
+
+Remember, you will need to use both an SSH key and Time-based one-time password to log into ARCHER2 so you will
+also need to [set up your TOTP](https://epcced.github.io/safe-docs/safe-for-users/#how-to-turn-on-mfa-on-your-machine-account) before you can log into ARCHER2.
+
+
 !!! tip
-    When you first log into ARCHER2, you will be prompted to change your
-    initial password. This is a three step process:
+    When you **first** log into ARCHER2, you will be prompted to change your initial password. This is a three step process:
 
-    1.  When prompted to enter your *ldap password*: re-enter the password
-        you retrieved from SAFE
+    1.  When promoted to enter your *ldap password*: Enter the password  which you [retrieve from SAFE](https://epcced.github.io/safe-docs/safe-for-users/#how-can-i-pick-up-my-password-for-the-service-machine)
     2.  When prompted to enter your new password: type in a new password
-    3.  When prompted to re-enter the new password: re-enter the new
-        password
+    3.  When prompted to re-enter the new password: re-enter the new password
 
-    Your password has now been changed.
+    Your password has now been changed<br>
+	You will **not** use your password when logging on to ARCHER2 after the initial logon.
+
+
 
 !!! hint
     More information on connecting to ARCHER2 is available in
