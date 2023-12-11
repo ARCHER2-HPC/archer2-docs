@@ -6,7 +6,10 @@ CrayPat-lite and CrayPat. We also show how to get usage data
 on currently running jobs from Slurm batch system.
 
 You can also use [the Arm Forge tool](../data-tools/arm-forge.md)
-to profile applications on ARCHER2
+to profile applications on ARCHER2.
+
+If you are specifically interested in profiling IO, then you
+may want to look at the [Darshan IO profiling tool](../data-tools/darshan.md).
 
 ## CrayPat-lite
 
@@ -571,3 +574,10 @@ The AMD &mu;Prof tool provides capabilities for low-level profiling on AMD proce
 The Arm Forge tool also provides profiling capabilities. See:
 
 - [ARCHER2 Arm Forge documentation](../data-tools/arm-forge.md)
+
+## Darshan IO profiling
+
+The Darshan lightweight IO profiling tool provides a quick way to profile the IO
+part of your software:
+
+- [Using Darshan on ARCHER2](../data-tools/darshan.md)

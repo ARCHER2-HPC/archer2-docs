@@ -119,6 +119,7 @@ nav:
     - "Overview": data-tools/index.md
     - "AMD uProf": data-tools/amd-uprof.md
     - "Arm Forge": data-tools/arm-forge.md
+    - "Darshan": data-tools/darshan.md
     - "Energy Counters": data-tools/pm-mpi-lib.md
     - "Julia": data-tools/julia.md
     - "ParaView": data-tools/paraview.md
