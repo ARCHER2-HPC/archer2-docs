@@ -300,7 +300,6 @@ environments.
 !!! warning
     Intel compilers are not currently available on ARCHER2.
 
-
 ### GNU compiler collection (GCC)
 
 The commonly used open source GNU compiler collection is available and
@@ -367,6 +366,25 @@ Due to MODULEPATH changes, the following have been reloaded:
     generate an error as not standard conforming. Use
     `-fallow-argument-mismatch` to reduce the error to a warning. The same
     effect may be achieved via `-std=legacy`.
+
+#### Using GCC 12.x on ARCHER2
+
+GCC 12.x compilers are available on ARCHER2 for users who wish to access 
+newer features (particularly C++ features).
+
+Testing by the CSE service has
+identified that some software regression tests produce different results
+from the reference values when using software compiled with gfortran from
+GCC 12.x so we do not recommend its general use by users. Users should 
+carefully check results from software built using compilers from GCC 12.x
+before using it for their research projects.
+
+You can access GCC 12.x by using the commands:
+
+```
+module load extra-compilers
+module load PrgEnv-gnu
+```
 
 #### Reference material
 
