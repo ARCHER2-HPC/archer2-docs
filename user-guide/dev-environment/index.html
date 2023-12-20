@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.1">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.45e1311d.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
@@ -775,6 +775,15 @@
   <a href="#useful-gnu-fortran-options" class="md-nav__link">
     <span class="md-ellipsis">
       Useful Gnu Fortran options
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-gcc-12x-on-archer2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using GCC 12.x on ARCHER2
     </span>
   </a>
   
@@ -2570,6 +2579,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#using-gcc-12x-on-archer2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using GCC 12.x on ARCHER2
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#reference-material" class="md-nav__link">
     <span class="md-ellipsis">
       Reference material
@@ -3184,6 +3202,19 @@ generate an error as not standard conforming. Use
 <code>-fallow-argument-mismatch</code> to reduce the error to a warning. The same
 effect may be achieved via <code>-std=legacy</code>.</p>
 </div>
+<h4 id="using-gcc-12x-on-archer2">Using GCC 12.x on ARCHER2</h4>
+<p>GCC 12.x compilers are available on ARCHER2 for users who wish to access 
+newer features (particularly C++ features).</p>
+<p>Testing by the CSE service has
+identified that some software regression tests produce different results
+from the reference values when using software compiled with gfortran from
+GCC 12.x so we do not recommend its general use by users. Users should 
+carefully check results from software built using compilers from GCC 12.x
+before using it for their research projects.</p>
+<p>You can access GCC 12.x by using the commands:</p>
+<div class="highlight"><pre><span></span><code>module load extra-compilers
+module load PrgEnv-gnu
+</code></pre></div>
 <h4 id="reference-material">Reference material</h4>
 <ul>
 <li>
