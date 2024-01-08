@@ -133,7 +133,7 @@ Two EPYC 7742 SoCs are interconnected via Socket to Socket Global Memory Interco
 
 The Zen 2 microarchitecture places eight unified memory controllers in the centralized I/O die. The memory channels can be split into one, two, or four Non-Uniform Memory Access (NUMA) Nodes per Socket (NPS1, NPS2, and NPS4). ARCHER2 compute nodes are configured as NPS4, which is the highest memory bandwidth configuration geared toward HPC applications.
 
-With eight 3,200-GHz memory channels, an 8-byte read or write operation taking place per cycle per channel results in a maximum total memory bandwidth of 204.8 GB/s per socket.
+With eight 3,200 MHz memory channels, an 8-byte read or write operation taking place per cycle per channel results in a maximum total memory bandwidth of 204.8 GB/s per socket.
 
 Each memory channel can be connected with up to two Double Data Rate (DDR) fourth-generation Dual In-line Memory Modules (DIMMs). On ARCHER2 standard memory nodes, each channel is connected to a single 16 GB DDR4 registered DIMM (RDIMM) with error correcting code (ECC) support leading to 128 GB per socket and 256 GB per node. For the high memory nodes, each channel is connected to a single 32 GB DDR4 registered DIMM (RDIMM) with error correcting code (ECC) support leading to 256 GB per socket and 512 GB per node.
 
