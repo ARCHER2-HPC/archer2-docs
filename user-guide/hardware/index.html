@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
     
     
       
@@ -2555,7 +2555,7 @@ processor clock frequency boost to around 2.8 GHz.</p>
 <p>Two EPYC 7742 SoCs are interconnected via Socket to Socket Global Memory Interconnect (xGMI) links, part of the Infinity Fabric that connects all the components of the SoC together. On ARCHER2 compute nodes there are 3 xGMI links using a total of 48 PCIe lanes. With the xGMI link speed set at 16 GT/s, the theoretical throughput for each direction is 96 GB/s (3 links x 16 GT/s x 2 bytes/transfer) without factoring in the encoding for xGMI, since there is no publication from AMD available. However, the expected efficiencies are 66–75%, so the sustained bandwidth per direction will be 63.5–72 GB/s. xGMI Dynamic Link Width Management saves power during periods of low socket-to-socket data traffic by reducing the number of active xGMI lanes per link from 16 to 8.</p>
 <h2 id="memory-subsystem">Memory subsystem</h2>
 <p>The Zen 2 microarchitecture places eight unified memory controllers in the centralized I/O die. The memory channels can be split into one, two, or four Non-Uniform Memory Access (NUMA) Nodes per Socket (NPS1, NPS2, and NPS4). ARCHER2 compute nodes are configured as NPS4, which is the highest memory bandwidth configuration geared toward HPC applications.</p>
-<p>With eight 3,200-GHz memory channels, an 8-byte read or write operation taking place per cycle per channel results in a maximum total memory bandwidth of 204.8 GB/s per socket.</p>
+<p>With eight 3,200 MHz memory channels, an 8-byte read or write operation taking place per cycle per channel results in a maximum total memory bandwidth of 204.8 GB/s per socket.</p>
 <p>Each memory channel can be connected with up to two Double Data Rate (DDR) fourth-generation Dual In-line Memory Modules (DIMMs). On ARCHER2 standard memory nodes, each channel is connected to a single 16 GB DDR4 registered DIMM (RDIMM) with error correcting code (ECC) support leading to 128 GB per socket and 256 GB per node. For the high memory nodes, each channel is connected to a single 32 GB DDR4 registered DIMM (RDIMM) with error correcting code (ECC) support leading to 256 GB per socket and 512 GB per node.</p>
 <!-- Need to confirm how this configured on ARCHER2
 
