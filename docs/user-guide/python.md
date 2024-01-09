@@ -138,7 +138,7 @@ We cover each of these points in more detail below.
 
 ### Conda install location
 
-If you only need to use the files and executables from your conda installaiton on the login and data analysis nodes
+If you only need to use the files and executables from your conda installation on the login and data analysis nodes
 (via the `serial` QoS) then the best place to install conda is in your home directory structure - this will usually
 be the default install location provided by the installation script.
 
@@ -168,7 +168,7 @@ singularity exec -B $PWD anaconda3.sif python my_script.py
 ```
 
 As the container image is a single large file, you end up doing a single large read from the work file system rather
-than lots of small reads of individual Python files,, this improves the performance of Python and reduces the 
+than lots of small reads of individual Python files, this improves the performance of Python and reduces the 
 detrimental impact on the wider file system performance for all users.
 
 We have pre-built a Singularity container with the Anaconda distribution in on 
@@ -213,7 +213,7 @@ read/write performance from the work file systems for you and other users so sho
 all costs.
 
 If you have previously installed a conda distribution and answered "yes" to the question about
-adding the initialisation to shell configuraiton files, you should edit your `~/.bashrc` file
+adding the initialisation to shell configuration files, you should edit your `~/.bashrc` file
 to remove the conda initialisation entries. This means deleting the lines that look something
 like:
 
