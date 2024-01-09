@@ -48,10 +48,17 @@ Sometimes, you may need to setup a local custom Python environment such that it 
 By extend, we mean being able to install packages locally that are not provided by `cray-python`. This is necessary because some Python
 packages such as `mpi4py` must be built specifically for the ARCHER2 system and so are best provided centrally.
 
-You can do this by creating a lightweight **virtual** environment where the local packages can be installed. Further, this environment
+You can do this by creating a lightweight **virtual** environment where the local packages can be installed. This environment
 is created on top of an existing Python installation, known as the environment's **base** Python.
 
-Select the base Python by loading the `cray-python` module that you wish to extend.
+First, load the `PrgEnv-gnu` environment.
+
+    auser@ln01:~> module load PrgEnv-gnu
+
+This first step is necessary because subsequent `pip` installs may involve source code compilation and it is better that this be done using
+the GCC compilers to maintain consistency with how some base Python packages have been built.
+
+Second, select the base Python by loading the `cray-python` module that you wish to extend.
 
     auser@ln01:~> module load cray-python
 
@@ -77,7 +84,10 @@ Installing packages to your local environment can now be done as follows.
     (myvenv) auser@ln01:~> python -m pip install <package name>
 
 Running `pip` directly as in `pip install <package name>` will also work, but we show the `python -m` approach
-as this is consistent with the way the virtual environment was created.
+as this is consistent with the way the virtual environment was created. Further, if the package installation
+will require code compilation, you should amend the command to ensure use of the ARCHER2 compiler wrappers.
+
+    (myvenv) auser@ln01:~> CC=cc CXX=CC FC=ftn python -m pip install <package name>
 
 And when you have finished installing packages, you can deactivate the environment by running the `deactivate` command.
 
@@ -101,9 +111,9 @@ you must first activate the environment, by adding the activation command to the
 
 source /work/t01/t01/auser/myvenv/bin/activate
 
-export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+export SRUN_CPUS_PER_TASK=${SLURM_CPUS_PER_TASK}
 
-srun --distribution=block:block --hint=nomultithread python ${SLURM_SUBMIT_DIR}/myvenv-script.py
+srun --distribution=block:block --hint=nomultithread python myvenv-script.py
 ```
 
 !!! tip
@@ -118,10 +128,11 @@ or `pytorch`. One extra command is required; it is issued immediately after the 
     extend-venv-activate /work/t01/t01/auser/myvenv
 
 The `extend-venv-activate` command merely adds some extra commands to the virtual environment's `activate` script,
-ensuring that the python packages will be gathered from the local virtual environment, the ML module and from the
+ensuring that the Python packages will be gathered from the local virtual environment, the ML module and from the
 `cray-python` base module. All this means you would avoid having to install ML packages within your local area.
 
 !!! note
+    The `extend-venv-activate` command becomes available (i.e., its location is placed on the path) only when the ML module is loaded.
     The ML modules are themselves based on `cray-python`. For example, `tensorflow/2.12.0` is based on the `cray-python/3.9.13.1` module.
 
 ## Running Python
@@ -177,7 +188,7 @@ module load cray-python
 source <<path to virtual environment>>/bin/activate
 
 # Pass cpus-per-task setting to srun
-export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+export SRUN_CPUS_PER_TASK=${SLURM_CPUS_PER_TASK}
 
 # Run your Python program
 #   Note that srun MUST be used to wrap the call to python,
@@ -189,6 +200,55 @@ srun --distribution=block:block --hint=nomultithread python mpi4py_test.py
     If you have installed your own packages you will need to activate your local Python
     environment within your job submission script as shown at the end of
     [Installing your own Python packages (with pip)](./python.md#installing-your-own-python-packages-with-pip).
+
+By default, mpi4py will use the Cray MPICH **OFI** library. If one wishes to use **UCX** instead, you must first,
+within the submission script, load `PrgEnv-gnu` before loading the UCX modules, as shown below.
+
+```
+module load PrgEnv-gnu
+module load craype-network-ucx
+module load cray-mpich-ucx
+module load cray-python
+```
+
+
+### Running Python at scale
+
+The file system metadata server may become overloaded when running a parallel Python script over many fully populated nodes (i.e., 128 MPI ranks per node).
+Performance degrades due to the IO operations that accompany a high volume of Python import statements. Typically, each import will first require the module or
+library to be located by searching a number of file paths before the module is loaded into memory. Such a workload scales as *N<sub>p</sub>* x *N<sub>lib</sub>* x *N<sub>path</path>* ,
+where *N<sub>p</sub>* is the number of parallel processes, *N<sub>lib</sub>* is the number of libraries imported and *N<sub>path</path>* the number of file paths searched. And so, in this way
+much time can be lost during the initial phase of a large Python job, not to mention the fact that the IO contention will be impacting other users of the system.
+
+[Spindle](https://computing.llnl.gov/projects/spindle) is a tool for improving the library-loading performance of dynamically linked HPC applications. It provides a
+mechanism for scalable loading of shared libraries, executables and Python files from a shared file system at scale without turning the file system into a bottleneck.
+This is achieved by caching libraries or their locations within node memory. Spindle takes a pure user-space approach: users do not need to configure new file systems,
+load particular OS kernels or build special system components. The tool operates on existing binaries &mdash; no application modification or special build flags are required.
+
+The script below shows how to run Spindle with your Python code.
+
+```
+#!/bin/bash --login
+
+#SBATCH --nodes=256
+#SBATCH --ntasks-per-node=128
+...
+
+module load cray-python
+module load spinde/0.13
+
+export SRUN_CPUS_PER_TASK=${SLURM_CPUS_PER_TASK}
+
+spindle --slurm --python-prefix=/opt/cray/pe/python/${CRAY_PYTHON_LEVEL} \      
+    srun --overlap --distribution=block:block --hint=nomultithread \
+        python mpi4py_script.py
+```
+
+The `--python-prefix` argument can be set to a list of colon-separated paths if necessary. In the example above,
+the `CRAY_PYTHON_LEVEL` environment variable is set as a conseqeunce of loading `cray-python`.
+
+!!! note
+    The `srun --overlap` option is required for Spindle as the version of Slurm on ARCHER2 is newer than 20.11.
 
 
 ## Using JupyterLab on ARCHER2
