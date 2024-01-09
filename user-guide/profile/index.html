@@ -3173,17 +3173,24 @@ information on running jobs:</p>
 <p>We provide examples of the use of these three commands below.</p>
 <p>For the <code>sacct</code> and <code>sstat</code> command, the memory properties we print out below are:</p>
 <ul>
-<li><code>AveRSS</code> - The mean memory use per node over the length of the job</li>
-<li><code>MaxRSS</code> - The maximum memory use per node measured during the job</li>
-<li><code>MaxRSSTask</code> - The maximum memory use from any process in the job</li>
+<li><code>AveRSS</code> - The mean memory use per process over the length of the job</li>
+<li><code>MaxRSS</code> - The maximum memory use by an individual process measured during the job</li>
+<li><code>MaxRSSTask</code> - The process ID associated with the maximum memory use measured during the job</li>
+<li><code>MaxRSSNode</code> - The node ID associated with the maximum memory use measured during the job</li>
+<li><code>TRESUsageInTot</code> - Totals of various properties for the job. For example, the total memory use of the job is available in the <code>mem=</code> property</li>
 </ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Slurm polls for the memory use in a job, this means that short-term changes in memory use may not
+be captured in the Slurm data.</p>
+</div>
 <h3 id="example-1-sstat-for-running-jobs">Example 1: <code>sstat</code> for running jobs</h3>
 <p>To display the current memory use of a running job with the ID 123456:</p>
-<div class="highlight"><pre><span></span><code>sstat --format=JobID,AveCPU,AveRSS,MaxRSS,MaxRSSTask -j 123456
+<div class="highlight"><pre><span></span><code>sstat --format=JobID,AveCPU,AveRSS,MaxRSS,MaxRSSTask,MaxRSSNode,TRESUsageInTot%150 -j 123456
 </code></pre></div>
 <h3 id="example-2-sacct-for-finished-jobs">Example 2: <code>sacct</code> for finished jobs</h3>
 <p>To display the memory use of a completed job with the ID 123456:</p>
-<div class="highlight"><pre><span></span><code>sacct --format=JobID,JobName,AveRSS,MaxRSS,MaxRSSTask -j 123456
+<div class="highlight"><pre><span></span><code>sacct --format=JobID,JobName,AveRSS,MaxRSS,MaxRSSTask,MaxRSSNode,TRESUsageInTot%150 -j 123456
 </code></pre></div>
 <p>Another usage of <code>sacct</code> is to display when a job was submitted, started running and ended for a particular user:</p>
 <div class="highlight"><pre><span></span><code>sacct --format=JobID,Submit,Start,End -u auser
