@@ -499,16 +499,22 @@ We provide examples of the use of these three commands below.
 
 For the `sacct` and `sstat` command, the memory properties we print out below are:
 
- - `AveRSS` - The mean memory use per node over the length of the job
- - `MaxRSS` - The maximum memory use per node measured during the job
- - `MaxRSSTask` - The maximum memory use from any process in the job
+ - `AveRSS` - The mean memory use per process over the length of the job
+ - `MaxRSS` - The maximum memory use by an individual process measured during the job
+ - `MaxRSSTask` - The process ID associated with the maximum memory use measured during the job
+ - `MaxRSSNode` - The node ID associated with the maximum memory use measured during the job
+ - `TRESUsageInTot` - Totals of various properties for the job. For example, the total memory use of the job is available in the `mem=` property
+
+!!! tip
+    Slurm polls for the memory use in a job, this means that short-term changes in memory use may not
+    be captured in the Slurm data.
 
 ### Example 1: `sstat` for running jobs
 
 To display the current memory use of a running job with the ID 123456:
 
 ```
-sstat --format=JobID,AveCPU,AveRSS,MaxRSS,MaxRSSTask -j 123456
+sstat --format=JobID,AveCPU,AveRSS,MaxRSS,MaxRSSTask,MaxRSSNode,TRESUsageInTot%150 -j 123456
 ```
 
 ### Example 2: `sacct` for finished jobs
@@ -516,7 +522,7 @@ sstat --format=JobID,AveCPU,AveRSS,MaxRSS,MaxRSSTask -j 123456
 To display the memory use of a completed job with the ID 123456:
 
 ```
-sacct --format=JobID,JobName,AveRSS,MaxRSS,MaxRSSTask -j 123456
+sacct --format=JobID,JobName,AveRSS,MaxRSS,MaxRSSTask,MaxRSSNode,TRESUsageInTot%150 -j 123456
 ```    
 
 Another usage of `sacct` is to display when a job was submitted, started running and ended for a particular user:
