@@ -124,6 +124,117 @@ ensuring that the python packages will be gathered from the local virtual enviro
 !!! note
     The ML modules are themselves based on `cray-python`. For example, `tensorflow/2.12.0` is based on the `cray-python/3.9.13.1` module.
 
+## Conda on ARCHER2
+
+Conda-based Python distributions (e.g. Anaconda, Mamba, Miniconda) are an extremely popular way of installing and
+accessing software on many systems, including ARCHER2. Although conda-based distributions can be used on ARCHER2, 
+care is needed in how they are installed and configured so that the installation does not adversely effect your use
+of ARCHER2. In particular, you should be careful of:
+
+- Where you install conda on ARCHER2
+- Conda additions to shell configuration files such as `.bashrc`
+
+We cover each of these points in more detail below.
+
+### Conda install location
+
+If you only need to use the files and executables from your conda installation on the login and data analysis nodes
+(via the `serial` QoS) then the best place to install conda is in your home directory structure - this will usually
+be the default install location provided by the installation script.
+
+If you need to access the files and executables from conda on the compute nodes then you will need to install to a 
+different location as the home file systems are not available on the compute nodes. The work file systems are not 
+well suited to hosting Python software natively due to the way in which file access work, particularly during 
+Python startup. There are two main options for using conda from ARCHER2 compute nodes:
+
+1. Use a conda container image 
+2. Install conda on the solid state storage
+
+#### Use a conda container image
+
+You can pull official conda-based container images from Dockerhub that you can use if you want just the standard
+set of Python modules that come with the distribution. For example, to get the latest Anaconda distribution as a 
+Singularity container image on the ARCHER2 work file system, you would use (on an ARCHER2 login node, from the
+directory on the work file system where you want to store the container image):
+
+```
+singularity build anaconda3.sif docker://continuumio/anaconda3
+```
+
+Once you have the container image, you can run scripts in it with a command like:
+
+```
+singularity exec -B $PWD anaconda3.sif python my_script.py
+```
+
+As the container image is a single large file, you end up doing a single large read from the work file system rather
+than lots of small reads of individual Python files, this improves the performance of Python and reduces the 
+detrimental impact on the wider file system performance for all users.
+
+We have pre-built a Singularity container with the Anaconda distribution in on 
+ARCHER2. Users can access it at `$EPCC_SINGULARITY_DIR/anaconda3.sif`. To run a Python
+script with the centrally-installed image, you can use:
+
+```
+singularity exec -B $PWD $EPCC_SINGULARITY_DIR/anaconda3.sif python my_script.py
+```
+
+If you want additional packages that are not available in the standard container images then
+you will need to build your own container images. If you need help to do this, then please
+contact the [ARCHER2 Service Desk](mailto:support@archer2.ac.uk)
+
+#### Install conda on the solid state storage
+
+!!! note
+    You must have applied for and been granted access to the solid state storage on ARCHER2
+    to use this approach. See the [Data Management section](data.md#solid-state-nvme-file-system) for more details.
+
+The ARCHER2 solid state storage is better suited to accessing many small files and so performs better
+for Python imports. You can install your conda distribution on the solid state storage to see better
+performance than you would from the work file systems. To do this, specify an install location 
+in your directories on the solid state storage when prompted in the conda installation process.
+
+### Conda addtions to shell configuration files
+
+During the install process most conda-based distributions will ask a question like:
+
+> Do you wish the installer to initialize Miniconda3 by running conda init?
+
+If you are installing to the ARCHER2 work directories or the solid state storage, you 
+should answer "no" to this question.
+
+Adding the initialisation to shell startup scripts (typically `.bashrc`) means that every time
+you login to ARCHER2, the conda environment will try to initialise by reading lots of files
+within the conda installation. This approach was designed for the case where a user has installed
+conda on their personal device and so is the only user of the file system. For shared file systems
+such as those on ARCHER2, this places a large load on the file system and will lead to you seeing 
+slow login times and slow response from your command line on ARCHER2. It will also lead to degraded
+read/write performance from the work file systems for you and other users so should be avoided at 
+all costs.
+
+If you have previously installed a conda distribution and answered "yes" to the question about
+adding the initialisation to shell configuration files, you should edit your `~/.bashrc` file
+to remove the conda initialisation entries. This means deleting the lines that look something
+like:
+
+```
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/work/t01/t01/auser/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+eval "$__conda_setup"
+else
+if [ -f "/work/t01/t01/auser/miniconda3/etc/profile.d/conda.sh" ]; then
+. "/work/t01/t01/auser/miniconda3/etc/profile.d/conda.sh"
+else
+export PATH="/work/t01/t01/auser/miniconda3/bin:$PATH"
+fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+```
+
+
 ## Running Python
 
 ### Example serial Python submission script
