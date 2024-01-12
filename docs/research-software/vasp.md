@@ -101,7 +101,7 @@ export OMP_NUM_THREADS=1
 export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 
 # Launch the code - the distribution and hint options are important for performance
-srun --distribution=block:block --hint=nomultithread vasp_std
+srun vasp_std
 ```
 
 
