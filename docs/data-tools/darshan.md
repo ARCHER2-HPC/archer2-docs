@@ -40,6 +40,12 @@ module remove darshan
 
 This will avoid Darshan profiling IO for operations that are not part of your main parallel program.
 
+!!! tip
+    There may be some periods when Darshan monitoring is enabled by default for all users. During these
+    periods, you can disable Darshan monitoring by adding the command `module remove darshan` to your
+    job submission script. Periods of Darshan monitoring will be noted on the 
+    [ARCHER2 Service Status page](https://www.archer2.ac.uk/support-access/status.html#service-alerts).
+
 !!! important
     The `darshan` module is dependent on the compiler environment you are using and you should ensure
     that you load the `darshan` module that matches the compiler environment you used to compile the
