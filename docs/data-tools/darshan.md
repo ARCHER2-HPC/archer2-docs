@@ -84,7 +84,7 @@ module load darshan-util
 Once this is loaded, you can produce and IO performance summary from a profile log file with:
 
 ```
-darshan-parser --prof /path/to/darshan/log/file.darshan
+darshan-parser --perf /path/to/darshan/log/file.darshan
 ```
 
 You can get a dump of all data in the Darshan profile log by omitting the `--perf` option, e.g.:
