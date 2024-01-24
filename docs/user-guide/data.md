@@ -221,7 +221,13 @@ themselves using the `lfs quota` command. To do this:
    pid 1009 is using default file quota setting
    ```
 
-### Solid state (NVMe) file system
+### Solid state (NVMe) file system - scratch storage
+
+!!! important
+    The solid state storage system is configured as *scratch* storage with all files 
+    that have not been accessed in the last 28 days being automatically deleted. This
+    implementation starts on 1 Mar 2024, i.e. any files not accessed since 2 Feb 2024
+    will be automatically removed on 1 Mar 2024.
 
 The solid state storage file system is a 1 PB high performance parallel Lustre file system
 similar to the work file systems. However, unlike the work file systems, all of the
@@ -249,20 +255,12 @@ Data on the solid state (NVMe) file system is visible on the compute nodes
 
 #### Access to the solid state file system
 
-Projects do not have access to the solid state file system by default. If you would like
-access to the solid state file system, you should contact the
-[ARCHER2 Service Desk](https://www.archer2.ac.uk/support-access/servicedesk.html) with a
-short description of why you want access, how much space you require and how long you
-require access for.
-
-!!! important
-    While we will endeavour to meet all reasonable requests for access, the capacity of the
-    solid state file system is limited and we may not be able to fulfil all requests.
+All projects have access to the solid state file system by default. If you find you
+cannot access the solid state file system, please [contact the Service Desk](mailto:support@archer2.ac.uk).
 
 #### Location of directories
 
-If your project has been granted access to the solid state file system, you can find
-your directory on the file system at:
+You can find your directory on the file system at:
 
 ```
 /mnt/lustre/a2fs-nvme/work/<project code>/<project code>/<username>
@@ -277,6 +275,12 @@ solid state storage directory at:
 
 #### Quotas on solid state file system
 
+!!! important
+    All projects have the same, large quota of 250,000 GiB on the solid state
+    file system to allow them to use it as a scratch file system. Remember, any
+    files that have not been accessed in the last 28 days will be automatically
+    deleted.
+
 You query quotas for the solid state file system in the same way as
 [quotas on the work file systems](#quotas-on-the-work-file-systems).
 
@@ -284,6 +288,21 @@ You query quotas for the solid state file system in the same way as
     Usage and quotas of the solid state file system are not yet available
     in SAFE - you should use commands such as `lfs quota -hp $(id -g) .`
     to query quotas on the solid state file system. 
+
+#### Identifying files that are candidates for deletion
+
+You can identify which files you own that are candidates for deletion at the next
+scratch file system purge using the `find` command in the following format:
+
+```
+find /mnt/lustre/a2fs-nvme/work/<project code> -atime +28 -type f -print
+```
+
+For example, if my account is in project `t01`, I would use:
+
+```
+find /mnt/lustre/a2fs-nvme/work/t01 -atime +28 -type f -print
+```
 
 ### RDFaaS file systems
 
