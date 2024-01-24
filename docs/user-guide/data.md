@@ -255,8 +255,9 @@ Data on the solid state (NVMe) file system is visible on the compute nodes
 
 #### Access to the solid state file system
 
-All projects have access to the solid state file system by default. If you find you
-cannot access the solid state file system, please [contact the Service Desk](mailto:support@archer2.ac.uk).
+Projects do not have access to the solid state file system by default. If your project does
+not yet have access and you want access for your project, please [contact the Service Desk](mailto:support@archer2.ac.uk)
+to request access.
 
 #### Location of directories
 
