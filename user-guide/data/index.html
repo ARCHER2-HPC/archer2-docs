@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.4">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.5">
     
     
       
@@ -699,13 +699,13 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#solid-state-nvme-file-system" class="md-nav__link">
+  <a href="#solid-state-nvme-file-system-scratch-storage" class="md-nav__link">
     <span class="md-ellipsis">
-      Solid state (NVMe) file system
+      Solid state (NVMe) file system - scratch storage
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Solid state (NVMe) file system">
+    <nav class="md-nav" aria-label="Solid state (NVMe) file system - scratch storage">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -730,6 +730,15 @@
   <a href="#quotas-on-solid-state-file-system" class="md-nav__link">
     <span class="md-ellipsis">
       Quotas on solid state file system
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#identifying-files-that-are-candidates-for-deletion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Identifying files that are candidates for deletion
     </span>
   </a>
   
@@ -2620,13 +2629,13 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#solid-state-nvme-file-system" class="md-nav__link">
+  <a href="#solid-state-nvme-file-system-scratch-storage" class="md-nav__link">
     <span class="md-ellipsis">
-      Solid state (NVMe) file system
+      Solid state (NVMe) file system - scratch storage
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Solid state (NVMe) file system">
+    <nav class="md-nav" aria-label="Solid state (NVMe) file system - scratch storage">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2651,6 +2660,15 @@
   <a href="#quotas-on-solid-state-file-system" class="md-nav__link">
     <span class="md-ellipsis">
       Quotas on solid state file system
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#identifying-files-that-are-candidates-for-deletion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Identifying files that are candidates for deletion
     </span>
   </a>
   
@@ -3125,7 +3143,14 @@ Disk quotas for prj 1009 (pid 1009):
 pid 1009 is using default block quota setting
 pid 1009 is using default file quota setting
 </code></pre></div>
-<h3 id="solid-state-nvme-file-system">Solid state (NVMe) file system</h3>
+<h3 id="solid-state-nvme-file-system-scratch-storage">Solid state (NVMe) file system - scratch storage</h3>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The solid state storage system is configured as <em>scratch</em> storage with all files 
+that have not been accessed in the last 28 days being automatically deleted. This
+implementation starts on 1 Mar 2024, i.e. any files not accessed since 2 Feb 2024
+will be automatically removed on 1 Mar 2024.</p>
+</div>
 <p>The solid state storage file system is a 1 PB high performance parallel Lustre file system
 similar to the work file systems. However, unlike the work file systems, all of the
 disks are based solid state storage (NVMe) technology. This changes the performance characteristics of the 
@@ -3152,19 +3177,11 @@ on ARCHER2.</p>
 not rely on this file system for long term storage.</p>
 </div>
 <h4 id="access-to-the-solid-state-file-system">Access to the solid state file system</h4>
-<p>Projects do not have access to the solid state file system by default. If you would like
-access to the solid state file system, you should contact the
-<a href="https://www.archer2.ac.uk/support-access/servicedesk.html">ARCHER2 Service Desk</a> with a
-short description of why you want access, how much space you require and how long you
-require access for.</p>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>While we will endeavour to meet all reasonable requests for access, the capacity of the
-solid state file system is limited and we may not be able to fulfil all requests.</p>
-</div>
+<p>Projects do not have access to the solid state file system by default. If your project does
+not yet have access and you want access for your project, please <a href="mailto:support@archer2.ac.uk">contact the Service Desk</a>
+to request access.</p>
 <h4 id="location-of-directories">Location of directories</h4>
-<p>If your project has been granted access to the solid state file system, you can find
-your directory on the file system at:</p>
+<p>You can find your directory on the file system at:</p>
 <div class="highlight"><pre><span></span><code>/mnt/lustre/a2fs-nvme/work/&lt;project code&gt;/&lt;project code&gt;/&lt;username&gt;
 </code></pre></div>
 <p>For example, if my username is <code>auser</code> and I am in project <code>t01</code>, I could find my 
@@ -3172,6 +3189,13 @@ solid state storage directory at:</p>
 <div class="highlight"><pre><span></span><code>/mnt/lustre/a2fs-nvme/work/t01/t01/auser
 </code></pre></div>
 <h4 id="quotas-on-solid-state-file-system">Quotas on solid state file system</h4>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>All projects have the same, large quota of 250,000 GiB on the solid state
+file system to allow them to use it as a scratch file system. Remember, any
+files that have not been accessed in the last 28 days will be automatically
+deleted.</p>
+</div>
 <p>You query quotas for the solid state file system in the same way as
 <a href="#quotas-on-the-work-file-systems">quotas on the work file systems</a>.</p>
 <div class="admonition bug">
@@ -3180,6 +3204,14 @@ solid state storage directory at:</p>
 in SAFE - you should use commands such as <code>lfs quota -hp $(id -g) .</code>
 to query quotas on the solid state file system. </p>
 </div>
+<h4 id="identifying-files-that-are-candidates-for-deletion">Identifying files that are candidates for deletion</h4>
+<p>You can identify which files you own that are candidates for deletion at the next
+scratch file system purge using the <code>find</code> command in the following format:</p>
+<div class="highlight"><pre><span></span><code>find /mnt/lustre/a2fs-nvme/work/&lt;project code&gt; -atime +28 -type f -print
+</code></pre></div>
+<p>For example, if my account is in project <code>t01</code>, I would use:</p>
+<div class="highlight"><pre><span></span><code>find /mnt/lustre/a2fs-nvme/work/t01 -atime +28 -type f -print
+</code></pre></div>
 <h3 id="rdfaas-file-systems">RDFaaS file systems</h3>
 <p>The RDFaaS file systems provide additional capacity for projects to store data
 that is not currently required on the compute nodes but which is too large for
@@ -3709,10 +3741,10 @@ transfer, we could instead use the <code>scp</code> command,</p>
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "search": "../../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.7389ff0e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.c18c5fb9.min.js"></script>
       
     
   </body>
