@@ -4,7 +4,7 @@
     This page is work in progress. More details on the GPU development system
     and how to use it will be added as they become available.
 
-In early 2024 (January 2024) ARCHER2 users will gain access to a small GPU system 
+In early 2024 ARCHER2 users will gain access to a small GPU system 
 integrated into ARCHER2 which is designed to allow users to test and develop software 
 using AMD GPU.
 
@@ -16,17 +16,19 @@ using AMD GPU.
 
 The GPU development system will consist of 4 compute nodes each with:
 
-- 1x AMD EPYC 7534P (Milan) processor, 2.8 GHz
+- 1x AMD EPYC 7534P (Milan) processor, 32 core, 2.8 GHz
 - 4x AMD Instinct MI210 accelerator
+- 512 GiB host memory
+- 2&times; 100 Gb/s Slingshot interfaces per node
 
 !!! note
-    Further details on the hardware available will be added as soon as they
-    are available.
+    Further details on the hardware available will be added shortly.
 
 ## Accessing the GPU compute nodes
 
 The GPU nodes will be accessed through the Slurm job submisson system from the
-standard ARCHER2 login nodes.
+standard ARCHER2 login nodes. Details of the scheduler limits and configuration
+and example job submission scripts are provided below.
 
 ## Compiling software for the GPU compute nodes
 
@@ -357,103 +359,251 @@ Codes that have modules targetting GPUs are:
 
 - 
 
-
-## Resource allocation
-
-### Slurm
-
-#### partitions
-
-- gpu
-
-#### QOS
-
-- gpu-shd : shared nodes
-- gpu-exc : exclusive nodes
-
-#### Limits
-
-- 2 node limit per user
-- max wall time 1 hr
-
-
 ## Running jobs on the GPU nodes
 
-Here are a series of example jobs for various patterns of running on the Archer2 GPUs:
+To run a GPU job, you must specify a GPU partition and a
+quality of service (QoS) as well as the number of GPUs required. You
+specify the number of GPU cards you want per node using the `--gpu=N`
+option, where `N` is typically 1, 2 or 4.
 
-### Single node single GPU Job example
+!!! Note
+	As there are 4 GPUs per node, each GPU is associated with 1/4 of the
+	resources of the node, i.e., 8 of 32 physical cores and roughly 128 GiB
+	of the total 512 GiB host memory.
+
+
+Allocations of host resources are made pro-rata. For example, if 2 GPUs
+are requested, `sbatch` will allocate 16 cores and around 256 GiB of host
+memory (in addition to 2 GPUs). Any attempt to use more than the
+allocated resources will result in an error.
+
+This automatic allocation by Slurm for GPU jobs means that the
+submission script should not specify options such as `--ntasks` and
+`--cpus-per-task`. Such a job submission will be rejected. See below for
+some examples of how to use host resources and how to launch MPI
+applications.
+
+!!! Warning
+	In order to run jobs on the GPU nodes your ARCHHER2 budget must have positive CU
+	hours associated with it. However, your budget will not be charged for any GPU
+    jobs you run.
+
+### Slurm Partitions
+
+Your job script must specify a partition. The following table has a list
+of relevant GPU partition(s) on ARCHER2.
+
+| Partition | Description                                                 | Max nodes available |
+| --------- | ----------------------------------------------------------- | ------------------- |
+| gpu  | GPU nodes with AMD EPYC 32-core processor, 512 GB memory, 4&times;AMD Instinct MI210 GPU | 4    |
+
+### Slurm Quality of Service (QoS)
+
+Your job script must specify a QoS relevant for the GPU nodes. Available
+QoS specifications are as follows.
+
+| QoS        | Max Nodes Per Job | Max Walltime | Jobs Queued | Jobs Running | Partition(s) | Notes |
+| ---------- | ----------------- | ------------ | ----------- | ------------ | ------------ | ------|
+| gpu-shd    | 1               | 1 hr       | 2          | 1           | gpu    | Nodes potentially shared with other users |
+| gpu-exc    | 2               | 1 hr       | 2          | 1           | gpu    | Exclusive node access |
+
+### Example job submission scripts
+
+Here are a series of example jobs for various patterns of running on the ARCHER2 GPU nodes
+They cover the following scenarios:
+
+- Single GPU
+- Multiple GPU on a single node - shared node access (max. 2 GPU)
+- Multiple GPU on a single node - exclusive node access (max. 4 GPU)
+- Multiple GPU on multiple nodes
+
+### Single GPU
+
+This example requests a single GPU on a potentially shared node and launch using a single CPU
+process with offload to a single GPU.
 
 ```
 #!/bin/bash
 
-#SBATCH --job-name=gpujob
-#SBATCH --account=act1
+#SBATCH --job-name=single-GPU
+#SBATCH --gpus=1
+#SBATCH --time=00:20:00
+
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code]
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu-shd
-#SBATCH --time=00:20:00 
-#SBATCH --gpus=1
 
-srun -n 1 HelloWorld 
+srun --ntasks=1 --cpus-per-task=1 ./my_gpu_program.x
 ```
 
+### Multiple GPU on a single node - shared node access (max. 2 GPU)
 
-### Single node multi GPU Job example
+This example requests two GPUs on a potentially shared node and launch using two
+MPI processes (one per GPU) with one MPI process per CPU NUMA region.
+
+We use the `--cpus-per-task=8` option to `srun` to set the stride between the two
+MPI processes to 8 physical cores. This places the MPI processes on separate NUMA
+regions to ensure they are associated with the correct GPU that is closest to them
+on the compute node architecture.
+
 ```
 #!/bin/bash
 
-#SBATCH --job-name=gpujob_A
-#SBATCH --account=act1
+#SBATCH --job-name=multi-GPU
+#SBATCH --gpus=2
+#SBATCH --time=00:20:00
+
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code]
 #SBATCH --partition=gpu
-#SBATCH --qos=gpu-exc
-#SBATCH --exclusive
+#SBATCH --qos=gpu-shd
+
+srun --ntasks=2 --cpus-per-task=8 ./my_gpu_program.x
+```
+
+### Multiple GPU on a single node - exclusive node access (max. 4 GPU)
+
+This example requests four GPUs on a single node and launches the program using four
+MPI processes (one per GPU) with one MPI process per CPU NUMA region.
+
+We use the `--cpus-per-task=8` option to `srun` to set the stride between the
+MPI processes to 8 physical cores. This places the MPI processes on separate NUMA
+regions to ensure they are associated with the correct GPU that is closest to them
+on the compute node architecture.
+
+```
+#!/bin/bash
+
+#SBATCH --job-name=multi-GPU
+#SBATCH --gpus=4
 #SBATCH --nodes=1
+#SBATCH --exclusive
 #SBATCH --time=00:20:00
-#SBATCH --gpus=4
 
-module load PrgEnv-amd
-module load rocm
-module load craype-accel-amd-gfx90a
-module load cray-mpich
-module load cray-libsci_acc
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code]
+#SBATCH --partition=gpu
+#SBATCH --qos=gpu-exc
 
-export MPICH_GPU_SUPPORT_ENABLED=1
-
-echo $HIP_VISIBLE_DEVICES
-
-srun -n 4 --exclusive --nodes=1 --time=00:20:00 --partition=gpu --qos=gpu-exc --gpus=4 ./exe
+srun --ntasks=4 --cpus-per-task=8 ./my_gpu_program.x
 ```
 
-### Multi-node multi-GPU Job example
+!!! note
+    When you use the `--qos=gpu-exc` QoS you must also add the `--exclusive` flag
+    and the specify the number of nodes you want with `--nodes=1`.  
+
+### Multiple GPU on multiple nodes - exclusive node access (max. 8 GPU)
+
+This example requests eight GPUs across two nodes and launches the program using eight
+MPI processes (one per GPU) with one MPI process per CPU NUMA region.
+
+We use the `--cpus-per-task=8` option to `srun` to set the stride between the
+MPI processes to 8 physical cores. This places the MPI processes on separate NUMA
+regions to ensure they are associated with the correct GPU that is closest to them
+on the compute node architecture.
 
 ```
 #!/bin/bash
 
-#SBATCH --job-name=gpujob_A
-#SBATCH --account=act1
+#SBATCH --job-name=multi-GPU
+#SBATCH --gpus=4
+#SBATCH --nodes=2
+#SBATCH --exclusive
+#SBATCH --time=00:20:00
+
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code]
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu-exc
-#SBATCH --exclusive
-#SBATCH --nodes=2
-#SBATCH --time=00:20:00
-#SBATCH --gpus=4
 
-module load PrgEnv-amd
-module load rocm
-module load craype-accel-amd-gfx90a
-module load cray-mpich
-module load cray-libsci_acc
-
-export MPICH_GPU_SUPPORT_ENABLED=1
-
-echo $HIP_VISIBLE_DEVICES
-
-srun -n 8 --exclusive --nodes=2 --time=00:20:00 --partition=gpu --qos=gpu-exc --gpus=8 ./exe
+srun --ntasks=8 --cpus-per-task=8 ./my_gpu_program.x
 ```
 
+!!! note
+    When you use the `--qos=gpu-exc` QoS you must also add the `--exclusive` flag
+    and the specify the number of nodes you want with `--nodes=1`.  
 
-### Interactive Job example
+### Interactive jobs
+
+#### Using `salloc`
+
+!!! tip
+    This method does not give you an interactive shell on a GPU compute node. If you
+    want an interactive shell on the GPU compute nodes, see the `srun` method described
+    below.
+
+If you wish to have a terminal to perform interactive testing, you can 
+use the `salloc` command to reserve the resources so you can use `srun` commands interactively. 
+For example, to request 2 GPU for 20 minutes you would use (remember to replace `t01` with your
+budget code):
+
+```
+auser@ln04:/work/t01/t01/auser> salloc --gpus=2 --time=00:20:00 --partition=gpu --qos=gpu-shd --account=t01
+salloc: Pending job allocation 5335731
+salloc: job 5335731 queued and waiting for resources
+salloc: job 5335731 has been allocated resources
+salloc: Granted job allocation 5335731
+salloc: Waiting for resource configuration
+salloc: Nodes nid200001 are ready for job
+
+auser@ln04:/work/t01/t01/auser> export OMP_NUM_THREADS=1
+auser@ln04:/work/t01/t01/auser> srun rocm-smi
 
 
+======================= ROCm System Management Interface =======================
+================================= Concise Info =================================
+GPU  Temp   AvgPwr  SCLK    MCLK     Fan  Perf  PwrCap  VRAM%  GPU%  
+0    31.0c  43.0W   800Mhz  1600Mhz  0%   auto  300.0W    0%   0%    
+1    34.0c  43.0W   800Mhz  1600Mhz  0%   auto  300.0W    0%   0%    
+================================================================================
+============================= End of ROCm SMI Log ==============================
+
+
+srun: error: nid200001: tasks 0: Exited with exit code 2
+srun: launch/slurm: _step_signal: Terminating StepId=5335731.0
+
+auser@ln04:/work/t01/t01/auser> module load xthi
+auser@ln04:/work/t01/t01/auser> srun --ntasks=2 --cpus-per-task=8 --hint=nomultithread xthi
+Node summary for    1 nodes:
+Node    0, hostname nid200001, mpi   2, omp   1, executable xthi
+MPI summary: 2 ranks 
+Node    0, rank    0, thread   0, (affinity =  0-7) 
+Node    0, rank    1, thread   0, (affinity = 8-15) 
+```
+
+#### Using `srun`
+
+If you want an interactive terminal on a GPU node then you can use the `srun` command to achieve this.
+For example, to request 2 GPU for 20 minutes with an interactive terminal on a GPU compute node you
+would use (remember to replace `t01` with your budget code):
+
+```
+auser@ln04:/work/t01/t01/auser> srun --gpus=2 --time=00:20:00 --partition=gpu --qos=gpu-shd --account=z19 --pty /bin/bash
+srun: job 5335771 queued and waiting for resources
+srun: job 5335771 has been allocated resources
+aturner@nid200001:/work/t01/t01/auser> 
+```
+
+Note that the command prompt has changed to indicate we are now on a GPU compute node. You can now directly run commands
+that interact with the GPU devices, e.g.:
+
+```
+auser@nid200001:/work/t01/t01/auser> rocm-smi
+
+
+======================= ROCm System Management Interface =======================
+================================= Concise Info =================================
+GPU  Temp   AvgPwr  SCLK    MCLK     Fan  Perf  PwrCap  VRAM%  GPU%  
+0    29.0c  43.0W   800Mhz  1600Mhz  0%   auto  300.0W    0%   0%    
+1    31.0c  43.0W   800Mhz  1600Mhz  0%   auto  300.0W    0%   0%    
+================================================================================
+============================= End of ROCm SMI Log ==============================
+```
+
+!!! warning
+    Launching parallel jobs on GPU nodes from an interactive shell on a GPU node is not straightforward so you should either
+    use job submission scripts or the `salloc` method of interactive use described above.
 
 ## Debugging
 
