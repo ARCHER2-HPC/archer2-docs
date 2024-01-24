@@ -363,7 +363,7 @@ Codes that have modules targetting GPUs are:
 
 To run a GPU job, you must specify a GPU partition and a
 quality of service (QoS) as well as the number of GPUs required. You
-specify the number of GPU cards you want per node using the `--gpu=N`
+specify the number of GPU cards you want per node using the `--gpus=N`
 option, where `N` is typically 1, 2 or 4.
 
 !!! Note
@@ -582,7 +582,7 @@ would use (remember to replace `t01` with your budget code):
 auser@ln04:/work/t01/t01/auser> srun --gpus=2 --time=00:20:00 --partition=gpu --qos=gpu-shd --account=z19 --pty /bin/bash
 srun: job 5335771 queued and waiting for resources
 srun: job 5335771 has been allocated resources
-aturner@nid200001:/work/t01/t01/auser> 
+auser@nid200001:/work/t01/t01/auser> 
 ```
 
 Note that the command prompt has changed to indicate we are now on a GPU compute node. You can now directly run commands
