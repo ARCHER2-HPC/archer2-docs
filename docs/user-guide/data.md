@@ -226,8 +226,8 @@ themselves using the `lfs quota` command. To do this:
 !!! important
     The solid state storage system is configured as *scratch* storage with all files 
     that have not been accessed in the last 28 days being automatically deleted. This
-    implementation starts on 1 Mar 2024, i.e. any files not accessed since 2 Feb 2024
-    will be automatically removed on 1 Mar 2024.
+    implementation starts on 28 Feb 2024, i.e. any files not accessed since 1 Feb 2024
+    will be automatically removed on 28 Feb 2024.
 
 The solid state storage file system is a 1 PB high performance parallel Lustre file system
 similar to the work file systems. However, unlike the work file systems, all of the
