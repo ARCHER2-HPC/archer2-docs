@@ -149,11 +149,23 @@ If you want to try the UCX transport protocol then you can do this  using
 by loading additional modules after you have loaded the
 VASP modules. For example, for VASP 6, you would use:
 
-```
+```bash
 module load vasp/6
 module load craype-network-ucx
 module load cray-mpich-ucx
 ```
+
+### Increasing the CPU frequency and enabling turbo-boost
+
+The default CPU frequency is currently set to 2 GHz on ARCHER2. While many VASP calculations are memory or MPI bound, some calculations can be CPU bound. For those cases, you may see a signiicant difference in performance by increasing the CPU frequency and enabling turbo-boost (though you will almost certainly also be less energy efficient).
+
+You can do this by adding the line:
+
+```bash
+export SLURM_CPU_FREQ_REQ=2250000
+```
+
+in your job submission script before the srun command
 
 
 <!-- Temporarily removed peformance tips while they are updated
