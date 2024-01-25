@@ -1441,6 +1441,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#increasing-the-cpu-frequency-and-enabling-turbo-boost" class="md-nav__link">
+    <span class="md-ellipsis">
+      Increasing the CPU frequency and enabling turbo-boost
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2337,6 +2346,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#increasing-the-cpu-frequency-and-enabling-turbo-boost" class="md-nav__link">
+    <span class="md-ellipsis">
+      Increasing the CPU frequency and enabling turbo-boost
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2486,10 +2504,16 @@ However, there may be cases where using UCX can give better performance than Ope
 <p>If you want to try the UCX transport protocol then you can do this  using
 by loading additional modules after you have loaded the
 VASP modules. For example, for VASP 6, you would use:</p>
-<div class="highlight"><pre><span></span><code>module load vasp/6
-module load craype-network-ucx
-module load cray-mpich-ucx
+<div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>vasp/6
+module<span class="w"> </span>load<span class="w"> </span>craype-network-ucx
+module<span class="w"> </span>load<span class="w"> </span>cray-mpich-ucx
 </code></pre></div>
+<h3 id="increasing-the-cpu-frequency-and-enabling-turbo-boost">Increasing the CPU frequency and enabling turbo-boost</h3>
+<p>The default CPU frequency is currently set to 2 GHz on ARCHER2. While many VASP calculations are memory or MPI bound, some calculations can be CPU bound. For those cases, you may see a signiicant difference in performance by increasing the CPU frequency and enabling turbo-boost (though you will almost certainly also be less energy efficient).</p>
+<p>You can do this by adding the line:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">SLURM_CPU_FREQ_REQ</span><span class="o">=</span><span class="m">2250000</span>
+</code></pre></div>
+<p>in your job submission script before the srun command</p>
 <!-- Temporarily removed peformance tips while they are updated
 
 ### Performance tips
