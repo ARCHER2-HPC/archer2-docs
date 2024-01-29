@@ -1,7 +1,7 @@
-# AMD GPU development system
+# AMD GPU Development Platform
 
 !!! note
-    This page is work in progress. More details on the GPU development system
+    This page is work in progress. More details on the GPU development platform
     and how to use it will be added as they become available.
 
 In early 2024 ARCHER2 users will gain access to a small GPU system 
@@ -14,15 +14,12 @@ using AMD GPU.
 
 ## Hardware available
 
-The GPU development system will consist of 4 compute nodes each with:
+The GPU development platform will consist of 4 compute nodes each with:
 
 - 1x AMD EPYC 7534P (Milan) processor, 32 core, 2.8 GHz
 - 4x AMD Instinct MI210 accelerator
 - 512 GiB host memory
 - 2&times; 100 Gb/s Slingshot interfaces per node
-
-!!! note
-    Further details on the hardware available will be added shortly.
 
 ## Accessing the GPU compute nodes
 
@@ -353,7 +350,10 @@ If not set then if MPI calls try to send messages with pointers to GPU memory an
 
 ## Supported software
 
-The ARCHER2 GPU service is intended for code development, testing and experimentation and will not have supported centrally installed versions of codes as is supported for the ARCHER2 compute nodes. However some builds are being made available to users by members of CSE to under a best effort approach to support the community.
+The ARCHER2 GPU development platform is intended for code development, testing and
+experimentation and will not have supported centrally installed versions of modelling and
+simpulation software as for the wider ARCHER2 service. However, some builds are being made
+available to users by members of CSE to under a best effort approach to support the community.
 
 Codes that have modules targetting GPUs are:
 
@@ -370,7 +370,6 @@ option, where `N` is typically 1, 2 or 4.
 	As there are 4 GPUs per node, each GPU is associated with 1/4 of the
 	resources of the node, i.e., 8 of 32 physical cores and roughly 128 GiB
 	of the total 512 GiB host memory.
-
 
 Allocations of host resources are made pro-rata. For example, if 2 GPUs
 are requested, `sbatch` will allocate 16 cores and around 256 GiB of host
@@ -417,12 +416,18 @@ They cover the following scenarios:
 - Multiple GPU on a single node - exclusive node access (max. 4 GPU)
 - Multiple GPU on multiple nodes
 
+In all examples, we add a call to `rocm-smi` and `xthi` before running the software on
+the GPU nodes. `rocm-smi` prints information on the GPU that have been assigned to your
+job and `xthi` reports the process/thread pinning on the CPU. In combination, these tools
+provide useful information for you to verify that the job submission script is doing what
+you think it should be doing.
+
 ### Single GPU
 
 This example requests a single GPU on a potentially shared node and launch using a single CPU
 process with offload to a single GPU.
 
-```
+```slurm
 #!/bin/bash
 
 #SBATCH --job-name=single-GPU
@@ -433,6 +438,13 @@ process with offload to a single GPU.
 #SBATCH --account=[budget code]
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu-shd
+
+# Print information on the GPU assigned to the job
+srun --ntasks=1 rocm-smi
+
+# Show CPU process/thread pinning
+module load xthi
+srun --ntasks=1 xthi
 
 srun --ntasks=1 --cpus-per-task=1 ./my_gpu_program.x
 ```
@@ -458,6 +470,13 @@ on the compute node architecture.
 #SBATCH --account=[budget code]
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu-shd
+
+# Print information on the GPU assigned to the job
+srun --ntasks=1 rocm-smi
+
+# Show CPU process/thread pinning
+module load xthi
+srun --ntasks=2 --cpus-per-task=8 xthi
 
 srun --ntasks=2 --cpus-per-task=8 ./my_gpu_program.x
 ```
@@ -485,6 +504,13 @@ on the compute node architecture.
 #SBATCH --account=[budget code]
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu-exc
+
+# Print information on the GPU assigned to the job
+srun --ntasks=1 rocm-smi
+
+# Show CPU process/thread pinning
+module load xthi
+srun --ntasks=4 --cpus-per-task=8 xthi
 
 srun --ntasks=4 --cpus-per-task=8 ./my_gpu_program.x
 ```
@@ -516,6 +542,18 @@ on the compute node architecture.
 #SBATCH --account=[budget code]
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu-exc
+
+# Check assigned GPU
+nodelist=$(scontrol show hostname $SLURM_JOB_NODELIST)
+for nodeid in $nodelist
+do
+   echo $nodeid
+   srun --ntasks=1 --nodelist=$nodeid rocm-smi
+done
+
+# Show CPU process/thread pinning
+module load xthi
+srun --ntasks=8 --cpus-per-task=8 xthi
 
 srun --ntasks=8 --cpus-per-task=8 ./my_gpu_program.x
 ```
