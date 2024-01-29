@@ -459,7 +459,7 @@ MPI processes to 8 physical cores. This places the MPI processes on separate NUM
 regions to ensure they are associated with the correct GPU that is closest to them
 on the compute node architecture.
 
-```
+```slurm
 #!/bin/bash
 
 #SBATCH --job-name=multi-GPU
@@ -491,7 +491,7 @@ MPI processes to 8 physical cores. This places the MPI processes on separate NUM
 regions to ensure they are associated with the correct GPU that is closest to them
 on the compute node architecture.
 
-```
+```slurm
 #!/bin/bash
 
 #SBATCH --job-name=multi-GPU
@@ -529,7 +529,7 @@ MPI processes to 8 physical cores. This places the MPI processes on separate NUM
 regions to ensure they are associated with the correct GPU that is closest to them
 on the compute node architecture.
 
-```
+```slurm
 #!/bin/bash
 
 #SBATCH --job-name=multi-GPU
@@ -576,7 +576,7 @@ use the `salloc` command to reserve the resources so you can use `srun` commands
 For example, to request 2 GPU for 20 minutes you would use (remember to replace `t01` with your
 budget code):
 
-```
+```bash
 auser@ln04:/work/t01/t01/auser> salloc --gpus=2 --time=00:20:00 --partition=gpu --qos=gpu-shd --account=t01
 salloc: Pending job allocation 5335731
 salloc: job 5335731 queued and waiting for resources
@@ -616,7 +616,7 @@ If you want an interactive terminal on a GPU node then you can use the `srun` co
 For example, to request 2 GPU for 20 minutes with an interactive terminal on a GPU compute node you
 would use (remember to replace `t01` with your budget code):
 
-```
+```bash
 auser@ln04:/work/t01/t01/auser> srun --gpus=2 --time=00:20:00 --partition=gpu --qos=gpu-shd --account=z19 --pty /bin/bash
 srun: job 5335771 queued and waiting for resources
 srun: job 5335771 has been allocated resources
@@ -626,7 +626,7 @@ auser@nid200001:/work/t01/t01/auser>
 Note that the command prompt has changed to indicate we are now on a GPU compute node. You can now directly run commands
 that interact with the GPU devices, e.g.:
 
-```
+```bash
 auser@nid200001:/work/t01/t01/auser> rocm-smi
 
 
