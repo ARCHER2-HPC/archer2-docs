@@ -240,7 +240,7 @@ Avalible in three of the programming environments:
 
 - PrgEnv-amd
 - PrgEnv-cray
-- PrgEnv-gnu
+- PrgEnv-gnu ?
 
 Need to set environment variable to enable GPU support in cray-mpich:
 
@@ -609,6 +609,8 @@ GPU  Temp   AvgPwr  SCLK    MCLK     Fan  Perf  PwrCap  VRAM%  GPU%
 
 rocgdb?
 
+https://docs.amd.com/projects/HIP/en/docs-5.3.0/how_to_guides/debugging.html
+
 ## Profiling
 
 rocprof?
@@ -619,8 +621,11 @@ rocprof?
 
 One important feature of GPU nodes is the placement of processes to GPU's and the associated host memory region.
 
-#### Node Topology
+by default...
 
+
+#### Node Topology
+```
 ======================= ROCm System Management Interface =======================
 =========================== Weight between two GPUs ============================
        GPU0         GPU1         GPU2         GPU3
@@ -653,14 +658,19 @@ GPU 2          : (Topology) Numa Affinity: 2
 GPU 3          : (Topology) Numa Node: 3
 GPU 3          : (Topology) Numa Affinity: 3
 ============================= End of ROCm SMI Log ==============================
-
+```
 
 ### Performance tuning
+
+The specifications of the GPU hardwar can be found here:
+
+https://www.amd.com/en/products/accelerators/instinct/mi200/mi210.html
+
+https://www.amd.com/system/files/documents/amd-instinct-mi210-brochure.pdf/
 
 AMD provide documentation:
 
 https://rocm.docs.amd.com/en/docs-5.5.1/how_to/tuning_guides/mi200.html
-
 
 
 ## Tools
@@ -671,14 +681,28 @@ If you load the rocm module on the system you will have access to the rocm-smi u
 
 Here are some useful commands to get you started:
 
+`rocm-smi --alldevices` deivce status
+
+`rocm-smi --showuse` GPU activity
+
+`rocm-smi -- showmemuse` GPU memory currently consumed
+
+`rocm-smi --help` will run on the login nodes to get more infomation about probing the gpu's
+
 
 
 More detail can be found at 
 
 
-### Hipify
+### HIPify
 
+Is a CUDA to HIP source translator tool that can allow CUDA code to be translated into HIP code easing the transition between the two hardware targets.
 
+The tool is avalible on ARCHER2 by loading the `rocm` module.
+
+The github repository for HIPify can be found here: https://github.com/ROCm/HIPIFY
+
+Note: requires a local version of cuda...
 
 
 ## Notes
