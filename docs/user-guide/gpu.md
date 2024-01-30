@@ -1,12 +1,12 @@
-# AMD GPU Development Platform
+# AMD GPU development system
 
 !!! note
-    This page is work in progress. More details on the GPU development platform
+    This page is work in progress. More details on the GPU development system
     and how to use it will be added as they become available.
 
 In early 2024 ARCHER2 users will gain access to a small GPU system 
 integrated into ARCHER2 which is designed to allow users to test and develop software 
-using AMD GPU.
+using AMD GPUs.
 
 !!! important
     The GPU component is very small and so is aimed at software development and 
@@ -14,226 +14,269 @@ using AMD GPU.
 
 ## Hardware available
 
-The GPU development platform will consist of 4 compute nodes each with:
+The GPU development system consists of 4 compute nodes each with:
 
 - 1x AMD EPYC 7534P (Milan) processor, 32 core, 2.8 GHz
 - 4x AMD Instinct MI210 accelerator
 - 512 GiB host memory
 - 2&times; 100 Gb/s Slingshot interfaces per node
 
+!!! note
+    Further details on the hardware available will be added shortly.
+
 ## Accessing the GPU compute nodes
 
-The GPU nodes will be accessed through the Slurm job submisson system from the
+The GPU nodes can be accessed through the Slurm job submisson system from the
 standard ARCHER2 login nodes. Details of the scheduler limits and configuration
-and example job submission scripts are provided below.
+and example job submission scripts are provided below. 
 
 ## Compiling software for the GPU compute nodes
 
-!!! note
-    Details on how to compile software for use on compute nodes will be added
-    as soon as they are available.
+### Overview
 
-### Supported programming models
+As a quick summary, the recommended procedure for compiling code that
+offloads to the AMD GPUs is as follows:
 
-- hip
-- openACC
-- openMP offload
+- Load the desired Programming Environment module: `module load PrgEnv-xxx`
+- Load the ROCm module: `module load rocm`
+- Load the appropriate GPU target module `module load craype-accel-amd-gfx90a`
+- Load the appropriate CPU target module: `module load craype-x86-milan`
+- Load any other modules (e.g. libraries)
+- Use the usual compiler wrappers `ftn`, `cc`, or `CC`
 
-May work but at user peril (CSE will be looking into additional programming models over time and ill update documentation accordingly): 
-
-- Sycl
-- Kokkos
-- Raja?
+For details and alternative approaches, see below. 
 
 
-### Programming environments
+### Programming Environments
 
-#### PrgEnv-amd
+The following programming environments and compilers are available to
+compile code for the AMD GPUs on ARCHER2 using the usual compiler
+wrappers (`ftn`, `cc`, `CC`), which is the recommended approach:
 
-AMD LLVM Compilers (GPU support)
 
-module load PrgEnv-amd
+| Programming Environment   | Description        | Actual compilers called by `ftn`, `cc`, `CC` |
+| ------------------------- | ------------------ | ------------------------------------ |
+| `PrgEnv-amd`              | AMD LLVM compilers | `amdflang`, `amdclang`, `amdclang++` |
+| `PrgEnv-cray`             | Cray compilers     | `crayftn`, `craycc`, `crayCC`        |
+| `PrgEnv-gnu`              | GNU compilers      | `gfortran`, `gcc`, `g++`             |
+| `PrgEnv-gnu-amd`          | hybrid             | `gfortran`, `amdclang`, `amdclang++` |
+| `PrgEnv-cray-amd`         | hybrid             | `crayftn`, `amdclang`, `amdclang++`  |
 
-Real Compilers: amdflang, amdclang, amdclang++
 
-#### PrgEnv-aocc
+To decide which compiler(s) to use to compile offload code for the AMD
+GPUs, you may find it useful to consult the [Compilation
+Strategies](#compilation-strategies) section below.
 
-AMD Optimizing Compilers (AOCC, CPU only support)
+The hybrid environments `PrgEnv-gnu-amd` and `PrgEnv-cray-amd` are
+provided as a convenient way to mitigate less mature OpenMP offload
+support in the AMD LLVM Fortran compiler. In these hybrid environments
+`ftn` therefore calls `gfortran` or `crayftn` instead of `amdflang`.
 
-module load PrgEnv-aocc
+Details about the underlying compiler being called by a compiler
+wrapper can be checked using the `--version` flag, for example:
 
-Real Compilers: flang, clang, clang++
+```
+> module load PrgEnv-amd
+> cc --version
+AMD clang version 14.0.0 (https://github.com/RadeonOpenCompute/llvm-project roc-5.2.3 22324 d6c88e5a78066d5d7a1e8db6c5e3e9884c6ad10e)
+Target: x86_64-unknown-linux-gnu
+Thread model: posix
+InstalledDir: /opt/rocm-5.2.3/llvm/bin
 
-#### PrgEnv-cray
+```
 
-Cray Compilation Environment
 
-module load PrgEnv-cray
+### ROCm 
 
-Real Compilers: crayftn, craycc, crayCC
+Access to AMD's ROCm software stack is provided through the `rocm`
+module:
 
-#### PrgEnv-cray-amd
-
-AMD Clang C/C++ compiler and the Cray Compiling Environment (CCE) Fortran compiler
-
-module load PrgEnv-cray-amd
-
-Real Compilers: crayftn, amdclang, amdclang++
-
-#### PrgEnv-gnu
-
-GNU Compiler Collection
-
-module load PrgEnv-gnu
-
-Real Compilers: gfortran, gcc, g++
-
-#### PrgEnv-gnu-amd
-
-AMD Clang C/C++ compiler and the GNU compiler suite Fortran compiler
-
-module load PrgEnv-gnu-amd
-
-Real Compilers: gfortran, amdclang, amdclang++
-
-### Other modules
-
-#### Hip compilation
-
-Need to load the Rocm module:
-
+```
 module load rocm
+```
 
-This contains the hipcc compiler
+With the `rocm` module loaded the AMD LLVM compilers `amdflang`,
+`amdclang`, and `amdclang++` become available to use directly or
+through AMD's compiler driver utility `hipcc`. Neither approach is
+recommended as a first choice for most users, as considerable care
+needs to be taken to pass suitable flags to the compiler or to
+`hipcc`. With `PrgEnv-amd` loaded the compiler wrappers `ftn`, `cc`,
+`CC`, which bypass `hipcc` and call `amdflang`, `amdclang`, or
+`amdclang++` directly, take care of passing suitable compilation
+flags, which is why using these wrappers is the recommended approach
+for most users, at least initially.
 
-#### GPU target
+**Note**: the `rocm` module should be loaded whenever you are compiling
+for the AMD GPUs, even if you are not using the AMD LLVM compilers
+(`amdflang`, `amdclang`, `amdclang++`).  
 
-Additionally you need to tell the GPU compiler which GPU hardware your planning to target.
-To do this on archer2 you can load the following module:
+The `rocm` module also provides access to other AMD tools, such as
+HIPIFY (`hipify-clang` or `hipify-perl` command), which enables
+translation of CUDA to HIP code.
 
+
+### GPU target
+
+Regardless of what approach you use, you will need to tell the
+underlying GPU compiler which GPU hardware to target. When using the
+compiler wrappers `ftn`, `cc`, or `CC`, as recommended, this can be
+done by ensuring the appropriate GPU target module is loaded:
+
+```
 module load craype-accel-amd-gfx90a
+```
 
-#### CPU target
+### CPU target
 
-Additionally unlike the majority of the cPU compute nodes on ARCHER2 the GPU nodes do not use AMD EPYC Rome CPUs and instead use AMD EPYC MILAN's instead.
-This means we need to load a different CPU target module:
+The AMD GPU nodes are equipped with AMD EPYC Milan CPUs instead of the
+AMD EPYC Rome CPUs present on the regular CPU-only ARCHER2 compute
+nodes. Though the difference between these processors is small, when
+using the compiler wrappers `ftn`, `cc`, or `CC`, as recommended, we
+should load the appropriate CPU target module:
 
+```
 module load craype-x86-milan
-
-### Compilation 
-
-#### Compilation strategies for GPUs
-
-1) OpenACC: The compiler uses directives in the code target 
-
-    The compiler 
-
-2) OpenMP offload:
-
-    The compiler
-
-3) Device specific code (AMD HiP):
-
-    Architecture specific code kernels are written for sections of you application that have to be compiled by a device specific compiler.
-
-    Separately the CPU sections of the code still need to compiled by a chosen base or host compiler (cray, amd, aocc, gnu,...).
-
-    The compilation pipeline looks something like:
-
-    **DIAGAM**
+```
 
 
 
+### Compilation Strategies
 
-For each programming environment we can then look at different ways to target GPU hardware.
+Compiler support on ARCHER2 for various programming models that enable
+offloading to AMD GPUs can be summarised at a glance in the following
+table:
 
-#### Cray
+| PrgEnv        | Actual compiler | OpenMP Offload | HIP | OpenACC |
+| ------------- | --------------- | :------------: | :-: | :-----: |
+| `PrgEnv-amd`  | `amdflang`      |     ✅	   | ❌  |   |
+| `PrgEnv-amd`  | `amdclang`      |     ✅	   | ❌  |   |
+| `PrgEnv-amd`  | `amdclang++`    |     ✅	   | ✅  |   |
+| `PrgEnv-cray` | `crayftn`       |     ✅	   | ❌  |   |
+| `PrgEnv-cray` | `craycc`        |     ✅	   | ❌  |   | 
+| `PrgEnv-cray` | `crayCC`        |     ✅	   | ✅  |   |
+| `PrgEnv-gnu`  | `gfortran`      |     ✅	   | ❌  |   |
+| `PrgEnv-gnu`  | `gcc`           |     ✅	   | ❌  |   |
+| `PrgEnv-gnu`  | `g++`           |     ✅         | ❌  |   |
 
-module load PrgEnv-cray
-module load craype-accel-amd-gfx90a
+
+It is generally recommended to do the following:
+
+```
+module load PrgEnv-xxx
 module load rocm
-
-##### HiP
-
-Fortran:
-
-Not supported?
-
-C/C++:
-
-CC -x hip -I. -Ihip -std=c++11 -DHIP main.cpp hip/HIPStream.cpp –o hip.x
-
-##### OpenACC
-
-Fortran:
-
-Enabled by default
-
-ftn -hacc saxpy_acc_mpi.f90 -o saxpy_acc_mpi.x
-
-C/C++:
-
-No openACC support.
-
-##### OpenMP
-
-Fortran:
-
-ftn -fopenmp gemv-omp-target-many-matrices.f90 -o gemv-omp-target-many-matrices.x
-
-C/C++:
-
-CC -fopenmp -DOMP main.cpp omp/OMPStream.cpp -I. -Iomp -DOMP_TARGET_GPU –o omp.x
-
-
-#### AMD
-
-module load PrgEnv-amd
 module load craype-accel-amd-gfx90a
+module load craype-x86-milan
+```
+
+And then to use the `ftn`, `cc` and/or `CC` wrapper to compile as
+appropriate for the programming model in question. Specific guidance
+on how to do this for different programming models is provided in the
+subsections below. 
+
+When deviating from this procedure and using underlying compilers
+directly, or when debugging a problematic build using the wrappers, it
+may be useful to check what flags the compiler wrappers are passing to
+the underlying compiler. This can be done by using the
+`-craype-verbose` option with a wrapper when compiling a
+file. Optionally piping the resulting output to the command `tr " "
+"\n"` so that flags are split over lines may be convenient for visual
+parsing. For example:
+
+```
+> CC -craype-verbose source.cpp | tr " " "\n"
+```
+
+
+
+#### OpenMP Offload
+
+To use the compiler wrappers to compile code that offloads to GPU with
+OpenMP directives, first load the desired PrgEnv module and other
+necessary modules:
+
+```
+module load PrgEnv-xxx
 module load rocm
+module load craype-accel-amd-gfx90a
+module load craype-x86-milan
+```
 
-##### HiP
+Then use the appropriate compiler wrapper and pass the `-fopenmp`
+option to the wrapper when compiling. For example:
 
-Fortran: ?
+```
+ftn -fopenmp source.f90
+```
 
-C/C++:
+This should work under `PrgEnv-amd`, `PrgEnv-cray`, and
+`PrgEnv-gnu`. However you may find that Fortran code with OpenMP
+offload directives introduced in more recent versions of the standard,
+e.g. versions later than OpenMP 4.5, fail to compile under
+`PrgEnv-amd` or `PrgEnv-gnu`, in which case we recommend you use
+`PrgEnv-amd` or `PrgEnv-cray` instead.
 
-CC -x hip -I. -Ihip -std=c++11 -DHIP main.cpp hip/HIPStream.cpp –o hip.x
+    
+#### HIP
+
+To compile C or C++ code that uses HIP written specifically to offload
+to AMD GPUs, first load the desired PrgEnv module (either `PrgEnv-amd`
+or `PrgEnv-cray`) and other necessary modules:
+
+```
+module load PrgEnv-xxx
+module load rocm
+module load craype-accel-amd-gfx90a
+module load craype-x86-milan
+```
+
+Then compile using the `CC` compiler wrapper as follows:
+
+```
+CC -x hip -std=c++11 -D__HIP_ROCclr__ --rocm-path=${ROCM_PATH} source.cpp
+```
+
+Alternatively, you may use `hipcc` to drive the AMD LLVM compiler to
+compile HIP code. In that case you will need to take care to
+explicitly pass all required offload flags to `hipcc`, such as:
+
+```
+-D__HIP_PLATFORM_AMD__ --offload-arch=gfx90a
+```
+
+To see what `hipcc` passes to the compiler, you can pass the
+`--verbose` option.
 
 
-##### OpenACC
+<!-----the CPU sections of the code still need to compiled by a
+chosen base or host compiler (cray, amd, aocc, gnu,...).
 
-Fortran: ?
+The compilation pipeline looks something like:---->
 
-C/C++: ?
 
-##### OpenMP
+#### OpenACC: The compiler uses directives in the code target 
 
-Fortran: 
+The compiler 
 
-ftn -fopenmp gemv-omp-target-many-matrices.f90 -o gemv-omp-target-many-matrices.x
 
-C/C++:
 
-CC -fopenmp -DOMP main.cpp omp/OMPStream.cpp -I. -Iomp -DOMP_TARGET_GPU –o omp.x
 
-#### GNU
 
-???
+
+
 
 
 ### Advanced Compilation
 
-#### Mixing openMP and HIP C/C++
+#### Mixing OpenMP and HIP C/C++
 
 #### Compilation with hipcc
 
-#### Hpicc and MPI
+#### HIPCC and MPI
 
 
 ## GPU-aware MPI
 
-Avalible in three of the programming environments:
+Available in three of the programming environments:
 
 - PrgEnv-amd
 - PrgEnv-cray
@@ -350,10 +393,7 @@ If not set then if MPI calls try to send messages with pointers to GPU memory an
 
 ## Supported software
 
-The ARCHER2 GPU development platform is intended for code development, testing and
-experimentation and will not have supported centrally installed versions of modelling and
-simpulation software as for the wider ARCHER2 service. However, some builds are being made
-available to users by members of CSE to under a best effort approach to support the community.
+The ARCHER2 GPU service is intended for code development, testing and experimentation and will not have supported centrally installed versions of codes as is supported for the ARCHER2 compute nodes. However some builds are being made available to users by members of CSE to under a best effort approach to support the community.
 
 Codes that have modules targetting GPUs are:
 
@@ -370,6 +410,7 @@ option, where `N` is typically 1, 2 or 4.
 	As there are 4 GPUs per node, each GPU is associated with 1/4 of the
 	resources of the node, i.e., 8 of 32 physical cores and roughly 128 GiB
 	of the total 512 GiB host memory.
+
 
 Allocations of host resources are made pro-rata. For example, if 2 GPUs
 are requested, `sbatch` will allocate 16 cores and around 256 GiB of host
@@ -416,18 +457,12 @@ They cover the following scenarios:
 - Multiple GPU on a single node - exclusive node access (max. 4 GPU)
 - Multiple GPU on multiple nodes
 
-In all examples, we add a call to `rocm-smi` and `xthi` before running the software on
-the GPU nodes. `rocm-smi` prints information on the GPU that have been assigned to your
-job and `xthi` reports the process/thread pinning on the CPU. In combination, these tools
-provide useful information for you to verify that the job submission script is doing what
-you think it should be doing.
-
 ### Single GPU
 
 This example requests a single GPU on a potentially shared node and launch using a single CPU
 process with offload to a single GPU.
 
-```slurm
+```
 #!/bin/bash
 
 #SBATCH --job-name=single-GPU
@@ -438,13 +473,6 @@ process with offload to a single GPU.
 #SBATCH --account=[budget code]
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu-shd
-
-# Print information on the GPU assigned to the job
-srun --ntasks=1 rocm-smi
-
-# Show CPU process/thread pinning
-module load xthi
-srun --ntasks=1 xthi
 
 srun --ntasks=1 --cpus-per-task=1 ./my_gpu_program.x
 ```
@@ -459,7 +487,7 @@ MPI processes to 8 physical cores. This places the MPI processes on separate NUM
 regions to ensure they are associated with the correct GPU that is closest to them
 on the compute node architecture.
 
-```slurm
+```
 #!/bin/bash
 
 #SBATCH --job-name=multi-GPU
@@ -470,13 +498,6 @@ on the compute node architecture.
 #SBATCH --account=[budget code]
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu-shd
-
-# Print information on the GPU assigned to the job
-srun --ntasks=1 rocm-smi
-
-# Show CPU process/thread pinning
-module load xthi
-srun --ntasks=2 --cpus-per-task=8 xthi
 
 srun --ntasks=2 --cpus-per-task=8 ./my_gpu_program.x
 ```
@@ -491,7 +512,7 @@ MPI processes to 8 physical cores. This places the MPI processes on separate NUM
 regions to ensure they are associated with the correct GPU that is closest to them
 on the compute node architecture.
 
-```slurm
+```
 #!/bin/bash
 
 #SBATCH --job-name=multi-GPU
@@ -504,13 +525,6 @@ on the compute node architecture.
 #SBATCH --account=[budget code]
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu-exc
-
-# Print information on the GPU assigned to the job
-srun --ntasks=1 rocm-smi
-
-# Show CPU process/thread pinning
-module load xthi
-srun --ntasks=4 --cpus-per-task=8 xthi
 
 srun --ntasks=4 --cpus-per-task=8 ./my_gpu_program.x
 ```
@@ -529,7 +543,7 @@ MPI processes to 8 physical cores. This places the MPI processes on separate NUM
 regions to ensure they are associated with the correct GPU that is closest to them
 on the compute node architecture.
 
-```slurm
+```
 #!/bin/bash
 
 #SBATCH --job-name=multi-GPU
@@ -542,18 +556,6 @@ on the compute node architecture.
 #SBATCH --account=[budget code]
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu-exc
-
-# Check assigned GPU
-nodelist=$(scontrol show hostname $SLURM_JOB_NODELIST)
-for nodeid in $nodelist
-do
-   echo $nodeid
-   srun --ntasks=1 --nodelist=$nodeid rocm-smi
-done
-
-# Show CPU process/thread pinning
-module load xthi
-srun --ntasks=8 --cpus-per-task=8 xthi
 
 srun --ntasks=8 --cpus-per-task=8 ./my_gpu_program.x
 ```
@@ -576,7 +578,7 @@ use the `salloc` command to reserve the resources so you can use `srun` commands
 For example, to request 2 GPU for 20 minutes you would use (remember to replace `t01` with your
 budget code):
 
-```bash
+```
 auser@ln04:/work/t01/t01/auser> salloc --gpus=2 --time=00:20:00 --partition=gpu --qos=gpu-shd --account=t01
 salloc: Pending job allocation 5335731
 salloc: job 5335731 queued and waiting for resources
@@ -616,7 +618,7 @@ If you want an interactive terminal on a GPU node then you can use the `srun` co
 For example, to request 2 GPU for 20 minutes with an interactive terminal on a GPU compute node you
 would use (remember to replace `t01` with your budget code):
 
-```bash
+```
 auser@ln04:/work/t01/t01/auser> srun --gpus=2 --time=00:20:00 --partition=gpu --qos=gpu-shd --account=z19 --pty /bin/bash
 srun: job 5335771 queued and waiting for resources
 srun: job 5335771 has been allocated resources
@@ -626,7 +628,7 @@ auser@nid200001:/work/t01/t01/auser>
 Note that the command prompt has changed to indicate we are now on a GPU compute node. You can now directly run commands
 that interact with the GPU devices, e.g.:
 
-```bash
+```
 auser@nid200001:/work/t01/t01/auser> rocm-smi
 
 
