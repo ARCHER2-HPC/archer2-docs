@@ -515,9 +515,6 @@ on the compute node architecture.
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu-shd
 
-# Enable GPU-aware MPI
-export MPICH_GPU_SUPPORT_ENABLED=1
-
 srun --ntasks=2 --cpus-per-task=8 ./my_gpu_program.x
 ```
 
@@ -544,9 +541,6 @@ on the compute node architecture.
 #SBATCH --account=[budget code]
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu-exc
-
-# Enable GPU-aware MPI
-export MPICH_GPU_SUPPORT_ENABLED=1
 
 srun --ntasks=4 --cpus-per-task=8 ./my_gpu_program.x
 ```
@@ -578,9 +572,6 @@ on the compute node architecture.
 #SBATCH --account=[budget code]
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu-exc
-
-# Enable GPU-aware MPI
-export MPICH_GPU_SUPPORT_ENABLED=1
 
 srun --ntasks=8 --cpus-per-task=8 ./my_gpu_program.x
 ```
@@ -629,7 +620,6 @@ srun: error: nid200001: tasks 0: Exited with exit code 2
 srun: launch/slurm: _step_signal: Terminating StepId=5335731.0
 
 auser@ln04:/work/t01/t01/auser> module load xthi
-auser@ln04:/work/t01/t01/auser> export MPICH_GPU_SUPPORT_ENABLED=1
 auser@ln04:/work/t01/t01/auser> srun --ntasks=2 --cpus-per-task=8 --hint=nomultithread xthi
 Node summary for    1 nodes:
 Node    0, hostname nid200001, mpi   2, omp   1, executable xthi
