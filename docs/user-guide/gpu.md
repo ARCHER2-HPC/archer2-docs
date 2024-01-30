@@ -1,7 +1,7 @@
-# AMD GPU development system
+# AMD GPU Development Platform
 
 !!! note
-    This page is work in progress. More details on the GPU development system
+    This page is work in progress. More details on the GPU Development Platform
     and how to use it will be added as they become available.
 
 In early 2024 ARCHER2 users will gain access to a small GPU system 
@@ -14,7 +14,7 @@ using AMD GPUs.
 
 ## Hardware available
 
-The GPU development system consists of 4 compute nodes each with:
+The GPU Development Platform consists of 4 compute nodes each with:
 
 - 1x AMD EPYC 7534P (Milan) processor, 32 core, 2.8 GHz
 - 4x AMD Instinct MI210 accelerator
@@ -26,7 +26,7 @@ The GPU development system consists of 4 compute nodes each with:
 
 ## Accessing the GPU compute nodes
 
-The GPU nodes can be accessed through the Slurm job submisson system from the
+The GPU nodes can be accessed through the Slurm job submission system from the
 standard ARCHER2 login nodes. Details of the scheduler limits and configuration
 and example job submission scripts are provided below. 
 
@@ -45,7 +45,6 @@ offloads to the AMD GPUs is as follows:
 - Use the usual compiler wrappers `ftn`, `cc`, or `CC`
 
 For details and alternative approaches, see below. 
-
 
 ### Programming Environments
 
@@ -499,6 +498,9 @@ on the compute node architecture.
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu-shd
 
+# Enable GPU-aware MPI
+export MPICH_GPU_SUPPORT_ENABLED=1
+
 srun --ntasks=2 --cpus-per-task=8 ./my_gpu_program.x
 ```
 
@@ -525,6 +527,9 @@ on the compute node architecture.
 #SBATCH --account=[budget code]
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu-exc
+
+# Enable GPU-aware MPI
+export MPICH_GPU_SUPPORT_ENABLED=1
 
 srun --ntasks=4 --cpus-per-task=8 ./my_gpu_program.x
 ```
@@ -556,6 +561,9 @@ on the compute node architecture.
 #SBATCH --account=[budget code]
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu-exc
+
+# Enable GPU-aware MPI
+export MPICH_GPU_SUPPORT_ENABLED=1
 
 srun --ntasks=8 --cpus-per-task=8 ./my_gpu_program.x
 ```
@@ -604,6 +612,7 @@ srun: error: nid200001: tasks 0: Exited with exit code 2
 srun: launch/slurm: _step_signal: Terminating StepId=5335731.0
 
 auser@ln04:/work/t01/t01/auser> module load xthi
+auser@ln04:/work/t01/t01/auser> export MPICH_GPU_SUPPORT_ENABLED=1
 auser@ln04:/work/t01/t01/auser> srun --ntasks=2 --cpus-per-task=8 --hint=nomultithread xthi
 Node summary for    1 nodes:
 Node    0, hostname nid200001, mpi   2, omp   1, executable xthi
@@ -615,11 +624,11 @@ Node    0, rank    1, thread   0, (affinity = 8-15)
 #### Using `srun`
 
 If you want an interactive terminal on a GPU node then you can use the `srun` command to achieve this.
-For example, to request 2 GPU for 20 minutes with an interactive terminal on a GPU compute node you
+For example, to request 1 GPU for 20 minutes with an interactive terminal on a GPU compute node you
 would use (remember to replace `t01` with your budget code):
 
 ```
-auser@ln04:/work/t01/t01/auser> srun --gpus=2 --time=00:20:00 --partition=gpu --qos=gpu-shd --account=z19 --pty /bin/bash
+auser@ln04:/work/t01/t01/auser> srun --gpus=1 --time=00:20:00 --partition=gpu --qos=gpu-shd --account=z19 --pty /bin/bash
 srun: job 5335771 queued and waiting for resources
 srun: job 5335771 has been allocated resources
 auser@nid200001:/work/t01/t01/auser> 
@@ -631,12 +640,10 @@ that interact with the GPU devices, e.g.:
 ```
 auser@nid200001:/work/t01/t01/auser> rocm-smi
 
-
 ======================= ROCm System Management Interface =======================
 ================================= Concise Info =================================
 GPU  Temp   AvgPwr  SCLK    MCLK     Fan  Perf  PwrCap  VRAM%  GPU%  
-0    29.0c  43.0W   800Mhz  1600Mhz  0%   auto  300.0W    0%   0%    
-1    31.0c  43.0W   800Mhz  1600Mhz  0%   auto  300.0W    0%   0%    
+0    29.0c  43.0W   800Mhz  1600Mhz  0%   auto  300.0W    0%   0%     
 ================================================================================
 ============================= End of ROCm SMI Log ==============================
 ```
