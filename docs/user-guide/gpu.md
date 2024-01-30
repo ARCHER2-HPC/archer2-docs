@@ -112,7 +112,8 @@ for the AMD GPUs, even if you are not using the AMD LLVM compilers
 
 The `rocm` module also provides access to other AMD tools, such as
 HIPIFY (`hipify-clang` or `hipify-perl` command), which enables
-translation of CUDA to HIP code.
+translation of CUDA to HIP code. See also the [section below on
+HIPIFY](#hipify).
 
 
 ### GPU target
@@ -140,7 +141,7 @@ module load craype-x86-milan
 
 
 
-### Compilation Strategies
+### Compilation Strategies for GPU Offloading
 
 Compiler support on ARCHER2 for various programming models that enable
 offloading to AMD GPUs can be summarised at a glance in the following
@@ -235,22 +236,30 @@ Then compile using the `CC` compiler wrapper as follows:
 CC -x hip -std=c++11 -D__HIP_ROCclr__ --rocm-path=${ROCM_PATH} source.cpp
 ```
 
-Alternatively, you may use `hipcc` to drive the AMD LLVM compiler to
-compile HIP code. In that case you will need to take care to
-explicitly pass all required offload flags to `hipcc`, such as:
+Alternatively, you may use `hipcc` to drive the AMD LLVM compiler
+`amdclang(++)` to compile HIP code. In that case you will need to take
+care to explicitly pass all required offload flags to `hipcc`, such
+as:
 
 ```
 -D__HIP_PLATFORM_AMD__ --offload-arch=gfx90a
 ```
 
 To see what `hipcc` passes to the compiler, you can pass the
-`--verbose` option.
+`--verbose` option. If you are compiling MPI-parallel HIP code with
+`hipcc`, please see additional guidance under [HIPCC and
+MPI](#hipcc-and-mpi).
 
+`hipcc` can compile both HIP code for device (GPU) execution and
+non-HIP code for host (CPU) execution and will default to using the
+AMD LLVM compiler `amdclang(++)` to do so. If your software consists
+of separate compilation units - typically separate files - containing
+HIP code non-HIP code, it is possible to use a different compiler than
+`hipcc` to compile the non-HIP code. To do this:
 
-<!-----the CPU sections of the code still need to compiled by a
-chosen base or host compiler (cray, amd, aocc, gnu,...).
-
-The compilation pipeline looks something like:---->
+- Compile the HIP code as above using `hipcc`
+- Compile the non-HIP code using the compiler wrapper `CC` and a *different* PrgEnv than `PrgEnv-amd` loaded
+- Link the resulting code objects (`.o` files) together using the compiler wrapper 
 
 
 #### OpenACC
@@ -271,25 +280,69 @@ OpenACC Fortran code can then be compiled using the `-hacc` flag, as follows:
 ftn -hacc source.f90 
 ```
 
-Details on exactly what OpenACC version and features are supported
-under `PrgEnv-cray` can be viewed using the command `man
-intro_openacc`.
-
-
-
-
-
-
-
+Details on what OpenACC standard and features are supported under
+`PrgEnv-cray` can be viewed using the command `man intro_openacc`.
 
 
 ### Advanced Compilation
 
-#### Mixing OpenMP and HIP C/C++
+#### OpenMP Offload + OpenMP CPU threading
 
-#### Compilation with hipcc
+Code may use OpenMP for multithreaded execution on the host CPU in
+combination with target directives to offload work to GPU. Both uses
+of OpenMP can coexist in a single compilation unit, which should be
+compiled using the relevant compiler wrapper and the `-fopenmp` flag.
+
+
+#### HIP + OpenMP Offload
+
+Using both OpenMP and HIP to offload to GPU is possible, but only if
+the two programming models are not mixed in the same compilation unit.
+Two or more separate compilation units - typically separate source
+files - should be compiled as recommended individually for HIP and
+OpenMP offload code in the respective sections above. The resulting
+code objects (`.o` files) should then be linked together using a
+compiler wrapper *with* the `-fopenmp` flag, but *without* the `-x
+hip` flag.
+
+#### HIP + OpenMP CPU threading
+
+Code in a single compilation unit, such as a single source file, can
+use HIP to offload to GPU as well as OpenMP for multithreaded
+execution on the host CPU. Compilation should be done using the
+relevant compiler wrapper and the flags `-fopenmp` and `–x hip` - in
+that order - as well as the flags for HIP compilation specified above:
+
+```
+CC -fopenmp -x hip -std=c++11 -D__HIP_ROCclr__ --rocm-path=${ROCM_PATH} source.cpp
+```
+
 
 #### HIPCC and MPI
+
+When compiling an MPI-parallel code with `hipcc` instead of a compiler
+wrapper, the path to the Cray MPI library include directory should be
+passed explicitly, or set as part of the `CXXFLAGS` environment
+variable, as:
+
+```
+-I${CRAY_MPICH_DIR}/include
+```
+
+MPI library directories should also be passed to `hipcc`, or set as
+part of the `CXXFLAGS` environment variable prior to compiling, as:
+
+```
+-L${CRAY_MPICH_DIR}/lib ${PE_MPICH_GTL_DIR_amd_gfx90a}
+```
+
+Finally the MPI library should be linked explicitly, or set as part of
+the `LIBS` environment variable prior to linking, as:
+
+```
+-lmpi ${PE_MPICH_GTL_LIBS_amd_gfx90a}
+```
+
 
 
 ## GPU-aware MPI
