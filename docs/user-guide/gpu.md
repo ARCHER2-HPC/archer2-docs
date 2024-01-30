@@ -147,15 +147,15 @@ table:
 
 | PrgEnv        | Actual compiler | OpenMP Offload | HIP | OpenACC |
 | ------------- | --------------- | :------------: | :-: | :-----: |
-| `PrgEnv-amd`  | `amdflang`      |     ✅	   | ❌  |   |
-| `PrgEnv-amd`  | `amdclang`      |     ✅	   | ❌  |   |
-| `PrgEnv-amd`  | `amdclang++`    |     ✅	   | ✅  |   |
-| `PrgEnv-cray` | `crayftn`       |     ✅	   | ❌  |   |
-| `PrgEnv-cray` | `craycc`        |     ✅	   | ❌  |   | 
-| `PrgEnv-cray` | `crayCC`        |     ✅	   | ✅  |   |
-| `PrgEnv-gnu`  | `gfortran`      |     ✅	   | ❌  |   |
-| `PrgEnv-gnu`  | `gcc`           |     ✅	   | ❌  |   |
-| `PrgEnv-gnu`  | `g++`           |     ✅         | ❌  |   |
+| `PrgEnv-amd`  | `amdflang`      |     ✅	   | ❌  |   ❌    |
+| `PrgEnv-amd`  | `amdclang`      |     ✅	   | ❌  |   ❌    |
+| `PrgEnv-amd`  | `amdclang++`    |     ✅	   | ✅  |   ❌    |
+| `PrgEnv-cray` | `crayftn`       |     ✅	   | ❌  |   ✅    |
+| `PrgEnv-cray` | `craycc`        |     ✅	   | ❌  |   ❌    |  
+| `PrgEnv-cray` | `crayCC`        |     ✅	   | ✅  |   ❌    |
+| `PrgEnv-gnu`  | `gfortran`      |     ✅	   | ❌  |   ❌    |
+| `PrgEnv-gnu`  | `gcc`           |     ✅	   | ❌  |   ❌    |
+| `PrgEnv-gnu`  | `g++`           |     ✅         | ❌  |   ❌    |
 
 
 It is generally recommended to do the following:
@@ -208,11 +208,11 @@ ftn -fopenmp source.f90
 ```
 
 This should work under `PrgEnv-amd`, `PrgEnv-cray`, and
-`PrgEnv-gnu`. However you may find that Fortran code with OpenMP
-offload directives introduced in more recent versions of the standard,
-e.g. versions later than OpenMP 4.5, fail to compile under
-`PrgEnv-amd` or `PrgEnv-gnu`, in which case we recommend you use
-`PrgEnv-amd` or `PrgEnv-cray` instead.
+`PrgEnv-gnu`. You may find that offload directives introduced in more
+recent versions of the OpenMP standard, e.g. versions later than
+OpenMP 4.5, fail to compile with some compilers. Under `PrgEnv-cray`
+an explicit description of supported OpenMP features can be viewed
+using the command `man intro_openmp`.
 
     
 #### HIP
@@ -252,9 +252,27 @@ chosen base or host compiler (cray, amd, aocc, gnu,...).
 The compilation pipeline looks something like:---->
 
 
-#### OpenACC: The compiler uses directives in the code target 
+#### OpenACC
 
-The compiler 
+Offloading using OpenACC directives on ARCHER2 is only supported by
+the Cray Fortran compiler. You should therefore load the following:
+
+```
+module load PrgEnv-cray
+module load rocm
+module load craype-accel-amd-gfx90a
+module load craype-x86-milan
+```
+
+OpenACC Fortran code can then be compiled using the `-hacc` flag, as follows:
+
+```
+ftn -hacc source.f90 
+```
+
+Details on exactly what OpenACC version and features are supported
+under `PrgEnv-cray` can be viewed using the command `man
+intro_openacc`.
 
 
 
