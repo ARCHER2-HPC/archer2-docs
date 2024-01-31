@@ -1487,7 +1487,7 @@
           <li class="md-nav__item">
   <a href="#hipify" class="md-nav__link">
     <span class="md-ellipsis">
-      Hipify
+      HIPIFY
     </span>
   </a>
   
@@ -3456,7 +3456,7 @@
           <li class="md-nav__item">
   <a href="#hipify" class="md-nav__link">
     <span class="md-ellipsis">
-      Hipify
+      HIPIFY
     </span>
   </a>
   
@@ -3578,8 +3578,9 @@ wrappers (<code>ftn</code>, <code>cc</code>, <code>CC</code>), which is the reco
 </tbody>
 </table>
 <p>To decide which compiler(s) to use to compile offload code for the AMD
-GPUs, you may find it useful to consult the <a href="#compilation-strategies">Compilation
-Strategies</a> section below.</p>
+GPUs, you may find it useful to consult the <a href="#compilation-strategies-for-gpu-offloading">Compilation Strategies
+for GPU Offloading</a>
+section below.</p>
 <p>The hybrid environments <code>PrgEnv-gnu-amd</code> and <code>PrgEnv-cray-amd</code> are
 provided as a convenient way to mitigate less mature OpenMP offload
 support in the AMD LLVM Fortran compiler. In these hybrid environments
@@ -4485,11 +4486,11 @@ GPU[3]          : Memory Activity: 319854295
 <p><code>rocm-smi --help</code></p>
 <p>will run on the login nodes to get more infomation about probing the GPUs.</p>
 <p>More detail can be found at <a href="https://github.com/ROCm/rocm_smi_lib/tree/rocm-5.2.3/python_smi_tools">here</a>.</p>
-<h3 id="hipify">Hipify</h3>
-<p>Is a CUDA to HIP source translator tool that can allow CUDA source code to be translated into HIP source code easing the transition between the two hardware targets.</p>
-<p>The tool is avalible on ARCHER2 by loading the <code>rocm</code> module.</p>
-<p>The github repository for HIPify can be found <a href="https://github.com/ROCm/HIPIFY">here</a>.</p>
-<p>The documentation for hipfiy is found <a href="https://rocm.docs.amd.com/projects/HIPIFY/en/docs-5.2.3/index.html">here</a>.</p>
+<h3 id="hipify">HIPIFY</h3>
+<p>HIPIFY is a CUDA to HIP source translator tool that can allow CUDA source code to be translated into HIP source code easing the transition between the two hardware targets.</p>
+<p>The tool is available on ARCHER2 by loading the <code>rocm</code> module.</p>
+<p>The github repository for HIPIFY can be found <a href="https://github.com/ROCm/HIPIFY">here</a>.</p>
+<p>The documentation for HIPIFY is found <a href="https://rocm.docs.amd.com/projects/HIPIFY/en/docs-5.2.3/index.html">here</a>.</p>
 <h2 id="notes-and-useful-links">Notes and useful links</h2>
 <p>You should expect the software development environment to be similar to that
 available on the Frontier exascale system:</p>
