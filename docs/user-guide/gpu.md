@@ -354,7 +354,7 @@ Need to set an environment variable to enable GPU support in `cray-mpich`:
 
 `export MPICH_GPU_SUPPORT_ENABLED=1`
 
-No additional MPI modules to load just use the standard `cray-mpich` module.
+No additional or alternative MPI modules need to be loaded instead of the default `cray-mpich` module.
 
 This supports GPU-GPU transfers:
 
@@ -366,10 +366,11 @@ Therefore NUMA effects are to be expected in multi-node communication. More deta
 
 ### Libraries
 
-
-In order to access the maths libraries provided by HPE-cray, targeted for GPU acceleration there is a new module provided:
+In order to access the GPU-accelerated version of Cray's LibSci maths libraries, a new module has been provided:
 
 `cray-libsci_acc`
+
+With this module loaded, documentation can be viewed using the command `man intro_libsci_acc`. 
 
 Additionally a number of libraries are provided as part of the `rocm` module.
 
@@ -397,7 +398,7 @@ from mpi4py import MPI
 
 ## Supported software
 
-The ARCHER2 GPU service is intended for code development, testing and experimentation and will not have supported centrally installed versions of codes as are supported for the ARCHER2 compute nodes. However some builds are being made available to users by members of CSE to under a best effort approach to support the community.
+The ARCHER2 GPU development platform is intended for code development, testing and experimentation and will not have supported centrally installed versions of codes as is the case for the standard ARCHER2 CPU compute nodes. However some builds are being made available to users by members of CSE to under a best effort approach to support the community.
 
 Codes that have modules targetting GPUs are:
 
@@ -762,7 +763,7 @@ Runtime : HIP Runtime. Applies only to applications using HIP on the AMD platfor
 
 ##### AMD_SERIALIZE_KERNEL
 
-To serialize the kernel enquing set the following variable, 
+To serialize the kernel enqueuing set the following variable, 
 
 `export AMD_SERIALIZE_KERNEL=1`
 
@@ -895,7 +896,7 @@ to profile your applicaition. More detail on the use of rocprof can be found [he
 
 ## Performance tuning
 
-AMD provides some documentation on performance tuning [here](https://rocm.docs.amd.com/en/docs-5.2.3/how_to/tuning_guides/mi200.html) not all options will be avalible to users to be aware milage may vary.
+AMD provides some documentation on performance tuning [here](https://rocm.docs.amd.com/en/docs-5.2.3/how_to/tuning_guides/mi200.html) not all options will be available to users, so be aware that mileage may vary.
 
 ### Hardware details
 
@@ -964,7 +965,7 @@ To quote the [rocm documentation](https://rocm.docs.amd.com/en/docs-5.5.1/how_to
 
 As part of the `rocm` module the  `rocm-bandwidth-test` is provided that can be used to measure the performance of commentions between the hardware in a node.
 
-In addition to `rocm-smi` this is a bandwidth test can be useful to understand the composition and performance limitations in a GPU node. Here is an example output from a GPU nodes on Archer2.
+In addition to `rocm-smi` this is a bandwidth test can be useful to understand the composition and performance limitations in a GPU node. Here is an example output from a GPU nodes on ARCHER2.
 
 ```
 Device: 0,  AMD EPYC 7543P 32-Core Processor
@@ -1068,7 +1069,7 @@ If you load the rocm module on the system you will have access to the rocm-smi u
 
 Here are some useful commands to get you started:
 
-`rocm-smi --alldevices` deivce status
+`rocm-smi --alldevices` device status
 
 ```
 ======================= ROCm System Management Interface =======================
@@ -1083,7 +1084,7 @@ GPU  Temp   AvgPwr  SCLK    MCLK     Fan  Perf  PwrCap  VRAM%  GPU%
 ```
 This shows you the current state of the hardware while an application is running.
 
-Focusing on the GPU activity can be usful to understand when you code is active on the GPUs:
+Focusing on the GPU activity can be useful to understand when your code is active on the GPUs:
 
 `rocm-smi --showuse` GPU activity
 
@@ -1102,7 +1103,7 @@ GPU[3]          : GFX Activity: 665049119
 ============================= End of ROCm SMI Log ==============================
 ```
 
-Additionally you can focus on the memory use of the GPU's:
+Additionally you can focus on the memory use of the GPUs:
 
 `rocm-smi --showmemuse` GPU memory currently consumed
 
@@ -1132,7 +1133,7 @@ More detail can be found at [here](https://github.com/ROCm/rocm_smi_lib/tree/roc
 
 ### HIPIFY
 
-HIPIFY is a CUDA to HIP source translator tool that can allow CUDA source code to be translated into HIP source code easing the transition between the two hardware targets.
+HIPIFY is a CUDA to HIP source translator tool that can allow CUDA source code to be translated into HIP source code, easing the transition between the two hardware targets.
 
 The tool is available on ARCHER2 by loading the `rocm` module.
 
