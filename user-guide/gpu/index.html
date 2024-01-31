@@ -3839,7 +3839,7 @@ the <code>LIBS</code> environment variable prior to linking, as:</p>
 <h2 id="gpu-aware-mpi">GPU-aware MPI</h2>
 <p>Need to set an environment variable to enable GPU support in <code>cray-mpich</code>:</p>
 <p><code>export MPICH_GPU_SUPPORT_ENABLED=1</code></p>
-<p>No additional MPI modules to load just use the standard <code>cray-mpich</code> module.</p>
+<p>No additional or alternative MPI modules need to be loaded instead of the default <code>cray-mpich</code> module.</p>
 <p>This supports GPU-GPU transfers:</p>
 <ul>
 <li>Inter-node via GPU-NIC RDMA</li>
@@ -3848,8 +3848,9 @@ the <code>LIBS</code> environment variable prior to linking, as:</p>
 <p>Be aware that on these nodes there are only two PICe network cards in each node and they may not be in the same memory region to a given GPU.
 Therefore NUMA effects are to be expected in multi-node communication. More detail on this is provided below.</p>
 <h3 id="libraries">Libraries</h3>
-<p>In order to access the maths libraries provided by HPE-cray, targeted for GPU acceleration there is a new module provided:</p>
+<p>In order to access the GPU-accelerated version of Cray's LibSci maths libraries, a new module has been provided:</p>
 <p><code>cray-libsci_acc</code></p>
+<p>With this module loaded, documentation can be viewed using the command <code>man intro_libsci_acc</code>. </p>
 <p>Additionally a number of libraries are provided as part of the <code>rocm</code> module.</p>
 <ul>
 <li><a href="https://rocm.docs.amd.com/en/docs-5.2.3/reference/gpu_libraries/math.html">Math Libraries</a></li>
@@ -3867,7 +3868,7 @@ if environ.get(&quot;MPICH_GPU_SUPPORT_ENABLED&quot;, False):
 from mpi4py import MPI
 </code></pre></div>
 <h2 id="supported-software">Supported software</h2>
-<p>The ARCHER2 GPU service is intended for code development, testing and experimentation and will not have supported centrally installed versions of codes as are supported for the ARCHER2 compute nodes. However some builds are being made available to users by members of CSE to under a best effort approach to support the community.</p>
+<p>The ARCHER2 GPU development platform is intended for code development, testing and experimentation and will not have supported centrally installed versions of codes as is the case for the standard ARCHER2 CPU compute nodes. However some builds are being made available to users by members of CSE to under a best effort approach to support the community.</p>
 <p>Codes that have modules targetting GPUs are:</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -4212,7 +4213,7 @@ use job submission scripts or the <code>salloc</code> method of interactive use 
 <p>Runtime : HIP Runtime. Applies only to applications using HIP on the AMD platform.</p>
 <p><code>export HIP_VISIBLE_DEVICES=0,1</code></p>
 <h5 id="amd_serialize_kernel">AMD_SERIALIZE_KERNEL</h5>
-<p>To serialize the kernel enquing set the following variable, </p>
+<p>To serialize the kernel enqueuing set the following variable, </p>
 <p><code>export AMD_SERIALIZE_KERNEL=1</code></p>
 <ul>
 <li>0: not serialized</li>
@@ -4291,7 +4292,7 @@ use job submission scripts or the <code>salloc</code> method of interactive use 
 <p>The license for Linaro-forge help on ARCHER2 does not include support for GPU profiling.</p>
 </div>
 <h2 id="performance-tuning">Performance tuning</h2>
-<p>AMD provides some documentation on performance tuning <a href="https://rocm.docs.amd.com/en/docs-5.2.3/how_to/tuning_guides/mi200.html">here</a> not all options will be avalible to users to be aware milage may vary.</p>
+<p>AMD provides some documentation on performance tuning <a href="https://rocm.docs.amd.com/en/docs-5.2.3/how_to/tuning_guides/mi200.html">here</a> not all options will be available to users, so be aware that mileage may vary.</p>
 <h3 id="hardware-details">Hardware details</h3>
 <p>The specifications of the GPU hardware can be found <a href="https://www.amd.com/en/products/accelerators/instinct/mi200/mi210.html">here</a>.</p>
 <p>Additionally you can use the command,</p>
@@ -4343,7 +4344,7 @@ GPU 3          : (Topology) Numa Affinity: 3
 </code></pre></div>
 <h3 id="rocm-bandwidth-test">rocm-bandwidth-test</h3>
 <p>As part of the <code>rocm</code> module the  <code>rocm-bandwidth-test</code> is provided that can be used to measure the performance of commentions between the hardware in a node.</p>
-<p>In addition to <code>rocm-smi</code> this is a bandwidth test can be useful to understand the composition and performance limitations in a GPU node. Here is an example output from a GPU nodes on Archer2.</p>
+<p>In addition to <code>rocm-smi</code> this is a bandwidth test can be useful to understand the composition and performance limitations in a GPU node. Here is an example output from a GPU nodes on ARCHER2.</p>
 <div class="highlight"><pre><span></span><code>Device: 0,  AMD EPYC 7543P 32-Core Processor
 Device: 1,  AMD EPYC 7543P 32-Core Processor
 Device: 2,  AMD EPYC 7543P 32-Core Processor
@@ -4440,7 +4441,7 @@ D/D       0           1           2           3           4           5         
 <h3 id="rocm-smi">rocm-smi</h3>
 <p>If you load the rocm module on the system you will have access to the rocm-smi utility. This utility allows users to report information about the GPUs on node and can be very useful in better understanding the set up of the hardware you are working with and monitoring GPU metrics during job execution.</p>
 <p>Here are some useful commands to get you started:</p>
-<p><code>rocm-smi --alldevices</code> deivce status</p>
+<p><code>rocm-smi --alldevices</code> device status</p>
 <p><div class="highlight"><pre><span></span><code>======================= ROCm System Management Interface =======================
 ================================= Concise Info =================================
 GPU  Temp   AvgPwr  SCLK    MCLK     Fan  Perf  PwrCap  VRAM%  GPU%
@@ -4452,7 +4453,7 @@ GPU  Temp   AvgPwr  SCLK    MCLK     Fan  Perf  PwrCap  VRAM%  GPU%
 ============================= End of ROCm SMI Log ==============================
 </code></pre></div>
 This shows you the current state of the hardware while an application is running.</p>
-<p>Focusing on the GPU activity can be usful to understand when you code is active on the GPUs:</p>
+<p>Focusing on the GPU activity can be useful to understand when your code is active on the GPUs:</p>
 <p><code>rocm-smi --showuse</code> GPU activity</p>
 <div class="highlight"><pre><span></span><code>======================= ROCm System Management Interface =======================
 ============================== % time GPU is busy ==============================
@@ -4467,7 +4468,7 @@ GPU[3]          : GFX Activity: 665049119
 ================================================================================
 ============================= End of ROCm SMI Log ==============================
 </code></pre></div>
-<p>Additionally you can focus on the memory use of the GPU's:</p>
+<p>Additionally you can focus on the memory use of the GPUs:</p>
 <p><code>rocm-smi --showmemuse</code> GPU memory currently consumed</p>
 <div class="highlight"><pre><span></span><code>======================= ROCm System Management Interface =======================
 ============================== Current Memory Use ==============================
@@ -4487,7 +4488,7 @@ GPU[3]          : Memory Activity: 319854295
 <p>will run on the login nodes to get more infomation about probing the GPUs.</p>
 <p>More detail can be found at <a href="https://github.com/ROCm/rocm_smi_lib/tree/rocm-5.2.3/python_smi_tools">here</a>.</p>
 <h3 id="hipify">HIPIFY</h3>
-<p>HIPIFY is a CUDA to HIP source translator tool that can allow CUDA source code to be translated into HIP source code easing the transition between the two hardware targets.</p>
+<p>HIPIFY is a CUDA to HIP source translator tool that can allow CUDA source code to be translated into HIP source code, easing the transition between the two hardware targets.</p>
 <p>The tool is available on ARCHER2 by loading the <code>rocm</code> module.</p>
 <p>The github repository for HIPIFY can be found <a href="https://github.com/ROCm/HIPIFY">here</a>.</p>
 <p>The documentation for HIPIFY is found <a href="https://rocm.docs.amd.com/projects/HIPIFY/en/docs-5.2.3/index.html">here</a>.</p>
