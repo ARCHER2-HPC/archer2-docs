@@ -138,8 +138,6 @@ should load the appropriate CPU target module:
 module load craype-x86-milan
 ```
 
-
-
 ### Compilation Strategies for GPU Offloading
 
 Compiler support on ARCHER2 for various programming models that enable
@@ -156,7 +154,7 @@ table:
 | `PrgEnv-cray` | `crayCC`        |     ✅	   | ✅  |   ❌    |
 | `PrgEnv-gnu`  | `gfortran`      |     ✅	   | ❌  |   ❌    |
 | `PrgEnv-gnu`  | `gcc`           |     ✅	   | ❌  |   ❌    |
-| `PrgEnv-gnu`  | `g++`           |     ✅         | ❌  |   ❌    |
+| `PrgEnv-gnu`  | `g++`           |     ✅      | ❌  |   ❌    |
 
 
 It is generally recommended to do the following:
@@ -344,19 +342,18 @@ the `LIBS` environment variable prior to linking, as:
 
 
 
+### Cmake
+
+Documentation about integrating rocm with cmake can be found [here](https://rocm.docs.amd.com/en/docs-5.2.3/understand/cmake_packages.html).
+
+
 ## GPU-aware MPI
 
-Available in three of the programming environments:
+Need to set an environment variable to enable GPU support in `cray-mpich`:
 
-- PrgEnv-amd
-- PrgEnv-cray
-- PrgEnv-gnu
+`export MPICH_GPU_SUPPORT_ENABLED=1`
 
-Need to set environment variable to enable GPU support in cray-mpich:
-
-`MPICH_GPU_SUPPORT_ENABLED=1`
-
-No additional MPI models to load use the standard CRAY-MPICH module.
+No additional MPI modules to load just use the standard `cray-mpich` module.
 
 This supports GPU-GPU transfers:
 
@@ -364,110 +361,47 @@ This supports GPU-GPU transfers:
 - Intra-node via GPU Peer2Peer IPC
 
 Be aware that on these nodes there are only two PICe network cards in each node and they may not be in the same memory region to a given GPU.
-Therefore NUMA effects are to be expected in multi-node communication.
+Therefore NUMA effects are to be expected in multi-node communication. More detail on this is provided below.
 
 ### Libraries
 
-cray-libsci_acc
 
+In order to access the maths libraries provided by HPE-cray, targeted for GPU acceleration there is a new module provided:
 
-### Environment variables 
+`cray-libsci_acc`
 
-https://rocm.docs.amd.com/projects/HIP/en/latest/how_to_guides/debugging.html#summary-of-environment-variables-in-hip
+Additionally a number of libraries are provided as part of the `rocm` module.
 
-#### AMD_LOG_LEVEL
+- [Math Libraries](https://rocm.docs.amd.com/en/docs-5.2.3/reference/gpu_libraries/math.html)
+- [AI Libraries](https://rocm.docs.amd.com/projects/MIOpen/en/docs-5.2.3/index.html)
+- [C++ primative Libraries](https://rocm.docs.amd.com/en/docs-5.2.3/reference/gpu_libraries/c%2B%2B_primitives.html)
 
-0: Disable log.
-1: Enable log on error level.
-2: Enable log on warning and below levels.
-0x3: Enable log on information and below levels.
-0x4: Decode and display AQL packets.
-
-#### AMD_LOG_MASK
-
-Enable HIP log on different Level.
-
-Default: 0x7FFFFFFF
-
-0x1: Log API calls.
-0x02: Kernel and Copy Commands and Barriers.
-0x4: Synchronization and waiting for commands to finish.
-0x8: Enable log on information and below levels.
-0x20: Queue commands and queue contents.
-0x40:Signal creation, allocation, pool.
-0x80: Locks and thread-safety code.
-0x100: Copy debug.
-0x200: Detailed copy debug.
-0x400: Resource allocation, performance-impacting events.
-0x800: Initialization and shutdown.
-0x1000: Misc debug, not yet classified.
-0x2000: Show raw bytes of AQL packet.
-0x4000: Show code creation debug.
-0x8000: More detailed command info, including barrier commands.
-0x10000: Log message location.
-0xFFFFFFFF: Log always even mask flag is zero.
-
-#### HIP_VISIBLE_DEVICES:
-
-For system with multiple devices, it’s possible to make only certain device(s) visible to HIP via setting environment variable, HIP_VISIBLE_DEVICES(or CUDA_VISIBLE_DEVICES on Nvidia platform), only devices whose index is present in the sequence are visible to HIP.
-
-Runtime : HIP Runtime. Applies only to applications using HIP on the AMD platform.
-
-`export HIP_VISIBLE_DEVICES=0,1`
-
- 
-#### ROCR_VISIBLE_DEVICES
-
-A list of device indices or UUIDs that will be exposed to applications
-
-Runtime : ROCm Platform Runtime. Applies to all applications using the user mode ROCm software stack.
-
-`export ROCR_VISIBLE_DEVICES="0,GPU-DEADBEEFDEADBEEF"`
-
-#### OMP_DEFAULT_DEVICE
-
-Default device used for OpenMP target offloading.
-
-Runtime : OpenMP Runtime. Applies only to applications using OpenMP offloading.
-
-`export OMP_DEFAULT_DEVICE="2"`
-
-sets the default device to the 3rd device on the node.
-
-#### HSA_ENABLE_SDMA
-
-`export HSA_ENABLE_SDMA=0`
-
-Forces host-to-device and device-to-host copies to use compute shader blit kernels rather than the dedicated DMA copy engines.
-
-Impact will be reduced bandwidth but useful when isolating issues with hardware copy engines.
-
-
-#### MPICH_OFI_NIC_VERBOSE
-
-#### MPICH_OFI_NIC_POLICY
-
-#### MPICH_GPU_SUPPORT_ENABLED
-
-Activates GPU aware MPI in Cray MPICH:
-
-`export MPICH_GPU_SUPPORT_ENABLED=1`
-
-If not set then if MPI calls try to send messages with pointers to GPU memory an error will occur.
 
 
 ## Python Environment
 
+The `cray-python` module can be used as normal for the GPU partition with `mpi4py` package that is installed by default. `mpi4py` uses `cray-mpich` under the hood and in the same way as the CPU compute nodes.
 
+However unless specifically compiled for GPU-GPU communication certain python packages/frameworks that try to take advantage of the fast links between GPUs by calling MPI on GPU pointers may have issues. To set the environment correctly for a given python program the following snippet can be added to load the required libmpi_gtl_has library:
+
+```
+from os import environ
+if environ.get("MPICH_GPU_SUPPORT_ENABLED", False):
+    from ctypes import CDLL, RTLD_GLOBAL
+    CDLL(f"{environ.get('CRAY_MPICH_ROOTDIR')}/gtl/lib/libmpi_gtl_hsa.so", mode=RTLD_GLOBAL)
+
+from mpi4py import MPI
+```
 
 
 ## Supported software
 
-The ARCHER2 GPU service is intended for code development, testing and experimentation and will not have supported centrally installed versions of codes as is supported for the ARCHER2 compute nodes. However some builds are being made available to users by members of CSE to under a best effort approach to support the community.
+The ARCHER2 GPU service is intended for code development, testing and experimentation and will not have supported centrally installed versions of codes as are supported for the ARCHER2 compute nodes. However some builds are being made available to users by members of CSE to under a best effort approach to support the community.
 
 Codes that have modules targetting GPUs are:
 
-- 
+!!! Note
+    Will be filled out as applications are compiled and made available. 
 
 ## Running jobs on the GPU nodes
 
@@ -494,7 +428,7 @@ some examples of how to use host resources and how to launch MPI
 applications.
 
 !!! Warning
-	In order to run jobs on the GPU nodes your ARCHHER2 budget must have positive CU
+	In order to run jobs on the GPU nodes your ARCHER2 budget must have positive CU
 	hours associated with it. However, your budget will not be charged for any GPU
     jobs you run.
 
@@ -713,22 +647,223 @@ GPU  Temp   AvgPwr  SCLK    MCLK     Fan  Perf  PwrCap  VRAM%  GPU%
     Launching parallel jobs on GPU nodes from an interactive shell on a GPU node is not straightforward so you should either
     use job submission scripts or the `salloc` method of interactive use described above.
 
+
+### Environment variables 
+
+
+
+##### ROCR_VISIBLE_DEVICES
+
+A list of device indices or UUIDs that will be exposed to applications
+
+Runtime : ROCm Platform Runtime. Applies to all applications using the user mode ROCm software stack.
+
+`export ROCR_VISIBLE_DEVICES="0,GPU-DEADBEEFDEADBEEF"`
+
+
+#### HIP Environment variables
+
+https://rocm.docs.amd.com/projects/HIP/en/docs-5.2.3/how_to_guides/debugging.html#summary-of-environment-variables-in-hip
+
+##### AMD_LOG_LEVEL
+
+`export AMD_LOG_LEVEL=1`
+
+0: Disable log.
+1: Enable log on error level.
+2: Enable log on warning and below levels.
+0x3: Enable log on information and below levels.
+0x4: Decode and display AQL packets.
+
+#### AMD_LOG_MASK
+
+Enable HIP log on different Levels.
+
+`export AMD_LOG_MASK=0x1`
+
+```
+Default: 0x7FFFFFFF
+
+0x1: Log API calls.
+0x02: Kernel and Copy Commands and Barriers.
+0x4: Synchronization and waiting for commands to finish.
+0x8: Enable log on information and below levels.
+0x20: Queue commands and queue contents.
+0x40: Signal creation, allocation, pool.
+0x80: Locks and thread-safety code.
+0x100: Copy debug.
+0x200: Detailed copy debug.
+0x400: Resource allocation, performance-impacting events.
+0x800: Initialization and shutdown.
+0x1000: Misc debug, not yet classified.
+0x2000: Show raw bytes of AQL packet.
+0x4000: Show code creation debug.
+0x8000: More detailed command info, including barrier commands.
+0x10000: Log message location.
+0xFFFFFFFF: Log always even mask flag is zero.
+```
+
+##### HIP_VISIBLE_DEVICES:
+
+For system with multiple devices, it’s possible to make only certain device(s) visible to HIP via setting environment variable, HIP_VISIBLE_DEVICES(or CUDA_VISIBLE_DEVICES on Nvidia platform), only devices whose index is present in the sequence are visible to HIP.
+
+Runtime : HIP Runtime. Applies only to applications using HIP on the AMD platform.
+
+`export HIP_VISIBLE_DEVICES=0,1`
+
+##### AMD_SERIALIZE_KERNEL
+
+To serialize the kernel enquing set the following variable, 
+
+`export AMD_SERIALIZE_KERNEL=1`
+
+- 0: not serialized
+- 1: wait for completion before enqueue
+- 2: wait for completion after enqueue
+- 3: Both 1 and 2
+
+##### AMD_SERIALIZE_COPY
+
+To serialize the copies set,
+
+`export AMD_SERIALIZE_COPY=1`
+
+- 0: not serialized
+- 1: wait for completion before enqueue
+- 2: wait for completion after enqueue
+- 3: Both 1 and 2
+
+
+##### HIP_HOST_COHERENT
+
+Sets whether memory in coherent in hipHostMalloc.
+
+`export HIP_HOST_COHERENT=1`
+
+Is value is `1` memory is coherent with host, if `0` memory is not coherent between host and GPU.
+
+#### OpenMP Environment variables
+
+https://rocm.docs.amd.com/en/docs-5.2.3/reference/openmp/openmp.html#environment-variables
+
+##### OMP_DEFAULT_DEVICE
+
+Default device used for OpenMP target offloading.
+
+Runtime : OpenMP Runtime. Applies only to applications using OpenMP offloading.
+
+`export OMP_DEFAULT_DEVICE="2"`
+
+sets the default device to the 3rd device on the node.
+
+##### OMP_NUM_TEAMS
+
+Users can choose the number of teams used for kernel launch by setting,
+
+`export OMP_NUM_THREADS`
+
+this can be tuned to optimise performance.
+
+##### GPU_MAX_HW_QUEUES
+
+To set the number of HSA queues used in the OpenMP runtime set,
+
+`export GPU_MAX_HW_QUEUES`
+
+#### MPI Environment variables
+
+##### MPICH_GPU_SUPPORT_ENABLED
+
+Activates GPU aware MPI in Cray MPICH:
+
+`export MPICH_GPU_SUPPORT_ENABLED=1`
+
+If not set MPI calls that attempt to send messages from buffers that are on  GPU-attached memory will crash/hang.
+
+##### HSA_ENABLE_SDMA
+
+`export HSA_ENABLE_SDMA=0`
+
+Forces host-to-device and device-to-host copies to use compute shader blit kernels rather than the dedicated DMA copy engines.
+
+Impact will be reduced bandwidth but this is recommended when isolating issues with hardware copy engines.
+
+##### MPICH_OFI_NIC_POLICY
+
+For GPU-enabled parallel applications that involve MPI operations that access application arrays that are resident on GPU-attached memory regions users can set,
+
+`export MPICH_OFI_NIC_POLICY=GPU`
+
+In this case, for each MPI process, Cray MPI aims to aelect a NIC device that is closest to the GPU device being used.
+
+##### MPICH_OFI_NIC_VERBOSE
+
+To display information pertaining to NIC selection set,
+
+`export MPICH_OFI_NIC_VERBOSE=2`
+
+
 ## Debugging
+
+!!! Note
+    Remove section for now
+
+
+https://rocm.docs.amd.com/projects/ROCgdb/en/docs-5.2.3/index.html
+
+!!! Note
+    Work in progresss issue with integration with gdb4hpc
+
+
+!!! Note
+    The license for Linaro-forge help on ARCHER2 does not include support for GPU profiling.
+
+### HiP
+
 
 rocgdb?
 
+https://docs.amd.com/projects/HIP/en/docs-5.2.3/how_to_guides/debugging.html#using-rocgdb
+
+
+
 ## Profiling
 
-rocprof?
+An initial profiling capability is provided via `rocprof` which is part of the `rocm` module.
+
+
+For example in an interactive session where resources have alrasdy been allocated you can call,
+
+```
+srun -n 2 --exclusive --nodes=1 --time=00:20:00 --partition=gpu --qos=gpu-exc --gpus=2 rocprof --stats ./myprog_exe
+```
+
+to profile your applicaition. More detail on the use of rocprof can be found [here](https://github.com/ROCm/rocprofiler/tree/rocm-5.2.3).
+
+!!! Note
+    The license for Linaro-forge help on ARCHER2 does not include support for GPU profiling.
+
 
 ## Performance tuning
 
-### Job placement
+AMD provides some documentation on performance tuning [here](https://rocm.docs.amd.com/en/docs-5.2.3/how_to/tuning_guides/mi200.html) not all options will be avalible to users to be aware milage may vary.
 
-One important feature of GPU nodes is the placement of processes to GPU's and the associated host memory region.
+### Hardware details
 
-#### Node Topology
+The specifications of the GPU hardware can be found [here](https://www.amd.com/en/products/accelerators/instinct/mi200/mi210.html).
 
+Additionally you can use the command,
+
+`rocminfo`
+
+in job on a GPU node to print information about the GPUs and CPU on the node. This command is provided as part of the `rocm` module.
+
+### Node Topology
+
+Using `rocm-smi --showtopo` we can learn about the connections between the GPUs in a node and the how memory regions between the GPU and CPU are connected.
+
+
+```
 ======================= ROCm System Management Interface =======================
 =========================== Weight between two GPUs ============================
        GPU0         GPU1         GPU2         GPU3
@@ -761,15 +896,120 @@ GPU 2          : (Topology) Numa Affinity: 2
 GPU 3          : (Topology) Numa Node: 3
 GPU 3          : (Topology) Numa Affinity: 3
 ============================= End of ROCm SMI Log ==============================
+```
+
+To quote the [rocm documentation](https://rocm.docs.amd.com/en/docs-5.5.1/how_to/tuning_guides/mi200.html#hardware-verification-with-rocm):
+
+```
+- The first block of the output shows the distance between the GPUs similar to what the numactl command outputs for the NUMA domains of a system. The weight is a qualitative measure for the “distance” data must travel to reach one GPU from another one. While the values do not carry a special (physical) meaning, the higher the value the more hops are needed to reach the destination from the source GPU.
+
+- The second block has a matrix named “Hops between two GPUs”, where 1 means the two GPUs are directly connected with XGMI, 2 means both GPUs are linked to the same CPU socket and GPU communications will go through the CPU, and 3 means both GPUs are linked to different CPU sockets so communications will go through both CPU sockets. This number is one for all GPUs in this case since they are all connected to each other through the Infinity Fabric links.
+
+- The third block outputs the link types between the GPUs. This can either be “XGMI” for AMD Infinity Fabric links or “PCIE” for PCIe Gen4 links.
+
+- The fourth block reveals the localization of a GPU with respect to the NUMA organization of the shared memory of the AMD EPYC processors.
+
+```
+
+### rocm-bandwidth-test
+
+As part of the `rocm` module the  `rocm-bandwidth-test` is provided that can be used to measure the performance of commentions between the hardware in a node.
+
+In addition to `rocm-smi` this is a bandwidth test can be useful to understand the composition and performance limitations in a GPU node. Here is an example output from a GPU nodes on Archer2.
+
+```
+Device: 0,  AMD EPYC 7543P 32-Core Processor
+Device: 1,  AMD EPYC 7543P 32-Core Processor
+Device: 2,  AMD EPYC 7543P 32-Core Processor
+Device: 3,  AMD EPYC 7543P 32-Core Processor
+Device: 4,  ,  GPU-ab43b63dec8adaf3,  c9:0.0
+Device: 5,  ,  GPU-0b953cf8e6d4184a,  87:0.0
+Device: 6,  ,  GPU-b0266df54d0dd2e1,  49:0.0
+Device: 7,  ,  GPU-790a09bfbf673859,  09:0.0
+
+Inter-Device Access
+
+D/D       0         1         2         3         4         5         6         7
+
+0         1         1         1         1         1         1         1         1
+
+1         1         1         1         1         1         1         1         1
+
+2         1         1         1         1         1         1         1         1
+
+3         1         1         1         1         1         1         1         1
+
+4         1         1         1         1         1         1         1         1
+
+5         1         1         1         1         1         1         1         1
+
+6         1         1         1         1         1         1         1         1
+
+7         1         1         1         1         1         1         1         1
 
 
-### Performance tuning
+Inter-Device Numa Distance
 
-AMD provide documentation:
+D/D       0         1         2         3         4         5         6         7
 
-https://rocm.docs.amd.com/en/docs-5.5.1/how_to/tuning_guides/mi200.html
+0         0         12        12        12        20        32        32        32
+
+1         12        0         12        12        32        20        32        32
+
+2         12        12        0         12        32        32        20        32
+
+3         12        12        12        0         32        32        32        20
+
+4         20        32        32        32        0         15        15        15
+
+5         32        20        32        32        15        0         15        15
+
+6         32        32        20        32        15        15        0         15
+
+7         32        32        32        20        15        15        15        0
 
 
+Unidirectional copy peak bandwidth GB/s
+
+D/D       0           1           2           3           4           5           6           7
+
+0         N/A         N/A         N/A         N/A         26.977      26.977      26.977      26.977
+
+1         N/A         N/A         N/A         N/A         26.977      26.975      26.975      26.975
+
+2         N/A         N/A         N/A         N/A         26.977      26.977      26.975      26.975
+
+3         N/A         N/A         N/A         N/A         26.975      26.977      26.975      26.977
+
+4         28.169      28.171      28.169      28.169      1033.080    42.239      42.112      42.264
+
+5         28.169      28.169      28.169      28.169      42.243      1033.088    42.294      42.286
+
+6         28.169      28.171      28.167      28.169      42.158      42.281      1043.367    42.277
+
+7         28.171      28.169      28.169      28.169      42.226      42.264      42.264      1051.212
+
+
+Bidirectional copy peak bandwidth GB/s
+
+D/D       0           1           2           3           4           5           6           7
+
+0         N/A         N/A         N/A         N/A         40.480      42.528      42.059      42.173
+
+1         N/A         N/A         N/A         N/A         41.604      41.826      41.903      41.417
+
+2         N/A         N/A         N/A         N/A         41.008      41.499      41.258      41.338
+
+3         N/A         N/A         N/A         N/A         40.968      41.273      40.982      41.450
+
+4         40.480      41.604      41.008      40.968      N/A         80.946      80.631      80.888
+
+5         42.528      41.826      41.499      41.273      80.946      N/A         80.944      80.940
+
+6         42.059      41.903      41.258      40.982      80.631      80.944      N/A         80.896
+
+7         42.173      41.417      41.338      41.450      80.888      80.940      80.896      N/A
+```
 
 ## Tools
 
@@ -779,41 +1019,89 @@ If you load the rocm module on the system you will have access to the rocm-smi u
 
 Here are some useful commands to get you started:
 
+`rocm-smi --alldevices` deivce status
+
+```
+======================= ROCm System Management Interface =======================
+================================= Concise Info =================================
+GPU  Temp   AvgPwr  SCLK    MCLK     Fan  Perf  PwrCap  VRAM%  GPU%
+0    28.0c  43.0W   800Mhz  1600Mhz  0%   auto  300.0W    0%   0%
+1    30.0c  43.0W   800Mhz  1600Mhz  0%   auto  300.0W    0%   0%
+2    33.0c  43.0W   800Mhz  1600Mhz  0%   auto  300.0W    0%   0%
+3    33.0c  41.0W   800Mhz  1600Mhz  0%   auto  300.0W    0%   0%
+================================================================================
+============================= End of ROCm SMI Log ==============================
+```
+This shows you the current state of the hardware while an application is running.
+
+Focusing on the GPU activity can be usful to understand when you code is active on the GPUs:
+
+`rocm-smi --showuse` GPU activity
+
+```
+======================= ROCm System Management Interface =======================
+============================== % time GPU is busy ==============================
+GPU[0]          : GPU use (%): 0
+GPU[0]          : GFX Activity: 705759841
+GPU[1]          : GPU use (%): 0
+GPU[1]          : GFX Activity: 664257322
+GPU[2]          : GPU use (%): 0
+GPU[2]          : GFX Activity: 660987914
+GPU[3]          : GPU use (%): 0
+GPU[3]          : GFX Activity: 665049119
+================================================================================
+============================= End of ROCm SMI Log ==============================
+```
+
+Additionally you can focus on the memory use of the GPU's:
+
+`rocm-smi --showmemuse` GPU memory currently consumed
+
+```
+======================= ROCm System Management Interface =======================
+============================== Current Memory Use ==============================
+GPU[0]          : GPU memory use (%): 0
+GPU[0]          : Memory Activity: 323631375
+GPU[1]          : GPU memory use (%): 0
+GPU[1]          : Memory Activity: 319196585
+GPU[2]          : GPU memory use (%): 0
+GPU[2]          : Memory Activity: 318641690
+GPU[3]          : GPU memory use (%): 0
+GPU[3]          : Memory Activity: 319854295
+================================================================================
+============================= End of ROCm SMI Log ==============================
+```
 
 
-More detail can be found at 
+More commands can be found by running,
 
+`rocm-smi --help`
+
+will run on the login nodes to get more infomation about probing the GPUs.
+
+More detail can be found at [here](https://github.com/ROCm/rocm_smi_lib/tree/rocm-5.2.3/python_smi_tools).
 
 ### Hipify
 
+Is a CUDA to HIP source translator tool that can allow CUDA source code to be translated into HIP source code easing the transition between the two hardware targets.
 
+The tool is avalible on ARCHER2 by loading the `rocm` module.
 
+The github repository for HIPify can be found [here](https://github.com/ROCm/HIPIFY).
 
-## Notes
+The documentation for hipfiy is found [here](https://rocm.docs.amd.com/projects/HIPIFY/en/docs-5.2.3/index.html).
+
+## Notes and useful links
 
 You should expect the software development environment to be similar to that
 available on the Frontier exascale system:
 
 - [Programming environment](https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#programming-environment)
-- [Compiling](https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#compiling) 
+- [Compiling](https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#compiling)
+- [Lumi docs](https://docs.lumi-supercomputer.eu/hardware/lumig/)
+- [rocm-examples](https://github.com/amd/rocm-examples/tree/develop)
+- [hip-examples](https://github.com/ROCm/HIP-Examples/tree/rocm-5.2.x)
+- [hello-jobstep](https://code.ornl.gov/olcf/hello_jobstep) 
 
 
-Examples need:
 
-Fortran:
-
-    OpenACC
-
-    OpenMP
-
-    HIP: N/A
-
-C/C++:
-
-    OpenACC
-
-    OpenMP
-
-    HiP
-
-- GPU isolation: https://rocm.docs.amd.com/en/docs-5.7.1/understand/gpu_isolation.html
