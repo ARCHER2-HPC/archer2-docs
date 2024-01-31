@@ -137,8 +137,6 @@ should load the appropriate CPU target module:
 module load craype-x86-milan
 ```
 
-
-
 ### Compilation Strategies
 
 Compiler support on ARCHER2 for various programming models that enable
@@ -275,35 +273,20 @@ under `PrgEnv-cray` can be viewed using the command `man
 intro_openacc`.
 
 
+#### Cmake
+
+https://rocm.docs.amd.com/en/docs-5.2.3/understand/cmake_packages.html
 
 
-
-
-
-
-
-### Advanced Compilation
-
-#### Mixing OpenMP and HIP C/C++
-
-#### Compilation with hipcc
-
-#### HIPCC and MPI
 
 
 ## GPU-aware MPI
 
-Available in three of the programming environments:
+Need to set an environment variable to enable GPU support in `cray-mpich`:
 
-- PrgEnv-amd
-- PrgEnv-cray
-- PrgEnv-gnu ?
+`export MPICH_GPU_SUPPORT_ENABLED=1`
 
-Need to set environment variable to enable GPU support in cray-mpich:
-
-`MPICH_GPU_SUPPORT_ENABLED=1`
-
-No additional MPI models to load use the standard CRAY-MPICH module.
+No additional MPI modules to load just use the standard `cray-mpich` module.
 
 This supports GPU-GPU transfers:
 
@@ -311,30 +294,48 @@ This supports GPU-GPU transfers:
 - Intra-node via GPU Peer2Peer IPC
 
 Be aware that on these nodes there are only two PICe network cards in each node and they may not be in the same memory region to a given GPU.
-Therefore NUMA effects are to be expected in multi-node communication.
+Therefore NUMA effects are to be expected in multi-node communication. More detail on this is provided below.
 
 ### Libraries
 
 
+In order to access the maths libraries provided by HPE-cray, targeted for GPU acceleration there is a new module provided:
 
-cray-libsci_acc
+`cray-libsci_acc`
 
+Additionally a number of libraries are provided as part of the `rocm` module.
 
-https://rocm.docs.amd.com/en/docs-5.2.3/
+- [Math Libraries](https://rocm.docs.amd.com/en/docs-5.2.3/reference/gpu_libraries/math.html)
+- [AI Libraries](https://rocm.docs.amd.com/projects/MIOpen/en/docs-5.2.3/index.html)
+- [C++ primative Libraries](https://rocm.docs.amd.com/en/docs-5.2.3/reference/gpu_libraries/c%2B%2B_primitives.html)
+
 
 ### Environment variables 
 
-https://rocm.docs.amd.com/projects/HIP/en/latest/how_to_guides/debugging.html#summary-of-environment-variables-in-hip
 
-#### AMD_LOG_LEVEL
+
+##### ROCR_VISIBLE_DEVICES
+
+A list of device indices or UUIDs that will be exposed to applications
+
+Runtime : ROCm Platform Runtime. Applies to all applications using the user mode ROCm software stack.
+
+`export ROCR_VISIBLE_DEVICES="0,GPU-DEADBEEFDEADBEEF"`
+
+
+#### HIP Environment variables
+
+https://rocm.docs.amd.com/projects/HIP/en/docs-5.2.3/how_to_guides/debugging.html#useful-environment-variables
+
+##### AMD_LOG_LEVEL
 
 `export AMD_LOG_LEVEL=1`
 
 0: Disable log.
 1: Enable log on error level.
 2: Enable log on warning and below levels.
-3: Enable log on information and below levels.
-4: Decode and display AQL packets.
+0x3: Enable log on information and below levels.
+0x4: Decode and display AQL packets.
 
 #### AMD_LOG_MASK
 
@@ -342,6 +343,7 @@ Enable HIP log on different Levels.
 
 `export AMD_LOG_MASK=0x1`
 
+```
 Default: 0x7FFFFFFF
 
 0x1: Log API calls.
@@ -361,16 +363,10 @@ Default: 0x7FFFFFFF
 0x8000: More detailed command info, including barrier commands.
 0x10000: Log message location.
 0xFFFFFFFF: Log always even mask flag is zero.
+```
 
-#### ROCR_VISIBLE_DEVICES
 
-A list of device indices or UUIDs that will be exposed to applications
-
-Runtime : ROCm Platform Runtime. Applies to all applications using the user mode ROCm software stack.
-
-`export ROCR_VISIBLE_DEVICES="0,GPU-DEADBEEFDEADBEEF"`
-
-#### HIP_VISIBLE_DEVICES:
+##### HIP_VISIBLE_DEVICES:
 
 For system with multiple devices, it’s possible to make only certain device(s) visible to HIP via setting environment variable, HIP_VISIBLE_DEVICES(or CUDA_VISIBLE_DEVICES on Nvidia platform), only devices whose index is present in the sequence are visible to HIP.
 
@@ -378,7 +374,25 @@ Runtime : HIP Runtime. Applies only to applications using HIP on the AMD platfor
 
 `export HIP_VISIBLE_DEVICES=0,1`
 
-#### OMP_DEFAULT_DEVICE
+##### AMD_SERIALIZE_KERNEL
+
+##### AMD_SERIALIZE_COPY
+
+Sets what the copy behavour 
+
+##### HIP_HOST_COHERENT
+
+Sets weather memory in coherent in hipHostMalloc.
+
+`export HIP_HOST_COHERENT=1`
+
+Is value is `1` memory is coherent with host, if `0` memory is not coherent between host and GPU.
+
+#### OpenMP Environment variables
+
+https://rocm.docs.amd.com/en/docs-5.2.3/reference/openmp/openmp.html#environment-variables
+
+##### OMP_DEFAULT_DEVICE
 
 Default device used for OpenMP target offloading.
 
@@ -388,18 +402,7 @@ Runtime : OpenMP Runtime. Applies only to applications using OpenMP offloading.
 
 sets the default device to the 3rd device on the node.
 
-#### HSA_ENABLE_SDMA
-
-`export HSA_ENABLE_SDMA=0`
-
-Forces host-to-device and device-to-host copies to use compute shader blit kernels rather than the dedicated DMA copy engines.
-
-Impact will be reduced bandwidth but useful when isolating issues with hardware copy engines.
-
-
-#### MPICH_OFI_NIC_VERBOSE
-
-#### MPICH_OFI_NIC_POLICY
+##### MPI Environment variables
 
 #### MPICH_GPU_SUPPORT_ENABLED
 
@@ -407,13 +410,35 @@ Activates GPU aware MPI in Cray MPICH:
 
 `export MPICH_GPU_SUPPORT_ENABLED=1`
 
-If not set then if MPI calls try to send messages with pointers to GPU memory an error will occur.
+If not set MPI calls that attempt to send messages from buffers that are on  GPU-attached memory will crash/hang.
+
+#### HSA_ENABLE_SDMA
+
+`export HSA_ENABLE_SDMA=0`
+
+Forces host-to-device and device-to-host copies to use compute shader blit kernels rather than the dedicated DMA copy engines.
+
+Impact will be reduced bandwidth but this is recommended when isolating issues with hardware copy engines.
+
+#### MPICH_OFI_NIC_POLICY
+
+For GPU-enabled parallel applications that involve MPI operations that access application arrays that are resident on GPU-attached memory regions users can set,
+
+`export MPICH_OFI_NIC_POLICY=GPU`
+
+In this case, for each MPI process, Cray MPI aims to aelect a NIC device that is closest to the GPU device being used.
+
+#### MPICH_OFI_NIC_VERBOSE
+
+To display information pertaining to NIC selection set,
+
+`export MPICH_OFI_NIC_VERBOSE=2`
 
 ## Python Environment
 
-The `cray-python` environment can be used normal with `mpi4py` that uses `cray-mpich` in the same way as the CPU compute nodes.
+The `cray-python` module can be used as normal for the GPU partition with `mpi4py` package that is installed by default. `mpi4py` uses `cray-mpich` under the hood and in the same way as the CPU compute nodes.
 
-However unless specifically compiled for GPU-GPU communication certain packages that try to take advantage of the fast links between GPU's by calling MPI on GPU pointers may have issues. To set the environment correctly for a given python program the following snippet can be added to load the required libmpi_gtl_has library:
+However unless specifically compiled for GPU-GPU communication certain python packages/frameworks that try to take advantage of the fast links between GPUs by calling MPI on GPU pointers may have issues. To set the environment correctly for a given python program the following snippet can be added to load the required libmpi_gtl_has library:
 
 ```
 from os import environ
@@ -431,7 +456,8 @@ The ARCHER2 GPU service is intended for code development, testing and experiment
 
 Codes that have modules targetting GPUs are:
 
-!!! will be 
+!!! Note
+    Will be filled out as applications are compiled and made available. 
 
 ## Running jobs on the GPU nodes
 
@@ -458,7 +484,7 @@ some examples of how to use host resources and how to launch MPI
 applications.
 
 !!! Warning
-	In order to run jobs on the GPU nodes your ARCHHER2 budget must have positive CU
+	In order to run jobs on the GPU nodes your ARCHER2 budget must have positive CU
 	hours associated with it. However, your budget will not be charged for any GPU
     jobs you run.
 
@@ -679,7 +705,15 @@ GPU  Temp   AvgPwr  SCLK    MCLK     Fan  Perf  PwrCap  VRAM%  GPU%
 
 ## Debugging
 
+!!! Note
+    Remove section for now
+
+
 https://rocm.docs.amd.com/projects/ROCgdb/en/docs-5.2.3/index.html
+
+!!! Note
+    Work in progresss issue with integration with gdb4hpc
+
 
 ### HiP
 
@@ -694,22 +728,37 @@ https://docs.amd.com/projects/HIP/en/docs-5.2.3/how_to_guides/debugging.html#usi
 
 ## Profiling
 
+An initial profiling capability is provided via `rocprof` which is part of the `rocm` module.
 
-https://github.com/ROCm/rocprofiler/tree/rocm-5.2.3
 
-rocprof?
+For example in an interactive session you can call,
+
+```
+srun -n 2 --exclusive --nodes=1 --time=00:20:00 --partition=gpu --qos=gpu-exc --gpus=2 rocprof --stats ./myprog_exe
+```
+
+to profile your applicaition. More detail on the use of rocprof can be found [here](https://github.com/ROCm/rocprofiler/tree/rocm-5.2.3).
+
+!!! Note
+    The license for Linaro-forge help on ARCHER2 does not include support for GPU profiling.
+
 
 ## Performance tuning
 
-### Job placement
+### Hardware specifics
 
-One important feature of GPU nodes is the placement of processes to GPU's and the associated host memory region.
+The specifications of the GPU hardware can be found here:
 
-by default...
+https://www.amd.com/en/products/accelerators/instinct/mi200/mi210.html
+
+https://www.amd.com/system/files/documents/amd-instinct-mi210-brochure.pdf/
+
+AMD provides tuning documentation:
+
+https://rocm.docs.amd.com/en/docs-5.2.3/how_to/tuning_guides/mi200.html
 
 
 ### Node Topology
-
 
 Using `rocm-smi` we can learn about the connections between the GPUs in a node and the how memory regions between the GPU and CPU are connected.
 
@@ -748,17 +797,106 @@ GPU 3          : (Topology) Numa Affinity: 3
 ============================= End of ROCm SMI Log ==============================
 ```
 
-### Performance tuning
+### rocm-bandwidth-test
 
-The specifications of the GPU hardware can be found here:
+As part of the `rocm` module the  `rocm-bandwidth-test` is provided that can be used to measure the performance of commentions between the hardware in a node.
 
-https://www.amd.com/en/products/accelerators/instinct/mi200/mi210.html
+In addition to `rocm-smi` this is a bandwidth test can be useful to understand the composition and performance limitations in a GPU node. Here is an example output from the GPU nodes on archer2
 
-https://www.amd.com/system/files/documents/amd-instinct-mi210-brochure.pdf/
+```
+Device: 0,  AMD EPYC 7543P 32-Core Processor
+Device: 1,  AMD EPYC 7543P 32-Core Processor
+Device: 2,  AMD EPYC 7543P 32-Core Processor
+Device: 3,  AMD EPYC 7543P 32-Core Processor
+Device: 4,  ,  GPU-ab43b63dec8adaf3,  c9:0.0
+Device: 5,  ,  GPU-0b953cf8e6d4184a,  87:0.0
+Device: 6,  ,  GPU-b0266df54d0dd2e1,  49:0.0
+Device: 7,  ,  GPU-790a09bfbf673859,  09:0.0
 
-AMD provide documentation:
+Inter-Device Access
 
-https://rocm.docs.amd.com/en/docs-5.2.3/how_to/tuning_guides/mi200.html
+D/D       0         1         2         3         4         5         6         7
+
+0         1         1         1         1         1         1         1         1
+
+1         1         1         1         1         1         1         1         1
+
+2         1         1         1         1         1         1         1         1
+
+3         1         1         1         1         1         1         1         1
+
+4         1         1         1         1         1         1         1         1
+
+5         1         1         1         1         1         1         1         1
+
+6         1         1         1         1         1         1         1         1
+
+7         1         1         1         1         1         1         1         1
+
+
+Inter-Device Numa Distance
+
+D/D       0         1         2         3         4         5         6         7
+
+0         0         12        12        12        20        32        32        32
+
+1         12        0         12        12        32        20        32        32
+
+2         12        12        0         12        32        32        20        32
+
+3         12        12        12        0         32        32        32        20
+
+4         20        32        32        32        0         15        15        15
+
+5         32        20        32        32        15        0         15        15
+
+6         32        32        20        32        15        15        0         15
+
+7         32        32        32        20        15        15        15        0
+
+
+Unidirectional copy peak bandwidth GB/s
+
+D/D       0           1           2           3           4           5           6           7
+
+0         N/A         N/A         N/A         N/A         26.977      26.977      26.977      26.977
+
+1         N/A         N/A         N/A         N/A         26.977      26.975      26.975      26.975
+
+2         N/A         N/A         N/A         N/A         26.977      26.977      26.975      26.975
+
+3         N/A         N/A         N/A         N/A         26.975      26.977      26.975      26.977
+
+4         28.169      28.171      28.169      28.169      1033.080    42.239      42.112      42.264
+
+5         28.169      28.169      28.169      28.169      42.243      1033.088    42.294      42.286
+
+6         28.169      28.171      28.167      28.169      42.158      42.281      1043.367    42.277
+
+7         28.171      28.169      28.169      28.169      42.226      42.264      42.264      1051.212
+
+
+Bidirectional copy peak bandwidth GB/s
+
+D/D       0           1           2           3           4           5           6           7
+
+0         N/A         N/A         N/A         N/A         40.480      42.528      42.059      42.173
+
+1         N/A         N/A         N/A         N/A         41.604      41.826      41.903      41.417
+
+2         N/A         N/A         N/A         N/A         41.008      41.499      41.258      41.338
+
+3         N/A         N/A         N/A         N/A         40.968      41.273      40.982      41.450
+
+4         40.480      41.604      41.008      40.968      N/A         80.946      80.631      80.888
+
+5         42.528      41.826      41.499      41.273      80.946      N/A         80.944      80.940
+
+6         42.059      41.903      41.258      40.982      80.631      80.944      N/A         80.896
+
+7         42.173      41.417      41.338      41.450      80.888      80.940      80.896      N/A
+```
+
 
 
 ## Tools
@@ -833,7 +971,7 @@ will run on the login nodes to get more infomation about probing the GPUs
 More detail can be found at https://github.com/ROCm/rocm_smi_lib/tree/rocm-5.2.3/python_smi_tools
 
 
-### Hipify
+### HIPIFY
 
 Is a CUDA to HIP source translator tool that can allow CUDA source code to be translated into HIP source code easing the transition between the two hardware targets.
 
@@ -841,16 +979,17 @@ The tool is avalible on ARCHER2 by loading the `rocm` module.
 
 The github repository for HIPify can be found here: https://github.com/ROCm/HIPIFY
 
-https://rocm.docs.amd.com/projects/HIPIFY/en/docs-5.2.3/index.html
+The documentation for hipfiy is found [here](https://rocm.docs.amd.com/projects/HIPIFY/en/docs-5.2.3/index.html).
 
-## Notes
+## Notes and useful links
 
 You should expect the software development environment to be similar to that
 available on the Frontier exascale system:
 
 - [Programming environment](https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#programming-environment)
 - [Compiling](https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#compiling)
-- [rocm-examples](https://github.com/amd/rocm-examples/tree/develop) 
+- [rocm-examples](https://github.com/amd/rocm-examples/tree/develop)
+- [hello-jobstep](https://code.ornl.gov/olcf/hello_jobstep) 
 
 
 Examples need:
