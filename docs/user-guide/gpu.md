@@ -478,6 +478,9 @@ process with offload to a single GPU.
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu-shd
 
+# Check assigned GPU
+srun --ntasks=1 rocm-smi
+
 srun --ntasks=1 --cpus-per-task=1 ./my_gpu_program.x
 ```
 
@@ -503,7 +506,21 @@ on the compute node architecture.
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu-shd
 
-srun --ntasks=2 --cpus-per-task=8 ./my_gpu_program.x
+# Enable GPU-aware MPI
+export MPICH_GPU_SUPPORT_ENABLED=1
+
+# Check assigned GPU
+srun --ntasks=1 rocm-smi
+
+# Check process/thread pinning
+module load xthi
+srun --ntasks=2 --cpus-per-task=8 \
+     --hint=nomultithread --distribution=block:block \
+     xthi
+
+srun --ntasks=2 --cpus-per-task=8 \
+     --hint=nomultithread --distribution=block:block \
+     ./my_gpu_program.x
 ```
 
 ### Multiple GPU on a single node - exclusive node access (max. 4 GPU)
@@ -530,7 +547,21 @@ on the compute node architecture.
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu-exc
 
-srun --ntasks=4 --cpus-per-task=8 ./my_gpu_program.x
+# Enable GPU-aware MPI
+export MPICH_GPU_SUPPORT_ENABLED=1
+
+# Check assigned GPU
+srun --ntasks=1 rocm-smi
+
+# Check process/thread pinning
+module load xthi
+srun --ntasks=4 --cpus-per-task=8 \
+     --hint=nomultithread --distribution=block:block \
+     xthi
+
+srun --ntasks=4 --cpus-per-task=8 \
+     --hint=nomultithread --distribution=block:block \
+     ./my_gpu_program.x
 ```
 
 !!! note
@@ -561,7 +592,26 @@ on the compute node architecture.
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu-exc
 
-srun --ntasks=8 --cpus-per-task=8 ./my_gpu_program.x
+# Enable GPU-aware MPI
+export MPICH_GPU_SUPPORT_ENABLED=1
+
+# Check assigned GPU
+nodelist=$(scontrol show hostname $SLURM_JOB_NODELIST)
+for nodeid in $nodelist
+do
+   echo $nodeid
+   srun --ntasks=1 --nodelist=$nodeid rocm-smi
+done
+
+# Check process/thread pinning
+module load xthi
+srun --ntasks=8 --cpus-per-task=8 \
+     --hint=nomultithread --distribution=block:block \
+     xthi
+
+srun --ntasks=8 --cpus-per-task=8 \
+     --hint=nomultithread --distribution=block:block \
+     ./my_gpu_program.x
 ```
 
 !!! note
@@ -579,11 +629,11 @@ srun --ntasks=8 --cpus-per-task=8 ./my_gpu_program.x
 
 If you wish to have a terminal to perform interactive testing, you can 
 use the `salloc` command to reserve the resources so you can use `srun` commands interactively. 
-For example, to request 2 GPU for 20 minutes you would use (remember to replace `t01` with your
+For example, to request 1 GPU for 20 minutes you would use (remember to replace `t01` with your
 budget code):
 
 ```
-auser@ln04:/work/t01/t01/auser> salloc --gpus=2 --time=00:20:00 --partition=gpu --qos=gpu-shd --account=t01
+auser@ln04:/work/t01/t01/auser> salloc --gpus=1 --time=00:20:00 --partition=gpu --qos=gpu-shd --account=t01
 salloc: Pending job allocation 5335731
 salloc: job 5335731 queued and waiting for resources
 salloc: job 5335731 has been allocated resources
@@ -598,8 +648,7 @@ auser@ln04:/work/t01/t01/auser> srun rocm-smi
 ======================= ROCm System Management Interface =======================
 ================================= Concise Info =================================
 GPU  Temp   AvgPwr  SCLK    MCLK     Fan  Perf  PwrCap  VRAM%  GPU%  
-0    31.0c  43.0W   800Mhz  1600Mhz  0%   auto  300.0W    0%   0%    
-1    34.0c  43.0W   800Mhz  1600Mhz  0%   auto  300.0W    0%   0%    
+0    31.0c  43.0W   800Mhz  1600Mhz  0%   auto  300.0W    0%   0%       
 ================================================================================
 ============================= End of ROCm SMI Log ==============================
 
@@ -608,12 +657,11 @@ srun: error: nid200001: tasks 0: Exited with exit code 2
 srun: launch/slurm: _step_signal: Terminating StepId=5335731.0
 
 auser@ln04:/work/t01/t01/auser> module load xthi
-auser@ln04:/work/t01/t01/auser> srun --ntasks=2 --cpus-per-task=8 --hint=nomultithread xthi
+auser@ln04:/work/t01/t01/auser> srun --ntasks=1 --cpus-per-task=8 --hint=nomultithread xthi
 Node summary for    1 nodes:
-Node    0, hostname nid200001, mpi   2, omp   1, executable xthi
-MPI summary: 2 ranks 
+Node    0, hostname nid200001, mpi   1, omp   1, executable xthi
+MPI summary: 1 ranks 
 Node    0, rank    0, thread   0, (affinity =  0-7) 
-Node    0, rank    1, thread   0, (affinity = 8-15) 
 ```
 
 #### Using `srun`
