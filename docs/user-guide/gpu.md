@@ -63,8 +63,9 @@ wrappers (`ftn`, `cc`, `CC`), which is the recommended approach:
 
 
 To decide which compiler(s) to use to compile offload code for the AMD
-GPUs, you may find it useful to consult the [Compilation
-Strategies](#compilation-strategies) section below.
+GPUs, you may find it useful to consult the [Compilation Strategies
+for GPU Offloading](#compilation-strategies-for-gpu-offloading)
+section below.
 
 The hybrid environments `PrgEnv-gnu-amd` and `PrgEnv-cray-amd` are
 provided as a convenient way to mitigate less mature OpenMP offload
@@ -1129,15 +1130,15 @@ will run on the login nodes to get more infomation about probing the GPUs.
 
 More detail can be found at [here](https://github.com/ROCm/rocm_smi_lib/tree/rocm-5.2.3/python_smi_tools).
 
-### Hipify
+### HIPIFY
 
-Is a CUDA to HIP source translator tool that can allow CUDA source code to be translated into HIP source code easing the transition between the two hardware targets.
+HIPIFY is a CUDA to HIP source translator tool that can allow CUDA source code to be translated into HIP source code easing the transition between the two hardware targets.
 
-The tool is avalible on ARCHER2 by loading the `rocm` module.
+The tool is available on ARCHER2 by loading the `rocm` module.
 
-The github repository for HIPify can be found [here](https://github.com/ROCm/HIPIFY).
+The github repository for HIPIFY can be found [here](https://github.com/ROCm/HIPIFY).
 
-The documentation for hipfiy is found [here](https://rocm.docs.amd.com/projects/HIPIFY/en/docs-5.2.3/index.html).
+The documentation for HIPIFY is found [here](https://rocm.docs.amd.com/projects/HIPIFY/en/docs-5.2.3/index.html).
 
 ## Notes and useful links
 
