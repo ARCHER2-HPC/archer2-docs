@@ -330,7 +330,7 @@ variable, as:
 ```
 
 MPI library directories should also be passed to `hipcc`, or set as
-part of the `CXXFLAGS` environment variable prior to compiling, as:
+part of the `LDFLAGS` environment variable prior to compiling, as:
 
 ```
 -L${CRAY_MPICH_DIR}/lib ${PE_MPICH_GTL_DIR_amd_gfx90a}
