@@ -1,16 +1,16 @@
 # ParaView
 
-[ParaView](https://www.paraview.org) ParaView is a data visualisation and analysis package.
+[ParaView](https://www.paraview.org) is a data visualisation and analysis package.
 Whilst ARCHER2 compute or login nodes do not have graphics cards installed 
-in them paraview is installed so the visualisation libraries and applications 
-can be used to post-process simulation data. The ParaView server (``pvserver``),
-batch application (``pvbatch``) and the Python interface (``pvpython``)
+in them, ParaView is installed so the visualisation libraries and applications 
+can be used to post-process simulation data. The ParaView server (`pvserver`),
+batch application (`pvbatch`), and the Python interface (`pvpython`)
 are all available. Users are able to run the server on the compute nodes
 and connect to a local ParaView client running on their own computer.
 
 ## Useful links
 
-  - [Paraview webpage](https://www.paraview.org)
+  - [ParaView webpage](https://www.paraview.org)
   - [ParaView quick-start guide](https://kitware.github.io/paraview-docs/latest/python/quick-start.html)
 
 
@@ -22,54 +22,59 @@ ParaView is available through the `paraview` module.
 module load paraview
 ```
 
-Once the module has been added the ParaView executables, tools, 
-and libraries will be able available.
+Once the module has been added, the ParaView executables, tools, 
+and libraries will be available.
 
 ### Connecting to pvserver on ARCHER2
 
-For doing visualisation you should connect to pvserver from a local
-paraview client running on your own computer.
+For doing visualisation, you should connect to `pvserver` from a local
+ParaView client running on your own computer.
 
 !!! note 
-    You should make sure the version of ParaView you have installed locally is the same as 
-    the one on ARCHER2 (version 5.10.1).
+    You should make sure the version of ParaView you have installed locally is
+    the same as the one on ARCHER2 (version 5.10.1).
 
 The following instructions are for running pvserver in an interactive job. 
 Start an iteractive job using:
 
 ```
 srun --nodes=1 --exclusive --time=00:20:00 \
-               --partition=standard --qos=short --reservation=shortqos \
-               --pty /bin/bash
+               --partition=standard --qos=short --pty /bin/bash
 ```
 
 Once the job starts the command prompt will change to show you are now
-on the compute node e.g.
+on the compute node, e.g.:
 
 ```
 auser@nid001023:/work/t01/t01/auser> 
 ```
 
-Then load the ParaView module and start pvserver with the srun command,
+Then load the ParaView module and start `pvserver` with the `srun` command,
 
 ```
 auser@nid001023:/work/t01/t01/auser> module load paraview
-auser@nid001023:/work/t01/t01/auser> srun --overlap --oversubscribe -n 4 pvserver --mpi --force-offscreen-rendering
+auser@nid001023:/work/t01/t01/auser> srun --overlap --oversubscribe -n 4 \
+> pvserver --mpi --force-offscreen-rendering
 Waiting for client...
 Connection URL: cs://nid001023:11111
 Accepting connection(s): nid001023:11111
  
 ```
 
-In a separate terminal you can now set up an ssh tunnel with the node
-ID and port number which the pvserver is using, e.g.
+!!! note 
+    The previous example uses 4 compute cores to run `pvserver`. You can
+    increase the number of cores in case the visualisation does not run
+    smoothly. Please bear in mind that, depending on the testcase, a large
+    number of compute cores can lead to an out-of-memory runtime error.
+
+In a separate terminal you can now set up an SSH tunnel with the node
+ID and port number which the `pvserver` is using, e.g.:
 
 ```
 ssh -L 11111:nid001023:11111 auser@login.archer2.ac.uk 
 ```
 
-enter your password and phasephrase as usual.
-
+enter your password and passphrase as usual.
 
 You can then connect from your local client using the following connection
 settings:
@@ -83,10 +88,10 @@ Port:           11111
 
 !!! note 
     The Host from the local client should be set to "localhost" when using the
-    ssh tunnel. The "Name" field can be set to a name of your choosing. 
-    11111 is the default port for pvserver.
+    SSH tunnel. The "Name" field can be set to a name of your choosing. 
+    11111 is the default port for `pvserver`.
 
-If it has connected correctly you should see the following:
+If it has connected correctly, you should see the following:
 
 ```
 Waiting for client...
@@ -97,7 +102,7 @@ Client connected.
 
 ### Using batch-mode (pvbatch)
 
-A pvbatch script can be run in a standard job script. For example
+A `pvbatch` script can be run in a standard job script. For example
 the following will run on a single node:
 
 
@@ -129,5 +134,5 @@ srun --distribution=block:block --hint=nomultithread pvbatch pvbatchscript.py
 The latest instructions for building ParaView on ARCHER2 may be found in
 the GitHub repository of build instructions:
 
-   - [Build instructions for Paraview on
+   - [Build instructions for ParaView on
      GitHub](https://github.com/hpc-uk/build-instructions/tree/main/apps/ParaView)
