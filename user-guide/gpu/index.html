@@ -1231,11 +1231,6 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-        
           <li class="md-nav__item">
   <a href="#amd_log_mask" class="md-nav__link">
     <span class="md-ellipsis">
@@ -1243,8 +1238,7 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="AMD_LOG_MASK">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#hip_visible_devices" class="md-nav__link">
@@ -3200,11 +3194,6 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-        
           <li class="md-nav__item">
   <a href="#amd_log_mask" class="md-nav__link">
     <span class="md-ellipsis">
@@ -3212,8 +3201,7 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="AMD_LOG_MASK">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#hip_visible_devices" class="md-nav__link">
@@ -3859,7 +3847,7 @@ Therefore NUMA effects are to be expected in multi-node communication. More deta
 </ul>
 <h2 id="python-environment">Python Environment</h2>
 <p>The <code>cray-python</code> module can be used as normal for the GPU partition with <code>mpi4py</code> package that is installed by default. <code>mpi4py</code> uses <code>cray-mpich</code> under the hood and in the same way as the CPU compute nodes.</p>
-<p>However unless specifically compiled for GPU-GPU communication certain python packages/frameworks that try to take advantage of the fast links between GPUs by calling MPI on GPU pointers may have issues. To set the environment correctly for a given python program the following snippet can be added to load the required libmpi_gtl_has library:</p>
+<p>However unless specifically compiled for GPU-GPU communication certain python packages/frameworks that try to take advantage of the fast links between GPUs by calling MPI on GPU pointers may have issues. To set the environment correctly for a given python program the following snippet can be added to load the required <code>libmpi_gtl_hsa</code> library:</p>
 <div class="highlight"><pre><span></span><code>from os import environ
 if environ.get(&quot;MPICH_GPU_SUPPORT_ENABLED&quot;, False):
     from ctypes import CDLL, RTLD_GLOBAL
@@ -4056,7 +4044,7 @@ srun --ntasks=4 --cpus-per-task=8 \
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>When you use the <code>--qos=gpu-exc</code> QoS you must also add the <code>--exclusive</code> flag
-and the specify the number of nodes you want with <code>--nodes=1</code>.  </p>
+and then specify the number of nodes you want with <code>--nodes=1</code>.  </p>
 </div>
 <h3 id="multiple-gpu-on-multiple-nodes-exclusive-node-access-max-8-gpu">Multiple GPU on multiple nodes - exclusive node access (max. 8 GPU)</h3>
 <p>This example requests eight GPUs across two nodes and launches the program using eight
@@ -4102,7 +4090,7 @@ srun --ntasks=8 --cpus-per-task=8 \
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>When you use the <code>--qos=gpu-exc</code> QoS you must also add the <code>--exclusive</code> flag
-and the specify the number of nodes you want with <code>--nodes=1</code>.  </p>
+and then specify the number of nodes you want with <code>--nodes=1</code>.  </p>
 </div>
 <h3 id="interactive-jobs">Interactive jobs</h3>
 <h4 id="using-salloc">Using <code>salloc</code></h4>
@@ -4177,15 +4165,18 @@ use job submission scripts or the <code>salloc</code> method of interactive use 
 <p>Runtime : ROCm Platform Runtime. Applies to all applications using the user mode ROCm software stack.</p>
 <p><code>export ROCR_VISIBLE_DEVICES="0,GPU-DEADBEEFDEADBEEF"</code></p>
 <h4 id="hip-environment-variables">HIP Environment variables</h4>
-<p>https://rocm.docs.amd.com/projects/HIP/en/docs-5.2.3/how_to_guides/debugging.html#summary-of-environment-variables-in-hip</p>
+<p><a href="https://rocm.docs.amd.com/projects/HIP/en/docs-5.2.3/how_to_guides/debugging.html#summary-of-environment-variables-in-hip">https://rocm.docs.amd.com/projects/HIP/en/docs-5.2.3/how_to_guides/debugging.html#summary-of-environment-variables-in-hip</a></p>
 <h5 id="amd_log_level">AMD_LOG_LEVEL</h5>
+<p>Enable HIP log on different Level.</p>
 <p><code>export AMD_LOG_LEVEL=1</code></p>
-<p>0: Disable log.
-1: Enable log on error level.
-2: Enable log on warning and below levels.
-0x3: Enable log on information and below levels.
-0x4: Decode and display AQL packets.</p>
-<h4 id="amd_log_mask">AMD_LOG_MASK</h4>
+<ul>
+<li>0: Disable log.</li>
+<li>1: Enable log on error level.</li>
+<li>2: Enable log on warning and below levels.</li>
+<li>0x3: Enable log on information and below levels.</li>
+<li>0x4: Decode and display AQL packets.</li>
+</ul>
+<h5 id="amd_log_mask">AMD_LOG_MASK</h5>
 <p>Enable HIP log on different Levels.</p>
 <p><code>export AMD_LOG_MASK=0x1</code></p>
 <div class="highlight"><pre><span></span><code>Default: 0x7FFFFFFF
@@ -4233,9 +4224,9 @@ use job submission scripts or the <code>salloc</code> method of interactive use 
 <h5 id="hip_host_coherent">HIP_HOST_COHERENT</h5>
 <p>Sets whether memory in coherent in hipHostMalloc.</p>
 <p><code>export HIP_HOST_COHERENT=1</code></p>
-<p>Is value is <code>1</code> memory is coherent with host, if <code>0</code> memory is not coherent between host and GPU.</p>
+<p>If the value is <code>1</code>, memory is coherent with host; if <code>0</code>, memory is not coherent between host and GPU.</p>
 <h4 id="openmp-environment-variables">OpenMP Environment variables</h4>
-<p>https://rocm.docs.amd.com/en/docs-5.2.3/reference/openmp/openmp.html#environment-variables</p>
+<p><a href="https://rocm.docs.amd.com/en/docs-5.2.3/reference/openmp/openmp.html#environment-variables">https://rocm.docs.amd.com/en/docs-5.2.3/reference/openmp/openmp.html#environment-variables</a></p>
 <h5 id="omp_default_device">OMP_DEFAULT_DEVICE</h5>
 <p>Default device used for OpenMP target offloading.</p>
 <p>Runtime : OpenMP Runtime. Applies only to applications using OpenMP offloading.</p>
@@ -4260,7 +4251,7 @@ use job submission scripts or the <code>salloc</code> method of interactive use 
 <h5 id="mpich_ofi_nic_policy">MPICH_OFI_NIC_POLICY</h5>
 <p>For GPU-enabled parallel applications that involve MPI operations that access application arrays that are resident on GPU-attached memory regions users can set,</p>
 <p><code>export MPICH_OFI_NIC_POLICY=GPU</code></p>
-<p>In this case, for each MPI process, Cray MPI aims to aelect a NIC device that is closest to the GPU device being used.</p>
+<p>In this case, for each MPI process, Cray MPI aims to select a NIC device that is closest to the GPU device being used.</p>
 <h5 id="mpich_ofi_nic_verbose">MPICH_OFI_NIC_VERBOSE</h5>
 <p>To display information pertaining to NIC selection set,</p>
 <p><code>export MPICH_OFI_NIC_VERBOSE=2</code></p>
@@ -4283,7 +4274,7 @@ use job submission scripts or the <code>salloc</code> method of interactive use 
 <p>https://docs.amd.com/projects/HIP/en/docs-5.2.3/how_to_guides/debugging.html#using-rocgdb</p>
 <h2 id="profiling">Profiling</h2>
 <p>An initial profiling capability is provided via <code>rocprof</code> which is part of the <code>rocm</code> module.</p>
-<p>For example in an interactive session where resources have alrasdy been allocated you can call,</p>
+<p>For example in an interactive session where resources have already been allocated you can call,</p>
 <div class="highlight"><pre><span></span><code>srun -n 2 --exclusive --nodes=1 --time=00:20:00 --partition=gpu --qos=gpu-exc --gpus=2 rocprof --stats ./myprog_exe
 </code></pre></div>
 <p>to profile your applicaition. More detail on the use of rocprof can be found <a href="https://github.com/ROCm/rocprofiler/tree/rocm-5.2.3">here</a>.</p>
@@ -4343,8 +4334,8 @@ GPU 3          : (Topology) Numa Affinity: 3
 - The fourth block reveals the localization of a GPU with respect to the NUMA organization of the shared memory of the AMD EPYC processors.
 </code></pre></div>
 <h3 id="rocm-bandwidth-test">rocm-bandwidth-test</h3>
-<p>As part of the <code>rocm</code> module the  <code>rocm-bandwidth-test</code> is provided that can be used to measure the performance of commentions between the hardware in a node.</p>
-<p>In addition to <code>rocm-smi</code> this is a bandwidth test can be useful to understand the composition and performance limitations in a GPU node. Here is an example output from a GPU nodes on ARCHER2.</p>
+<p>As part of the <code>rocm</code> module the  <code>rocm-bandwidth-test</code> is provided that can be used to measure the performance of communications between the hardware in a node.</p>
+<p>In addition to <code>rocm-smi</code> this is a bandwidth test that can be useful in understanding the composition and performance limitations in a GPU node. Here is an example output from a GPU nodes on ARCHER2.</p>
 <div class="highlight"><pre><span></span><code>Device: 0,  AMD EPYC 7543P 32-Core Processor
 Device: 1,  AMD EPYC 7543P 32-Core Processor
 Device: 2,  AMD EPYC 7543P 32-Core Processor
@@ -4439,7 +4430,7 @@ D/D       0           1           2           3           4           5         
 </code></pre></div>
 <h2 id="tools">Tools</h2>
 <h3 id="rocm-smi">rocm-smi</h3>
-<p>If you load the rocm module on the system you will have access to the rocm-smi utility. This utility allows users to report information about the GPUs on node and can be very useful in better understanding the set up of the hardware you are working with and monitoring GPU metrics during job execution.</p>
+<p>If you load the rocm module on the system you will have access to the <code>rocm-smi</code> utility. This utility allows users to report information about the GPUs on node and can be very useful in better understanding the set up of the hardware you are working with and monitoring GPU metrics during job execution.</p>
 <p>Here are some useful commands to get you started:</p>
 <p><code>rocm-smi --alldevices</code> device status</p>
 <p><div class="highlight"><pre><span></span><code>======================= ROCm System Management Interface =======================
