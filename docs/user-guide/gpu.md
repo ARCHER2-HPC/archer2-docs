@@ -384,7 +384,7 @@ Additionally a number of libraries are provided as part of the `rocm` module.
 
 The `cray-python` module can be used as normal for the GPU partition with `mpi4py` package that is installed by default. `mpi4py` uses `cray-mpich` under the hood and in the same way as the CPU compute nodes.
 
-However unless specifically compiled for GPU-GPU communication certain python packages/frameworks that try to take advantage of the fast links between GPUs by calling MPI on GPU pointers may have issues. To set the environment correctly for a given python program the following snippet can be added to load the required libmpi_gtl_has library:
+However unless specifically compiled for GPU-GPU communication certain python packages/frameworks that try to take advantage of the fast links between GPUs by calling MPI on GPU pointers may have issues. To set the environment correctly for a given python program the following snippet can be added to load the required `libmpi_gtl_hsa` library:
 
 ```
 from os import environ
@@ -568,7 +568,7 @@ srun --ntasks=4 --cpus-per-task=8 \
 
 !!! note
     When you use the `--qos=gpu-exc` QoS you must also add the `--exclusive` flag
-    and the specify the number of nodes you want with `--nodes=1`.  
+    and then specify the number of nodes you want with `--nodes=1`.  
 
 ### Multiple GPU on multiple nodes - exclusive node access (max. 8 GPU)
 
@@ -618,7 +618,7 @@ srun --ntasks=8 --cpus-per-task=8 \
 
 !!! note
     When you use the `--qos=gpu-exc` QoS you must also add the `--exclusive` flag
-    and the specify the number of nodes you want with `--nodes=1`.  
+    and then specify the number of nodes you want with `--nodes=1`.  
 
 ### Interactive jobs
 
@@ -713,19 +713,21 @@ Runtime : ROCm Platform Runtime. Applies to all applications using the user mode
 
 #### HIP Environment variables
 
-https://rocm.docs.amd.com/projects/HIP/en/docs-5.2.3/how_to_guides/debugging.html#summary-of-environment-variables-in-hip
+[https://rocm.docs.amd.com/projects/HIP/en/docs-5.2.3/how_to_guides/debugging.html#summary-of-environment-variables-in-hip](https://rocm.docs.amd.com/projects/HIP/en/docs-5.2.3/how_to_guides/debugging.html#summary-of-environment-variables-in-hip)
 
 ##### AMD_LOG_LEVEL
 
+Enable HIP log on different Level.
+
 `export AMD_LOG_LEVEL=1`
 
-0: Disable log.
-1: Enable log on error level.
-2: Enable log on warning and below levels.
-0x3: Enable log on information and below levels.
-0x4: Decode and display AQL packets.
+- 0: Disable log.
+- 1: Enable log on error level.
+- 2: Enable log on warning and below levels.
+- 0x3: Enable log on information and below levels.
+- 0x4: Decode and display AQL packets.
 
-#### AMD_LOG_MASK
+##### AMD_LOG_MASK
 
 Enable HIP log on different Levels.
 
@@ -790,11 +792,11 @@ Sets whether memory in coherent in hipHostMalloc.
 
 `export HIP_HOST_COHERENT=1`
 
-Is value is `1` memory is coherent with host, if `0` memory is not coherent between host and GPU.
+If the value is `1`, memory is coherent with host; if `0`, memory is not coherent between host and GPU.
 
 #### OpenMP Environment variables
 
-https://rocm.docs.amd.com/en/docs-5.2.3/reference/openmp/openmp.html#environment-variables
+[https://rocm.docs.amd.com/en/docs-5.2.3/reference/openmp/openmp.html#environment-variables](https://rocm.docs.amd.com/en/docs-5.2.3/reference/openmp/openmp.html#environment-variables)
 
 ##### OMP_DEFAULT_DEVICE
 
@@ -844,7 +846,7 @@ For GPU-enabled parallel applications that involve MPI operations that access ap
 
 `export MPICH_OFI_NIC_POLICY=GPU`
 
-In this case, for each MPI process, Cray MPI aims to aelect a NIC device that is closest to the GPU device being used.
+In this case, for each MPI process, Cray MPI aims to select a NIC device that is closest to the GPU device being used.
 
 ##### MPICH_OFI_NIC_VERBOSE
 
@@ -882,7 +884,7 @@ https://docs.amd.com/projects/HIP/en/docs-5.2.3/how_to_guides/debugging.html#usi
 An initial profiling capability is provided via `rocprof` which is part of the `rocm` module.
 
 
-For example in an interactive session where resources have alrasdy been allocated you can call,
+For example in an interactive session where resources have already been allocated you can call,
 
 ```
 srun -n 2 --exclusive --nodes=1 --time=00:20:00 --partition=gpu --qos=gpu-exc --gpus=2 rocprof --stats ./myprog_exe
@@ -963,9 +965,9 @@ To quote the [rocm documentation](https://rocm.docs.amd.com/en/docs-5.5.1/how_to
 
 ### rocm-bandwidth-test
 
-As part of the `rocm` module the  `rocm-bandwidth-test` is provided that can be used to measure the performance of commentions between the hardware in a node.
+As part of the `rocm` module the  `rocm-bandwidth-test` is provided that can be used to measure the performance of communications between the hardware in a node.
 
-In addition to `rocm-smi` this is a bandwidth test can be useful to understand the composition and performance limitations in a GPU node. Here is an example output from a GPU nodes on ARCHER2.
+In addition to `rocm-smi` this is a bandwidth test that can be useful in understanding the composition and performance limitations in a GPU node. Here is an example output from a GPU nodes on ARCHER2.
 
 ```
 Device: 0,  AMD EPYC 7543P 32-Core Processor
@@ -1065,7 +1067,7 @@ D/D       0           1           2           3           4           5         
 
 ### rocm-smi
 
-If you load the rocm module on the system you will have access to the rocm-smi utility. This utility allows users to report information about the GPUs on node and can be very useful in better understanding the set up of the hardware you are working with and monitoring GPU metrics during job execution.
+If you load the rocm module on the system you will have access to the `rocm-smi` utility. This utility allows users to report information about the GPUs on node and can be very useful in better understanding the set up of the hardware you are working with and monitoring GPU metrics during job execution.
 
 Here are some useful commands to get you started:
 
