@@ -125,5 +125,6 @@ nav:
     - "ParaView": data-tools/paraview.md
     - "R": data-tools/cray-r.md
     - "VisiData": data-tools/visidata.md
+    - "VMD": data-tools/vmd.md
   - "Essential Skills": essentials/index.md
   - "ARCHER2 and Publications": publish/index.md

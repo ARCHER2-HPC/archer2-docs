@@ -11,8 +11,8 @@ by third-parties rather than the ARCHER2 service are marked with *):
 OpenMP or pthreads mutli-threaded applications (and also hydrid MPI/OpenMP)
 - [Darshan](darshan.md): Lightweight IO characterisation and profiling tool
 - [Energy Counters](pm-mpi-lib.md): MPI-based library for reading energy counters
-- [Julia(*)](julia.md): The julia language
+- [Julia(\*)](julia.md): The julia language
 - [ParaView](paraview.md): A data visualisation and analysis package 
 - [R](cray-r.md): The R statistical language
 - [VisiData](visidata.md): An interactive multitool for tabular data
-
+- [VMD](vmd.md): A visualisation and analysis program for Molecular Dynamics
