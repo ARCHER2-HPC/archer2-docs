@@ -6,6 +6,7 @@ using 3D graphics, and built-In tcl/tk scripting.
 ## Useful links
 
   - [VMD website][vmd-website]
+  - [VMD build instructions][vmd-build]
 
 
 ## Using VMD on ARCHER2
@@ -73,7 +74,7 @@ the [GitHub repository of build instructions][vmd-build].
 
 
 
-[archer2-docs-login]: user-guide/connecting.md#logging-in "ARCHER2 documentation -- logging in"
+[archer2-docs-login]: ../user-guide/connecting.md#logging-in "ARCHER2 documentation -- logging in"
 [vmd-build]: https://github.com/hpc-uk/build-instructions/tree/main/utils/vmd "VMD compilation instructions"
 [vmd-website]: https://www.ks.uiuc.edu/Research/vmd/ "VMD website"
 [wsl]: https://learn.microsoft.com/en-us/windows/wsl/install "Windows subsystem for Linux"
