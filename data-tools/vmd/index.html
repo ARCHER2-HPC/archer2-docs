@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../darshan/">
+        <link rel="prev" href="../visidata/">
       
       
-        <link rel="next" href="../julia/">
+        <link rel="next" href="../../essentials/">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Energy Counters - ARCHER2 User Documentation</title>
+        <title>VMD - ARCHER2 User Documentation</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#power-management-mpi-library" class="md-skip">
+        <a href="#vmd" class="md-skip">
           Skip to content
         </a>
       
@@ -117,7 +117,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Energy Counters
+              VMD
             
           </span>
         </div>
@@ -1966,19 +1966,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../pm-mpi-lib/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1987,7 +1978,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -2081,10 +2071,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../vmd/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    VMD
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -2093,6 +2103,77 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#useful-links" class="md-nav__link">
+    <span class="md-ellipsis">
+      Useful links
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-vmd-on-archer2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using VMD on ARCHER2
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using VMD on ARCHER2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#launching-vmd-with-a-gui" class="md-nav__link">
+    <span class="md-ellipsis">
+      Launching VMD with a GUI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-vmd-from-macos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using VMD from macOS
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compiling-vmd" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compiling VMD
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2165,6 +2246,65 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#useful-links" class="md-nav__link">
+    <span class="md-ellipsis">
+      Useful links
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-vmd-on-archer2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using VMD on ARCHER2
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using VMD on ARCHER2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#launching-vmd-with-a-gui" class="md-nav__link">
+    <span class="md-ellipsis">
+      Launching VMD with a GUI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-vmd-from-macos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using VMD from macOS
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compiling-vmd" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compiling VMD
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2181,27 +2321,52 @@
   
 
 
-<h1 id="power-management-mpi-library">Power Management MPI Library</h1>
-<p>The ARCHER2 compute nodes each have a set of so-called Power Management (PM) counters.
-These cover point-in-time power readings for the whole node, and for the CPU and memory domains.
-The accumulated energy use is also recorded at the same level of detail. Further, there are
-two temperature counters, one for each socket/processor on the node. The counters are read
-ten times per second and the data written to a set of files stored within node memory (located
-at <code>/sys/cray/pm_counters/</code>).</p>
-<p>For convenience, we have developed an MPI-based wrapper, called <code>pm_mpi_lib</code> that facilitates
-the reading of the PM counter files, see the link below.</p>
-<p><a href="https://github.com/cresta-eu/pm_mpi_lib">https://github.com/cresta-eu/pm_mpi_lib</a></p>
-<p>The PM MPI Library makes it possible to monitor the Power Management counters during the execution
-of an MPI code running across <em>multiple</em> compute nodes. The library is lightweight, containing just
-three functions, and is intended to be straightforward to use. You simply decide which parts of
-your code you wish to profile as regards energy usage and/or power consumption.</p>
-<p>As your code executes, the PM counters will be read at various points by a single designated
-monitor rank on each node assigned to the job. These readings are then written to a log file,
-which, after the job completes, will contain one set of time-stamped readings per node for
-every call to the <code>pm_mpi_record</code> function made from within your code. The readings can then
-be aggregated according to preference.</p>
-<p>Further information along with test harnesses and example scripts can be found by reading
-the <a href="https://github.com/cresta-eu/pm_mpi_lib">PM MPI Library readme file</a>.</p>
+<h1 id="vmd">VMD</h1>
+<p><a href="https://www.ks.uiuc.edu/Research/vmd/" title="VMD website">VMD</a> is a visualisation program for displaying, animating, and analysing molecular systems
+using 3D graphics, and built-In tcl/tk scripting.</p>
+<h2 id="useful-links">Useful links</h2>
+<ul>
+<li><a href="https://www.ks.uiuc.edu/Research/vmd/" title="VMD website">VMD website</a></li>
+<li><a href="https://github.com/hpc-uk/build-instructions/tree/main/utils/vmd" title="VMD compilation instructions">VMD build instructions</a></li>
+</ul>
+<h2 id="using-vmd-on-archer2">Using VMD on ARCHER2</h2>
+<p>VMD is available through the <code>vmd</code> module.</p>
+<div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>vmd
+</code></pre></div>
+<p>Once the module has been added the VMD executables,
+tools, and libraries will be made available.</p>
+<p>Without anything else, this allows you to run VMD in "text-only" mode with:</p>
+<div class="highlight"><pre><span></span><code>vmd<span class="w"> </span>-dispdev<span class="w"> </span>text
+</code></pre></div>
+<p>If you want to launch VMD with a GUI, see the requirements on the next section.</p>
+<h3 id="launching-vmd-with-a-gui">Launching VMD with a GUI</h3>
+<p>To be able to launch VMD with it's graphical interface,
+your machine needs to support the x11 "X windows system".
+Most Linux and *NIX systems support this by default.
+If you're using Windows (through <a href="https://learn.microsoft.com/en-us/windows/wsl/install" title="Windows subsystem for Linux">WSL</a>, for example),
+you will need an X11 display server, we recommend <a href="https://en.wikipedia.org/wiki/Xming" title="XMing X11 display server">XMing</a>.
+For macOS, we recommend <a href="https://en.wikipedia.org/wiki/XQuartz" title="XQuartz x11 display server">XQuartz</a>,
+but please be aware that there's some extra configuration needed, please see the next section</p>
+<p>To launch VMD with a GUI, once you have a running X11 display server on your local machine,
+you'll need to connect to ARCHER2 with X11 forwarding enabled,
+please follow the instructions in <a href="../../user-guide/connecting/#logging-in" title="ARCHER2 documentation -- logging in">the logging in section</a>.
+Once you're connected to ARCHER2, load the VMD module with:</p>
+<div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>vmd
+</code></pre></div>
+<p>and launch VMD with:</p>
+<div class="highlight"><pre><span></span><code>vmd
+</code></pre></div>
+<h3 id="using-vmd-from-macos">Using VMD from macOS</h3>
+<p>If you're using macOS and XQuartz, before you're able to launch VMD with a GUI,
+you will need to change the XQuartz configuration.
+On a local terminal (that is, not connected to ARCHER2), run the following command:</p>
+<div class="highlight"><pre><span></span><code>defaults<span class="w"> </span>write<span class="w"> </span>org.xquartz.X11<span class="w"> </span>enable_iglx<span class="w"> </span>-bool<span class="w"> </span><span class="nb">true</span>
+</code></pre></div>
+<p>then, restart XQuartz.
+You will now be able to launch VMD's GUI without a <code>segmentation fault</code>.</p>
+<h2 id="compiling-vmd">Compiling VMD</h2>
+<p>The latest instructions for building VMD on ARCHER2 may be found in
+the <a href="https://github.com/hpc-uk/build-instructions/tree/main/utils/vmd" title="VMD compilation instructions">GitHub repository of build instructions</a>.</p>
 
 
 
