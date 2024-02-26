@@ -153,9 +153,9 @@ table:
 | `PrgEnv-cray` | `crayftn`       |     ✅	   | ❌  |   ✅    |
 | `PrgEnv-cray` | `craycc`        |     ✅	   | ❌  |   ❌    |  
 | `PrgEnv-cray` | `crayCC`        |     ✅	   | ✅  |   ❌    |
-| `PrgEnv-gnu`  | `gfortran`      |     ✅	   | ❌  |   ❌    |
-| `PrgEnv-gnu`  | `gcc`           |     ✅	   | ❌  |   ❌    |
-| `PrgEnv-gnu`  | `g++`           |     ✅      | ❌  |   ❌    |
+| `PrgEnv-gnu`  | `gfortran`      |     ❌	   | ❌  |   ❌    |
+| `PrgEnv-gnu`  | `gcc`           |     ❌	   | ❌  |   ❌    |
+| `PrgEnv-gnu`  | `g++`           |     ❌         | ❌  |   ❌    |
 
 
 It is generally recommended to do the following:
@@ -207,12 +207,16 @@ option to the wrapper when compiling. For example:
 ftn -fopenmp source.f90
 ```
 
-This should work under `PrgEnv-amd`, `PrgEnv-cray`, and
-`PrgEnv-gnu`. You may find that offload directives introduced in more
-recent versions of the OpenMP standard, e.g. versions later than
-OpenMP 4.5, fail to compile with some compilers. Under `PrgEnv-cray`
-an explicit description of supported OpenMP features can be viewed
-using the command `man intro_openmp`.
+This should work under `PrgEnv-amd` and `PrgEnv-cray`, but not under
+PrgEnv-gnu as GCC 11.2.0 is the most recent version of GCC available
+on ARCHER2 and OpenMP offload to AMD MI200 series GPUs is only
+supported by GCC 13 and later.
+
+You may find that offload directives introduced in more recent
+versions of the OpenMP standard, e.g. versions later than OpenMP 4.5,
+fail to compile with some compilers. Under `PrgEnv-cray` an explicit
+description of supported OpenMP features can be viewed using the
+command `man intro_openmp`.
 
     
 #### HIP
