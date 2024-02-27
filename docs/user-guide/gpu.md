@@ -862,25 +862,17 @@ To display information pertaining to NIC selection set,
 ## Debugging
 
 !!! Note
-    Remove section for now
+    Work in progress
 
+Documentation for rocgdb can be found in the following locations:
 
 https://rocm.docs.amd.com/projects/ROCgdb/en/docs-5.2.3/index.html
 
-!!! Note
-    Work in progresss issue with integration with gdb4hpc
-
-
-!!! Note
-    The license for Linaro-forge help on ARCHER2 does not include support for GPU profiling.
-
-### HiP
-
-
-rocgdb?
-
 https://docs.amd.com/projects/HIP/en/docs-5.2.3/how_to_guides/debugging.html#using-rocgdb
 
+
+!!! Note
+    The license for Linaro-forge help on ARCHER2 does not include support for GPU debugging.
 
 
 ## Profiling
