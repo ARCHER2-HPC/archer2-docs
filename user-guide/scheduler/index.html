@@ -1325,6 +1325,39 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#capability-days" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capability Days
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Capability Days">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-capability-day-job-submission-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Capability Day job submission script
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#capability-day-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capability Day tips
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#serial-jobs" class="md-nav__link">
     <span class="md-ellipsis">
       Serial jobs
@@ -3641,6 +3674,39 @@
       Reservations
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capability-days" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capability Days
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Capability Days">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-capability-day-job-submission-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Capability Day job submission script
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#capability-day-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capability Day tips
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -5987,6 +6053,75 @@ and, once the username has been selected, the budget you want to charge the rese
 <p class="admonition-title">Tip</p>
 <p>You can submit jobs to a reservation as soon as the reservation has been set up; jobs will remain queued until the reservation starts.</p>
 </div>
+<h2 id="capability-days">Capability Days</h2>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The next ARCHER2 Capability Day is 0900 14 Mar - 0900 15 Mar 2024.</p>
+</div>
+<p>ARCHER2 Capability Days are a mechanism to allow users to run large scale (512 node or more) tests
+on the system free of charge. The motivations behind Capability Days are:</p>
+<ul>
+<li>Enhancing world-leading science from ARCHER2 by enabling modelling and simulation at scales that are not otherwise possible.</li>
+<li>Enabling capability use cases that are not possible on other UK HPC services.</li>
+<li>Providing a facility that can be used to test scaling to help prepare software and communities for future exascale resources.</li>
+</ul>
+<p>To enable this, a 24h period will be made available regularly where users can run jobs free of
+charge with the following limits:</p>
+<ul>
+<li>Minimum job size: 512 nodes<ul>
+<li>Individual jobs steps (i.e. <code>srun</code> commands) within job scripts should also be a minimum of 512 nodes</li>
+<li>Jobs that do not stick to these limits will be killed</li>
+</ul>
+</li>
+<li>Maximum walltime: 3 hours</li>
+<li>Job numbers: 8 jobs maximum per user in the QoS<ul>
+<li>2 jobs maximum running per user</li>
+</ul>
+</li>
+<li>Users must have a valid, positive CU budget to be able to run jobs during Capability Days</li>
+</ul>
+<p>Users wishing to run jobs during Capability Day should submit to the <code>capabilityday</code> QoS. Jobs can be 
+submitted ahead of time and will start when the Capability Day starts.</p>
+<h3 id="example-capability-day-job-submission-script">Example Capability Day job submission script</h3>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="kp">#SBATCH --job-name=capability_job</span>
+<span class="kp">#SBATCH --nodes=1024</span>
+<span class="kp">#SBATCH --ntasks-per-node=8</span>
+<span class="kp">#SBATCH --cpus-per-task=16</span>
+<span class="kp">#SBATCH --time=1:0:0</span>
+<span class="kp">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --qos=capabilityday</span>
+<span class="kp">#SBATCH --account=t01</span>
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">16</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_PLACES</span><span class="o">=</span>cores
+<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
+
+<span class="c1"># Check process/thread placement</span>
+module<span class="w"> </span>load<span class="w"> </span>xthi
+<span class="nb">srun</span><span class="w"> </span>--hint<span class="o">=</span>multithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>xthi<span class="w"> </span>&gt;<span class="w"> </span>placement-<span class="si">${</span><span class="nv">SLURM_JOBID</span><span class="si">}</span>.out
+
+<span class="nb">srun</span><span class="w"> </span>--hint<span class="o">=</span>multithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>my_app.x
+</code></pre></div>
+<h3 id="capability-day-tips">Capability Day tips</h3>
+<ul>
+<li>OFI communications protocol seems to work more reliably at capability scale than UCX protocol<ul>
+<li>UCX often sees memory/timeout errors</li>
+</ul>
+</li>
+<li>All-to-all collective patterns do not generally scale well to large MPI process counts, particularly when there are high MPI process counts per node</li>
+<li>c.f. On the Frontier exascale system there are typically a maximum of 8 MPI processes per node (1 per GPU). 9,408 compute nodes gives a maximum of 75,264 MPI processes for a whole system job.<ul>
+<li>4096 ARCHER2 compute nodes, 1 MPI process per core is 524,488 MPI processes!</li>
+</ul>
+</li>
+<li>MPI-IO does not generally scale well to high process counts unless the IO pattern is very simple<ul>
+<li>Same for IO libraries based on MPI-IO: parallel HDF5, NetCDF</li>
+<li>Consider a different parallel IO approach, e.g. ADIOS2</li>
+</ul>
+</li>
+<li>Make use of the scratch, solid state file system so you do not hit unexpected storage quota issues</li>
+<li>With very high MPI process counts, you may see long MPI startup times, take this into account in wall times in your job scripts</li>
+</ul>
 <h2 id="serial-jobs">Serial jobs</h2>
 <p>You can run serial jobs on the shared data analysis nodes. More information
 on using the data analysis nodes (including example job submission scripts)
