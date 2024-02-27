@@ -9,6 +9,19 @@ active investigation by HPE Cray and the wider service.
 
 ## Open Issues
 
+### When close to storage quota, jobs may slow down or produce corrupted files (Added: 2024-02-27)
+
+For situations where users are close to user or project quotas on work (Lustre) file systems we have
+seen cases of the following behaviour:
+
+- Jobs run very slowly as IO slows down
+- IO calls seem to complete successfully but not all data is written (so output is corrupted)
+- No "disk quota exceeded" error is seen
+
+If you see these symptoms: slower than expected performance, data corruption; then you should check
+if you are close to your storage quota (either user or project quota). If you are, you may be experiencing this issue. Either 
+remove data to free up space or request more storage quota.
+
 ### e-mail alerts from Slurm do not work (Added: 2023-11-09)
 
 Email alerts from Slurm (`--mail-type` and `--mail-user` options) do not produce emails to users. We are investigating
