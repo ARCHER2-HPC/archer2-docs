@@ -2322,54 +2322,61 @@
 
 
 <h1 id="paraview">ParaView</h1>
-<p><a href="https://www.paraview.org">ParaView</a> ParaView is a data visualisation and analysis package.
+<p><a href="https://www.paraview.org">ParaView</a> is a data visualisation and analysis package.
 Whilst ARCHER2 compute or login nodes do not have graphics cards installed 
-in them paraview is installed so the visualisation libraries and applications 
+in them, ParaView is installed so the visualisation libraries and applications 
 can be used to post-process simulation data. The ParaView server (<code>pvserver</code>),
-batch application (<code>pvbatch</code>) and the Python interface (<code>pvpython</code>)
+batch application (<code>pvbatch</code>), and the Python interface (<code>pvpython</code>)
 are all available. Users are able to run the server on the compute nodes
 and connect to a local ParaView client running on their own computer.</p>
 <h2 id="useful-links">Useful links</h2>
 <ul>
-<li><a href="https://www.paraview.org">Paraview webpage</a></li>
+<li><a href="https://www.paraview.org">ParaView webpage</a></li>
 <li><a href="https://kitware.github.io/paraview-docs/latest/python/quick-start.html">ParaView quick-start guide</a></li>
 </ul>
 <h2 id="using-paraview-on-archer2">Using ParaView on ARCHER2</h2>
 <p>ParaView is available through the <code>paraview</code> module.</p>
 <div class="highlight"><pre><span></span><code>module load paraview
 </code></pre></div>
-<p>Once the module has been added the ParaView executables, tools, 
-and libraries will be able available.</p>
+<p>Once the module has been added, the ParaView executables, tools, 
+and libraries will be available.</p>
 <h3 id="connecting-to-pvserver-on-archer2">Connecting to pvserver on ARCHER2</h3>
-<p>For doing visualisation you should connect to pvserver from a local
-paraview client running on your own computer.</p>
+<p>For doing visualisation, you should connect to <code>pvserver</code> from a local
+ParaView client running on your own computer.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You should make sure the version of ParaView you have installed locally is the same as 
-the one on ARCHER2 (version 5.10.1).</p>
+<p>You should make sure the version of ParaView you have installed locally is
+the same as the one on ARCHER2 (version 5.10.1).</p>
 </div>
 <p>The following instructions are for running pvserver in an interactive job. 
 Start an iteractive job using:</p>
 <div class="highlight"><pre><span></span><code>srun --nodes=1 --exclusive --time=00:20:00 \
-               --partition=standard --qos=short --reservation=shortqos \
-               --pty /bin/bash
+               --partition=standard --qos=short --pty /bin/bash
 </code></pre></div>
 <p>Once the job starts the command prompt will change to show you are now
-on the compute node e.g.</p>
+on the compute node, e.g.:</p>
 <div class="highlight"><pre><span></span><code>auser@nid001023:/work/t01/t01/auser&gt; 
 </code></pre></div>
-<p>Then load the ParaView module and start pvserver with the srun command,</p>
+<p>Then load the ParaView module and start <code>pvserver</code> with the <code>srun</code> command,</p>
 <div class="highlight"><pre><span></span><code>auser@nid001023:/work/t01/t01/auser&gt; module load paraview
-auser@nid001023:/work/t01/t01/auser&gt; srun --overlap --oversubscribe -n 4 pvserver --mpi --force-offscreen-rendering
+auser@nid001023:/work/t01/t01/auser&gt; srun --overlap --oversubscribe -n 4 \
+&gt; pvserver --mpi --force-offscreen-rendering
 Waiting for client...
 Connection URL: cs://nid001023:11111
 Accepting connection(s): nid001023:11111
 </code></pre></div>
-<p>In a separate terminal you can now set up an ssh tunnel with the node
-ID and port number which the pvserver is using, e.g.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The previous example uses 4 compute cores to run <code>pvserver</code>. You can
+increase the number of cores in case the visualisation does not run
+smoothly. Please bear in mind that, depending on the testcase, a large
+number of compute cores can lead to an out-of-memory runtime error.</p>
+</div>
+<p>In a separate terminal you can now set up an SSH tunnel with the node
+ID and port number which the <code>pvserver</code> is using, e.g.:</p>
 <div class="highlight"><pre><span></span><code>ssh -L 11111:nid001023:11111 auser@login.archer2.ac.uk 
 </code></pre></div>
-<p>enter your password and phasephrase as usual.</p>
+<p>enter your password and passphrase as usual.</p>
 <p>You can then connect from your local client using the following connection
 settings:</p>
 <div class="highlight"><pre><span></span><code>Name:           archer2 
@@ -2380,17 +2387,17 @@ Port:           11111
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The Host from the local client should be set to "localhost" when using the
-ssh tunnel. The "Name" field can be set to a name of your choosing. 
-11111 is the default port for pvserver.</p>
+SSH tunnel. The "Name" field can be set to a name of your choosing. 
+11111 is the default port for <code>pvserver</code>.</p>
 </div>
-<p>If it has connected correctly you should see the following:</p>
+<p>If it has connected correctly, you should see the following:</p>
 <div class="highlight"><pre><span></span><code>Waiting for client...
 Connection URL: cs://nid001023:11111
 Accepting connection(s): nid001023:11111
 Client connected.
 </code></pre></div>
 <h3 id="using-batch-mode-pvbatch">Using batch-mode (pvbatch)</h3>
-<p>A pvbatch script can be run in a standard job script. For example
+<p>A <code>pvbatch</code> script can be run in a standard job script. For example
 the following will run on a single node:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
@@ -2417,7 +2424,7 @@ module<span class="w"> </span>load<span class="w"> </span>paraview
 <p>The latest instructions for building ParaView on ARCHER2 may be found in
 the GitHub repository of build instructions:</p>
 <ul>
-<li><a href="https://github.com/hpc-uk/build-instructions/tree/main/apps/ParaView">Build instructions for Paraview on
+<li><a href="https://github.com/hpc-uk/build-instructions/tree/main/apps/ParaView">Build instructions for ParaView on
      GitHub</a></li>
 </ul>
 
