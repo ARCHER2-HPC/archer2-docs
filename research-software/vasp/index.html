@@ -1442,6 +1442,39 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#performance-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance tips
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vasp-performance-data-on-archer2" class="md-nav__link">
+    <span class="md-ellipsis">
+      VASP performance data on ARCHER2
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="VASP performance data on ARCHER2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cdte-supercell-hybrid-dft-functional-8-k-points-65-atoms" class="md-nav__link">
+    <span class="md-ellipsis">
+      CdTe Supercell, hybrid DFT functional. 8 k-points, 65 atoms
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2364,6 +2397,39 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#performance-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance tips
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vasp-performance-data-on-archer2" class="md-nav__link">
+    <span class="md-ellipsis">
+      VASP performance data on ARCHER2
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="VASP performance data on ARCHER2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cdte-supercell-hybrid-dft-functional-8-k-points-65-atoms" class="md-nav__link">
+    <span class="md-ellipsis">
+      CdTe Supercell, hybrid DFT functional. 8 k-points, 65 atoms
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2523,13 +2589,11 @@ module<span class="w"> </span>load<span class="w"> </span>cray-mpich-ucx
 <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">SLURM_CPU_FREQ_REQ</span><span class="o">=</span><span class="m">2250000</span>
 </code></pre></div>
 <p>in your job submission script before the srun command</p>
-<!-- Temporarily removed peformance tips while they are updated
-
-### Performance tips
-
-The performance of VASP depends on the version of VASP used, the performance
+<h3 id="performance-tips">Performance tips</h3>
+<p>The performance of VASP depends on the version of VASP used, the performance
 of MPI collective operations, the choice of VASP parallelisation parameters
-(`NCORE`/`NPAR` and `KPAR`) and how many MPI processes per node are used.
+(<code>NCORE</code>/<code>NPAR</code> and <code>KPAR</code>) and how many MPI processes per node are used.</p>
+<!-- Temporarily removed peformance tips while they are updated
 
 **VASP version** For the benchmarks studied, VASP 6.3.0 usually gives
 better performance than the older VASP 5.4.4.pl2. The exception is for when
@@ -2555,39 +2619,32 @@ module load cray-mpich-ucx
 export UCX_IB_REG_METHODS=direct
 </code></pre></div>
 
-**KPAR:** You should always use the maximum value of `KPAR` that is possible for
-your calculation within the memory limits of what is possible.
+-->
 
-**NCORE/NPAR:** We have found that the optimal values of `NCORE` (and hence `NPAR`)
+<p><strong>KPAR:</strong> You should always use the maximum value of <code>KPAR</code> that is possible for
+your calculation within the memory limits of what is possible.</p>
+<p><strong>NCORE/NPAR:</strong> We have found that the optimal values of <code>NCORE</code> (and hence <code>NPAR</code>)
 depend on both the type of calculation you are performing (e.g. pure DFT, hybrid functional,
 &Gamma;-point, non-collinear) and the number of nodes/cores you are using for your 
 calculation. In practice, this means that you should experiment with different values
 to find the best choice for your calculation. There is information below on the best 
 choices for the benchmarks we have run on ARCHER2 that may serve as a useful starting
 point. The performance difference from choosing different values can vary by up to
-100% so it is worth spending time investigating this.
-
-**MPI processes per node** We found that it is sometimes beneficial to performance to
+100% so it is worth spending time investigating this.</p>
+<p><strong>MPI processes per node</strong> We found that it is sometimes beneficial to performance to
 use less MPI processes per node than the total number of cores per node in some cases
-for the benchmarks used. We found that for the large TiO2 &Gamma;-point calculation it
-was best to use just 64 MPI processes per node (leaving half of the cores idle). For
-the CdTe non-collinear, multiple k-point benchmark, best performance was achieved when
-all 128 cores on the node had an MPI process (128 MPI processes per node).
-
-**OpenMP threads** The use of OpenMP threads did not improve performance or scaling
-for either of the benchmarks used. This was true even for the TiO2 benchmark case where 
-we used only 64 MPI processes per node, the performance was better with 64 idle cores
-on a node rather than using the spare core for OpenMP threads. This seems to be because
-when OpenMP threading is used, `NCORE` is fixed at a value of 1, which gives poor
-performance.
-
-## VASP performance data on ARCHER2
-
-VASP performance data on ARCHER2 is currently available for two
-different benchmark systems:
-
-- TiO_2 Supercell, pure DFT functional, &Gamma;-point, 1080 atoms
-- CdTe Supercell, hybrid DFT functional. 8 k-points, 65 atoms
+for the benchmarks used. </p>
+<p><strong>OpenMP threads</strong> Using multiple OpenMP threads per MPI process can be beneficial to
+performance. 4 OpenMP threads per MPI process typically sees the best performance in the
+tests we have performed.</p>
+<h2 id="vasp-performance-data-on-archer2">VASP performance data on ARCHER2</h2>
+<p>VASP performance data on ARCHER2 is currently available for two
+different benchmark systems:</p>
+<ul>
+<li>TiO_2 Supercell, pure DFT functional, &Gamma;-point, 1080 atoms (results added soon)</li>
+<li>CdTe Supercell, hybrid DFT functional. 8 k-points, 65 atoms</li>
+</ul>
+<!-- 
 
 ### TiO_2 Supercell, pure DFT functional, Gamma-point, 1080 atoms
 
@@ -2625,48 +2682,116 @@ Performance summary:
 |    32 |                     64 |                2048 |    64 |                 131 |
 |    64 |                     64 |                4096 |    64 |                  82 |
 
-
-### CdTe Supercell, hybrid DFT functional. 8 k-points, 65 atoms
-
-Basic information:
-
-- Uses `vasp_ncl`
-- `NELM = 6`
-- [CdTe performance data](https://github.com/hpc-uk/archer-benchmarks/blob/main/others/VASP/analysis/VASP_CdTe_perf_analysis.ipynb)
-
-Performance summary:
-
-- VASP version:
-  + Up to 8 nodes: best performance from VASP 6.3.0
-  + 16 nodes or more: best performance from VASP 5.4.4.pl2
-- Cores per node:
-  + Best performance usually from 128 MPI processes per node - all cores occupied
-  + At 64 nodes, best performance from 64 MPI processes per node - 64 core idle
-- `NCORE`:
-  + Up to 8 nodes: best performance with `NCORE = 4` (VASP 6.3.0)
-  + 16 nodes or more: best performance with `NCORE = 16` (VASP 5.4.4.pl2)
-- `KPAR = 2` is maximum that can be used on standard memory nodes 
-- Scales well to 64 nodes
-- Using OpenMP threads results in worse performance
-
-#### Full system, VASP 6.3.0
-
- - `vasp/6/6.3.0` module
- - GCC 11.2.0
- - AOCL 3.1 for BLAS/LAPACK/ScaLAPACK and FFTW
- - UCX for MPI transport layer
-
-| Nodes | MPI processes per node | Total MPI processes | NCORE | KPAR | 6.3.0 (full system) |
-|------:|-----------------------:|--------------------:|------:|-----:|-------------------------:|
-|     1 |                    128 |                 128 |     4 |    2 |                    19000 |
-|     2 |                    128 |                 256 |     4 |    2 |                    10021 |
-|     4 |                    128 |                 512 |     4 |    2 |                     5560 |
-|     8 |                    128 |                1024 |     4 |    2 |                     3176 |
-|    16 |                    128 |                2048 |     8 |    2 |                     2413 |
-|    32 |                     64 |                2048 |    16 |    2 |                     1340 |
-|    64 |                     64 |                4096 |    16 |    2 |                      908 |
-
 -->
+
+<h3 id="cdte-supercell-hybrid-dft-functional-8-k-points-65-atoms">CdTe Supercell, hybrid DFT functional. 8 k-points, 65 atoms</h3>
+<p>Basic information:</p>
+<ul>
+<li>Uses <code>vasp_ncl</code></li>
+<li><code>NELM = 6</code></li>
+</ul>
+<p>Performance summary:</p>
+<ul>
+<li>VASP version:<ul>
+<li>VASP 6.4.2 with MKL 19.5 gives best performance (<code>vasp/6/6.4.2-mkl19</code> modules)</li>
+</ul>
+</li>
+<li>Cores per node:<ul>
+<li>Best performance usually from 128 MPI processes per node - all cores occupied</li>
+</ul>
+</li>
+<li><code>NCORE</code>:<ul>
+<li>Up to 8 nodes: best performance with <code>NCORE = 4</code></li>
+<li>16 nodes or more: best performance with <code>NCORE = 16</code></li>
+</ul>
+</li>
+<li><code>KPAR = 2</code> is maximum that can be used on standard memory nodes </li>
+<li>Scales well to 8 nodes, OK to 16 nodes</li>
+<li>Using 4 OpenMP threads per MPI process usually gives best performance</li>
+</ul>
+<p>Setup details:
+ - <code>vasp/6/6.4.2-mkl19</code> module
+ - GCC 11.2.0
+ - MKL 19.5 for BLAS/LAPACK/ScaLAPACK and FFTW
+ - OFI for MPI transport layer</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Nodes</th>
+<th style="text-align: right;">MPI processes per node</th>
+<th style="text-align: right;">OpenMP thread per MPI process</th>
+<th style="text-align: right;">Total cores</th>
+<th style="text-align: right;">NCORE</th>
+<th style="text-align: right;">KPAR</th>
+<th style="text-align: right;">LOOP+ Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">128</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">5838</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">256</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3115</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">512</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1682</td>
+</tr>
+<tr>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1024</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">928</td>
+</tr>
+<tr>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">128</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2048</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">612</td>
+</tr>
+<tr>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">128</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4096</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">459</td>
+</tr>
+<tr>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">128</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">8192</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">629</td>
+</tr>
+</tbody>
+</table>
 
 
 
