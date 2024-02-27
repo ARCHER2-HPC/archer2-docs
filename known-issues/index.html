@@ -435,6 +435,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#when-close-to-storage-quota-jobs-may-slow-down-or-produce-corrupted-files-added-2024-02-27" class="md-nav__link">
+    <span class="md-ellipsis">
+      When close to storage quota, jobs may slow down or produce corrupted files (Added: 2024-02-27)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#e-mail-alerts-from-slurm-do-not-work-added-2023-11-09" class="md-nav__link">
     <span class="md-ellipsis">
       e-mail alerts from Slurm do not work (Added: 2023-11-09)
@@ -2306,6 +2315,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#when-close-to-storage-quota-jobs-may-slow-down-or-produce-corrupted-files-added-2024-02-27" class="md-nav__link">
+    <span class="md-ellipsis">
+      When close to storage quota, jobs may slow down or produce corrupted files (Added: 2024-02-27)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#e-mail-alerts-from-slurm-do-not-work-added-2023-11-09" class="md-nav__link">
     <span class="md-ellipsis">
       e-mail alerts from Slurm do not work (Added: 2023-11-09)
@@ -2418,6 +2436,17 @@ active investigation by HPE Cray and the wider service.</p>
 <p>This page was last reviewed on 9 November 2023</p>
 </div>
 <h2 id="open-issues">Open Issues</h2>
+<h3 id="when-close-to-storage-quota-jobs-may-slow-down-or-produce-corrupted-files-added-2024-02-27">When close to storage quota, jobs may slow down or produce corrupted files (Added: 2024-02-27)</h3>
+<p>For situations where users are close to user or project quotas on work (Lustre) file systems we have
+seen cases of the following behaviour:</p>
+<ul>
+<li>Jobs run very slowly as IO slows down</li>
+<li>IO calls seem to complete successfully but not all data is written (so output is corrupted)</li>
+<li>No "disk quota exceeded" error is seen</li>
+</ul>
+<p>If you see these symptoms: slower than expected performance, data corruption; then you should check
+if you are close to your storage quota (either user or project quota). If you are, you may be experiencing this issue. Either 
+remove data to free up space or request more storage quota.</p>
 <h3 id="e-mail-alerts-from-slurm-do-not-work-added-2023-11-09">e-mail alerts from Slurm do not work (Added: 2023-11-09)</h3>
 <p>Email alerts from Slurm (<code>--mail-type</code> and <code>--mail-user</code> options) do not produce emails to users. We are investigating
 with Universtiy of Edinburgh Information Services to enable this Slurm feature in the future.</p>
