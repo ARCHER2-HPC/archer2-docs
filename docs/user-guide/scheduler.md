@@ -2272,6 +2272,69 @@ Your request will be checked by the ARCHER2 User Administration team and, if app
 !!! tip
     You can submit jobs to a reservation as soon as the reservation has been set up; jobs will remain queued until the reservation starts.
 
+## Capability Days
+
+!!! important
+    The next ARCHER2 Capability Day is 0900 14 Mar - 0900 15 Mar 2024.
+
+ARCHER2 Capability Days are a mechanism to allow users to run large scale (512 node or more) tests
+on the system free of charge. The motivations behind Capability Days are:
+
+- Enhancing world-leading science from ARCHER2 by enabling modelling and simulation at scales that are not otherwise possible.
+- Enabling capability use cases that are not possible on other UK HPC services.
+- Providing a facility that can be used to test scaling to help prepare software and communities for future exascale resources.
+
+To enable this, a 24h period will be made available regularly where users can run jobs free of
+charge with the following limits:
+
+- Minimum job size: 512 nodes
+    - Individual jobs steps (i.e. `srun` commands) within job scripts should also be a minimum of 512 nodes
+    - Jobs that do not stick to these limits will be killed
+- Maximum walltime: 3 hours
+- Job numbers: 8 jobs maximum per user in the QoS
+    - 2 jobs maximum running per user
+- Users must have a valid, positive CU budget to be able to run jobs during Capability Days
+
+Users wishing to run jobs during Capability Day should submit to the `capabilityday` QoS. Jobs can be 
+submitted ahead of time and will start when the Capability Day starts.
+
+### Example Capability Day job submission script
+
+```slurm
+#!/bin/bash
+#SBATCH --job-name=capability_job
+#SBATCH --nodes=1024
+#SBATCH --ntasks-per-node=8
+#SBATCH --cpus-per-task=16
+#SBATCH --time=1:0:0
+#SBATCH --partition=standard
+#SBATCH --qos=capabilityday
+#SBATCH --account=t01
+
+export OMP_NUM_THREADS=16
+export OMP_PLACES=cores
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+# Check process/thread placement
+module load xthi
+srun --hint=multithread --distribution=block:block xthi > placement-${SLURM_JOBID}.out
+
+srun --hint=multithread --distribution=block:block my_app.x
+```
+
+### Capability Day tips
+
+- OFI communications protocol seems to work more reliably at capability scale than UCX protocol
+    - UCX often sees memory/timeout errors
+- All-to-all collective patterns do not generally scale well to large MPI process counts, particularly when there are high MPI process counts per node
+  - c.f. On the Frontier exascale system there are typically a maximum of 8 MPI processes per node (1 per GPU). 9,408 compute nodes gives a maximum of 75,264 MPI processes for a whole system job.
+    - 4096 ARCHER2 compute nodes, 1 MPI process per core is 524,488 MPI processes!
+- MPI-IO does not generally scale well to high process counts unless the IO pattern is very simple
+    - Same for IO libraries based on MPI-IO: parallel HDF5, NetCDF
+    - Consider a different parallel IO approach, e.g. ADIOS2
+- Make use of the scratch, solid state file system so you do not hit unexpected storage quota issues
+- With very high MPI process counts, you may see long MPI startup times, take this into account in wall times in your job scripts
+
 ## Serial jobs
 
 You can run serial jobs on the shared data analysis nodes. More information
