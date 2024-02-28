@@ -287,7 +287,7 @@ Performance summary:
 - Cores per node:
     + Best performance usually from 128 MPI processes per node - all cores occupied
 - `NCORE`:
-    + Up to 8 nodes: best performance with `NCORE = 4`
+    + Up to 8 nodes: best performance with 4 OpenMP threads (NCORE fixed at 1)
     + 16 nodes or more: best performance with `NCORE = 16`
 - `KPAR = 2` is maximum that can be used on standard memory nodes 
 - Scales well to 8 nodes, OK to 16 nodes
