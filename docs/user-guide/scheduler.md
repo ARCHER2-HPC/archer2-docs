@@ -2289,7 +2289,7 @@ charge with the following limits:
 
 - Minimum job size: 512 nodes
     - Individual jobs steps (i.e. `srun` commands) within job scripts should also be a minimum of 512 nodes
-    - Jobs that do not stick to these limits will be killed
+    - Jobs that do not meet these limits will be killed
 - Maximum walltime: 3 hours
 - Job numbers: 8 jobs maximum per user in the QoS
     - 2 jobs maximum running per user
