@@ -544,6 +544,18 @@ module load craype-network-ucx
 module load cray-mpich-ucx 
 ```
 
+!!! important
+    If your software was compiled using a compiler environment other 
+    then CCE you will also need to load that compiler environment 
+    as well as the UCX modules. For example, if you compiled using 
+    `PrgEnv-gnu` you would need to:
+    
+    ```
+    module load PrgEnv-gnu
+    module load craype-network-ucx 
+    module load cray-mpich-ucx 
+    ```
+
 The performance benefits will also vary depending on the number of
 processes, so it is important to benchmark your application at the
 scale used in full production runs.
