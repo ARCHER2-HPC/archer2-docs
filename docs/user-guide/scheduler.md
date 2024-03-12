@@ -197,6 +197,7 @@ on ARCHER2.
     | standard  | CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 256/512 GB memory | 5860    |
     | highmem   | CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 512 GB memory | 584     |
     | serial    | CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 512 GB memory | 2       |
+    | gpu  | GPU nodes with AMD EPYC 32-core processor, 512 GB memory, 4&times;AMD Instinct MI210 GPU | 4    |
 
 !!! note
     The `standard` partition includes both the standard memory and high memory nodes but standard memory
@@ -217,10 +218,12 @@ lists the active QoS on ARCHER2.
     | taskfarm   | 16               | 24 hrs       | 128          | 32           | standard     | Maximum of 256 nodes in use by any one user at any time |
     | short      | 32                 | 20 mins      | 16           | 4            | standard     | |
     | long       | 64                | 96 hrs       | 16          | 16           | standard     | Minimum walltime of 24 hrs, maximum 512 nodes in use by any one user at any time, maximum of 2048 nodes in use by QoS |
-    | largescale | 5860               | 12 hrs        | 8           | 1            | standard     | Minimum job size of 1025 nodes |
     | lowpriority | 2048               | 24 hrs        | 16           | 16            | standard     | Jobs not charged but requires at least 1 CU in budget to use. |
     | serial | 32 cores and/or 128 GB memory   | 24 hrs        | 32           | 4            | serial    | Jobs not charged but requires at least 1 CU in budget to use. Maximum of 32 cores and/or 128 GB in use by any one user at any time. |
     | reservation | Size of reservation  | Length of reservation       | No limit           | no limit           | standard   |  |
+    | capabilityday | At least 4096 nodes  | 3 hrs        | 8           | 2            | standard     | Minimum job size of 512 nodes. Jobs only run during [Capability Days](#capability-days) |
+    | gpu-shd    | 1               | 1 hr       | 2          | 1           | gpu    | GPU nodes potentially shared with other users |
+    | gpu-exc    | 2               | 1 hr       | 2          | 1           | gpu    | GPU node exclusive node access |
 
 You can find out the QoS that you can use by running the following
 command:
