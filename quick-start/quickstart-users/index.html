@@ -2532,11 +2532,11 @@ and running your first job.</p>
 <h2 id="request-an-account-on-archer2">Request an account on ARCHER2</h2>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>You need to use both a password and a passphrase-protected SSH key pair
-to log into ARCHER2. You get the password from SAFE, but, you will also
-need to setup your own SSH key pair and add the public part to your
-account via SAFE before you will be able to log in. We cover the
-authentication steps below.</p>
+<p>To access ARCHER2, you need to use two sets of credentials: your SSH
+key pair protected by a passphrase <strong>and</strong> a Time-based one-time
+password (TOTP). Additionally, the first time you ever log into 
+an account on ARCHER2, you will need to use a single use password
+you retrieve from SAFE.</p>
 </div>
 <h3 id="obtain-an-account-on-the-safe-website">Obtain an account on the SAFE website</h3>
 <div class="admonition warning">
@@ -2651,18 +2651,9 @@ Policy](https://www.archer2.ac.uk/about/policies/passwords_usernames.html).
 
 <h2 id="login-to-archer2">Login to ARCHER2</h2>
 <p>To log into ARCHER2 you should use the address:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Full system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
 <p>ssh [userID]@login.archer2.ac.uk</p>
-</div>
-</div>
-</div>
 <p>The order in which you are asked for credentials depends on the system you
 are accessing:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Full system</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
 <p>You will first be prompted for the passphrase associated with your SSH key pair. Once you have entered this passphrase successfully, you will then be prompted for your machine account password. You need to enter both credentials correctly to be able to access ARCHER2.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -2688,9 +2679,6 @@ Please contact your system administrator.
 </code></pre></div>
 <p>If you see this, you should delete the offending host key from your <code>~/.ssh/known_hosts</code>
 file (in the example above the offending line is line #11)</p>
-</div>
-</div>
-</div>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -2907,7 +2895,7 @@ above with your project code and replace the username
 <code>ENTER_PARTITION_HERE</code> with the partition you wish to run on (e.g
 <code>standard</code>), and <code>ENTER_QOS_HERE</code> with the quality of service you want
 (e.g. <code>standard</code>).</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">Full system</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Full system</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>#!/bin/bash --login
