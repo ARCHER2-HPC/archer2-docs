@@ -2345,6 +2345,10 @@ on using the data analysis nodes (including example job submission scripts)
 can be found in the [Data Analysis section](analysis.md) of the User and Best
 Practice Guide.
 
+## GPU jobs
+
+You can run on the ARCHER2 GPU nodes and full guidance can be found on the [GPU development platform page](https://docs.archer2.ac.uk/user-guide/gpu/)
+
 ## Best practices for job submission
 
 This guidance is adapted from [the advice provided by
