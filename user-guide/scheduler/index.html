@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.12">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.13">
     
     
       
@@ -3988,6 +3988,11 @@ on ARCHER2.</p>
 <td>CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 512 GB memory</td>
 <td>2</td>
 </tr>
+<tr>
+<td>gpu</td>
+<td>GPU nodes with AMD EPYC 32-core processor, 512 GB memory, 4&times;AMD Instinct MI210 GPU</td>
+<td>4</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -4065,15 +4070,6 @@ lists the active QoS on ARCHER2.</p>
 <td>Minimum walltime of 24 hrs, maximum 512 nodes in use by any one user at any time, maximum of 2048 nodes in use by QoS</td>
 </tr>
 <tr>
-<td>largescale</td>
-<td>5860</td>
-<td>12 hrs</td>
-<td>8</td>
-<td>1</td>
-<td>standard</td>
-<td>Minimum job size of 1025 nodes</td>
-</tr>
-<tr>
 <td>lowpriority</td>
 <td>2048</td>
 <td>24 hrs</td>
@@ -4099,6 +4095,33 @@ lists the active QoS on ARCHER2.</p>
 <td>no limit</td>
 <td>standard</td>
 <td></td>
+</tr>
+<tr>
+<td>capabilityday</td>
+<td>At least 4096 nodes</td>
+<td>3 hrs</td>
+<td>8</td>
+<td>2</td>
+<td>standard</td>
+<td>Minimum job size of 512 nodes. Jobs only run during <a href="#capability-days">Capability Days</a></td>
+</tr>
+<tr>
+<td>gpu-shd</td>
+<td>1</td>
+<td>1 hr</td>
+<td>2</td>
+<td>1</td>
+<td>gpu</td>
+<td>GPU nodes potentially shared with other users</td>
+</tr>
+<tr>
+<td>gpu-exc</td>
+<td>2</td>
+<td>1 hr</td>
+<td>2</td>
+<td>1</td>
+<td>gpu</td>
+<td>GPU node exclusive node access</td>
 </tr>
 </tbody>
 </table>
