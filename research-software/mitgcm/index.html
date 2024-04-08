@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.13">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.7e359304.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.bcfcd587.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
@@ -2517,22 +2517,17 @@ flow of both the atmosphere and ocean.</p>
 </ul>
 <h2 id="building-mitgcm-on-archer2">Building MITgcm on ARCHER2</h2>
 <p>MITgcm is not available via a module on ARCHER2 as users will build
-their own executables specific to the problem they are working on.
-However, we do provide an optfile which will allow <code>genmake2</code> to create
-Makefiles which will work on ARCHER2.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The processes to build MITgcm on the ARCHER2 4-cabinet system and full
-system are slightly different. Please make sure you use the commands
-for the correct system below.</p>
-</div>
+their own executables specific to the problem they are working on.</p>
 <p>You can obtain the MITgcm source code from the developers by cloning
 from the GitHub repository with the command</p>
 <pre><code>git clone https://github.com/MITgcm/MITgcm.git
 </code></pre>
-<p>You should then copy the ARCHER2 optfile into the MITgcm directories. You may use the files at the locations below for the 4-cabinet and full systems.</p>
-<div class="highlight"><pre><span></span><code>cp<span class="w"> </span>/work/n02/shared/mjmn02/ECCOv4/cases/cce/cce1/scripts/dev_linux_amd64_cray_archer2<span class="w"> </span>MITgcm/tools/build_options/
-</code></pre></div>
+<p>You should then copy the ARCHER2 optfile into the MITgcm directories.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>A current ARCHER2 optfile is not available at the present time. Please
+contact <code>support@archer2.ac.uk</code> for help.</p>
+</div>
 <p>You should also set the following environment variables.
 <code>MITGCM_ROOTDIR</code> is used to locate the source code and should point to
 the top MITgcm directory. Optionally, adding the MITgcm tools directory
@@ -2553,7 +2548,7 @@ then run a command that resembles the following:</p>
 running</p>
 <pre><code>genmake2 -help
 </code></pre>
-<p>Finally, you may then build your executable by running </p>
+<p>Finally, you may then build your executable by running</p>
 <pre><code>make depend
 make
 </code></pre>
@@ -2573,7 +2568,7 @@ each for up to one hour.</p>
 <span class="kp">#SBATCH --cpus-per-task=1</span>
 
 <span class="c1"># Replace [budget code] below with your project code (e.g. t01)</span>
-<span class="kp">#SBATCH --account=[budget code] </span>
+<span class="kp">#SBATCH --account=[budget code]</span>
 <span class="kp">#SBATCH --partition=standard</span>
 <span class="kp">#SBATCH --qos=standard</span>
 
@@ -2626,7 +2621,7 @@ This can also sometimes lead to performance increases.</p>
 <span class="kp">#SBATCH --cpus-per-task=4</span>
 
 <span class="c1"># Replace [budget code] below with your project code (e.g. t01)</span>
-<span class="kp">#SBATCH --account=[budget code] </span>
+<span class="kp">#SBATCH --account=[budget code]</span>
 <span class="kp">#SBATCH --partition=standard</span>
 <span class="kp">#SBATCH --qos=standard</span>
 
@@ -2649,14 +2644,14 @@ This can also sometimes lead to performance increases.</p>
 model's run directory to ensure the number of threads requested there match
 those requested in the job submission script.</p>
 <h2 id="reproducing-the-ecco-version-4-release-4-state-estimate-on-archer2">Reproducing the ECCO version 4 (release 4) state estimate on ARCHER2</h2>
-<p>The ECCO version 4 state estimate (ECCOv4-r4) is an observationally-constrained numerical solution produced by the ECCO group at JPL. If you would like to reproduce the state estimate on ARCHER2 in order to create customised runs and experiments, follow the instructions below. They have been slightly modified from the JPL instructions for ARCHER2. </p>
+<p>The ECCO version 4 state estimate (ECCOv4-r4) is an observationally-constrained numerical solution produced by the ECCO group at JPL. If you would like to reproduce the state estimate on ARCHER2 in order to create customised runs and experiments, follow the instructions below. They have been slightly modified from the JPL instructions for ARCHER2.</p>
 <p>For more information, see the ECCOv4-r4 website <a href="https://ecco-group.org/products-ECCO-V4r4.htm">https://ecco-group.org/products-ECCO-V4r4.htm</a></p>
 <h3 id="get-the-eccov4-r4-source-code">Get the ECCOv4-r4 source code</h3>
 <p>First, navigate to your directory on the <code>/work</code> filesystem in order to get access to the compute nodes. Next, create a working directory, perhaps MYECCO, and navigate into this working directory:</p>
 <pre><code>mkdir MYECCO
 cd MYECCO
 </code></pre>
-<p>In order to reproduce ECCOv4-r4, we need a specific checkpoint of the MITgcm source code. </p>
+<p>In order to reproduce ECCOv4-r4, we need a specific checkpoint of the MITgcm source code.</p>
 <pre><code>git clone https://github.com/MITgcm/MITgcm.git -b checkpoint66g
 </code></pre>
 <p>Next, get the ECCOv4-r4 specific code from GitHub:</p>
@@ -2673,7 +2668,7 @@ rm -rf ECCO-v4-Configurations
 <p>Next, acquire your WebDAV credentials: <a href="https://ecco.jpl.nasa.gov/drive">https://ecco.jpl.nasa.gov/drive</a> (second box from the top)</p>
 <p>Now, you can use wget to download the required forcing and input files:</p>
 <pre><code>wget -r --no-parent --user YOURUSERNAME --ask-password https://ecco.jpl.nasa.gov/drive/files/Version4/Release4/input_forcing
-wget -r --no-parent --user YOURUSERNAME --ask-password https://ecco.jpl.nasa.gov/drive/files/Version4/Release4/input_init 
+wget -r --no-parent --user YOURUSERNAME --ask-password https://ecco.jpl.nasa.gov/drive/files/Version4/Release4/input_init
 wget -r --no-parent --user YOURUSERNAME --ask-password https://ecco.jpl.nasa.gov/drive/files/Version4/Release4/input_ecco
 </code></pre>
 <p>After using <code>wget</code>, you will notice that the <code>input*</code> directories are, by default, several levels deep in the directory structure. Use the <code>mv</code> command to move the <code>input*</code> directories to the directory where you executed the <code>wget</code> command. Specifically,</p>
@@ -2702,7 +2697,7 @@ export MITGCM_OPT=$MITGCM_ROOTDIR/tools/build_options/dev_linux_amd64_cray_arche
 make depend
 make
 </code></pre>
-<p>Once you have compiled the model, you will have the mitgcmuv executable for ECCOv4-r4. </p>
+<p>Once you have compiled the model, you will have the mitgcmuv executable for ECCOv4-r4.</p>
 <h4 id="create-run-directory-and-link-files">Create run directory and link files</h4>
 <p>In order to run the model, you need to create a run directory and link/copy the appropriate files. First, navigate to your directory on the <code>work</code> filesystem. From the <code>MITgcm/ECCOV4/release4</code> directory:</p>
 <pre><code>mkdir run
@@ -2722,7 +2717,7 @@ python mkdir_subdir_diags.py
 # manually copy the mitgcmuv executable
 cp -p ../build/mitgcmuv .
 </code></pre>
-<p>For a short test run, edit the <code>nTimeSteps</code> variable in the file <code>data</code>. Comment out the default value and uncomment the line reading <code>nTimeSteps=8</code>. This is a useful test to make sure that the model can at least start up. </p>
+<p>For a short test run, edit the <code>nTimeSteps</code> variable in the file <code>data</code>. Comment out the default value and uncomment the line reading <code>nTimeSteps=8</code>. This is a useful test to make sure that the model can at least start up.</p>
 <p>To run on ARCHER2, submit a batch script to the Slurm scheduler. Here is an example submission script:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
@@ -2734,7 +2729,7 @@ cp -p ../build/mitgcmuv .
 <span class="kp">#SBATCH --cpus-per-task=1</span>
 
 <span class="c1"># Replace [budget code] below with your project code (e.g. t01)</span>
-<span class="kp">#SBATCH --account=[budget code] </span>
+<span class="kp">#SBATCH --account=[budget code]</span>
 <span class="kp">#SBATCH --partition=standard</span>
 <span class="kp">#SBATCH --qos=standard</span>
 
@@ -2751,13 +2746,13 @@ cp -p ../build/mitgcmuv .
 <span class="c1">#   srun picks up the distribution from the sbatch options</span>
 <span class="nb">srun</span><span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>./mitgcmuv
 </code></pre></div>
-<p>This configuration uses 96 MPI processes at 12 MPI processes per node. Once the run has finished, in order to check that the run has successfully completed, check the end of one of the standard output files. </p>
+<p>This configuration uses 96 MPI processes at 12 MPI processes per node. Once the run has finished, in order to check that the run has successfully completed, check the end of one of the standard output files.</p>
 <pre><code>tail STDOUT.0000
 </code></pre>
-<p>It should read </p>
+<p>It should read</p>
 <pre><code>PROGRAM MAIN: Execution ended Normally
 </code></pre>
-<p>The files named <code>STDOUT.*</code> contain diagnostic information that you can use to check your results. As a first pass, check the printed statistics for any clear signs of trouble (e.g. NaN values, extremely large values). </p>
+<p>The files named <code>STDOUT.*</code> contain diagnostic information that you can use to check your results. As a first pass, check the printed statistics for any clear signs of trouble (e.g. NaN values, extremely large values).</p>
 <h4 id="eccov4-r4-in-adjoint-mode">ECCOv4-r4 in adjoint mode</h4>
 <p>If you have access to the commercial TAF software produced by <a href="http://FastOpt.de">http://FastOpt.de</a>, then you can compile and run the ECCOv4-r4 instance of MITgcm in adjoint mode. This mode is useful for comprehensive sensitivity studies and for constructing state estimates. From the <code>MITgcm/ECCOV4/release4</code> directory, create a new code directory and a new build directory:</p>
 <pre><code>mkdir code_ad
@@ -2794,17 +2789,17 @@ cd run_ad
 # manually copy the mitgcmuv executable
 cp -p ../build_ad/mitgcmuv_ad .
 </code></pre>
-<p>To run the model, change the name of the executable in the Slurm submission script; everything else should be the same as in the forward case. As above, at the end of the run you should have a set of <code>STDOUT.*</code> files that you can examine for any obvious problems. </p>
+<p>To run the model, change the name of the executable in the Slurm submission script; everything else should be the same as in the forward case. As above, at the end of the run you should have a set of <code>STDOUT.*</code> files that you can examine for any obvious problems.</p>
 <h5 id="compile-time-errors">Compile time errors</h5>
 <p>If TAF compilation fails with an error like <code>failed to convert GOTPCREL relocation;
 relink with --no-relax</code> then add the following line to the FFLAGS options: <code>-Wl,--no-relax</code>.</p>
 <h5 id="checkpointing-for-adjoint-runs">Checkpointing for adjoint runs</h5>
-<p>In an adjoint run, there is a balance between storage (i.e. saving the model state to disk) and recomputation (i.e. integrating the model forward from a stored state). Changing the <code>nchklev</code> parameters in the <code>tamc.h</code> file at compile time is how you control the relative balance between storage and recomputation. </p>
+<p>In an adjoint run, there is a balance between storage (i.e. saving the model state to disk) and recomputation (i.e. integrating the model forward from a stored state). Changing the <code>nchklev</code> parameters in the <code>tamc.h</code> file at compile time is how you control the relative balance between storage and recomputation.</p>
 <p>A suggested strategy that has been used on a variety of HPC platforms is as follows:
 1. Set <code>nchklev_1</code> as large as possible, up to the size allowed by memory on your machine. (Use the <code>size</code> command to estimate the memory per process. This should be just a little bit less than the maximum allowed on the machine. On ARCHER2 this is 2 GB (standard) and 4 GB (high memory)).
-2. Next, set <code>nchklev_2</code> and <code>nchklev_3</code> to be large enough to accomodate the entire run. A common strategy is to set <code>nchklev_2 = nchklev_3 = sqrt(numsteps/nchklev_1) + 1</code>. 
-3. If the <code>nchklev_2</code> files get too big, then you may have to add a fourth level (i.e. <code>nchklev_4</code>), but this is unlikely. </p>
-<p>This strategy allows you to keep as much in memory as possible, minimising the I/O requirements for the disk. This is useful, as I/O is often the bottleneck for MITgcm runs on HPC. </p>
+2. Next, set <code>nchklev_2</code> and <code>nchklev_3</code> to be large enough to accommodate the entire run. A common strategy is to set <code>nchklev_2 = nchklev_3 = sqrt(numsteps/nchklev_1) + 1</code>.
+3. If the <code>nchklev_2</code> files get too big, then you may have to add a fourth level (i.e. <code>nchklev_4</code>), but this is unlikely.</p>
+<p>This strategy allows you to keep as much in memory as possible, minimising the I/O requirements for the disk. This is useful, as I/O is often the bottleneck for MITgcm runs on HPC.</p>
 <p>Another way to adjust performance is to adjust how tapelevel I/O is handled. This strategy performs well for most configurations:
 <div class="highlight"><pre><span></span><code>C o tape settings
 #define ALLOW_AUTODIFF_WHTAPEIO
@@ -2901,7 +2896,7 @@ relink with --no-relax</code> then add the following line to the FFLAGS options:
     <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.c8d2eff1.min.js"></script>
+      <script src="../../assets/javascripts/bundle.1e8ae164.min.js"></script>
       
     
   </body>
