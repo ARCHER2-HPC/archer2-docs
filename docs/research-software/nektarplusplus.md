@@ -77,7 +77,7 @@ srun --distribution=block:cyclic --hint=nomultithread \
 Instructions for building Nektar++ on ARCHER2 may be found in
 the GitHub repository of build instructions:
 
-* [ARCHER2 Full System](https://github.com/hpc-uk/build-instructions/blob/main/apps/nektarplusplus/build_nektarplusplus_5.0.3_archer2_gcc11_cmpich8.md)
+* [ARCHER2 Full System](https://github.com/hpc-uk/build-instructions/blob/main/apps/nektarplusplus/build_nektarplusplus_5.2.0_archer2_gcc11_cmpich8.md)
 
 ## More information
 
