@@ -23,11 +23,11 @@ line, in build scripts, or in configure options. It could be helpful to
 set some or all of the following environment variables before running a
 build to ensure that the build tool is aware of the wrappers.
 
-  export CC=cc
-  export CXX=CC
-  export FC=ftn
-  export F77=ftn
-  export F90=ftn
+    export CC=cc
+    export CXX=CC
+    export FC=ftn
+    export F77=ftn
+    export F90=ftn
 
 `man` pages are available for each wrapper. You can also see the full
 set of compiler and linker options being used by passing the
