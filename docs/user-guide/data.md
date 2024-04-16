@@ -526,6 +526,8 @@ Common options include:
    - `-l` confirm all file hard links are included in the archive
    - `-f` use an archive file (for historical reasons, tar writes its
      output to stdout by default rather than a file).
+   - `-b 2048` use a 1 MiB block size (better performance and less contention
+     on Lustre compared to the default block size)
 
 Putting these together:
 
@@ -535,10 +537,11 @@ will create and verify an archive.
 
 To extract files from a tar file, the option `-x` is used. For example:
 
-    tar -xf mydata.tar
+    tar -b 2048 -xf mydata.tar
 
 will recover the contents of `mydata.tar` to the current working
-directory.
+directory (using a block size of 1 MiB to improve Lustre performance and 
+reduce contention).
 
 To verify an existing tar file against a set of data, the `-d` (diff)
 option can be used. By default, no output will be given if a
