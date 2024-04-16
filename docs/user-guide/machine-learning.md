@@ -124,7 +124,7 @@ In the script above, we specify four tasks per node, one for each GPU. These tas
 bandwidth between the host and the GPU devices. Note, PyTorch is not using Cray MPICH for inter-task communications, which is instead being handled by the 
 ROCm Collective Communications Library (RCCL), hence the `--wireup_method nccl-slurm` option (`nccl-slurm` works as an alias for `rccl-slurm in this context).
 
-The above job should achieve convergence - an Intersection over Union (IoU) of 0.82 - after 35 epochs or so. Runtime should be around 20-30 minutes.
+The above job should achieve convergence &mdash; an Intersection over Union (IoU) of 0.82 &mdash; after 35 epochs or so. Runtime should be around 20-30 minutes.
 
 
 We can also modify the DeepCam `train.py` script so that the accuracy and loss are logged using [TensorBoard](https://pytorch.org/tutorials/recipes/recipes/tensorboard_with_pytorch.html).
@@ -360,7 +360,7 @@ The job script above tells TensorFlow to choose the values by setting both param
 You will note that only a few hyperparameters are specified for the CosmoFlow training job
 (e.g., `--n-epochs`, `--n-train` and `--n-valid`). Those settings in fact override the values
 assigned to those same parameters within the `./configs/cosmo.yaml` file. However, that file
-contains settings for many other hyperparameters that are not overwritten.`
+contains settings for many other hyperparameters that are not overwritten.
 
 The CosmoFlow job specified above should take around 140 minutes to complete 2048 epochs,
 which should be sufficient to achieve a mean average error of 0.23.
