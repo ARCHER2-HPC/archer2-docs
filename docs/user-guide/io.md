@@ -317,5 +317,5 @@ call MPI-IO at the lowest level.
 
 When you are expanding a large tar archive file to the Lustre file systems
 you should specify the `-b 2048` option to ensure that tar writes out data
-in blocks of 1 GiB. This will improve the performance of your tar command
+in blocks of 1 MiB. This will improve the performance of your tar command
 and reduce the impact of writing the data to Lustre on other users.
