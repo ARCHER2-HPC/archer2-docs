@@ -553,6 +553,9 @@ verification succeeds and an example of a failed verification follows:
     the original data to be present during verification.
 
 !!! tip
+     we recommend you use `-b 2048` option to set the blocking factor when writing to lustre
+
+!!! tip
     Further information on using `tar` can be found in the `tar` manual
     (accessed via `man tar` or at [man
     tar](https://linux.die.net/man/1/tar)).
