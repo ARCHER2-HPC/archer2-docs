@@ -3422,16 +3422,19 @@ has general form:</p>
 <li><code>-l</code> confirm all file hard links are included in the archive</li>
 <li><code>-f</code> use an archive file (for historical reasons, tar writes its
      output to stdout by default rather than a file).</li>
+<li><code>-b 2048</code> use a 1 MiB block size (better performance and less contention
+     on Lustre compared to the default block size)</li>
 </ul>
 <p>Putting these together:</p>
 <pre><code>tar -cvWlf mydata.tar mydata
 </code></pre>
 <p>will create and verify an archive.</p>
 <p>To extract files from a tar file, the option <code>-x</code> is used. For example:</p>
-<pre><code>tar -xf mydata.tar
+<pre><code>tar -b 2048 -xf mydata.tar
 </code></pre>
 <p>will recover the contents of <code>mydata.tar</code> to the current working
-directory.</p>
+directory (using a block size of 1 MiB to improve Lustre performance and 
+reduce contention).</p>
 <p>To verify an existing tar file against a set of data, the <code>-d</code> (diff)
 option can be used. By default, no output will be given if a
 verification succeeds and an example of a failed verification follows:</p>
