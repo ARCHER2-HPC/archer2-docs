@@ -1,7 +1,7 @@
 # I/O performance and tuning
 
-This section describes common IO patterns and how to get good performance
-on the ARCHER2 storage. 
+This section describes common IO patterns, best practice for
+I/O and how to get good performance on the ARCHER2 storage. 
 
 Information on the file systems, directory layouts, quotas,
 archiving and transferring data can be found in the
@@ -310,3 +310,12 @@ that you are calling your parallel I/O library correctly.
 Although this information comes from the MPI library, it is still
 useful for users of higher-level libraries such as HDF5 as they all
 call MPI-IO at the lowest level.
+
+## Tips and advice for I/O
+
+### Set an optimum blocksize when untar'ing data
+
+When you are expanding a large tar archive file to the Lustre file systems
+you should specify the `-b 2048` option to ensure that tar writes out data
+in blocks of 1 GiB. This will improve the performance of your tar command
+and reduce the impact of writing the data to Lustre on other users.
