@@ -63,6 +63,7 @@ nav:
     - "Application development environment": user-guide/dev-environment.md
     - "Containers": user-guide/containers.md
     - "Using Python": user-guide/python.md
+    - "Machine Learning": user-guide/machine-learning.md
     - "Data analysis": user-guide/analysis.md
     - "Debugging": user-guide/debug.md
     - "Profiling": user-guide/profile.md
