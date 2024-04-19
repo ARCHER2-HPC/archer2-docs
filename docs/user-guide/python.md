@@ -196,7 +196,7 @@ If you want additional packages that are not available in the standard container
 you will need to build your own container images. If you need help to do this, then please
 contact the [ARCHER2 Service Desk](mailto:support@archer2.ac.uk)
 
-#### Install conda on the solid state storage
+<!-- #### Install conda on the solid state storage
 
 !!! note
     You must have applied for and been granted access to the solid state storage on ARCHER2
@@ -205,7 +205,7 @@ contact the [ARCHER2 Service Desk](mailto:support@archer2.ac.uk)
 The ARCHER2 solid state storage is better suited to accessing many small files and so performs better
 for Python imports. You can install your conda distribution on the solid state storage to see better
 performance than you would from the work file systems. To do this, specify an install location 
-in your directories on the solid state storage when prompted in the conda installation process.
+in your directories on the solid state storage when prompted in the conda installation process. -->
 
 ### Conda addtions to shell configuration files
 
