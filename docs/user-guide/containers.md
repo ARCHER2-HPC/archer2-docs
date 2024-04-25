@@ -425,3 +425,228 @@ Lmod is automatically replacing "cray-mpich/8.1.23" with
 524288               1025.87
 1048576              2173.25
 ```
+
+## Using Containerized HPE Cray Programming Environments
+
+An experimental containerized CPE module has been setup on ARCHER2. The module is not available by default
+but can be made accessible by running `module use` with the right path.
+
+```bash
+module use /work/y07/shared/archer2-lmod/others/dev
+module load ccpe/23.12
+```
+
+The purpose of the `ccpe` module(s) is to allow developers to check that their code compiles with the
+latest Cray Programming Environment (CPE) releases. The CPE release installed on ARCHER2 (currently
+CPE 22.12) will typically be older than the latest available. A more recent containerised CPE therefore
+gives developers the opportunity to try out the latest compilers and libraries before the ARCHER CPE
+is upgraded.
+
+!!! note
+    The Containerized CPEs support CCE and GCC compilers, but not AOCC compilers.
+
+The `ccpe/23.12` module then provides access to CPE 23.12 via a Singularity image file, located at
+`/work/y07/shared/utils/dev/ccpe/23.12/cpe_23.12.sif`. Singularity containers can be run such that locations
+on the host file system are still visible. This means source code stored on `/work` can be compiled from
+inside the CPE container. And any output resulting from the compilation, such as object files, libraries
+and executables, can be written to `/work` also. This ability to bind to locations on the host is
+necessary as the container is immutable, i.e., you cannot write files to the container itself.
+
+Any executable resulting from a containerized CPE build can be run from within the container,
+allowing the developer to test the performance of the containerized libraries, e.g., `libmpi_cray`,
+`libpmi2`, `libfabric`.
+
+We'll now show how to build and run a simple Hello World MPI example using a containerized CPE.
+
+First, `cd` to the directory containing the Hello World MPI source, makefile and build script.
+Examples of these files are given below.
+
+=== "build.sh"
+    ```bash
+    #!/bin/bash
+
+    make clean
+    make
+
+    echo -e "\n\nldd helloworld"
+    ldd helloworld
+    ```
+=== "makefile"
+    ```Makefile
+    MF=     Makefile
+
+    FC=     ftn
+    FFLAGS= -O3
+    LFLAGS= -lmpichf90
+
+    EXE=    helloworld
+    FSRC=   helloworld.f90
+
+    #
+    # No need to edit below this line
+    #
+
+    .SUFFIXES:
+    .SUFFIXES: .f90 .o
+
+    OBJ=    $(FSRC:.f90=.o)
+
+    .f90.o:
+        $(FC) $(FFLAGS) -c $<
+
+    all:    $(EXE)
+
+    $(EXE): $(OBJ)
+        $(FC) $(FFLAGS) -o $@ $(OBJ) $(LFLAGS)
+
+    clean:
+        rm -f $(OBJ) $(EXE) core
+    ```
+=== "helloworld.f90"
+    ```fortran
+    !
+    ! Prints 'Hello World' from rank 0 and
+    ! prints what processor it is out of the total number of processors from
+    ! all ranks
+    !
+
+    program helloworld
+      use mpi
+
+      implicit none
+
+      integer :: comm, rank, size, ierr
+      integer :: last_arg
+
+      comm = MPI_COMM_WORLD
+
+      call MPI_INIT(ierr)
+
+      call MPI_COMM_RANK(comm, rank, ierr)
+      call MPI_COMM_SIZE(comm, size, ierr)
+
+      ! Each process prints out its rank
+      write(*,*) 'I am ', rank, 'out of ', size,' processors.'
+
+      call sleep(1)
+
+      call MPI_FINALIZE(ierr)
+
+    end program helloworld
+    ```
+
+The `ldd` command at the end of the build script is simply there to confirm that the code is indeed linked to
+containerized libraries that form part of the CPE 23.12 release.
+
+The next step is to launch a job (via `sbatch`) on a serial node that instantiates the containerized CPE 23.12
+image and builds the Hello World MPI code.
+
+=== "submit-build.slurm"
+    ```slurm
+    #!/bin/bash
+
+    #SBATCH --job-name=ccpe-build
+    #SBATCH --ntasks=8
+    #SBATCH --time=00:10:00
+    #SBATCH --account=<budget code>
+    #SBATCH --partition=serial
+    #SBATCH --qos=serial
+    #SBATCH --export=none
+
+    export OMP_NUM_THREADS=1
+
+    module use /work/y07/shared/archer2-lmod/others/dev
+    module load ccpe/23.12
+
+    BUILD_CMD="${CCPE_BUILDER} ${SLURM_SUBMIT_DIR}/build.sh"
+
+    singularity exec --cleanenv \
+        --bind ${CCPE_BIND_ARGS},${SLURM_SUBMIT_DIR} --env LD_LIBRARY_PATH=${CCPE_LD_LIBRARY_PATH} \
+        ${CCPE_IMAGE_FILE} ${BUILD_CMD}
+    ```
+
+The `CCPE` environment variables shown above (e.g., `CCPE_BUILDER` and `CCPE_IMAGE_FILE`) are set by the
+loading of the `ccpe/23.12` module. The `CCPE_BUILDER` variable holds the path to the script that prepares the
+containerized environment prior to running the `build.sh` script. You can run `cat ${CCPE_BUILDER}` to take
+a closer look at what is going on.
+
+!!! note
+    Passing the `${SLURM_SUBMIT_DIR}` path to Singularity via the `--bind` option allows the CPE container
+    to access the source code and write out the executable using locations on the host.
+
+Running the newly-built code is similarly straightforward; this time the containerized CPE is launched on the
+compute nodes using the `srun` command.
+
+=== "submit-run.slurm"
+    ```slurm
+    #!/bin/bash
+
+    #SBATCH --job-name=helloworld
+    #SBATCH --nodes=2
+    #SBATCH --tasks-per-node=128
+    #SBATCH --cpus-per-task=1
+    #SBATCH --time=00:20:00
+    #SBATCH --account=<budget code>
+    #SBATCH --partition=standard
+    #SBATCH --qos=short
+    #SBATCH --export=none
+
+    export OMP_NUM_THREADS=1
+
+    module use /work/y07/shared/archer2-lmod/others/dev
+    module load ccpe/23.12
+
+    RUN_CMD="${SLURM_SUBMIT_DIR}/helloworld"
+
+    srun --distribution=block:block --hint=nomultithread --chdir=${SLURM_SUBMIT_DIR} \
+        singularity exec --bind ${CCPE_BIND_ARGS},${SLURM_SUBMIT_DIR} --env LD_LIBRARY_PATH=${CCPE_LD_LIBRARY_PATH} \
+            ${CCPE_IMAGE_FILE} ${RUN_CMD}
+    ```
+
+If you wish you can at runtime replace a containerized library with its host equivalent. You may for example decide to
+do this for a low-level communications library such as `libfabric` or `libpmi`. This can be done by adding (before the
+`srun` command) something like the following line to the `submit-run.slurm` file.
+
+```bash
+source ${CCPE_SET_HOST_PATH} "/opt/cray/pe/pmi" "6.1.8" "lib"
+```
+
+As of April 2024, the version of PMI available on ARCHER2 is 6.1.8 (CPE 22.12), and so the command above would allow
+you to isolate the impact of the containerized PMI library, which for CPE 23.12 is PMI 6.1.13. To see how the setting
+of the host library is done, simply run `cat ${CCPE_SET_HOST_PATH}` after loading the `ccpe` module.
+
+An MPI code that just prints a message from each rank is obviously very simple. Real-world codes such as CP2K or GROMACS
+will often require additional software for compilation, e.g., Intel MKL libraries or tools that control the build process
+such as `CMake`. The way round this sort of problem is to point the CCPE container at the locations on the host where the
+software is installed.
+
+=== "submit-cmake-build.slurm"
+    ```slurm
+    #!/bin/bash
+
+    #SBATCH --job-name=ccpe-build
+    #SBATCH --ntasks=8
+    #SBATCH --time=00:10:00
+    #SBATCH --account=<budget code>
+    #SBATCH --partition=serial
+    #SBATCH --qos=serial
+    #SBATCH --export=none
+    
+    export OMP_NUM_THREADS=1
+    
+    module use /work/y07/shared/archer2-lmod/others/dev
+    module load ccpe/23.12
+    
+    CMAKE_DIR="/work/y07/shared/utils/core/cmake/3.21.3"
+    
+    BUILD_CMD="${CCPE_BUILDER} ${SLURM_SUBMIT_DIR}/build.sh"
+    
+    singularity exec --cleanenv \
+        --bind ${CCPE_BIND_ARGS},${CMAKE_DIR},${SLURM_SUBMIT_DIR} \
+        --env LD_LIBRARY_PATH=${CCPE_LD_LIBRARY_PATH} \
+        ${CCPE_IMAGE_FILE} ${BUILD_CMD}
+    ```
+
+The `submit-cmake-build.slurm` script shows how the `--bind` option can be used to make the `CMake` installation on ARCHER2
+accessible from within the container. The `build.sh` script can then call the `cmake` command directly (once the `CMake`
+bin directory has been added to the `PATH` environment variable).

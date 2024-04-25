@@ -613,7 +613,7 @@ first choice for access to software libraries if available.
 
 ## Available HPE Cray Programming Environment releases on ARCHER2
 
-ARCHER2 currently has the following HPE Cray Programming Environment releases available:
+ARCHER2 currently has the following HPE Cray Programming Environment (CPE) releases available:
 
 - **22.12: Current default**
 
@@ -625,6 +625,11 @@ repository](https://github.com/PE-Cray).
     We recommend that users use the most recent version of the PE available to get
     the latest improvements and bug fixes.
 
+Later PE releases may sometimes be available via a containerized form. This allows developers to check that their code compiles and runs
+using CPE releases that have not yet been installed on ARCHER2.
+
+CPE 23.12 is currently available as a Singularity container, see [Using Containerized HPE Cray Programming Environments](containers.md/#using-containerized-hpe-cray-programming-environments) for further details.
+                                                        
 <!-- Only one PE available at the moment
 
 ## Switching to a different HPE Cray Programming Environment release
