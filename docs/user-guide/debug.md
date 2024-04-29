@@ -496,6 +496,8 @@ environment variable to 1 on the login node:
 
     module load atp
     export ATP_ENABLED=1
+    # Fix for a known issue:
+    export HOME=${HOME/home/work}
 
 Then, launch your job using `srun` as a background task (by adding an
 `&` at the end of the command). For example, if you are running an
