@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../favicon.ico">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.18">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.20">
     
     
       
@@ -433,6 +433,15 @@
   
     <nav class="md-nav" aria-label="Open Issues">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#atp-module-tries-to-write-to-home-from-compute-nodes-added-2024-04-29" class="md-nav__link">
+    <span class="md-ellipsis">
+      ATP Module tries to write to /home from compute nodes (Added: 2024-04-29)
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#when-close-to-storage-quota-jobs-may-slow-down-or-produce-corrupted-files-added-2024-02-27" class="md-nav__link">
@@ -2336,6 +2345,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#atp-module-tries-to-write-to-home-from-compute-nodes-added-2024-04-29" class="md-nav__link">
+    <span class="md-ellipsis">
+      ATP Module tries to write to /home from compute nodes (Added: 2024-04-29)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#when-close-to-storage-quota-jobs-may-slow-down-or-produce-corrupted-files-added-2024-02-27" class="md-nav__link">
     <span class="md-ellipsis">
       When close to storage quota, jobs may slow down or produce corrupted files (Added: 2024-02-27)
@@ -2457,6 +2475,13 @@ active investigation by HPE Cray and the wider service.</p>
 <p>This page was last reviewed on 9 November 2023</p>
 </div>
 <h2 id="open-issues">Open Issues</h2>
+<h3 id="atp-module-tries-to-write-to-home-from-compute-nodes-added-2024-04-29">ATP Module tries to write to /home from compute nodes (Added: 2024-04-29)</h3>
+<p>The ATP Module tries to execute a <code>mkdir</code> command in the <code>/home</code> filesystem.
+When running the ATP module on the compute nodes, this will lead to an error, as the compute nodes cannot access the <code>/home</code> filesystem.</p>
+<p>To circumvent the error, add the line:</p>
+<pre><code>export HOME=${HOME/home/work}
+</code></pre>
+<p>in the slurm script, so that the ATP module will write to <code>/work</code> instead.</p>
 <h3 id="when-close-to-storage-quota-jobs-may-slow-down-or-produce-corrupted-files-added-2024-02-27">When close to storage quota, jobs may slow down or produce corrupted files (Added: 2024-02-27)</h3>
 <p>For situations where users are close to user or project quotas on work (Lustre) file systems we have
 seen cases of the following behaviour:</p>
@@ -2632,7 +2657,7 @@ to try and workaround this error:</p>
     <script id="__config" type="application/json">{"base": "..", "features": ["tabs"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.3220b9d7.min.js"></script>
+      <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
       
     
   </body>
