@@ -9,6 +9,17 @@ active investigation by HPE Cray and the wider service.
 
 ## Open Issues
 
+### ATP Module tries to write to /home from compute nodes (Added: 2024-04-29)
+
+The ATP Module tries to execute a `mkdir` command in the `/home` filesystem.
+When running the ATP module on the compute nodes, this will lead to an error, as the compute nodes cannot access the `/home` filesystem.
+
+To circumvent the error, add the line:
+
+    export HOME=${HOME/home/work}
+
+in the slurm script, so that the ATP module will write to `/work` instead.
+
 ### When close to storage quota, jobs may slow down or produce corrupted files (Added: 2024-02-27)
 
 For situations where users are close to user or project quotas on work (Lustre) file systems we have
