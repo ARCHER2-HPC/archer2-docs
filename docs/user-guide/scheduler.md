@@ -433,7 +433,7 @@ that they wish to charge the job too with the option:
      to in SAFE.
 
 !!! important
-    You **must** specify an acount code for your job otherwise it will
+    You **must** specify an account code for your job otherwise it will
     fail to submit with the error: `sbatch: error: Batch job submission failed: Invalid account or account/partition combination specified`.
     (This error can also mean that you have specified a budget that
     has run out of resources.)
@@ -2298,7 +2298,7 @@ charge with the following limits:
     - 2 jobs maximum running per user
 - Users must have a valid, positive CU budget to be able to run jobs during Capability Days
 
-Users wishing to run jobs during Capability Day should submit to the `capabilityday` QoS. Jobs can be 
+Users wishing to run jobs during Capability Day should submit to the `capabilityday` QoS. Jobs can be
 submitted ahead of time and will start when the Capability Day starts.
 
 ### Example Capability Day job submission script
