@@ -426,9 +426,9 @@ Lmod is automatically replacing "cray-mpich/8.1.23" with
 1048576              2173.25
 ```
 
-## Using Containerized HPE Cray Programming Environments
+## Using Containerised HPE Cray Programming Environments
 
-An experimental containerized CPE module has been setup on ARCHER2. The module is not available by default
+An experimental containerised CPE module has been setup on ARCHER2. The module is not available by default
 but can be made accessible by running `module use` with the right path.
 
 ```bash
@@ -443,7 +443,7 @@ gives developers the opportunity to try out the latest compilers and libraries b
 is upgraded.
 
 !!! note
-    The Containerized CPEs support CCE and GCC compilers, but not AOCC compilers.
+    The Containerised CPEs support CCE and GCC compilers, but not AOCC compilers.
 
 The `ccpe/23.12` module then provides access to CPE 23.12 via a Singularity image file, located at
 `/work/y07/shared/utils/dev/ccpe/23.12/cpe_23.12.sif`. Singularity containers can be run such that locations
@@ -452,11 +452,11 @@ inside the CPE container. And any output resulting from the compilation, such as
 and executables, can be written to `/work` also. This ability to bind to locations on the host is
 necessary as the container is immutable, i.e., you cannot write files to the container itself.
 
-Any executable resulting from a containerized CPE build can be run from within the container,
-allowing the developer to test the performance of the containerized libraries, e.g., `libmpi_cray`,
+Any executable resulting from a containerised CPE build can be run from within the container,
+allowing the developer to test the performance of the containerised libraries, e.g., `libmpi_cray`,
 `libpmi2`, `libfabric`.
 
-We'll now show how to build and run a simple Hello World MPI example using a containerized CPE.
+We'll now show how to build and run a simple Hello World MPI example using a containerised CPE.
 
 First, `cd` to the directory containing the Hello World MPI source, makefile and build script.
 Examples of these files are given below.
@@ -536,9 +536,9 @@ Examples of these files are given below.
     ```
 
 The `ldd` command at the end of the build script is simply there to confirm that the code is indeed linked to
-containerized libraries that form part of the CPE 23.12 release.
+containerised libraries that form part of the CPE 23.12 release.
 
-The next step is to launch a job (via `sbatch`) on a serial node that instantiates the containerized CPE 23.12
+The next step is to launch a job (via `sbatch`) on a serial node that instantiates the containerised CPE 23.12
 image and builds the Hello World MPI code.
 
 === "submit-build.slurm"
@@ -567,14 +567,14 @@ image and builds the Hello World MPI code.
 
 The `CCPE` environment variables shown above (e.g., `CCPE_BUILDER` and `CCPE_IMAGE_FILE`) are set by the
 loading of the `ccpe/23.12` module. The `CCPE_BUILDER` variable holds the path to the script that prepares the
-containerized environment prior to running the `build.sh` script. You can run `cat ${CCPE_BUILDER}` to take
+containerised environment prior to running the `build.sh` script. You can run `cat ${CCPE_BUILDER}` to take
 a closer look at what is going on.
 
 !!! note
     Passing the `${SLURM_SUBMIT_DIR}` path to Singularity via the `--bind` option allows the CPE container
     to access the source code and write out the executable using locations on the host.
 
-Running the newly-built code is similarly straightforward; this time the containerized CPE is launched on the
+Running the newly-built code is similarly straightforward; this time the containerised CPE is launched on the
 compute nodes using the `srun` command.
 
 === "submit-run.slurm"
@@ -603,7 +603,7 @@ compute nodes using the `srun` command.
             ${CCPE_IMAGE_FILE} ${RUN_CMD}
     ```
 
-If you wish you can at runtime replace a containerized library with its host equivalent. You may for example decide to
+If you wish you can at runtime replace a containerised library with its host equivalent. You may for example decide to
 do this for a low-level communications library such as `libfabric` or `libpmi`. This can be done by adding (before the
 `srun` command) something like the following line to the `submit-run.slurm` file.
 
@@ -612,7 +612,7 @@ source ${CCPE_SET_HOST_PATH} "/opt/cray/pe/pmi" "6.1.8" "lib"
 ```
 
 As of April 2024, the version of PMI available on ARCHER2 is 6.1.8 (CPE 22.12), and so the command above would allow
-you to isolate the impact of the containerized PMI library, which for CPE 23.12 is PMI 6.1.13. To see how the setting
+you to isolate the impact of the containerised PMI library, which for CPE 23.12 is PMI 6.1.13. To see how the setting
 of the host library is done, simply run `cat ${CCPE_SET_HOST_PATH}` after loading the `ccpe` module.
 
 An MPI code that just prints a message from each rank is obviously very simple. Real-world codes such as CP2K or GROMACS
