@@ -454,8 +454,8 @@ QoS specifications are as follows.
 
 | QoS        | Max Nodes Per Job | Max Walltime | Jobs Queued | Jobs Running | Partition(s) | Notes |
 | ---------- | ----------------- | ------------ | ----------- | ------------ | ------------ | ------|
-| gpu-shd    | 1               | 1 hr       | 2          | 1           | gpu    | Nodes potentially shared with other users |
-| gpu-exc    | 2               | 1 hr       | 2          | 1           | gpu    | Exclusive node access |
+| gpu-shd    | 1               | 12 hr       | 2          | 1           | gpu    | Nodes potentially shared with other users |
+| gpu-exc    | 2               | 12 hr       | 2          | 1           | gpu    | Exclusive node access |
 
 ### Example job submission scripts
 

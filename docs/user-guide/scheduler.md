@@ -222,8 +222,8 @@ lists the active QoS on ARCHER2.
     | serial | 32 cores and/or 128 GB memory   | 24 hrs        | 32           | 4            | serial    | Jobs not charged but requires at least 1 CU in budget to use. Maximum of 32 cores and/or 128 GB in use by any one user at any time. |
     | reservation | Size of reservation  | Length of reservation       | No limit           | no limit           | standard   |  |
     | capabilityday | At least 4096 nodes  | 3 hrs        | 8           | 2            | standard     | Minimum job size of 512 nodes. Jobs only run during [Capability Days](#capability-days) |
-    | gpu-shd    | 1               | 1 hr       | 2          | 1           | gpu    | GPU nodes potentially shared with other users |
-    | gpu-exc    | 2               | 1 hr       | 2          | 1           | gpu    | GPU node exclusive node access |
+    | gpu-shd    | 1               | 12 hr       | 2          | 1           | gpu    | GPU nodes potentially shared with other users |
+    | gpu-exc    | 2               | 12 hr       | 2          | 1           | gpu    | GPU node exclusive node access |
 
 You can find out the QoS that you can use by running the following
 command:
