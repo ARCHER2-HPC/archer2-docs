@@ -847,6 +847,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#using-containerised-hpe-cray-programming-environments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Containerised HPE Cray Programming Environments
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2492,6 +2501,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#using-containerised-hpe-cray-programming-environments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Containerised HPE Cray Programming Environments
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2876,6 +2894,226 @@ file:</p>
 524288               1025.87
 1048576              2173.25
 </code></pre></div>
+<h2 id="using-containerised-hpe-cray-programming-environments">Using Containerised HPE Cray Programming Environments</h2>
+<p>An experimental containerised CPE module has been setup on ARCHER2. The module is not available by default
+but can be made accessible by running <code>module use</code> with the right path.</p>
+<div class="highlight"><pre><span></span><code>module<span class="w"> </span>use<span class="w"> </span>/work/y07/shared/archer2-lmod/others/dev
+module<span class="w"> </span>load<span class="w"> </span>ccpe/23.12
+</code></pre></div>
+<p>The purpose of the <code>ccpe</code> module(s) is to allow developers to check that their code compiles with the
+latest Cray Programming Environment (CPE) releases. The CPE release installed on ARCHER2 (currently
+CPE 22.12) will typically be older than the latest available. A more recent containerised CPE therefore
+gives developers the opportunity to try out the latest compilers and libraries before the ARCHER CPE
+is upgraded.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Containerised CPEs support CCE and GCC compilers, but not AOCC compilers.</p>
+</div>
+<p>The <code>ccpe/23.12</code> module then provides access to CPE 23.12 via a Singularity image file, located at
+<code>/work/y07/shared/utils/dev/ccpe/23.12/cpe_23.12.sif</code>. Singularity containers can be run such that locations
+on the host file system are still visible. This means source code stored on <code>/work</code> can be compiled from
+inside the CPE container. And any output resulting from the compilation, such as object files, libraries
+and executables, can be written to <code>/work</code> also. This ability to bind to locations on the host is
+necessary as the container is immutable, i.e., you cannot write files to the container itself.</p>
+<p>Any executable resulting from a containerised CPE build can be run from within the container,
+allowing the developer to test the performance of the containerised libraries, e.g., <code>libmpi_cray</code>,
+<code>libpmi2</code>, <code>libfabric</code>.</p>
+<p>We'll now show how to build and run a simple Hello World MPI example using a containerised CPE.</p>
+<p>First, <code>cd</code> to the directory containing the Hello World MPI source, makefile and build script.
+Examples of these files are given below.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">build.sh</label><label for="__tabbed_1_2">makefile</label><label for="__tabbed_1_3">helloworld.f90</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+make<span class="w"> </span>clean
+make
+
+<span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;\n\nldd helloworld&quot;</span>
+ldd<span class="w"> </span>helloworld
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nv">MF</span><span class="o">=</span><span class="w">     </span>Makefile
+
+<span class="nv">FC</span><span class="o">=</span><span class="w">     </span>ftn
+<span class="nv">FFLAGS</span><span class="o">=</span><span class="w"> </span>-O3
+<span class="nv">LFLAGS</span><span class="o">=</span><span class="w"> </span>-lmpichf90
+
+<span class="nv">EXE</span><span class="o">=</span><span class="w">    </span>helloworld
+<span class="nv">FSRC</span><span class="o">=</span><span class="w">   </span>helloworld.f90
+
+<span class="c">#</span>
+<span class="c"># No need to edit below this line</span>
+<span class="c">#</span>
+
+<span class="nf">.SUFFIXES</span><span class="o">:</span>
+<span class="nf">.SUFFIXES</span><span class="o">:</span><span class="w"> </span>.<span class="n">f</span>90 .<span class="n">o</span>
+
+<span class="nv">OBJ</span><span class="o">=</span><span class="w">    </span><span class="k">$(</span>FSRC:.f90<span class="o">=</span>.o<span class="k">)</span>
+
+<span class="nf">.f90.o</span><span class="o">:</span>
+<span class="w">    </span><span class="k">$(</span>FC<span class="k">)</span><span class="w"> </span><span class="k">$(</span>FFLAGS<span class="k">)</span><span class="w"> </span>-c<span class="w"> </span>$&lt;
+
+<span class="nf">all</span><span class="o">:</span><span class="w">    </span><span class="k">$(</span><span class="nv">EXE</span><span class="k">)</span>
+
+<span class="nf">$(EXE)</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">OBJ</span><span class="k">)</span>
+<span class="w">    </span><span class="k">$(</span>FC<span class="k">)</span><span class="w"> </span><span class="k">$(</span>FFLAGS<span class="k">)</span><span class="w"> </span>-o<span class="w"> </span><span class="nv">$@</span><span class="w"> </span><span class="k">$(</span>OBJ<span class="k">)</span><span class="w"> </span><span class="k">$(</span>LFLAGS<span class="k">)</span>
+
+<span class="nf">clean</span><span class="o">:</span>
+<span class="w">    </span>rm<span class="w"> </span>-f<span class="w"> </span><span class="k">$(</span>OBJ<span class="k">)</span><span class="w"> </span><span class="k">$(</span>EXE<span class="k">)</span><span class="w"> </span>core
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="c">!</span>
+<span class="c">! Prints &#39;Hello World&#39; from rank 0 and</span>
+<span class="c">! prints what processor it is out of the total number of processors from</span>
+<span class="c">! all ranks</span>
+<span class="c">!</span>
+
+<span class="k">program </span><span class="n">helloworld</span>
+<span class="w">  </span><span class="k">use </span><span class="n">mpi</span>
+
+<span class="w">  </span><span class="k">implicit none</span>
+
+<span class="k">  </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">comm</span><span class="p">,</span><span class="w"> </span><span class="n">rank</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">,</span><span class="w"> </span><span class="n">ierr</span>
+<span class="w">  </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">last_arg</span>
+
+<span class="w">  </span><span class="n">comm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MPI_COMM_WORLD</span>
+
+<span class="w">  </span><span class="k">call </span><span class="n">MPI_INIT</span><span class="p">(</span><span class="n">ierr</span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">call </span><span class="n">MPI_COMM_RANK</span><span class="p">(</span><span class="n">comm</span><span class="p">,</span><span class="w"> </span><span class="n">rank</span><span class="p">,</span><span class="w"> </span><span class="n">ierr</span><span class="p">)</span>
+<span class="w">  </span><span class="k">call </span><span class="n">MPI_COMM_SIZE</span><span class="p">(</span><span class="n">comm</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">,</span><span class="w"> </span><span class="n">ierr</span><span class="p">)</span>
+
+<span class="w">  </span><span class="c">! Each process prints out its rank</span>
+<span class="w">  </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s1">&#39;I am &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">rank</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;out of &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">,</span><span class="s1">&#39; processors.&#39;</span>
+
+<span class="w">  </span><span class="k">call </span><span class="nb">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">call </span><span class="n">MPI_FINALIZE</span><span class="p">(</span><span class="n">ierr</span><span class="p">)</span>
+
+<span class="k">end program </span><span class="n">helloworld</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>The <code>ldd</code> command at the end of the build script is simply there to confirm that the code is indeed linked to
+containerised libraries that form part of the CPE 23.12 release.</p>
+<p>The next step is to launch a job (via <code>sbatch</code>) on a serial node that instantiates the containerised CPE 23.12
+image and builds the Hello World MPI code.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">submit-build.slurm</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+<span class="kp">#SBATCH --job-name=ccpe-build</span>
+<span class="kp">#SBATCH --ntasks=8</span>
+<span class="kp">#SBATCH --time=00:10:00</span>
+<span class="kp">#SBATCH --account=&lt;budget code&gt;</span>
+<span class="kp">#SBATCH --partition=serial</span>
+<span class="kp">#SBATCH --qos=serial</span>
+<span class="kp">#SBATCH --export=none</span>
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
+
+module<span class="w"> </span>use<span class="w"> </span>/work/y07/shared/archer2-lmod/others/dev
+module<span class="w"> </span>load<span class="w"> </span>ccpe/23.12
+
+<span class="nv">BUILD_CMD</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CCPE_BUILDER</span><span class="si">}</span><span class="s2"> </span><span class="si">${</span><span class="nv">SLURM_SUBMIT_DIR</span><span class="si">}</span><span class="s2">/build.sh&quot;</span>
+
+singularity<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>--cleanenv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--bind<span class="w"> </span><span class="si">${</span><span class="nv">CCPE_BIND_ARGS</span><span class="si">}</span>,<span class="si">${</span><span class="nv">SLURM_SUBMIT_DIR</span><span class="si">}</span><span class="w"> </span>--env<span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="si">${</span><span class="nv">CCPE_LD_LIBRARY_PATH</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="si">${</span><span class="nv">CCPE_IMAGE_FILE</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">BUILD_CMD</span><span class="si">}</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>The <code>CCPE</code> environment variables shown above (e.g., <code>CCPE_BUILDER</code> and <code>CCPE_IMAGE_FILE</code>) are set by the
+loading of the <code>ccpe/23.12</code> module. The <code>CCPE_BUILDER</code> variable holds the path to the script that prepares the
+containerised environment prior to running the <code>build.sh</code> script. You can run <code>cat ${CCPE_BUILDER}</code> to take
+a closer look at what is going on.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Passing the <code>${SLURM_SUBMIT_DIR}</code> path to Singularity via the <code>--bind</code> option allows the CPE container
+to access the source code and write out the executable using locations on the host.</p>
+</div>
+<p>Running the newly-built code is similarly straightforward; this time the containerised CPE is launched on the
+compute nodes using the <code>srun</code> command.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">submit-run.slurm</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+<span class="kp">#SBATCH --job-name=helloworld</span>
+<span class="kp">#SBATCH --nodes=2</span>
+<span class="kp">#SBATCH --tasks-per-node=128</span>
+<span class="kp">#SBATCH --cpus-per-task=1</span>
+<span class="kp">#SBATCH --time=00:20:00</span>
+<span class="kp">#SBATCH --account=&lt;budget code&gt;</span>
+<span class="kp">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --qos=short</span>
+<span class="kp">#SBATCH --export=none</span>
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
+
+module<span class="w"> </span>use<span class="w"> </span>/work/y07/shared/archer2-lmod/others/dev
+module<span class="w"> </span>load<span class="w"> </span>ccpe/23.12
+
+<span class="nv">RUN_CMD</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">SLURM_SUBMIT_DIR</span><span class="si">}</span><span class="s2">/helloworld&quot;</span>
+
+<span class="nb">srun</span><span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>--chdir<span class="o">=</span><span class="si">${</span><span class="nv">SLURM_SUBMIT_DIR</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>singularity<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>--bind<span class="w"> </span><span class="si">${</span><span class="nv">CCPE_BIND_ARGS</span><span class="si">}</span>,<span class="si">${</span><span class="nv">SLURM_SUBMIT_DIR</span><span class="si">}</span><span class="w"> </span>--env<span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="si">${</span><span class="nv">CCPE_LD_LIBRARY_PATH</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">        </span><span class="si">${</span><span class="nv">CCPE_IMAGE_FILE</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">RUN_CMD</span><span class="si">}</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>If you wish you can at runtime replace a containerised library with its host equivalent. You may for example decide to
+do this for a low-level communications library such as <code>libfabric</code> or <code>libpmi</code>. This can be done by adding (before the
+<code>srun</code> command) something like the following line to the <code>submit-run.slurm</code> file.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">source</span><span class="w"> </span><span class="si">${</span><span class="nv">CCPE_SET_HOST_PATH</span><span class="si">}</span><span class="w"> </span><span class="s2">&quot;/opt/cray/pe/pmi&quot;</span><span class="w"> </span><span class="s2">&quot;6.1.8&quot;</span><span class="w"> </span><span class="s2">&quot;lib&quot;</span>
+</code></pre></div>
+<p>As of April 2024, the version of PMI available on ARCHER2 is 6.1.8 (CPE 22.12), and so the command above would allow
+you to isolate the impact of the containerised PMI library, which for CPE 23.12 is PMI 6.1.13. To see how the setting
+of the host library is done, simply run <code>cat ${CCPE_SET_HOST_PATH}</code> after loading the <code>ccpe</code> module.</p>
+<p>An MPI code that just prints a message from each rank is obviously very simple. Real-world codes such as CP2K or GROMACS
+will often require additional software for compilation, e.g., Intel MKL libraries or tools that control the build process
+such as <code>CMake</code>. The way round this sort of problem is to point the CCPE container at the locations on the host where the
+software is installed.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">submit-cmake-build.slurm</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+<span class="kp">#SBATCH --job-name=ccpe-build</span>
+<span class="kp">#SBATCH --ntasks=8</span>
+<span class="kp">#SBATCH --time=00:10:00</span>
+<span class="kp">#SBATCH --account=&lt;budget code&gt;</span>
+<span class="kp">#SBATCH --partition=serial</span>
+<span class="kp">#SBATCH --qos=serial</span>
+<span class="kp">#SBATCH --export=none</span>
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
+
+module<span class="w"> </span>use<span class="w"> </span>/work/y07/shared/archer2-lmod/others/dev
+module<span class="w"> </span>load<span class="w"> </span>ccpe/23.12
+
+<span class="nv">CMAKE_DIR</span><span class="o">=</span><span class="s2">&quot;/work/y07/shared/utils/core/cmake/3.21.3&quot;</span>
+
+<span class="nv">BUILD_CMD</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CCPE_BUILDER</span><span class="si">}</span><span class="s2"> </span><span class="si">${</span><span class="nv">SLURM_SUBMIT_DIR</span><span class="si">}</span><span class="s2">/build.sh&quot;</span>
+
+singularity<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>--cleanenv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--bind<span class="w"> </span><span class="si">${</span><span class="nv">CCPE_BIND_ARGS</span><span class="si">}</span>,<span class="si">${</span><span class="nv">CMAKE_DIR</span><span class="si">}</span>,<span class="si">${</span><span class="nv">SLURM_SUBMIT_DIR</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--env<span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="si">${</span><span class="nv">CCPE_LD_LIBRARY_PATH</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="si">${</span><span class="nv">CCPE_IMAGE_FILE</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">BUILD_CMD</span><span class="si">}</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>The <code>submit-cmake-build.slurm</code> script shows how the <code>--bind</code> option can be used to make the <code>CMake</code> installation on ARCHER2
+accessible from within the container. The <code>build.sh</code> script can then call the <code>cmake</code> command directly (once the <code>CMake</code>
+bin directory has been added to the <code>PATH</code> environment variable).</p>
 
 
 
