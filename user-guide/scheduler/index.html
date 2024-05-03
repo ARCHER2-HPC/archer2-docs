@@ -4147,7 +4147,7 @@ lists the active QoS on ARCHER2.</p>
 <tr>
 <td>gpu-shd</td>
 <td>1</td>
-<td>1 hr</td>
+<td>12 hrs</td>
 <td>2</td>
 <td>1</td>
 <td>gpu</td>
@@ -4156,7 +4156,7 @@ lists the active QoS on ARCHER2.</p>
 <tr>
 <td>gpu-exc</td>
 <td>2</td>
-<td>1 hr</td>
+<td>12 hrs</td>
 <td>2</td>
 <td>1</td>
 <td>gpu</td>
@@ -4477,7 +4477,7 @@ that they wish to charge the job too with the option:</p>
 </ul>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>You <strong>must</strong> specify an acount code for your job otherwise it will
+<p>You <strong>must</strong> specify an account code for your job otherwise it will
 fail to submit with the error: <code>sbatch: error: Batch job submission failed: Invalid account or account/partition combination specified</code>.
 (This error can also mean that you have specified a budget that
 has run out of resources.)</p>
@@ -6142,7 +6142,7 @@ charge with the following limits:</p>
 </li>
 <li>Users must have a valid, positive CU budget to be able to run jobs during Capability Days</li>
 </ul>
-<p>Users wishing to run jobs during Capability Day should submit to the <code>capabilityday</code> QoS. Jobs can be 
+<p>Users wishing to run jobs during Capability Day should submit to the <code>capabilityday</code> QoS. Jobs can be
 submitted ahead of time and will start when the Capability Day starts.</p>
 <h3 id="example-capability-day-job-submission-script">Example Capability Day job submission script</h3>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
