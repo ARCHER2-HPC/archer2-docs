@@ -222,8 +222,8 @@ lists the active QoS on ARCHER2.
     | serial | 32 cores and/or 128 GB memory   | 24 hrs        | 32           | 4            | serial    | Jobs not charged but requires at least 1 CU in budget to use. Maximum of 32 cores and/or 128 GB in use by any one user at any time. |
     | reservation | Size of reservation  | Length of reservation       | No limit           | no limit           | standard   |  |
     | capabilityday | At least 4096 nodes  | 3 hrs        | 8           | 2            | standard     | Minimum job size of 512 nodes. Jobs only run during [Capability Days](#capability-days) |
-    | gpu-shd    | 1               | 1 hr       | 2          | 1           | gpu    | GPU nodes potentially shared with other users |
-    | gpu-exc    | 2               | 1 hr       | 2          | 1           | gpu    | GPU node exclusive node access |
+    | gpu-shd    | 1               | 12 hrs      | 2          | 1           | gpu    | GPU nodes potentially shared with other users |
+    | gpu-exc    | 2               | 12 hrs      | 2          | 1           | gpu    | GPU node exclusive node access |
 
 You can find out the QoS that you can use by running the following
 command:
@@ -433,7 +433,7 @@ that they wish to charge the job too with the option:
      to in SAFE.
 
 !!! important
-    You **must** specify an acount code for your job otherwise it will
+    You **must** specify an account code for your job otherwise it will
     fail to submit with the error: `sbatch: error: Batch job submission failed: Invalid account or account/partition combination specified`.
     (This error can also mean that you have specified a budget that
     has run out of resources.)
@@ -2298,7 +2298,7 @@ charge with the following limits:
     - 2 jobs maximum running per user
 - Users must have a valid, positive CU budget to be able to run jobs during Capability Days
 
-Users wishing to run jobs during Capability Day should submit to the `capabilityday` QoS. Jobs can be 
+Users wishing to run jobs during Capability Day should submit to the `capabilityday` QoS. Jobs can be
 submitted ahead of time and will start when the Capability Day starts.
 
 ### Example Capability Day job submission script
