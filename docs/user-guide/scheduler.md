@@ -2278,7 +2278,10 @@ Your request will be checked by the ARCHER2 User Administration team and, if app
 ## Capability Days
 
 !!! important
-    The next ARCHER2 Capability Day is 0900 14 Mar - 0900 15 Mar 2024.
+    The next ARCHER2 Capability Day is 4 - 6 June 2024:
+
+    - `pre-capabilityday` - 0800-2000 BST, Tue 4 Jun 2024
+    - `capabilityday` - 2000 BST Tue 4 Jun - 1400 BST Thu 6 Jun 2024
 
 ARCHER2 Capability Days are a mechanism to allow users to run large scale (512 node or more) tests
 on the system free of charge. The motivations behind Capability Days are:
@@ -2287,21 +2290,82 @@ on the system free of charge. The motivations behind Capability Days are:
 - Enabling capability use cases that are not possible on other UK HPC services.
 - Providing a facility that can be used to test scaling to help prepare software and communities for future exascale resources.
 
-To enable this, a 24h period will be made available regularly where users can run jobs free of
-charge with the following limits:
+To enable this, a period will be made available regularly where users can run jobs at large scale free of
+charge.
 
-- Minimum job size: 512 nodes
+Capability Days are made up of two parts:
+
+- pre-Capability Day session (`pre-capabilityday` QoS) to allow users to test scaling and job setup ahead of full Capability Day
+- Capability Day session (`capabilityday` QoS)
+
+### pre-Capability Day session 
+
+The pre-Capability Day session typically runs directly before the full Capability Day session and allows
+short test jobs to prepare for Capability Day.
+
+Submit to the `pre-capabilityday` QoS. Jobs can be submitted ahead of time and will start when the pre-Capability Day
+session starts.
+
+`pre-capabilityday` QoS limits:
+
+- Runs for 12 hours
+- 1024 nodes available
+- Minimum job size: 256 nodes, maximum job size: 1024 nodes
+    - Individual jobs steps (i.e. `srun` commands) within job scripts should also be a minimum of 256 nodes
+    - Jobs that do not meet these limits will be killed
+- Maximum walltime: 20 minutes
+- Job numbers: 8 jobs maximum per budget code in the QoS
+    - 1 job maximum running per budget code
+- High memory nodes are not available
+- Users must have a valid, positive CU budget to be able to run jobs in the pre-Capability Day session
+- Jobs are free
+
+#### Example pre-Capability Day session job submission script
+
+```slurm
+#!/bin/bash
+#SBATCH --job-name=test_capability_job
+#SBATCH --nodes=256
+#SBATCH --ntasks-per-node=8
+#SBATCH --cpus-per-task=16
+#SBATCH --time=1:0:0
+#SBATCH --partition=standard
+#SBATCH --qos=pre-capabilityday
+#SBATCH --account=t01
+
+export OMP_NUM_THREADS=16
+export OMP_PLACES=cores
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+# Check process/thread placement
+module load xthi
+srun --hint=multithread --distribution=block:block xthi > placement-${SLURM_JOBID}.out
+
+srun --hint=multithread --distribution=block:block my_app.x
+```
+
+### Capability Day session
+
+The Capability Day session typically runs directly after the pre-Capability Day session.
+
+Submit to the `capability` QoS. Jobs can be submitted ahead of time and will start when the Capability Day
+session starts.
+
+`capabilityday` QoS limits:
+
+- Runs for 42 hours
+- 4096 nodes available
+- Minimum job size: 512 nodes, maximum job size: 4096 nodes
     - Individual jobs steps (i.e. `srun` commands) within job scripts should also be a minimum of 512 nodes
     - Jobs that do not meet these limits will be killed
-- Maximum walltime: 3 hours
-- Job numbers: 8 jobs maximum per user in the QoS
-    - 2 jobs maximum running per user
-- Users must have a valid, positive CU budget to be able to run jobs during Capability Days
+- Maximum walltime: 1 hour
+- Job numbers: 16 jobs maximum per budget code in the QoS
+    - 2 jobs maximum running per budget code
+- High memory nodes are not available
+- Users must have a valid, positive CU budget to be able to run jobs in the pre-Capability Day session
+- Jobs are free
 
-Users wishing to run jobs during Capability Day should submit to the `capabilityday` QoS. Jobs can be
-submitted ahead of time and will start when the Capability Day starts.
-
-### Example Capability Day job submission script
+#### Example Capability Day job submission script
 
 ```slurm
 #!/bin/bash
