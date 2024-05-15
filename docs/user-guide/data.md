@@ -726,6 +726,11 @@ above.)
     (accessed via `man rsync` or at [man
     rsync](https://linux.die.net/man/1/rsync)).
 
+### Data transfer via Globus
+
+The ARCHER2 filesystems have a Globus Collection (formerly known as an endpoint) with the name "Archer2 file systems"<br>
+[Full step-by-step guide for using Globus](../../data-tools/globus) to transfer files to/from ARCHER2
+
 ### Data transfer via GridFTP
 
 ARCHER2 provides a module for grid computing, `gct/6.2`, otherwise known

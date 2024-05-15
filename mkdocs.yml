@@ -122,6 +122,7 @@ nav:
     - "Arm Forge": data-tools/arm-forge.md
     - "Darshan": data-tools/darshan.md
     - "Energy Counters": data-tools/pm-mpi-lib.md
+    - "Globus": data-tools/globus.md
     - "Julia": data-tools/julia.md
     - "ParaView": data-tools/paraview.md
     - "R": data-tools/cray-r.md
