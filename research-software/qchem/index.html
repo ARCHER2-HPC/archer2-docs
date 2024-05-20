@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../qchem/">
+        <link rel="prev" href="../orca/">
       
       
-        <link rel="next" href="../vasp/">
+        <link rel="next" href="../qe/">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Quantum Espresso - ARCHER2 User Documentation</title>
+        <title>QChem - ARCHER2 User Documentation</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#quantum-espresso" class="md-skip">
+        <a href="#qchem" class="md-skip">
           Skip to content
         </a>
       
@@ -117,7 +117,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Quantum Espresso
+              QChem
             
           </span>
         </div>
@@ -1315,27 +1315,6 @@
                 
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../qchem/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    QChem
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
     
   
   
@@ -1352,7 +1331,7 @@
           
   
   <span class="md-ellipsis">
-    Quantum Espresso
+    QChem
   </span>
   
 
@@ -1363,7 +1342,7 @@
         
   
   <span class="md-ellipsis">
-    Quantum Espresso
+    QChem
   </span>
   
 
@@ -1394,36 +1373,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#using-qe-on-archer2" class="md-nav__link">
+  <a href="#using-qchem-on-archer2" class="md-nav__link">
     <span class="md-ellipsis">
-      Using QE on ARCHER2
+      Using QChem on ARCHER2
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#running-parallel-qe-jobs" class="md-nav__link">
+  <a href="#running-parallel-qchem-jobs" class="md-nav__link">
     <span class="md-ellipsis">
-      Running parallel QE jobs
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#hints-and-tips" class="md-nav__link">
-    <span class="md-ellipsis">
-      Hints and tips
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#compiling-qe" class="md-nav__link">
-    <span class="md-ellipsis">
-      Compiling QE
+      Running parallel QChem jobs
     </span>
   </a>
   
@@ -1433,6 +1394,27 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Quantum Espresso
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -2319,36 +2301,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#using-qe-on-archer2" class="md-nav__link">
+  <a href="#using-qchem-on-archer2" class="md-nav__link">
     <span class="md-ellipsis">
-      Using QE on ARCHER2
+      Using QChem on ARCHER2
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#running-parallel-qe-jobs" class="md-nav__link">
+  <a href="#running-parallel-qchem-jobs" class="md-nav__link">
     <span class="md-ellipsis">
-      Running parallel QE jobs
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#hints-and-tips" class="md-nav__link">
-    <span class="md-ellipsis">
-      Hints and tips
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#compiling-qe" class="md-nav__link">
-    <span class="md-ellipsis">
-      Compiling QE
+      Running parallel QChem jobs
     </span>
   </a>
   
@@ -2372,64 +2336,58 @@
   
 
 
-<h1 id="quantum-espresso">Quantum Espresso</h1>
-<p>Quantum Espresso (QE) is an integrated suite of open-source computer
-codes for electronic-structure calculations and materials modeling at
-the nanoscale. It is based on density-functional theory, plane waves,
-and pseudopotentials.</p>
+<h1 id="qchem">QChem</h1>
+<p>QChem is an ab initio quantum chemistry software package for fast and
+accurate simulations of molecular systems, including electronic and
+molecular structure, reactivities, properties, and spectra.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>QChem is not part of the officially supported
+software on ARCHER2. While the ARCHER2 service desk is able to provide
+support for basic use of this software (e.g. access to software, writing
+job submission scripts) it does not generally provide detailed technical
+support for the software and you may be directed to seek support from
+other places if the service desk cannot answer the questions.</p>
+</div>
 <h2 id="useful-links">Useful Links</h2>
 <ul>
-<li><a href="http://www.quantum-espresso.org/">Quantum Espresso home page</a></li>
-<li><a href="http://www.quantum-espresso.org/resources/users-manual">Quantum Espresso User Guides</a></li>
-<li><a href="http://www.quantum-espresso.org/resources/tutorials">Quantum Espresso Tutorials</a></li>
+<li><a href="https://www.q-chem.com/">QChem home site</a></li>
+<li><a href="https://manual.q-chem.com/">QChem documentation</a></li>
 </ul>
-<h2 id="using-qe-on-archer2">Using QE on ARCHER2</h2>
-<p>QE is released under a GPL v2 license and is freely available to all
-ARCHER2 users.</p>
-<h2 id="running-parallel-qe-jobs">Running parallel QE jobs</h2>
-<p>For example, the following script will run a QE <code>pw.x</code> job using 4 nodes
-(128x4 cores).</p>
-<div class="highlight"><pre><span></span><code>#!/bin/bash
+<h2 id="using-qchem-on-archer2">Using QChem on ARCHER2</h2>
+<p>ARCHER2 has a site licence for QChem.</p>
+<h2 id="running-parallel-qchem-jobs">Running parallel QChem jobs</h2>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>QChem parallelisation is only available on ARCHER2 by using multiple threads 
+within a single compute node. Multi-process and multi-node parallelisation 
+will not work on ARCHER2.</p>
+</div>
+<p>The following script will run QChem using 16 OpenMP threads using the input in
+<code>hf3c.in</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="kp">#SBATCH --nodes=1</span>
+<span class="kp">#SBATCH --time=1:0:0</span>
+<span class="kp">#SBATCH --ntasks-per-node=1</span>
+<span class="kp">#SBATCH --cpus-per-task=16</span>
 
-# Request 4 nodes to run a 512 MPI task job with 128 MPI tasks per node.
-# The maximum walltime limit is set to be 20 minutes.
+<span class="c1"># Replace [budget code] below with your project code (e.g. e05)</span>
+<span class="kp">#SBATCH --account=[budget code]</span>
+<span class="kp">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --qos=standard</span>
 
-#SBATCH --job-name=qe_test
-#SBATCH --nodes=4
-#SBATCH --ntasks-per-node=128
-#SBATCH --cpus-per-task=1
-#SBATCH --time=00:20:00
+module<span class="w"> </span>load<span class="w"> </span>other-software
+module<span class="w"> </span>load<span class="w"> </span>qchem
 
-# Replace [budget code] below with your project code (e.g. t01)
-#SBATCH --account=[budget code] 
-#SBATCH --partition=standard
-#SBATCH --qos=standard
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_PLACES</span><span class="o">=</span>cores
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
 
-# Load the relevant Quantum Espresso module
-module load quantum_espresso
+<span class="nb">export</span><span class="w"> </span><span class="nv">SLURM_HINT</span><span class="o">=</span><span class="s2">&quot;nomultithread&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SLURM_DISTRIBUTION</span><span class="o">=</span><span class="s2">&quot;block:block&quot;</span>
 
-# Set number of OpenMP threads to 1 to prevent multithreading by libraries
-export OMP_NUM_THREADS=1
-
-# Ensure the cpus-per-task option is propagated to srun commands
-export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
-
-srun --hint=nomultithread --distribution=block:block pw.x &lt; test_calc.in
+qchem<span class="w"> </span>-slurm<span class="w"> </span>-nt<span class="w"> </span><span class="nv">$OMP_NUM_THREADS</span><span class="w"> </span>hf3c.in<span class="w"> </span>hf3c.out
 </code></pre></div>
-<h2 id="hints-and-tips">Hints and tips</h2>
-<p>The QE module is set to load up the default QE-provided
-pseudo-potentials. If you wish to use non-default pseudo-potentials, you
-will need to change the <code>ESPRESSO_PSEUDO</code> variable to point to the
-directory you wish. This can be done by adding the following line
-<strong>after</strong> the module is loaded</p>
-<pre><code>export ESPRESSO_PSEUDO /path/to/pseudo_potentials
-</code></pre>
-<h2 id="compiling-qe">Compiling QE</h2>
-<p>The latest instructions for building QE on ARCHER2 can be found in the
-GitHub repository of build instructions:</p>
-<ul>
-<li><a href="https://github.com/hpc-uk/build-instructions/tree/main/apps/QuantumEspresso">Build instructions for Quantum Espresso</a></li>
-</ul>
 
 
 
