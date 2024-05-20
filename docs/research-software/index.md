@@ -35,6 +35,7 @@ fully-supported software stack are marked with *):
   - [ONETEP](onetep.md)
   - [OpenFOAM](openfoam.md)
   - [ORCA(*)](orca.md)
+  - [QChem(*)](qchem.md)
   - [Quantum Espresso](qe.md)
   - [VASP](vasp.md)
 

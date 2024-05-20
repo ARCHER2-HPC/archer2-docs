@@ -91,6 +91,7 @@ nav:
     - "ONETEP": research-software/onetep.md
     - "OpenFOAM": research-software/openfoam.md
     - "ORCA": research-software/orca.md
+    - "QChem": research-software/qchem.md
     - "Quantum Espresso": research-software/qe.md
     - "VASP": research-software/vasp.md
   - "Software Libraries":
