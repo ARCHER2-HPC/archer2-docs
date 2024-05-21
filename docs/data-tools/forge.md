@@ -38,15 +38,20 @@ cd ${HOME/home/work}
 source ${FORGE_DIR}/config-init
 ```
 
-This will create a directory `${HOME/home/work}/.forge` that contains the
+Running the `source` command will create a directory `${HOME/home/work}/.forge` that contains the
 following files.
 
 ```output
 system.config  user.config
 ```
 
+!!! warning
+    The `config-init` script may output, `Warning: failed to read system config`.
+    Please ignore as subsequent messages should indicate that the new configuration
+    files have been created.
+
 Within the `system.config` file you should find that `shared directory` is set to the equivalent of `${HOME/home/work/.forge}`.
-The directory will also store other relevant files when Forge is run.
+That directory will also store other relevant files when Forge is run.
 
 ### Using DDT
 
