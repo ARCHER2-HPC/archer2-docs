@@ -610,8 +610,9 @@ first choice for access to software libraries if available.
     be found in the [Software libraries](../../software-libraries/)
     section of the user guide.
 
+## HPE Cray Programming Environment (CPE) releases
 
-## Available HPE Cray Programming Environment releases on ARCHER2
+### Available HPE Cray Programming Environment (CPE) releases
 
 ARCHER2 currently has the following HPE Cray Programming Environment (CPE) releases available:
 
@@ -631,7 +632,7 @@ using CPE releases that have not yet been installed on ARCHER2.
 
 CPE 23.12 is currently available as a Singularity container, see [Using Containerised HPE Cray Programming Environments](containers.md/#using-containerised-hpe-cray-programming-environments) for further details.
                                                         
-## Switching to a different HPE Cray Programming Environment release
+### Switching to a different HPE Cray Programming Environment (CPE) release
 
 !!! important
     See the section below on using non-default versions of HPE Cray libraries
@@ -717,7 +718,7 @@ environment.
     release. To restore the default programming environment release you should log 
     out and then log back in to ARCHER2.
 
-## Using non-default versions of HPE Cray libraries on ARCHER2
+## Using non-default versions of HPE Cray libraries
 
 If you wish to make use of non-default versions of libraries provided by HPE
 Cray (usually because they are part of a non-default PE release: either old
