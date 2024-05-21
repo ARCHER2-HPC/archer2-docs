@@ -871,10 +871,6 @@ https://rocm.docs.amd.com/projects/ROCgdb/en/docs-5.2.3/index.html
 https://docs.amd.com/projects/HIP/en/docs-5.2.3/how_to_guides/debugging.html#using-rocgdb
 
 
-!!! Note
-    The license for Linaro-forge help on ARCHER2 does not include support for GPU debugging.
-
-
 ## Profiling
 
 An initial profiling capability is provided via `rocprof` which is part of the `rocm` module.
@@ -887,9 +883,6 @@ srun -n 2 --exclusive --nodes=1 --time=00:20:00 --partition=gpu --qos=gpu-exc --
 ```
 
 to profile your applicaition. More detail on the use of rocprof can be found [here](https://github.com/ROCm/rocprofiler/tree/rocm-5.2.3).
-
-!!! Note
-    The license for Linaro-forge help on ARCHER2 does not include support for GPU profiling.
 
 
 ## Performance tuning

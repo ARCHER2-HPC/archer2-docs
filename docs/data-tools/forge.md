@@ -1,34 +1,23 @@
-## Arm Forge
+## Linaro Forge
 
+
+[Linaro Forge](https://www.linaroforge.com/) provides debugging and profiling tools
+for MPI parallel applications, and OpenMP or pthreads multi-threaded applications
+(and also hydrid MPI/OpenMP). Forge DDT is the debugger and MAP is the profiler.
+
+ARCHER2 has a license for up to 16 nodes (2048 cores) shared between all users at
+any one time.
 
 !!! note
-    What were Arm Forge products (DDT and MAP) were acquired by Linaro in 2023.
-    We may continue to refer to "Arm Forge" to prevent confusion,
-    particularly in the context of module files.
-    However, relevant links are now to the
-    [Linaro web site](https://www.linaroforge.com/)
+    Cores are counted by the license, not MPI processes, threads, or any other software entity.
 
+There are two ways of running the Forge user interface. If you have a good internet
+connection to ARCHER2, the GUI can be run on the front-end (with an X-connection).
+Alternatively, one can download a copy of the Forge remote client to your laptop or desktop,
+and run it locally. The remote client should be used if at all possible.
 
-[Linaro Forge](https://www.linaroforge.com/)
-provides debugging and profiling tools for MPI parallel applications, and
-OpenMP or pthreads multi-threaded applications (and also hydrid MPI/OpenMP).
-The debugger and profiler are called DDT and MAP, respectively.
-
-ARCHER2 has a license for up to 16 nodes (2048 cores) shared between
-all users at any one time. (Note, cores are counted by the license, not
-MPI processes, threads, or any other software entity.)
-
-There are two ways of running the Forge user interface. If you have a good
-internet connection to ARCHER2, the GUI can be run on the front-end (with
-an X-connection).
-Alternatively, one can download a copy of the Forge remote client to your
-laptop or desktop, and run it locally. The remote client should be used if
-at all possible.
-
-To download the remote client, see the
-[Forge developer download pages](https://www.linaroforge.com/downloadForge/).
-Version 22.1.1 is known to work at the time of writing. Connecting with
-the remote client is discussed below.
+To download the remote client, see the [Forge developer download pages](https://www.linaroforge.com/downloadForge/).
+Version 24.0 is known to work at the time of writing. Connecting with the remote client is discussed below.
 
 
 
@@ -37,43 +26,27 @@ the remote client is discussed below.
 A preliminary step is required to set up the necessary
 Forge configuration files that allow DDT and MAP to initialise its
 environment correctly so that it can, for example, interact with
-the SLURM queue system. These steps should be performed in the `/work`
+the Slurm queue system. These steps should be performed in the `/work`
 file system on ARCHER2.
 
 It is recommended that these commands are performed in the top-level work
 file system directory for the user account, i.e., `${HOME/home/work}`.
 
 ```bash
-module load arm/forge
+module load forge
 cd ${HOME/home/work}
 source ${FORGE_DIR}/config-init
 ```
 
-This will create a directory `${HOME/home/work}/.allinea` that contains the
+This will create a directory `${HOME/home/work}/.forge` that contains the
 following files.
 
 ```output
 system.config  user.config
 ```
 
+Within the `system.config` file you should find that `shared directory` is set to the equivalent of `${HOME/home/work/.forge}`.
 The directory will also store other relevant files when Forge is run.
-
-!!! warning
-    The `config-init` script will output a warning, `...failed to read system config`.
-    Please ignore: subsequent output should indicate that the new configuration
-    files have been created.
-
-Once you have created this directory, you also need to modify the `system.config` file in the directory `${HOME/home/work/.allinea}`, editing the line
-
-```bash
-shared directory = ~
-```
-
-To instead point to your `${HOME/home/work/.allinea}` directory, i.e. if you are in the `z19` project, that would be:
-
-```bash
-shared directory = /work/z19/z19/$USER/.allinea
-```
 
 ### Using DDT
 
@@ -101,9 +74,9 @@ Such a job can be submitted to the batch system in the usual way. The
 relevant command to start the executable is as follows.
 
 ```slurm
-# ... SLURM batch commands as usual ...
+# ... Slurm batch commands as usual ...
 
-module load arm/forge
+module load forge
 
 export OMP_NUM_THREADS=16
 export OMP_PLACES=cores
@@ -117,7 +90,7 @@ ddt --verbose --offline --mpi=slurm --np 8 \
 ```
 
 The parallel launch is delegated to `ddt` and the `--mpi=slurm` option
-indicates to `ddt` that the relevant queue system is SLURM
+indicates to `ddt` that the relevant queue system is Slurm
 (there is no explicit `srun`). It will also be
 necessary to state explicitly to `ddt` the number of processes
 required (here `--np 8`). For other options see, e.g., `ddt --help`.
@@ -135,7 +108,7 @@ to examine the state of execution at the point of failure.
 You can also start the client interactively (for details of remote launch, see below).
 
 ```bash
-module load arm/forge
+module load forge
 ddt
 ```
 
@@ -177,19 +150,19 @@ section and specify the relevant project budget, see the ***Account*** entry.
 The default queue template file configuration uses the short QoS with the
 standard time limit of 20 minutes. If something different is required,
 one can edit the settings. Alternatively, one can copy the `archer2.qtf` file
-(to `${HOME/home/work}/.allinea`) and make the relevant changes. This new
+(to `${HOME/home/work}/.forge`) and make the relevant changes. This new
 template file can then be specified in the dialog window.
 
 There may be a short delay while the sbatch job starts. Debugging should
-then proceed as described in the Allinea documentation.
+then proceed as described in the [Linaro Forge documentation](https://docs.linaroforge.com/24.0/html/forge/ddt/index.html).
 
 
 ### Using MAP
 
-Load the `arm/forge` module:
+Load the `forge` module:
 
 ```bash
-module load arm/forge
+module load forge
 ```
 
 #### Compilation and linking
@@ -200,7 +173,7 @@ libraries is required at link time.
 The path to the additional libraries required will depend on the programming
 environment you are using as well as the Cray programming release. Here are
 the paths for each of the compiler environments consistent with the
-Cray Programming Release (CPE) 21.04 using the default OFI as the low-level
+Cray Programming Release (CPE) 22.12 using the default OFI as the low-level
 comms protocol:
 
 - `PrgEnv-cray`: `${FORGE_DIR}/map/libs/default/cray/ofi`
@@ -224,9 +197,9 @@ comms protocol, simply replace `ofi` with `ucx` in the library path.
 Submit a batch job in the usual way, and include the lines:
 
 ```slurm
-# ... SLURM batch commands as usual ...
+# ... Slurm batch commands as usual ...
 
-module load arm/forge
+module load forge
 
 # Ensure the cpus-per-task option is propagated to srun commands
 export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
@@ -258,7 +231,7 @@ commands on connection. A default script is provided in the location
 shown.
 
 ```output
-/work/y07/shared/utils/core/arm/forge/latest/remote-init
+/work/y07/shared/utils/core/forge/latest/remote-init
 ```
 
 Other settings can be as shown. Remember to click ***OK*** when done.
@@ -272,7 +245,7 @@ password to connect. A remote connection will allow you to debug,
 or view a profile, as discussed above.
 
 If different commands are required on connection, a copy of the
-`remote-init` script can be placed in, e.g., `${HOME/home/work}/.allinea`
+`remote-init` script can be placed in, e.g., `${HOME/home/work}/.forge`
 and edited as necessary. The full path of the new script should then be
 specified in the remote launch settings dialog box.
 Note that the script changes the directory to the `/work/` file system so

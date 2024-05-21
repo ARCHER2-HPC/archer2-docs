@@ -120,7 +120,7 @@ nav:
   - "Data Analysis and Tools":
     - "Overview": data-tools/index.md
     - "AMD uProf": data-tools/amd-uprof.md
-    - "Arm Forge": data-tools/arm-forge.md
+    - "Linaro Forge": data-tools/forge.md
     - "Darshan": data-tools/darshan.md
     - "Energy Counters": data-tools/pm-mpi-lib.md
     - "Globus": data-tools/globus.md

@@ -58,7 +58,7 @@ The following is a list of the modules and extensions currently available:
 
   aocl: aocl/3.1, aocl/4.0
 
-  arm/forge: arm/forge/22.1.3
+  forge: forge/24.0
 
   atp: atp/3.14.16
 

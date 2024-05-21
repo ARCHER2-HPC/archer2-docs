@@ -2,7 +2,7 @@
 
 The following debugging tools are available on ARCHER2:
 
-  - [Arm Forge (DDT)](../data-tools/arm-forge.md) is an easy-to-use graphical
+  - [Linaro Forge (DDT)](../data-tools/forge.md) is an easy-to-use graphical
     interface for source-level debugging of compiled C/C++ or Fortran codes.
     It can also be used for non-interactive debugging, and there
     is also some limited support for python debugging.
@@ -27,11 +27,11 @@ The following debugging tools are available on ARCHER2:
     side-by-side to analyse differences. (Not currently described in this
     documentation.)
 
-## Arm Forge
+## Linaro Forge
 
-The Arm Forge tool (now Linaro Forge) provides the DDT parallel debugger. See:
+The Linaro Forge tool provides the DDT parallel debugger. See:
 
-- [ARCHER2 Arm Forge documentation](../data-tools/arm-forge.md)
+- [ARCHER2 Linaro Forge documentation](../data-tools/forge.md)
 
 ## gdb4hpc
 
