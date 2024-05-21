@@ -616,6 +616,7 @@ first choice for access to software libraries if available.
 ARCHER2 currently has the following HPE Cray Programming Environment (CPE) releases available:
 
 - **22.12: Current default**
+- 23.09
 
 You can find information, notes, and lists of changes for current and upcoming ARCHER2 
 HPE Cray programming environments in [the HPE Cray Programming Environment GitHub
@@ -630,8 +631,6 @@ using CPE releases that have not yet been installed on ARCHER2.
 
 CPE 23.12 is currently available as a Singularity container, see [Using Containerised HPE Cray Programming Environments](containers.md/#using-containerised-hpe-cray-programming-environments) for further details.
                                                         
-<!-- Only one PE available at the moment
-
 ## Switching to a different HPE Cray Programming Environment release
 
 !!! important
@@ -646,28 +645,27 @@ Loading a `cpe` module will do the following:
 - All HPE Cray PE modules will be updated so their default version is the
   one from the PE you have selected
 
-
-
 For example, if you have a code that uses the Gnu compiler environment, FFTW
 and NetCDF parallel libraries and you want to compile in the (non-default) 22.04
 programming environment, you would do the following:
 
-First, load the `cpe/22.04` module to switch all the defaults to the versions from
+First, load the `cpe/23.09` module to switch all the defaults to the versions from
 the 22.04 PE. Then, swap to the GNU compiler environment and load the required library
 modules (FFTW, hdf5-parallel and NetCDF HDF5 parallel). The loaded module list shows they 
 are the versions from the 22.04 PE:
 
 
 ```bash
-module load cpe/22.04
+module load cpe/23.09
 ```
 
 Output:
 ```output
 
 The following have been reloaded with a version change:
-  1) PrgEnv-cray/8.0.0 => PrgEnv-cray/8.3.3     3) cray-libsci/21.04.1.1 => cray-libsci/21.08.1.2     5) craype/2.7.6 => craype/2.7.15
-  2) cce/11.0.4 => cce/13.0.2                   4) cray-mpich/8.1.4 => cray-mpich/8.1.15
+  1) PrgEnv-cray/8.3.3 => PrgEnv-cray/8.4.0             4) cray-mpich/8.1.23 => cray-mpich/8.1.27
+  2) cce/15.0.0 => cce/16.0.1                           5) craype/2.7.19 => craype/2.7.23
+  3) cray-libsci/22.12.1.1 => cray-libsci/23.09.1.1     6) perftools-base/22.12.0 => perftools-base/23.09.0
 ```
 
 ```bash
@@ -675,14 +673,15 @@ module load PrgEnv-gnu
 ```
 Output:
 ```output
-Lmod is automatically replacing "cce/13.0.2" with "gcc/11.2.0".
+Lmod is automatically replacing "cce/16.0.1" with "gcc/11.2.0".
 
 
-Lmod is automatically replacing "PrgEnv-cray/8.3.3" with "PrgEnv-gnu/8.0.0".
+Lmod is automatically replacing "PrgEnv-cray/8.4.0" with "PrgEnv-gnu/8.4.0".
 
 
 Due to MODULEPATH changes, the following have been reloaded:
-  1) cray-mpich/8.1.15
+  1) cray-mpich/8.1.27
+
 ```
 
 ```bash
@@ -695,16 +694,16 @@ module list
 Output:
 ```output
 Currently Loaded Modules:
-  1) cpe/22.04               6) craype-network-ofi                         11) bolt/0.7           16) cray-hdf5-parallel/1.12.1.1
-  2) gcc/11.2.0              7) perftools-base/22.04.0                     12) epcc-setup-env     17) cray-netcdf-hdf5parallel/4.8.1.1
-  3) craype/2.7.15           8) xpmem/2.2.40-7.0.1.0_2.7__g1d7a24d.shasta  13) load-epcc-module
-  4) craype-x86-rome         9) cray-mpich/8.1.15                          14) PrgEnv-gnu/8.0.0
-  5) libfabric/1.11.0.4.71  10) cray-libsci/21.08.1.2                      15) cray-fftw/3.3.8.9
+  1) craype-x86-rome                         6) epcc-setup-env          11) craype/2.7.23          16) cray-fftw/3.3.10.5
+  2) libfabric/1.12.1.2.2.0.0                7) load-epcc-module        12) cray-dsmml/0.2.2       17) cray-hdf5-parallel/1.12.2.7
+  3) craype-network-ofi                      8) perftools-base/23.09.0  13) cray-mpich/8.1.27      18) cray-netcdf-hdf5parallel/4.9.0.7
+  4) xpmem/2.5.2-2.4_3.30__gd0f7936.shasta   9) cpe/23.09               14) cray-libsci/23.09.1.1
+  5) bolt/0.8                               10) gcc/11.2.0              15) PrgEnv-gnu/8.4.0
+
 ```
 
 Now you can go ahead and compile your software with the new programming
 environment.
-
 
 
 !!! important
@@ -718,18 +717,6 @@ environment.
     release. To restore the default programming environment release you should log 
     out and then log back in to ARCHER2.
 
-#### Accessing performance analysis tools in non-default Programming Environment
-
-The performance analysis tools (such as CrayPAT and CrayPAT-lite) behave slightly differently
-to other HPE Cray modules when you change to a non-default version of the programming
-environment. Specifically, an additional step is required to make them available. Once
-you have loaded the `cpe` module, you may also need to load the `perftools-base` 
-module to be able to load and use the performance tools modules.
-
-
-    
-
-
 ## Using non-default versions of HPE Cray libraries on ARCHER2
 
 If you wish to make use of non-default versions of libraries provided by HPE
@@ -740,12 +727,12 @@ environment variable.
 
 **At compile time** you need to load the version of the library module before you compile
 *and* set the LD_LIBRARY_PATH environment variable to include the contencts of
-`$CRAY_LD_LIBRARY_PATH` as the first entry. For example, to use the, non-default, 21.08.1.2
+`$CRAY_LD_LIBRARY_PATH` as the first entry. For example, to use the, non-default, 23.09.1.1
 version of HPE Cray LibSci in the default programming environment (Cray Compiler Environment,
 CCE) you would first setup the environment to compile with:
 
 ```bash
-module load cray-libsci/21.08.1.2
+module load cray-libsci/23.09.1.1
 export LD_LIBRARY_PATH=$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH
 ```
 
@@ -763,25 +750,25 @@ ldd dgemv.x
 
 Output:
 ```
-	linux-vdso.so.1 (0x00007fffd33dd000)
-	libm.so.6 => /lib64/libm.so.6 (0x00007fbd6e7ed000)
-	libsci_cray.so.5 => /opt/cray/pe/libsci/21.08.1.2/CRAY/9.0/x86_64/lib/libsci_cray.so.5 (0x00007fbd6a8a7000)
-	libdl.so.2 => /lib64/libdl.so.2 (0x00007fbd6a6a3000)
-	libxpmem.so.0 => /opt/cray/xpmem/default/lib64/libxpmem.so.0 (0x00007fbd6a4a0000)
-	libquadmath.so.0 => /opt/cray/pe/cce/11.0.4/cce/x86_64/lib/libquadmath.so.0 (0x00007fbd6a260000)
-	libmodules.so.1 => /opt/cray/pe/cce/11.0.4/cce/x86_64/lib/libmodules.so.1 (0x00007fbd6a044000)
-	libfi.so.1 => /opt/cray/pe/cce/11.0.4/cce/x86_64/lib/libfi.so.1 (0x00007fbd69921000)
-	libcraymath.so.1 => /opt/cray/pe/cce/11.0.4/cce/x86_64/lib/libcraymath.so.1 (0x00007fbd69640000)
-	libf.so.1 => /opt/cray/pe/cce/11.0.4/cce/x86_64/lib/libf.so.1 (0x00007fbd693ac000)
-	libu.so.1 => /opt/cray/pe/cce/11.0.4/cce/x86_64/lib/libu.so.1 (0x00007fbd69098000)
-	libcsup.so.1 => /opt/cray/pe/cce/11.0.4/cce/x86_64/lib/libcsup.so.1 (0x00007fbd68e92000)
-	libc.so.6 => /lib64/libc.so.6 (0x00007fbd68ad7000)
-	/lib64/ld-linux-x86-64.so.2 (0x00007fbd6eb25000)
-	libpthread.so.0 => /lib64/libpthread.so.0 (0x00007fbd688b8000)
-	librt.so.1 => /lib64/librt.so.1 (0x00007fbd686b0000)
-	libgfortran.so.5 => /opt/cray/pe/gcc-libs/libgfortran.so.5 (0x00007fbd681f9000)
-	libstdc++.so.6 => /opt/cray/pe/gcc-libs/libstdc++.so.6 (0x00007fbd67e26000)
-	libgcc_s.so.1 => /opt/cray/pe/gcc-libs/libgcc_s.so.1 (0x00007fbd67c0e000
+	linux-vdso.so.1 (0x00007ffc7fff5000)
+	libm.so.6 => /lib64/libm.so.6 (0x00007fd6a6361000)
+	libsci_cray.so.5 => /opt/cray/pe/libsci/23.09.1.1/CRAY/12.0/x86_64/lib/libsci_cray.so.5 (0x00007fd6a2419000)
+	libdl.so.2 => /lib64/libdl.so.2 (0x00007fd6a2215000)
+	libxpmem.so.0 => /opt/cray/xpmem/default/lib64/libxpmem.so.0 (0x00007fd6a68b3000)
+	libquadmath.so.0 => /opt/cray/pe/gcc-libs/libquadmath.so.0 (0x00007fd6a1fce000)
+	libmodules.so.1 => /opt/cray/pe/cce/15.0.0/cce/x86_64/lib/libmodules.so.1 (0x00007fd6a689a000)
+	libfi.so.1 => /opt/cray/pe/cce/15.0.0/cce/x86_64/lib/libfi.so.1 (0x00007fd6a1a29000)
+	libcraymath.so.1 => /opt/cray/pe/cce/15.0.0/cce/x86_64/lib/libcraymath.so.1 (0x00007fd6a67b3000)
+	libf.so.1 => /opt/cray/pe/cce/15.0.0/cce/x86_64/lib/libf.so.1 (0x00007fd6a6720000)
+	libu.so.1 => /opt/cray/pe/cce/15.0.0/cce/x86_64/lib/libu.so.1 (0x00007fd6a1920000)
+	libcsup.so.1 => /opt/cray/pe/cce/15.0.0/cce/x86_64/lib/libcsup.so.1 (0x00007fd6a6715000)
+	libc.so.6 => /lib64/libc.so.6 (0x00007fd6a152b000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007fd6a66ac000)
+	libpthread.so.0 => /lib64/libpthread.so.0 (0x00007fd6a1308000)
+	librt.so.1 => /lib64/librt.so.1 (0x00007fd6a10ff000)
+	libgfortran.so.5 => /opt/cray/pe/gcc-libs/libgfortran.so.5 (0x00007fd6a0c53000)
+	libstdc++.so.6 => /opt/cray/pe/gcc-libs/libstdc++.so.6 (0x00007fd6a0841000)
+	libgcc_s.so.1 => /opt/cray/pe/gcc-libs/libgcc_s.so.1 (0x00007fd6a0628000)
 ```
 
 !!! tip
@@ -811,9 +798,7 @@ look like:
 #SBATCH --reservation=shortqos
 
 # Setup up the environment to use the non-default version of LibSci
-#   We use "module swap" as the "cray-libsci" is loaded by default.
-#   This must be done after loading the "epcc-job-env" module
-module swap cray-libsci cray-libsci/20.08.1.2
+module load cray-libsci/23.09.1.1
 export LD_LIBRARY_PATH=$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH
 
 # Check which library versions the executable is pointing too
@@ -832,8 +817,6 @@ srun --hint=nomultithread --distribution=block:block dgemv.x
 !!! important
     You must setup the environment at both compile and run time otherwise
     you will end up using the default version of the library.
-
--->
 
 ## Compiling on compute nodes
 
