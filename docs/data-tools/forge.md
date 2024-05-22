@@ -5,20 +5,36 @@
 for MPI parallel applications, and OpenMP or pthreads multi-threaded applications
 (and also hydrid MPI/OpenMP). Forge DDT is the debugger and MAP is the profiler.
 
-ARCHER2 has a license for up to 16 nodes (2048 cores) shared between all users at
-any one time.
 
-!!! note
-    Cores are counted by the license, not MPI processes, threads, or any other software entity.
+### User interface
 
 There are two ways of running the Forge user interface. If you have a good internet
 connection to ARCHER2, the GUI can be run on the front-end (with an X-connection).
 Alternatively, one can download a copy of the Forge remote client to your laptop or desktop,
 and run it locally. The remote client should be used if at all possible.
 
-To download the remote client, see the [Forge developer download pages](https://www.linaroforge.com/downloadForge/).
-Version 24.0 is known to work at the time of writing. Connecting with the remote client is discussed below.
+To download the remote client, see the [Forge download pages](https://www.linaroforge.com/downloadForge/).
+Version 24.0 is known to work at the time of writing. A section further down this page explains how use the remote client,
+see [Connecting with the remote client](#connecting-with-the-remote-client).
 
+### Licensing
+
+ARCHER2 has a license for up to 2080 tokens, where a token represents an MPI parallel process.
+Running Forge DDT/MAP to debug/profile a code running across 16 nodes using 128 MPI ranks per
+node would require 2048 tokens. If you wish to run on more nodes, say 32, then it will be
+necessary to reduce the number of tasks per node so as to fall below the maximum number of
+tokens allowed.
+
+Please note, Forge licence tokens are shared by all ARCHER2 (and [Cirrus](https://www.cirrus.ac.uk/)) users.
+
+To see how many tokens are in use, you can view the licence server status page by first
+setting up an SSH tunnel to the node hosting the licence server.
+
+```bash
+ssh <username>@login.archer2.ac.uk -L 4241:dvn04:4241
+```
+
+You can now view the status page from within a local browser, see [http://localhost:4241/status.html](http://localhost:4241/status.html).
 
 
 ### One time set-up for using Forge
@@ -110,7 +126,7 @@ to examine the state of execution at the point of failure.
 
 #### Interactive debugging: using the client to submit a batch job
 
-You can also start the client interactively (for details of remote launch, see below).
+You can also start the client interactively (for details of remote launch, see [Connecting with the remote client](#connecting-with-the-remote-client)).
 
 ```bash
 module load forge
@@ -223,8 +239,7 @@ file selection dialog box can then be used to locate the `.map` file.
 ### Connecting with the remote client
 
 If one starts the Forge client on e.g., a laptop, one should see the
-main window as
-shown above. Select ***Remote Launch*** and then ***Configure*** from the
+main window as shown above. Select ***Remote Launch*** and then ***Configure*** from the
 drop-down menu. In the ***Configure Remote Connections*** dialog box
 click ***Add***. The following window should be displayed. Fill
 in the fields as shown. The ***Connection Name*** is just a tag
