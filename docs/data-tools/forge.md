@@ -19,7 +19,7 @@ see [Connecting with the remote client](#connecting-with-the-remote-client).
 
 ### Licensing
 
-ARCHER2 has a license for up to 2080 tokens, where a token represents an MPI parallel process.
+ARCHER2 has a licence for up to 2080 tokens, where a token represents an MPI parallel process.
 Running Forge DDT/MAP to debug/profile a code running across 16 nodes using 128 MPI ranks per
 node would require 2048 tokens. If you wish to run on more nodes, say 32, then it will be
 necessary to reduce the number of tasks per node so as to fall below the maximum number of
