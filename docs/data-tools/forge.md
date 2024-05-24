@@ -186,16 +186,18 @@ Load the `forge` module:
 module load forge
 ```
 
-#### Compilation and linking
+#### Linking
 
-Compilation should take place as usual. However, an additional set of
-libraries is required at link time.
+MAP uses two small libraries to collect data from your program. These
+are called `map-sampler` and `map-sampler-pmpi`. On ARCHER2, the linking
+of these libraries is usually done automatically via the LD_PRELOAD
+mechanism, but only if your program is dynamically linked. Otherwise, you
+will need to link the MAP libraries manually by providing explicit link options.
 
-The path to the additional libraries required will depend on the programming
-environment you are using as well as the Cray programming release. Here are
-the paths for each of the compiler environments consistent with the
-Cray Programming Release (CPE) 22.12 using the default OFI as the low-level
-comms protocol:
+The library paths specified in the link options will depend on the programming
+environment you are using as well as the Cray programming release. Here are the
+paths for each of the compiler environments consistent with the Cray Programming
+Release (CPE) 22.12 using the default OFI as the low-level comms protocol:
 
 - `PrgEnv-cray`: `${FORGE_DIR}/map/libs/default/cray/ofi`
 - `PrgEnv-gnu`: `${FORGE_DIR}/map/libs/default/gnu/ofi`
