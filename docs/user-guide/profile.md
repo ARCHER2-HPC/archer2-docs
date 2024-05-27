@@ -5,7 +5,7 @@ ARCHER2. In this section, we discuss the HPE Cray profiling tools,
 CrayPat-lite and CrayPat. We also show how to get usage data
 on currently running jobs from Slurm batch system.
 
-You can also use [the Arm Forge tool](../data-tools/arm-forge.md)
+You can also use [the Linaro Forge tool](../data-tools/forge.md)
 to profile applications on ARCHER2.
 
 If you are specifically interested in profiling IO, then you
@@ -575,11 +575,11 @@ The AMD &mu;Prof tool provides capabilities for low-level profiling on AMD proce
 
 - [AMD &mu;Prof](../data-tools/amd-uprof.md)
 
-## Arm Forge
+## Linaro Forge
 
-The Arm Forge tool also provides profiling capabilities. See:
+The Linaro Forge tool also provides profiling capabilities. See:
 
-- [ARCHER2 Arm Forge documentation](../data-tools/arm-forge.md)
+- [ARCHER2 Linaro Forge documentation](../data-tools/forge.md)
 
 ## Darshan IO profiling
 

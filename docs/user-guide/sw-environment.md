@@ -138,7 +138,7 @@ auser@uan01:~> module avail
 
 ------------------------------------ /work/y07/shared/archer2-lmod/utils/core -------------------------------------
    amd-uprof/3.6.449          darshan-util/3.3.1        imagemagick/7.1.0         reframe/4.1.0
-   arm/forge/22.1.3           epcc-reframe/0.2          ncl/6.6.2                 tcl/8.6.13
+   forge/24.0                 epcc-reframe/0.2          ncl/6.6.2                 tcl/8.6.13
    bolt/0.7                   epcc-setup-env     (L)    nco/5.0.3          (D)    tk/8.6.13
    bolt/0.8          (L,D)    gct/v6.2.20201212         nco/5.0.5                 usage-analysis/1.2
    cdo/1.9.9rc1               genmaskcpu/1.0            ncview/2.1.7              visidata/2.1
