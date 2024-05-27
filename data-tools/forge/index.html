@@ -16,11 +16,11 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.23">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.25">
     
     
       
-        <title>Arm Forge - ARCHER2 User Documentation</title>
+        <title>Linaro Forge - ARCHER2 User Documentation</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#arm-forge" class="md-skip">
+        <a href="#linaro-forge" class="md-skip">
           Skip to content
         </a>
       
@@ -117,7 +117,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Arm Forge
+              Linaro Forge
             
           </span>
         </div>
@@ -1980,7 +1980,7 @@
           
   
   <span class="md-ellipsis">
-    Arm Forge
+    Linaro Forge
   </span>
   
 
@@ -1991,7 +1991,7 @@
         
   
   <span class="md-ellipsis">
-    Arm Forge
+    Linaro Forge
   </span>
   
 
@@ -2011,14 +2011,32 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#arm-forge" class="md-nav__link">
+  <a href="#linaro-forge" class="md-nav__link">
     <span class="md-ellipsis">
-      Arm Forge
+      Linaro Forge
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Arm Forge">
+    <nav class="md-nav" aria-label="Linaro Forge">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#user-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      User interface
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#licensing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Licensing
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#one-time-set-up-for-using-forge" class="md-nav__link">
@@ -2082,9 +2100,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#compilation-and-linking" class="md-nav__link">
+  <a href="#linking" class="md-nav__link">
     <span class="md-ellipsis">
-      Compilation and linking
+      Linking
     </span>
   </a>
   
@@ -2376,14 +2394,32 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#arm-forge" class="md-nav__link">
+  <a href="#linaro-forge" class="md-nav__link">
     <span class="md-ellipsis">
-      Arm Forge
+      Linaro Forge
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Arm Forge">
+    <nav class="md-nav" aria-label="Linaro Forge">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#user-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      User interface
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#licensing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Licensing
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#one-time-set-up-for-using-forge" class="md-nav__link">
@@ -2447,9 +2483,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#compilation-and-linking" class="md-nav__link">
+  <a href="#linking" class="md-nav__link">
     <span class="md-ellipsis">
-      Compilation and linking
+      Linking
     </span>
   </a>
   
@@ -2510,63 +2546,56 @@
   
 
 
-  <h1>Arm Forge</h1>
+  <h1>Linaro Forge</h1>
 
-<h2 id="arm-forge">Arm Forge</h2>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>What were Arm Forge products (DDT and MAP) were acquired by Linaro in 2023.
-We may continue to refer to "Arm Forge" to prevent confusion,
-particularly in the context of module files.
-However, relevant links are now to the
-<a href="https://www.linaroforge.com/">Linaro web site</a></p>
-</div>
-<p><a href="https://www.linaroforge.com/">Linaro Forge</a>
-provides debugging and profiling tools for MPI parallel applications, and
-OpenMP or pthreads multi-threaded applications (and also hydrid MPI/OpenMP).
-The debugger and profiler are called DDT and MAP, respectively.</p>
-<p>ARCHER2 has a license for up to 16 nodes (2048 cores) shared between
-all users at any one time. (Note, cores are counted by the license, not
-MPI processes, threads, or any other software entity.)</p>
-<p>There are two ways of running the Forge user interface. If you have a good
-internet connection to ARCHER2, the GUI can be run on the front-end (with
-an X-connection).
-Alternatively, one can download a copy of the Forge remote client to your
-laptop or desktop, and run it locally. The remote client should be used if
-at all possible.</p>
-<p>To download the remote client, see the
-<a href="https://www.linaroforge.com/downloadForge/">Forge developer download pages</a>.
-Version 22.1.1 is known to work at the time of writing. Connecting with
-the remote client is discussed below.</p>
+<h2 id="linaro-forge">Linaro Forge</h2>
+<p><a href="https://www.linaroforge.com/">Linaro Forge</a> provides debugging and profiling tools
+for MPI parallel applications, and OpenMP or pthreads multi-threaded applications
+(and also hydrid MPI/OpenMP). Forge DDT is the debugger and MAP is the profiler.</p>
+<h3 id="user-interface">User interface</h3>
+<p>There are two ways of running the Forge user interface. If you have a good internet
+connection to ARCHER2, the GUI can be run on the front-end (with an X-connection).
+Alternatively, one can download a copy of the Forge remote client to your laptop or desktop,
+and run it locally. The remote client should be used if at all possible.</p>
+<p>To download the remote client, see the <a href="https://www.linaroforge.com/downloadForge/">Forge download pages</a>.
+Version 24.0 is known to work at the time of writing. A section further down this page explains how to use the remote client,
+see <a href="#connecting-with-the-remote-client">Connecting with the remote client</a>.</p>
+<h3 id="licensing">Licensing</h3>
+<p>ARCHER2 has a licence for up to 2080 tokens, where a token represents an MPI parallel process.
+Running Forge DDT/MAP to debug/profile a code running across 16 nodes using 128 MPI ranks per
+node would require 2048 tokens. If you wish to run on more nodes, say 32, then it will be
+necessary to reduce the number of tasks per node so as to fall below the maximum number of
+tokens allowed.</p>
+<p>Please note, Forge licence tokens are shared by all ARCHER2 (and <a href="https://www.cirrus.ac.uk/">Cirrus</a>) users.</p>
+<p>To see how many tokens are in use, you can view the licence server status page by first
+setting up an SSH tunnel to the node hosting the licence server.</p>
+<div class="highlight"><pre><span></span><code>ssh<span class="w"> </span>&lt;username&gt;@login.archer2.ac.uk<span class="w"> </span>-L<span class="w"> </span><span class="m">4241</span>:dvn04:4241
+</code></pre></div>
+<p>You can now view the status page from within a local browser, see <a href="http://localhost:4241/status.html">http://localhost:4241/status.html</a>.</p>
 <h3 id="one-time-set-up-for-using-forge">One time set-up for using Forge</h3>
 <p>A preliminary step is required to set up the necessary
 Forge configuration files that allow DDT and MAP to initialise its
 environment correctly so that it can, for example, interact with
-the SLURM queue system. These steps should be performed in the <code>/work</code>
+the Slurm queue system. These steps should be performed in the <code>/work</code>
 file system on ARCHER2.</p>
 <p>It is recommended that these commands are performed in the top-level work
 file system directory for the user account, i.e., <code>${HOME/home/work}</code>.</p>
-<div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>arm/forge
+<div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>forge
 <span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="p">/home/work</span><span class="si">}</span>
 <span class="nb">source</span><span class="w"> </span><span class="si">${</span><span class="nv">FORGE_DIR</span><span class="si">}</span>/config-init
 </code></pre></div>
-<p>This will create a directory <code>${HOME/home/work}/.allinea</code> that contains the
+<p>Running the <code>source</code> command will create a directory <code>${HOME/home/work}/.forge</code> that contains the
 following files.</p>
 <div class="highlight"><pre><span></span><code><span class="go">system.config  user.config</span>
 </code></pre></div>
-<p>The directory will also store other relevant files when Forge is run.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>The <code>config-init</code> script will output a warning, <code>...failed to read system config</code>.
-Please ignore: subsequent output should indicate that the new configuration
+<p>The <code>config-init</code> script may output, <code>Warning: failed to read system config</code>.
+Please ignore as subsequent messages should indicate that the new configuration
 files have been created.</p>
 </div>
-<p>Once you have created this directory, you also need to modify the <code>system.config</code> file in the directory <code>${HOME/home/work/.allinea}</code>, editing the line</p>
-<div class="highlight"><pre><span></span><code>shared<span class="w"> </span><span class="nv">directory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>~
-</code></pre></div>
-<p>To instead point to your <code>${HOME/home/work/.allinea}</code> directory, i.e. if you are in the <code>z19</code> project, that would be:</p>
-<div class="highlight"><pre><span></span><code>shared<span class="w"> </span><span class="nv">directory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>/work/z19/z19/<span class="nv">$USER</span>/.allinea
-</code></pre></div>
+<p>Within the <code>system.config</code> file you should find that <code>shared directory</code> is set to the equivalent of <code>${HOME/home/work/.forge}</code>.
+That directory will also store other relevant files when Forge is run.</p>
 <h3 id="using-ddt">Using DDT</h3>
 <p>DDT (<strong>D</strong>istributed <strong>D</strong>ebugging <strong>T</strong>ool) provides an easy-to-use graphical
 interface for source-level debugging of compiled C/C++ or Fortran codes.
@@ -2585,9 +2614,9 @@ to be obtained on the state of the execution at the point of failure in a
 batch job.</p>
 <p>Such a job can be submitted to the batch system in the usual way. The
 relevant command to start the executable is as follows.</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># ... SLURM batch commands as usual ...</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># ... Slurm batch commands as usual ...</span>
 
-module<span class="w"> </span>load<span class="w"> </span>arm/forge
+module<span class="w"> </span>load<span class="w"> </span>forge
 
 <span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">16</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">OMP_PLACES</span><span class="o">=</span>cores
@@ -2600,7 +2629,7 @@ ddt<span class="w"> </span>--verbose<span class="w"> </span>--offline<span class
 <span class="w">    </span>./my_executable
 </code></pre></div>
 <p>The parallel launch is delegated to <code>ddt</code> and the <code>--mpi=slurm</code> option
-indicates to <code>ddt</code> that the relevant queue system is SLURM
+indicates to <code>ddt</code> that the relevant queue system is Slurm
 (there is no explicit <code>srun</code>). It will also be
 necessary to state explicitly to <code>ddt</code> the number of processes
 required (here <code>--np 8</code>). For other options see, e.g., <code>ddt --help</code>.</p>
@@ -2610,8 +2639,8 @@ slow execution. The example given above uses the default
 <p>Execution will produce a <code>.html</code> format report which can be used
 to examine the state of execution at the point of failure.</p>
 <h4 id="interactive-debugging-using-the-client-to-submit-a-batch-job">Interactive debugging: using the client to submit a batch job</h4>
-<p>You can also start the client interactively (for details of remote launch, see below).</p>
-<div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>arm/forge
+<p>You can also start the client interactively (for details of remote launch, see <a href="#connecting-with-the-remote-client">Connecting with the remote client</a>).</p>
+<div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>forge
 ddt
 </code></pre></div>
 <p>This should start a window as shown below. Click on the <strong><em>DDT</em></strong> panel on
@@ -2648,22 +2677,24 @@ section and specify the relevant project budget, see the <strong><em>Account</em
 <p>The default queue template file configuration uses the short QoS with the
 standard time limit of 20 minutes. If something different is required,
 one can edit the settings. Alternatively, one can copy the <code>archer2.qtf</code> file
-(to <code>${HOME/home/work}/.allinea</code>) and make the relevant changes. This new
+(to <code>${HOME/home/work}/.forge</code>) and make the relevant changes. This new
 template file can then be specified in the dialog window.</p>
 <p>There may be a short delay while the sbatch job starts. Debugging should
-then proceed as described in the Allinea documentation.</p>
+then proceed as described in the <a href="https://docs.linaroforge.com/24.0/html/forge/ddt/index.html">Linaro Forge documentation</a>.</p>
 <h3 id="using-map">Using MAP</h3>
-<p>Load the <code>arm/forge</code> module:</p>
-<div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>arm/forge
+<p>Load the <code>forge</code> module:</p>
+<div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>forge
 </code></pre></div>
-<h4 id="compilation-and-linking">Compilation and linking</h4>
-<p>Compilation should take place as usual. However, an additional set of
-libraries is required at link time.</p>
-<p>The path to the additional libraries required will depend on the programming
-environment you are using as well as the Cray programming release. Here are
-the paths for each of the compiler environments consistent with the
-Cray Programming Release (CPE) 21.04 using the default OFI as the low-level
-comms protocol:</p>
+<h4 id="linking">Linking</h4>
+<p>MAP uses two small libraries to collect data from your program. These
+are called <code>map-sampler</code> and <code>map-sampler-pmpi</code>. On ARCHER2, the linking
+of these libraries is usually done automatically via the LD_PRELOAD
+mechanism, but only if your program is dynamically linked. Otherwise, you
+will need to link the MAP libraries manually by providing explicit link options.</p>
+<p>The library paths specified in the link options will depend on the programming
+environment you are using as well as the Cray programming release. Here are the
+paths for each of the compiler environments consistent with the Cray Programming
+Release (CPE) 22.12 using the default OFI as the low-level comms protocol:</p>
 <ul>
 <li><code>PrgEnv-cray</code>: <code>${FORGE_DIR}/map/libs/default/cray/ofi</code></li>
 <li><code>PrgEnv-gnu</code>: <code>${FORGE_DIR}/map/libs/default/gnu/ofi</code></li>
@@ -2680,9 +2711,9 @@ are given below.
 comms protocol, simply replace <code>ofi</code> with <code>ucx</code> in the library path.</p>
 <h4 id="generating-a-profile">Generating a profile</h4>
 <p>Submit a batch job in the usual way, and include the lines:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># ... SLURM batch commands as usual ...</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># ... Slurm batch commands as usual ...</span>
 
-module<span class="w"> </span>load<span class="w"> </span>arm/forge
+module<span class="w"> </span>load<span class="w"> </span>forge
 
 <span class="c1"># Ensure the cpus-per-task option is propagated to srun commands</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
@@ -2696,8 +2727,7 @@ map<span class="w"> </span>-n<span class="w"> </span>&lt;number<span class="w"> 
 file selection dialog box can then be used to locate the <code>.map</code> file.</p>
 <h3 id="connecting-with-the-remote-client">Connecting with the remote client</h3>
 <p>If one starts the Forge client on e.g., a laptop, one should see the
-main window as
-shown above. Select <strong><em>Remote Launch</em></strong> and then <strong><em>Configure</em></strong> from the
+main window as shown above. Select <strong><em>Remote Launch</em></strong> and then <strong><em>Configure</em></strong> from the
 drop-down menu. In the <strong><em>Configure Remote Connections</em></strong> dialog box
 click <strong><em>Add</em></strong>. The following window should be displayed. Fill
 in the fields as shown. The <strong><em>Connection Name</em></strong> is just a tag
@@ -2707,7 +2737,7 @@ username. The <strong><em>Remote Installation Directory</em></strong> should be 
 shown. The <strong><em>Remote Script</em></strong> is needed to execute additional environment
 commands on connection. A default script is provided in the location
 shown.</p>
-<div class="highlight"><pre><span></span><code><span class="go">/work/y07/shared/utils/core/arm/forge/latest/remote-init</span>
+<div class="highlight"><pre><span></span><code><span class="go">/work/y07/shared/utils/core/forge/latest/remote-init</span>
 </code></pre></div>
 <p>Other settings can be as shown. Remember to click <strong><em>OK</em></strong> when done.</p>
 <p><img alt="Remote Launch Settings" src="../forge-remote-launch.png" /></p>
@@ -2716,7 +2746,7 @@ Name. Select this, and enter the relevant ssh passphase and machine
 password to connect. A remote connection will allow you to debug,
 or view a profile, as discussed above.</p>
 <p>If different commands are required on connection, a copy of the
-<code>remote-init</code> script can be placed in, e.g., <code>${HOME/home/work}/.allinea</code>
+<code>remote-init</code> script can be placed in, e.g., <code>${HOME/home/work}/.forge</code>
 and edited as necessary. The full path of the new script should then be
 specified in the remote launch settings dialog box.
 Note that the script changes the directory to the <code>/work/</code> file system so
@@ -2817,7 +2847,7 @@ local <code>.ssh/config</code> configuration file.</p>
     <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.ebd0bdb7.min.js"></script>
+      <script src="../../assets/javascripts/bundle.081f42fc.min.js"></script>
       
     
   </body>
