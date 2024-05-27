@@ -14,7 +14,7 @@ Alternatively, one can download a copy of the Forge remote client to your laptop
 and run it locally. The remote client should be used if at all possible.
 
 To download the remote client, see the [Forge download pages](https://www.linaroforge.com/downloadForge/).
-Version 24.0 is known to work at the time of writing. A section further down this page explains how use the remote client,
+Version 24.0 is known to work at the time of writing. A section further down this page explains how to use the remote client,
 see [Connecting with the remote client](#connecting-with-the-remote-client).
 
 ### Licensing
