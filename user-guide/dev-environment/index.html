@@ -941,9 +941,42 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#available-hpe-cray-programming-environment-releases-on-archer2" class="md-nav__link">
+  <a href="#hpe-cray-programming-environment-cpe-releases" class="md-nav__link">
     <span class="md-ellipsis">
-      Available HPE Cray Programming Environment releases on ARCHER2
+      HPE Cray Programming Environment (CPE) releases
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HPE Cray Programming Environment (CPE) releases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-hpe-cray-programming-environment-cpe-releases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Available HPE Cray Programming Environment (CPE) releases
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#switching-to-a-different-hpe-cray-programming-environment-cpe-release" class="md-nav__link">
+    <span class="md-ellipsis">
+      Switching to a different HPE Cray Programming Environment (CPE) release
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-non-default-versions-of-hpe-cray-libraries" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using non-default versions of HPE Cray libraries
     </span>
   </a>
   
@@ -2817,9 +2850,42 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#available-hpe-cray-programming-environment-releases-on-archer2" class="md-nav__link">
+  <a href="#hpe-cray-programming-environment-cpe-releases" class="md-nav__link">
     <span class="md-ellipsis">
-      Available HPE Cray Programming Environment releases on ARCHER2
+      HPE Cray Programming Environment (CPE) releases
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HPE Cray Programming Environment (CPE) releases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-hpe-cray-programming-environment-cpe-releases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Available HPE Cray Programming Environment (CPE) releases
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#switching-to-a-different-hpe-cray-programming-environment-cpe-release" class="md-nav__link">
+    <span class="md-ellipsis">
+      Switching to a different HPE Cray Programming Environment (CPE) release
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-non-default-versions-of-hpe-cray-libraries" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using non-default versions of HPE Cray libraries
     </span>
   </a>
   
@@ -3559,10 +3625,12 @@ first choice for access to software libraries if available.</p>
 be found in the <a href="../../software-libraries/">Software libraries</a>
 section of the user guide.</p>
 </div>
-<h2 id="available-hpe-cray-programming-environment-releases-on-archer2">Available HPE Cray Programming Environment releases on ARCHER2</h2>
+<h2 id="hpe-cray-programming-environment-cpe-releases">HPE Cray Programming Environment (CPE) releases</h2>
+<h3 id="available-hpe-cray-programming-environment-cpe-releases">Available HPE Cray Programming Environment (CPE) releases</h3>
 <p>ARCHER2 currently has the following HPE Cray Programming Environment (CPE) releases available:</p>
 <ul>
 <li><strong>22.12: Current default</strong></li>
+<li>23.09</li>
 </ul>
 <p>You can find information, notes, and lists of changes for current and upcoming ARCHER2 
 HPE Cray programming environments in <a href="https://github.com/PE-Cray">the HPE Cray Programming Environment GitHub
@@ -3575,162 +3643,130 @@ the latest improvements and bug fixes.</p>
 <p>Later PE releases may sometimes be available via a containerised form. This allows developers to check that their code compiles and runs
 using CPE releases that have not yet been installed on ARCHER2.</p>
 <p>CPE 23.12 is currently available as a Singularity container, see <a href="../containers/#using-containerised-hpe-cray-programming-environments">Using Containerised HPE Cray Programming Environments</a> for further details.</p>
-<!-- Only one PE available at the moment
-
-## Switching to a different HPE Cray Programming Environment release
-
-!!! important
-    See the section below on using non-default versions of HPE Cray libraries
-    as this process will generally need to be followed when using software
-    from non-default PE installs.
-
-Access to non-default PE environments is controlled by the use of the `cpe` modules.
-Loading a `cpe` module will do the following:
-
-- The compiler version will be switched to the one from the selected PE
-- All HPE Cray PE modules will be updated so their default version is the
-  one from the PE you have selected
-
-
-
-For example, if you have a code that uses the Gnu compiler environment, FFTW
+<h3 id="switching-to-a-different-hpe-cray-programming-environment-cpe-release">Switching to a different HPE Cray Programming Environment (CPE) release</h3>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>See the section below on using non-default versions of HPE Cray libraries
+as this process will generally need to be followed when using software
+from non-default PE installs.</p>
+</div>
+<p>Access to non-default PE environments is controlled by the use of the <code>cpe</code> modules.
+Loading a <code>cpe</code> module will do the following:</p>
+<ul>
+<li>The compiler version will be switched to the one from the selected PE</li>
+<li>All HPE Cray PE modules will be updated so their default version is the
+  one from the PE you have selected</li>
+</ul>
+<p>For example, if you have a code that uses the Gnu compiler environment, FFTW
 and NetCDF parallel libraries and you want to compile in the (non-default) 22.04
-programming environment, you would do the following:
-
-First, load the `cpe/22.04` module to switch all the defaults to the versions from
+programming environment, you would do the following:</p>
+<p>First, load the <code>cpe/23.09</code> module to switch all the defaults to the versions from
 the 22.04 PE. Then, swap to the GNU compiler environment and load the required library
 modules (FFTW, hdf5-parallel and NetCDF HDF5 parallel). The loaded module list shows they 
-are the versions from the 22.04 PE:
-
-
-<div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>cpe/22.04
+are the versions from the 22.04 PE:</p>
+<div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>cpe/23.09
 </code></pre></div>
-
-Output:
+<p>Output:
 <div class="highlight"><pre><span></span><code><span class="go">The following have been reloaded with a version change:</span>
-<span class="go">  1) PrgEnv-cray/8.0.0 =&gt; PrgEnv-cray/8.3.3     3) cray-libsci/21.04.1.1 =&gt; cray-libsci/21.08.1.2     5) craype/2.7.6 =&gt; craype/2.7.15</span>
-<span class="go">  2) cce/11.0.4 =&gt; cce/13.0.2                   4) cray-mpich/8.1.4 =&gt; cray-mpich/8.1.15</span>
-</code></pre></div>
-
-<div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>PrgEnv-gnu
+<span class="go">  1) PrgEnv-cray/8.3.3 =&gt; PrgEnv-cray/8.4.0             4) cray-mpich/8.1.23 =&gt; cray-mpich/8.1.27</span>
+<span class="go">  2) cce/15.0.0 =&gt; cce/16.0.1                           5) craype/2.7.19 =&gt; craype/2.7.23</span>
+<span class="go">  3) cray-libsci/22.12.1.1 =&gt; cray-libsci/23.09.1.1     6) perftools-base/22.12.0 =&gt; perftools-base/23.09.0</span>
+</code></pre></div></p>
+<p><div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>PrgEnv-gnu
 </code></pre></div>
 Output:
-<div class="highlight"><pre><span></span><code><span class="go">Lmod is automatically replacing &quot;cce/13.0.2&quot; with &quot;gcc/11.2.0&quot;.</span>
+<div class="highlight"><pre><span></span><code><span class="go">Lmod is automatically replacing &quot;cce/16.0.1&quot; with &quot;gcc/11.2.0&quot;.</span>
 
 
-<span class="go">Lmod is automatically replacing &quot;PrgEnv-cray/8.3.3&quot; with &quot;PrgEnv-gnu/8.0.0&quot;.</span>
+<span class="go">Lmod is automatically replacing &quot;PrgEnv-cray/8.4.0&quot; with &quot;PrgEnv-gnu/8.4.0&quot;.</span>
 
 
 <span class="go">Due to MODULEPATH changes, the following have been reloaded:</span>
-<span class="go">  1) cray-mpich/8.1.15</span>
-</code></pre></div>
-
+<span class="go">  1) cray-mpich/8.1.27</span>
+</code></pre></div></p>
 <div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>cray-fftw
 module<span class="w"> </span>load<span class="w"> </span>cray-hdf5-parallel
 module<span class="w"> </span>load<span class="w"> </span>cray-netcdf-hdf5parallel
 module<span class="w"> </span>list
 </code></pre></div>
-
-Output:
+<p>Output:
 <div class="highlight"><pre><span></span><code><span class="go">Currently Loaded Modules:</span>
-<span class="go">  1) cpe/22.04               6) craype-network-ofi                         11) bolt/0.7           16) cray-hdf5-parallel/1.12.1.1</span>
-<span class="go">  2) gcc/11.2.0              7) perftools-base/22.04.0                     12) epcc-setup-env     17) cray-netcdf-hdf5parallel/4.8.1.1</span>
-<span class="go">  3) craype/2.7.15           8) xpmem/2.2.40-7.0.1.0_2.7__g1d7a24d.shasta  13) load-epcc-module</span>
-<span class="go">  4) craype-x86-rome         9) cray-mpich/8.1.15                          14) PrgEnv-gnu/8.0.0</span>
-<span class="go">  5) libfabric/1.11.0.4.71  10) cray-libsci/21.08.1.2                      15) cray-fftw/3.3.8.9</span>
-</code></pre></div>
-
-Now you can go ahead and compile your software with the new programming
-environment.
-
-
-
-!!! important
-    The `cpe` modules only change the versions of software modules provided
-    as part of the HPE Cray programming environments. Any modules provided
-    by the ARCHER2 service will need to be loaded manually after you have
-    completed the process described above.
-
-!!! note
-    Unloading the `cpe` module does not restore the original programming environment
-    release. To restore the default programming environment release you should log 
-    out and then log back in to ARCHER2.
-
-#### Accessing performance analysis tools in non-default Programming Environment
-
-The performance analysis tools (such as CrayPAT and CrayPAT-lite) behave slightly differently
-to other HPE Cray modules when you change to a non-default version of the programming
-environment. Specifically, an additional step is required to make them available. Once
-you have loaded the `cpe` module, you may also need to load the `perftools-base` 
-module to be able to load and use the performance tools modules.
-
-
-
-
-
-## Using non-default versions of HPE Cray libraries on ARCHER2
-
-If you wish to make use of non-default versions of libraries provided by HPE
+<span class="go">  1) craype-x86-rome                         6) epcc-setup-env          11) craype/2.7.23          16) cray-fftw/3.3.10.5</span>
+<span class="go">  2) libfabric/1.12.1.2.2.0.0                7) load-epcc-module        12) cray-dsmml/0.2.2       17) cray-hdf5-parallel/1.12.2.7</span>
+<span class="go">  3) craype-network-ofi                      8) perftools-base/23.09.0  13) cray-mpich/8.1.27      18) cray-netcdf-hdf5parallel/4.9.0.7</span>
+<span class="go">  4) xpmem/2.5.2-2.4_3.30__gd0f7936.shasta   9) cpe/23.09               14) cray-libsci/23.09.1.1</span>
+<span class="go">  5) bolt/0.8                               10) gcc/11.2.0              15) PrgEnv-gnu/8.4.0</span>
+</code></pre></div></p>
+<p>Now you can go ahead and compile your software with the new programming
+environment.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The <code>cpe</code> modules only change the versions of software modules provided
+as part of the HPE Cray programming environments. Any modules provided
+by the ARCHER2 service will need to be loaded manually after you have
+completed the process described above.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Unloading the <code>cpe</code> module does not restore the original programming environment
+release. To restore the default programming environment release you should log 
+out and then log back in to ARCHER2.</p>
+</div>
+<h2 id="using-non-default-versions-of-hpe-cray-libraries">Using non-default versions of HPE Cray libraries</h2>
+<p>If you wish to make use of non-default versions of libraries provided by HPE
 Cray (usually because they are part of a non-default PE release: either old
-or new) then you need to make changes at *both* compile and runtime. In summary,
-you need to load the correct module and also make changes to the `LD_LIBRARY_PATH`
-environment variable.
-
-**At compile time** you need to load the version of the library module before you compile
-*and* set the LD_LIBRARY_PATH environment variable to include the contencts of
-`$CRAY_LD_LIBRARY_PATH` as the first entry. For example, to use the, non-default, 21.08.1.2
+or new) then you need to make changes at <em>both</em> compile and runtime. In summary,
+you need to load the correct module and also make changes to the <code>LD_LIBRARY_PATH</code>
+environment variable.</p>
+<p><strong>At compile time</strong> you need to load the version of the library module before you compile
+<em>and</em> set the LD_LIBRARY_PATH environment variable to include the contencts of
+<code>$CRAY_LD_LIBRARY_PATH</code> as the first entry. For example, to use the, non-default, 23.09.1.1
 version of HPE Cray LibSci in the default programming environment (Cray Compiler Environment,
-CCE) you would first setup the environment to compile with:
-
-<div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>cray-libsci/21.08.1.2
+CCE) you would first setup the environment to compile with:</p>
+<div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>cray-libsci/23.09.1.1
 <span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$CRAY_LD_LIBRARY_PATH</span>:<span class="nv">$LD_LIBRARY_PATH</span>
 </code></pre></div>
-
-The order is important here: every time you change a module, you will need to reset
-the value of `LD_LIBRARY_PATH` for the process to work (it will not be updated
-automatically).
-
-Now you can compile your code. You can check that the executable is using the correct version 
-of LibSci with the `ldd` command and look for the line beginning `libsci_cray.so.5`, you
-should see the version in the path to the library file:
-
+<p>The order is important here: every time you change a module, you will need to reset
+the value of <code>LD_LIBRARY_PATH</code> for the process to work (it will not be updated
+automatically).</p>
+<p>Now you can compile your code. You can check that the executable is using the correct version 
+of LibSci with the <code>ldd</code> command and look for the line beginning <code>libsci_cray.so.5</code>, you
+should see the version in the path to the library file:</p>
 <div class="highlight"><pre><span></span><code>ldd<span class="w"> </span>dgemv.x<span class="w"> </span>
 </code></pre></div>
-
-Output:
-<div class="highlight"><pre><span></span><code>    linux-vdso.so.1 (0x00007fffd33dd000)
-    libm.so.6 =&gt; /lib64/libm.so.6 (0x00007fbd6e7ed000)
-    libsci_cray.so.5 =&gt; /opt/cray/pe/libsci/21.08.1.2/CRAY/9.0/x86_64/lib/libsci_cray.so.5 (0x00007fbd6a8a7000)
-    libdl.so.2 =&gt; /lib64/libdl.so.2 (0x00007fbd6a6a3000)
-    libxpmem.so.0 =&gt; /opt/cray/xpmem/default/lib64/libxpmem.so.0 (0x00007fbd6a4a0000)
-    libquadmath.so.0 =&gt; /opt/cray/pe/cce/11.0.4/cce/x86_64/lib/libquadmath.so.0 (0x00007fbd6a260000)
-    libmodules.so.1 =&gt; /opt/cray/pe/cce/11.0.4/cce/x86_64/lib/libmodules.so.1 (0x00007fbd6a044000)
-    libfi.so.1 =&gt; /opt/cray/pe/cce/11.0.4/cce/x86_64/lib/libfi.so.1 (0x00007fbd69921000)
-    libcraymath.so.1 =&gt; /opt/cray/pe/cce/11.0.4/cce/x86_64/lib/libcraymath.so.1 (0x00007fbd69640000)
-    libf.so.1 =&gt; /opt/cray/pe/cce/11.0.4/cce/x86_64/lib/libf.so.1 (0x00007fbd693ac000)
-    libu.so.1 =&gt; /opt/cray/pe/cce/11.0.4/cce/x86_64/lib/libu.so.1 (0x00007fbd69098000)
-    libcsup.so.1 =&gt; /opt/cray/pe/cce/11.0.4/cce/x86_64/lib/libcsup.so.1 (0x00007fbd68e92000)
-    libc.so.6 =&gt; /lib64/libc.so.6 (0x00007fbd68ad7000)
-    /lib64/ld-linux-x86-64.so.2 (0x00007fbd6eb25000)
-    libpthread.so.0 =&gt; /lib64/libpthread.so.0 (0x00007fbd688b8000)
-    librt.so.1 =&gt; /lib64/librt.so.1 (0x00007fbd686b0000)
-    libgfortran.so.5 =&gt; /opt/cray/pe/gcc-libs/libgfortran.so.5 (0x00007fbd681f9000)
-    libstdc++.so.6 =&gt; /opt/cray/pe/gcc-libs/libstdc++.so.6 (0x00007fbd67e26000)
-    libgcc_s.so.1 =&gt; /opt/cray/pe/gcc-libs/libgcc_s.so.1 (0x00007fbd67c0e000
-</code></pre></div>
-
-!!! tip
-    If any of the libraries point to versions in the `/opt/cray/pe/lib64` directory
-    then these are using the default versions of the libraries rather than the 
-    specific versions. This happens at compile time if you have forgotton to load 
-    the right module and set `$LD_LIBRARY_PATH` afterwards.
-
-**At run time** (typically in your job script) you need to repeat the environment
-setup steps (you can also use the `ldd` command in your job submission script to 
+<p>Output:
+<div class="highlight"><pre><span></span><code>    linux-vdso.so.1 (0x00007ffc7fff5000)
+    libm.so.6 =&gt; /lib64/libm.so.6 (0x00007fd6a6361000)
+    libsci_cray.so.5 =&gt; /opt/cray/pe/libsci/23.09.1.1/CRAY/12.0/x86_64/lib/libsci_cray.so.5 (0x00007fd6a2419000)
+    libdl.so.2 =&gt; /lib64/libdl.so.2 (0x00007fd6a2215000)
+    libxpmem.so.0 =&gt; /opt/cray/xpmem/default/lib64/libxpmem.so.0 (0x00007fd6a68b3000)
+    libquadmath.so.0 =&gt; /opt/cray/pe/gcc-libs/libquadmath.so.0 (0x00007fd6a1fce000)
+    libmodules.so.1 =&gt; /opt/cray/pe/cce/15.0.0/cce/x86_64/lib/libmodules.so.1 (0x00007fd6a689a000)
+    libfi.so.1 =&gt; /opt/cray/pe/cce/15.0.0/cce/x86_64/lib/libfi.so.1 (0x00007fd6a1a29000)
+    libcraymath.so.1 =&gt; /opt/cray/pe/cce/15.0.0/cce/x86_64/lib/libcraymath.so.1 (0x00007fd6a67b3000)
+    libf.so.1 =&gt; /opt/cray/pe/cce/15.0.0/cce/x86_64/lib/libf.so.1 (0x00007fd6a6720000)
+    libu.so.1 =&gt; /opt/cray/pe/cce/15.0.0/cce/x86_64/lib/libu.so.1 (0x00007fd6a1920000)
+    libcsup.so.1 =&gt; /opt/cray/pe/cce/15.0.0/cce/x86_64/lib/libcsup.so.1 (0x00007fd6a6715000)
+    libc.so.6 =&gt; /lib64/libc.so.6 (0x00007fd6a152b000)
+    /lib64/ld-linux-x86-64.so.2 (0x00007fd6a66ac000)
+    libpthread.so.0 =&gt; /lib64/libpthread.so.0 (0x00007fd6a1308000)
+    librt.so.1 =&gt; /lib64/librt.so.1 (0x00007fd6a10ff000)
+    libgfortran.so.5 =&gt; /opt/cray/pe/gcc-libs/libgfortran.so.5 (0x00007fd6a0c53000)
+    libstdc++.so.6 =&gt; /opt/cray/pe/gcc-libs/libstdc++.so.6 (0x00007fd6a0841000)
+    libgcc_s.so.1 =&gt; /opt/cray/pe/gcc-libs/libgcc_s.so.1 (0x00007fd6a0628000)
+</code></pre></div></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If any of the libraries point to versions in the <code>/opt/cray/pe/lib64</code> directory
+then these are using the default versions of the libraries rather than the 
+specific versions. This happens at compile time if you have forgotton to load 
+the right module and set <code>$LD_LIBRARY_PATH</code> afterwards.</p>
+</div>
+<p><strong>At run time</strong> (typically in your job script) you need to repeat the environment
+setup steps (you can also use the <code>ldd</code> command in your job submission script to 
 check the library is pointing to the correct version). For example, a job submission
-script to run our `dgemv.x` executable with the non-default version of LibSci could
-look like:
-
+script to run our <code>dgemv.x</code> executable with the non-default version of LibSci could
+look like:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="kp">#SBATCH --job-name=dgemv</span>
 <span class="kp">#SBATCH --time=0:20:0</span>
@@ -3745,9 +3781,7 @@ look like:
 <span class="kp">#SBATCH --reservation=shortqos</span>
 
 <span class="c1"># Setup up the environment to use the non-default version of LibSci</span>
-<span class="c1">#   We use &quot;module swap&quot; as the &quot;cray-libsci&quot; is loaded by default.</span>
-<span class="c1">#   This must be done after loading the &quot;epcc-job-env&quot; module</span>
-module<span class="w"> </span>swap<span class="w"> </span>cray-libsci<span class="w"> </span>cray-libsci/20.08.1.2
+module<span class="w"> </span>load<span class="w"> </span>cray-libsci/23.09.1.1
 <span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$CRAY_LD_LIBRARY_PATH</span>:<span class="nv">$LD_LIBRARY_PATH</span>
 
 <span class="c1"># Check which library versions the executable is pointing too</span>
@@ -3757,18 +3791,17 @@ ldd<span class="w"> </span>dgemv.x
 
 <span class="nb">srun</span><span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>dgemv.x
 </code></pre></div>
-
-!!! tip
-    As when compiling, the order of commands matters. Setting the value of
-    `LD_LIBRARY_PATH` must happen after you have finished all your `module`
-    commands for it to have the correct effect.
-
-!!! important
-    You must setup the environment at both compile and run time otherwise
-    you will end up using the default version of the library.
-
--->
-
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>As when compiling, the order of commands matters. Setting the value of
+<code>LD_LIBRARY_PATH</code> must happen after you have finished all your <code>module</code>
+commands for it to have the correct effect.</p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>You must setup the environment at both compile and run time otherwise
+you will end up using the default version of the library.</p>
+</div>
 <h2 id="compiling-on-compute-nodes">Compiling on compute nodes</h2>
 <p>Sometimes you may wish to compile in a batch job. For example, the compile process may take a long
 time or the compile process is part of the research workflow and can be coupled to the production job.
