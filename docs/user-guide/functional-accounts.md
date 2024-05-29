@@ -79,7 +79,7 @@ auser@dvn04:~> sudo -iu testlm
 To exit the functional account, you use the `exit` command which will return you to your normal
 user account on `dvn04`.
 
-### Setup the persistent service definition
+## Setup the persistent service
 
 You should use `systemctl` to manage your persistent service on `dvn04`. In order to use the
 `systemctl` command, you need to add the following lines to the `~/.bashrc` for the 
@@ -116,8 +116,8 @@ Enable the licence server service, e.g. for the QChem licence server service:
 ```bash
 testlm@dvn04:~> systemctl --user enable /work/y07/shared/apps/core/qchem/6.1/etc/flexnet/qchem-lm.service
  
-Created symlink /home/y07/y07/qchemlic/.config/systemd/user/default.target.wants/qchem-lm.service → /work/y07/shared/apps/core/qchem/6.1/etc/flexnet/qchem-lm.service.
-Created symlink /home/y07/y07/qchemlic/.config/systemd/user/qchem-lm.service → /work/y07/shared/apps/core/qchem/6.1/etc/flexnet/qchem-lm.service.
+Created symlink /home/y07/y07/testlm/.config/systemd/user/default.target.wants/qchem-lm.service → /work/y07/shared/apps/core/qchem/6.1/etc/flexnet/qchem-lm.service.
+Created symlink /home/y07/y07/testlm/.config/systemd/user/qchem-lm.service → /work/y07/shared/apps/core/qchem/6.1/etc/flexnet/qchem-lm.service.
 ```
 
 Once it has been enabled, you can start the licence server service, e.g. for the QChem licence server service:
@@ -131,7 +131,7 @@ Check the status to make sure it is running:
 ```bash
 testlm@dvn04:~> systemctl --user status qchem-lm
 ● qchem-lm.service - Licence manger for QChem
-     Loaded: loaded (/home/y07/y07/qchemlic/.config/systemd/user/qchem-lm.service; enabled; vendor preset: disabled)
+     Loaded: loaded (/home/y07/y07/testlm/.config/systemd/user/qchem-lm.service; enabled; vendor preset: disabled)
      Active: active (running) since Thu 2024-05-16 15:33:59 BST; 8s ago
     Process: 174248 ExecStart=/work/y07/shared/apps/core/qchem/6.1/bin/flexnet/lmgrd -l +/work/y07/shared/apps/core/qchem/6.1/var/log/qchemlm.log -c /work/y07/shared/apps/core/qchem/6.1/etc/flexnet/ (code=exited, status=0/SUCCESS)
    Main PID: 174249 (lmgrd)
