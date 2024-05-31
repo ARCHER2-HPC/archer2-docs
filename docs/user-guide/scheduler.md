@@ -2301,7 +2301,7 @@ Capability Days are made up of two parts:
 
 ### pre-Capability Day session 
 
-The pre-Capability Day session typically runs directly before the full Capability Day session and allows
+The pre-Capability Day session is typically available directly before the full Capability Day session and allows
 short test jobs to prepare for Capability Day.
 
 Submit to the `pre-capabilityday` QoS. Jobs can be submitted ahead of time and will start when the pre-Capability Day
@@ -2309,7 +2309,7 @@ session starts.
 
 `pre-capabilityday` QoS limits:
 
-- Runs for 12 hours
+- Available for 12 hours
 - 1024 nodes available
 - Minimum job size: 256 nodes, maximum job size: 1024 nodes
     - Individual jobs steps (i.e. `srun` commands) within job scripts should also be a minimum of 256 nodes
@@ -2347,14 +2347,14 @@ srun --hint=multithread --distribution=block:block my_app.x
 
 ### Capability Day session
 
-The Capability Day session typically runs directly after the pre-Capability Day session.
+The Capability Day session is typically available directly after the pre-Capability Day session.
 
 Submit to the `capability` QoS. Jobs can be submitted ahead of time and will start when the Capability Day
 session starts.
 
 `capabilityday` QoS limits:
 
-- Runs for 42 hours
+- Available for 42 hours
 - 4096 nodes available
 - Minimum job size: 512 nodes, maximum job size: 4096 nodes
     - Individual jobs steps (i.e. `srun` commands) within job scripts should also be a minimum of 512 nodes
