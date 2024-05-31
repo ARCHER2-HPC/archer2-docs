@@ -6268,13 +6268,13 @@ charge.</p>
 <li>Capability Day session (<code>capabilityday</code> QoS)</li>
 </ul>
 <h3 id="pre-capability-day-session">pre-Capability Day session</h3>
-<p>The pre-Capability Day session typically runs directly before the full Capability Day session and allows
+<p>The pre-Capability Day session is typically available directly before the full Capability Day session and allows
 short test jobs to prepare for Capability Day.</p>
 <p>Submit to the <code>pre-capabilityday</code> QoS. Jobs can be submitted ahead of time and will start when the pre-Capability Day
 session starts.</p>
 <p><code>pre-capabilityday</code> QoS limits:</p>
 <ul>
-<li>Runs for 12 hours</li>
+<li>Available for 12 hours</li>
 <li>1024 nodes available</li>
 <li>Minimum job size: 256 nodes, maximum job size: 1024 nodes<ul>
 <li>Individual jobs steps (i.e. <code>srun</code> commands) within job scripts should also be a minimum of 256 nodes</li>
@@ -6312,12 +6312,12 @@ module<span class="w"> </span>load<span class="w"> </span>xthi
 <span class="nb">srun</span><span class="w"> </span>--hint<span class="o">=</span>multithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>my_app.x
 </code></pre></div>
 <h3 id="capability-day-session">Capability Day session</h3>
-<p>The Capability Day session typically runs directly after the pre-Capability Day session.</p>
+<p>The Capability Day session is typically available directly after the pre-Capability Day session.</p>
 <p>Submit to the <code>capability</code> QoS. Jobs can be submitted ahead of time and will start when the Capability Day
 session starts.</p>
 <p><code>capabilityday</code> QoS limits:</p>
 <ul>
-<li>Runs for 42 hours</li>
+<li>Available for 42 hours</li>
 <li>4096 nodes available</li>
 <li>Minimum job size: 512 nodes, maximum job size: 4096 nodes<ul>
 <li>Individual jobs steps (i.e. <code>srun</code> commands) within job scripts should also be a minimum of 512 nodes</li>
