@@ -270,12 +270,9 @@ The priority factors are:
 - P(Age) - The priority based on the job age normalised to a value between 0 and 1.
   The maximum raw value is 14 days (where P(Age) = 1).
 - P(Fairshare) - The fairshare priority normalised to a value between 0 and 1. Your
-  fairshare priority is determined by a combination of your budget code fairshare
-  value and your user fairshare value within that budget code. The more use that
-  the budget code you are using has made of the system recently relative to other
-  budget codes on the system, the lower the budget code fairshare value will be; and the more
-  use you have made of the system recently relative to other users within your
-  budget code, the lower your user fairshare value will be. The decay half life
+  fairshare priority is determined by your user fairshare value. The more use that
+  your username has made of the system recently relative to other
+  users on the system, the lower the fairshare value will be. The decay half life
   for fairshare on ARCHER2 is set to 2 days. [More information on the Slurm fairshare
   algorithm](https://slurm.schedmd.com/fair_tree.html).
 - P(Size) - The priority based on the job size normalised to a value between 0 and 1.
