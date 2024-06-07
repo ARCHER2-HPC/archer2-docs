@@ -2294,6 +2294,9 @@ Capability Days are made up of two parts:
 - pre-Capability Day session (`pre-capabilityday` QoS) to allow users to test scaling and job setup ahead of full Capability Day
 - Capability Day session (`capabilityday` QoS)
 
+!!! tip
+    Any jobs left in the queues when Capability Days finish will be deleted.
+
 ### pre-Capability Day session 
 
 The pre-Capability Day session is typically available directly before the full Capability Day session and allows
