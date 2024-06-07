@@ -274,7 +274,7 @@ The priority factors are:
   your username has made of the system recently relative to other
   users on the system, the lower the fairshare value will be. The decay half life
   for fairshare on ARCHER2 is set to 2 days. [More information on the Slurm fairshare
-  algorithm](https://slurm.schedmd.com/fair_tree.html).
+  algorithm](https://slurm.schedmd.com/classic_fair_share.html).
 - P(Size) - The priority based on the job size normalised to a value between 0 and 1.
   The maximum size is the total number of ARCHER2 compute nodes.
 
