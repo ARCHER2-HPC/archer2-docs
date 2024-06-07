@@ -36,6 +36,16 @@ ssh <username>@login.archer2.ac.uk -L 4241:dvn04:4241
 
 You can now view the status page from within a local browser, see [http://localhost:4241/status.html](http://localhost:4241/status.html).
 
+!!! note
+    The licence status page may contain multiple licences, indicated by a row of buttons (one per licence) near the top of the page.
+    The details of the 12-month licence described above can be accessed by clicking on the first button in the row.
+    Additional buttons may appear at various times for *boosted* licences: once a quarter, ARCHER2 will have a boosted 7-day
+    licence offering 8192 tokens, sufficient for 64 nodes running 128 MPI ranks per node. Please contact the [Service Desk](https://www.archer2.ac.uk/support-access/servicedesk.html)
+    if you have a specific requirement that exceeds the current Forge licence provision.
+
+!!! note
+    The licence status page refers to the Arm Licence Server. Arm is the name of the company that originally developed Forge
+    before it was acquired by Linaro.
 
 ### One time set-up for using Forge
 
