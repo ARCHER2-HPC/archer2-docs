@@ -1,10 +1,6 @@
 # AMD GPU Development Platform
 
-!!! note
-    This page is work in progress. More details on the GPU Development Platform
-    and how to use it will be added as they become available.
-
-In early 2024 ARCHER2 users will gain access to a small GPU system
+In early 2024 ARCHER2 users gained access to a small GPU system
 integrated into ARCHER2 which is designed to allow users to test and develop software
 using AMD GPUs.
 
@@ -21,8 +17,6 @@ The GPU Development Platform consists of 4 compute nodes each with:
 - 512 GiB host memory
 - 2&times; 100 Gb/s Slingshot interfaces per node
 
-!!! note
-    Further details on the hardware available will be added shortly.
 
 ## Accessing the GPU compute nodes
 
