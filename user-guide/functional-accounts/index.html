@@ -2256,6 +2256,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#setup-ssh-key-pair-for-dvn04-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup SSH key pair for dvn04 access
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#login-to-the-persistent-service-node-dvn04" class="md-nav__link">
     <span class="md-ellipsis">
       Login to the persistent service node (dvn04)
@@ -2343,19 +2352,57 @@ application. They will then inform you of the functional account name.</p>
 <p>The process for accessing the functional account is:</p>
 <ol>
 <li>Log into ARCHER2 using normal user account</li>
+<li>Setup an SSH key pair for login access to persistent service node (<code>dvn04</code>)</li>
 <li>Log into persistent service node (<code>dvn04</code>)</li>
 <li>Use <code>sudo</code> to access the functional account</li>
 </ol>
 <h3 id="login-to-archer2">Login to ARCHER2</h3>
 <p><a href="../connecting/">Log into ARCHER2 in the usual way</a> using a normal user account that has been given access
 to manage the functional account. </p>
+<h3 id="setup-ssh-key-pair-for-dvn04-access">Setup SSH key pair for <code>dvn04</code> access</h3>
+<p>You can create a passphrase-less SSH key pair to use for access to the persistent service 
+node using the <code>ssh-keygen</code> command. As long as you place the public and private key parts
+in the default location, you will not need any additional SSH options to access <code>dvn04</code> from 
+the ARCHER2 login nodes. Just hit enter when prompted for a passphrase to create a key with
+no passphrase.</p>
+<p>Once the key pair has been created, you add the public part to the <code>$HOME/.ssh/authorized_keys</code>
+file on ARCHER2 to make it valid for login to <code>dvn04</code> using the command
+<code>cat $HOME/.ssh/id_rsa.pub &gt;&gt; $HOME/.ssh/authorized_keys</code>.</p>
+<p>Example commands to setup SSH key pair:</p>
+<div class="highlight"><pre><span></span><code>auser@ln04:~&gt; ssh-keygen -t rsa
+
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/t01/t01/auser/.ssh/id_rsa): 
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/t01/t01/auser/.ssh/id_rsa
+Your public key has been saved in /home/t01/t01/auser/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:wX2bgNElbsPaT8HXKIflNmqnjSfg7a8BPM1R56b4/60 auser@ln02
+The key&#39;s randomart image is:
++---[RSA 3072]----+
+|        ..... o .|
+|       . *.o = = |
+|        + B B B +|
+|         * * % + |
+|        S * X o  |
+|         . O *   |
+|          . B +  |
+|           . + ..|
+|            ooE.=|
++----[SHA256]-----+
+
+auser@ln04:~&gt; cat $HOME/.ssh/id_rsa.pub &gt;&gt; $HOME/.ssh/authorized_keys
+</code></pre></div>
 <h3 id="login-to-the-persistent-service-node-dvn04">Login to the persistent service node (<code>dvn04</code>)</h3>
-<p>Once you are logged into an ARCHER2 login node, login to <code>dvn04</code>:</p>
+<p>Once you are logged into an ARCHER2 login node, and assuming the SSH key is in the 
+default location, you can now login to <code>dvn04</code>:</p>
 <div class="highlight"><pre><span></span><code>auser@ln04:~&gt;<span class="w"> </span>ssh<span class="w"> </span>dvn04
 </code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You should not need to enter any login credentials to access <code>dvn04</code> from an ARCHER2 login node.</p>
+<p>You will need to enter the TOTP for your ARCHER2 account to login to <code>dvn04</code> unless
+you have logged in to the node recently.</p>
 </div>
 <h3 id="access-the-functional-account">Access the functional account</h3>
 <p>Once you are logged into <code>dvn04</code>, you use <code>sudo</code> to access the functional account.</p>
