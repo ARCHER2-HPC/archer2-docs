@@ -42,24 +42,68 @@ application. They will then inform you of the functional account name.
 The process for accessing the functional account is:
 
 1. Log into ARCHER2 using normal user account
-2. Log into persistent service node (`dvn04`)
-3. Use `sudo` to access the functional account
+2. Setup an SSH key pair for login access to persistent service node (`dvn04`)
+3. Log into persistent service node (`dvn04`)
+4. Use `sudo` to access the functional account
 
 ### Login to ARCHER2
 
 [Log into ARCHER2 in the usual way](connecting.md) using a normal user account that has been given access
 to manage the functional account. 
 
+### Setup SSH key pair for `dvn04` access
+
+You can create a passphrase-less SSH key pair to use for access to the persistent service 
+node using the `ssh-keygen` command. As long as you place the public and private key parts
+in the default location, you will not need any additional SSH options to access `dvn04` from 
+the ARCHER2 login nodes. Just hit enter when prompted for a passphrase to create a key with
+no passphrase.
+
+Once the key pair has been created, you add the public part to the `$HOME/.ssh/authorized_keys`
+file on ARCHER2 to make it valid for login to `dvn04` using the command
+`cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys`.
+
+Example commands to setup SSH key pair:
+
+```
+auser@ln04:~> ssh-keygen -t rsa
+
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/t01/t01/auser/.ssh/id_rsa): 
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/t01/t01/auser/.ssh/id_rsa
+Your public key has been saved in /home/t01/t01/auser/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:wX2bgNElbsPaT8HXKIflNmqnjSfg7a8BPM1R56b4/60 auser@ln02
+The key's randomart image is:
++---[RSA 3072]----+
+|        ..... o .|
+|       . *.o = = |
+|        + B B B +|
+|         * * % + |
+|        S * X o  |
+|         . O *   |
+|          . B +  |
+|           . + ..|
+|            ooE.=|
++----[SHA256]-----+
+
+auser@ln04:~> cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
+```
+
 ### Login to the persistent service node (`dvn04`)
 
-Once you are logged into an ARCHER2 login node, login to `dvn04`:
+Once you are logged into an ARCHER2 login node, and assuming the SSH key is in the 
+default location, you can now login to `dvn04`:
 
 ```bash
 auser@ln04:~> ssh dvn04
 ```
 
 !!! note
-    You should not need to enter any login credentials to access `dvn04` from an ARCHER2 login node.
+    You will need to enter the TOTP for your ARCHER2 account to login to `dvn04` unless
+    you have logged in to the node recently.
 
 ### Access the functional account
 
