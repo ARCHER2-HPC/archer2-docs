@@ -63,6 +63,15 @@ There are a number of different data storage types available to users:
 Each type of storage has different characteristics and policies, and is
 suitable for different types of use.
 
+
+!!! important
+   All users have a directory on one of the home file systems and on
+   one of the work file systems. The directories are located at:
+
+   - `/home/[project ID]/[project ID]/[user ID]` (this is also set as your home directory)
+   - `/work/[project ID]/[project ID]/[user ID]`
+
+
 There are also three different types of node available to users:
 
    - Login nodes
@@ -94,7 +103,7 @@ different node types:
 There are four independent home file-systems. Every project has an
 allocation on one of the four. You do not need to know which one your
 project uses as your projects space can always be accessed via the path
-`/home/project-code`. Each home file-system is approximately 100 TB in
+`/home/[project ID]` with your personal directory at `/home/[project ID]/[project ID]/[user ID]`. Each home file-system is approximately 100 TB in
 size and is implemented using standard Network Attached Storage (NAS)
 technology. This means that these disks are not particularly high
 performance but are well suited to standard operations like compilation
@@ -133,7 +142,9 @@ account.
 
 There are currently three work file systems on the full ARCHER2 service.
 Each of these file systems is 3.4 PB and a portion of one of these file
-systems is available to each project.
+systems is available to each project. You do not usually need to know which one your
+project uses as your projects space can always be accessed via the path
+`/work/[project ID]` with your personal directory at `/work/[project ID]/[project ID]/[user ID]`.
 
 All of these are high-performance, Lustre parallel file systems. They are
 designed to support data in large files. The performance for data stored
