@@ -3061,6 +3061,15 @@ There are a number of different data storage types available to users:</p>
 </ul>
 <p>Each type of storage has different characteristics and policies, and is
 suitable for different types of use.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+</div>
+<p>All users have a directory on one of the home file systems and on
+   one of the work file systems. The directories are located at:</p>
+<ul>
+<li><code>/home/[project ID]/[project ID]/[user ID]</code> (this is also set as your home directory)</li>
+<li><code>/work/[project ID]/[project ID]/[user ID]</code></li>
+</ul>
 <p>There are also three different types of node available to users:</p>
 <ul>
 <li>Login nodes</li>
@@ -3124,7 +3133,7 @@ or RDFaaS file systems when running on the compute nodes.</p>
 <p>There are four independent home file-systems. Every project has an
 allocation on one of the four. You do not need to know which one your
 project uses as your projects space can always be accessed via the path
-<code>/home/project-code</code>. Each home file-system is approximately 100 TB in
+<code>/home/[project ID]</code> with your personal directory at <code>/home/[project ID]/[project ID]/[user ID]</code>. Each home file-system is approximately 100 TB in
 size and is implemented using standard Network Attached Storage (NAS)
 technology. This means that these disks are not particularly high
 performance but are well suited to standard operations like compilation
@@ -3156,7 +3165,9 @@ exactly up to date with the situation on the systems themselves.</p>
 <h3 id="work-file-systems">Work file systems</h3>
 <p>There are currently three work file systems on the full ARCHER2 service.
 Each of these file systems is 3.4 PB and a portion of one of these file
-systems is available to each project.</p>
+systems is available to each project. You do not usually need to know which one your
+project uses as your projects space can always be accessed via the path
+<code>/work/[project ID]</code> with your personal directory at <code>/work/[project ID]/[project ID]/[user ID]</code>.</p>
 <p>All of these are high-performance, Lustre parallel file systems. They are
 designed to support data in large files. The performance for data stored
 in large numbers of small files is probably not going to be as good.</p>
