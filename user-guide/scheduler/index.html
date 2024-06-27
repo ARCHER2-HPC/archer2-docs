@@ -4336,10 +4336,13 @@ The current job priority formula on ARCHER2 is:</p>
 <li>P(Age) - The priority based on the job age normalised to a value between 0 and 1.
   The maximum raw value is 14 days (where P(Age) = 1).</li>
 <li>P(Fairshare) - The fairshare priority normalised to a value between 0 and 1. Your
-  fairshare priority is determined by your user fairshare value. The more use that
-  your username has made of the system recently relative to other
-  users on the system, the lower the fairshare value will be. The decay half life
-  for fairshare on ARCHER2 is set to 2 days. <a href="https://slurm.schedmd.com/classic_fair_share.html">More information on the Slurm fairshare
+  fairshare priority is determined by a combination of your budget code fairshare
+  value and your user fairshare value within that budget code. The more use that
+  the budget code you are using has made of the system recently relative to other
+  budget codes on the system, the lower the budget code fairshare value will be; and the more
+  use you have made of the system recently relative to other users within your
+  budget code, the lower your user fairshare value will be. The decay half life
+  for fairshare on ARCHER2 is set to 2 days. <a href="https://slurm.schedmd.com/fair_tree.html">More information on the Slurm fairshare
   algorithm</a>.</li>
 <li>P(Size) - The priority based on the job size normalised to a value between 0 and 1.
   The maximum size is the total number of ARCHER2 compute nodes.</li>
