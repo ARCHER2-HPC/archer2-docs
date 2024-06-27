@@ -276,6 +276,9 @@ To run on ARCHER2, submit a batch script to the Slurm scheduler. Here is an exam
 #SBATCH --partition=standard
 #SBATCH --qos=standard
 
+# For adjoint runs the default cpu-freq is a lot slower
+#SBATCH --cpu-freq=2250000
+
 # Set the number of threads to 1
 #   This prevents any threaded system libraries from automatically
 #   using threading.
