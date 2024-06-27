@@ -2423,10 +2423,10 @@ You can set it up to do this by following the steps below. First you will need
 to load the <code>cray-mpich</code> module and define some environment variables (see <a href="https://juliaparallel.org/MPI.jl/stable/configuration/">here</a>
 for further details). Then you can launch Julia in an environment of your
 choice, ready to build.</p>
-<div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>cray-mpich/8.1.4
+<div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>cray-mpich/8.1.23
 <span class="nb">export</span><span class="w"> </span><span class="nv">JULIA_MPI_BINARY</span><span class="o">=</span><span class="s2">&quot;system&quot;</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">JULIA_MPI_PATH</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">JULIA_MPI_LIBRARY</span><span class="o">=</span><span class="s2">&quot;/opt/cray/pe/mpich/8.1.4/ofi/cray/9.1/lib/libmpi.so&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">JULIA_MPI_LIBRARY</span><span class="o">=</span><span class="s2">&quot;/opt/cray/pe/mpich/8.1.23/ofi/gnu/9.1/lib/libmpi.so&quot;</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">JULIA_MPIEXEC</span><span class="o">=</span><span class="s2">&quot;srun&quot;</span>
 
 julia<span class="w"> </span>--project<span class="o">=</span>&lt;&lt;path<span class="w"> </span>to<span class="w"> </span>environment&gt;&gt;
@@ -2463,7 +2463,7 @@ points too.</p>
 
 <span class="c1"># Setup the job environment (this module needs to be loaded before any other modules)</span>
 module<span class="w"> </span>load<span class="w"> </span>PrgEnv-cray
-module<span class="w"> </span>load<span class="w"> </span>cray-mpich/8.1.4
+module<span class="w"> </span>load<span class="w"> </span>cray-mpich/8.1.23
 
 <span class="c1"># Set the number of threads to 1</span>
 <span class="c1">#   This prevents any threaded system libraries from automatically</span>
