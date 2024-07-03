@@ -70,6 +70,7 @@ nav:
     - "Performance tuning": user-guide/tuning.md
     - "Energy use": user-guide/energy.md
     - "GPU development platform": user-guide/gpu.md
+    - "Functional accounts": user-guide/functional-accounts.md
   - "Research Software":
     - "Overview": research-software/index.md
     - "CASINO": research-software/casino.md
