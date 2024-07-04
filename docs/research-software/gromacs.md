@@ -103,6 +103,8 @@ The following script will run a GROMACS MD job using 1 GPU with 1 MPI process 8 
 #SBATCH --job-name=mdrun_gpu
 #SBATCH --gpus=1
 #SBATCH --time=00:20:00
+#SBATCH --hint=nomultithread
+#SBATCH --distribution=block:block
 
 # Replace [budget code] below with your project code (e.g. t01)
 #SBATCH --account=[budget code]
