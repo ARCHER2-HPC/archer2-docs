@@ -17,11 +17,17 @@ non-biological systems, e.g. polymers.
 ## Using GROMACS on ARCHER2
 
 GROMACS is Open Source software and is freely available to all users.
-Three versions are available:
+Three executable versions are available on the normal (CPU-only) modules:
 
   - Parallel MPI/OpenMP, single precision: `gmx_mpi`
   - Parallel MPI/OpenMP, double precision: `gmx_mpi_d`
   - Serial, single precision: `gmx`
+
+We also provide a GPU version of GROMACS that will run on the MI210 GPU nodes, it's named `gromacs/2022.4-GPU` and can be loaded with
+
+```bash
+module load gromacs/2022.4-GPU
+```
 
 !!! important
     The `gromacs` modules reset the CPU frequency to the highest possible value
@@ -33,8 +39,7 @@ Three versions are available:
 
 ### Running MPI only jobs
 
-The following script will run a GROMACS MD job using 4 nodes (128x4
-cores) with pure MPI.
+The following script will run a GROMACS MD job using 4 nodes (128x4 cores) with pure MPI.
 
 ```slurm
 #!/bin/bash
@@ -87,6 +92,28 @@ export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 
 export OMP_NUM_THREADS=8
 srun --distribution=block:block --hint=nomultithread gmx_mpi mdrun -s test_calc.tpr
+```
+
+### Running GROMACS on the AMD MI210 GPUs
+
+The following script will run a GROMACS MD job using 1 GPU with 1 MPI process 8 OpenMP threads per MPI process.
+
+```slurm
+#!/bin/bash
+#SBATCH --job-name=mdrun_gpu
+#SBATCH --gpus=1
+#SBATCH --time=00:20:00
+
+# Replace [budget code] below with your project code (e.g. t01)
+#SBATCH --account=[budget code]
+#SBATCH --partition=gpu
+#SBATCH --qos=gpu-shd  # or gpu-exc
+
+# Setup the environment
+module load gromacs/2022.4-GPU
+
+export OMP_NUM_THREADS=8
+srun --ntasks=1 --cpus-per-task=8 gmx_mpi mdrun -ntomp 8 --noconfout -s calc.tpr
 ```
 
 ## Compiling Gromacs
