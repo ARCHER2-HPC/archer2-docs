@@ -57,6 +57,10 @@ To load the default version of VASP, you would use:
 
     module load vasp
 
+!!! tip 
+    VASP 6.4.3 and above have all been compiled to include Wannier90 functionality.
+    Older versions of VASP on ARCHER2 **do not** include Wannier90.
+
 Once loaded, the executables are called:
 
   - `vasp_std` - Multiple k-point version
