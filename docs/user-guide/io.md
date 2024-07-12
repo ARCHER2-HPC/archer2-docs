@@ -1,7 +1,7 @@
 # I/O performance and tuning
 
 This section describes common IO patterns, best practice for
-I/O and how to get good performance on the ARCHER2 storage. 
+I/O and how to get good performance on the ARCHER2 storage.
 
 Information on the file systems, directory layouts, quotas,
 archiving and transferring data can be found in the
@@ -108,7 +108,7 @@ appropriate I/O patterns.
 
 In order to achieve good performance on the ARCHER2 Lustre file systems,
 you need to make sure your IO is configured correctly for the type
-of I/O you want to do. In the following sections we describe how to 
+of I/O you want to do. In the following sections we describe how to
 do this.
 
 ### Summary: achieving best I/O performance
@@ -142,7 +142,7 @@ Following sections describe the settings in more detail.
 
 #### File-Per-Process (FPP)
 
-We regularly run tests of FPP write performance on ARCHER2 `/work`` Lustre file 
+We regularly run tests of FPP write performance on ARCHER2 `/work`` Lustre file
 systems using the [benchio](https://github.com/EPCCed/epcc-reframe/tree/main/tests/synth/benchio) software in the following configuration:
 
 - Number of MPI processes writing: 2048 (16 nodes each with 128 processes)
@@ -166,7 +166,7 @@ Typical write performance:
 
 #### Single Shared File with collective writes (SSF)
 
-We regularly run tests of FPP write performance on ARCHER2 `/work`` Lustre file 
+We regularly run tests of FPP write performance on ARCHER2 `/work`` Lustre file
 systems using the [benchio](https://github.com/EPCCed/epcc-reframe/tree/main/tests/synth/benchio) software in the following configuration:
 
 - Number of MPI processes writing: 2048 (16 nodes each with 128 processes)
@@ -226,7 +226,7 @@ created directory `resdir`:
 
     auser@ln03:~> lfs getstripe resdir/
     resdir
-    stripe_count:   1 stripe_size:    1048576 stripe_offset:  -1 
+    stripe_count:   1 stripe_size:    1048576 stripe_offset:  -1
 
 #### Setting custom striping configurations
 
@@ -251,14 +251,14 @@ For example, to set a stripe size of 4 MiB for the existing directory
 
 ### Environment variables
 
-The following environment variables typically only have an impact for the case 
+The following environment variables typically only have an impact for the case
 when you using Single Shared Files with collective communications.
 As mentioned above, it is very important to use collective calls when
 doing parallel I/O to a single shared file.
 
 However, with the default settings, parallel I/O on multiple nodes can
 currently give poor performance. We recommend always setting these
-environment variables in your SLURM batch script when 
+environment variables in your SLURM batch script when
 you are using the SSF I/O pattern:
 
     export FI_OFI_RXM_SAR_LIMIT=64K
