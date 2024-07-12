@@ -261,8 +261,8 @@ currently give poor performance. We recommend always setting these
 environment variables in your SLURM batch script when 
 you are using the SSF I/O pattern:
 
-  export FI_OFI_RXM_SAR_LIMIT=64K
-  export MPICH_MPIIO_HINTS="*:cray_cb_write_lock_mode=2,*:cray_cb_nodes_multiplier=4”
+    export FI_OFI_RXM_SAR_LIMIT=64K
+    export MPICH_MPIIO_HINTS="*:cray_cb_write_lock_mode=2,*:cray_cb_nodes_multiplier=4”
 
 <!-- TODO: add description of what these settings do -->
 
