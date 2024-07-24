@@ -18,9 +18,9 @@ information on using Spack itself please see the [developers'
 documentation](https://spack.readthedocs.io/en/latest/).
 
 !!! important
-    As our Spack installation is still in an experimental stage please be aware
-    that we cannot guarantee that it will work with full functionality and may
-    not be able to provide support.
+    As ARCHER2's central Spack installation is still in an experimental stage
+    please be aware that we cannot guarantee that it will work with full
+    functionality and we may not be able to provide support.
 
 ## Activating Spack
 
@@ -58,7 +58,17 @@ can be expanded to include which options you like. For example, the command
     auser@ln01:~> spack install gromacs@2024.2%gcc+mpi
 
 would use the GCC compiler to install an MPI-enabled version of GROMACS version
-2024.2. You can find information about any Spack package and the options
+2024.2.
+
+!!! tip
+    Spack needs to bootstrap the installation of some extra software in order to
+    function, principally `clingo` which is used to solve the dependencies
+    required for an installation. The first time you ask Spack to concretise a
+    spec into a precise set of requirements, it will take extra time as it
+    downloads this software and extracts it into a local directory for Spack's
+    use.
+
+You can find information about any Spack package and the options
 available to use with the `spack info` command:
 
     auser@ln01:~> spack info gromacs
@@ -72,14 +82,6 @@ dependencies of a package before you install it, you can use `spack spec` to see
 the full concretised set of packages:
 
     auser@ln01:~> spack spec gromacs@2024.2%gcc+mpi
-
-!!! tip
-    Spack needs to bootstrap the installation of some extra software in order to
-    function, principally `clingo`  which is used to solve the dependencies
-    required for an installation. The first time you ask Spack to concretise a
-    spec into a precise set of requirements, it will take extra time as it
-    downloads this software and extracts it into a local directory for Spack's
-    use.
 
 !!! tip
     Spack on ARCHER2 has been configured to use as much of the HPE Cray
@@ -175,8 +177,11 @@ running, for example:
 
     auser@ln01:~> spack config edit repos
 
-which would open your `repos.yaml` in `vim`. You can change which editor is used
-by setting the `SPACK_EDITOR` environment variable.
+which would open your `repos.yaml` in `vim`.
+
+!!! tip
+    If you would rather not use `vim`, you can change which editor is used by
+    Spack by setting the `SPACK_EDITOR` environment variable.
 
 The final configuration used by Spack is a compound of several scopes, from the
 Spack defaults which are overridden by the ARCHER2 system configuration files,
@@ -221,7 +226,7 @@ able to use these with no issues on ARCHER2 by simply running `spack install` as
 described above, but if you do run into problems in the interaction between
 Spack and the CPE compilers and libraries then you may wish to write your own.
 Where the ARCHER2 CSE service has encountered problems with packages we have
-attempted to provide our own in a repository located at
+provided our own in a repository located at
 `$SPACK_ROOT/var/spack/repos/archer2`.
 
 ### Creating your own package repository
@@ -231,22 +236,126 @@ and another directory called `packages`. Directories within the latter are named
 for the package they provide, for example `cp2k`, and contain in turn a
 `package.py`. You can create a repository from scratch with the command
 
-    auser@ln01:~> spack repo create reponame
+    auser@ln01:~> spack repo create dirname
 
-where `reponame` is the name of the repository. This command will create the
-`reponame` directory in your current working directory, but you can provide a
-path to its location elsewhere if necessary. You can then make it available to
-Spack to use by running:
+where `dirname` is the name of the directory holding the repository. This
+command will create the directory in your current working directory, but you can
+choose to instead provide a path to its location. You can then make the new
+repository available to Spack by running:
 
-    auser@ln01:~> spack repo add reponame
+    auser@ln01:~> spack repo add dirname
 
-This adds the path to `reponame` to the `repos.yaml` file in your user scope
-config directory [as described above](#custom-configuration). If this file
-doesn't yet exist, it will be created.
+This adds the path to `dirname` to the `repos.yaml` file in your user scope
+configuration directory [as described above](#custom-configuration). If your
+`repos.yaml` doesn't yet exist, it will be created.
+
+A Spack repository can similarly be removed from the config using:
+
+    auser@ln01:~> spack repo rm dirname
+
+### Namespaces and repository priority
+
+A package can exist in several repositories. For example, the Quantum Espresso
+package is provided by both the `builtin` repository provided with Spack and
+also by the `archer2` repository; the latter has been patched to work on
+ARCHER2.
+
+To distinguish between these packages, each repository's packages exist within
+that repository's namespace. By default the namespace is the same as the name of
+the directory it was created in, but Spack does allow it to be different. Both
+`builtin` and `archer2` use the same directory name and namespace.
+
+!!! tip
+    If you want your repository namespace to be different from the name of
+    the directory, you can change it either by editing the repository's
+    `repo.yaml` or by providing an extra argument to `spack repo create`:
+
+        auser@ln01:~> spack repo create dirname namespace
+
+Running `spack find -N` will return the list of installed packages with their
+namespace. You'll see that they are then prefixed with the repository namespace,
+for example `builtin.bison@3.8.2` and `archer2.quantum-espresso@7.2`. In order
+to avoid ambiguity when managing package installation you can always prefix a
+spec with a repository namespace.
+
+If you don't include the repository in a spec, Spack will search in order all the
+repositories it has been configured to use until it finds a matching
+package, which it will then use. The earlier in the list of repositories, the
+higher the priority. You can check this with:
+
+    auser@ln01:~> spack repo list
+
+If you run this without having added any repositories of your own, you will see
+that the two available repositories are `archer2` and `builtin`, in this order.
+This means that `archer2` has higher priority. Because of this, running `spack
+install quantum-espresso` would install `archer2.quantum-espresso`, but you
+could still choose to install from the other repository with `spack install
+builtin.quantum-espresso`.
 
 ### Creating a package
 
+Once you have a repository of your own in place, you can create new packages to
+store within it. Spack has a `spack create` command which will do the initial
+setup and create a boilerplate `package.py`. To create an empty package called
+`packagename` you would run:
 
+    auser@ln01:~> spack create --name packagename
+
+However, it will very often be more efficient if you instead provide a download
+URL for your software as the argument. For example, the Code_Saturne 8.0.3
+source is obtained from
+`https://www.code-saturne.org/releases/code_saturne-8.0.3.tar.gz`,
+so you can run:
+
+    auser@ln01:~> spack create https://www.code-saturne.org/releases/code_saturne-8.0.3.tar.gz
+
+Spack will determine from this the package name, the download URLs for all
+versions X.Y.Z matching the
+`https://www.code-saturne.org/releases/code_saturne-X.Y.Z.tar.gz` pattern. It
+will then ask you interactively which of these you want to use. Finally, it will
+download the `.tar.gz` archives for those versions and calculate their
+checksums, then place all this information in the initial version of the package
+for you. This takes away a lot of the initial work!
+
+At this point you can get to work on the package. You can edit an existing
+package by running
+
+    auser@ln01:~> spack edit packagename
+
+or by directly opening `packagename/package.py` within the repository with a
+text editor.
+
+The boilerplate code will note several sections for you to fill out. If you did
+provide a source code download URL, you'll also see listed the versions you
+chose and their checksums.
+
+A package is implemented as a Python class. You'll see that by default it will
+inherit from the `AutotoolsPackage` class which defines how a package following
+the common `configure` > `make` > `make install` process should be built. You
+can change this to another build system, for example `CMakePackage`. If you
+want, you can have the class inherit from several different types of build
+system classes and choose between them at install time.
+
+Options must be provided to the build. For an `AutotoolsPackage` package, you
+can write a `configure_args` method which very simply returns a list of the
+command line arguments you would give to `configure` if you were building the
+code yourself. There is an identical `cmake_args` method for `CMakePackage`
+packages.
+
+Finally, you will need to provide your package's dependencies. In the main body
+of your package class you should add calls to the `depends_on()` function. For
+example, if your package needs MPI, add `depends_on("mpi")`. As the argument to
+the function is a full Spack spec, you can provide any necessary versioning or
+options, so, for example, if you need PETSc 3.18.0 or newer with Fortran support,
+you can call `depends_on("petsc+fortran@3.18.0:")`.
+
+If you know that you will only ever want to build a package one way, then
+providing the build options and dependencies should be all that you need to do.
+However, if you want to allow for different options as part of the install spec,
+patch the source code or perform post-install fixes, or take more manual control
+of the build process, it can become much more complex. Thankfully the Spack
+developers have provided excellent documentation covering the whole process, and
+there are many existing packages you can look at to see how it's done.
 
 ## Contributing
 
