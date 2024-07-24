@@ -357,7 +357,56 @@ of the build process, it can become much more complex. Thankfully the Spack
 developers have provided excellent documentation covering the whole process, and
 there are many existing packages you can look at to see how it's done.
 
+### Tips when writing packages for ARCHER2
+
+Here are some useful pointers when writing packages for use with the HPE Cray
+Programming Environment on ARCHER2.
+
+#### Cray compiler wrappers
+
+An important point of note is that Spack does not use the Cray compiler wrappers
+`cc`, `CC` and `ftn` when compiling code. Instead, it uses the underlying
+compilers themselves. Remember that the wrappers automate the use of Cray
+LibSci, Cray FFTW, Cray HDF5 and Cray NetCDF. Without this being done for you,
+you may need to take extra care to ensure that the options needed to use those
+libraries are correctly set.
+
+#### Using Cray LibSci
+
+Cray LibSci provides optimised implementations of BLAS, BLACS, LAPACK and
+ScaLAPACK on ARCHER2. These are bundled together into single libraries named for
+variants on `libsci_cray.so`. Although Spack itself knows about LibSci, many
+applications don't and it can sometimes be tricky to get them to use these
+libraries when they are instead looking for `libblas.so` and the like.
+
+The `configure` or `cmake` or equivalent step for your software will hopefully
+allow you to manually point it to the correct library. For example,
+Code_Saturne's `configure` can take the options `--with-blas-lib` and
+`--with-blas-libs` which respectively tell it the location to search and the
+libraries to use in order to build against BLAS.
+
+Spack can provide the correct BLAS library search and link flags to be passed on
+to `configure` via `self.spec["blas"].libs`, a
+[`LibraryList`](https://spack.readthedocs.io/en/latest/llnl.util.html#llnl.util.filesystem.LibraryList)
+object. So, the Code_Saturne package uses the following `configure_args()`
+method:
+
+```python
+def configure_args(self):
+    blas = self.spec["blas"].libs
+    args = ["--with-blas-lib={0}".format(blas.search_flags),
+            "--with-blas-libs={0}".format(blas.link_flags)]
+    return args
+```
+
+Here the `blas.search_flags` attribute is resolved to a `-L` library search flag
+using the path to the correct LibSci directory, taking into account whether the
+libraries for the Cray, GCC or AOCC compilers should be used. `blas.link_flags`
+similarly gives a `-l` flag for the correct LibSci library. Depending on what
+you need, the `LibraryList` has other attributes which can help you pass the
+options needed to get `configure` to find and use the correct library.
+
 ## Contributing
 
-If you develop a package for use on ARCHER2 please feel free to open a pull
+If you develop a package for use on ARCHER2 please do consider opening a pull
 request to the [GitHub repository](https://github.com/EPCCed/spack-archer2).
