@@ -25,12 +25,12 @@ documentation](https://spack.readthedocs.io/en/latest/).
 ## Activating Spack
 
 As it is still in an experimental stage, the Spack module is not made available
-to users by default. The development modules must firstly be enabled by running:
+to users by default. You must firstly load the `other-software` module:
     
-    auser@ln01:~> module use /work/y07/shared/archer2-lmod/apps/dev
+    auser@ln01:~> module load other-software
 
 Several modules with `spack` in their name will become visible to you. You
-should simply load the `spack` module:
+should load the `spack` module:
 
     auser@ln01:~> module load spack
 
@@ -72,6 +72,12 @@ You can find information about any Spack package and the options
 available to use with the `spack info` command:
 
     auser@ln01:~> spack info gromacs
+
+!!! tip
+    The Spack developers also provide a website at
+    [https://packages.spack.io/](https://packages.spack.io/) where you can
+    search for and examine packages, including all information on options,
+    versions and dependencies.
 
 When installing a package, Spack will determine what dependencies are required
 to support it. If they are not already available to Spack, either as packages
