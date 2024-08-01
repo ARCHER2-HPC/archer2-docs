@@ -12,7 +12,7 @@ using AMD GPUs.
 
 The GPU Development Platform consists of 4 compute nodes each with:
 
-- 1x AMD EPYC 7534P (Milan) processor, 32 core, 2.8 GHz
+- 1x AMD EPYC 7543P (Milan) processor, 32 core, 2.8 GHz
 - 4x AMD Instinct MI210 accelerator
 - 512 GiB host memory
 - 2&times; 100 Gb/s Slingshot interfaces per node
