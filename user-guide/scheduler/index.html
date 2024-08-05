@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.30">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.31">
     
     
       
@@ -4647,6 +4647,14 @@ environment at the point of submission, the option</p>
 </ul>
 <p>Using the <code>--export=none</code> means that the behaviour of batch submissions
 should be repeatable. We strongly recommend its use.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When submitting your job, the scheduler will check that the requested resources are available e.g. that your account
+is a member of the requested budget, that the requested QoS exists.<br>
+If things change before the job starts and e.g. your account has been removed from the requested budget or the requested QoS has been deleted
+then the job will not be able to start. <br>
+In such cases, the job will be removed from the pending queue by our systems team, as it will no longer be eligible to run.</p>
+</div>
 <h3 id="additional-options-for-parallel-jobs">Additional options for parallel jobs</h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
