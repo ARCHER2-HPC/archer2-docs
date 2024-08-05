@@ -455,6 +455,13 @@ environment at the point of submission, the option
 Using the `--export=none` means that the behaviour of batch submissions
 should be repeatable. We strongly recommend its use.
 
+!!! Note
+    When submitting your job, the scheduler will check that the requested resources are available e.g. that your account
+    is a member of the requested budget, that the requested QoS exists.<br>
+    If things change before the job starts and e.g. your account has been removed from the requested budget or the requested QoS has been deleted
+    then the job will not be able to start. <br>
+    In such cases, the job will be removed from the pending queue by our systems team, as it will no longer be eligible to run.
+
 ### Additional options for parallel jobs
 
 !!! note
