@@ -1199,6 +1199,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#running-gromacs-on-the-amd-mi210-gpus" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running GROMACS on the AMD MI210 GPUs
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2391,6 +2400,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#running-gromacs-on-the-amd-mi210-gpus" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running GROMACS on the AMD MI210 GPUs
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2439,12 +2457,15 @@ non-biological systems, e.g. polymers.</p>
 </ul>
 <h2 id="using-gromacs-on-archer2">Using GROMACS on ARCHER2</h2>
 <p>GROMACS is Open Source software and is freely available to all users.
-Three versions are available:</p>
+Three executable versions are available on the normal (CPU-only) modules:</p>
 <ul>
 <li>Parallel MPI/OpenMP, single precision: <code>gmx_mpi</code></li>
 <li>Parallel MPI/OpenMP, double precision: <code>gmx_mpi_d</code></li>
 <li>Serial, single precision: <code>gmx</code></li>
 </ul>
+<p>We also provide a GPU version of GROMACS that will run on the MI210 GPU nodes, it's named <code>gromacs/2022.4-GPU</code> and can be loaded with</p>
+<div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>gromacs/2022.4-GPU
+</code></pre></div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>The <code>gromacs</code> modules reset the CPU frequency to the highest possible value
@@ -2454,8 +2475,7 @@ energy use. You can change this setting by following the instructions in the
 </div>
 <h2 id="running-parallel-gromacs-jobs">Running parallel GROMACS jobs</h2>
 <h3 id="running-mpi-only-jobs">Running MPI only jobs</h3>
-<p>The following script will run a GROMACS MD job using 4 nodes (128x4
-cores) with pure MPI.</p>
+<p>The following script will run a GROMACS MD job using 4 nodes (128x4 cores) with pure MPI.</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
 <span class="kp">#SBATCH --job-name=mdrun_test</span>
@@ -2502,6 +2522,26 @@ module<span class="w"> </span>load<span class="w"> </span>gromacs
 
 <span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">8</span>
 <span class="nb">srun</span><span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>gmx_mpi<span class="w"> </span>mdrun<span class="w"> </span>-s<span class="w"> </span>test_calc.tpr
+</code></pre></div>
+<h3 id="running-gromacs-on-the-amd-mi210-gpus">Running GROMACS on the AMD MI210 GPUs</h3>
+<p>The following script will run a GROMACS MD job using 1 GPU with 1 MPI process 8 OpenMP threads per MPI process.</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="kp">#SBATCH --job-name=mdrun_gpu</span>
+<span class="kp">#SBATCH --gpus=1</span>
+<span class="kp">#SBATCH --time=00:20:00</span>
+<span class="kp">#SBATCH --hint=nomultithread</span>
+<span class="kp">#SBATCH --distribution=block:block</span>
+
+<span class="c1"># Replace [budget code] below with your project code (e.g. t01)</span>
+<span class="kp">#SBATCH --account=[budget code]</span>
+<span class="kp">#SBATCH --partition=gpu</span>
+<span class="kp">#SBATCH --qos=gpu-shd  # or gpu-exc</span>
+
+<span class="c1"># Setup the environment</span>
+module<span class="w"> </span>load<span class="w"> </span>gromacs/2022.4-GPU
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">8</span>
+<span class="nb">srun</span><span class="w"> </span>--ntasks<span class="o">=</span><span class="m">1</span><span class="w"> </span>--cpus-per-task<span class="o">=</span><span class="m">8</span><span class="w"> </span>gmx_mpi<span class="w"> </span>mdrun<span class="w"> </span>-ntomp<span class="w"> </span><span class="m">8</span><span class="w"> </span>--noconfout<span class="w"> </span>-s<span class="w"> </span>calc.tpr
 </code></pre></div>
 <h2 id="compiling-gromacs">Compiling Gromacs</h2>
 <p>The latest instructions for building GROMACS on ARCHER2 may be found in
