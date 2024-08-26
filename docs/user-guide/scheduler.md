@@ -2286,8 +2286,11 @@ Your request will be checked by the ARCHER2 User Administration team and, if app
 ## Capability Days
 
 !!! important
-    We expect the next Capability Days session to be in August or September 2024. Once the dates have been
-    set, ARCHER2 users will be informed and this section updated.
+    The next Capability Days session will be from Tue 24 Sep 2024 to Thu 26 Sep 2024.
+
+    - `pre-capabilityday` QoS: 0800-2000, Tue 24 Sep 2024
+    - `NERCcapability` reservation: 0800-1600, Tue 24 Sep 2024
+    - `capabilityday` QoS: 2000 Tue 24 Sep - 1400 Thu 26 Sep 2024
 
 ARCHER2 Capability Days are a mechanism to allow users to run large scale (512 node or more) tests
 on the system free of charge. The motivations behind Capability Days are:
@@ -2299,9 +2302,10 @@ on the system free of charge. The motivations behind Capability Days are:
 To enable this, a period will be made available regularly where users can run jobs at large scale free of
 charge.
 
-Capability Days are made up of two parts:
+Capability Days are made up of three parts:
 
 - pre-Capability Day session (`pre-capabilityday` QoS) to allow users to test scaling and job setup ahead of full Capability Day
+- NERC Capability reservation (`NERCcapability` reservation) to allow NERC users to test at large scale
 - Capability Day session (`capabilityday` QoS)
 
 !!! tip
@@ -2340,6 +2344,51 @@ session starts.
 #SBATCH --time=1:0:0
 #SBATCH --partition=standard
 #SBATCH --qos=pre-capabilityday
+#SBATCH --account=t01
+
+export OMP_NUM_THREADS=16
+export OMP_PLACES=cores
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+# Check process/thread placement
+module load xthi
+srun --hint=multithread --distribution=block:block xthi > placement-${SLURM_JOBID}.out
+
+srun --hint=multithread --distribution=block:block my_app.x
+```
+
+### NERC Capability reservation
+
+The NERC Capability reservation is typically available directly before the full Capability Day session and allows
+short test jobs to prepare for Capability Day.
+
+Submit to the `NERCcapability` *reservation*. Jobs can be submitted ahead of time and will start when the NERC Capability
+reservatoin starts.
+
+`NERCcapability` reservation limits:
+
+- Only available to users in NERC projects
+- Available for 8 hours
+- 1024 nodes available
+- Maximum job size: 1024 nodes
+- Maximum walltime: 8 hours (reservation length)
+    - We will monitor use of the reservation to ensure multiple users get a chance to run
+    - Any long jobs blocking access for other users will be killed
+- High memory nodes are not available
+- Jobs are free
+
+#### Example NERC Capability reservation job submission script
+
+```slurm
+#!/bin/bash
+#SBATCH --job-name=NERC_capability_job
+#SBATCH --nodes=256
+#SBATCH --ntasks-per-node=8
+#SBATCH --cpus-per-task=16
+#SBATCH --time=1:0:0
+#SBATCH --partition=standard
+#SBATCH --reservation=NERCcapability
+#SBATCH --qos=reservation
 #SBATCH --account=t01
 
 export OMP_NUM_THREADS=16
