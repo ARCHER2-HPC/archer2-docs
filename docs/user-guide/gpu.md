@@ -876,7 +876,7 @@ For example in an interactive session where resources have already been allocate
 srun -n 2 --exclusive --nodes=1 --time=00:20:00 --partition=gpu --qos=gpu-exc --gpus=2 rocprof --stats ./myprog_exe
 ```
 
-to profile your applicaition. More detail on the use of rocprof can be found [here](https://github.com/ROCm/rocprofiler/tree/rocm-5.2.3).
+to profile your application. More detail on the use of rocprof can be found [here](https://github.com/ROCm/rocprofiler/tree/rocm-5.2.3).
 
 
 ## Performance tuning
