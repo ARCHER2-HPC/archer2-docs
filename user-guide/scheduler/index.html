@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.31">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.33">
     
     
       
@@ -6276,9 +6276,14 @@ and, once the username has been selected, the budget you want to charge the rese
 <h2 id="capability-days">Capability Days</h2>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>We expect the next Capability Days session to be in August or September 2024. Once the dates have been
-set, ARCHER2 users will be informed and this section updated.</p>
+<p>The next Capability Days session will be from Tue 24 Sep 2024 to Thu 26 Sep 2024.</p>
+<ul>
+<li><code>pre-capabilityday</code> QoS: 0800-2000, Tue 24 Sep 2024</li>
+<li><code>capabilityday</code> QoS: 2000 Tue 24 Sep - 1400 Thu 26 Sep 2024</li>
+</ul>
 </div>
+<!--    - `NERCcapability` reservation: 0800-1600, Tue 24 Sep 2024 -->
+
 <p>ARCHER2 Capability Days are a mechanism to allow users to run large scale (512 node or more) tests
 on the system free of charge. The motivations behind Capability Days are:</p>
 <ul>
@@ -6288,9 +6293,12 @@ on the system free of charge. The motivations behind Capability Days are:</p>
 </ul>
 <p>To enable this, a period will be made available regularly where users can run jobs at large scale free of
 charge.</p>
-<p>Capability Days are made up of two parts:</p>
+<p>Capability Days are made up of different parts:</p>
 <ul>
 <li>pre-Capability Day session (<code>pre-capabilityday</code> QoS) to allow users to test scaling and job setup ahead of full Capability Day</li>
+</ul>
+<!-- - NERC Capability reservation (`NERCcapability` reservation) to allow NERC users to test at large scale -->
+<ul>
 <li>Capability Day session (<code>capabilityday</code> QoS)</li>
 </ul>
 <div class="admonition tip">
@@ -6341,6 +6349,54 @@ module<span class="w"> </span>load<span class="w"> </span>xthi
 
 <span class="nb">srun</span><span class="w"> </span>--hint<span class="o">=</span>multithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>my_app.x
 </code></pre></div>
+<!--
+
+### NERC Capability reservation
+
+The NERC Capability reservation is typically available directly before the full Capability Day session and allows
+short test jobs to prepare for Capability Day.
+
+Submit to the `NERCcapability` *reservation*. Jobs can be submitted ahead of time and will start when the NERC Capability
+reservatoin starts.
+
+`NERCcapability` reservation limits:
+
+- Only available to users in NERC projects
+- Available for 8 hours
+- 1024 nodes available
+- Maximum job size: 1024 nodes
+- Maximum walltime: 8 hours (reservation length)
+    - We will monitor use of the reservation to ensure multiple users get a chance to run
+    - Any long jobs blocking access for other users will be killed
+- High memory nodes are not available
+- Jobs are free
+
+<!--
+#### Example NERC Capability reservation job submission script
+
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="kp">#SBATCH --job-name=NERC_capability_job</span>
+<span class="kp">#SBATCH --nodes=256</span>
+<span class="kp">#SBATCH --ntasks-per-node=8</span>
+<span class="kp">#SBATCH --cpus-per-task=16</span>
+<span class="kp">#SBATCH --time=1:0:0</span>
+<span class="kp">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --reservation=NERCcapability</span>
+<span class="kp">#SBATCH --qos=reservation</span>
+<span class="kp">#SBATCH --account=t01</span>
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">16</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_PLACES</span><span class="o">=</span>cores
+<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
+
+<span class="c1"># Check process/thread placement</span>
+module<span class="w"> </span>load<span class="w"> </span>xthi
+<span class="nb">srun</span><span class="w"> </span>--hint<span class="o">=</span>multithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>xthi<span class="w"> </span>&gt;<span class="w"> </span>placement-<span class="si">${</span><span class="nv">SLURM_JOBID</span><span class="si">}</span>.out
+
+<span class="nb">srun</span><span class="w"> </span>--hint<span class="o">=</span>multithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>my_app.x
+</code></pre></div>
+-->
+
 <h3 id="capability-day-session">Capability Day session</h3>
 <p>The Capability Day session is typically available directly after the pre-Capability Day session.</p>
 <p>Submit to the <code>capability</code> QoS. Jobs can be submitted ahead of time and will start when the Capability Day
@@ -6617,7 +6673,7 @@ value to obtain more information on huge pages use.</p>
     <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      <script src="../../assets/javascripts/bundle.af256bd8.min.js"></script>
       
     
   </body>
