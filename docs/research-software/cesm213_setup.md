@@ -1,5 +1,9 @@
 # First-Time setup of CESM 2.1.3
 
+!!! important
+    These instructions are intended for users of the `n02` project.
+    Downloads may be incomplete if you are not a member of `n02`.  
+
 Due to the nature of the CESM program, a centrally installed version of the code is not provided on ARCHER2. Instead, a user needs to download and set up the program themselves in their `/work` area. The installation is done in three steps:
 
 1. [Download the code and set up the directory structure](#downloading-cesm-2.1.3-and-setting-up-the-directory-structure)
@@ -15,6 +19,7 @@ For ease of use, a setup script has been created which downloads CESM 2.1.3, cre
 To execute this script, run the following in an archer2 terminal
 
 ```bash
+module load cray-python
 source /work/n02/shared/CESM2/setup_cesm213.sh
 ```
 
@@ -89,10 +94,36 @@ branch = maint-5.6
 protocol = git
 repo_url = https://github.com/ESMCI/cime
 local_path = cime
+externals = Externals_cime.cfg
 required = True
 ```
 
-By making this change, the configurations for archer2 are brought in along with some bug fixes
+In the same `$CESM_LOC/Externals.cfg` file, also update the version of CAM: 
+
+```bash 
+[cam]
+tag = cam_cesm2_1_rel_41
+protocol = git
+repo_url = https://github.com/ESCOMP/CAM
+local_path = components/cam
+externals = Externals_CAM.cfg
+required = True
+```
+
+to 
+
+```bash 
+[cam]
+tag = cam_cesm2_1_rel
+protocol = git
+repo_url = https://github.com/ESCOMP/CAM
+local_path = components/cam
+externals = Externals_CAM.cfg
+required = True
+```
+
+
+By making these changes, the configurations for archer2 are brought in along with some bug fixes
 
 Once this has been done you are free to download the external components by executing the commands
 
@@ -119,7 +150,8 @@ module load CESM2/2.1.3
 cd $CIMEROOT/tools/cprnc
 ../configure --macros-format=Makefile --mpilib=mpi-serial
 sed -i '/}}/d' .env_mach_specific.sh
-source ./.env_mach_specific.sh && make
+source ./.env_mach_specific.sh 
+make
 ```
 
 It is likely you will see a warning message of the form
