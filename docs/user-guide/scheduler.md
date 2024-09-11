@@ -2289,9 +2289,8 @@ Your request will be checked by the ARCHER2 User Administration team and, if app
     The next Capability Days session will be from Tue 24 Sep 2024 to Thu 26 Sep 2024.
 
     - `pre-capabilityday` QoS: 0800-2000, Tue 24 Sep 2024
+    - `NERCcapability` reservation: 0800-1600, Tue 24 Sep 2024
     - `capabilityday` QoS: 2000 Tue 24 Sep - 1400 Thu 26 Sep 2024
-
-<!--    - `NERCcapability` reservation: 0800-1600, Tue 24 Sep 2024 -->
 
 ARCHER2 Capability Days are a mechanism to allow users to run large scale (512 node or more) tests
 on the system free of charge. The motivations behind Capability Days are:
@@ -2306,7 +2305,7 @@ charge.
 Capability Days are made up of different parts:
 
 - pre-Capability Day session (`pre-capabilityday` QoS) to allow users to test scaling and job setup ahead of full Capability Day
-<!-- - NERC Capability reservation (`NERCcapability` reservation) to allow NERC users to test at large scale -->
+- NERC Capability reservation (`NERCcapability` reservation) to allow NERC users to test at large scale
 - Capability Day session (`capabilityday` QoS)
 
 !!! tip
@@ -2358,8 +2357,6 @@ srun --hint=multithread --distribution=block:block xthi > placement-${SLURM_JOBI
 srun --hint=multithread --distribution=block:block my_app.x
 ```
 
-<!--
-
 ### NERC Capability reservation
 
 The NERC Capability reservation is typically available directly before the full Capability Day session and allows
@@ -2380,7 +2377,6 @@ reservatoin starts.
 - High memory nodes are not available
 - Jobs are free
 
-<!--
 #### Example NERC Capability reservation job submission script
 
 ```slurm
@@ -2405,7 +2401,6 @@ srun --hint=multithread --distribution=block:block xthi > placement-${SLURM_JOBI
 
 srun --hint=multithread --distribution=block:block my_app.x
 ```
--->
 
 ### Capability Day session
 
