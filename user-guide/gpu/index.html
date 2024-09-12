@@ -4325,7 +4325,7 @@ use job submission scripts or the <code>salloc</code> method of interactive use 
 <p>For example in an interactive session where resources have already been allocated you can call,</p>
 <div class="highlight"><pre><span></span><code>srun -n 2 --exclusive --nodes=1 --time=00:20:00 --partition=gpu --qos=gpu-exc --gpus=2 rocprof --stats ./myprog_exe
 </code></pre></div>
-<p>to profile your applicaition. More detail on the use of rocprof can be found <a href="https://github.com/ROCm/rocprofiler/tree/rocm-5.2.3">here</a>.</p>
+<p>to profile your application. More detail on the use of rocprof can be found <a href="https://github.com/ROCm/rocprofiler/tree/rocm-5.2.3">here</a>.</p>
 <h2 id="performance-tuning">Performance tuning</h2>
 <p>AMD provides some documentation on performance tuning <a href="https://rocm.docs.amd.com/en/docs-5.2.3/how_to/tuning_guides/mi200.html">here</a> not all options will be available to users, so be aware that mileage may vary.</p>
 <h3 id="hardware-details">Hardware details</h3>
