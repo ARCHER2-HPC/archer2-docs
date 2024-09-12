@@ -547,9 +547,6 @@ on the compute node architecture.
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu-exc
 
-# Enable GPU-aware MPI
-export MPICH_GPU_SUPPORT_ENABLED=1
-
 # Check assigned GPU
 srun --ntasks=1 rocm-smi
 
@@ -558,6 +555,9 @@ module load xthi
 srun --ntasks=4 --cpus-per-task=8 \
      --hint=nomultithread --distribution=block:block \
      xthi
+
+# Enable GPU-aware MPI
+export MPICH_GPU_SUPPORT_ENABLED=1
 
 srun --ntasks=4 --cpus-per-task=8 \
      --hint=nomultithread --distribution=block:block \
@@ -592,31 +592,31 @@ on the compute node architecture.
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu-exc
 
-# Enable GPU-aware MPI
-export MPICH_GPU_SUPPORT_ENABLED=1
-
 # Check assigned GPU
 nodelist=$(scontrol show hostname $SLURM_JOB_NODELIST)
 for nodeid in $nodelist
 do
    echo $nodeid
-   srun --ntasks=1 --nodelist=$nodeid rocm-smi
+   srun --ntasks=1 --gpus=4 --nodes=1 --ntasks-per-node=1 --nodelist=$nodeid rocm-smi
 done
 
 # Check process/thread pinning
 module load xthi
-srun --ntasks=8 --cpus-per-task=8 \
+srun --ntasks-per-node=4 --cpus-per-task=8 \
      --hint=nomultithread --distribution=block:block \
      xthi
 
-srun --ntasks=8 --cpus-per-task=8 \
+# Enable GPU-aware MPI
+export MPICH_GPU_SUPPORT_ENABLED=1
+
+srun --ntasks-per-node=4 --cpus-per-task=8 \
      --hint=nomultithread --distribution=block:block \
      ./my_gpu_program.x
 ```
 
 !!! note
     When you use the `--qos=gpu-exc` QoS you must also add the `--exclusive` flag
-    and then specify the number of nodes you want with `--nodes=1`.
+    and then specify the number of nodes you want with, for example, `--nodes=2`.
 
 ### Interactive jobs
 
