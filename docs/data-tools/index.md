@@ -14,6 +14,7 @@ OpenMP or pthreads mutli-threaded applications (and also hydrid MPI/OpenMP)
 - [Globus](globus): Data transfer tool
 - [Julia(\*)](julia.md): The julia language
 - [ParaView](paraview.md): A data visualisation and analysis package 
+- [Blender](blender.md): A generalist 3D software that can be used for scientific visualisations
 - [R](cray-r.md): The R statistical language
 - [VisiData](visidata.md): An interactive multitool for tabular data
 - [VMD](vmd.md): A visualisation and analysis program for Molecular Dynamics
