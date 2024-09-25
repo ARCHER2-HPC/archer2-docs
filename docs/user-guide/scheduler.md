@@ -763,6 +763,27 @@ sbatch: Job 1039497 to start at 2022-02-01T23:20:51 using 256 processors on node
 in partition standard
 ```
 
+## Estimated start time for queued jobs
+
+You can use the `squeue` command to show the current estimated start time for a job.
+Please note that it is just an estimate, the actual start time may differ as the scheduler
+status when the start time was estimated may be different due to subsequent changes to
+the scheduler state. To return the estimated start time for a job you spacify the 
+job ID with the `--jobs=<jobid>` and `--Format=StartTime` options.
+
+For example, to show the estimated start time for job `123456`, you would use:
+
+```
+squeue --jobs=123456 --Format=StartTime
+```
+
+The output from this command would look like:
+
+```
+START_TIME          
+2024-09-25T13:07:00
+```
+
 ## Example job submission scripts
 
 A subset of example job submission scripts are included in full below.
