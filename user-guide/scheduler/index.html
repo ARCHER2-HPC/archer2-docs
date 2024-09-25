@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.34">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.37">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.35f28582.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.8c3ca2c6.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
@@ -956,6 +956,15 @@
   <a href="#checking-scripts-and-estimating-start-time-with-test-only" class="md-nav__link">
     <span class="md-ellipsis">
       Checking scripts and estimating start time with --test-only
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#estimated-start-time-for-queued-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Estimated start time for queued jobs
     </span>
   </a>
   
@@ -3471,6 +3480,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#estimated-start-time-for-queued-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Estimated start time for queued jobs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#example-job-submission-scripts" class="md-nav__link">
     <span class="md-ellipsis">
       Example job submission scripts
@@ -4975,6 +4993,19 @@ checkScript finished: 0 warning(s) and 0 error(s).
 <div class="highlight"><pre><span></span><code>auser@ln01:~&gt; sbatch --test-only submit.slurm
 sbatch: Job 1039497 to start at 2022-02-01T23:20:51 using 256 processors on nodes nid002836
 in partition standard
+</code></pre></div>
+<h2 id="estimated-start-time-for-queued-jobs">Estimated start time for queued jobs</h2>
+<p>You can use the <code>squeue</code> command to show the current estimated start time for a job.
+Please note that it is just an estimate, the actual start time may differ as the scheduler
+status when the start time was estimated may be different due to subsequent changes to
+the scheduler state. To return the estimated start time for a job you spacify the 
+job ID with the <code>--jobs=&lt;jobid&gt;</code> and <code>--Format=StartTime</code> options.</p>
+<p>For example, to show the estimated start time for job <code>123456</code>, you would use:</p>
+<div class="highlight"><pre><span></span><code>squeue --jobs=123456 --Format=StartTime
+</code></pre></div>
+<p>The output from this command would look like:</p>
+<div class="highlight"><pre><span></span><code>START_TIME          
+2024-09-25T13:07:00
 </code></pre></div>
 <h2 id="example-job-submission-scripts">Example job submission scripts</h2>
 <p>A subset of example job submission scripts are included in full below.
@@ -6708,10 +6739,10 @@ value to obtain more information on huge pages use.</p>
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "search": "../../assets/javascripts/workers/search.07f07601.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.56dfad97.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d6f25eb3.min.js"></script>
       
     
   </body>
