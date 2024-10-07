@@ -348,7 +348,7 @@ The script below shows how to run Spindle with your Python code.
 ...
 
 module load cray-python
-module load spinde/0.13
+module load spindle/0.13
 
 export SRUN_CPUS_PER_TASK=${SLURM_CPUS_PER_TASK}
 
