@@ -1,6 +1,6 @@
 # AMD GPU Development Platform
 
-In early 2024 ARCHER2 users gained access to a small GPU system
+In early 2024, ARCHER2 users gained access to a small GPU system
 integrated into ARCHER2 which is designed to allow users to test and develop software
 using AMD GPUs.
 
@@ -11,12 +11,17 @@ using AMD GPUs.
 ## Hardware available
 
 The GPU Development Platform consists of 4 compute nodes each with:
-
 - 1x AMD EPYC 7543P (Milan) processor, 32 core, 2.8 GHz
 - 4x AMD Instinct MI210 accelerator
 - 512 GiB host memory
 - 2&times; 100 Gb/s Slingshot interfaces per node
 
+The AMD Instinct&trade; MI210 Accelerators feature:
+ - Architecture: CDNA 2
+ - Compute Units: 104
+ - Memory: 64 GB HBM2e
+
+A comprehensive list of features is available on the [AMD website.](https://www.amd.com/en/products/accelerators/instinct/mi200/mi210.html)
 
 ## Accessing the GPU compute nodes
 
