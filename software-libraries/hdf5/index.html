@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.39">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.40">
     
     
       
@@ -1553,6 +1553,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#compiling-applications-against-hdf5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compiling applications against HDF5
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#resources" class="md-nav__link">
     <span class="md-ellipsis">
       Resources
@@ -2295,6 +2304,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#compiling-applications-against-hdf5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compiling applications against HDF5
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#resources" class="md-nav__link">
     <span class="md-ellipsis">
       Resources
@@ -2325,8 +2343,8 @@
 <p>The Hierarchical Data Format HDF5
 (and its parallel manifestation HDF5 parallel) is a standard library
 and data format developed and supported by
-<a href="https://portal.hdfgroup.org/display/HDF5/HDF5">The HDF Group</a>, and
-is released under a BSD-like license. </p>
+<a href="https://www.hdfgroup.org/">The HDF Group</a>, and
+is released under a BSD-like license.</p>
 <p>Both serial and parallel versions are available on ARCHER2 as
 standard modules:</p>
 <ul>
@@ -2353,18 +2371,23 @@ particular version.</p>
 </div>
 <div class="tabbed-block">
 <ul>
-<li>There are no currently known issues. </li>
+<li>There are no currently known issues.</li>
 </ul>
 </div>
 </div>
 </div>
-<p>Some general comments and information on serial and parallel I/O 
+<p>Some general comments and information on serial and parallel I/O
 to ARCHER2 are given in the section on
 <a href="../../user-guide/io/">I/O and file systems</a>.</p>
+<h2 id="compiling-applications-against-hdf5">Compiling applications against HDF5</h2>
+<p>If the appropriate programming environment and HDF5 modules are loaded,
+compiling applications against the HDF5 libraries should straightforward.
+You should use the compiler wrappers <code>cc</code>, <code>CC</code>, and/or <code>ftn</code>. See, e.g.,
+<code>cc --cray-print-opts</code> for the full list of include paths and library
+paths and options added by the compiler wrapper.</p>
 <h2 id="resources">Resources</h2>
-<p>Tutorials and <a href="https://portal.hdfgroup.org/display/HDF5/Learning+HDF5">introduction to HDF5</a> at the HDF5 Group pages.</p>
-<p>General <a href="https://docs.hdfgroup.org/hdf5/develop/">information for developers</a>
-of HDF5.</p>
+<p>The HDF5 support website includes <a href="https://support.hdfgroup.org/documentation/index.html">general documentation</a>.</p>
+<p>For parallel HDF5, some <a href="https://support.hdfgroup.org/documentation/hdf5-docs/hdf5_topics/ParallelHDF5.html">tutorials and presentations</a> are available.</p>
 
 
 
