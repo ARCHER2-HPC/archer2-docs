@@ -3,7 +3,7 @@
 The Hierarchical Data Format HDF5
 (and its parallel manifestation HDF5 parallel) is a standard library
 and data format developed and supported by
-[The HDF Group](https://portal.hdfgroup.org/display/HDF5/HDF5), and
+[The HDF Group](https://www.hdfgroup.org/), and
 is released under a BSD-like license. 
 
 Both serial and parallel versions are available on ARCHER2 as
@@ -39,7 +39,6 @@ to ARCHER2 are given in the section on
 
 ## Resources
 
-Tutorials and [introduction to HDF5](https://portal.hdfgroup.org/display/HDF5/Learning+HDF5) at the HDF5 Group pages.
+The HDF5 support website includes [general documentation](https://support.hdfgroup.org/documentation/index.html).
 
-General [information for developers](https://docs.hdfgroup.org/hdf5/develop/)
-of HDF5.
+For parallel HDF5, some [tutorials and presentations](https://support.hdfgroup.org/documentation/hdf5-docs/hdf5_topics/ParallelHDF5.html) are available.
