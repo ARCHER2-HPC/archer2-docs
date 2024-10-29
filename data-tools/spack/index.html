@@ -9,10 +9,14 @@
       
       
       
+        <link rel="prev" href="../cray-r/">
+      
+      
+        <link rel="next" href="../visidata/">
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.40">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
     
     
       
@@ -20,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.8c3ca2c6.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
@@ -1904,17 +1908,19 @@
       
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
         
           
           <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
@@ -1928,7 +1934,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_8">
             <span class="md-nav__icon md-icon"></span>
             Data Analysis and Tools
@@ -2119,6 +2125,211 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Spack
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Spack
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#activating-spack" class="md-nav__link">
+    <span class="md-ellipsis">
+      Activating Spack
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-spack-on-archer2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Spack on ARCHER2
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using Spack on ARCHER2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-software" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installing software
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-spack-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Spack packages
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maintaining-your-spack-installations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Maintaining your Spack installations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custom-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Custom configuration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writing-new-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Writing new packages
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Writing new packages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-your-own-package-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating your own package repository
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#namespaces-and-repository-priority" class="md-nav__link">
+    <span class="md-ellipsis">
+      Namespaces and repository priority
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating a package
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tips-when-writing-packages-for-archer2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tips when writing packages for ARCHER2
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tips when writing packages for ARCHER2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cray-compiler-wrappers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cray compiler wrappers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-cray-libsci" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Cray LibSci
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contributing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Contributing
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2419,9 +2630,11 @@ information on using Spack itself please see the <a href="https://spack.readthed
 documentation</a>.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>As ARCHER2's central Spack installation is still in an experimental stage
-please be aware that we cannot guarantee that it will work with full
-functionality and we may not be able to provide support.</p>
+<p>As ARCHER2's central Spack installation is still in an
+experimental stage please be aware that we cannot guarantee that it will
+work with full functionality and we may not be able to provide support. The
+centrally-provided configuration and Spack-installed software may be subject
+to change.</p>
 </div>
 <h2 id="activating-spack">Activating Spack</h2>
 <p>As it is still in an experimental stage, the Spack module is not made available
@@ -2838,7 +3051,7 @@ request to the <a href="https://github.com/EPCCed/spack-archer2">GitHub reposito
     <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.525ec568.min.js"></script>
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
       
     
   </body>
