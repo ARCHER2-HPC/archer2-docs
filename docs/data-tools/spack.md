@@ -18,9 +18,11 @@ information on using Spack itself please see the [developers'
 documentation](https://spack.readthedocs.io/en/latest/).
 
 !!! important
-    As ARCHER2's central Spack installation is still in an experimental stage
-    please be aware that we cannot guarantee that it will work with full
-    functionality and we may not be able to provide support.
+    As ARCHER2's central Spack installation is still in an
+    experimental stage please be aware that we cannot guarantee that it will
+    work with full functionality and we may not be able to provide support. The
+    centrally-provided configuration and Spack-installed software may be subject
+    to change.
 
 ## Activating Spack
 
