@@ -65,11 +65,11 @@ suitable for different types of use.
 
 
 !!! important
-   All users have a directory on one of the home file systems and on
-   one of the work file systems. The directories are located at:
-
-   - `/home/[project ID]/[project ID]/[user ID]` (this is also set as your home directory)
-   - `/work/[project ID]/[project ID]/[user ID]`
+    All users have a directory on one of the home file systems and on
+    one of the work file systems. The directories are located at:
+    
+    - `/home/[project ID]/[project ID]/[user ID]` (this is also set as your home directory)
+    - `/work/[project ID]/[project ID]/[user ID]`
 
 
 There are also three different types of node available to users:
