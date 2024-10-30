@@ -2283,7 +2283,7 @@ CUs if you fail to use them due to a job issue unless this issue is due to a sys
 To request a reservation you complete a form on SAFE:
 
  1. [Log into SAFE](https://safe.epcc.ed.ac.uk)
- 2. Under the "Login accounts" menu, choose the "Request reservation" option
+ 2. Under the "Apply" menu, choose the "Request reservation" option
 
 On the first page, you need to provide the following:
 
@@ -2291,6 +2291,7 @@ On the first page, you need to provide the following:
  - The end time and date of the reservation.
  - Your justification for the reservation -- this must be provided or the request will be rejected.
  - The number of nodes required.
+ - The machine name (ARCHER2) under resource type.
 
 On the second page, you will need to specify which username you wish the reservation to be charged against
 and, once the username has been selected, the budget you want to charge the reservation to.
