@@ -218,7 +218,7 @@ lists the active QoS on ARCHER2.
     | taskfarm   | 16               | 24 hrs       | 128          | 32           | standard     | Maximum of 256 nodes in use by any one user at any time |
     | short      | 32                 | 20 mins      | 16           | 4            | standard     | |
     | long       | 64                | 96 hrs       | 16          | 16           | standard     | Minimum walltime of 24 hrs, maximum 512 nodes in use by any one user at any time, maximum of 2048 nodes in use by QoS |
-    | largescale | 5860               | 12 hrs        | 8           | 1            | standard     | Minimum job size of 1025 nodes | 
+    | largescale | 5860               | 12 hrs        | 8           | 1            | standard     | Minimum job size of 1025 nodes |
     | lowpriority | 2048               | 24 hrs        | 16           | 16            | standard     | Jobs not charged but requires at least 1 CU in budget to use. |
     | serial | 32 cores and/or 128 GB memory   | 24 hrs        | 32           | 4            | serial    | Jobs not charged but requires at least 1 CU in budget to use. Maximum of 32 cores and/or 128 GB in use by any one user at any time. |
     | reservation | Size of reservation  | Length of reservation       | No limit           | no limit           | standard   |  |
@@ -768,7 +768,7 @@ in partition standard
 You can use the `squeue` command to show the current estimated start time for a job.
 Please note that it is just an estimate, the actual start time may differ as the scheduler
 status when the start time was estimated may be different due to subsequent changes to
-the scheduler state. To return the estimated start time for a job you spacify the 
+the scheduler state. To return the estimated start time for a job you specify the
 job ID with the `--jobs=<jobid>` and `--Format=StartTime` options.
 
 For example, to show the estimated start time for job `123456`, you would use:
@@ -780,7 +780,7 @@ squeue --jobs=123456 --Format=StartTime
 The output from this command would look like:
 
 ```
-START_TIME          
+START_TIME
 2024-09-25T13:07:00
 ```
 
@@ -2283,7 +2283,7 @@ CUs if you fail to use them due to a job issue unless this issue is due to a sys
 To request a reservation you complete a form on SAFE:
 
  1. [Log into SAFE](https://safe.epcc.ed.ac.uk)
- 2. Under the "Login accounts" menu, choose the "Request reservation" option
+ 2. Under the "Apply" menu, choose the "Request reservation" option
 
 On the first page, you need to provide the following:
 
@@ -2291,6 +2291,7 @@ On the first page, you need to provide the following:
  - The end time and date of the reservation.
  - Your justification for the reservation -- this must be provided or the request will be rejected.
  - The number of nodes required.
+ - The machine name (ARCHER2) under resource type.
 
 On the second page, you will need to specify which username you wish the reservation to be charged against
 and, once the username has been selected, the budget you want to charge the reservation to.
@@ -2328,7 +2329,7 @@ Capability Days are made up of different parts:
 !!! tip
     Any jobs left in the queues when Capability Days finish will be deleted.
 
-### pre-Capability Day session 
+### pre-Capability Day session
 
 The pre-Capability Day session is typically available directly before the full Capability Day session and allows
 short test jobs to prepare for Capability Day.
