@@ -768,7 +768,7 @@ in partition standard
 You can use the `squeue` command to show the current estimated start time for a job.
 Please note that it is just an estimate, the actual start time may differ as the scheduler
 status when the start time was estimated may be different due to subsequent changes to
-the scheduler state. To return the estimated start time for a job you spacify the
+the scheduler state. To return the estimated start time for a job you specify the
 job ID with the `--jobs=<jobid>` and `--Format=StartTime` options.
 
 For example, to show the estimated start time for job `123456`, you would use:
