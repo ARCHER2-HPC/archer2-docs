@@ -24,15 +24,80 @@ will remove it.
 
 ## Running on ARCHER2
 
-### OOM error on ARCHER2
+### Jobs failures
+
+Your job has failed with an ugly message from the scheduler. What can be done?
+Here are some common causes, and possible remedies.
+
+
+#### Out-of-memory error OOM
 
 **Q.** Why is my code failing on ARCHER2 with an out of memory (OOM) error?
 
-**A.** You are requesting too much memory per process. We recommend that you try running
-the same job on underpopulated nodes. This can be done by editing reducing the
-``--ntasks-per-node`` in your Slurm submission script. Please lower it to half
-of its value when it fails (so if you have ``--ntasks-per-node=128``, reduce it
-to ``--ntasks-per-node=64``).
+**A.** If you see a message of the following form at the end of your job
+output:
+```
+slurmstepd: error: Detected 1 oom-kill event(s) in StepId=7935598.0. \
+Some of your processes may have been killed by the cgroup out-of-memory handler.
+```
+your job has requested too much memory on one or more nodes (the maximum
+is 256 GB shared between all processes for standard nodes). This may
+typically happen shortly after the job has started (one or two minutes).
+In this case, you need to provide more memory.
+
+1. Try running the same job on the same number of MPI processes, but
+use more nodes (and hence more memory).  This can be done by reducing
+the `--ntasks-per-node` value in your Slurm submission script; e.g.,
+if you have `--ntasks-per-node=128` you can try `--ntasks-per-node=64`
+and double the number of nodes via `--nodes`.
+2. If using standard nodes, one can also try running on the
+same number of MPI processes, but use the ``hignmem`` partition in
+which the nodes have twice as much memory as the standard partition.
+3. If there is still a problem, you may need to reduce the size of
+your problem until you understand where the limit is.
+
+More rarely, OOM errors may occur long after the job as started (many hours).
+This is suggestive of a memory leak, and your code will need to be debugged.
+If you are using a standard package, please contact the Service Desk with
+enough information that the problem can be replicated. A poorly designed
+application can also exhibit this problem if, for example, there is a
+significant request for new memory late in execution (e..g, at a final
+configuration output). This should be remedied by the developers.
+
+#### What does a hardware fault look like?
+
+If you see a message of the following form at the end of standard
+output:
+```
+slurmstepd: error: *** STEP 7871129.0 ON nid001520 CANCELLED AT 2024-10-23T20:04:10 DUE TO NODE FAILURE ***
+```
+it means a hardware failure on the node has caused the job to crash.
+These failures are detected automatically by the system (the hardware
+gets replaced), and the time used is automatically refunded to the
+relevant budget. This is merely "unlucky". Please resubmit the same job.
+
+#### Job cancelled owing to time limit
+
+Jobs reaching their time limit will be cancelled by the queue system
+with a message of the form:
+```
+slurmstepd: error: *** STEP 7871128.0 ON nid001258 CANCELLED AT 2024-10-24T01:21:34 DUE TO TIME LIMIT ***
+```
+First, it is a good idea to have an expectation about how long your job
+will take. This may prevent surprises. If you don't have an idea, we
+will recommend looking at a smaller or shorter problem until you do.
+Check the time limit you have specified via the `--time-limit` option
+to `sbatch`.
+
+There are a number of possible remedies if a longer time is required:
+
+1. Consider using the `long` QoS option; see the [Quality of Service](../user-guide/scheduler.md/#quality-of-service-qos) descriptions.
+2. Exceptionally, consider using a [reservation](../user-guide/scheduler.md/#reservations).
+
+If you are expecting output from your program, but see nothing, you can try
+using the `--unbuffered` option to `srun` to make sure output appears
+immediately in the standard output (or error), rather than being
+buffered by the system (in which case it appears in discrete chunks).
 
 ### Checking budgets
 
