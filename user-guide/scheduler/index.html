@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
     
     
       
@@ -5019,13 +5019,13 @@ in partition standard
 <p>You can use the <code>squeue</code> command to show the current estimated start time for a job.
 Please note that it is just an estimate, the actual start time may differ as the scheduler
 status when the start time was estimated may be different due to subsequent changes to
-the scheduler state. To return the estimated start time for a job you spacify the 
+the scheduler state. To return the estimated start time for a job you specify the
 job ID with the <code>--jobs=&lt;jobid&gt;</code> and <code>--Format=StartTime</code> options.</p>
 <p>For example, to show the estimated start time for job <code>123456</code>, you would use:</p>
 <div class="highlight"><pre><span></span><code>squeue --jobs=123456 --Format=StartTime
 </code></pre></div>
 <p>The output from this command would look like:</p>
-<div class="highlight"><pre><span></span><code>START_TIME          
+<div class="highlight"><pre><span></span><code>START_TIME
 2024-09-25T13:07:00
 </code></pre></div>
 <h2 id="example-job-submission-scripts">Example job submission scripts</h2>
@@ -6352,7 +6352,7 @@ CUs if you fail to use them due to a job issue unless this issue is due to a sys
 <p>To request a reservation you complete a form on SAFE:</p>
 <ol>
 <li><a href="https://safe.epcc.ed.ac.uk">Log into SAFE</a></li>
-<li>Under the "Login accounts" menu, choose the "Request reservation" option</li>
+<li>Under the "Apply" menu, choose the "Request reservation" option</li>
 </ol>
 <p>On the first page, you need to provide the following:</p>
 <ul>
@@ -6360,6 +6360,7 @@ CUs if you fail to use them due to a job issue unless this issue is due to a sys
 <li>The end time and date of the reservation.</li>
 <li>Your justification for the reservation -- this must be provided or the request will be rejected.</li>
 <li>The number of nodes required.</li>
+<li>The machine name (ARCHER2) under resource type.</li>
 </ul>
 <p>On the second page, you will need to specify which username you wish the reservation to be charged against
 and, once the username has been selected, the budget you want to charge the reservation to.
