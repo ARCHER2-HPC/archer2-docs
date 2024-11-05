@@ -63,6 +63,6 @@ You can only check the amount of available budget via SAFE - [see above](#checki
 
 **Q.**  I’ve checked the estimated start time for my queued jobs using “squeue -u $USER --start”. Why does the estimated start time keep changing?
 
-**A.**  ARCHER2 uses the Slurm scheduler to queue jobs for the compute nodes. Slurm attempts to find a better schedule as jobs complete and new jobs are added to the queue. This helps to maximise the use of resources by minimising the number of idle compute nodes, in turn reducing your wait time in the queue.  
+**A.**  ARCHER2 uses the Slurm scheduler to queue jobs for the compute nodes. Slurm attempts to find a better schedule as jobs complete and new jobs are added to the queue. This helps to maximise the use of resources by minimising the number of idle compute nodes, in turn reducing your wait time in the queue.
 
 However, If you periodically check the estimated start time of your queued jobs, you may notice that the estimate changes or even disappears. This is because Slurm only assigns the top entries in the queue with an estimated start time. As the schedule changes, your jobs could move in and out of this top region and thus gain or lose an estimated start time.
