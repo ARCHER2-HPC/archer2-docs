@@ -41,7 +41,8 @@ slurmstepd: error: Detected 1 oom-kill event(s) in StepId=7935598.0. \
 Some of your processes may have been killed by the cgroup out-of-memory handler.
 ```
 your job has requested too much memory on one or more nodes (the maximum
-is 256 GB shared between all processes for standard nodes). This may
+is 256 GB shared between all processes for nodes in the standard partition).
+This may
 typically happen shortly after the job has started (one or two minutes).
 In this case, you need to provide more memory.
 
@@ -50,8 +51,8 @@ use more nodes (and hence more memory).  This can be done by reducing
 the `--ntasks-per-node` value in your Slurm submission script; e.g.,
 if you have `--ntasks-per-node=128` you can try `--ntasks-per-node=64`
 and double the number of nodes via `--nodes`.
-2. If using standard nodes, one can also try running on the
-same number of MPI processes, but use the ``hignmem`` partition in
+2. If using standard partition nodes, one can also try running on the
+same number of MPI processes, but use the `hignmem` partition in
 which the nodes have twice as much memory as the standard partition.
 3. If there is still a problem, you may need to reduce the size of
 your problem until you understand where the limit is.
@@ -73,8 +74,9 @@ slurmstepd: error: *** STEP 7871129.0 ON nid001520 CANCELLED AT 2024-10-23T20:04
 ```
 it means a hardware failure on the node has caused the job to crash.
 These failures are detected automatically by the system (the hardware
-gets replaced), and the time used is automatically refunded to the
-relevant budget. This is merely "unlucky". Please resubmit the same job.
+gets restarted or replaced), and the time used will not be charged
+against your budget. This is merely "unlucky": please just resubmit
+the same job.
 
 #### Job cancelled owing to time limit
 
@@ -86,7 +88,7 @@ slurmstepd: error: *** STEP 7871128.0 ON nid001258 CANCELLED AT 2024-10-24T01:21
 First, it is a good idea to have an expectation about how long your job
 will take. This may prevent surprises. If you don't have an idea, we
 will recommend looking at a smaller or shorter problem until you do.
-Check the time limit you have specified via the `--time-limit` option
+Check the time limit you have specified via the `--time` option
 to `sbatch`.
 
 There are a number of possible remedies if a longer time is required:
