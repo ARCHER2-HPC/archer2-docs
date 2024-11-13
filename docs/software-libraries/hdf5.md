@@ -3,8 +3,8 @@
 The Hierarchical Data Format HDF5
 (and its parallel manifestation HDF5 parallel) is a standard library
 and data format developed and supported by
-[The HDF Group](https://portal.hdfgroup.org/display/HDF5/HDF5), and
-is released under a BSD-like license. 
+[The HDF Group](https://www.hdfgroup.org/), and
+is released under a BSD-like license.
 
 Both serial and parallel versions are available on ARCHER2 as
 standard modules:
@@ -22,24 +22,31 @@ Known issues:
     + There are no currently known issues.
 
 === "Full system"
-    
+
     + There is currently a problem with the module file which means
       `cray-hdf5-parallel` will not operate correctly in `PrgEnv-aocc`.
       One can load module `epcc-cray-hdf5-parallel` instead as a work-around
       if `PrgEnv-aocc` is required.
 
 === "4-cabinet system"
-    
-    + There are no currently known issues. 
 
-Some general comments and information on serial and parallel I/O 
+    + There are no currently known issues.
+
+Some general comments and information on serial and parallel I/O
 to ARCHER2 are given in the section on
 [I/O and file systems](../user-guide/io.md).
+
+## Compiling applications against HDF5
+
+If the appropriate programming environment and HDF5 modules are loaded,
+compiling applications against the HDF5 libraries should straightforward.
+You should use the compiler wrappers `cc`, `CC`, and/or `ftn`. See, e.g.,
+`cc --cray-print-opts` for the full list of include paths and library
+paths and options added by the compiler wrapper.
 
 
 ## Resources
 
-Tutorials and [introduction to HDF5](https://portal.hdfgroup.org/display/HDF5/Learning+HDF5) at the HDF5 Group pages.
+The HDF5 support website includes [general documentation](https://support.hdfgroup.org/documentation/index.html).
 
-General [information for developers](https://docs.hdfgroup.org/hdf5/develop/)
-of HDF5.
+For parallel HDF5, some [tutorials and presentations](https://support.hdfgroup.org/documentation/hdf5-docs/hdf5_topics/ParallelHDF5.html) are available.

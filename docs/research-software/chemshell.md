@@ -8,19 +8,17 @@ Tcl-ChemShell and a more recent python-based version Py-ChemShell.
 The advice from <https://www.chemshell.org/licence> on the difference
 is:
 
-> We regard Py-ChemShell 21.0 as suitable for production calculations on 
-> materials systems, and would encourage materials modellers to consider 
-> switching from Tcl-ChemShell to Py-ChemShell if they haven't already 
-> done so.
-> 
-> Py-ChemShell 21.0 is the first beta release to include support for 
-> calculations on biomolecular systems, including a guided protein solvation 
-> workflow and automated import of CHARMM and AMBER forcefields for 
-> biomolecular QM/MM calculations. We encourage experienced ChemShell users 
-> to try the new functionality and send us feedback on your experience. For 
-> new users, we would currently still recommend using Tcl-ChemShell for 
-> biomolecular calculations until the next beta release of Py-ChemShell, 
-> which is anticipated for summer 2022.
+> We consider Py-ChemShell 23.0 to be suitable for production 
+> calculations on both materials systems and biomolecules, and
+> recommend that new ChemShell users should use the Python-based 
+> version.
+
+> We continue to maintain the original Tcl-based version of ChemShell
+> and distribute it on request. Tcl-ChemShell currently contains some 
+> features that are not yet available in Py-ChemShell (but will be 
+> soon!) including a QM/MM MD driver and multiple electronic state 
+> calculations. At the present time if you need this functionality 
+> you will need to obtain a licence for Tcl-Chemshell.
 
 ## Useful Links
 

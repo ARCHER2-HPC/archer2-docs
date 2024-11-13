@@ -63,6 +63,15 @@ There are a number of different data storage types available to users:
 Each type of storage has different characteristics and policies, and is
 suitable for different types of use.
 
+
+!!! important
+    All users have a directory on one of the home file systems and on
+    one of the work file systems. The directories are located at:
+    
+    - `/home/[project ID]/[project ID]/[user ID]` (this is also set as your home directory)
+    - `/work/[project ID]/[project ID]/[user ID]`
+
+
 There are also three different types of node available to users:
 
    - Login nodes
@@ -94,7 +103,7 @@ different node types:
 There are four independent home file-systems. Every project has an
 allocation on one of the four. You do not need to know which one your
 project uses as your projects space can always be accessed via the path
-`/home/project-code`. Each home file-system is approximately 100 TB in
+`/home/[project ID]` with your personal directory at `/home/[project ID]/[project ID]/[user ID]`. Each home file-system is approximately 100 TB in
 size and is implemented using standard Network Attached Storage (NAS)
 technology. This means that these disks are not particularly high
 performance but are well suited to standard operations like compilation
@@ -133,7 +142,9 @@ account.
 
 There are currently three work file systems on the full ARCHER2 service.
 Each of these file systems is 3.4 PB and a portion of one of these file
-systems is available to each project.
+systems is available to each project. You do not usually need to know which one your
+project uses as your projects space can always be accessed via the path
+`/work/[project ID]` with your personal directory at `/work/[project ID]/[project ID]/[user ID]`.
 
 All of these are high-performance, Lustre parallel file systems. They are
 designed to support data in large files. The performance for data stored
@@ -526,6 +537,8 @@ Common options include:
    - `-l` confirm all file hard links are included in the archive
    - `-f` use an archive file (for historical reasons, tar writes its
      output to stdout by default rather than a file).
+   - `-b 2048` use a 1 MiB block size (better performance and less contention
+     on Lustre compared to the default block size)
 
 Putting these together:
 
@@ -535,10 +548,11 @@ will create and verify an archive.
 
 To extract files from a tar file, the option `-x` is used. For example:
 
-    tar -xf mydata.tar
+    tar -b 2048 -xf mydata.tar
 
 will recover the contents of `mydata.tar` to the current working
-directory.
+directory (using a block size of 1 MiB to improve Lustre performance and 
+reduce contention).
 
 To verify an existing tar file against a set of data, the `-d` (diff)
 option can be used. By default, no output will be given if a
@@ -551,6 +565,8 @@ verification succeeds and an example of a failed verification follows:
 !!! note
     tar files do not store checksums with their data, requiring
     the original data to be present during verification.
+
+
 
 !!! tip
     Further information on using `tar` can be found in the `tar` manual
@@ -720,6 +736,11 @@ above.)
     Further information on using `rsync` can be found in the `rsync` manual
     (accessed via `man rsync` or at [man
     rsync](https://linux.die.net/man/1/rsync)).
+
+### Data transfer via Globus
+
+The ARCHER2 filesystems have a Globus Collection (formerly known as an endpoint) with the name "Archer2 file systems"<br>
+[Full step-by-step guide for using Globus](../../data-tools/globus) to transfer files to/from ARCHER2
 
 ### Data transfer via GridFTP
 

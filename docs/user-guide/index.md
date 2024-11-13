@@ -21,6 +21,8 @@ The User and Best Practice Guide contains the following sections:
   - [Performance tuning](tuning.md)
   - [ARCHER2 hardware](hardware.md)
   - [Energy use](energy.md)
+  - [GPU development platform](gpu.md)
+  - [Functional accounts](functional-accounts.md)
   
   
 

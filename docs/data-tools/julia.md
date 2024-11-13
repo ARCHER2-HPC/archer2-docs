@@ -83,10 +83,10 @@ for further details). Then you can launch Julia in an environment of your
 choice, ready to build.
 
 ```bash
-module load cray-mpich/8.1.4
+module load cray-mpich/8.1.23
 export JULIA_MPI_BINARY="system"
 export JULIA_MPI_PATH=""
-export JULIA_MPI_LIBRARY="/opt/cray/pe/mpich/8.1.4/ofi/cray/9.1/lib/libmpi.so"
+export JULIA_MPI_LIBRARY="/opt/cray/pe/mpich/8.1.23/ofi/gnu/9.1/lib/libmpi.so"
 export JULIA_MPIEXEC="srun"
 
 julia --project=<<path to environment>>
@@ -129,7 +129,7 @@ Below is an example script for running Julia with mpi on the compute nodes
 
 # Setup the job environment (this module needs to be loaded before any other modules)
 module load PrgEnv-cray
-module load cray-mpich/8.1.4
+module load cray-mpich/8.1.23
 
 # Set the number of threads to 1
 #   This prevents any threaded system libraries from automatically

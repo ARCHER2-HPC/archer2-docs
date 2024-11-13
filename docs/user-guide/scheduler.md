@@ -197,6 +197,7 @@ on ARCHER2.
     | standard  | CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 256/512 GB memory | 5860    |
     | highmem   | CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 512 GB memory | 584     |
     | serial    | CPU nodes with AMD EPYC 7742 64-core processor &times; 2, 512 GB memory | 2       |
+    | gpu  | GPU nodes with AMD EPYC 32-core processor, 512 GB memory, 4&times;AMD Instinct MI210 GPU | 4    |
 
 !!! note
     The `standard` partition includes both the standard memory and high memory nodes but standard memory
@@ -221,6 +222,9 @@ lists the active QoS on ARCHER2.
     | lowpriority | 2048               | 24 hrs        | 16           | 16            | standard     | Jobs not charged but requires at least 1 CU in budget to use. |
     | serial | 32 cores and/or 128 GB memory   | 24 hrs        | 32           | 4            | serial    | Jobs not charged but requires at least 1 CU in budget to use. Maximum of 32 cores and/or 128 GB in use by any one user at any time. |
     | reservation | Size of reservation  | Length of reservation       | No limit           | no limit           | standard   |  |
+    | capabilityday | At least 4096 nodes  | 3 hrs        | 8           | 2            | standard     | Minimum job size of 512 nodes. Jobs only run during [Capability Days](#capability-days) |
+    | gpu-shd    | 1               | 12 hrs      | 2          | 1           | gpu    | GPU nodes potentially shared with other users |
+    | gpu-exc    | 2               | 12 hrs      | 2          | 1           | gpu    | GPU node exclusive node access |
 
 You can find out the QoS that you can use by running the following
 command:
@@ -430,7 +434,7 @@ that they wish to charge the job too with the option:
      to in SAFE.
 
 !!! important
-    You **must** specify an acount code for your job otherwise it will
+    You **must** specify an account code for your job otherwise it will
     fail to submit with the error: `sbatch: error: Batch job submission failed: Invalid account or account/partition combination specified`.
     (This error can also mean that you have specified a budget that
     has run out of resources.)
@@ -450,6 +454,13 @@ environment at the point of submission, the option
 
 Using the `--export=none` means that the behaviour of batch submissions
 should be repeatable. We strongly recommend its use.
+
+!!! Note
+    When submitting your job, the scheduler will check that the requested resources are available e.g. that your account
+    is a member of the requested budget, that the requested QoS exists.<br>
+    If things change before the job starts and e.g. your account has been removed from the requested budget or the requested QoS has been deleted
+    then the job will not be able to start. <br>
+    In such cases, the job will be removed from the pending queue by our systems team, as it will no longer be eligible to run.
 
 ### Additional options for parallel jobs
 
@@ -750,6 +761,27 @@ An example of the sort of output the tool can give would be:
 auser@ln01:~> sbatch --test-only submit.slurm
 sbatch: Job 1039497 to start at 2022-02-01T23:20:51 using 256 processors on nodes nid002836
 in partition standard
+```
+
+## Estimated start time for queued jobs
+
+You can use the `squeue` command to show the current estimated start time for a job.
+Please note that it is just an estimate, the actual start time may differ as the scheduler
+status when the start time was estimated may be different due to subsequent changes to
+the scheduler state. To return the estimated start time for a job you specify the
+job ID with the `--jobs=<jobid>` and `--Format=StartTime` options.
+
+For example, to show the estimated start time for job `123456`, you would use:
+
+```
+squeue --jobs=123456 --Format=StartTime
+```
+
+The output from this command would look like:
+
+```
+START_TIME
+2024-09-25T13:07:00
 ```
 
 ## Example job submission scripts
@@ -2251,7 +2283,7 @@ CUs if you fail to use them due to a job issue unless this issue is due to a sys
 To request a reservation you complete a form on SAFE:
 
  1. [Log into SAFE](https://safe.epcc.ed.ac.uk)
- 2. Under the "Login accounts" menu, choose the "Request reservation" option
+ 2. Under the "Apply" menu, choose the "Request reservation" option
 
 On the first page, you need to provide the following:
 
@@ -2259,6 +2291,7 @@ On the first page, you need to provide the following:
  - The end time and date of the reservation.
  - Your justification for the reservation -- this must be provided or the request will be rejected.
  - The number of nodes required.
+ - The machine name (ARCHER2) under resource type.
 
 On the second page, you will need to specify which username you wish the reservation to be charged against
 and, once the username has been selected, the budget you want to charge the reservation to.
@@ -2272,12 +2305,189 @@ Your request will be checked by the ARCHER2 User Administration team and, if app
 !!! tip
     You can submit jobs to a reservation as soon as the reservation has been set up; jobs will remain queued until the reservation starts.
 
+## Capability Days
+
+!!! important
+    The next Capability Days session has not been scheduled yet
+
+ARCHER2 Capability Days are a mechanism to allow users to run large scale (512 node or more) tests
+on the system free of charge. The motivations behind Capability Days are:
+
+- Enhancing world-leading science from ARCHER2 by enabling modelling and simulation at scales that are not otherwise possible.
+- Enabling capability use cases that are not possible on other UK HPC services.
+- Providing a facility that can be used to test scaling to help prepare software and communities for future exascale resources.
+
+To enable this, a period will be made available regularly where users can run jobs at large scale free of
+charge.
+
+Capability Days are made up of different parts:
+
+- pre-Capability Day session (`pre-capabilityday` QoS) to allow users to test scaling and job setup ahead of full Capability Day
+- NERC Capability reservation (`NERCcapability` reservation) to allow NERC users to test at large scale
+- Capability Day session (`capabilityday` QoS)
+
+!!! tip
+    Any jobs left in the queues when Capability Days finish will be deleted.
+
+### pre-Capability Day session
+
+The pre-Capability Day session is typically available directly before the full Capability Day session and allows
+short test jobs to prepare for Capability Day.
+
+Submit to the `pre-capabilityday` QoS. Jobs can be submitted ahead of time and will start when the pre-Capability Day
+session starts.
+
+`pre-capabilityday` QoS limits:
+
+- Available for 12 hours
+- 1024 nodes available
+- Minimum job size: 256 nodes, maximum job size: 1024 nodes
+    - Individual jobs steps (i.e. `srun` commands) within job scripts should also be a minimum of 256 nodes
+    - Jobs that do not meet these limits will be killed
+- Maximum walltime: 20 minutes
+- Job numbers: 8 jobs maximum per budget code in the QoS
+    - 1 job maximum running per budget code
+- High memory nodes are not available
+- Users must have a valid, positive CU budget to be able to run jobs in the pre-Capability Day session
+- Jobs are free
+
+#### Example pre-Capability Day session job submission script
+
+```slurm
+#!/bin/bash
+#SBATCH --job-name=test_capability_job
+#SBATCH --nodes=256
+#SBATCH --ntasks-per-node=8
+#SBATCH --cpus-per-task=16
+#SBATCH --time=1:0:0
+#SBATCH --partition=standard
+#SBATCH --qos=pre-capabilityday
+#SBATCH --account=t01
+
+export OMP_NUM_THREADS=16
+export OMP_PLACES=cores
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+# Check process/thread placement
+module load xthi
+srun --hint=multithread --distribution=block:block xthi > placement-${SLURM_JOBID}.out
+
+srun --hint=multithread --distribution=block:block my_app.x
+```
+
+### NERC Capability reservation
+
+The NERC Capability reservation is typically available directly before the full Capability Day session and allows
+short test jobs to prepare for Capability Day.
+
+Submit to the `NERCcapability` *reservation*. Jobs can be submitted ahead of time and will start when the NERC Capability
+reservatoin starts.
+
+`NERCcapability` reservation limits:
+
+- Only available to users in NERC projects
+- Available for 8 hours
+- 1024 nodes available
+- Maximum job size: 1024 nodes
+- Maximum walltime: 8 hours (reservation length)
+    - We will monitor use of the reservation to ensure multiple users get a chance to run
+    - Any long jobs blocking access for other users will be killed
+- High memory nodes are not available
+- Jobs are free
+
+#### Example NERC Capability reservation job submission script
+
+```slurm
+#!/bin/bash
+#SBATCH --job-name=NERC_capability_job
+#SBATCH --nodes=256
+#SBATCH --ntasks-per-node=8
+#SBATCH --cpus-per-task=16
+#SBATCH --time=1:0:0
+#SBATCH --partition=standard
+#SBATCH --reservation=NERCcapability
+#SBATCH --qos=reservation
+#SBATCH --account=t01
+
+export OMP_NUM_THREADS=16
+export OMP_PLACES=cores
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+# Check process/thread placement
+module load xthi
+srun --hint=multithread --distribution=block:block xthi > placement-${SLURM_JOBID}.out
+
+srun --hint=multithread --distribution=block:block my_app.x
+```
+
+### Capability Day session
+
+The Capability Day session is typically available directly after the pre-Capability Day session.
+
+Submit to the `capability` QoS. Jobs can be submitted ahead of time and will start when the Capability Day
+session starts.
+
+`capabilityday` QoS limits:
+
+- Available for 42 hours
+- 4096 nodes available
+- Minimum job size: 512 nodes, maximum job size: 4096 nodes
+    - Individual jobs steps (i.e. `srun` commands) within job scripts should also be a minimum of 512 nodes
+    - Jobs that do not meet these limits will be killed
+- Maximum walltime: 1 hour
+- Job numbers: 16 jobs maximum per budget code in the QoS
+    - 2 jobs maximum running per budget code
+- High memory nodes are not available
+- Users must have a valid, positive CU budget to be able to run jobs in the pre-Capability Day session
+- Jobs are free
+
+#### Example Capability Day job submission script
+
+```slurm
+#!/bin/bash
+#SBATCH --job-name=capability_job
+#SBATCH --nodes=1024
+#SBATCH --ntasks-per-node=8
+#SBATCH --cpus-per-task=16
+#SBATCH --time=1:0:0
+#SBATCH --partition=standard
+#SBATCH --qos=capabilityday
+#SBATCH --account=t01
+
+export OMP_NUM_THREADS=16
+export OMP_PLACES=cores
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+# Check process/thread placement
+module load xthi
+srun --hint=multithread --distribution=block:block xthi > placement-${SLURM_JOBID}.out
+
+srun --hint=multithread --distribution=block:block my_app.x
+```
+
+### Capability Day tips
+
+- OFI communications protocol seems to work more reliably at capability scale than UCX protocol
+    - UCX often sees memory/timeout errors
+- All-to-all collective patterns do not generally scale well to large MPI process counts, particularly when there are high MPI process counts per node
+  - c.f. On the Frontier exascale system there are typically a maximum of 8 MPI processes per node (1 per GPU). 9,408 compute nodes gives a maximum of 75,264 MPI processes for a whole system job.
+    - 4096 ARCHER2 compute nodes, 1 MPI process per core is 524,488 MPI processes!
+- MPI-IO does not generally scale well to high process counts unless the IO pattern is very simple
+    - Same for IO libraries based on MPI-IO: parallel HDF5, NetCDF
+    - Consider a different parallel IO approach, e.g. ADIOS2
+- Make use of the scratch, solid state file system so you do not hit unexpected storage quota issues
+- With very high MPI process counts, you may see long MPI startup times, take this into account in wall times in your job scripts
+
 ## Serial jobs
 
 You can run serial jobs on the shared data analysis nodes. More information
 on using the data analysis nodes (including example job submission scripts)
 can be found in the [Data Analysis section](analysis.md) of the User and Best
 Practice Guide.
+
+## GPU jobs
+
+You can run on the ARCHER2 GPU nodes and full guidance can be found on the [GPU development platform page](https://docs.archer2.ac.uk/user-guide/gpu/)
 
 ## Best practices for job submission
 

@@ -1,34 +1,33 @@
 # AMD GPU Development Platform
 
-!!! note
-    This page is work in progress. More details on the GPU Development Platform
-    and how to use it will be added as they become available.
-
-In early 2024 ARCHER2 users will gain access to a small GPU system 
-integrated into ARCHER2 which is designed to allow users to test and develop software 
+In early 2024, ARCHER2 users gained access to a small GPU system
+integrated into ARCHER2 which is designed to allow users to test and develop software
 using AMD GPUs.
 
 !!! important
-    The GPU component is very small and so is aimed at software development and 
+    The GPU component is very small and so is aimed at software development and
     testing rather than to be used for production research.
 
 ## Hardware available
 
 The GPU Development Platform consists of 4 compute nodes each with:
-
-- 1x AMD EPYC 7534P (Milan) processor, 32 core, 2.8 GHz
+- 1x AMD EPYC 7543P (Milan) processor, 32 core, 2.8 GHz
 - 4x AMD Instinct MI210 accelerator
 - 512 GiB host memory
 - 2&times; 100 Gb/s Slingshot interfaces per node
 
-!!! note
-    Further details on the hardware available will be added shortly.
+The AMD Instinct&trade; MI210 Accelerators feature:
+ - Architecture: CDNA 2
+ - Compute Units: 104
+ - Memory: 64 GB HBM2e
+
+A comprehensive list of features is available on the [AMD website.](https://www.amd.com/en/products/accelerators/instinct/mi200/mi210.html)
 
 ## Accessing the GPU compute nodes
 
 The GPU nodes can be accessed through the Slurm job submission system from the
 standard ARCHER2 login nodes. Details of the scheduler limits and configuration
-and example job submission scripts are provided below. 
+and example job submission scripts are provided below.
 
 ## Compiling software for the GPU compute nodes
 
@@ -44,7 +43,7 @@ offloads to the AMD GPUs is as follows:
 - Load any other modules (e.g. libraries)
 - Use the usual compiler wrappers `ftn`, `cc`, or `CC`
 
-For details and alternative approaches, see below. 
+For details and alternative approaches, see below.
 
 ### Programming Environments
 
@@ -86,7 +85,7 @@ InstalledDir: /opt/rocm-5.2.3/llvm/bin
 ```
 
 
-### ROCm 
+### ROCm
 
 Access to AMD's ROCm software stack is provided through the `rocm`
 module:
@@ -108,7 +107,7 @@ for most users, at least initially.
 
 **Note**: the `rocm` module should be loaded whenever you are compiling
 for the AMD GPUs, even if you are not using the AMD LLVM compilers
-(`amdflang`, `amdclang`, `amdclang++`).  
+(`amdflang`, `amdclang`, `amdclang++`).
 
 The `rocm` module also provides access to other AMD tools, such as
 HIPIFY (`hipify-clang` or `hipify-perl` command), which enables
@@ -151,11 +150,11 @@ table:
 | `PrgEnv-amd`  | `amdclang`      |     ✅	   | ❌  |   ❌    |
 | `PrgEnv-amd`  | `amdclang++`    |     ✅	   | ✅  |   ❌    |
 | `PrgEnv-cray` | `crayftn`       |     ✅	   | ❌  |   ✅    |
-| `PrgEnv-cray` | `craycc`        |     ✅	   | ❌  |   ❌    |  
+| `PrgEnv-cray` | `craycc`        |     ✅	   | ❌  |   ❌    |
 | `PrgEnv-cray` | `crayCC`        |     ✅	   | ✅  |   ❌    |
-| `PrgEnv-gnu`  | `gfortran`      |     ✅	   | ❌  |   ❌    |
-| `PrgEnv-gnu`  | `gcc`           |     ✅	   | ❌  |   ❌    |
-| `PrgEnv-gnu`  | `g++`           |     ✅      | ❌  |   ❌    |
+| `PrgEnv-gnu`  | `gfortran`      |     ❌	   | ❌  |   ❌    |
+| `PrgEnv-gnu`  | `gcc`           |     ❌	   | ❌  |   ❌    |
+| `PrgEnv-gnu`  | `g++`           |     ❌         | ❌  |   ❌    |
 
 
 It is generally recommended to do the following:
@@ -170,7 +169,7 @@ module load craype-x86-milan
 And then to use the `ftn`, `cc` and/or `CC` wrapper to compile as
 appropriate for the programming model in question. Specific guidance
 on how to do this for different programming models is provided in the
-subsections below. 
+subsections below.
 
 When deviating from this procedure and using underlying compilers
 directly, or when debugging a problematic build using the wrappers, it
@@ -207,14 +206,18 @@ option to the wrapper when compiling. For example:
 ftn -fopenmp source.f90
 ```
 
-This should work under `PrgEnv-amd`, `PrgEnv-cray`, and
-`PrgEnv-gnu`. You may find that offload directives introduced in more
-recent versions of the OpenMP standard, e.g. versions later than
-OpenMP 4.5, fail to compile with some compilers. Under `PrgEnv-cray`
-an explicit description of supported OpenMP features can be viewed
-using the command `man intro_openmp`.
+This should work under `PrgEnv-amd` and `PrgEnv-cray`, but not under
+PrgEnv-gnu as GCC 11.2.0 is the most recent version of GCC available
+on ARCHER2 and OpenMP offload to AMD MI200 series GPUs is only
+supported by GCC 13 and later.
 
-    
+You may find that offload directives introduced in more recent
+versions of the OpenMP standard, e.g. versions later than OpenMP 4.5,
+fail to compile with some compilers. Under `PrgEnv-cray` an explicit
+description of supported OpenMP features can be viewed using the
+command `man intro_openmp`.
+
+
 #### HIP
 
 To compile C or C++ code that uses HIP written specifically to offload
@@ -257,7 +260,7 @@ HIP code non-HIP code, it is possible to use a different compiler than
 
 - Compile the HIP code as above using `hipcc`
 - Compile the non-HIP code using the compiler wrapper `CC` and a *different* PrgEnv than `PrgEnv-amd` loaded
-- Link the resulting code objects (`.o` files) together using the compiler wrapper 
+- Link the resulting code objects (`.o` files) together using the compiler wrapper
 
 
 #### OpenACC
@@ -275,7 +278,7 @@ module load craype-x86-milan
 OpenACC Fortran code can then be compiled using the `-hacc` flag, as follows:
 
 ```
-ftn -hacc source.f90 
+ftn -hacc source.f90
 ```
 
 Details on what OpenACC standard and features are supported under
@@ -361,7 +364,7 @@ This supports GPU-GPU transfers:
 - Inter-node via GPU-NIC RDMA
 - Intra-node via GPU Peer2Peer IPC
 
-Be aware that on these nodes there are only two PICe network cards in each node and they may not be in the same memory region to a given GPU.
+Be aware that on these nodes there are only two PCIe network cards in each node and they may not be in the same memory region to a given GPU.
 Therefore NUMA effects are to be expected in multi-node communication. More detail on this is provided below.
 
 ### Libraries
@@ -370,13 +373,13 @@ In order to access the GPU-accelerated version of Cray's LibSci maths libraries,
 
 `cray-libsci_acc`
 
-With this module loaded, documentation can be viewed using the command `man intro_libsci_acc`. 
+With this module loaded, documentation can be viewed using the command `man intro_libsci_acc`.
 
 Additionally a number of libraries are provided as part of the `rocm` module.
 
 - [Math Libraries](https://rocm.docs.amd.com/en/docs-5.2.3/reference/gpu_libraries/math.html)
 - [AI Libraries](https://rocm.docs.amd.com/projects/MIOpen/en/docs-5.2.3/index.html)
-- [C++ primative Libraries](https://rocm.docs.amd.com/en/docs-5.2.3/reference/gpu_libraries/c%2B%2B_primitives.html)
+- [C++ primitive Libraries](https://rocm.docs.amd.com/en/docs-5.2.3/reference/gpu_libraries/c%2B%2B_primitives.html)
 
 
 
@@ -400,10 +403,10 @@ from mpi4py import MPI
 
 The ARCHER2 GPU development platform is intended for code development, testing and experimentation and will not have supported centrally installed versions of codes as is the case for the standard ARCHER2 CPU compute nodes. However some builds are being made available to users by members of CSE to under a best effort approach to support the community.
 
-Codes that have modules targetting GPUs are:
+Codes that have modules targeting GPUs are:
 
 !!! Note
-    Will be filled out as applications are compiled and made available. 
+    Will be filled out as applications are compiled and made available.
 
 ## Running jobs on the GPU nodes
 
@@ -450,8 +453,8 @@ QoS specifications are as follows.
 
 | QoS        | Max Nodes Per Job | Max Walltime | Jobs Queued | Jobs Running | Partition(s) | Notes |
 | ---------- | ----------------- | ------------ | ----------- | ------------ | ------------ | ------|
-| gpu-shd    | 1               | 1 hr       | 2          | 1           | gpu    | Nodes potentially shared with other users |
-| gpu-exc    | 2               | 1 hr       | 2          | 1           | gpu    | Exclusive node access |
+| gpu-shd    | 1               | 12 hr       | 2          | 1           | gpu    | Nodes potentially shared with other users |
+| gpu-exc    | 2               | 12 hr       | 2          | 1           | gpu    | Exclusive node access |
 
 ### Example job submission scripts
 
@@ -549,9 +552,6 @@ on the compute node architecture.
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu-exc
 
-# Enable GPU-aware MPI
-export MPICH_GPU_SUPPORT_ENABLED=1
-
 # Check assigned GPU
 srun --ntasks=1 rocm-smi
 
@@ -561,6 +561,9 @@ srun --ntasks=4 --cpus-per-task=8 \
      --hint=nomultithread --distribution=block:block \
      xthi
 
+# Enable GPU-aware MPI
+export MPICH_GPU_SUPPORT_ENABLED=1
+
 srun --ntasks=4 --cpus-per-task=8 \
      --hint=nomultithread --distribution=block:block \
      ./my_gpu_program.x
@@ -568,7 +571,7 @@ srun --ntasks=4 --cpus-per-task=8 \
 
 !!! note
     When you use the `--qos=gpu-exc` QoS you must also add the `--exclusive` flag
-    and then specify the number of nodes you want with `--nodes=1`.  
+    and then specify the number of nodes you want with `--nodes=1`.
 
 ### Multiple GPU on multiple nodes - exclusive node access (max. 8 GPU)
 
@@ -594,31 +597,31 @@ on the compute node architecture.
 #SBATCH --partition=gpu
 #SBATCH --qos=gpu-exc
 
-# Enable GPU-aware MPI
-export MPICH_GPU_SUPPORT_ENABLED=1
-
 # Check assigned GPU
 nodelist=$(scontrol show hostname $SLURM_JOB_NODELIST)
 for nodeid in $nodelist
 do
    echo $nodeid
-   srun --ntasks=1 --nodelist=$nodeid rocm-smi
+   srun --ntasks=1 --gpus=4 --nodes=1 --ntasks-per-node=1 --nodelist=$nodeid rocm-smi
 done
 
 # Check process/thread pinning
 module load xthi
-srun --ntasks=8 --cpus-per-task=8 \
+srun --ntasks-per-node=4 --cpus-per-task=8 \
      --hint=nomultithread --distribution=block:block \
      xthi
 
-srun --ntasks=8 --cpus-per-task=8 \
+# Enable GPU-aware MPI
+export MPICH_GPU_SUPPORT_ENABLED=1
+
+srun --ntasks-per-node=4 --cpus-per-task=8 \
      --hint=nomultithread --distribution=block:block \
      ./my_gpu_program.x
 ```
 
 !!! note
     When you use the `--qos=gpu-exc` QoS you must also add the `--exclusive` flag
-    and then specify the number of nodes you want with `--nodes=1`.  
+    and then specify the number of nodes you want with, for example, `--nodes=2`.
 
 ### Interactive jobs
 
@@ -629,8 +632,8 @@ srun --ntasks=8 --cpus-per-task=8 \
     want an interactive shell on the GPU compute nodes, see the `srun` method described
     below.
 
-If you wish to have a terminal to perform interactive testing, you can 
-use the `salloc` command to reserve the resources so you can use `srun` commands interactively. 
+If you wish to have a terminal to perform interactive testing, you can
+use the `salloc` command to reserve the resources so you can use `srun` commands interactively.
 For example, to request 1 GPU for 20 minutes you would use (remember to replace `t01` with your
 budget code):
 
@@ -649,8 +652,8 @@ auser@ln04:/work/t01/t01/auser> srun rocm-smi
 
 ======================= ROCm System Management Interface =======================
 ================================= Concise Info =================================
-GPU  Temp   AvgPwr  SCLK    MCLK     Fan  Perf  PwrCap  VRAM%  GPU%  
-0    31.0c  43.0W   800Mhz  1600Mhz  0%   auto  300.0W    0%   0%       
+GPU  Temp   AvgPwr  SCLK    MCLK     Fan  Perf  PwrCap  VRAM%  GPU%
+0    31.0c  43.0W   800Mhz  1600Mhz  0%   auto  300.0W    0%   0%
 ================================================================================
 ============================= End of ROCm SMI Log ==============================
 
@@ -662,8 +665,8 @@ auser@ln04:/work/t01/t01/auser> module load xthi
 auser@ln04:/work/t01/t01/auser> srun --ntasks=1 --cpus-per-task=8 --hint=nomultithread xthi
 Node summary for    1 nodes:
 Node    0, hostname nid200001, mpi   1, omp   1, executable xthi
-MPI summary: 1 ranks 
-Node    0, rank    0, thread   0, (affinity =  0-7) 
+MPI summary: 1 ranks
+Node    0, rank    0, thread   0, (affinity =  0-7)
 ```
 
 #### Using `srun`
@@ -676,7 +679,7 @@ would use (remember to replace `t01` with your budget code):
 auser@ln04:/work/t01/t01/auser> srun --gpus=1 --time=00:20:00 --partition=gpu --qos=gpu-shd --account=z19 --pty /bin/bash
 srun: job 5335771 queued and waiting for resources
 srun: job 5335771 has been allocated resources
-auser@nid200001:/work/t01/t01/auser> 
+auser@nid200001:/work/t01/t01/auser>
 ```
 
 Note that the command prompt has changed to indicate we are now on a GPU compute node. You can now directly run commands
@@ -687,8 +690,8 @@ auser@nid200001:/work/t01/t01/auser> rocm-smi
 
 ======================= ROCm System Management Interface =======================
 ================================= Concise Info =================================
-GPU  Temp   AvgPwr  SCLK    MCLK     Fan  Perf  PwrCap  VRAM%  GPU%  
-0    29.0c  43.0W   800Mhz  1600Mhz  0%   auto  300.0W    0%   0%     
+GPU  Temp   AvgPwr  SCLK    MCLK     Fan  Perf  PwrCap  VRAM%  GPU%
+0    29.0c  43.0W   800Mhz  1600Mhz  0%   auto  300.0W    0%   0%
 ================================================================================
 ============================= End of ROCm SMI Log ==============================
 ```
@@ -698,7 +701,7 @@ GPU  Temp   AvgPwr  SCLK    MCLK     Fan  Perf  PwrCap  VRAM%  GPU%
     use job submission scripts or the `salloc` method of interactive use described above.
 
 
-### Environment variables 
+### Environment variables
 
 
 
@@ -765,7 +768,7 @@ Runtime : HIP Runtime. Applies only to applications using HIP on the AMD platfor
 
 ##### AMD_SERIALIZE_KERNEL
 
-To serialize the kernel enqueuing set the following variable, 
+To serialize the kernel enqueuing set the following variable,
 
 `export AMD_SERIALIZE_KERNEL=1`
 
@@ -858,25 +861,13 @@ To display information pertaining to NIC selection set,
 ## Debugging
 
 !!! Note
-    Remove section for now
+    Work in progress
 
+Documentation for rocgdb can be found in the following locations:
 
 https://rocm.docs.amd.com/projects/ROCgdb/en/docs-5.2.3/index.html
 
-!!! Note
-    Work in progresss issue with integration with gdb4hpc
-
-
-!!! Note
-    The license for Linaro-forge help on ARCHER2 does not include support for GPU profiling.
-
-### HiP
-
-
-rocgdb?
-
 https://docs.amd.com/projects/HIP/en/docs-5.2.3/how_to_guides/debugging.html#using-rocgdb
-
 
 
 ## Profiling
@@ -890,10 +881,7 @@ For example in an interactive session where resources have already been allocate
 srun -n 2 --exclusive --nodes=1 --time=00:20:00 --partition=gpu --qos=gpu-exc --gpus=2 rocprof --stats ./myprog_exe
 ```
 
-to profile your applicaition. More detail on the use of rocprof can be found [here](https://github.com/ROCm/rocprofiler/tree/rocm-5.2.3).
-
-!!! Note
-    The license for Linaro-forge help on ARCHER2 does not include support for GPU profiling.
+to profile your application. More detail on the use of rocprof can be found [here](https://github.com/ROCm/rocprofiler/tree/rocm-5.2.3).
 
 
 ## Performance tuning
@@ -1129,7 +1117,7 @@ More commands can be found by running,
 
 `rocm-smi --help`
 
-will run on the login nodes to get more infomation about probing the GPUs.
+will run on the login nodes to get more information about probing the GPUs.
 
 More detail can be found at [here](https://github.com/ROCm/rocm_smi_lib/tree/rocm-5.2.3/python_smi_tools).
 
@@ -1153,7 +1141,4 @@ available on the Frontier exascale system:
 - [Lumi docs](https://docs.lumi-supercomputer.eu/hardware/lumig/)
 - [rocm-examples](https://github.com/amd/rocm-examples/tree/develop)
 - [hip-examples](https://github.com/ROCm/HIP-Examples/tree/rocm-5.2.x)
-- [hello-jobstep](https://code.ornl.gov/olcf/hello_jobstep) 
-
-
-
+- [hello-jobstep](https://code.ornl.gov/olcf/hello_jobstep)

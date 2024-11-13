@@ -63,12 +63,14 @@ nav:
     - "Application development environment": user-guide/dev-environment.md
     - "Containers": user-guide/containers.md
     - "Using Python": user-guide/python.md
+    - "Machine Learning": user-guide/machine-learning.md
     - "Data analysis": user-guide/analysis.md
     - "Debugging": user-guide/debug.md
     - "Profiling": user-guide/profile.md
     - "Performance tuning": user-guide/tuning.md
     - "Energy use": user-guide/energy.md
     - "GPU development platform": user-guide/gpu.md
+    - "Functional accounts": user-guide/functional-accounts.md
   - "Research Software":
     - "Overview": research-software/index.md
     - "CASINO": research-software/casino.md
@@ -90,6 +92,7 @@ nav:
     - "ONETEP": research-software/onetep.md
     - "OpenFOAM": research-software/openfoam.md
     - "ORCA": research-software/orca.md
+    - "QChem": research-software/qchem.md
     - "Quantum Espresso": research-software/qe.md
     - "VASP": research-software/vasp.md
   - "Software Libraries":
@@ -118,12 +121,14 @@ nav:
   - "Data Analysis and Tools":
     - "Overview": data-tools/index.md
     - "AMD uProf": data-tools/amd-uprof.md
-    - "Arm Forge": data-tools/arm-forge.md
+    - "Linaro Forge": data-tools/forge.md
     - "Darshan": data-tools/darshan.md
     - "Energy Counters": data-tools/pm-mpi-lib.md
+    - "Globus": data-tools/globus.md
     - "Julia": data-tools/julia.md
     - "ParaView": data-tools/paraview.md
     - "R": data-tools/cray-r.md
+    - "Spack": data-tools/spack.md
     - "VisiData": data-tools/visidata.md
     - "VMD": data-tools/vmd.md
   - "Essential Skills": essentials/index.md

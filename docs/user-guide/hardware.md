@@ -53,7 +53,7 @@ Each socket contains eight *Core Complex Dies* (CCDs) and one I/O die (IOD). Eac
 
 More information on the architecture of the AMD EPYC Zen2 processors:
 
-* [HPC Tuning Guide for AMD EPYC 7002 Processors](https://www.amd.com/system/files/documents/amd-epyc-7002-tg-hpc-56827.pdf)
+* [HPC Tuning Guide for AMD EPYC 7002 Processors](https://www.amd.com/content/dam/amd/en/documents/epyc-technical-docs/tuning-guides/amd-epyc-7002-tg-hpc-56827.pdf)
 
 ## AMD Zen2 microarchitecture
 
