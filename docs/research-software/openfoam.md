@@ -86,12 +86,12 @@ there is no completely standardised way in which this works. Some packages
 assume they have write access to the main OpenFOAM installation. If this is
 the case, you must install your own version before continuing. This
 can be done on an individual basis, or a per-project basis using the
-project shared directories.
+[project shared directories](https://docs.archer2.ac.uk/user-guide/data/#sharing-data-with-archer2-users-in-your-project).
 
 Some packages are installed in the OpenFOAM user directory, by default this is
 set to `$HOME/OpenFOAM/$USER-[openfoam-version]`. This can be changed (e.g. to
 the work filesystem) by adding `WM_PROJECT_USER_DIR=/work/a01/a01/auser/OpenFOAM/auser-[openfoam-version]`
-as an argument to `source ${FOAM_INSTALL_DIR}/etc/bashrc`, e.g.
+as an argument to `source ${FOAM_INSTALL_DIR}/etc/bashrc`. For example:
 
 ```bash
 source ${FOAM_INSTALL_DIR}/etc/bashrc WM_PROJECT_USER_DIR=/work/a01/a01/auser/OpenFOAM/auser-v2106
