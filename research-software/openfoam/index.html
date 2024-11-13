@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.44">
     
     
       
@@ -1358,25 +1358,7 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#running-parallel-openfoam-jobs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Running parallel OpenFOAM jobs
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#compiling-openfoam" class="md-nav__link">
-    <span class="md-ellipsis">
-      Compiling OpenFOAM
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Compiling OpenFOAM">
+    <nav class="md-nav" aria-label="Using OpenFOAM on ARCHER2">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1388,8 +1370,26 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#compiling-openfoam" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compiling OpenFOAM
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-parallel-openfoam-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running parallel OpenFOAM jobs
+    </span>
+  </a>
   
 </li>
       
@@ -2406,25 +2406,7 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#running-parallel-openfoam-jobs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Running parallel OpenFOAM jobs
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#compiling-openfoam" class="md-nav__link">
-    <span class="md-ellipsis">
-      Compiling OpenFOAM
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Compiling OpenFOAM">
+    <nav class="md-nav" aria-label="Using OpenFOAM on ARCHER2">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2436,8 +2418,26 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#compiling-openfoam" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compiling OpenFOAM
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-parallel-openfoam-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running parallel OpenFOAM jobs
+    </span>
+  </a>
   
 </li>
       
@@ -2558,6 +2558,25 @@ are compiled under <code>PrgEnv-gnu</code>.</p>
 <p>Note there are no default module versions specified. It is recommended to
 use a fully qualified module name (with the exact version, as in the
 example above).</p>
+<h3 id="extensions-to-openfoam">Extensions to OpenFOAM</h3>
+<p>Many packages extend the central OpenFOAM functionality in some way. However,
+there is no completely standardised way in which this works. Some packages
+assume they have write access to the main OpenFOAM installation. If this is
+the case, you must install your own version before continuing. This
+can be done on an individual basis, or a per-project basis using the
+<a href="https://docs.archer2.ac.uk/user-guide/data/#sharing-data-with-archer2-users-in-your-project">project shared directories</a>.</p>
+<p>Some packages are installed in the OpenFOAM user directory, by default this is
+set to <code>$HOME/OpenFOAM/$USER-[openfoam-version]</code>. This can be changed (e.g. to
+the work filesystem) by adding <code>WM_PROJECT_USER_DIR=/work/a01/a01/auser/OpenFOAM/auser-[openfoam-version]</code>
+as an argument to <code>source ${FOAM_INSTALL_DIR}/etc/bashrc</code>. For example:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">source</span><span class="w"> </span><span class="si">${</span><span class="nv">FOAM_INSTALL_DIR</span><span class="si">}</span>/etc/bashrc<span class="w"> </span><span class="nv">WM_PROJECT_USER_DIR</span><span class="o">=</span>/work/a01/a01/auser/OpenFOAM/auser-v2106
+</code></pre></div>
+<h3 id="compiling-openfoam">Compiling OpenFOAM</h3>
+<p>If you want to compile your own version of OpenFOAM, instructions are
+available for ARCHER2 at:</p>
+<ul>
+<li><a href="https://github.com/hpc-uk/build-instructions/tree/main/apps/OpenFOAM">Build instructions for OpenFOAM on GitHub</a></li>
+</ul>
 <h2 id="running-parallel-openfoam-jobs">Running parallel OpenFOAM jobs</h2>
 <p>While it is possible to run limited OpenFOAM pre-processing and
 post-processing activities on the front end, we request all significant
@@ -2623,20 +2642,6 @@ srun interFoam -parallel
 </div>
 </div>
 </div>
-<h2 id="compiling-openfoam">Compiling OpenFOAM</h2>
-<p>If you want to compile your own version of OpenFOAM, instructions are
-available for ARCHER2 at:</p>
-<ul>
-<li><a href="https://github.com/hpc-uk/build-instructions/tree/main/apps/OpenFOAM">Build instructions for OpenFOAM on GitHub</a></li>
-</ul>
-<h3 id="extensions-to-openfoam">Extensions to OpenFOAM</h3>
-<p>Many packages extend the central OpenFOAM functionality in some way. However,
-there is no
-completely standardised way in which this works. Some packages assume
-they have write access to the main OpenFOAM installation. If this is
-the case, you must install your own version before continuing. This
-can be done on an individual basis, or a per-project basis using the
-project shared directories.</p>
 <h2 id="module-version-history">Module version history</h2>
 <p>The following centrally installed versions are available.</p>
 <h3 id="upgrade-2023">Upgrade 2023</h3>
