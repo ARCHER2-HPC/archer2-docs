@@ -79,6 +79,31 @@ Note there are no default module versions specified. It is recommended to
 use a fully qualified module name (with the exact version, as in the
 example above).
 
+### Extensions to OpenFOAM
+
+Many packages extend the central OpenFOAM functionality in some way. However,
+there is no completely standardised way in which this works. Some packages
+assume they have write access to the main OpenFOAM installation. If this is
+the case, you must install your own version before continuing. This
+can be done on an individual basis, or a per-project basis using the
+[project shared directories](https://docs.archer2.ac.uk/user-guide/data/#sharing-data-with-archer2-users-in-your-project).
+
+Some packages are installed in the OpenFOAM user directory, by default this is
+set to `$HOME/OpenFOAM/$USER-[openfoam-version]`. This can be changed (e.g. to
+the work filesystem) by adding `WM_PROJECT_USER_DIR=/work/a01/a01/auser/OpenFOAM/auser-[openfoam-version]`
+as an argument to `source ${FOAM_INSTALL_DIR}/etc/bashrc`. For example:
+
+```bash
+source ${FOAM_INSTALL_DIR}/etc/bashrc WM_PROJECT_USER_DIR=/work/a01/a01/auser/OpenFOAM/auser-v2106
+```
+
+### Compiling OpenFOAM
+
+If you want to compile your own version of OpenFOAM, instructions are
+available for ARCHER2 at:
+
+ - [Build instructions for OpenFOAM on GitHub](https://github.com/hpc-uk/build-instructions/tree/main/apps/OpenFOAM)
+
 ## Running parallel OpenFOAM jobs
 
 While it is possible to run limited OpenFOAM pre-processing and
@@ -147,23 +172,6 @@ MPI tasks). Each MPI task is allocated one core (`--cpus-per-task=1`).
     srun interFoam -parallel
 
     ```
-
-## Compiling OpenFOAM
-
-If you want to compile your own version of OpenFOAM, instructions are
-available for ARCHER2 at:
-
- - [Build instructions for OpenFOAM on GitHub](https://github.com/hpc-uk/build-instructions/tree/main/apps/OpenFOAM)
-
-### Extensions to OpenFOAM
-
-Many packages extend the central OpenFOAM functionality in some way. However,
-there is no
-completely standardised way in which this works. Some packages assume
-they have write access to the main OpenFOAM installation. If this is
-the case, you must install your own version before continuing. This
-can be done on an individual basis, or a per-project basis using the
-project shared directories.
 
 ## Module version history
 
