@@ -278,6 +278,11 @@ Current Scope 2 grid based emission calculations estimates do not include overhe
 and cooling plant, these will vary with outside weather conditions at the data centre but are typically
 less than 10%.
 
+We are aware that there is ongoing discussion in the sustainability community about the impact and
+effectiveness of certified renewable energy contracts that are supplied through UK National Grid
+connections. We are monitoring these discussions and taking advice from sustainability professionals
+on how we report and estimate ARCHER2 emissions.
+
 ### Estimating your emissions
 
 To help estimate GHG emissions from your use of ARCHER2 and place them in context to other sources of
