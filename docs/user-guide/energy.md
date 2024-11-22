@@ -1,7 +1,14 @@
-# Energy use
+# Energy use and emissions
 
-This section covers how to monitor energy use for your jobs on ARCHER2 and how to control the CPU frequency
-which allows some control over how much energy is consumed by jobs.
+This section covers energy use and greenhouse gas (GHG) emissions from ARCHER2.
+
+The emissions section describes how to estimate emissions from your use of 
+ARCHER2 and the methodology we have used to produce emissions estimates for the
+service.
+
+The energy section describes how to monitor energy use for your jobs on ARCHER2
+and how to control the CPU frequency which allows some control over how much
+energy is consumed by jobs.
 
 !!! important
     The default CPU frequency cap on ARCHER2 compute nodes for jobs launched using `srun` is currently set
@@ -180,6 +187,181 @@ CPU frequency to the highest value (2.25 GHz). The packages that currently do th
 !!! important
     If you specify the Slurm CPU frequency in your job scripts using one of the mechanisms described
     above *after* you have loaded the module, you will override the setting from the module.
+
+## Emissions
+
+In this section we provide a brief overview of greenhouse gas (GHG) emissions sources relevant to ARCHER2, show how 
+we have estimated the emissions associated with the service and describe how users can estimate
+emissions associated with their use of ARCHER2.
+
+### Emission sources
+
+The emissions from ARCHER2 potentially fall into two categories (wording inspired by the Green Software Practitioner course linked below):
+
+- Scope 2: Indirect emissions related to emission generation of purchased energy, such as heat and electricity. On ARCHER2 this would correspond to any emissions from the electricity used by the service. As we will see, the Scope 2 emissions are reported as zero because the energy contract for the service is based on 100% renewable energy.
+- Scope 3: Other indirect emissions from the service. For ARCHER2, this corresponds to the embodied emissions of the hardware and infrastructure from the service, i.e. the emissions from manufacturing, shipping and decommissioning ARCHER2 hardware and supporting physical infrastructure.
+
+The other class of emissions (Scope 1) are not relevant for the ARCHER2 service:
+
+- Scope 1: Direct emissions from the service, such as on-site fuel combustion or fleet vehicles. There is nothing of this type currently associated with the ARCHER2 service.
+
+If you want to learn more about GHG emissions in the area of software and digital infrastructure then you may want to 
+look at the Green Software Foundation [Green Software Practitioner online course](https://learn.greensoftware.foundation/).
+
+### ARCHER2 emissions
+
+!!! important
+    All ARCHER2 emissions are estimated and you should understand that there is the potential for
+    significant variation from the current values as understanding of emissions values and 
+    sources improves. 
+
+#### Scope 3 emissions
+
+Scope 3 emissions from the ARCHER2 hardware have been estimated from a subset of the components that are expected to 
+make up the majority of the emissions. Note that there is a large amount of uncertainty for Scope 3 emissions due
+to lack of high quality Scope 3 emissions data from vendors. In particular, the number used for the compute node
+emissions is at the high end of estimated values and the actual value could be as much as 15% lower at around 
+900 kgCO<sub>2</sub>e/node.
+
+| Component | Count | Estimated kgCO<sub>2</sub>e per unit | Estimated kgCO<sub>2</sub>e | % Total Scope 3 | References |
+|---|--:|--:|--:|--:|---|
+| Compute nodes | 5,860 nodes | 1,100 | 6,400,000 | 84% | (1) |
+| Interconnect switches | 768 switches | 280 | 150,000 | 2% | (2) |
+| Lustre HDD | 19,759,200 GB | 0.02 | 400,000 | 6% | (3) |
+| Lustre SSD | 1,900,800 GB | 0.16 | 300,000 | 4% | (3) |
+| NFS HDD | 3,240,000 GB | 0.02 | 70,000 | 1% | (3) |
+| Total | | | 7,320,000 | 100% | |
+
+We then estimate the per-CU (nodeh) Scope 3 emissions by assuming a service lifetime of 6 years and
+100% availability:
+
+```
+7,320,000 kgCO2e / (5,860 nodes * 6 years * 365 days * 24 hours) = 0.023 kgCO2e/CU
+```
+
+Tools use a value of **0.023 kgCO<sub>2</sub>e/CU** for ARCHER2.
+
+References:
+
+1. [IRISCAST Final Report](https://doi.org/10.5281/zenodo.7692451)
+2. Estimate taken from IBM z16™ multi frame 24-port Ethernet Switch Product Carbon Footprint
+3. [Tannu and Nair, 2023](https://arxiv.org/abs/2207.10793)
+
+#### Scope 2 emissions
+
+Scope 2 emissions from ARCHER2 are zero as the service is supplied by 100% certified renewable energy.
+For information purposes we can calculate what the Scope 2 emissions would have been if the energy
+was not 100% renewable energy using the methodology described below.
+
+UK National Grid based Scope 2 emissions are calculated using the compute node energy use for particular
+jobs along with the carbon intensity of the South Scotland region of the UK National Grid at the start
+time of the job. The carbon intensity is retrieved from the [carbonintensity.org.uk](carbonintensity.org.uk)
+web API.
+
+If the energy use of a job is not available (which happens occasionally due to, e.g. counter failures) then
+the mean per node power draw from 1 Jan 2024 - 30 Jun 2024 on ARCHER2 is used to compute the energy
+consumption. This corresponds to a value of 0.41 kW per node.
+
+Estimates of power draw of individual components of ARCHER2 suggest that the compute node power draw makes up
+around 85% of the system power draw so using just the compute node power draw is a reasonable estimate.
+
+| Component | Count | Loaded power draw per unit (kW)| Loaded power draw (kW) | % Total | Notes |
+|---|--:|--:|--:|--:|---|
+| Compute nodes | 5,860 nodes | 0.41 | 2,400 | 85% | Measured by on system counters |
+| Interconnect switches | 768 switches | 0.24 | 240 | 9% | Measured by on system counters |
+| Lustre storage | 5 file systems | 8 | 40 | 1% | Estimate from vendor |
+| NFS storage | 4 file systems | 8 | 32 | 1% | Estimate from vendor |
+| Coolant distribution units | 6 CDU | 16 | 96 | 3% | Estimate from vendor |
+| Total | | | 2,808 | 99% | |
+
+Current Scope 2 grid based emission calculations estimates do not include overheads from the electrical
+and cooling plant, these will vary with outside weather conditions at the data centre but are typically
+less than 10%.
+
+### Estimating your emissions
+
+To help estimate GHG emissions from your use of ARCHER2 and place them in context to other sources of
+GHG emissions we are developing a number of tools. We will add more information on these tools in 
+this section of the documentation as they become available.
+
+At the moment, the following tools are available:
+
+- `jobemissions` - a command line tool on ARCHER2 that reports estimated emissions for a specified,
+  completed job. It can also provide comparisons to other GHG emissions sources
+- [ARCHER2 CU Calculator](https://www.archer2.ac.uk/support-access/cu-calc.html) provides estimated
+  emissions for the specified CU use of ARCHER2
+
+#### `jobemissions` tool
+
+The `jobemissions` tool is available by default to all ARCHER2 users from the command line. You
+supply a Slurm job ID for a completed job and the tool provides an estimate of the GHG emissions
+associated with that job (based on the estimation methodologies described above). For example, to
+provide an estimate for the completed job with Job ID 7654321, you would use:
+
+```bash
+jobemissions 7654321
+```
+
+Typical output from the tool would look like:
+
+```
+  Job details
+       Job ID:                   7654321
+        Start:       2024-11-11T20:50:00
+       Budget:                       t01
+        Nodes:                        20
+      Runtime:                    324000 s
+           CU:                  1800.000
+   Energy use:                   448.973 kWh
+
+  Emissions estimates:
+      Scope 2:      0.000 kgCO2e (ARCHER2 is on 100% certified
+               renewable energy contract so scope emissions are zero)
+      Scope 3:     41.400 kgCO2e (23.0 gCO2e/CU)
+        Total:     41.400 kgCO2e
+
+      Indicative emissions estimates for UK national grid energy mix
+      in S. Scotland at start of job if ARCHER2 was not using
+      renewable energy
+          Scope 2:      7.633 kgCO2e (448.973 kWh, 17.0 gCO2e/kWh)
+          Scope 3:     41.400 kgCO2e (23.0 gCO2e/CU)
+            Total:     49.033 kgCO2e
+
+      Scope 2 carbon intensity values from carbonintensity.org.uk
+
+```
+
+If you add the flag `--comparison food,other` the tool will add comparisons of
+GHG emissions for the job to other sources. e.g. for the same job above, it 
+would add the following section to the end of the output.
+
+```
+   Emissions from job approximately equivalent to following food consumption:
+        |      Food |  Emissions (kgCO2e/100g) | Equivalent to (g) |
+        |-----------|--------------------------|-------------------|
+        |      Beef |                    12.47 |            332.00 |
+        |   Chicken |                     1.43 |           2895.10 |
+        |   Avocado |                     0.18 |          23000.00 |
+        | Chickpeas |                     0.04 |         103500.00 |
+
+  Emissions from job approximately equivalent to:
+        Daily emissions from 329.2 houses' electricity use (in S. Scotland)
+        Emissions from flying 0.083 times across the Atlantic (500.00 kgCO2e/person)
+        Emissions from driving 153.9 miles (0.27 kgCO2e/mile, average UK car, petrol and diesel very similar)
+
+```
+
+You can add the `--json` flag to obtain the emissions data from the tool in a machine-readable
+format.
+
+#### ARCHER2 CU Calculator
+
+The [ARCHER2 CU Calculator](https://www.archer2.ac.uk/support-access/cu-calc.html) on the ARCHER2
+website is used by potential users to estimate the number and cost of resources for potential
+applications to use ARCHER2. This tool has been augmented to include an estimate of GHG emissions
+from the proposed use of ARCHER2. In this tool, we include the Scope 3 emissions calculated 
+as per the methodology above and note that Scope 2 emissions are zero due to the 100% renewable 
+energy contract used to power ARCHER2.
 
 
 
