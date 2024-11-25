@@ -68,6 +68,10 @@ are injected when using the standard compiler wrappers `cc`, `CC` and `ftn`.
 
 The following libraries will also made available by the ARCHER2 CSE team:
 
+- **ADIOS2** [*...details for AOCL on ARCHER2...*](adios.md)
+
+    ADIOS2 parallel IO libray.
+
 - **AOCL** [*...details for AOCL on ARCHER2...*](aocl.md)
 
     AOCL (AMD Optimizing CPU Libraries) provides a set of numerical libraries optimised for AMD "Zen"-based processors. 
