@@ -4444,14 +4444,18 @@ The current job priority formula on ARCHER2 is:</p>
 <li>P(Age) - The priority based on the job age normalised to a value between 0 and 1.
   The maximum raw value is 14 days (where P(Age) = 1).</li>
 <li>P(Fairshare) - The fairshare priority normalised to a value between 0 and 1. Your
-  fairshare priority is determined by a combination of your budget code fairshare
-  value and your user fairshare value within that budget code. The more use that
-  the budget code you are using has made of the system recently relative to other
-  budget codes on the system, the lower the budget code fairshare value will be; and the more
+  fairshare priority is determined by a combination of your project fairshare
+  value and your user fairshare value within that project. The more use that
+  the project you are using has made of the system recently relative to other
+  projects on the system, the lower the project fairshare value will be; and the more
   use you have made of the system recently relative to other users within your
-  budget code, the lower your user fairshare value will be. The decay half life
-  for fairshare on ARCHER2 is set to 2 days. <a href="https://slurm.schedmd.com/fair_tree.html">More information on the Slurm fairshare
-  algorithm</a>.</li>
+  project, the lower your user fairshare value will be. The number of shares that
+  a project has within the fairshare system is linked to its CU allocation - so 
+  a project that has a larger allocation on ARCHER2, will have a larger number of
+  shares within the fairshare system. A floor value of 1% is set for allocation shares
+  so all projects with 1% or lower allocations have the same number of shares. The
+  decay half life for fairshare on ARCHER2 is set to 2 days. <a href="https://slurm.schedmd.com/fair_tree.html">More information on the
+  Slurm fairshare algorithm</a>.</li>
 <li>P(Size) - The priority based on the job size normalised to a value between 0 and 1.
   The maximum size is the total number of ARCHER2 compute nodes.</li>
 </ul>
