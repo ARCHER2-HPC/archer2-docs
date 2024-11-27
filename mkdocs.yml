@@ -101,8 +101,8 @@ nav:
     - "FFTW": software-libraries/fftw.md
     - "HDF5": software-libraries/hdf5.md
     - "NetCDF": software-libraries/netcdf.md
-    - "AOCL": software-libraries/adios.md
-    - "ADIOS2": software-libraries/aocl.md
+    - "ADIOS2": software-libraries/adios.md
+    - "AOCL": software-libraries/aocl.md
     - "ARPACK": software-libraries/arpack.md
     - "Boost": software-libraries/boost.md
     - "Eigen": software-libraries/eigen.md
