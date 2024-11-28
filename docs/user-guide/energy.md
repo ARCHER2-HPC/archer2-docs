@@ -310,27 +310,30 @@ jobemissions 7654321
 Typical output from the tool would look like:
 
 ```
-  Job details
-       Job ID:                   7654321
-        Start:       2024-11-11T20:50:00
-       Budget:                       t01
-        Nodes:                        20
-      Runtime:                    324000 s
-           CU:                  1800.000
-   Energy use:                   448.973 kWh
+  Job details:
+                       Job ID:              7654321
+                        Start:  2024-11-11T20:51:25
+                       Budget:                  t01
+                        Nodes:                   20
+                      Runtime:               324000 s
+                           CU:             1800.000
+      Compute node energy use:              448.973 kWh
+    Other hardware energy use:               67.346 kWh (estimated)
+          Overhead energy use:               51.632 kWh (estimated)
+             Total energy use:              567.951 kWh (estimated)
 
   Emissions estimates:
       Scope 2:      0.000 kgCO2e (ARCHER2 is on 100% certified
-               renewable energy contract so scope emissions are zero)
+                renewable energy contract so scope 2 emissions are zero)
       Scope 3:     41.400 kgCO2e (23.0 gCO2e/CU)
         Total:     41.400 kgCO2e
 
       Indicative emissions estimates for UK national grid energy mix
       in S. Scotland at start of job if ARCHER2 was not using
       renewable energy
-          Scope 2:      7.633 kgCO2e (448.973 kWh, 17.0 gCO2e/kWh)
+          Scope 2:      9.655 kgCO2e (567.951 kWh, 17.0 gCO2e/kWh)
           Scope 3:     41.400 kgCO2e (23.0 gCO2e/CU)
-            Total:     49.033 kgCO2e
+            Total:     51.055 kgCO2e
 
       Scope 2 carbon intensity values from carbonintensity.org.uk
 
