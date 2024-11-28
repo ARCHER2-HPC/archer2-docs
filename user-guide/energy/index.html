@@ -20,7 +20,7 @@
     
     
       
-        <title>Energy use - ARCHER2 User Documentation</title>
+        <title>Energy use and emissions - ARCHER2 User Documentation</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#energy-use" class="md-skip">
+        <a href="#energy-use-and-emissions" class="md-skip">
           Skip to content
         </a>
       
@@ -117,7 +117,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Energy use
+              Energy use and emissions
             
           </span>
         </div>
@@ -827,7 +827,7 @@
           
   
   <span class="md-ellipsis">
-    Energy use
+    Energy use and emissions
   </span>
   
 
@@ -838,7 +838,7 @@
         
   
   <span class="md-ellipsis">
-    Energy use
+    Energy use and emissions
   </span>
   
 
@@ -917,6 +917,96 @@
       Slurm CPU frequency settings for centrally-installed software
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#emissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Emissions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Emissions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#emission-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Emission sources
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#archer2-emissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      ARCHER2 emissions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ARCHER2 emissions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scope-3-emissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scope 3 emissions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scope-2-emissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scope 2 emissions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estimating-your-emissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Estimating your emissions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Estimating your emissions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jobemissions-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      jobemissions tool
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#archer2-cu-calculator" class="md-nav__link">
+    <span class="md-ellipsis">
+      ARCHER2 CU Calculator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -2438,6 +2528,96 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#emissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Emissions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Emissions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#emission-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Emission sources
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#archer2-emissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      ARCHER2 emissions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ARCHER2 emissions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scope-3-emissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scope 3 emissions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scope-2-emissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scope 2 emissions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estimating-your-emissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Estimating your emissions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Estimating your emissions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jobemissions-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      jobemissions tool
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#archer2-cu-calculator" class="md-nav__link">
+    <span class="md-ellipsis">
+      ARCHER2 CU Calculator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2456,9 +2636,14 @@
   
 
 
-<h1 id="energy-use">Energy use</h1>
-<p>This section covers how to monitor energy use for your jobs on ARCHER2 and how to control the CPU frequency
-which allows some control over how much energy is consumed by jobs.</p>
+<h1 id="energy-use-and-emissions">Energy use and emissions</h1>
+<p>This section covers energy use and greenhouse gas (GHG) emissions from ARCHER2.</p>
+<p>The emissions section describes how to estimate emissions from your use of 
+ARCHER2 and the methodology we have used to produce emissions estimates for the
+service.</p>
+<p>The energy section describes how to monitor energy use for your jobs on ARCHER2
+and how to control the CPU frequency which allows some control over how much
+energy is consumed by jobs.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>The default CPU frequency cap on ARCHER2 compute nodes for jobs launched using <code>srun</code> is currently set
@@ -2653,6 +2838,261 @@ CPU frequency to the highest value (2.25 GHz). The packages that currently do th
 <p>If you specify the Slurm CPU frequency in your job scripts using one of the mechanisms described
 above <em>after</em> you have loaded the module, you will override the setting from the module.</p>
 </div>
+<h2 id="emissions">Emissions</h2>
+<p>In this section we provide a brief overview of greenhouse gas (GHG) emissions sources relevant to ARCHER2, show how 
+we have estimated the emissions associated with the service and describe how users can estimate
+emissions associated with their use of ARCHER2.</p>
+<h3 id="emission-sources">Emission sources</h3>
+<p>The emissions from ARCHER2 potentially fall into two categories (wording inspired by the Green Software Practitioner course linked below):</p>
+<ul>
+<li>Scope 2: Indirect emissions related to emission generation of purchased energy, such as heat and electricity. On ARCHER2 this would correspond to any emissions from the electricity used by the service. As we will see, the Scope 2 emissions are reported as zero because the energy contract for the service is based on 100% renewable energy.</li>
+<li>Scope 3: Other indirect emissions from the service. For ARCHER2, this corresponds to the embodied emissions of the hardware and infrastructure from the service, i.e. the emissions from manufacturing, shipping and decommissioning ARCHER2 hardware and supporting physical infrastructure.</li>
+</ul>
+<p>The other class of emissions (Scope 1) are not relevant for the ARCHER2 service:</p>
+<ul>
+<li>Scope 1: Direct emissions from the service, such as on-site fuel combustion or fleet vehicles. There is nothing of this type currently associated with the ARCHER2 service.</li>
+</ul>
+<p>If you want to learn more about GHG emissions in the area of software and digital infrastructure then you may want to 
+look at the Green Software Foundation <a href="https://learn.greensoftware.foundation/">Green Software Practitioner online course</a>.</p>
+<h3 id="archer2-emissions">ARCHER2 emissions</h3>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>All ARCHER2 emissions are estimated and you should understand that there is the potential for
+significant variation from the current values as understanding of emissions values and 
+sources improves. </p>
+</div>
+<h4 id="scope-3-emissions">Scope 3 emissions</h4>
+<p>Scope 3 emissions from the ARCHER2 hardware have been estimated from a subset of the components that are expected to 
+make up the majority of the emissions. Note that there is a large amount of uncertainty for Scope 3 emissions due
+to lack of high quality Scope 3 emissions data from vendors. In particular, the number used for the compute node
+emissions is at the high end of estimated values and the actual value could be as much as 15% lower at around 
+900 kgCO<sub>2</sub>e/node.</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th style="text-align: right;">Count</th>
+<th style="text-align: right;">Estimated kgCO<sub>2</sub>e per unit</th>
+<th style="text-align: right;">Estimated kgCO<sub>2</sub>e</th>
+<th style="text-align: right;">% Total Scope 3</th>
+<th>References</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Compute nodes</td>
+<td style="text-align: right;">5,860 nodes</td>
+<td style="text-align: right;">1,100</td>
+<td style="text-align: right;">6,400,000</td>
+<td style="text-align: right;">84%</td>
+<td>(1)</td>
+</tr>
+<tr>
+<td>Interconnect switches</td>
+<td style="text-align: right;">768 switches</td>
+<td style="text-align: right;">280</td>
+<td style="text-align: right;">150,000</td>
+<td style="text-align: right;">2%</td>
+<td>(2)</td>
+</tr>
+<tr>
+<td>Lustre HDD</td>
+<td style="text-align: right;">19,759,200 GB</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">400,000</td>
+<td style="text-align: right;">6%</td>
+<td>(3)</td>
+</tr>
+<tr>
+<td>Lustre SSD</td>
+<td style="text-align: right;">1,900,800 GB</td>
+<td style="text-align: right;">0.16</td>
+<td style="text-align: right;">300,000</td>
+<td style="text-align: right;">4%</td>
+<td>(3)</td>
+</tr>
+<tr>
+<td>NFS HDD</td>
+<td style="text-align: right;">3,240,000 GB</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">70,000</td>
+<td style="text-align: right;">1%</td>
+<td>(3)</td>
+</tr>
+<tr>
+<td>Total</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">7,320,000</td>
+<td style="text-align: right;">100%</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>We then estimate the per-CU (nodeh) Scope 3 emissions by assuming a service lifetime of 6 years and
+100% availability:</p>
+<div class="highlight"><pre><span></span><code>7,320,000 kgCO2e / (5,860 nodes * 6 years * 365 days * 24 hours) = 0.023 kgCO2e/CU
+</code></pre></div>
+<p>Tools use a value of <strong>0.023 kgCO<sub>2</sub>e/CU</strong> for ARCHER2.</p>
+<p>References:</p>
+<ol>
+<li><a href="https://doi.org/10.5281/zenodo.7692451">IRISCAST Final Report</a></li>
+<li>Estimate taken from IBM z16™ multi frame 24-port Ethernet Switch Product Carbon Footprint</li>
+<li><a href="https://arxiv.org/abs/2207.10793">Tannu and Nair, 2023</a></li>
+</ol>
+<h4 id="scope-2-emissions">Scope 2 emissions</h4>
+<p>Scope 2 emissions from ARCHER2 are zero as the service is supplied by 100% certified renewable energy.
+For information purposes we can calculate what the Scope 2 emissions would have been if the energy
+was not 100% renewable energy using the methodology described below.</p>
+<p>UK National Grid based Scope 2 emissions are calculated using the compute node energy use for particular
+jobs along with the carbon intensity of the South Scotland region of the UK National Grid at the start
+time of the job. The carbon intensity is retrieved from the <a href="carbonintensity.org.uk">carbonintensity.org.uk</a>
+web API.</p>
+<p>If the energy use of a job is not available (which happens occasionally due to, e.g. counter failures) then
+the mean per node power draw from 1 Jan 2024 - 30 Jun 2024 on ARCHER2 is used to compute the energy
+consumption. This corresponds to a value of 0.41 kW per node.</p>
+<p>Estimates of power draw of individual components of ARCHER2 suggest that the compute node power draw makes up
+around 85% of the system power draw so using just the compute node power draw is a reasonable estimate.</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th style="text-align: right;">Count</th>
+<th style="text-align: right;">Loaded power draw per unit (kW)</th>
+<th style="text-align: right;">Loaded power draw (kW)</th>
+<th style="text-align: right;">% Total</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Compute nodes</td>
+<td style="text-align: right;">5,860 nodes</td>
+<td style="text-align: right;">0.41</td>
+<td style="text-align: right;">2,400</td>
+<td style="text-align: right;">85%</td>
+<td>Measured by on system counters</td>
+</tr>
+<tr>
+<td>Interconnect switches</td>
+<td style="text-align: right;">768 switches</td>
+<td style="text-align: right;">0.24</td>
+<td style="text-align: right;">240</td>
+<td style="text-align: right;">9%</td>
+<td>Measured by on system counters</td>
+</tr>
+<tr>
+<td>Lustre storage</td>
+<td style="text-align: right;">5 file systems</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">1%</td>
+<td>Estimate from vendor</td>
+</tr>
+<tr>
+<td>NFS storage</td>
+<td style="text-align: right;">4 file systems</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">1%</td>
+<td>Estimate from vendor</td>
+</tr>
+<tr>
+<td>Coolant distribution units</td>
+<td style="text-align: right;">6 CDU</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">96</td>
+<td style="text-align: right;">3%</td>
+<td>Estimate from vendor</td>
+</tr>
+<tr>
+<td>Total</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">2,808</td>
+<td style="text-align: right;">99%</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Current Scope 2 grid based emission calculations estimates do not include overheads from the electrical
+and cooling plant, these will vary with outside weather conditions at the data centre but are typically
+less than 10%.</p>
+<p>We are aware that there is ongoing discussion in the sustainability community about the impact and
+effectiveness of certified renewable energy contracts that are supplied through UK National Grid
+connections. We are monitoring these discussions and taking advice from sustainability professionals
+on how we report and estimate ARCHER2 emissions.</p>
+<h3 id="estimating-your-emissions">Estimating your emissions</h3>
+<p>To help estimate GHG emissions from your use of ARCHER2 and place them in context to other sources of
+GHG emissions we are developing a number of tools. We will add more information on these tools in 
+this section of the documentation as they become available.</p>
+<p>At the moment, the following tools are available:</p>
+<ul>
+<li><code>jobemissions</code> - a command line tool on ARCHER2 that reports estimated emissions for a specified,
+  completed job. It can also provide comparisons to other GHG emissions sources</li>
+<li><a href="https://www.archer2.ac.uk/support-access/cu-calc.html">ARCHER2 CU Calculator</a> provides estimated
+  emissions for the specified CU use of ARCHER2</li>
+</ul>
+<h4 id="jobemissions-tool"><code>jobemissions</code> tool</h4>
+<p>The <code>jobemissions</code> tool is available by default to all ARCHER2 users from the command line. You
+supply a Slurm job ID for a completed job and the tool provides an estimate of the GHG emissions
+associated with that job (based on the estimation methodologies described above). For example, to
+provide an estimate for the completed job with Job ID 7654321, you would use:</p>
+<div class="highlight"><pre><span></span><code>jobemissions<span class="w"> </span><span class="m">7654321</span>
+</code></pre></div>
+<p>Typical output from the tool would look like:</p>
+<div class="highlight"><pre><span></span><code>  Job details:
+                       Job ID:              7654321
+                        Start:  2024-11-11T20:51:25
+                       Budget:                  t01
+                        Nodes:                   20
+                      Runtime:               324000 s
+                           CU:             1800.000
+      Compute node energy use:              448.973 kWh
+    Other hardware energy use:               67.346 kWh (estimated)
+          Overhead energy use:               51.632 kWh (estimated)
+             Total energy use:              567.951 kWh (estimated)
+
+  Emissions estimates:
+      Scope 2:      0.000 kgCO2e (ARCHER2 is on 100% certified
+                renewable energy contract so scope 2 emissions are zero)
+      Scope 3:     41.400 kgCO2e (23.0 gCO2e/CU)
+        Total:     41.400 kgCO2e
+
+      Indicative emissions estimates for UK national grid energy mix
+      in S. Scotland at start of job if ARCHER2 was not using
+      renewable energy
+          Scope 2:      9.655 kgCO2e (567.951 kWh, 17.0 gCO2e/kWh)
+          Scope 3:     41.400 kgCO2e (23.0 gCO2e/CU)
+            Total:     51.055 kgCO2e
+
+      Scope 2 carbon intensity values from carbonintensity.org.uk
+</code></pre></div>
+<p>If you add the flag <code>--comparison food,other</code> the tool will add comparisons of
+GHG emissions for the job to other sources. e.g. for the same job above, it 
+would add the following section to the end of the output.</p>
+<div class="highlight"><pre><span></span><code>   Emissions from job approximately equivalent to following food consumption:
+        |      Food |  Emissions (kgCO2e/100g) | Equivalent to (g) |
+        |-----------|--------------------------|-------------------|
+        |      Beef |                    12.47 |            332.00 |
+        |   Chicken |                     1.43 |           2895.10 |
+        |   Avocado |                     0.18 |          23000.00 |
+        | Chickpeas |                     0.04 |         103500.00 |
+
+  Emissions from job approximately equivalent to:
+        Daily emissions from 329.2 houses&#39; electricity use (in S. Scotland)
+        Emissions from flying 0.083 times across the Atlantic (500.00 kgCO2e/person)
+        Emissions from driving 153.9 miles (0.27 kgCO2e/mile, average UK car, petrol and diesel very similar)
+</code></pre></div>
+<p>You can add the <code>--json</code> flag to obtain the emissions data from the tool in a machine-readable
+format.</p>
+<h4 id="archer2-cu-calculator">ARCHER2 CU Calculator</h4>
+<p>The <a href="https://www.archer2.ac.uk/support-access/cu-calc.html">ARCHER2 CU Calculator</a> on the ARCHER2
+website is used by potential users to estimate the number and cost of resources for potential
+applications to use ARCHER2. This tool has been augmented to include an estimate of GHG emissions
+from the proposed use of ARCHER2. In this tool, we include the Scope 3 emissions calculated 
+as per the methodology above and note that Scope 2 emissions are zero due to the 100% renewable 
+energy contract used to power ARCHER2.</p>
 
 
 
