@@ -253,6 +253,11 @@ Scope 2 emissions from ARCHER2 are zero as the service is supplied by 100% certi
 For information purposes we can calculate what the Scope 2 emissions would have been if the energy
 was not 100% renewable energy using the methodology described below.
 
+We are aware that there is ongoing discussion in the sustainability community about the impact and
+effectiveness of certified renewable energy contracts that are supplied through UK National Grid
+connections. We are monitoring these discussions and taking advice from sustainability professionals
+on how we report and estimate ARCHER2 emissions.
+
 UK National Grid based Scope 2 emissions are calculated using the compute node energy use for particular
 jobs along with the carbon intensity of the South Scotland region of the UK National Grid at the start
 time of the job. The carbon intensity is retrieved from the [carbonintensity.org.uk](carbonintensity.org.uk)
@@ -263,7 +268,8 @@ the mean per node power draw from 1 Jan 2024 - 30 Jun 2024 on ARCHER2 is used to
 consumption. This corresponds to a value of 0.41 kW per node.
 
 Estimates of power draw of individual components of ARCHER2 suggest that the compute node power draw makes up
-around 85% of the system power draw so using just the compute node power draw is a reasonable estimate.
+around 85% of the system power draw so to estimate energy use by additional components we add
+15% of the measured compute node energy.
 
 | Component | Count | Loaded power draw per unit (kW)| Loaded power draw (kW) | % Total | Notes |
 |---|--:|--:|--:|--:|---|
@@ -276,12 +282,15 @@ around 85% of the system power draw so using just the compute node power draw is
 
 Current Scope 2 grid based emission calculations estimates do not include overheads from the electrical
 and cooling plant, these will vary with outside weather conditions at the data centre but are typically
-less than 10%.
+less than 10%. As a conservative estimate, we add an additional 10% energy use to the total to 
+account for plant overheads. 
 
-We are aware that there is ongoing discussion in the sustainability community about the impact and
-effectiveness of certified renewable energy contracts that are supplied through UK National Grid
-connections. We are monitoring these discussions and taking advice from sustainability professionals
-on how we report and estimate ARCHER2 emissions.
+The final energy calculation for a job is therefore:
+
+1. Take measured compute node energy use from Slurm (or, if not available for that job use a per-node
+   power draw of 0.41 kW to estimate energy use).
+2. Add an additional 15% of this compute node energy use to estimate energy use by other components.
+3. Add an additional 10% of the new total energy use to estimate energy use overheads from plant.
 
 ### Estimating your emissions
 
