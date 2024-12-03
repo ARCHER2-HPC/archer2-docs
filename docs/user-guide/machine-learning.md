@@ -122,7 +122,7 @@ could be replaced by `module -q load pytorch/1.13.1-gpu` if you are not running 
 
 In the script above, we specify four tasks per node, one for each GPU. These tasks are evenly spaced across the node so as to maximise the communications
 bandwidth between the host and the GPU devices. Note, PyTorch is not using Cray MPICH for inter-task communications, which is instead being handled by the 
-ROCm Collective Communications Library (RCCL), hence the `--wireup_method nccl-slurm` option (`nccl-slurm` works as an alias for `rccl-slurm in this context).
+ROCm Collective Communications Library (RCCL), hence the `--wireup_method nccl-slurm` option (`nccl-slurm` works as an alias for `rccl-slurm` in this context).
 
 The above job should achieve convergence &mdash; an Intersection over Union (IoU) of 0.82 &mdash; after 35 epochs or so. Runtime should be around 20-30 minutes.
 
@@ -239,6 +239,62 @@ python -m pip install git+https://github.com/ildoonet/pytorch-gradual-warmup-lr.
 
 deactivate
 ```
+
+In order to run a DeepCam training job, you must first clone the [MLCommons HPC github repo](https://github.com/mlcommons/hpc/tree/main).
+
+```
+mkdir ${HOME/home/work}/tests
+cd ${HOME/home/work}/tests
+
+git clone https://github.com/mlcommons/hpc.git mlperf-hpc
+
+cd ./mlperf-hpc/deepcam/src/deepCam
+```
+
+
+Next, we need to edit some parts of the DeepCam Python source such that DeepCam is properly integrated with Cray MPICH.
+
+The `init` function defined in `./utils/comm.py` contains an `if` statement that initialises the DeepCam job according
+to the selected communications method. You will need to edit the `mpi` branch of this `if` statement as shown below.
+
+```python
+...
+
+def init(method, batchnorm_group_size=1):
+
+    if method == "nccl-openmpi":
+
+    ...
+
+    elif method == "mpi":
+        rank = int(os.getenv("SLURM_PROCID"))
+        world_size = int(os.getenv("SLURM_NTASKS"))
+        dist.init_process_group(backend = "mpi",
+                                rank = rank,
+                                world_size = world_size)
+    
+    else:
+        raise NotImplementedError()
+
+    ...    
+```
+
+Second, as we're not running on a GPU platform, we'll need to comment out a statement that calls a GPU-based
+synchronisation method, see the `synchronize` method within `./utils/bnstats.py`.
+
+```python
+...
+
+def synchronize(self:
+
+    if dist.is_initialized():
+        # sync the device before
+        #torch.cuda.synchronize()
+    
+    with torch.no_grad():
+        ...
+```
+
 
 DeepCam can now be run on the CPU nodes using a submission script like the one below.
 
