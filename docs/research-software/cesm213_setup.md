@@ -148,13 +148,11 @@ To build, execute the following commands
 ```bash
 module load CESM2/2.1.3
 cd $CIMEROOT/tools/cprnc
-../configure --macros-format=Makefile --mpilib=mpi-serial
-sed -i '/}}/d' .env_mach_specific.sh
-source ./.env_mach_specific.sh 
+cmake . -DNetCDF_Fortran_LIBRARIES=libnetcdff.so -DNetCDF_C_LIBRARIES=libnetcdf.so
 make
 ```
 
-It is likely you will see a warning message of the form
+<!-- It is likely you will see a warning message of the form
 
 ```
 The following dependent module(s) are not currently loaded: cray-hdf5-parallel (required by: CESM2/2.1.3), cray-netcdf-hdf5parallel (required by: CESM2/2.1.3), cray-parallel-netcdf (required by: CESM2/2.1.3)
@@ -178,6 +176,6 @@ Then rerunning the command
 
 ```bash
 source ./.env_mach_specific.sh && make
-```
+``` -->
 
-Once this step has been completed, you are ready to run a [simple test case](cesm213_run.md).
+You are now ready to run a [simple test case](cesm213_run.md)!
