@@ -2537,7 +2537,7 @@ mv slurm-${SLURM_JOB_ID}.out ${JOB_OUTPUT_PATH}/slurm.out
 could be replaced by <code>module -q load pytorch/1.13.1-gpu</code> if you are not running DeepCam and have no need for additional Python packages such as <code>mlperf-logging</code> and <code>warmup-scheduler</code>.</p>
 <p>In the script above, we specify four tasks per node, one for each GPU. These tasks are evenly spaced across the node so as to maximise the communications
 bandwidth between the host and the GPU devices. Note, PyTorch is not using Cray MPICH for inter-task communications, which is instead being handled by the 
-ROCm Collective Communications Library (RCCL), hence the <code>--wireup_method nccl-slurm</code> option (<code>nccl-slurm</code> works as an alias for `rccl-slurm in this context).</p>
+ROCm Collective Communications Library (RCCL), hence the <code>--wireup_method nccl-slurm</code> option (<code>nccl-slurm</code> works as an alias for <code>rccl-slurm</code> in this context).</p>
 <p>The above job should achieve convergence &mdash; an Intersection over Union (IoU) of 0.82 &mdash; after 35 epochs or so. Runtime should be around 20-30 minutes.</p>
 <p>We can also modify the DeepCam <code>train.py</code> script so that the accuracy and loss are logged using <a href="https://pytorch.org/tutorials/recipes/recipes/tensorboard_with_pytorch.html">TensorBoard</a>.</p>
 <p>The following lines must be added to the DeepCam <code>train.py</code> script.</p>
@@ -2636,6 +2636,50 @@ mv<span class="w"> </span>./mlperf-logging/mlperf_logging.egg-info<span class="w
 python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/ildoonet/pytorch-gradual-warmup-lr.git
 
 deactivate
+</code></pre></div>
+<p>In order to run a DeepCam training job, you must first clone the <a href="https://github.com/mlcommons/hpc/tree/main">MLCommons HPC github repo</a>.</p>
+<div class="highlight"><pre><span></span><code>mkdir ${HOME/home/work}/tests
+cd ${HOME/home/work}/tests
+
+git clone https://github.com/mlcommons/hpc.git mlperf-hpc
+
+cd ./mlperf-hpc/deepcam/src/deepCam
+</code></pre></div>
+<p>Next, we need to edit some parts of the DeepCam Python source such that DeepCam is properly integrated with Cray MPICH.</p>
+<p>The <code>init</code> function defined in <code>./utils/comm.py</code> contains an <code>if</code> statement that initialises the DeepCam job according
+to the selected communications method. You will need to edit the <code>mpi</code> branch of this <code>if</code> statement as shown below.</p>
+<div class="highlight"><pre><span></span><code><span class="o">...</span>
+
+<span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">batchnorm_group_size</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;nccl-openmpi&quot;</span><span class="p">:</span>
+
+    <span class="o">...</span>
+
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;mpi&quot;</span><span class="p">:</span>
+        <span class="n">rank</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;SLURM_PROCID&quot;</span><span class="p">))</span>
+        <span class="n">world_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;SLURM_NTASKS&quot;</span><span class="p">))</span>
+        <span class="n">dist</span><span class="o">.</span><span class="n">init_process_group</span><span class="p">(</span><span class="n">backend</span> <span class="o">=</span> <span class="s2">&quot;mpi&quot;</span><span class="p">,</span>
+                                <span class="n">rank</span> <span class="o">=</span> <span class="n">rank</span><span class="p">,</span>
+                                <span class="n">world_size</span> <span class="o">=</span> <span class="n">world_size</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+
+    <span class="o">...</span>    
+</code></pre></div>
+<p>Second, as we're not running on a GPU platform, we'll need to comment out a statement that calls a GPU-based
+synchronisation method, see the <code>synchronize</code> method within <code>./utils/bnstats.py</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="o">...</span>
+
+<span class="k">def</span> <span class="nf">synchronize</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span>
+
+    <span class="k">if</span> <span class="n">dist</span><span class="o">.</span><span class="n">is_initialized</span><span class="p">():</span>
+        <span class="c1"># sync the device before</span>
+        <span class="c1">#torch.cuda.synchronize()</span>
+
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="o">...</span>
 </code></pre></div>
 <p>DeepCam can now be run on the CPU nodes using a submission script like the one below.</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
