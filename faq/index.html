@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.48">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
     
     
       
@@ -540,11 +540,44 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#oom-error-on-archer2" class="md-nav__link">
+  <a href="#jobs-failures" class="md-nav__link">
     <span class="md-ellipsis">
-      OOM error on ARCHER2
+      Jobs failures
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Jobs failures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#out-of-memory-error-oom" class="md-nav__link">
+    <span class="md-ellipsis">
+      Out-of-memory error OOM
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-does-a-hardware-fault-look-like" class="md-nav__link">
+    <span class="md-ellipsis">
+      What does a hardware fault look like?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#job-cancelled-owing-to-time-limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Job cancelled owing to time limit
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -2455,11 +2488,44 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#oom-error-on-archer2" class="md-nav__link">
+  <a href="#jobs-failures" class="md-nav__link">
     <span class="md-ellipsis">
-      OOM error on ARCHER2
+      Jobs failures
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Jobs failures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#out-of-memory-error-oom" class="md-nav__link">
+    <span class="md-ellipsis">
+      Out-of-memory error OOM
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-does-a-hardware-fault-look-like" class="md-nav__link">
+    <span class="md-ellipsis">
+      What does a hardware fault look like?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#job-cancelled-owing-to-time-limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Job cancelled owing to time limit
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -2517,13 +2583,69 @@
 <p><code>echo -n &gt;.nfsXXXXXXXXXXX</code></p>
 <p>will remove it.</p>
 <h2 id="running-on-archer2">Running on ARCHER2</h2>
-<h3 id="oom-error-on-archer2">OOM error on ARCHER2</h3>
+<h3 id="jobs-failures">Jobs failures</h3>
+<p>Your job has failed with an ugly message from the scheduler. What can be done?
+Here are some common causes, and possible remedies.</p>
+<h4 id="out-of-memory-error-oom">Out-of-memory error OOM</h4>
 <p><strong>Q.</strong> Why is my code failing on ARCHER2 with an out of memory (OOM) error?</p>
-<p><strong>A.</strong> You are requesting too much memory per process. We recommend that you try running
-the same job on underpopulated nodes. This can be done by editing reducing the
-<code>--ntasks-per-node</code> in your Slurm submission script. Please lower it to half
-of its value when it fails (so if you have <code>--ntasks-per-node=128</code>, reduce it
-to <code>--ntasks-per-node=64</code>).</p>
+<p><strong>A.</strong> If you see a message of the following form at the end of your job
+output:
+<div class="highlight"><pre><span></span><code>slurmstepd: error: Detected 1 oom-kill event(s) in StepId=7935598.0. \
+Some of your processes may have been killed by the cgroup out-of-memory handler.
+</code></pre></div>
+your job has requested too much memory on one or more nodes (the maximum
+is 256 GB shared between all processes for nodes in the standard partition).
+This may
+typically happen shortly after the job has started (one or two minutes).
+In this case, you need to provide more memory.</p>
+<ol>
+<li>Try running the same job on the same number of MPI processes, but
+use more nodes (and hence more memory).  This can be done by reducing
+the <code>--ntasks-per-node</code> value in your Slurm submission script; e.g.,
+if you have <code>--ntasks-per-node=128</code> you can try <code>--ntasks-per-node=64</code>
+and double the number of nodes via <code>--nodes</code>.</li>
+<li>If using standard partition nodes, one can also try running on the
+same number of MPI processes, but use the <code>hignmem</code> partition in
+which the nodes have twice as much memory as the standard partition.</li>
+<li>If there is still a problem, you may need to reduce the size of
+your problem until you understand where the limit is.</li>
+</ol>
+<p>More rarely, OOM errors may occur long after the job as started (many hours).
+This is suggestive of a memory leak, and your code will need to be debugged.
+If you are using a standard package, please contact the Service Desk with
+enough information that the problem can be replicated. A poorly designed
+application can also exhibit this problem if, for example, there is a
+significant request for new memory late in execution (e..g, at a final
+configuration output). This should be remedied by the developers.</p>
+<h4 id="what-does-a-hardware-fault-look-like">What does a hardware fault look like?</h4>
+<p>If you see a message of the following form at the end of standard
+output:
+<div class="highlight"><pre><span></span><code>slurmstepd: error: *** STEP 7871129.0 ON nid001520 CANCELLED AT 2024-10-23T20:04:10 DUE TO NODE FAILURE ***
+</code></pre></div>
+it means a hardware failure on the node has caused the job to crash.
+These failures are detected automatically by the system (the hardware
+gets restarted or replaced), and the time used will not be charged
+against your budget. This is merely "unlucky": please just resubmit
+the same job.</p>
+<h4 id="job-cancelled-owing-to-time-limit">Job cancelled owing to time limit</h4>
+<p>Jobs reaching their time limit will be cancelled by the queue system
+with a message of the form:
+<div class="highlight"><pre><span></span><code>slurmstepd: error: *** STEP 7871128.0 ON nid001258 CANCELLED AT 2024-10-24T01:21:34 DUE TO TIME LIMIT ***
+</code></pre></div>
+First, it is a good idea to have an expectation about how long your job
+will take. This may prevent surprises. If you don't have an idea, we
+will recommend looking at a smaller or shorter problem until you do.
+Check the time limit you have specified via the <code>--time</code> option
+to <code>sbatch</code>.</p>
+<p>There are a number of possible remedies if a longer time is required:</p>
+<ol>
+<li>Consider using the <code>long</code> QoS option; see the <a href="../user-guide/scheduler/#quality-of-service-qos">Quality of Service</a> descriptions.</li>
+<li>Exceptionally, consider using a <a href="../user-guide/scheduler/#reservations">reservation</a>.</li>
+</ol>
+<p>If you are expecting output from your program, but see nothing, you can try
+using the <code>--unbuffered</code> option to <code>srun</code> to make sure output appears
+immediately in the standard output (or error), rather than being
+buffered by the system (in which case it appears in discrete chunks).</p>
 <h3 id="checking-budgets">Checking budgets</h3>
 <p><strong>Q.</strong>  How can I check which budget code(s) I can use?</p>
 <p><strong>A.</strong>  You can check in <a href="https://safe.epcc.ed.ac.uk">SAFE</a> by selecting <code>Login accounts</code> from the menu, select the login account you want to query.</p>
@@ -2542,7 +2664,7 @@ to <code>--ntasks-per-node=64</code>).</p>
 <p>You can only check the amount of available budget via SAFE - <a href="#checking-budgets">see above</a>.</p>
 <h3 id="estimated-start-time-of-queued-jobs">Estimated start time of queued jobs</h3>
 <p><strong>Q.</strong>  I’ve checked the estimated start time for my queued jobs using “squeue -u $USER --start”. Why does the estimated start time keep changing?</p>
-<p><strong>A.</strong>  ARCHER2 uses the Slurm scheduler to queue jobs for the compute nodes. Slurm attempts to find a better schedule as jobs complete and new jobs are added to the queue. This helps to maximise the use of resources by minimising the number of idle compute nodes, in turn reducing your wait time in the queue.  </p>
+<p><strong>A.</strong>  ARCHER2 uses the Slurm scheduler to queue jobs for the compute nodes. Slurm attempts to find a better schedule as jobs complete and new jobs are added to the queue. This helps to maximise the use of resources by minimising the number of idle compute nodes, in turn reducing your wait time in the queue.</p>
 <p>However, If you periodically check the estimated start time of your queued jobs, you may notice that the estimate changes or even disappears. This is because Slurm only assigns the top entries in the queue with an estimated start time. As the schedule changes, your jobs could move in and out of this top region and thus gain or lose an estimated start time.</p>
 
 
@@ -2632,7 +2754,7 @@ to <code>--ntasks-per-node=64</code>).</p>
     <script id="__config" type="application/json">{"base": "..", "features": ["tabs"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
+      <script src="../assets/javascripts/bundle.88dd0f4e.min.js"></script>
       
     
   </body>
