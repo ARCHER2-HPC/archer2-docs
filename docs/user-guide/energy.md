@@ -314,10 +314,81 @@ this section of the documentation as they become available.
 
 At the moment, the following tools are available:
 
+- `emissions` - a command line tool on ARCHER2 that reports estimated emissions over a defined
+  date range for a specifed user, budget code or project. It can also provide comparisons to
+  other GHG emissions sources.
 - `jobemissions` - a command line tool on ARCHER2 that reports estimated emissions for a specified,
-  completed job. It can also provide comparisons to other GHG emissions sources
+  completed job. It can also provide comparisons to other GHG emissions sources.
 - [ARCHER2 CU Calculator](https://www.archer2.ac.uk/support-access/cu-calc.html) provides estimated
-  emissions for the specified CU use of ARCHER2
+  emissions for the specified CU use of ARCHER2.
+
+#### `emissions` tool
+
+The `emissions` tool is available by default to all ARCHER2 users from the command line. You
+supply a date range and a classifier (user, budget code or project) and the tool provides an
+estimate of the GHG emissions associated with all jobs that ran in the date range belonging
+to the supplied classifier (based on the estimation methodologies described above). For example,
+to provide an emissions estimate for all jobs run by the user `auser` in November 2024:
+
+```bash
+emissions --start=2024-11-01T00:00 --end=2024-12-01T00:00 --type=user auser
+```
+
+Typical output from the tool would look like:
+
+```
+  Period details:
+                         User:                auser
+                 Period start:     2024-11-01T00:00
+                   Period end:     2024-12-01T00:00
+                         Jobs:                  699
+                           CU:             3565.100
+      Compute node energy use:             1461.691 kWh
+    Other hardware energy use:              219.254 kWh (estimated)
+          Overhead energy use:              168.094 kWh (estimated)
+             Total energy use:             1849.039 kWh (estimated)
+
+  Emissions estimates:
+      Scope 2:      0.000 kgCO2e (ARCHER2 is on 100% certified
+                renewable energy contract so scope 2 emissions are zero)
+      Scope 3:     81.997 kgCO2e (23.0 gCO2e/CU)
+        Total:     81.997 kgCO2e
+
+      Indicative emissions estimates for UK national grid energy mix
+      in S. Scotland at start of job if ARCHER2 was not using
+      renewable energy
+          Scope 2:     58.812 kgCO2e (1849.039 kWh)
+             Carbon Intensities (gCO2e/kWh): Q1: 4.0, Median: 36.5, Q3: 73.0
+          Scope 3:     81.997 kgCO2e (23.0 gCO2e/CU)
+            Total:    140.809 kgCO2e
+
+      Scope 2 carbon intensity values from carbonintensity.org.uk
+
+```
+
+If you add the flag `--comparison food,other` the tool will add comparisons of
+GHG emissions to other sources. e.g. for the same user report above, it 
+would add the following section to the end of the output.
+
+```
+   Emissions from job approximately equivalent to following food consumption:
+        |      Food |  Emissions (kgCO2e/100g) | Equivalent to (g) |
+        |-----------|--------------------------|-------------------|
+        |      Beef |                    12.47 |            657.56 |
+        |   Chicken |                     1.43 |           5734.08 |
+        |   Avocado |                     0.18 |          45554.05 |
+        | Chickpeas |                     0.04 |         204993.23 |
+
+  Emissions from job approximately equivalent to:
+        Daily emissions from 303.7 houses' electricity use (in S. Scotland)
+        Emissions from flying 0.164 times across the Atlantic (500.00 kgCO2e/person)
+        Emissions from driving 304.8 miles (0.27 kgCO2e/mile, average UK car, petrol and diesel very similar)
+
+```
+
+You can add the `--json` flag to obtain the emissions data from the tool in a machine-readable
+format.
+
 
 #### `jobemissions` tool
 
