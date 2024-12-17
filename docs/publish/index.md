@@ -5,9 +5,11 @@ how to register your work on ARCHER2 into the ARCHER2 publications database via 
 
 ## Acknowledging ARCHER2
 
-We will shortly be publishing a description of the ARCHER2 service with a DOI that you can cite
-in your published work that arises from the use of ARCHER2. Until that time, please add the following
-words to any work you publish that arises from your use of ARCHER2:
+Please cite the following publication in all outputs resulting from use of the ARCHER2 service:
+
+> Beckett, G., Beech-Brandt, J., Leach, K., Payne, Z., Simpson, A., Smith, L., Turner, A., & Whiting, A. (2024). ARCHER2 Service Description. Zenodo. https://doi.org/10.5281/zenodo.14507040https://doi.org/10.5281/zenodo.14507039
+
+You can also include the following words if you wish:
 
 > This work used the ARCHER2 UK National Supercomputing Service (https://www.archer2.ac.uk).
 
