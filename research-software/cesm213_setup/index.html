@@ -2430,7 +2430,10 @@ If this happens, rerun the checkout_externals script and it should download the 
 <p>To build, execute the following commands</p>
 <div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>CESM2/2.1.3
 <span class="nb">cd</span><span class="w"> </span><span class="nv">$CIMEROOT</span>/tools/cprnc
-cmake<span class="w"> </span>.<span class="w"> </span>-DNetCDF_Fortran_LIBRARIES<span class="o">=</span>libnetcdff.so<span class="w"> </span>-DNetCDF_C_LIBRARIES<span class="o">=</span>libnetcdf.so
+../configure<span class="w"> </span>--macros-format<span class="o">=</span>CMake<span class="w"> </span>--mpilib<span class="o">=</span>mpi-serial
+sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;/}}/d&#39;</span><span class="w"> </span>.env_mach_specific.sh
+<span class="nb">source</span><span class="w"> </span>./.env_mach_specific.sh
+cmake<span class="w"> </span>.
 make
 </code></pre></div>
 <!-- It is likely you will see a warning message of the form
