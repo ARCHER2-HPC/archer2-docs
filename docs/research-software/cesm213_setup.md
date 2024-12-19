@@ -148,7 +148,10 @@ To build, execute the following commands
 ```bash
 module load CESM2/2.1.3
 cd $CIMEROOT/tools/cprnc
-cmake . -DNetCDF_Fortran_LIBRARIES=libnetcdff.so -DNetCDF_C_LIBRARIES=libnetcdf.so
+../configure --macros-format=CMake --mpilib=mpi-serial
+sed -i '/}}/d' .env_mach_specific.sh
+source ./.env_mach_specific.sh
+cmake .
 make
 ```
 
