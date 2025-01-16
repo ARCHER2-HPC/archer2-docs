@@ -32,7 +32,7 @@ ParaView client running on your own computer.
 
 !!! note 
     You should make sure the version of ParaView you have installed locally is
-    the same as the one on ARCHER2 (version 5.10.1).
+    the same as the one on ARCHER2 (current default is version 5.13.0).
 
 The following instructions are for running pvserver in an interactive job. 
 Start an iteractive job using:
