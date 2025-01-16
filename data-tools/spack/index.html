@@ -2948,7 +2948,7 @@ to <code>configure</code> via <code>self.spec["blas"].libs</code>, a
 <a href="https://spack.readthedocs.io/en/latest/llnl.util.html#llnl.util.filesystem.LibraryList"><code>LibraryList</code></a>
 object. So, the Code_Saturne package uses the following <code>configure_args()</code>
 method:</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">configure_args</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">configure_args</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="n">blas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spec</span><span class="p">[</span><span class="s2">&quot;blas&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">libs</span>
     <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;--with-blas-lib=</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">blas</span><span class="o">.</span><span class="n">search_flags</span><span class="p">),</span>
             <span class="s2">&quot;--with-blas-libs=</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">blas</span><span class="o">.</span><span class="n">link_flags</span><span class="p">)]</span>

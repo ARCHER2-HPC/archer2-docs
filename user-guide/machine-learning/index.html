@@ -2541,14 +2541,14 @@ ROCm Collective Communications Library (RCCL), hence the <code>--wireup_method n
 <p>The above job should achieve convergence &mdash; an Intersection over Union (IoU) of 0.82 &mdash; after 35 epochs or so. Runtime should be around 20-30 minutes.</p>
 <p>We can also modify the DeepCam <code>train.py</code> script so that the accuracy and loss are logged using <a href="https://pytorch.org/tutorials/recipes/recipes/tensorboard_with_pytorch.html">TensorBoard</a>.</p>
 <p>The following lines must be added to the DeepCam <code>train.py</code> script.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="o">...</span>
 
-<span class="kn">from</span> <span class="nn">torch.utils.tensorboard</span> <span class="kn">import</span> <span class="n">SummaryWriter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.tensorboard</span><span class="w"> </span><span class="kn">import</span> <span class="n">SummaryWriter</span>
 
 <span class="o">...</span>
 
-<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">pargs</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">pargs</span><span class="p">):</span>
 
     <span class="c1">#init distributed training</span>
     <span class="n">comm_local_group</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">pargs</span><span class="o">.</span><span class="n">wireup_method</span><span class="p">,</span> <span class="n">pargs</span><span class="o">.</span><span class="n">batchnorm_group_size</span><span class="p">)</span>
@@ -2581,7 +2581,7 @@ ROCm Collective Communications Library (RCCL), hence the <code>--wireup_method n
 <p>The <code>train_epoch</code> function is defined in <code>./driver/trainer.py</code> and so that file must be amended like so.</p>
 <div class="highlight"><pre><span></span><code><span class="o">...</span>
 
-<span class="k">def</span> <span class="nf">train_epoch</span><span class="p">(</span><span class="n">pargs</span><span class="p">,</span> <span class="n">comm_rank</span><span class="p">,</span> <span class="n">comm_size</span><span class="p">,</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">train_epoch</span><span class="p">(</span><span class="n">pargs</span><span class="p">,</span> <span class="n">comm_rank</span><span class="p">,</span> <span class="n">comm_size</span><span class="p">,</span>
                 <span class="o">...</span><span class="p">,</span>
                 <span class="n">logger</span><span class="p">,</span> <span class="n">writer</span><span class="p">):</span>
 
@@ -2650,7 +2650,7 @@ cd ./mlperf-hpc/deepcam/src/deepCam
 to the selected communications method. You will need to edit the <code>mpi</code> branch of this <code>if</code> statement as shown below.</p>
 <div class="highlight"><pre><span></span><code><span class="o">...</span>
 
-<span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">batchnorm_group_size</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">init</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">batchnorm_group_size</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
 
     <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;nccl-openmpi&quot;</span><span class="p">:</span>
 
@@ -2672,7 +2672,7 @@ to the selected communications method. You will need to edit the <code>mpi</code
 synchronisation method, see the <code>synchronize</code> method within <code>./utils/bnstats.py</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="o">...</span>
 
-<span class="k">def</span> <span class="nf">synchronize</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">synchronize</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span>
 
     <span class="k">if</span> <span class="n">dist</span><span class="o">.</span><span class="n">is_initialized</span><span class="p">():</span>
         <span class="c1"># sync the device before</span>
