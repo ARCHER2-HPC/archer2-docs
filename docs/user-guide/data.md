@@ -739,8 +739,10 @@ above.)
 
 ### Data transfer via Globus
 
-The ARCHER2 filesystems have a Globus Collection (formerly known as an endpoint) with the name "Archer2 file systems"<br>
-[Full step-by-step guide for using Globus](../../data-tools/globus) to transfer files to/from ARCHER2
+The ARCHER2 filesystems have a Globus Collection (formerly known as an endpoint) with the name "Archer2 file systems".
+See the [ARCHER2 Globus documentation](../../data-tools/globus) for more information on using Globus to transfer data to/from ARCHER2 (this includes a full step-by-step guide on transferring data).
+
+The Globus Command Line Interface (CLI) is also available on ARCHER2, see the Globus page linked above for more information.
 
 ### Data transfer via GridFTP
 
