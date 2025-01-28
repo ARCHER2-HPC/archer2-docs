@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#using-globus-to-transfer-data-tofrom-archer2-filesystems" class="md-skip">
+        <a href="#globus" class="md-skip">
           Skip to content
         </a>
       
@@ -2099,6 +2099,25 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#using-globus-on-archer2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Globus on ARCHER2
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-by-step-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step-by-step example
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step-by-step example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#setting-up-archer2-filesystems" class="md-nav__link">
     <span class="md-ellipsis">
       Setting up ARCHER2 filesystems
@@ -2106,8 +2125,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#setting-up-the-other-end-of-the-transfer" class="md-nav__link">
     <span class="md-ellipsis">
       Setting up the other end of the transfer
@@ -2139,8 +2158,8 @@
     </nav>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#setting-up-and-initiating-the-transfer" class="md-nav__link">
     <span class="md-ellipsis">
       Setting up and initiating the transfer
@@ -2148,11 +2167,25 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#using-a-different-archer2-account" class="md-nav__link">
     <span class="md-ellipsis">
       Using a different ARCHER2 account
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#globus-command-line-interface-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      Globus Command Line Interface (CLI)
     </span>
   </a>
   
@@ -2367,6 +2400,25 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#using-globus-on-archer2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Globus on ARCHER2
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-by-step-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step-by-step example
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step-by-step example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#setting-up-archer2-filesystems" class="md-nav__link">
     <span class="md-ellipsis">
       Setting up ARCHER2 filesystems
@@ -2374,8 +2426,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#setting-up-the-other-end-of-the-transfer" class="md-nav__link">
     <span class="md-ellipsis">
       Setting up the other end of the transfer
@@ -2407,8 +2459,8 @@
     </nav>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#setting-up-and-initiating-the-transfer" class="md-nav__link">
     <span class="md-ellipsis">
       Setting up and initiating the transfer
@@ -2416,11 +2468,25 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#using-a-different-archer2-account" class="md-nav__link">
     <span class="md-ellipsis">
       Using a different ARCHER2 account
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#globus-command-line-interface-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      Globus Command Line Interface (CLI)
     </span>
   </a>
   
@@ -2444,56 +2510,70 @@
   
 
 
-<h1 id="using-globus-to-transfer-data-tofrom-archer2-filesystems">Using Globus to transfer data to/from ARCHER2  filesystems</h1>
-<h2 id="setting-up-archer2-filesystems">Setting up ARCHER2 filesystems</h2>
+<h1 id="globus">Globus</h1>
+<p>Globus is a service that enables high-performance and convenient data transfer and sharing of large amounts of data.</p>
+<ul>
+<li><a href="https://www.globus.org/">Globus website</a></li>
+<li><a href="https://docs.globus.org/guides/">Globus documentation and tutorials</a></li>
+</ul>
+<h2 id="using-globus-on-archer2">Using Globus on ARCHER2</h2>
+<p>The ARCHER2 filesystems have a Globus Collection (formerly known as an endpoint) with the name "Archer2 file systems"
+A full step-by-step guide on transferring data to/from ARCHER2 is provided below</p>
+<h2 id="step-by-step-example">Step-by-step example</h2>
+<h3 id="setting-up-archer2-filesystems">Setting up ARCHER2 filesystems</h3>
 <p>Navigate to <a href="https://app.globus.org">https://app.globus.org</a></p>
 <p>Log in with your Globus identity (this could be a globusid.org or other identity)</p>
-<p><img alt="image" src="../../images/globus/1-login.jpg" /></p>
+<p><img alt="Globus web app data transfer interface at login" src="../../images/globus/1-login.jpg" /></p>
 <p>In File Manager, use the search tool to search for “Archer2 file systems”. Select it.</p>
-<p><img alt="image" src="../../images/globus/2-archer2-search.jpg" /></p>
+<p><img alt="Using the app to locate the ARCHER2 collection" src="../../images/globus/2-archer2-search.jpg" /></p>
 <p>In the transfer pane, you are told that Authentication/Consent is required. Click Continue.</p>
-<p><img alt="image" src="../../images/globus/3-continue.jpg" /></p>
-<p><img alt="image" src="../../images/globus/4-link-archer2.jpg" /></p>
+<p><img alt="Continuing to the authetication step" src="../../images/globus/3-continue.jpg" /></p>
+<p><img alt="Interface required SAFE login" src="../../images/globus/4-link-archer2.jpg" /></p>
 <p>Click on the ARCHER2 Safe (safe.epcc.ed.ac.uk) link</p>
-<p><img alt="image" src="../../images/globus/5-safe.jpg" /></p>
+<p><img alt="Login to ARCHER2 SAFE and link account" src="../../images/globus/5-safe.jpg" /></p>
 <p>Select the correct User account (if you have more than one)</p>
 <p>Click Accept</p>
-<p><img alt="image" src="../../images/globus/6-continue.jpg" /></p>
+<p><img alt="Return to Globus web app" src="../../images/globus/6-continue.jpg" /></p>
 <p>Now confirm your Globus credentials – click Continue</p>
-<p><img alt="image" src="../../images/globus/7-identity.jpg" /></p>
-<p>Click on the SAFE id you selected previously</p>
-<p><img alt="image" src="../../images/globus/8-safe.jpg" /></p>
+<p><img alt="Linking credentials at Globus web app" src="../../images/globus/7-identity.jpg" /></p>
+<p>Click on the SAFE ID you selected previously</p>
+<p><img alt="Select the correct user account in SAFE" src="../../images/globus/8-safe.jpg" /></p>
 <p>Make sure the correct User account is selected and Accept again</p>
 <p>Your ARCHER2 /home directory will be shown </p>
-<p><img alt="image" src="../../images/globus/9-home.jpg" /></p>
+<p><img alt="Web app interface showing ARCHER2 home directory" src="../../images/globus/9-home.jpg" /></p>
 <p>You can switch to viewing e.g. your /work directory by editing the path, or using the "up one folder" and selecting folders to move down the tree, as required</p>
-<p><img alt="image" src="../../images/globus/9-work.jpg" /></p>
-<h2 id="setting-up-the-other-end-of-the-transfer">Setting up the other end of the transfer</h2>
-<p><img alt="image" src="../../images/globus/10a-two-pane.jpg" /></p>
+<p><img alt="Web app interface showing ARCHER2 work directory" src="../../images/globus/9-work.jpg" /></p>
+<h3 id="setting-up-the-other-end-of-the-transfer">Setting up the other end of the transfer</h3>
+<p><img alt="Illustration of two-panel view in web interface" src="../../images/globus/10a-two-pane.jpg" /></p>
 <p>Make sure you select two-panel view mode</p>
-<h3 id="laptop">Laptop</h3>
-<p><img alt="image" src="../../images/globus/10-destination.jpg" /></p>
+<h4 id="laptop">Laptop</h4>
+<p><img alt="Illustrating search option in right panel" src="../../images/globus/10-destination.jpg" /></p>
 <p>If you wish to transfer data to/from your personal laptop or other device, click on the Collection Search in the right-hand panel</p>
-<p><img alt="image" src="../../images/globus/11-globus-connect-personal.jpg" /></p>
+<p><img alt="Illustrating connection to laptop step" src="../../images/globus/11-globus-connect-personal.jpg" /></p>
 <p>Use the link to “Get Globus Connect Personal” to create a Collection for your local drive.</p>
-<p><img alt="image" src="../../images/globus/12-to-laptop.jpg" /></p>
-<h3 id="other-server-eg-jasmin">Other server e.g. JASMIN</h3>
+<p><img alt="Interface showing local laptop view" src="../../images/globus/12-to-laptop.jpg" /></p>
+<h4 id="other-server-eg-jasmin">Other server e.g. JASMIN</h4>
 <p>If you wish to connect to another server, you will need to search for the Collection e.g. JASMIN Default Collection and authenticate</p>
 <p>Please see the <a href="https://help.jasmin.ac.uk/docs/data-transfer/globus-transfers-with-jasmin/">JASMIN Globus page for more information</a></p>
-<p><img alt="image" src="../../images/globus/13-jasmin.jpg" /></p>
-<h2 id="setting-up-and-initiating-the-transfer">Setting up and initiating the transfer</h2>
+<p><img alt="Illustration of connecting to JASMIN Collection" src="../../images/globus/13-jasmin.jpg" /></p>
+<h3 id="setting-up-and-initiating-the-transfer">Setting up and initiating the transfer</h3>
 <p>Once you are connected to both the Source and Destination Collections, you can use the File Manager to select the files to be transferred, and then click the Start button to initiate the transfer</p>
-<p><img alt="image" src="../../images/globus/14-transfer.jpg" /></p>
+<p><img alt="Selecting data you want to transfer" src="../../images/globus/14-transfer.jpg" /></p>
 <p>A pop-up will appear once the Transfer request has been submitted successfully</p>
 <p>Clicking on the “View Details” will show the progress and final status of the transfer</p>
-<p><img alt="image" src="../../images/globus/15-result.jpg" /></p>
-<p><img alt="image" src="../../images/globus/16-transferred.jpg" /></p>
-<h2 id="using-a-different-archer2-account">Using a different ARCHER2 account</h2>
+<p><img alt="Progress indicator" src="../../images/globus/15-result.jpg" /></p>
+<p><img alt="Interface once data transfer is complete" src="../../images/globus/16-transferred.jpg" /></p>
+<h3 id="using-a-different-archer2-account">Using a different ARCHER2 account</h3>
 <p>If you want to use Globus with a different account on ARCHER2, you will have to go to Settings</p>
-<p><img alt="image" src="../../images/globus/17-settings.jpg" /></p>
+<p><img alt="Settings to change ARCHER2 account" src="../../images/globus/17-settings.jpg" /></p>
 <p>Manage Identities</p>
-<p><img alt="image" src="../../images/globus/18-unlink.jpg" /></p>
+<p><img alt="Multiple identities view" src="../../images/globus/18-unlink.jpg" /></p>
 <p>And Unlink the current ARCHER2 safe identity, then repeat the link process with the other ARCHER2 account</p>
+<h2 id="globus-command-line-interface-cli">Globus Command Line Interface (CLI)</h2>
+<p>The Globus CLI is also available on ARCHER2 for transferring data. You can make it available with</p>
+<div class="highlight"><pre><span></span><code>module load globus-cli
+</code></pre></div>
+<p>For more information on use, see the <a href="https://docs.globus.org/cli/">Globus CLI documentation</a>.</p>
 
 
 
