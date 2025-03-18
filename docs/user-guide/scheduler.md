@@ -134,6 +134,17 @@ output to just your jobs by adding the `-u $USER` option:
 auser@ln01:~> squeue -u $USER
 ```
 
+
+It is *possible* to continuously check the queue using
+
+```bash
+watch -n60 squeue
+```
+
+where the -n60 indicates to repeat the polling every 60 seconds.  The default value is 2 seconds, but on a large shared machine such as ARCHER2, such heavy polling will very quickly lead to impact on all users with slow response times for all slurm commands.  If it is essential to poll slurm in this way, please ensure that you set a time period of 60 seconds or longer.
+
+
+
 ### `scancel`: deleting jobs
 
 `scancel` is used to delete a jobs from the scheduler. If the job is
