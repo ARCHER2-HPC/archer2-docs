@@ -3,7 +3,7 @@
 
 [Linaro Forge](https://www.linaroforge.com/) provides debugging and profiling tools
 for MPI parallel applications, and OpenMP or pthreads multi-threaded applications
-(and also hydrid MPI/OpenMP). Forge DDT is the debugger and MAP is the profiler.
+(and also hydrid MPI/OpenMP). Forge DDT is the debugger and MAP is the profiler. Forge may also be used on the GPU development platform.
 
 
 ### User interface
@@ -286,6 +286,22 @@ that batch submissions via `sbatch` will not be rejected.
 Finally, note that `ssh` may need to be configured so that it picks up
 the correct local public key file. This may be done, e.g., via the
 local `.ssh/config` configuration file.
+
+## Using Forge with the GPU nodes
+
+Much of the functionality provided by Forge can be used to examine a GPU
+program, e.g., one compiled with `hipcc`. As usual, compile with `-g` to
+ensure debugging symbols are available.
+
+If using the remote cllient, a queue submission template file should be
+supplied with a line including the number of GPUs required, e.g.:
+
+```slurm
+#SBATCH --gpus=1
+```
+which cannot be set through the client interface. Other parameters
+including the partition and the QoS can be specified from the client.
+See the [ARCHER2 GPU page](../user-guide/gpu.md) for details.
 
 ## Useful links
 
