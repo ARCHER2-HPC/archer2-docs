@@ -860,14 +860,12 @@ To display information pertaining to NIC selection set,
 
 ## Debugging
 
-!!! Note
-    Work in progress
+GPU debugging via Forge DDT is available. See the
+[ARHCER2 Forge page](../data-tools/forge.md) for details of how to use the
+Forge tools.
 
-Documentation for rocgdb can be found in the following locations:
-
-https://rocm.docs.amd.com/projects/ROCgdb/en/docs-5.2.3/index.html
-
-https://docs.amd.com/projects/HIP/en/docs-5.2.3/how_to_guides/debugging.html#using-rocgdb
+Documentation for underlying `rocgdb` can be found in the
+[AMD documentation](https://rocm.docs.amd.com/projects/ROCgdb/en/docs-5.2.3/index.html).
 
 
 ## Profiling
@@ -881,7 +879,11 @@ For example in an interactive session where resources have already been allocate
 srun -n 2 --exclusive --nodes=1 --time=00:20:00 --partition=gpu --qos=gpu-exc --gpus=2 rocprof --stats ./myprog_exe
 ```
 
-to profile your application. More detail on the use of rocprof can be found [here](https://github.com/ROCm/rocprofiler/tree/rocm-5.2.3).
+to profile your application. More detail on the use of rocprof can be found [at this github repository](https://github.com/ROCm/rocprofiler/tree/rocm-5.2.3).
+
+
+Profiling functionality is also available via
+[Forge on ARCHER2](../data-tools/forge.md).
 
 
 ## Performance tuning
