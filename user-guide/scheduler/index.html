@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.11">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.12">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.4af4bdda.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.2afb09e1.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
@@ -6750,6 +6750,11 @@ module<span class="w"> </span>load<span class="w"> </span>xthi
 on using the data analysis nodes (including example job submission scripts)
 can be found in the <a href="../analysis/">Data Analysis section</a> of the User and Best
 Practice Guide.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Jobs running in the <code>serial</code> QoS are not charged but you do need a positive
+budget code to be able to run serial jobs.</p>
+</div>
 <h2 id="gpu-jobs">GPU jobs</h2>
 <p>You can run on the ARCHER2 GPU nodes and full guidance can be found on the <a href="https://docs.archer2.ac.uk/user-guide/gpu/">GPU development platform page</a></p>
 <h2 id="best-practices-for-job-submission">Best practices for job submission</h2>
@@ -6763,7 +6768,7 @@ minimum time for your job with the <code>--time-min</code> option to SBATCH:</p>
 <span class="kp">#SBATCH --time=&lt;upper_bound&gt;</span>
 </code></pre></div>
 <p>Within your job script, you can get the time remaining in the job with
-<code>squeue -h -j ${Slurm_JOBID} -o %L</code> to allow you to deal with
+<code>squeue -h -j ${SLURM_JOBID} -o %L</code> to allow you to deal with
 potentially varying runtimes when using this option.</p>
 <h3 id="long-running-jobs">Long Running Jobs</h3>
 <p>Simulations which must run for a long period of time achieve the best
