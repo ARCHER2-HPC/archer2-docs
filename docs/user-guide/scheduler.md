@@ -2500,6 +2500,10 @@ on using the data analysis nodes (including example job submission scripts)
 can be found in the [Data Analysis section](analysis.md) of the User and Best
 Practice Guide.
 
+!!! note
+    Jobs running in the `serial` QoS are not charged but you do need a positive
+    budget code to be able to run serial jobs.
+
 ## GPU jobs
 
 You can run on the ARCHER2 GPU nodes and full guidance can be found on the [GPU development platform page](https://docs.archer2.ac.uk/user-guide/gpu/)
@@ -2521,7 +2525,7 @@ minimum time for your job with the `--time-min` option to SBATCH:
 ```
 
 Within your job script, you can get the time remaining in the job with
-`squeue -h -j ${Slurm_JOBID} -o %L` to allow you to deal with
+`squeue -h -j ${SLURM_JOBID} -o %L` to allow you to deal with
 potentially varying runtimes when using this option.
 
 ### Long Running Jobs
