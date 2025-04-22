@@ -91,6 +91,11 @@ be used to transfer data from a remote system to ARCHER2 and vice versa
 (using e.g. `scp` or `rsync`). This can be useful when transferring large
 amounts of data that might take hours to complete.
 
+!!! note
+    Jobs in the `serial` QoS are not charged but you need to have a budget
+    code with resources available (i.e. that has a positive CU balance) to
+    be able to use them.
+
 ### Requesting resources on the data analysis nodes using Slurm
 
 The ARCHER2 data analysis nodes can be reached by using the `serial`
