@@ -2930,6 +2930,12 @@ work, and the RDFaaS file systems. They can also
 be used to transfer data from a remote system to ARCHER2 and vice versa
 (using e.g. <code>scp</code> or <code>rsync</code>). This can be useful when transferring large
 amounts of data that might take hours to complete.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Jobs in the <code>serial</code> QoS are not charged but you need to have a budget
+code with resources available (i.e. that has a positive CU balance) to
+be able to use them.</p>
+</div>
 <h3 id="requesting-resources-on-the-data-analysis-nodes-using-slurm">Requesting resources on the data analysis nodes using Slurm</h3>
 <p>The ARCHER2 data analysis nodes can be reached by using the <code>serial</code>
 partition and the <code>serial</code> QoS. Unlike other nodes on ARCHER2, you may
