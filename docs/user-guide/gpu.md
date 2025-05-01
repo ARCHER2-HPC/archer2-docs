@@ -587,7 +587,7 @@ on the compute node architecture.
 #!/bin/bash
 
 #SBATCH --job-name=multi-GPU
-#SBATCH --gpus=4
+#SBATCH --gpus=8
 #SBATCH --nodes=2
 #SBATCH --exclusive
 #SBATCH --time=00:20:00
