@@ -496,7 +496,7 @@ parallel processes and threads they require.
      no threading and you want to use all 128 cores on the node then you
      should set the number of CPUs (cores) per parallel process to 1.
      **Important:** if you are using threading (e.g. with OpenMP) or
-     you want to use less than 128 cores per node (e.g. to access more
+     you want to use fewer than 128 cores per node (e.g. to access more
      memory or memory bandwidth per core) then you will need to change
      this option as described below.
    - `--cpu-freq=<freq. in kHz>` set the CPU frequency for the compute
@@ -505,7 +505,7 @@ parallel processes and threads they require.
      and energy use see the [Energy use](energy.md) section.
 
 For parallel jobs that use threading (e.g. OpenMP) or when you want to
-use less than 128 cores per node (e.g. to access more memory or memory
+use fewer than 128 cores per node (e.g. to access more memory or memory
 bandwidth per core), you will also need to change the `--cpus-per-task`
 option.
 
@@ -516,7 +516,7 @@ For jobs using threading:
      `OMP_NUM_THREADS` environment variable if using OpenMP in your
      job.
 
-For jobs using less than 128 cores per node:
+For jobs using fewer than 128 cores per node:
    - `--cpus-per-task=<stride between placement of processes>` the stride
      between the parallel processes. For example, if you want to double the
      memory and memory bandwidth per process on an ARCHER2 compute node you
@@ -1523,7 +1523,7 @@ process placement are:
 
  - `--ntasks-per-node=X` Place *X* processes on each node
  - `--cpus-per-task=Y` Set a stride of *Y* cores between each placed process. If you specify this
-  option in a job submission script (queued using `sbatch`) or via `salloc` they you will also need
+  option in a job submission script (queued using `sbatch`) or via `salloc` then you will also need
   to set `export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK` to ensure the setting is passed to `srun`
   commands in the script or allocation.
 
@@ -2542,7 +2542,7 @@ runtimes maximise throughput).
 ### Interconnect locality
 
 For jobs which are sensitive to interconnect (MPI) performance and
-utilise 128 nodes or less it is possible to request that all nodes
+utilise 128 nodes or fewer it is possible to request that all nodes
 are in a single Slingshot dragonfly group. The maximum number of nodes in
 a group on ARCHER2 is 128.
 
