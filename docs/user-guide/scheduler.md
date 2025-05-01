@@ -1523,7 +1523,7 @@ process placement are:
 
  - `--ntasks-per-node=X` Place *X* processes on each node
  - `--cpus-per-task=Y` Set a stride of *Y* cores between each placed process. If you specify this
-  option in a job submission script (queued using `sbatch`) or via `salloc` they you will also need
+  option in a job submission script (queued using `sbatch`) or via `salloc` then you will also need
   to set `export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK` to ensure the setting is passed to `srun`
   commands in the script or allocation.
 
