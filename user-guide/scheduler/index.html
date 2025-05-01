@@ -4961,7 +4961,7 @@ parallel processes and threads they require.</p>
      no threading and you want to use all 128 cores on the node then you
      should set the number of CPUs (cores) per parallel process to 1.
      <strong>Important:</strong> if you are using threading (e.g. with OpenMP) or
-     you want to use less than 128 cores per node (e.g. to access more
+     you want to use fewer than 128 cores per node (e.g. to access more
      memory or memory bandwidth per core) then you will need to change
      this option as described below.</li>
 <li><code>--cpu-freq=&lt;freq. in kHz&gt;</code> set the CPU frequency for the compute
@@ -4970,7 +4970,7 @@ parallel processes and threads they require.</p>
      and energy use see the <a href="../energy/">Energy use</a> section.</li>
 </ul>
 <p>For parallel jobs that use threading (e.g. OpenMP) or when you want to
-use less than 128 cores per node (e.g. to access more memory or memory
+use fewer than 128 cores per node (e.g. to access more memory or memory
 bandwidth per core), you will also need to change the <code>--cpus-per-task</code>
 option.</p>
 <p>For jobs using threading:
@@ -4979,7 +4979,7 @@ option.</p>
      hybrid MPI/OpenMP jobs). <strong>Important:</strong> you must also set the
      <code>OMP_NUM_THREADS</code> environment variable if using OpenMP in your
      job.</p>
-<p>For jobs using less than 128 cores per node:
+<p>For jobs using fewer than 128 cores per node:
    - <code>--cpus-per-task=&lt;stride between placement of processes&gt;</code> the stride
      between the parallel processes. For example, if you want to double the
      memory and memory bandwidth per process on an ARCHER2 compute node you
@@ -5872,7 +5872,7 @@ process placement are:</p>
 <ul>
 <li><code>--ntasks-per-node=X</code> Place <em>X</em> processes on each node</li>
 <li><code>--cpus-per-task=Y</code> Set a stride of <em>Y</em> cores between each placed process. If you specify this
-  option in a job submission script (queued using <code>sbatch</code>) or via <code>salloc</code> they you will also need
+  option in a job submission script (queued using <code>sbatch</code>) or via <code>salloc</code> then you will also need
   to set <code>export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK</code> to ensure the setting is passed to <code>srun</code>
   commands in the script or allocation.</li>
 </ul>
@@ -6781,7 +6781,7 @@ minimise the checkpoint/restart overheads) and throughput (short
 runtimes maximise throughput).</p>
 <h3 id="interconnect-locality">Interconnect locality</h3>
 <p>For jobs which are sensitive to interconnect (MPI) performance and
-utilise 128 nodes or less it is possible to request that all nodes
+utilise 128 nodes or fewer it is possible to request that all nodes
 are in a single Slingshot dragonfly group. The maximum number of nodes in
 a group on ARCHER2 is 128.</p>
 <p>Slurm has a concept of "switches" which on ARCHER2 are configured to map
