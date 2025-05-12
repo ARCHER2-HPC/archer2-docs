@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.12">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.13">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.2afb09e1.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
@@ -1397,30 +1397,6 @@
   <a href="#example-pre-capability-day-session-job-submission-script" class="md-nav__link">
     <span class="md-ellipsis">
       Example pre-Capability Day session job submission script
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#nerc-capability-reservation" class="md-nav__link">
-    <span class="md-ellipsis">
-      NERC Capability reservation
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="NERC Capability reservation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#example-nerc-capability-reservation-job-submission-script" class="md-nav__link">
-    <span class="md-ellipsis">
-      Example NERC Capability reservation job submission script
     </span>
   </a>
   
@@ -4098,30 +4074,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#nerc-capability-reservation" class="md-nav__link">
-    <span class="md-ellipsis">
-      NERC Capability reservation
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="NERC Capability reservation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#example-nerc-capability-reservation-job-submission-script" class="md-nav__link">
-    <span class="md-ellipsis">
-      Example NERC Capability reservation job submission script
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#capability-day-session" class="md-nav__link">
     <span class="md-ellipsis">
       Capability Day session
@@ -6577,7 +6529,11 @@ and, once the username has been selected, the budget you want to charge the rese
 <h2 id="capability-days">Capability Days</h2>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>The next Capability Days session has not been scheduled yet</p>
+<p>The next Capability Days session will be from Tue 17 Jun 2025 to Thu 19 Jun 2024.</p>
+<ul>
+<li><code>pre-capabilityday</code> QoS: 0800-2000, Tue 17 Jun 2025</li>
+<li><code>capabilityday</code> QoS: 2000 Tue 17 Jun - 1400 Thu 19 Jun 2025</li>
+</ul>
 </div>
 <p>ARCHER2 Capability Days are a mechanism to allow users to run large scale (512 node or more) tests
 on the system free of charge. The motivations behind Capability Days are:</p>
@@ -6642,26 +6598,29 @@ module<span class="w"> </span>load<span class="w"> </span>xthi
 
 <span class="nb">srun</span><span class="w"> </span>--hint<span class="o">=</span>multithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>my_app.x
 </code></pre></div>
-<h3 id="nerc-capability-reservation">NERC Capability reservation</h3>
-<p>The NERC Capability reservation is typically available directly before the full Capability Day session and allows
-short test jobs to prepare for Capability Day.</p>
-<p>Submit to the <code>NERCcapability</code> <em>reservation</em>. Jobs can be submitted ahead of time and will start when the NERC Capability
-reservatoin starts.</p>
-<p><code>NERCcapability</code> reservation limits:</p>
-<ul>
-<li>Only available to users in NERC projects</li>
-<li>Available for 8 hours</li>
-<li>1024 nodes available</li>
-<li>Maximum job size: 1024 nodes</li>
-<li>Maximum walltime: 8 hours (reservation length)<ul>
-<li>We will monitor use of the reservation to ensure multiple users get a chance to run</li>
-<li>Any long jobs blocking access for other users will be killed</li>
-</ul>
-</li>
-<li>High memory nodes are not available</li>
-<li>Jobs are free</li>
-</ul>
-<h4 id="example-nerc-capability-reservation-job-submission-script">Example NERC Capability reservation job submission script</h4>
+<!--
+### NERC Capability reservation
+
+The NERC Capability reservation is typically available directly before the full Capability Day session and allows
+short test jobs to prepare for Capability Day.
+
+Submit to the `NERCcapability` *reservation*. Jobs can be submitted ahead of time and will start when the NERC Capability
+reservatoin starts.
+
+`NERCcapability` reservation limits:
+
+- Only available to users in NERC projects
+- Available for 8 hours
+- 1024 nodes available
+- Maximum job size: 1024 nodes
+- Maximum walltime: 8 hours (reservation length)
+    - We will monitor use of the reservation to ensure multiple users get a chance to run
+    - Any long jobs blocking access for other users will be killed
+- High memory nodes are not available
+- Jobs are free
+
+#### Example NERC Capability reservation job submission script
+
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="kp">#SBATCH --job-name=NERC_capability_job</span>
 <span class="kp">#SBATCH --nodes=256</span>
@@ -6683,6 +6642,8 @@ module<span class="w"> </span>load<span class="w"> </span>xthi
 
 <span class="nb">srun</span><span class="w"> </span>--hint<span class="o">=</span>multithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>my_app.x
 </code></pre></div>
+-->
+
 <h3 id="capability-day-session">Capability Day session</h3>
 <p>The Capability Day session is typically available directly after the pre-Capability Day session.</p>
 <p>Submit to the <code>capability</code> QoS. Jobs can be submitted ahead of time and will start when the Capability Day
@@ -6963,10 +6924,10 @@ value to obtain more information on huge pages use.</p>
     
     
       
-      <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
       
     
   </body>
