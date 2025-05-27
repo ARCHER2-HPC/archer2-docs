@@ -225,7 +225,7 @@ lists the active QoS on ARCHER2.
     | QoS        | Max Nodes Per Job | Max Walltime | Jobs Queued | Jobs Running | Partition(s) | Notes |
     | ---------- | ----------------- | ------------ | ----------- | ------------ | ------------ | ------|
     | standard   | 1024               | 24 hrs       | 64          | 16           | standard     | Maximum of 1024 nodes in use by any one user at any time |
-    | highmem   | 256               | 24 hrs       | 16          | 16           | highmem     | Maximum of 512 nodes in use by any one user at any time |
+    | highmem   | 256               | 24 hrs       | 16          | 16           | highmem     | Maximum of 256 nodes in use by any one user at any time |
     | taskfarm   | 16               | 24 hrs       | 128          | 32           | standard     | Maximum of 256 nodes in use by any one user at any time |
     | short      | 32                 | 20 mins      | 16           | 4            | standard     | |
     | long       | 64                | 96 hrs       | 16          | 16           | standard     | Minimum walltime of 24 hrs, maximum 512 nodes in use by any one user at any time, maximum of 2048 nodes in use by QoS |
