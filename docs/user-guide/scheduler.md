@@ -143,7 +143,7 @@ watch -n60 squeue
 
 where the -n60 indicates to repeat the polling every 60 seconds.  The default value is 2 seconds, but on a large shared machine such as ARCHER2, such heavy polling will very quickly lead to impact on all users with slow response times for all slurm commands.  If it is essential to poll slurm in this way, please ensure that you set a time period of 60 seconds or longer.
 
-Please avoid using `watch` inside a [`tmux`](https://docs.archer2.ac.uk/user-guide/connecting-totp/#tmux), as these can persist even after you log off or lose connection to ARCHER2.
+Please avoid using `watch` inside a [`tmux`](https://docs.archer2.ac.uk/user-guide/connecting-totp/#tmux) session, as these can persist even after you log off or lose connection to ARCHER2.
 
 
 ### `scancel`: deleting jobs
