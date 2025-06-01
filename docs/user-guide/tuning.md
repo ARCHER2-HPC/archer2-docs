@@ -26,7 +26,7 @@ effects on achieved performance.
 
 ### MPI environment variables
 
-There are a number of environment variables available to control aspects of MPI behavour on ARCHER2,
+There are a number of environment variables available to control aspects of MPI behaviour on ARCHER2,
 the set of options can be displayed by running,
 
 ```
