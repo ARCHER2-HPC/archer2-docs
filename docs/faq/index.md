@@ -52,7 +52,7 @@ the `--ntasks-per-node` value in your Slurm submission script; e.g.,
 if you have `--ntasks-per-node=128` you can try `--ntasks-per-node=64`
 and double the number of nodes via `--nodes`.
 2. If using standard partition nodes, one can also try running on the
-same number of MPI processes, but use the `hignmem` partition in
+same number of MPI processes, but use the `highmem` partition in
 which the nodes have twice as much memory as the standard partition.
 3. If there is still a problem, you may need to reduce the size of
 your problem until you understand where the limit is.
