@@ -217,6 +217,19 @@ fail to compile with some compilers. Under `PrgEnv-cray` an explicit
 description of supported OpenMP features can be viewed using the
 command `man intro_openmp`.
 
+##### Compiling with CMake
+
+When using the `CMake` build system with the Cray/GPU compilers the generated
+link line may not correctly link OpenMP - see https://gitlab.kitware.com/cmake/cmake/-/issues/26129.
+A potential solution is to add code equivalent to:
+
+```
+if(${CMAKE_Fortran_COMPILER_ID} STREQUAL "Cray")
+  target_link_options(<target> INTERFACE -h omp)
+endif()
+```
+
+to your CMake program (C/C++ linkers should use `-fopenmp`).
 
 #### HIP
 
