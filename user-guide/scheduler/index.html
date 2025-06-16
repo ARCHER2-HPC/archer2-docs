@@ -4332,6 +4332,7 @@ output to just your jobs by adding the <code>-u $USER</code> option:</p>
 <div class="highlight"><pre><span></span><code>watch<span class="w"> </span>-n60<span class="w"> </span>squeue
 </code></pre></div>
 <p>where the -n60 indicates to repeat the polling every 60 seconds.  The default value is 2 seconds, but on a large shared machine such as ARCHER2, such heavy polling will very quickly lead to impact on all users with slow response times for all slurm commands.  If it is essential to poll slurm in this way, please ensure that you set a time period of 60 seconds or longer.</p>
+<p>Please avoid using <code>watch</code> inside a <a href="https://docs.archer2.ac.uk/user-guide/connecting-totp/#tmux"><code>tmux</code></a> session, as these can persist even after you log off or lose connection to ARCHER2.</p>
 <h3 id="scancel-deleting-jobs"><code>scancel</code>: deleting jobs</h3>
 <p><code>scancel</code> is used to delete a jobs from the scheduler. If the job is
 waiting to run it is simply cancelled, if it is a running job then it is
