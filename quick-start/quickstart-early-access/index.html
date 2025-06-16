@@ -2528,10 +2528,31 @@ module load xthi
 
 srun --distribution=block:block --hint=nomultithread xthi
 </code></pre>
+<p>The reservation includes 140 standard-memory nodes and one GPU node.
+Below is an example script using the GPU node and <code>rocm-smi</code> utility to display 
+the topology. Note the use of the <code>--partition=gpu</code> setting.</p>
+<pre><code>#!/bin/bash
+
+#SBATCH --job-name=topo
+#SBATCH --account=z19
+#SBATCH --partition=gpu
+#SBATCH --qos=reservation
+#SBATCH --reservation=HPE_iscsi_testing_gpu
+#SBATCH --nodes=1
+#SBATCH --gpus=4
+#SBATCH --time=00:10:00
+#SBATCH --exclusive
+
+module load rocm
+
+rocm-smi --showtopo
+</code></pre>
 <h2 id="reporting-issues">Reporting Issues</h2>
 <p>Please let us know in case you encounter any issues, unexpected behaviour or 
 performance degradation by contacting the
-<a href="https://www.archer2.ac.uk/support-access/servicedesk.html">ARCHER2 Service Desk</a>.</p>
+<a href="https://www.archer2.ac.uk/support-access/servicedesk.html">ARCHER2 Service Desk</a> 
+and adding a note in the subject line that it is part of the 
+<em>Software Upgrade Early Access</em>.</p>
 <h2 id="further-notes">Further notes</h2>
 <p>Note that the default Cray Programming Environment (CPE) on the upgraded 
 nodes has switched the default from <code>cpe/22.12</code> to <code>cpe/23.09</code>. If you 
