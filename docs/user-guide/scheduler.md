@@ -2342,7 +2342,6 @@ charge.
 Capability Days are made up of different parts:
 
 - pre-Capability Day session (`pre-capabilityday` QoS) to allow users to test scaling and job setup ahead of full Capability Day
-- NERC Capability reservation (`NERCcapability` reservation) to allow NERC users to test at large scale
 - Capability Day session (`capabilityday` QoS)
 
 !!! tip
@@ -2456,7 +2455,7 @@ session starts.
 - Minimum job size: 512 nodes, maximum job size: 4096 nodes
     - Individual jobs steps (i.e. `srun` commands) within job scripts should also be a minimum of 512 nodes
     - Jobs that do not meet these limits will be killed
-- Maximum walltime: 1 hour
+- Maximum walltime: 2 hours
 - Job numbers: 16 jobs maximum per budget code in the QoS
     - 2 jobs maximum running per budget code
 - High memory nodes are not available
@@ -2471,7 +2470,7 @@ session starts.
 #SBATCH --nodes=1024
 #SBATCH --ntasks-per-node=8
 #SBATCH --cpus-per-task=16
-#SBATCH --time=1:0:0
+#SBATCH --time=2:0:0
 #SBATCH --partition=standard
 #SBATCH --qos=capabilityday
 #SBATCH --account=t01
