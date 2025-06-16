@@ -11,9 +11,8 @@ and core level spectra.
 
 ## Useful Links
 
-   - [CASTEP User Guides](http://www.castep.org/CASTEP/Documentation)
-   - [CASTEP Tutorials](http://www.castep.org/CASTEP/OnlineTutorials)
-   - [CASTEP Licensing](http://www.castep.org/CASTEP/GettingCASTEP)
+   - [CASTEP User Guides and Tutorials](https://www.castep.org/help_and_support)
+   - [CASTEP Licensing](https://www.castep.org/get_castep)
 
 ## Using CASTEP on ARCHER2
 
