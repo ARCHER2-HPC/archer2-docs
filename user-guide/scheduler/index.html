@@ -6548,7 +6548,6 @@ charge.</p>
 <p>Capability Days are made up of different parts:</p>
 <ul>
 <li>pre-Capability Day session (<code>pre-capabilityday</code> QoS) to allow users to test scaling and job setup ahead of full Capability Day</li>
-<li>NERC Capability reservation (<code>NERCcapability</code> reservation) to allow NERC users to test at large scale</li>
 <li>Capability Day session (<code>capabilityday</code> QoS)</li>
 </ul>
 <div class="admonition tip">
@@ -6658,7 +6657,7 @@ session starts.</p>
 <li>Jobs that do not meet these limits will be killed</li>
 </ul>
 </li>
-<li>Maximum walltime: 1 hour</li>
+<li>Maximum walltime: 2 hours</li>
 <li>Job numbers: 16 jobs maximum per budget code in the QoS<ul>
 <li>2 jobs maximum running per budget code</li>
 </ul>
@@ -6673,7 +6672,7 @@ session starts.</p>
 <span class="kp">#SBATCH --nodes=1024</span>
 <span class="kp">#SBATCH --ntasks-per-node=8</span>
 <span class="kp">#SBATCH --cpus-per-task=16</span>
-<span class="kp">#SBATCH --time=1:0:0</span>
+<span class="kp">#SBATCH --time=2:0:0</span>
 <span class="kp">#SBATCH --partition=standard</span>
 <span class="kp">#SBATCH --qos=capabilityday</span>
 <span class="kp">#SBATCH --account=t01</span>
