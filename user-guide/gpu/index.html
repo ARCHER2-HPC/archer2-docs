@@ -1032,6 +1032,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="OpenMP Offload">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#compiling-with-cmake" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compiling with CMake
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -3208,6 +3223,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="OpenMP Offload">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#compiling-with-cmake" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compiling with CMake
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -4011,6 +4041,15 @@ versions of the OpenMP standard, e.g. versions later than OpenMP 4.5,
 fail to compile with some compilers. Under <code>PrgEnv-cray</code> an explicit
 description of supported OpenMP features can be viewed using the
 command <code>man intro_openmp</code>.</p>
+<h5 id="compiling-with-cmake">Compiling with CMake</h5>
+<p>When using the <code>CMake</code> build system with the Cray/GPU compilers the generated
+link line may not correctly link OpenMP - see https://gitlab.kitware.com/cmake/cmake/-/issues/26129.
+A potential solution is to add code equivalent to:</p>
+<div class="highlight"><pre><span></span><code>if(${CMAKE_Fortran_COMPILER_ID} STREQUAL &quot;Cray&quot;)
+  target_link_options(&lt;target&gt; INTERFACE -h omp)
+endif()
+</code></pre></div>
+<p>to your CMake program (C/C++ linkers should use <code>-fopenmp</code>).</p>
 <h4 id="hip">HIP</h4>
 <p>To compile C or C++ code that uses HIP written specifically to offload
 to AMD GPUs, first load the desired PrgEnv module (either <code>PrgEnv-amd</code>
