@@ -37,12 +37,33 @@ of ranks and threads.
 
     srun --distribution=block:block --hint=nomultithread xthi
   
-  
+The reservation includes 140 standard-memory nodes and one GPU node.
+Below is an example script using the GPU node and `rocm-smi` utility to display 
+the topology. Note the use of the `--partition=gpu` setting.
+
+    #!/bin/bash
+
+    #SBATCH --job-name=topo
+    #SBATCH --account=z19
+    #SBATCH --partition=gpu
+    #SBATCH --qos=reservation
+    #SBATCH --reservation=HPE_iscsi_testing_gpu
+    #SBATCH --nodes=1
+    #SBATCH --gpus=4
+    #SBATCH --time=00:10:00
+    #SBATCH --exclusive
+
+    module load rocm
+
+    rocm-smi --showtopo
+
 ## Reporting Issues
    
 Please let us know in case you encounter any issues, unexpected behaviour or 
 performance degradation by contacting the
-[ARCHER2 Service Desk](https://www.archer2.ac.uk/support-access/servicedesk.html).
+[ARCHER2 Service Desk](https://www.archer2.ac.uk/support-access/servicedesk.html) 
+and adding a note in the subject line that it is part of the 
+*Software Upgrade Early Access*.
 
 ## Further notes
 
