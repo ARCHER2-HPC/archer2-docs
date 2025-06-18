@@ -2544,9 +2544,17 @@ the topology. Note the use of the <code>--partition=gpu</code> setting.</p>
 #SBATCH --exclusive
 
 module load rocm
+module load craype-accel-amd-gfx90a
+module load craype-x86-milan
 
 rocm-smi --showtopo
+
+srun --ntasks=1 --cpus-per-task=1 ./my_gpu_program.x
 </code></pre>
+<p>More detailed information including compilation, programming environments,
+multi-GPU execution and using GPU-aware MPI can be found in the 
+<a href="https://docs.archer2.ac.uk/user-guide/gpu/">GPU User Guide</a> 
+section.</p>
 <h2 id="reporting-issues">Reporting Issues</h2>
 <p>Please let us know in case you encounter any issues, unexpected behaviour or 
 performance degradation by contacting the
