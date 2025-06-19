@@ -2511,7 +2511,9 @@ the compute nodes in the reservation: </p>
 compute node. Make sure to use the <code>z19-upgrade2025</code> reservation when 
 submitting your jobs (see below for an example script). Here we use 
 <em>xthi</em> as an example application that can also be used to test placement 
-of ranks and threads.</p>
+of ranks and threads. Please note that module cache is shared among the 
+login nodes and it is recommended to bypass it using <code>module load --ignore-cache</code> 
+to avoid issues when loading modules.</p>
 <pre><code>#!/bin/bash
 
 #SBATCH --job-name=xthi_test
