@@ -19,7 +19,9 @@ Once you have logged in you can compile on the login node or on the
 compute node. Make sure to use the `z19-upgrade2025` reservation when 
 submitting your jobs (see below for an example script). Here we use 
 *xthi* as an example application that can also be used to test placement 
-of ranks and threads.
+of ranks and threads. Please note that module cache is shared among the 
+login nodes and it is recommended to bypass it using `module load --ignore-cache` 
+to avoid issues when loading modules.
   
     #!/bin/bash
 
