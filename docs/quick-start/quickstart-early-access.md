@@ -10,18 +10,20 @@ upgraded version of the operating system (OS) installed.
 If you don't have an account on ARCHER2 please refer to the 
 [Quickstart for users](quickstart-users.md) section.
  
-It is recommended to login via login node four that has the same OS as 
+It is recommended to login via login node four (login4), which has the same OS as 
 the compute nodes in the reservation: 
   
      ssh  <user>@login4.archer2.ac.uk
  
-Once you have logged in you can compile on the login node or on the 
-compute node. Make sure to use the `z19-upgrade2025` reservation when 
-submitting your jobs (see below for an example script). Here we use 
-*xthi* as an example application that can also be used to test placement 
-of ranks and threads. Please note that module cache is shared among the 
-login nodes and it is recommended to bypass it using `module load --ignore-cache` 
-to avoid issues when loading modules.
+Once you have logged in you can compile on the login node or on the
+compute node. Make sure to use the `z19-upgrade2025` reservation when
+submitting your jobs (see below for an example script). Here we use
+*xthi* as an example application that can also be used to test
+placement of ranks and threads. Please note that the module cache is
+shared between login4 and the other login nodes. To avoid potential
+issues it is therefore recommended to bypass the cache when loading a
+module by using `module --ignore-cache load`. This ensures only
+modules that can be found under the upgraded OS are loaded.
   
     #!/bin/bash
 
