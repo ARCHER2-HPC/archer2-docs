@@ -12,7 +12,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
     
     
       
@@ -2503,17 +2503,19 @@ upgraded version of the operating system (OS) installed.</p>
 <h2 id="accessing-upgraded-archer2-nodes">Accessing upgraded ARCHER2 nodes</h2>
 <p>If you don't have an account on ARCHER2 please refer to the 
 <a href="../quickstart-users/">Quickstart for users</a> section.</p>
-<p>It is recommended to login via login node four that has the same OS as 
+<p>It is recommended to login via login node four (login4), which has the same OS as 
 the compute nodes in the reservation: </p>
 <pre><code> ssh  &lt;user&gt;@login4.archer2.ac.uk
 </code></pre>
-<p>Once you have logged in you can compile on the login node or on the 
-compute node. Make sure to use the <code>z19-upgrade2025</code> reservation when 
-submitting your jobs (see below for an example script). Here we use 
-<em>xthi</em> as an example application that can also be used to test placement 
-of ranks and threads. Please note that module cache is shared among the 
-login nodes and it is recommended to bypass it using <code>module load --ignore-cache</code> 
-to avoid issues when loading modules.</p>
+<p>Once you have logged in you can compile on the login node or on the
+compute node. Make sure to use the <code>z19-upgrade2025</code> reservation when
+submitting your jobs (see below for an example script). Here we use
+<em>xthi</em> as an example application that can also be used to test
+placement of ranks and threads. Please note that the module cache is
+shared between login4 and the other login nodes. To avoid potential
+issues it is therefore recommended to bypass the cache when loading a
+module by using <code>module --ignore-cache load</code>. This ensures only
+modules that can be found under the upgraded OS are loaded.</p>
 <pre><code>#!/bin/bash
 
 #SBATCH --job-name=xthi_test
@@ -2666,7 +2668,7 @@ used to switch between CPE version.</p>
       <script id="__config" type="application/json">{"base": "../..", "features": ["tabs"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      <script src="../../assets/javascripts/bundle.56ea9cef.min.js"></script>
       
     
   </body>
