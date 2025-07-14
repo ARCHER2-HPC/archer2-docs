@@ -238,7 +238,8 @@ themselves using the `lfs quota` command. To do this:
     The solid state storage system is configured as *scratch* storage with all files 
     that have not been accessed in the last 28 days being automatically deleted. This
     implementation starts on 28 Feb 2024, i.e. any files not accessed since 1 Feb 2024
-    will be automatically removed on 28 Feb 2024.
+    will be automatically removed on 28 Feb 2024. The script which performs this purge
+    is run daily.
 
 The solid state storage file system is a 1 PB high performance parallel Lustre file system
 similar to the work file systems. However, unlike the work file systems, all of the
@@ -303,8 +304,8 @@ You query quotas for the solid state file system in the same way as
 
 #### Identifying files that are candidates for deletion
 
-You can identify which files you own that are candidates for deletion at the next
-scratch file system purge using the `find` command in the following format:
+You can identify which files you own that are candidates for imminent deletion at the
+next daily scratch file system purge using the `find` command in the following format:
 
 ```
 find /mnt/lustre/a2fs-nvme/work/<project code> -atime +28 -type f -print
@@ -315,6 +316,26 @@ For example, if my account is in project `t01`, I would use:
 ```
 find /mnt/lustre/a2fs-nvme/work/t01 -atime +28 -type f -print
 ```
+
+You may also wish to find which files are not yet deletion candidates, but which
+are getting older. For example, you can use the `-atime` flag to have the command
+return instead files which have not been accessed for 21 or more days with:
+
+```
+find /mnt/lustre/a2fs-nvme/work/<project code> -atime +21 -type f -print
+```
+
+As you should not use the scratch storage long term but instead look to stage data 
+on and off as required, keeping it in long term storage elsewhere, this can
+potentially help highlight files you have missed.
+
+Finally, the command
+
+```
+ls -lu
+```
+
+runs `ls` with list output using the last access times.
 
 ### RDFaaS file systems
 
