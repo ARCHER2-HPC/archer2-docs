@@ -3484,7 +3484,8 @@ pid 1009 is using default file quota setting
 <p>The solid state storage system is configured as <em>scratch</em> storage with all files 
 that have not been accessed in the last 28 days being automatically deleted. This
 implementation starts on 28 Feb 2024, i.e. any files not accessed since 1 Feb 2024
-will be automatically removed on 28 Feb 2024.</p>
+will be automatically removed on 28 Feb 2024. The script which performs this purge
+is run daily.</p>
 </div>
 <p>The solid state storage file system is a 1 PB high performance parallel Lustre file system
 similar to the work file systems. However, unlike the work file systems, all of the
@@ -3540,13 +3541,25 @@ in SAFE - you should use commands such as <code>lfs quota -hp $(id -g) .</code>
 to query quotas on the solid state file system. </p>
 </div>
 <h4 id="identifying-files-that-are-candidates-for-deletion">Identifying files that are candidates for deletion</h4>
-<p>You can identify which files you own that are candidates for deletion at the next
-scratch file system purge using the <code>find</code> command in the following format:</p>
+<p>You can identify which files you own that are candidates for imminent deletion at the
+next daily scratch file system purge using the <code>find</code> command in the following format:</p>
 <div class="highlight"><pre><span></span><code>find /mnt/lustre/a2fs-nvme/work/&lt;project code&gt; -atime +28 -type f -print
 </code></pre></div>
 <p>For example, if my account is in project <code>t01</code>, I would use:</p>
 <div class="highlight"><pre><span></span><code>find /mnt/lustre/a2fs-nvme/work/t01 -atime +28 -type f -print
 </code></pre></div>
+<p>You may also wish to find which files are not yet deletion candidates, but which
+are getting older. For example, you can use the <code>-atime</code> flag to have the command
+return instead files which have not been accessed for 21 or more days with:</p>
+<div class="highlight"><pre><span></span><code>find /mnt/lustre/a2fs-nvme/work/&lt;project code&gt; -atime +21 -type f -print
+</code></pre></div>
+<p>As you should not use the scratch storage long term but instead look to stage data 
+on and off as required, keeping it in long term storage elsewhere, this can
+potentially help highlight files you have missed.</p>
+<p>Finally, the command</p>
+<div class="highlight"><pre><span></span><code>ls -lu
+</code></pre></div>
+<p>runs <code>ls</code> with list output using the last access times.</p>
 <h3 id="rdfaas-file-systems">RDFaaS file systems</h3>
 <p>The RDFaaS file systems provide additional capacity for projects to store data
 that is not currently required on the compute nodes but which is too large for
