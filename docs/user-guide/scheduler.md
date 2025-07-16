@@ -2099,6 +2099,8 @@ export MPICH_SINGLE_HOST_ENABLED=0
 
 ### Heterogeneous jobs for a shared `MPI_COM_WORLD`
 
+#### Using `hetjob`
+
 !!! note
     The directive `SBATCH hetjob` can no longer be used for jobs requiring
     a shared `MPI_COMM_WORLD`
@@ -2106,7 +2108,7 @@ export MPICH_SINGLE_HOST_ENABLED=0
 !!! note
     In this approach, each `hetjob` component must be on its own set of nodes.
     You cannot use this approach to place different `hetjob` components on
-    the same node.
+    the same node. For multiple jobs on the same node see `multi-prog` below.
 
 If two or more heterogeneous components need to share a unique
 `MPI_COMM_WORLD`, a single `srun` invocation with the different
@@ -2163,6 +2165,47 @@ Node    2, rank   14, thread   0, (affinity =    2)
 Node    2, rank   15, thread   0, (affinity =    3)
 
 ```
+
+#### Using `multi-prog`
+
+In this approach the user writes a separate configuration file that
+specifies which program should be run by each MPI process; all the
+programs belong to the same `MPI_COMM_WORLD`. This works on any number
+of nodes, but here we will illustrate running on a single node (which
+is not possible to do with `hetjob`).
+
+To run `xthi-a` on 8 tasks (MPI ranks 0-7), and `xthi-b` on 4 (ranks
+8-11) you can use the following file `multi.conf`
+
+````
+# multi-prog configuration file for 8 xthi-a and 4 xthi-b on the same node
+0-7 xthi-a
+8-11 xthi-b
+````
+and run with
+````
+ srun --nodes=1 --ntasks=12 --distribution=block:block --hint=nomultithread --multi-prog ./multi.conf
+````
+This output confirms that we have indeed run 12 tasks
+````
+Node summary for    1 nodes:
+Node    0, hostname nid001380, mpi  12, omp   1, executable xthi-a
+MPI summary: 12 ranks
+Node    0, rank    0, thread   0, (affinity =    0)
+Node    0, rank    1, thread   0, (affinity =    1)
+Node    0, rank    2, thread   0, (affinity =    2)
+Node    0, rank    3, thread   0, (affinity =    3)
+Node    0, rank    4, thread   0, (affinity =    4)
+Node    0, rank    5, thread   0, (affinity =    5)
+Node    0, rank    6, thread   0, (affinity =    6)
+Node    0, rank    7, thread   0, (affinity =    7)
+Node    0, rank    8, thread   0, (affinity =    8)
+Node    0, rank    9, thread   0, (affinity =    9)
+Node    0, rank   10, thread   0, (affinity =   10)
+Node    0, rank   11, thread   0, (affinity =   11)
+````
+!!! note
+    `xthi` cannot differentiate between the two executables on the same node as they are part of the same `MPI_COMM_WORLD`, so incorrectly reports that we are running 12 copies of `xthi-a`
 
 ### Heterogeneous placement for mixed MPI/OpenMP work
 
