@@ -1339,6 +1339,30 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Heterogeneous jobs for a shared MPI_COM_WORLD">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-hetjob" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using hetjob
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-multi-prog" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using multi-prog
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -4005,6 +4029,30 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Heterogeneous jobs for a shared MPI_COM_WORLD">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-hetjob" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using hetjob
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-multi-prog" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using multi-prog
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -6331,6 +6379,7 @@ to export two new variables before your <code>srun</code> commands as defined be
 <span class="nb">export</span><span class="w"> </span><span class="nv">MPICH_SINGLE_HOST_ENABLED</span><span class="o">=</span><span class="m">0</span>
 </code></pre></div>
 <h3 id="heterogeneous-jobs-for-a-shared-mpi_com_world">Heterogeneous jobs for a shared <code>MPI_COM_WORLD</code></h3>
+<h4 id="using-hetjob">Using <code>hetjob</code></h4>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The directive <code>SBATCH hetjob</code> can no longer be used for jobs requiring
@@ -6340,7 +6389,7 @@ a shared <code>MPI_COMM_WORLD</code></p>
 <p class="admonition-title">Note</p>
 <p>In this approach, each <code>hetjob</code> component must be on its own set of nodes.
 You cannot use this approach to place different <code>hetjob</code> components on
-the same node.</p>
+the same node. For multiple jobs on the same node see <code>multi-prog</code> below.</p>
 </div>
 <p>If two or more heterogeneous components need to share a unique
 <code>MPI_COMM_WORLD</code>, a single <code>srun</code> invocation with the different
@@ -6391,6 +6440,42 @@ Node    2, rank   13, thread   0, (affinity =    1)
 Node    2, rank   14, thread   0, (affinity =    2)
 Node    2, rank   15, thread   0, (affinity =    3)
 </code></pre></div>
+<h4 id="using-multi-prog">Using <code>multi-prog</code></h4>
+<p>In this approach the user writes a separate configuration file that
+specifies which program should be run by each MPI process; all the
+programs belong to the same <code>MPI_COMM_WORLD</code>. This works on any number
+of nodes, but here we will illustrate running on a single node (which
+is not possible to do with <code>hetjob</code>).</p>
+<p>To run <code>xthi-a</code> on 8 tasks (MPI ranks 0-7), and <code>xthi-b</code> on 4 (ranks
+8-11) you can use the following file <code>multi.conf</code></p>
+<p><div class="highlight"><pre><span></span><code># multi-prog configuration file for 8 xthi-a and 4 xthi-b on the same node
+0-7 xthi-a
+8-11 xthi-b
+</code></pre></div>
+and run with
+<div class="highlight"><pre><span></span><code> srun --nodes=1 --ntasks=12 --distribution=block:block --hint=nomultithread --multi-prog ./multi.conf
+</code></pre></div>
+This output confirms that we have indeed run 12 tasks
+<div class="highlight"><pre><span></span><code>Node summary for    1 nodes:
+Node    0, hostname nid001380, mpi  12, omp   1, executable xthi-a
+MPI summary: 12 ranks
+Node    0, rank    0, thread   0, (affinity =    0)
+Node    0, rank    1, thread   0, (affinity =    1)
+Node    0, rank    2, thread   0, (affinity =    2)
+Node    0, rank    3, thread   0, (affinity =    3)
+Node    0, rank    4, thread   0, (affinity =    4)
+Node    0, rank    5, thread   0, (affinity =    5)
+Node    0, rank    6, thread   0, (affinity =    6)
+Node    0, rank    7, thread   0, (affinity =    7)
+Node    0, rank    8, thread   0, (affinity =    8)
+Node    0, rank    9, thread   0, (affinity =    9)
+Node    0, rank   10, thread   0, (affinity =   10)
+Node    0, rank   11, thread   0, (affinity =   11)
+</code></pre></div></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>xthi</code> cannot differentiate between the two executables on the same node as they are part of the same <code>MPI_COMM_WORLD</code>, so incorrectly reports that we are running 12 copies of <code>xthi-a</code></p>
+</div>
 <h3 id="heterogeneous-placement-for-mixed-mpiopenmp-work">Heterogeneous placement for mixed MPI/OpenMP work</h3>
 <p>Some care may be required for placement of tasks/threads in heterogeneous
 jobs in which the number of threads needs to be specified differently
