@@ -2803,14 +2803,16 @@
 <h2 id="linaro-forge">Linaro Forge</h2>
 <p><a href="https://www.linaroforge.com/">Linaro Forge</a> provides debugging and profiling tools
 for MPI parallel applications, and OpenMP or pthreads multi-threaded applications
-(and also hydrid MPI/OpenMP). Forge DDT is the debugger and MAP is the profiler. Forge may also be used on the GPU development platform.</p>
+(and also hydrid MPI/OpenMP). Forge DDT is the debugger and MAP is the profiler. Forge may also 
+be used on the GPU development platform.</p>
 <h3 id="user-interface">User interface</h3>
 <p>There are two ways of running the Forge user interface. If you have a good internet
 connection to ARCHER2, the GUI can be run on the front-end (with an X-connection).
 Alternatively, one can download a copy of the Forge remote client to your laptop or desktop,
 and run it locally. The remote client should be used if at all possible.</p>
 <p>To download the remote client, see the <a href="https://www.linaroforge.com/downloadForge/">Forge download pages</a>.
-Version 24.0 is known to work at the time of writing. A section further down this page explains how to use the remote client,
+Version 24.0 is known to work with the <code>forge/24.0</code> module and version 25.0 is known to work with the <code>forge/25.0.1</code> 
+module at the time of writing. A section further down this page explains how to use the remote client,
 see <a href="#connecting-with-the-remote-client">Connecting with the remote client</a>.</p>
 <h3 id="licensing">Licensing</h3>
 <p>ARCHER2 has a licence for up to 2080 tokens, where a token represents an MPI parallel process.
@@ -3002,8 +3004,9 @@ username. The <strong><em>Remote Installation Directory</em></strong> should be 
 shown. The <strong><em>Remote Script</em></strong> is needed to execute additional environment
 commands on connection. A default script is provided in the location
 shown.</p>
-<div class="highlight"><pre><span></span><code><span class="go">/work/y07/shared/utils/core/forge/latest/remote-init</span>
+<div class="highlight"><pre><span></span><code><span class="go">/work/y07/shared/utils/core/forge/share/remote-init</span>
 </code></pre></div>
+<p>This script will need to be updated to reflect the version of forge you are using. </p>
 <p>Other settings can be as shown. Remember to click <strong><em>OK</em></strong> when done.</p>
 <p><img alt="Remote Launch Settings" src="../forge-remote-launch.png" /></p>
 <p>From the <strong><em>Remote Launch</em></strong> menu you should now see the new Connection
