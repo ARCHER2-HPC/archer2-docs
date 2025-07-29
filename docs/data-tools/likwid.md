@@ -91,15 +91,14 @@ has the added benefit of being closer to the ARCHER2 default
 than using `likwid-perfctr`.
 
 Using `likwid-mpirun` restricts measurement functionality to
-`likwid-perfctr`'s wrapper mode. This is the primary mode of interest
-for performance characterisation through either whole-application or
-kernel-specific measurement. Users interested in running
-`likwid-perfctr` directly on ARCHER2, for example to access timeline
-or stethoscope mode, may consult the example job script for pure
-threaded applications that uses `likwid-perfctr` below as well as the
-[wiki page on LIKWID's pinning
-syntax](https://github.com/RRZE-HPC/likwid/wiki/Likwid-Pin), and can
-contact the ARCHER2 helpdesk to request assistance.
+`likwid-perfctr`'s wrapper mode, which supports performance
+characterisation through either whole-application or kernel-specific
+measurement. Users interested in running `likwid-perfctr` directly on
+ARCHER2, for example to access timeline or stethoscope mode, may
+consult the example job script for pure threaded applications that
+uses `likwid-perfctr` below as well as the [wiki page on LIKWID's
+pinning syntax](https://github.com/RRZE-HPC/likwid/wiki/Likwid-Pin),
+and can contact the ARCHER2 helpdesk to request assistance.
 
 LIKWID is available on ARCHER2 as a centrally installed module
 (`likwid/5.4.1-archer2`), which provides a [customised
@@ -132,7 +131,7 @@ custom version and its usage on ARCHER2.
 
 Below we provide example job scripts covering different cases of
 application parallelism. All examples perform whole-application
-measurement. 
+measurement but are easily adapted to use the marker API. 
 
 Each of the example job scripts that uses `likwid-mpirun` makes use of
 the srun/sbatch options `--hint=nomultithread` and
@@ -157,6 +156,12 @@ jobs](https://docs.archer2.ac.uk/user-guide/scheduler/).
     mode (`likwid-mpirun --debug`) and examining both the job output
     and the `.likwidscript-####` file mentioned therein.
 
+For pure threaded and MPI+thread parallel jobs using either the `-t`
+option to specify the number of threads or `-pin` with an appropriate
+pinning expression (or both) can accomplish the same desired
+application placement and measurement scenario. For simplicity the
+example job scripts use `-t` but the equivalent pinning expression is
+also provided.
 
 For further explanation of `likwid-mpirun` options used, see the
 section [Summary of likwid-mpirun
@@ -222,6 +227,11 @@ likwid-mpirun -n 1 --nocpubind -t 128 -s 0x0 -g FLOPS_DP xthi &> xthi.out
 likwid-mpirun -n 1 --nocpubind -t 128 -s 0x0 -g FLOPS_DP myApplication &> application.out
 
 ```
+
+Note: the same application placement and measurement scenario can be
+accomplished using the pinning option `-pin N:0-127` instead of or in
+addition to `-t 128`.
+
 
 For pure threaded applications the `likwid-perfctr` command can also
 be used directly, bypassing both `likwid-mpirun` and `srun`. This is
@@ -302,6 +312,11 @@ likwid-mpirun -n $SLURM_NTASKS --nocpubind -t 64 -s 0x0 -g FLOPS_DP xthi &> xthi
 likwid-mpirun -n $SLURM_NTASKS --nocpubind -t 64 -s 0x0 -g FLOPS_DP myApplication &> application.out
 
 ```
+
+Note: the same application placement and measurement scenario can be
+accomplished using the pinning option `-pin N:0-63_N:64-127` instead
+of or in addition to `-t 64`.
+
 
 
 ### Serial job
