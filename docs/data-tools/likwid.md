@@ -236,28 +236,7 @@ addition to `-t 128`.
 For pure threaded applications the `likwid-perfctr` command can also
 be used directly, bypassing both `likwid-mpirun` and `srun`. This is
 shown below in the equivalent job script to the `likwid-mpirun`
-example above. In this example LIKWID's expression based syntax ([see
-the `likwid-pin` wiki
-page](https://github.com/RRZE-HPC/likwid/wiki/Likwid-Pin)) is used
-with the -C option to set application pinning of threads to cores and
-the same as cores to measure counters for. The following pinning
-expressions are equivalent:
-
-```
--C E:N:128:1:2
--C N:0-127
-```
-
-This can be understood by examining CPU numbering using the
-`likwid-topology` command, which shows that adjacent hardware threads
-on the same physical cores are numbered `n` and `n + 128`
-respectively, hence physical CPUs numbered 0 through 127 correspond to
-single hardware threads on each of the 128 distinct physical cores on
-an ARCHER2 compute node. The final `:2` in the expression based syntax
-skips the second hardware thread for each physical core when pinning,
-accomplishing the same as the second domain-based pinning expression
-with direct core number assignment for the N domain (all cores). 
-
+example above. 
 
 
 ```slurm
@@ -282,6 +261,27 @@ likwid-perfctr -C E:N:128:1:2 -s 0x0 -g FLOPS_DP myApplication &> application.ou
 
 ```
 
+In this example LIKWID's expression based syntax ([see
+the `likwid-pin` wiki
+page](https://github.com/RRZE-HPC/likwid/wiki/Likwid-Pin)) is used
+with the -C option to set application pinning of threads to cores and
+the same as cores to measure counters for. The following pinning
+expressions are equivalent:
+
+```
+-C E:N:128:1:2
+-C N:0-127
+```
+
+This can be understood by examining CPU numbering using the
+`likwid-topology` command, which shows that adjacent hardware threads
+on the same physical cores are numbered `n` and `n + 128`
+respectively, hence physical CPUs numbered 0 through 127 correspond to
+single hardware threads on each of the 128 distinct physical cores on
+an ARCHER2 compute node. The final `:2` in the expression based syntax
+skips the second hardware thread for each physical core when pinning,
+accomplishing the same as the second domain-based pinning expression
+with direct core number assignment for the N domain (all cores). 
 
 
 ### Hybrid MPI+threaded jobs
