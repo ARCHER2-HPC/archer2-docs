@@ -3,7 +3,8 @@
 
 [Linaro Forge](https://www.linaroforge.com/) provides debugging and profiling tools
 for MPI parallel applications, and OpenMP or pthreads multi-threaded applications
-(and also hydrid MPI/OpenMP). Forge DDT is the debugger and MAP is the profiler. Forge may also be used on the GPU development platform.
+(and also hydrid MPI/OpenMP). Forge DDT is the debugger and MAP is the profiler. Forge may also 
+be used on the GPU development platform.
 
 
 ### User interface
@@ -14,7 +15,8 @@ Alternatively, one can download a copy of the Forge remote client to your laptop
 and run it locally. The remote client should be used if at all possible.
 
 To download the remote client, see the [Forge download pages](https://www.linaroforge.com/downloadForge/).
-Version 24.0 is known to work at the time of writing. A section further down this page explains how to use the remote client,
+Version 24.0 is known to work with the `forge/24.0` module and version 25.0 is known to work with the `forge/25.0.1` 
+module at the time of writing. A section further down this page explains how to use the remote client,
 see [Connecting with the remote client](#connecting-with-the-remote-client).
 
 ### Licensing
@@ -263,8 +265,10 @@ commands on connection. A default script is provided in the location
 shown.
 
 ```output
-/work/y07/shared/utils/core/forge/latest/remote-init
+/work/y07/shared/utils/core/forge/share/remote-init
 ```
+
+This script will need to be updated to reflect the version of forge you are using. 
 
 Other settings can be as shown. Remember to click ***OK*** when done.
 
