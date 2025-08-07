@@ -580,5 +580,88 @@ likwid-perfctr -C 0 --nocpubind -s 0x0 -g FLOPS_DP myApplication &> application.
 
 ```
 
+## LIKWID Marker API: instrumenting an application for fine-grained measurement 
 
+Another important feature of LIKWID is the ability to measure performance
+counters for specified regions of your code, such as a computationally intensive 
+kernel. You can instrument your code using the LIKWID *Marker API* to instruct 
+LIKWID when to start and stop taking measurements. This requires code changes and 
+recompilation to include the `likwid-marker.h` header and to call required macros or functions 
+as illustrated below. Moreover, the code must be compiled with `-DLIKWID_PERFMON` 
+to turn Marker API on and with reference to a location where the header files 
+are found (`-I $LIKWID_DIR/include`). As `LD_PRELOAD` mechnaism is used,
+the application must be linked dynamically with reference to likwid library
+(`-L $LIKWID_DIR/lib -llikwid`). Markers are recognised by 
+`likwid-perfctr` and `likwid-mpirun` with the `-m` option enabled. The location of 
+the headers and libraries can be viewed via `module show likwid`. The module
+also sets the value of the`$LIKWID_DIR` environment variable on loading. It may also 
+may be necessary to adjust `LD_LIBRARY_PATH` to include `$LIBLIKWID_DIR/lib` so that the
+library is picked up at runtime.
+
+The example below demonstrates the use of the C API (a similar API is also 
+supported for Fortran and some other languages). The initialisation and
+closing macros or functions must be called from the serial section of the code.
+ 
+```c
+... // other includes
+#include <likwid-marker.h>  
+...
+LIKWID_MARKER_INIT;   // macro call to setup measurement system
+...
+LIKWID_MARKER_REGISTER("myregion"); // recommended to reduce overhead
+// if OpenMP is used then this should be called in a parallel region
+// same is true for stop/start calls
+
+LIKWID_MARKER_START("myregion");
+... // code region of interest
+LIKWID_MARKER_STOP("myregion");
+
+LIKWID_MARKER_CLOSE;
+```
+
+Note that to allow for conditional compilation so that the original uninstrumented 
+code could be recompiled without `-DLIKWID_PERFMON`, the macros can be redefined 
+as empty macros using the `#ifndef LIKWID_PERFMON` preprocessor directive. 
+For an example and more detailed discussion please refer to the 
+[Marker API tutorial](https://github.com/RRZE-HPC/likwid/wiki/TutorialMarkerC).
+For each macro there exists a corresponding function which you can call instead.
+Additionally, similar APIs are also defined for NVIDIA and AMD GPUs.
+
+
+## Roofline Analysis using LIKWID
+
+The Roofline model allows to determine whether an application or kernel 
+is memory or compute bound by measuring its performance (FLOPS persecond) and 
+operational intensity (FLOPS per byte of memory traffic). This allows us to 
+assess the optimisation potential of the selected application, function or loop. 
+The Roofline is typically defined by measuring attainable performance of a memory-bound
+code such as a version of the STREAM benchmark (this would appear as a slanted roof in the Roofline plot). 
+For the compute-bound ceiling a theoretical maximum or a dense matrix multiplication
+kernel can be used or another appropriate compute-bound microbenchmark. Multiple Rooflines 
+can be defined, with no particular order: e.g. RAM vs last-level cache in a cache-aware Roofline
+for the slanted Rooflines and single vs double precision with or without vector intrinsics such as SSE or AVX
+could constitute additional horizontal Rooflines. Roofline analysis usually focuses on node-level performance
+optimisations.
+
+Then the performance of an entire application or of a loop can be plotted under those Rooflines.
+In can be interpreted as follows. If the point is on the left of the vertical line through ridge point
+where memory and compute rooflines meet, then it is memory-bound, otherwise compute bound. Compute-bound kernels
+usually exhibit operational intensity substantially higher than 1.
+The distance to the roofline represents the opportunities for optimisations. If the performance of 
+a loop is already close to attainable maximum it maybe tricky to find any improvement for it
+The Roofline model tells us that something may or may not be worth optimising but it does 
+not suggest a specific optimisation. 
+
+As described above, Marker API can be used to define regions of interest
+such as a hot loop where most compute time is spent, identified via an initial profiling run.
+Additionally `likwid-bench` can be used to get empirical peak memory and compute bounds
+by using a version of stream load benchmark and a peakflops kernels. 
+
+Results from `likwid-bench` can be used by running the appropriate microbenchmark 
+(add those lines below to the submissiomn script assuming a single-node run):
+
+```base
+likwid-bench -t peakflops_avx_fma -W N:4GB:128:1:2 &> peak_flops.out
+likwid-bench -t load_avx -W N:4GB:128:1:2          &> peak_bw.out
+```
 
