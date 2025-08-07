@@ -121,12 +121,13 @@ nav:
   - "Data Analysis and Tools":
     - "Overview": data-tools/index.md
     - "AMD uProf": data-tools/amd-uprof.md
-    - "Linaro Forge": data-tools/forge.md
+    - "Blender": data-tools/blender.md
     - "Darshan": data-tools/darshan.md
     - "Energy Counters": data-tools/pm-mpi-lib.md
     - "Globus": data-tools/globus.md
     - "Julia": data-tools/julia.md
     - "LIKWID": data-tools/likwid.md
+    - "Linaro Forge": data-tools/forge.md
     - "ParaView": data-tools/paraview.md
     - "R": data-tools/cray-r.md
     - "Spack": data-tools/spack.md
