@@ -127,24 +127,130 @@ custom version and its usage on ARCHER2.
 
 
 
+
+
+
+
+
+
+
+
+## Summary of likwid-mpirun options
+
+The following options are important to be aware of when using
+`likwid-mpirun` on ARCHER2. For additional information, try
+`likwid-mpirun --help` and see the LIKWID wiki, especially the
+[`likwid-mpirun`
+page](https://github.com/RRZE-HPC/likwid/wiki/Likwid-Mpirun).
+
+
+`-n/-np <count>`
+
+Specify the total number of processes to launch
+
+
+`-t <count>`
+
+The number of threads or threads per MPI rank. Defaults to 1 if not
+specified. Can be used to "space" processes for placement in the case
+of hybrid MPI + threaded applications and act as an alternative to
+`-pin` below in these cases. 
+
+`-pin <list>`
+
+Specify pinning of processes (and their threads if
+applicable). Follows the
+[`likwid-pin`](https://github.com/RRZE-HPC/likwid/wiki/Likwid-Pin)
+syntax. 
+
+`-g/--group <perf>`
+
+Specify which predefined group of performance counters and derived
+metrics to measure and compute. Details about these groups and
+available counters for the Zen2 architecture of ARCHER2's AMD EPYC
+processors can be found at
+[https://github.com/RRZE-HPC/likwid/wiki/Zen2](https://github.com/RRZE-HPC/likwid/wiki/Zen2).
+
+
+`--nocpubind` (ARCHER2 only)
+
+Suppress `likwid-mpirun`'s binding of application processes to CPUs
+(cores) that would otherwise take place through generation of a CPU
+mask list passed to `srun`. We recommend always using `--nocupbind` on
+ARCHER2 to avoid conflicts with binding/affinity specified following
+the usual approach on ARCHER2 and this is shown in example job
+scripts.
+
+
+`-s/--skip <hex>`
+
+This tells `likwid-mpirun` how many threads to skip when generating
+its specification of which cores to pin to/measure (see [this
+discussion of LIKWID and shepherd
+threads](https://blogs.fau.de/hager/archives/8171) for a detailed
+explanation). On ARCHER2 we have checked and confirmed that there are
+no shepherd threads involved using any of `PrgEnv-gnu`, `PrgEnv-cray`
+or `PrgEnv-aocc`, therefore not skipping any threads (`-s 0x0`) is the
+correct choice (this differs from `likwid-mpirun` defaults), reflected
+in the example job scripts above.
+
+`-d/--debug`
+
+To check how exactly `likwid-mpirun` calls `srun` and `likwid-perfctr`
+to launch and measure your application, use the `--debug` option,
+which will generate additional output that includes the relevant
+commands. For the modified `likwid-mpirun` on ARCHER2 the otherwise
+temporary files `.likwidscript_*.txt` referenced in debug output that
+contain these commands persist after execution, enabling closer
+inspection.
+
+
+`--mpiopts`
+
+Any desired options accepted by `srun` can be passed to the `srun`
+command through the `--mpiopts` option, for example as follows:
+
+`likwid-mpirun --mpiopts "--exact --hint=nomultithread --distribution=block:block"` 
+
+`-m/-marker`
+
+Activate Marker API mode
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Example job scripts
 
 Below we provide example job scripts covering different cases of
-application parallelism. All examples perform whole-application
-measurement but are easily adapted to use the marker API. 
+application parallelism using `likwid-perfctr` in wrapper mode either
+through `likwid-mpirun` or directly. All examples perform
+whole-application measurement but can be adapted to use the marker
+API.
 
 Each of the example job scripts that uses `likwid-mpirun` makes use of
 the srun/sbatch options `--hint=nomultithread` and
 `--distribution=block:block`. We have set these as SBATCH options at
-the top of the job script, but they as well as any other `srun`
-options could just as well be passed to the underlying `srun` command
-through `-mpiopts` option as follows:
+the top of the job script. Alternatively these as well as any other
+`srun` options could be passed explicitly to the underlying `srun`
+command through the `--mpiopts` option as follows:
 
-`likwid-mpirun -mpiopts "--hint=nomultithread --distribution=block:block"`  
+`likwid-mpirun --mpiopts "--hint=nomultithread --distribution=block:block"`  
 
-Each example job script also includes a suggested command to run
-`xthi` launched identically to the application you wish to measure in
-order to check and confirm process and thread placement for your
+Each example job script includes a suggested command to run `xthi`
+launched identically to the application you wish to measure in order
+to check and confirm that process and thread placement for your
 application is as intended. Details on checking process placement with
 `xthi` can be found in the User Guide page on [Running
 jobs](https://docs.archer2.ac.uk/user-guide/scheduler/).
@@ -159,9 +265,11 @@ jobs](https://docs.archer2.ac.uk/user-guide/scheduler/).
 For pure threaded and MPI+thread parallel jobs using either the `-t`
 option to specify the number of threads or `-pin` with an appropriate
 pinning expression (or both) can accomplish the same desired
-application placement and measurement scenario. For simplicity the
-example job scripts use `-t` but the equivalent pinning expression is
-also provided.
+application placement and measurement scenario. The same applies to
+pure MPI applications in the case of underpopulating nodes (i.e. fewer
+than 128 ranks per node), where `-t` can be used to space processes
+out across a node and/or `-pin` used to specify which cores on each
+node application processes should execute and be measured on.
 
 For further explanation of `likwid-mpirun` options used, see the
 section [Summary of likwid-mpirun
@@ -171,15 +279,17 @@ options](#summary-of-likwid-mpirun-options)
 
 ### Pure MPI jobs
 
-2 fully populated nodes:
+#### Fully populated node(s)
+
+Two fully populated nodes (128 ranks per node):
 
 ```slurm
 #!/bin/bash
 
-#SBATCH --account=[your account]
+#SBATCH --account=[your project]
 #SBATCH --partition=standard
-#SBATCH --qos=standard
-#SBATCH --time=00:05:00 
+#SBATCH --qos=short
+#SBATCH --time=00:20:00 
 #SBATCH --nodes=2
 #SBATCH --tasks-per-node=128
 #SBATCH --cpus-per-task=1
@@ -192,24 +302,92 @@ module load xthi
 export OMP_NUM_THREADS=1
 export SRUN_CPUS_PER_TASK=1
 
-likwid-mpirun -n $SLURM_NTASKS --nocpubind -g FLOPS_DP xthi_mpi &> xthi.out
-likwid-mpirun -n $SLURM_NTASKS --nocpubind -g FLOPS_DP myApplication &> application.out
+likwid-mpirun -n $SLURM_NTASKS --nocpubind -s 0x0 -g FLOPS_DP --debug xthi_mpi &> xthi_mpi.out
+likwid-mpirun -n $SLURM_NTASKS --nocpubind -s 0x0 -g FLOPS_DP myApplication &> application.out
 
 ```
+
+
+#### Underpopulated node(s)
+
+
+Two nodes, two ranks per node, one rank per socket (i.e. per 64-core AMD EPYC processor):
+
+```slurm
+#!/bin/bash
+
+#SBATCH --account=[your project]
+#SBATCH --partition=standard
+#SBATCH --qos=short
+#SBATCH --time=00:20:00 
+#SBATCH --nodes=2
+#SBATCH --tasks-per-node=2
+#SBATCH --cpus-per-task=64
+#SBATCH --hint=nomultithread
+#SBATCH --distribution=block:block
+
+module load likwid
+module load xthi
+
+export OMP_NUM_THREADS=1
+export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
+
+likwid-mpirun -n $SLURM_NTASKS -pin N:0_N:64 --nocpubind -s 0x0 -g FLOPS_DP --debug xthi_mpi &> xthi_mpi.out
+likwid-mpirun -n $SLURM_NTASKS -pin N:0_N:64 --nocpubind -s 0x0 -g FLOPS_DP myApplication &> application.out
+
+```
+
+The same application placement and measurement scenario can be
+accomplished by specifying the first core on each socket directly with
+`-pin S0:0_S1:0` instead of `-pin N:0_N:64`
+
+
+One node, four ranks, one rank per NUMA region all on the same socket:
+
+```slurm
+#!/bin/bash
+
+#SBATCH --account=[your project]
+#SBATCH --partition=standard
+#SBATCH --qos=short
+#SBATCH --time=00:20:00 
+#SBATCH --nodes=1
+#SBATCH --tasks-per-node=4
+#SBATCH --cpus-per-task=16
+#SBATCH --hint=nomultithread
+#SBATCH --distribution=block:block
+
+module load likwid
+module load xthi
+
+export OMP_NUM_THREADS=1
+export SRUN_CPUS_PER_TASK=16
+
+likwid-mpirun -n $SLURM_NTASKS -pin N:0_N:16_N:32_N:48 --nocpubind -s 0x0 -g FLOPS_DP --debug xthi_mpi &> xthi_mpi.out
+likwid-mpirun -n $SLURM_NTASKS -pin N:0_N:16_N:32_N:48 --nocpubind -s 0x0 -g FLOPS_DP myApplication &> application.out
+
+```
+
+The same application placement and measurement scenario can be
+accomplished by specifying the first core on each NUMA node directly
+with `-pin M0:0_M1:0_M2:0_M3:0` instead of `-pin N:0_N:16_N:32_N:48`
+
+
+
 
 
 
 ### Pure threaded jobs
 
-Fully populated node:
+#### Fully populated node
 
 ```slurm
 #!/bin/bash
 
-#SBATCH --account=[your account]
+#SBATCH --account=[your project]
 #SBATCH --partition=standard
-#SBATCH --qos=standard
-#SBATCH --time=00:05:00 
+#SBATCH --qos=short
+#SBATCH --time=00:20:00 
 #SBATCH --nodes=1
 #SBATCH --tasks-per-node=1
 #SBATCH --cpus-per-task=128
@@ -223,32 +401,29 @@ export OMP_NUM_THREADS=128
 export OMP_PLACES=cores
 export SRUN_CPUS_PER_TASK=128
 
-likwid-mpirun -n 1 --nocpubind -t 128 -s 0x0 -g FLOPS_DP xthi &> xthi.out
-likwid-mpirun -n 1 --nocpubind -t 128 -s 0x0 -g FLOPS_DP myApplication &> application.out
+likwid-mpirun -n 1 -t 128 --nocpubind -s 0x0 -g FLOPS_DP --debug xthi &> xthi.out
+likwid-mpirun -n 1 -t 128 --nocpubind -s 0x0 -g FLOPS_DP myApplication &> application.out
 
 ```
 
-Note: the same application placement and measurement scenario can be
-accomplished using the pinning option `-pin N:0-127` instead of or in
-addition to `-t 128`.
-
+The same application placement and measurement scenario can be
+accomplished using the pinning option `-pin N:0-127` instead of `-t
+128`.
 
 For pure threaded applications the `likwid-perfctr` command can also
-be used directly, bypassing both `likwid-mpirun` and `srun`. This is
-shown below in the equivalent job script to the `likwid-mpirun`
-example above. 
+be used directly instead of `likwid-mpirun`, bypassing `srun`. This is
+shown below in the equivalent job script to the fully populated
+`likwid-mpirun` example above.
 
 
 ```slurm
 #!/bin/bash
 
-#SBATCH --account=[your account]
+#SBATCH --account=[your project]
 #SBATCH --partition=standard
-#SBATCH --qos=standard
-#SBATCH --time=00:05:00 
+#SBATCH --qos=short
+#SBATCH --time=00:20:00 
 #SBATCH --nodes=1
-#SBATCH --tasks-per-node=1
-#SBATCH --cpus-per-task=128
 
 module load likwid
 module load xthi
@@ -256,32 +431,72 @@ module load xthi
 export OMP_NUM_THREADS=128
 export OMP_PLACES=cores
 
-likwid-perfctr -C E:N:128:1:2 -s 0x0 -g FLOPS_DP xthi &> xthi.out
-likwid-perfctr -C E:N:128:1:2 -s 0x0 -g FLOPS_DP myApplication &> application.out
+likwid-perfctr -C N:0-127 -s 0x0 -g FLOPS_DP --debug xthi &> xthi.out
+likwid-perfctr -C N:0-127 -s 0x0 -g FLOPS_DP myApplication &> application.out
 
 ```
 
-In this example LIKWID's expression based syntax ([see
-the `likwid-pin` wiki
-page](https://github.com/RRZE-HPC/likwid/wiki/Likwid-Pin)) is used
-with the -C option to set application pinning of threads to cores and
-the same as cores to measure counters for. The following pinning
+The `-C` option simultaneously sets pinning of application threads to cores and
+specifies those same cores to measure counters for. The following pinning
 expressions are equivalent:
 
 ```
--C E:N:128:1:2
 -C N:0-127
+-C E:N:128:1:2
 ```
 
-This can be understood by examining CPU numbering using the
-`likwid-topology` command, which shows that adjacent hardware threads
-on the same physical cores are numbered `n` and `n + 128`
-respectively, hence physical CPUs numbered 0 through 127 correspond to
-single hardware threads on each of the 128 distinct physical cores on
-an ARCHER2 compute node. The final `:2` in the expression based syntax
-skips the second hardware thread for each physical core when pinning,
-accomplishing the same as the second domain-based pinning expression
-with direct core number assignment for the N domain (all cores). 
+The second form uses LIKWID's expression based pinning syntax ([see
+the `likwid-pin` wiki
+page](https://github.com/RRZE-HPC/likwid/wiki/Likwid-Pin)). This can
+be understood by examining CPU numbering using the `likwid-topology`
+command, which shows that adjacent hardware threads on the same
+physical cores are numbered n and n+128 respectively, hence CPUs
+(logical cores) numbered 0 through 127 correspond to single hardware
+threads on each of the 128 distinct physical cores on an ARCHER2
+compute node. The final `:2` in the expression based syntax skips the
+second hardware thread for each physical core when pinning, thereby
+accomplishing the same as the domain-based pinning expression that
+specifies direct core number assignment for the N domain (all cores).
+
+
+#### Underpopulated node
+
+Launching fewer than 128 threads placed consecutively is a
+straightforward variation on the fully occupied node case above. We
+can achieve more varied placements, for example four threads in total,
+each bound to the first core of a different CCX complex on the same
+socket. The 4 cores in a CCX share a common L3 cache, hence this
+scenario results in none of the threads sharing the same L3 cache.
+
+This is easiest to accomplish using `likwid-perfctr` directly rather
+than through `likwid-mpirun`, as follows:
+
+```slurm
+#!/bin/bash
+
+#SBATCH --account=[your project]
+#SBATCH --partition=standard
+#SBATCH --qos=short
+#SBATCH --time=00:20:00 
+#SBATCH --nodes=1
+
+module load likwid
+module load xthi
+
+export OMP_NUM_THREADS=4
+export OMP_PLACES=cores
+
+likwid-perfctr -C 0,4,8,12 -s 0x0 -g FLOPS_DP xthi &> xthi_perfctr_list.out
+
+```
+
+The same application placement and measurement scenario can be
+accomplished using the pinning option `-C C0:0@C1:0@C2:0@C3:0`
+instead. This specifies threads be assigned to the first core of
+successive last cache level (L3) domains. The expression syntax
+version `-C E:N:4:1:8` would achieve the same.
+
+
 
 
 ### Hybrid MPI+threaded jobs
@@ -291,10 +506,10 @@ with direct core number assignment for the N domain (all cores).
 ```slurm
 #!/bin/bash
 
-#SBATCH --account=[your account]
+#SBATCH --account=[your project]
 #SBATCH --partition=standard
-#SBATCH --qos=standard
-#SBATCH --time=00:05:00 
+#SBATCH --qos=short
+#SBATCH --time=00:20:00 
 #SBATCH --nodes=2
 #SBATCH --tasks-per-node=2
 #SBATCH --cpus-per-task=64
@@ -308,80 +523,62 @@ export OMP_NUM_THREADS=64
 export OMP_PLACES=cores
 export SRUN_CPUS_PER_TASK=64
 
-likwid-mpirun -n $SLURM_NTASKS --nocpubind -t 64 -s 0x0 -g FLOPS_DP xthi &> xthi.out
-likwid-mpirun -n $SLURM_NTASKS --nocpubind -t 64 -s 0x0 -g FLOPS_DP myApplication &> application.out
+likwid-mpirun -n $SLURM_NTASKS -t 64 --nocpubind -s 0x0 -g FLOPS_DP --debug xthi &> xthi.out
+likwid-mpirun -n $SLURM_NTASKS -t 64 --nocpubind -s 0x0 -g FLOPS_DP myApplication &> application.out
 
 ```
 
-Note: the same application placement and measurement scenario can be
+The same application placement and measurement scenario can be
 accomplished using the pinning option `-pin N:0-63_N:64-127` instead
-of or in addition to `-t 64`.
-
+of `-t 64`.
 
 
 ### Serial job
 
+Using `likwid-mpirun`:
+
+```slurm
+#!/bin/bash
+
+#SBATCH --account=[your project]
+#SBATCH --partition=standard
+#SBATCH --qos=short
+#SBATCH --time=00:20:00 
+#SBATCH --nodes=1
+#SBATCH --tasks-per-node=1
+#SBATCH --cpus-per-task=1
+
+module load likwid
+module load xthi
+
+export OMP_NUM_THREADS=1
+export SRUN_CPUS_PER_TASK=1
+
+likwid-mpirun -n 1 --nocpubind -s 0x0 -g FLOPS_DP --debug xthi &> xthi.out
+likwid-mpirun -n 1 --nocpubind -s 0x0 -g FLOPS_DP myApplication &> application.out
+
+```
+
+Alternatively, using `likwid-perfctr`:
+
+```slurm
+#!/bin/bash
+
+#SBATCH --account=[your project]
+#SBATCH --partition=standard
+#SBATCH --qos=short
+#SBATCH --time=00:20:00 
+#SBATCH --nodes=1
+
+module load likwid
+module load xthi
+
+export OMP_NUM_THREADS=1
+
+likwid-perfctr -C 0 --nocpubind -s 0x0 -g FLOPS_DP --debug xthi &> xthi.out
+likwid-perfctr -C 0 --nocpubind -s 0x0 -g FLOPS_DP myApplication &> application.out
+
+```
 
 
-
-## Summary of likwid-mpirun options
-
-The following options are important to be aware of when using
-`likwid-mpirun` on ARCHER2:
-
-
-`-n/-np <count>`
-
-Specify the total number of processes to launch
-
-`-g/--group <perf>`
-
-Specify which predefined group of performance counters and derived
-metrics to measure and compute. Details about these groups and
-available counters for the Zen2 architecture of ARCHER2's AMD EPYC
-processors can be found at
-[https://github.com/RRZE-HPC/likwid/wiki/Zen2](https://github.com/RRZE-HPC/likwid/wiki/Zen2).
-
-`-t`
-
-The number of threads or threads per MPI rank. Defaults to 1 if not specified. 
-
-`--nocpubind`  
-
-Suppress `likwid-mpirun`'s binding of application processes to CPUs
-(cores), which would otherwise take place through generation of a CPU
-mask list passed to `srun` using the option
-`--cpu-bind=mask_cpu:<list>`, as this conflicts with the thread
-affinity specified following the usual approach on ARCHER2. 
-
-
-`-s/--skip <hex>`
-
-This tells `likwid-mpirun` how many threads to skip when generating
-its specification of which cores to pin to/measure (see
-[https://blogs.fau.de/hager/archives/8171](https://blogs.fau.de/hager/archives/8171)
-for a detailed explanation). On ARCHER2 we have checked and confirmed
-that there are no shepherd threads involved using any of `PrgEnv-gnu`,
-`PrgEnv-cray` or `PrgEnv-aocc`, therefore not skipping any threads is
-the correct choice (this differs from `likwid-mpirun` defaults) and
-this is reflected by specifying `-s 0x0` in the example job scripts
-above.
-
-`-d/--debug`
-
-To check how exactly `likwid-mpirun` calls `srun` and `likwid-perfctr`
-to launch and measure your application, use the `--debug` option,
-which will generate additional output that includes the relevant
-commands. For the modified `likwid-mpirun` on ARCHER2 the otherwise
-temporary files `.likwidscript_*.txt` referenced in debug output that
-contain these commands persist after execution, enabling closer
-inspection.
-
-
-`-mpiopts`
-
-Any desired `srun` options can be passed to the `srun` command through
-the `-mpiopts` option, for example as follows:
-
-`likwid-mpirun -mpiopts "--hint=nomultithread --distribution=block:block"` 
 
