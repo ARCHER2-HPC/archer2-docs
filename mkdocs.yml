@@ -126,6 +126,7 @@ nav:
     - "Energy Counters": data-tools/pm-mpi-lib.md
     - "Globus": data-tools/globus.md
     - "Julia": data-tools/julia.md
+    - "LIKWID": data-tools/likwid.md
     - "ParaView": data-tools/paraview.md
     - "R": data-tools/cray-r.md
     - "Spack": data-tools/spack.md
