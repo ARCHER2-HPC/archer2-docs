@@ -9,6 +9,10 @@
       
       
       
+        <link rel="prev" href="../julia/">
+      
+      
+        <link rel="next" href="../paraview/">
       
       
       <link rel="icon" href="../../favicon.ico">
@@ -16,7 +20,7 @@
     
     
       
-        <title>Casino - ARCHER2 User Documentation</title>
+        <title>LIKWID - ARCHER2 User Documentation</title>
       
     
     
@@ -77,6 +81,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#likwid" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -108,7 +117,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Casino
+              LIKWID
             
           </span>
         </div>
@@ -2034,18 +2043,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
         
           
           <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
@@ -2061,7 +2072,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_8">
             <span class="md-nav__icon md-icon"></span>
             Data Analysis and Tools
@@ -2075,7 +2086,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data-tools/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         
   
   
@@ -2098,7 +2109,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data-tools/amd-uprof/" class="md-nav__link">
+      <a href="../amd-uprof/" class="md-nav__link">
         
   
   
@@ -2121,7 +2132,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data-tools/forge/" class="md-nav__link">
+      <a href="../forge/" class="md-nav__link">
         
   
   
@@ -2144,7 +2155,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data-tools/darshan/" class="md-nav__link">
+      <a href="../darshan/" class="md-nav__link">
         
   
   
@@ -2167,7 +2178,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data-tools/pm-mpi-lib/" class="md-nav__link">
+      <a href="../pm-mpi-lib/" class="md-nav__link">
         
   
   
@@ -2190,7 +2201,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data-tools/globus/" class="md-nav__link">
+      <a href="../globus/" class="md-nav__link">
         
   
   
@@ -2213,7 +2224,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data-tools/julia/" class="md-nav__link">
+      <a href="../julia/" class="md-nav__link">
         
   
   
@@ -2233,10 +2244,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../data-tools/likwid/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    LIKWID
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -2247,6 +2280,152 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#likwid-perfctr-and-likwid-mpirun" class="md-nav__link">
+    <span class="md-ellipsis">
+      likwid-perfctr and likwid-mpirun
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#likwid-on-archer2" class="md-nav__link">
+    <span class="md-ellipsis">
+      LIKWID on ARCHER2
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-of-likwid-mpirun-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary of likwid-mpirun options
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-job-scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example job scripts
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Example job scripts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pure-mpi-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pure MPI jobs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pure MPI jobs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fully-populated-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fully populated node(s)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#underpopulated-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Underpopulated node(s)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pure-threaded-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pure threaded jobs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pure threaded jobs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fully-populated-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fully populated node
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#underpopulated-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      Underpopulated node
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hybrid-mpithreaded-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hybrid MPI+threaded jobs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#serial-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      Serial job
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2259,7 +2438,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data-tools/paraview/" class="md-nav__link">
+      <a href="../paraview/" class="md-nav__link">
         
   
   
@@ -2282,7 +2461,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data-tools/cray-r/" class="md-nav__link">
+      <a href="../cray-r/" class="md-nav__link">
         
   
   
@@ -2305,7 +2484,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data-tools/spack/" class="md-nav__link">
+      <a href="../spack/" class="md-nav__link">
         
   
   
@@ -2328,7 +2507,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data-tools/visidata/" class="md-nav__link">
+      <a href="../visidata/" class="md-nav__link">
         
   
   
@@ -2351,7 +2530,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data-tools/vmd/" class="md-nav__link">
+      <a href="../vmd/" class="md-nav__link">
         
   
   
@@ -2435,6 +2614,142 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#likwid-perfctr-and-likwid-mpirun" class="md-nav__link">
+    <span class="md-ellipsis">
+      likwid-perfctr and likwid-mpirun
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#likwid-on-archer2" class="md-nav__link">
+    <span class="md-ellipsis">
+      LIKWID on ARCHER2
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-of-likwid-mpirun-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary of likwid-mpirun options
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-job-scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example job scripts
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Example job scripts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pure-mpi-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pure MPI jobs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pure MPI jobs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fully-populated-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fully populated node(s)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#underpopulated-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Underpopulated node(s)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pure-threaded-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pure threaded jobs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pure threaded jobs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fully-populated-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fully populated node
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#underpopulated-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      Underpopulated node
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hybrid-mpithreaded-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hybrid MPI+threaded jobs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#serial-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      Serial job
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -2453,9 +2768,452 @@
   
 
 
-  <h1>Casino</h1>
+<h1 id="likwid">LIKWID</h1>
+<p><a href="https://github.com/RRZE-HPC/likwid">LIKWID</a> is an open-source tool
+suite that can be used to measure node-level hardware performance
+counters, amongst other functionalities. It offers ways to quantify
+performance, e.g. when investigating performance bottlenecks or
+degradation. In this documentation we present guidance for common use
+cases on ARCHER2, focusing on performance counter measurement for
+parallel applications. For more information on LIKWID functionality
+and usage see <a href="https://github.com/RRZE-HPC/likwid/wiki">the official LIKWID
+wiki</a>.</p>
+<h2 id="likwid-perfctr-and-likwid-mpirun">likwid-perfctr and likwid-mpirun</h2>
+<p>LIKWID provides a number of command line tools. Performance counter
+measurement is handled by
+<a href="https://github.com/RRZE-HPC/likwid/wiki/likwid-perfctr"><code>likwid-perfctr</code></a>,
+which supports the following usage modes:</p>
+<ul>
+<li>
+<p><a href="https://github.com/RRZE-HPC/likwid/wiki/likwid-perfctr#basic-usage-wrapper-mode"><strong>wrapper
+  mode</strong></a>
+  (default): use <code>likwid-perfctr</code> as a wrapper to launch your
+  application and measure performance counters while it executes. This
+  is the easiest way to ensure that measurement starts and stops when
+  your application starts and stops and that the cores whose counters
+  are included in measurements are those on which your application
+  executes.</p>
+<ul>
+<li><a href="https://github.com/RRZE-HPC/likwid/wiki/likwid-perfctr#using-the-marker-api"><strong>wrapper mode + marker
+  API</strong></a>:
+  when using wrapper mode it is possible to measure performance
+  counters only during execution of one or more specific regions
+  in your code, for example to quantify the performance of known
+  computationally costly kernels. This requires instrumenting your
+  code to use the <a href="https://github.com/RRZE-HPC/likwid/wiki/LikwidAPI-and-MarkerAPI">LIKWID marker
+  API</a>
+  and recompiling.</li>
+</ul>
+</li>
+<li>
+<p><a href="https://github.com/RRZE-HPC/likwid/wiki/likwid-perfctr#the-stethoscope-mode"><strong>stethoscope
+  mode</strong></a>:
+  launch your application as usual, then instruct <code>likwid-perfctr</code> to
+  measure performance counters associated with the cores on which your
+  application is executing. Measurements are aggregated over a
+  duration of time that you specify. It may be difficult to relate
+  results to what application code was executed over the measurement
+  duration. This mode is more suited to obtaining a snapshot of
+  performance than to performing a systematic performance assessment.</p>
+</li>
+<li>
+<p><a href="https://github.com/RRZE-HPC/likwid/wiki/likwid-perfctr#the-timeline-mode"><strong>timeline
+  mode</strong></a>:
+  launch your application as usual, then instruct <code>likwid-perfctr</code> to
+  periodically output performance counter measurements aggregated over
+  the time interval specified. As for stethoscope mode you must tell
+  <code>likwid-perfctr</code> which cores to measure counters for, ensuring these
+  match where your application is executing. This mode can provide
+  insight into performance during different phases of your
+  application, though it may be difficult to relate results to what
+  application code was executed over any given measurement interval.</p>
+</li>
+</ul>
+<p>Using <code>likwid-perfctr</code> in any of the above modes other than wrapper +
+marker API can be done without altering or recompiling your
+application code.</p>
+<p><code>likwid-perfctr</code> is designed to work with serial or thread-parallel
+applications. Measuring counters for MPI-parallel applications may be
+accomplished in principle by combining <code>likwid-perfctr</code> and a parallel
+application launcher such as <code>srun</code> as described <a href="https://github.com/RRZE-HPC/likwid/wiki/TutorialMPI">in this
+tutorial</a>.
+LIKWID provides a more elegant solution in the form of a wrapper
+called
+<a href="https://github.com/RRZE-HPC/likwid/wiki/Likwid-Mpirun"><code>likwid-mpirun</code></a>.
+This launches <code>likwid-perfctr</code> and your MPI-parallel application and
+aggregates measurement outputs across ranks.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>likwid-mpirun</code> only supports <code>likwid-perfctr</code>'s wrapper mode
+(with or without marker API)</p>
+</div>
+<h2 id="likwid-on-archer2">LIKWID on ARCHER2</h2>
+<p>For the sake of simplicity and convenience we provide guidance on how
+to use <code>likwid-mpirun</code> to measure performance counters on ARCHER2
+regardless of whether the application is serial, thread-parallel,
+MPI-parallel, or hybrid MPI + thread-parallel. This unified approach
+has the added benefit of being closer to the ARCHER2 default
+<code>srun</code>-based application launch approach used in existing job scripts
+than using <code>likwid-perfctr</code>.</p>
+<p>Using <code>likwid-mpirun</code> restricts measurement functionality to
+<code>likwid-perfctr</code>'s wrapper mode, which supports performance
+characterisation through either whole-application or kernel-specific
+measurement. Users interested in running <code>likwid-perfctr</code> directly on
+ARCHER2, for example to access timeline or stethoscope mode, may
+consult the example job script for pure threaded applications that
+uses <code>likwid-perfctr</code> below as well as the <a href="https://github.com/RRZE-HPC/likwid/wiki/Likwid-Pin">wiki page on LIKWID's
+pinning syntax</a>,
+and can contact the ARCHER2 helpdesk to request assistance.</p>
+<p>LIKWID is available on ARCHER2 as a centrally installed module
+(<code>likwid/5.4.1-archer2</code>), which provides a <a href="https://github.com/EPCCed/likwid/tree/archer2">customised
+version</a> of the
+official 5.4.1 release. The primary difference compared to the
+official release is that <code>likwid-mpirun</code> has been adapted for improved
+compatibility with ARCHER2 Slurm configuration, default job launch
+recommendations and the Cray MPI library. It offers the <code>--nocpubind</code>
+option, which we introduced and recommend using to leave binding of
+application processes to CPUs to <code>srun</code> to control as per the standard
+approach for running jobs on ARCHER2. The central LIKWID install also
+incorporates <a href="https://github.com/RRZE-HPC/likwid/compare/master...EPCCed:likwid:archer2">several more minor
+changes</a>. The
+guidance and example job scripts presented below pertain to this
+custom version and its usage on ARCHER2.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>LIKWID on ARCHER2 uses the <a href="https://github.com/RRZE-HPC/likwid/wiki/TutorialLikwidPerf">perf-event
+backend</a>
+with <code>perf_event_paranoid</code> set to -1 (no restrictions), which has
+<a href="https://github.com/RRZE-HPC/likwid/wiki/TutorialLikwidPerf#feature-limitations">some implications for
+features/functionality</a></p>
+</div>
+<h2 id="summary-of-likwid-mpirun-options">Summary of likwid-mpirun options</h2>
+<p>The following options are important to be aware of when using
+<code>likwid-mpirun</code> on ARCHER2. For additional information, try
+<code>likwid-mpirun --help</code> and see the LIKWID wiki, especially the
+<a href="https://github.com/RRZE-HPC/likwid/wiki/Likwid-Mpirun"><code>likwid-mpirun</code>
+page</a>.</p>
+<p><code>-n/-np &lt;count&gt;</code></p>
+<p>Specify the total number of processes to launch</p>
+<p><code>-t &lt;count&gt;</code></p>
+<p>The number of threads or threads per MPI rank. Defaults to 1 if not
+specified. Can be used to "space" processes for placement in the case
+of hybrid MPI + threaded applications and act as an alternative to
+<code>-pin</code> below in these cases. </p>
+<p><code>-pin &lt;list&gt;</code></p>
+<p>Specify pinning of processes (and their threads if
+applicable). Follows the
+<a href="https://github.com/RRZE-HPC/likwid/wiki/Likwid-Pin"><code>likwid-pin</code></a>
+syntax. </p>
+<p><code>-g/--group &lt;perf&gt;</code></p>
+<p>Specify which predefined group of performance counters and derived
+metrics to measure and compute. Details about these groups and
+available counters for the Zen2 architecture of ARCHER2's AMD EPYC
+processors can be found at
+<a href="https://github.com/RRZE-HPC/likwid/wiki/Zen2">https://github.com/RRZE-HPC/likwid/wiki/Zen2</a>.</p>
+<p><code>--nocpubind</code> (ARCHER2 only)</p>
+<p>Suppress <code>likwid-mpirun</code>'s binding of application processes to CPUs
+(cores) that would otherwise take place through generation of a CPU
+mask list passed to <code>srun</code>. We recommend always using <code>--nocupbind</code> on
+ARCHER2 to avoid conflicts with binding/affinity specified following
+the usual approach on ARCHER2 and this is shown in example job
+scripts.</p>
+<p><code>-s/--skip &lt;hex&gt;</code></p>
+<p>This tells <code>likwid-mpirun</code> how many threads to skip when generating
+its specification of which cores to pin to/measure (see <a href="https://blogs.fau.de/hager/archives/8171">this
+discussion of LIKWID and shepherd
+threads</a> for a detailed
+explanation). On ARCHER2 we have checked and confirmed that there are
+no shepherd threads involved using any of <code>PrgEnv-gnu</code>, <code>PrgEnv-cray</code>
+or <code>PrgEnv-aocc</code>, therefore not skipping any threads (<code>-s 0x0</code>) is the
+correct choice (this differs from <code>likwid-mpirun</code> defaults), reflected
+in the example job scripts above.</p>
+<p><code>-d/--debug</code></p>
+<p>To check how exactly <code>likwid-mpirun</code> calls <code>srun</code> and <code>likwid-perfctr</code>
+to launch and measure your application, use the <code>--debug</code> option,
+which will generate additional output that includes the relevant
+commands. For the modified <code>likwid-mpirun</code> on ARCHER2 the otherwise
+temporary files <code>.likwidscript_*.txt</code> referenced in debug output that
+contain these commands persist after execution, enabling closer
+inspection.</p>
+<p><code>--mpiopts</code></p>
+<p>Any desired options accepted by <code>srun</code> can be passed to the <code>srun</code>
+command through the <code>--mpiopts</code> option, for example as follows:</p>
+<p><code>likwid-mpirun --mpiopts "--exact --hint=nomultithread --distribution=block:block"</code> </p>
+<p><code>-m/-marker</code></p>
+<p>Activate Marker API mode</p>
+<h2 id="example-job-scripts">Example job scripts</h2>
+<p>Below we provide example job scripts covering different cases of
+application parallelism using <code>likwid-perfctr</code> in wrapper mode either
+through <code>likwid-mpirun</code> or directly. All examples perform
+whole-application measurement but can be adapted to use the marker
+API.</p>
+<p>Each of the example job scripts that uses <code>likwid-mpirun</code> makes use of
+the srun/sbatch options <code>--hint=nomultithread</code> and
+<code>--distribution=block:block</code>. We have set these as SBATCH options at
+the top of the job script. Alternatively these as well as any other
+<code>srun</code> options could be passed explicitly to the underlying <code>srun</code>
+command through the <code>--mpiopts</code> option as follows:</p>
+<p><code>likwid-mpirun --mpiopts "--hint=nomultithread --distribution=block:block"</code>  </p>
+<p>Each example job script includes a suggested command to run <code>xthi</code>
+launched identically to the application you wish to measure in order
+to check and confirm that process and thread placement for your
+application is as intended. Details on checking process placement with
+<code>xthi</code> can be found in the User Guide page on <a href="https://docs.archer2.ac.uk/user-guide/scheduler/">Running
+jobs</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You are encouraged to check how <code>likwid-mpirun</code> uses <code>srun</code> to
+launch <code>likwid-perfctr</code> and your application by running in debug
+mode (<code>likwid-mpirun --debug</code>) and examining both the job output
+and the <code>.likwidscript-####</code> file mentioned therein.</p>
+</div>
+<p>For pure threaded and MPI+thread parallel jobs using either the <code>-t</code>
+option to specify the number of threads or <code>-pin</code> with an appropriate
+pinning expression (or both) can accomplish the same desired
+application placement and measurement scenario. The same applies to
+pure MPI applications in the case of underpopulating nodes (i.e. fewer
+than 128 ranks per node), where <code>-t</code> can be used to space processes
+out across a node and/or <code>-pin</code> used to specify which cores on each
+node application processes should execute and be measured on.</p>
+<p>For further explanation of <code>likwid-mpirun</code> options used, see the
+section <a href="#summary-of-likwid-mpirun-options">Summary of likwid-mpirun
+options</a></p>
+<h3 id="pure-mpi-jobs">Pure MPI jobs</h3>
+<h4 id="fully-populated-nodes">Fully populated node(s)</h4>
+<p>Two fully populated nodes (128 ranks per node):</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
-<p><a href="../../research-software/casino/">This page has moved</a></p>
+<span class="kp">#SBATCH --account=[your project]</span>
+<span class="kp">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --qos=short</span>
+<span class="kp">#SBATCH --time=00:20:00 </span>
+<span class="kp">#SBATCH --nodes=2</span>
+<span class="kp">#SBATCH --tasks-per-node=128</span>
+<span class="kp">#SBATCH --cpus-per-task=1</span>
+<span class="kp">#SBATCH --hint=nomultithread</span>
+<span class="kp">#SBATCH --distribution=block:block</span>
+
+module<span class="w"> </span>load<span class="w"> </span>likwid
+module<span class="w"> </span>load<span class="w"> </span>xthi
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="m">1</span>
+
+likwid-mpirun<span class="w"> </span>-n<span class="w"> </span><span class="nv">$SLURM_NTASKS</span><span class="w"> </span>--nocpubind<span class="w"> </span>-s<span class="w"> </span>0x0<span class="w"> </span>-g<span class="w"> </span>FLOPS_DP<span class="w"> </span>--debug<span class="w"> </span>xthi_mpi<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>xthi_mpi.out
+likwid-mpirun<span class="w"> </span>-n<span class="w"> </span><span class="nv">$SLURM_NTASKS</span><span class="w"> </span>--nocpubind<span class="w"> </span>-s<span class="w"> </span>0x0<span class="w"> </span>-g<span class="w"> </span>FLOPS_DP<span class="w"> </span>myApplication<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>application.out
+</code></pre></div>
+<h4 id="underpopulated-nodes">Underpopulated node(s)</h4>
+<p>Two nodes, two ranks per node, one rank per socket (i.e. per 64-core AMD EPYC processor):</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+<span class="kp">#SBATCH --account=[your project]</span>
+<span class="kp">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --qos=short</span>
+<span class="kp">#SBATCH --time=00:20:00 </span>
+<span class="kp">#SBATCH --nodes=2</span>
+<span class="kp">#SBATCH --tasks-per-node=2</span>
+<span class="kp">#SBATCH --cpus-per-task=64</span>
+<span class="kp">#SBATCH --hint=nomultithread</span>
+<span class="kp">#SBATCH --distribution=block:block</span>
+
+module<span class="w"> </span>load<span class="w"> </span>likwid
+module<span class="w"> </span>load<span class="w"> </span>xthi
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
+
+likwid-mpirun<span class="w"> </span>-n<span class="w"> </span><span class="nv">$SLURM_NTASKS</span><span class="w"> </span>-pin<span class="w"> </span>N:0_N:64<span class="w"> </span>--nocpubind<span class="w"> </span>-s<span class="w"> </span>0x0<span class="w"> </span>-g<span class="w"> </span>FLOPS_DP<span class="w"> </span>--debug<span class="w"> </span>xthi_mpi<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>xthi_mpi.out
+likwid-mpirun<span class="w"> </span>-n<span class="w"> </span><span class="nv">$SLURM_NTASKS</span><span class="w"> </span>-pin<span class="w"> </span>N:0_N:64<span class="w"> </span>--nocpubind<span class="w"> </span>-s<span class="w"> </span>0x0<span class="w"> </span>-g<span class="w"> </span>FLOPS_DP<span class="w"> </span>myApplication<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>application.out
+</code></pre></div>
+<p>The same application placement and measurement scenario can be
+accomplished by specifying the first core on each socket directly with
+<code>-pin S0:0_S1:0</code> instead of <code>-pin N:0_N:64</code></p>
+<p>One node, four ranks, one rank per NUMA region all on the same socket:</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+<span class="kp">#SBATCH --account=[your project]</span>
+<span class="kp">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --qos=short</span>
+<span class="kp">#SBATCH --time=00:20:00 </span>
+<span class="kp">#SBATCH --nodes=1</span>
+<span class="kp">#SBATCH --tasks-per-node=4</span>
+<span class="kp">#SBATCH --cpus-per-task=16</span>
+<span class="kp">#SBATCH --hint=nomultithread</span>
+<span class="kp">#SBATCH --distribution=block:block</span>
+
+module<span class="w"> </span>load<span class="w"> </span>likwid
+module<span class="w"> </span>load<span class="w"> </span>xthi
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="m">16</span>
+
+likwid-mpirun<span class="w"> </span>-n<span class="w"> </span><span class="nv">$SLURM_NTASKS</span><span class="w"> </span>-pin<span class="w"> </span>N:0_N:16_N:32_N:48<span class="w"> </span>--nocpubind<span class="w"> </span>-s<span class="w"> </span>0x0<span class="w"> </span>-g<span class="w"> </span>FLOPS_DP<span class="w"> </span>--debug<span class="w"> </span>xthi_mpi<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>xthi_mpi.out
+likwid-mpirun<span class="w"> </span>-n<span class="w"> </span><span class="nv">$SLURM_NTASKS</span><span class="w"> </span>-pin<span class="w"> </span>N:0_N:16_N:32_N:48<span class="w"> </span>--nocpubind<span class="w"> </span>-s<span class="w"> </span>0x0<span class="w"> </span>-g<span class="w"> </span>FLOPS_DP<span class="w"> </span>myApplication<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>application.out
+</code></pre></div>
+<p>The same application placement and measurement scenario can be
+accomplished by specifying the first core on each NUMA node directly
+with <code>-pin M0:0_M1:0_M2:0_M3:0</code> instead of <code>-pin N:0_N:16_N:32_N:48</code></p>
+<h3 id="pure-threaded-jobs">Pure threaded jobs</h3>
+<h4 id="fully-populated-node">Fully populated node</h4>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+<span class="kp">#SBATCH --account=[your project]</span>
+<span class="kp">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --qos=short</span>
+<span class="kp">#SBATCH --time=00:20:00 </span>
+<span class="kp">#SBATCH --nodes=1</span>
+<span class="kp">#SBATCH --tasks-per-node=1</span>
+<span class="kp">#SBATCH --cpus-per-task=128</span>
+<span class="kp">#SBATCH --hint=nomultithread</span>
+<span class="kp">#SBATCH --distribution=block:block</span>
+
+module<span class="w"> </span>load<span class="w"> </span>likwid
+module<span class="w"> </span>load<span class="w"> </span>xthi
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">128</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_PLACES</span><span class="o">=</span>cores
+<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="m">128</span>
+
+likwid-mpirun<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span><span class="w"> </span>-t<span class="w"> </span><span class="m">128</span><span class="w"> </span>--nocpubind<span class="w"> </span>-s<span class="w"> </span>0x0<span class="w"> </span>-g<span class="w"> </span>FLOPS_DP<span class="w"> </span>--debug<span class="w"> </span>xthi<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>xthi.out
+likwid-mpirun<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span><span class="w"> </span>-t<span class="w"> </span><span class="m">128</span><span class="w"> </span>--nocpubind<span class="w"> </span>-s<span class="w"> </span>0x0<span class="w"> </span>-g<span class="w"> </span>FLOPS_DP<span class="w"> </span>myApplication<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>application.out
+</code></pre></div>
+<p>The same application placement and measurement scenario can be
+accomplished using the pinning option <code>-pin N:0-127</code> instead of <code>-t
+128</code>.</p>
+<p>For pure threaded applications the <code>likwid-perfctr</code> command can also
+be used directly instead of <code>likwid-mpirun</code>, bypassing <code>srun</code>. This is
+shown below in the equivalent job script to the fully populated
+<code>likwid-mpirun</code> example above.</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+<span class="kp">#SBATCH --account=[your project]</span>
+<span class="kp">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --qos=short</span>
+<span class="kp">#SBATCH --time=00:20:00 </span>
+<span class="kp">#SBATCH --nodes=1</span>
+
+module<span class="w"> </span>load<span class="w"> </span>likwid
+module<span class="w"> </span>load<span class="w"> </span>xthi
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">128</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_PLACES</span><span class="o">=</span>cores
+
+likwid-perfctr<span class="w"> </span>-C<span class="w"> </span>N:0-127<span class="w"> </span>-s<span class="w"> </span>0x0<span class="w"> </span>-g<span class="w"> </span>FLOPS_DP<span class="w"> </span>--debug<span class="w"> </span>xthi<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>xthi.out
+likwid-perfctr<span class="w"> </span>-C<span class="w"> </span>N:0-127<span class="w"> </span>-s<span class="w"> </span>0x0<span class="w"> </span>-g<span class="w"> </span>FLOPS_DP<span class="w"> </span>myApplication<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>application.out
+</code></pre></div>
+<p>The <code>-C</code> option simultaneously sets pinning of application threads to cores and
+specifies those same cores to measure counters for. The following pinning
+expressions are equivalent:</p>
+<div class="highlight"><pre><span></span><code>-C N:0-127
+-C E:N:128:1:2
+</code></pre></div>
+<p>The second form uses LIKWID's expression based pinning syntax (<a href="https://github.com/RRZE-HPC/likwid/wiki/Likwid-Pin">see
+the <code>likwid-pin</code> wiki
+page</a>). This can
+be understood by examining CPU numbering using the <code>likwid-topology</code>
+command, which shows that adjacent hardware threads on the same
+physical cores are numbered n and n+128 respectively, hence CPUs
+(logical cores) numbered 0 through 127 correspond to single hardware
+threads on each of the 128 distinct physical cores on an ARCHER2
+compute node. The final <code>:2</code> in the expression based syntax skips the
+second hardware thread for each physical core when pinning, thereby
+accomplishing the same as the domain-based pinning expression that
+specifies direct core number assignment for the N domain (all cores).</p>
+<h4 id="underpopulated-node">Underpopulated node</h4>
+<p>Launching fewer than 128 threads placed consecutively is a
+straightforward variation on the fully occupied node case above. We
+can achieve more varied placements, for example four threads in total,
+each bound to the first core of a different CCX complex on the same
+socket. The 4 cores in a CCX share a common L3 cache, hence this
+scenario results in none of the threads sharing the same L3 cache.</p>
+<p>This is easiest to accomplish using <code>likwid-perfctr</code> directly rather
+than through <code>likwid-mpirun</code>, as follows:</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+<span class="kp">#SBATCH --account=[your project]</span>
+<span class="kp">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --qos=short</span>
+<span class="kp">#SBATCH --time=00:20:00 </span>
+<span class="kp">#SBATCH --nodes=1</span>
+
+module<span class="w"> </span>load<span class="w"> </span>likwid
+module<span class="w"> </span>load<span class="w"> </span>xthi
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">4</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_PLACES</span><span class="o">=</span>cores
+
+likwid-perfctr<span class="w"> </span>-C<span class="w"> </span><span class="m">0</span>,4,8,12<span class="w"> </span>-s<span class="w"> </span>0x0<span class="w"> </span>-g<span class="w"> </span>FLOPS_DP<span class="w"> </span>xthi<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>xthi_perfctr_list.out
+</code></pre></div>
+<p>The same application placement and measurement scenario can be
+accomplished using the pinning option <code>-C C0:0@C1:0@C2:0@C3:0</code>
+instead. This specifies threads be assigned to the first core of
+successive last cache level (L3) domains. The expression syntax
+version <code>-C E:N:4:1:8</code> would achieve the same.</p>
+<h3 id="hybrid-mpithreaded-jobs">Hybrid MPI+threaded jobs</h3>
+<p>2 fully populated nodes with 2 ranks per node and 64 threads per rank:</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+<span class="kp">#SBATCH --account=[your project]</span>
+<span class="kp">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --qos=short</span>
+<span class="kp">#SBATCH --time=00:20:00 </span>
+<span class="kp">#SBATCH --nodes=2</span>
+<span class="kp">#SBATCH --tasks-per-node=2</span>
+<span class="kp">#SBATCH --cpus-per-task=64</span>
+<span class="kp">#SBATCH --hint=nomultithread</span>
+<span class="kp">#SBATCH --distribution=block:block</span>
+
+module<span class="w"> </span>load<span class="w"> </span>likwid
+module<span class="w"> </span>load<span class="w"> </span>xthi
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">64</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_PLACES</span><span class="o">=</span>cores
+<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="m">64</span>
+
+likwid-mpirun<span class="w"> </span>-n<span class="w"> </span><span class="nv">$SLURM_NTASKS</span><span class="w"> </span>-t<span class="w"> </span><span class="m">64</span><span class="w"> </span>--nocpubind<span class="w"> </span>-s<span class="w"> </span>0x0<span class="w"> </span>-g<span class="w"> </span>FLOPS_DP<span class="w"> </span>--debug<span class="w"> </span>xthi<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>xthi.out
+likwid-mpirun<span class="w"> </span>-n<span class="w"> </span><span class="nv">$SLURM_NTASKS</span><span class="w"> </span>-t<span class="w"> </span><span class="m">64</span><span class="w"> </span>--nocpubind<span class="w"> </span>-s<span class="w"> </span>0x0<span class="w"> </span>-g<span class="w"> </span>FLOPS_DP<span class="w"> </span>myApplication<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>application.out
+</code></pre></div>
+<p>The same application placement and measurement scenario can be
+accomplished using the pinning option <code>-pin N:0-63_N:64-127</code> instead
+of <code>-t 64</code>.</p>
+<h3 id="serial-job">Serial job</h3>
+<p>Using <code>likwid-mpirun</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+<span class="kp">#SBATCH --account=[your project]</span>
+<span class="kp">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --qos=short</span>
+<span class="kp">#SBATCH --time=00:20:00 </span>
+<span class="kp">#SBATCH --nodes=1</span>
+<span class="kp">#SBATCH --tasks-per-node=1</span>
+<span class="kp">#SBATCH --cpus-per-task=1</span>
+
+module<span class="w"> </span>load<span class="w"> </span>likwid
+module<span class="w"> </span>load<span class="w"> </span>xthi
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="m">1</span>
+
+likwid-mpirun<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span><span class="w"> </span>--nocpubind<span class="w"> </span>-s<span class="w"> </span>0x0<span class="w"> </span>-g<span class="w"> </span>FLOPS_DP<span class="w"> </span>--debug<span class="w"> </span>xthi<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>xthi.out
+likwid-mpirun<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span><span class="w"> </span>--nocpubind<span class="w"> </span>-s<span class="w"> </span>0x0<span class="w"> </span>-g<span class="w"> </span>FLOPS_DP<span class="w"> </span>myApplication<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>application.out
+</code></pre></div>
+<p>Alternatively, using <code>likwid-perfctr</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+<span class="kp">#SBATCH --account=[your project]</span>
+<span class="kp">#SBATCH --partition=standard</span>
+<span class="kp">#SBATCH --qos=short</span>
+<span class="kp">#SBATCH --time=00:20:00 </span>
+<span class="kp">#SBATCH --nodes=1</span>
+
+module<span class="w"> </span>load<span class="w"> </span>likwid
+module<span class="w"> </span>load<span class="w"> </span>xthi
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
+
+likwid-perfctr<span class="w"> </span>-C<span class="w"> </span><span class="m">0</span><span class="w"> </span>--nocpubind<span class="w"> </span>-s<span class="w"> </span>0x0<span class="w"> </span>-g<span class="w"> </span>FLOPS_DP<span class="w"> </span>--debug<span class="w"> </span>xthi<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>xthi.out
+likwid-perfctr<span class="w"> </span>-C<span class="w"> </span><span class="m">0</span><span class="w"> </span>--nocpubind<span class="w"> </span>-s<span class="w"> </span>0x0<span class="w"> </span>-g<span class="w"> </span>FLOPS_DP<span class="w"> </span>myApplication<span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>application.out
+</code></pre></div>
 
 
 
