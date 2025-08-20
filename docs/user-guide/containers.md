@@ -452,8 +452,8 @@ inside the CPE container. And any output resulting from the compilation, such as
 and executables, can be written to `/work` also. This ability to bind to locations on the host is
 necessary as the container is immutable, i.e., you cannot write files to the container itself.
 
-Any executable resulting from a containerised CPE build should also be run from within the container.
-Thus one can test the performance of the containerised libraries, e.g., `libmpi_cray`, `libpmi2`, `libfabric`.
+Any executable resulting from a containerised CPE build should also be run from within the container,
+allowing one to test the performance of the containerised libraries, e.g., `libmpi_cray`, `libpmi2`, `libfabric`.
 
 We'll now show how to build and run a simple Hello World MPI example using a containerised CPE.
 
@@ -620,7 +620,7 @@ software is installed.
     #!/bin/bash
 
     #SBATCH --job-name=ccpe-build
-    #SBATCH --ntasks=8
+    #SBATCH --ntasks=1
     #SBATCH --time=00:10:00
     #SBATCH --account=<budget code>
     #SBATCH --partition=serial
@@ -648,12 +648,12 @@ bin directory has been added to the `PATH` environment variable).
 
 ROCm is AMD's software support for GPU programming. As of August 2025, one of the CPE containers also provides a version of ROCm newer
 than the one currently installed on ARCHER2. For example, the `ccpe/23.12/rocm/5.6.0` module provides access to ROCm 5.6.0 with CPE 23.12.
-Having access to a more recent version of ROCm gives one access to more up-to-date compilers that target the AMD MI210 GPU platform, e.g. amdclang, amdclang++, amdflang.
+Having access to a more recent version of ROCm gives one access to more up-to-date compilers that target the AMD MI210 GPU platform, e.g. `amdclang`, `amdclang++`, `amdflang`.
 The same applies to ROCm-integrated software frameworks such as PyTorch.
 
 We'll now present a scenario showing how one can make use of the `ccpe/23.12/rocm/5.6.0` container to train a neural network using
-Python code that requires PyTorch 2.2.0. This is of interest since the version of ROCm installed on ARCHER2, 5.2.3, prevents users
-from using a version of PyTorch newer than 1.13.1. 
+Python code that requires PyTorch 2.2.0. This is of interest since the version of ROCm installed on ARCHER2, 5.2.3, limits users
+to versions of PyTorch no newer than 1.13.1. 
 
 !!! note
     An overview of the differences between PyTorch versions 2.2.0 and 1.13.1 can be found in the [official PyTorch release notes](https://github.com/pytorch/pytorch/releases?page=2).
@@ -662,7 +662,7 @@ We first setup a local Python custom environment from within the container, such
 host ARCHER2 `/work` system. We'll then install to this custom environment the PyTorch 2.2.0 packages.
 
 === "submit-rocm-build.slurm"
-    ```bash
+    ```slurm
     #!/bin/bash
 
     #SBATCH --job-name=ccpe-rocm-build
@@ -684,7 +684,7 @@ host ARCHER2 `/work` system. We'll then install to this custom environment the P
             ${CCPE_ROCM_BUILDER} ${PWD} mypyenv pip-install.sh
     ```
 === "pip-install.sh"
-    ```
+    ```bash
     #!/bin/bash
 
     pip install --user --upgrade pip scipy
@@ -710,44 +710,56 @@ git clone https://github.com/madagra/basic-pinn.git
 ```
 
 !!! note
-    Mario Dagreda has also published two articles on Medium relevant to the example described here, 
-   [Introduction to PINNs](https://medium.com/data-science/solving-differential-equations-with-neural-networks-afdcf7b8bcc4) and [A primer on functional PyTorch](https://medium.com/data-science/introduction-to-functional-pytorch-b5bf739e1e6e).
+    Mario Dagreda has also published two articles on Medium relevant to the example described here, [Introduction to PINNs](https://medium.com/data-science/solving-differential-equations-with-neural-networks-afdcf7b8bcc4) and [A Primer on Functional PyTorch](https://medium.com/data-science/introduction-to-functional-pytorch-b5bf739e1e6e).
 
-You will see that the code you've just cloned targets the CPU and so we'll need to make specific edits to ensure that the training and evaluation of the wave equation
-is indeed done on the GPU. Basically, this requires us to utilise `to(DEVICE)` such that the PINN model are moved to the GPU, where `DEVICE='cuda'`. The same is true
+You will see that the code you've just cloned targets the CPU and so we'll need to change the code to ensure that the training and evaluation of the wave equation
+is indeed done on the GPU. Basically, this requires us to utilise the `to(DEVICE='cuda')` method such that the PINN model is moved to the GPU. The same is true
 for the input and evaluation data. In addition, we need to ensure that the model output is transferred back to CPU so that it can be plotted: this is done using the `cpu()` method.
 
-The two source files that need to be changed are located in the repo at `./basic-pinn/basic_pinn`, see below for details.
+The two source files that need to be changed are located in the repository file tree at `./basic-pinn/basic_pinn`, see below for details.
 Any code that does not need to change is indicated by an ellipsis (`...`).
 
 === "wave_equation_1d.py"
+    ```python
+
     ...
 
     if __name__ == "__main__":
 
+        ### Add code to initialise DEVICE ###
         DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         print(f"DEVICE: {DEVICE}")
 
         ...
 
         def domain_sampler() -> tuple[torch.Tensor, torch.Tensor]:
+            ### Add to(DEVICE) in line below ###
             x = torch.FloatTensor(config.batch_size).uniform_(domain_x[0], domain_x[1]).to(DEVICE)
+            ### Add to(DEVICE) in line below ###
             t, _ = torch.sort(torch.FloatTensor(config.batch_size).uniform_(domain_t[0], domain_t[1]).to(DEVICE))
             t_and_x = torch.cartesian_prod(t, x)
             return t_and_x[:, 0], t_and_x[:, 1]
 
         # MLP model
+        ### Add to(DEVICE) in line below ###
         model = LinearNN(num_layers=config.num_hidden, num_neurons=config.dim_hidden, num_inputs=2).to(DEVICE)
 
         ...
 
+        ### Add to(DEVICE) in line below ###
         x_eval = torch.arange(domain_x[0], domain_x[1], 0.01).to(DEVICE)
+        ### Add to(DEVICE) in line below ###
         t_eval = torch.arange(domain_t[0], domain_t[1], 0.1).to(DEVICE)
 
         _, ani = animate_2d_solution(x_eval, t_eval, opt_params, f, show=True)
 
         ani.save("wave_equation_1d.gif", writer="pillow")
+    ```
 === "plotting.py"
+    ```python
+
+    ...
+
     def animate_2d_solution(
         x_eval: Tensor,
         t_eval: Tensor,
@@ -764,6 +776,7 @@ Any code that does not need to change is indicated by an ellipsis (`...`).
 
         def init() -> tuple:
             ax.set_xlim(x_eval[0].item(), x_eval[-1].item())
+            ### ADD cpu() in line below ###
             y_values = [fn(x_eval, t * torch.ones_like(x_eval), params=opt_params).cpu().detach().numpy() for t in t_eval]
             ax.set_ylim(min(map(min, y_values)), max(map(max, y_values)))
             return line,
@@ -771,15 +784,17 @@ Any code that does not need to change is indicated by an ellipsis (`...`).
         def animate(frame: int) -> tuple:
             t = t_eval[frame]
             y = fn(x_eval, t * torch.ones_like(x_eval), params=opt_params)
+            ### ADD cpu() in line below ###
             line.set_data(x_eval.cpu().detach().numpy(), y.cpu().detach().numpy())
             return line,
 
         ...
+    ```
 
 Once you've completed the code edits, you can submit the Slurm script below to initiate the training of the PINN on a GPU. 
 
 === "submit-rocm-run.slurm"
-    ```bash
+    ```slurm
     #!/bin/bash
 
     #SBATCH --job-name=pinn-wave-eqn
@@ -805,6 +820,6 @@ Once you've completed the code edits, you can submit the Slurm script below to i
     ```
 
 The `cpe_23.12-rocm_5.6.0.sif` container image file (referenced by `${CCPE_IMAGE_FILE}`) is instantiated on the GPU node where it runs the `${CCPE_ROCM_RUNNER}` script,
-which activates the containerised custom Python environment preparatory to executing the `wave_equation_1d.py` code (courtesy of Mario Dagreda).
+which activates the containerised custom Python environment preparatory to executing the `wave_equation_1d.py` code (courtesy of [Mario Dagreda](https://github.com/madagra/basic-pinn.git)).
 
-The output is a GIF animation (`wave_equation_1d.gif`) that shows an oscillating wave as inferred from the trainined PINN.
+The output is a GIF animation (`wave_equation_1d.gif`) that shows an oscillating wave as inferred from the trained PINN.
