@@ -630,7 +630,7 @@ repository](https://github.com/PE-Cray).
 Later PE releases may sometimes be available via a containerised form. This allows developers to check that their code compiles and runs
 using CPE releases that have not yet been installed on ARCHER2.
 
-CPE 23.12 is currently available as a Singularity container, see [Using Containerised HPE Cray Programming Environments](containers.md/#using-containerised-hpe-cray-programming-environments) for further details.
+CPE 25.03 is currently available as a Singularity container, see [Using Containerised HPE Cray Programming Environments](containers.md/#using-containerised-hpe-cray-programming-environments) for further details.
                                                         
 ### Switching to a different HPE Cray Programming Environment (CPE) release
 

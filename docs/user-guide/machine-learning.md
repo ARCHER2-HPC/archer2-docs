@@ -28,6 +28,9 @@ A binary install of PyTorch 1.13.1 suitable for ROCm 5.2.3 has been installed ac
 
 This install can be accessed by loading the `pytorch/1.13.1-gpu` module.
 
+!!! note
+    For GPU, ARCHER2 currently provides access to a legacy version of [ROCm](gpu.md#rocm), `rocm/5.2.3`. This means that users cannot run on GPU a version of PyTorch more recent than 1.13.1. However, it is possible to run PyTorch 2.2.0 via a containerised HPE Cray Programming Environment module, one that features ROCm 5.6.0, see [Containerised ROCm](containers.md/#containerised-rocm) for details.
+
 As DeepCam is an [MLPerf](https://ieeexplore.ieee.org/document/9238612) benchmark, you may wish to base a local python environment on `pytorch/1.13.1-gpu`
 so that you have the opportunity to install additional python packages that support MLPerf logging, as well as extra features pertinent to DeepCam (e.g., dynamic learning rates).
 

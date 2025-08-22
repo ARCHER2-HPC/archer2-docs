@@ -137,6 +137,8 @@ ensuring that the Python packages will be gathered from the local virtual enviro
     The `extend-venv-activate` command becomes available (i.e., its location is placed on the path) only when the ML module is loaded.
     The ML modules are themselves based on `cray-python`. For example, `tensorflow/2.12.0` is based on the `cray-python/3.9.13.1` module.
 
+Further info about running ML frameworks on ARCHER2 can be found on the [Machine Learning page](machine-learning.md).
+
 ## Conda on ARCHER2
 
 Conda-based Python distributions (e.g. Anaconda, Mamba, Miniconda) are an extremely popular way of installing and
