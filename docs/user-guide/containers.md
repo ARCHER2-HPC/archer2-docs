@@ -802,7 +802,7 @@ Once you've completed the code edits, you can submit the Slurm script below to i
     #SBATCH --job-name=pinn-wave-eqn
     #SBATCH --nodes=1
     #SBATCH --gpus=1
-    #SBATCH --time=00   :10:00
+    #SBATCH --time=00:10:00
     #SBATCH --account=<budget code>
     #SBATCH --partition=gpu
     #SBATCH --qos=gpu-shd
