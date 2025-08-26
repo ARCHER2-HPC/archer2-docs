@@ -874,7 +874,7 @@ To display information pertaining to NIC selection set,
 ## Debugging
 
 GPU debugging via Forge DDT is available. See the
-[ARHCER2 Forge page](../data-tools/forge.md) for details of how to use the
+[ARCHER2 Forge page](../data-tools/forge.md) for details of how to use the
 Forge tools.
 
 Documentation for underlying `rocgdb` can be found in the
