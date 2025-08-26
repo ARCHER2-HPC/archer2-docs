@@ -114,6 +114,9 @@ HIPIFY (`hipify-clang` or `hipify-perl` command), which enables
 translation of CUDA to HIP code. See also the [section below on
 HIPIFY](#hipify).
 
+!!! note
+    ARCHER2 currently provides access to a legacy version of ROCm, `rocm/5.2.3`. However, it is now possible to use a more recent version via a containerised HPE Cray Programming Environment module, `ccpe/23.12/rocm/5.6.0`, see [Containerised ROCm](containers.md/#containerised-rocm) for more details.
+
 
 ### GPU target
 
