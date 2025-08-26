@@ -3927,6 +3927,10 @@ for the AMD GPUs, even if you are not using the AMD LLVM compilers
 HIPIFY (<code>hipify-clang</code> or <code>hipify-perl</code> command), which enables
 translation of CUDA to HIP code. See also the <a href="#hipify">section below on
 HIPIFY</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>ARCHER2 currently provides access to a legacy version of ROCm, <code>rocm/5.2.3</code>. However, it is now possible to use a more recent version via a containerised HPE Cray Programming Environment module, <code>ccpe/23.12/rocm/5.6.0</code>, see <a href="../containers/#containerised-rocm">Containerised ROCm</a> for more details.</p>
+</div>
 <h3 id="gpu-target">GPU target</h3>
 <p>Regardless of what approach you use, you will need to tell the
 underlying GPU compiler which GPU hardware to target. When using the

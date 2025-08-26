@@ -900,6 +900,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Using Containerised HPE Cray Programming Environments">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#containerised-rocm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Containerised ROCm
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -2806,6 +2821,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Using Containerised HPE Cray Programming Environments">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#containerised-rocm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Containerised ROCm
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -3197,26 +3227,25 @@ file:</p>
 <p>An experimental containerised CPE module has been setup on ARCHER2. The module is not available by default
 but can be made accessible by running <code>module use</code> with the right path.</p>
 <div class="highlight"><pre><span></span><code>module<span class="w"> </span>use<span class="w"> </span>/work/y07/shared/archer2-lmod/others/dev
-module<span class="w"> </span>load<span class="w"> </span>ccpe/23.12
+module<span class="w"> </span>load<span class="w"> </span>ccpe/25.03
 </code></pre></div>
 <p>The purpose of the <code>ccpe</code> module(s) is to allow developers to check that their code compiles with the
 latest Cray Programming Environment (CPE) releases. The CPE release installed on ARCHER2 (currently
-CPE 22.12) will typically be older than the latest available. A more recent containerised CPE therefore
-gives developers the opportunity to try out the latest compilers and libraries before the ARCHER CPE
+CPE 23.09) will typically be older than the latest available. A more recent containerised CPE therefore
+gives developers the opportunity to try out the latest compilers and libraries before the ARCHER2 CPE
 is upgraded.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The Containerised CPEs support CCE and GCC compilers, but not AOCC compilers.</p>
 </div>
-<p>The <code>ccpe/23.12</code> module then provides access to CPE 23.12 via a Singularity image file, located at
-<code>/work/y07/shared/utils/dev/ccpe/23.12/cpe_23.12.sif</code>. Singularity containers can be run such that locations
+<p>The <code>ccpe/25.03</code> module provides access to CPE 25.03 via a Singularity image file, located at
+<code>/work/y07/shared/utils/dev/ccpe/25.03/cpe_25.03.sif</code>. Singularity containers can be run such that locations
 on the host file system are still visible. This means source code stored on <code>/work</code> can be compiled from
 inside the CPE container. And any output resulting from the compilation, such as object files, libraries
 and executables, can be written to <code>/work</code> also. This ability to bind to locations on the host is
 necessary as the container is immutable, i.e., you cannot write files to the container itself.</p>
-<p>Any executable resulting from a containerised CPE build can be run from within the container,
-allowing the developer to test the performance of the containerised libraries, e.g., <code>libmpi_cray</code>,
-<code>libpmi2</code>, <code>libfabric</code>.</p>
+<p>Any executable resulting from a containerised CPE build should also be run from within the container,
+allowing one to test the performance of the containerised libraries, e.g., <code>libmpi_cray</code>, <code>libpmi2</code>, <code>libfabric</code>.</p>
 <p>We'll now show how to build and run a simple Hello World MPI example using a containerised CPE.</p>
 <p>First, <code>cd</code> to the directory containing the Hello World MPI source, makefile and build script.
 Examples of these files are given below.</p>
@@ -3298,8 +3327,8 @@ ldd<span class="w"> </span>helloworld
 </div>
 </div>
 <p>The <code>ldd</code> command at the end of the build script is simply there to confirm that the code is indeed linked to
-containerised libraries that form part of the CPE 23.12 release.</p>
-<p>The next step is to launch a job (via <code>sbatch</code>) on a serial node that instantiates the containerised CPE 23.12
+containerised libraries that form part of the CPE 25.03 release.</p>
+<p>The next step is to launch a job (via <code>sbatch</code>) on a serial node that instantiates the containerised CPE 25.03
 image and builds the Hello World MPI code.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">submit-build.slurm</label></div>
 <div class="tabbed-content">
@@ -3307,7 +3336,7 @@ image and builds the Hello World MPI code.</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
 <span class="kp">#SBATCH --job-name=ccpe-build</span>
-<span class="kp">#SBATCH --ntasks=8</span>
+<span class="kp">#SBATCH --ntasks=1</span>
 <span class="kp">#SBATCH --time=00:10:00</span>
 <span class="kp">#SBATCH --account=&lt;budget code&gt;</span>
 <span class="kp">#SBATCH --partition=serial</span>
@@ -3317,25 +3346,23 @@ image and builds the Hello World MPI code.</p>
 <span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
 
 module<span class="w"> </span>use<span class="w"> </span>/work/y07/shared/archer2-lmod/others/dev
-module<span class="w"> </span>load<span class="w"> </span>ccpe/23.12
-
-<span class="nv">BUILD_CMD</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CCPE_BUILDER</span><span class="si">}</span><span class="s2"> </span><span class="si">${</span><span class="nv">SLURM_SUBMIT_DIR</span><span class="si">}</span><span class="s2">/build.sh&quot;</span>
+module<span class="w"> </span>load<span class="w"> </span>ccpe/25.03
 
 singularity<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>--cleanenv<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--bind<span class="w"> </span><span class="si">${</span><span class="nv">CCPE_BIND_ARGS</span><span class="si">}</span>,<span class="si">${</span><span class="nv">SLURM_SUBMIT_DIR</span><span class="si">}</span><span class="w"> </span>--env<span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="si">${</span><span class="nv">CCPE_LD_LIBRARY_PATH</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span><span class="si">${</span><span class="nv">CCPE_IMAGE_FILE</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">BUILD_CMD</span><span class="si">}</span>
+<span class="w">    </span>--bind<span class="w"> </span><span class="si">${</span><span class="nv">CCPE_BIND_ARGS</span><span class="si">}</span>,<span class="si">${</span><span class="nv">PWD</span><span class="si">}</span><span class="w"> </span>--env<span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="si">${</span><span class="nv">CCPE_LD_LIBRARY_PATH</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="si">${</span><span class="nv">CCPE_IMAGE_FILE</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">CCPE_BUILDER</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>/build.sh
 </code></pre></div>
 </div>
 </div>
 </div>
 <p>The <code>CCPE</code> environment variables shown above (e.g., <code>CCPE_BUILDER</code> and <code>CCPE_IMAGE_FILE</code>) are set by the
-loading of the <code>ccpe/23.12</code> module. The <code>CCPE_BUILDER</code> variable holds the path to the script that prepares the
+loading of the <code>ccpe/25.03</code> module. The <code>CCPE_BUILDER</code> variable holds the path to the script that prepares the
 containerised environment prior to running the <code>build.sh</code> script. You can run <code>cat ${CCPE_BUILDER}</code> to take
 a closer look at what is going on.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Passing the <code>${SLURM_SUBMIT_DIR}</code> path to Singularity via the <code>--bind</code> option allows the CPE container
-to access the source code and write out the executable using locations on the host.</p>
+<p>Passing the <code>${PWD}</code> path to Singularity via the <code>--bind</code> option allows the CPE container
+to access the source code and write out the executable within the current working directory on the host.</p>
 </div>
 <p>Running the newly-built code is similarly straightforward; this time the containerised CPE is launched on the
 compute nodes using the <code>srun</code> command.</p>
@@ -3357,13 +3384,11 @@ compute nodes using the <code>srun</code> command.</p>
 <span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
 
 module<span class="w"> </span>use<span class="w"> </span>/work/y07/shared/archer2-lmod/others/dev
-module<span class="w"> </span>load<span class="w"> </span>ccpe/23.12
+module<span class="w"> </span>load<span class="w"> </span>ccpe/25.03
 
-<span class="nv">RUN_CMD</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">SLURM_SUBMIT_DIR</span><span class="si">}</span><span class="s2">/helloworld&quot;</span>
-
-<span class="nb">srun</span><span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>--chdir<span class="o">=</span><span class="si">${</span><span class="nv">SLURM_SUBMIT_DIR</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>singularity<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>--bind<span class="w"> </span><span class="si">${</span><span class="nv">CCPE_BIND_ARGS</span><span class="si">}</span>,<span class="si">${</span><span class="nv">SLURM_SUBMIT_DIR</span><span class="si">}</span><span class="w"> </span>--env<span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="si">${</span><span class="nv">CCPE_LD_LIBRARY_PATH</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
-<span class="w">        </span><span class="si">${</span><span class="nv">CCPE_IMAGE_FILE</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">RUN_CMD</span><span class="si">}</span>
+<span class="nb">srun</span><span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>--chdir<span class="o">=</span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>singularity<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>--bind<span class="w"> </span><span class="si">${</span><span class="nv">CCPE_BIND_ARGS</span><span class="si">}</span>,<span class="si">${</span><span class="nv">PWD</span><span class="si">}</span><span class="w"> </span>--env<span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="si">${</span><span class="nv">CCPE_LD_LIBRARY_PATH</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">        </span><span class="si">${</span><span class="nv">CCPE_IMAGE_FILE</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>/helloworld
 </code></pre></div>
 </div>
 </div>
@@ -3373,9 +3398,9 @@ do this for a low-level communications library such as <code>libfabric</code> or
 <code>srun</code> command) something like the following line to the <code>submit-run.slurm</code> file.</p>
 <div class="highlight"><pre><span></span><code><span class="nb">source</span><span class="w"> </span><span class="si">${</span><span class="nv">CCPE_SET_HOST_PATH</span><span class="si">}</span><span class="w"> </span><span class="s2">&quot;/opt/cray/pe/pmi&quot;</span><span class="w"> </span><span class="s2">&quot;6.1.8&quot;</span><span class="w"> </span><span class="s2">&quot;lib&quot;</span>
 </code></pre></div>
-<p>As of April 2024, the version of PMI available on ARCHER2 is 6.1.8 (CPE 22.12), and so the command above would allow
-you to isolate the impact of the containerised PMI library, which for CPE 23.12 is PMI 6.1.13. To see how the setting
-of the host library is done, simply run <code>cat ${CCPE_SET_HOST_PATH}</code> after loading the <code>ccpe</code> module.</p>
+<p>As of August 2025, the versions of PMI available on ARCHER2 are 6.1.8 (CPE 22.12) and 6.1.12 (CPE 23.09), and so the
+command above would allow you to isolate the impact of the containerised PMI library, which for CPE 25.03 is PMI 6.1.15.
+To see how the setting of the host library is done, simply run <code>cat ${CCPE_SET_HOST_PATH}</code> after loading the <code>ccpe</code> module.</p>
 <p>An MPI code that just prints a message from each rank is obviously very simple. Real-world codes such as CP2K or GROMACS
 will often require additional software for compilation, e.g., Intel MKL libraries or tools that control the build process
 such as <code>CMake</code>. The way round this sort of problem is to point the CCPE container at the locations on the host where the
@@ -3396,16 +3421,14 @@ software is installed.</p>
 <span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
 
 module<span class="w"> </span>use<span class="w"> </span>/work/y07/shared/archer2-lmod/others/dev
-module<span class="w"> </span>load<span class="w"> </span>ccpe/23.12
+module<span class="w"> </span>load<span class="w"> </span>ccpe/25.03
 
-<span class="nv">CMAKE_DIR</span><span class="o">=</span><span class="s2">&quot;/work/y07/shared/utils/core/cmake/3.21.3&quot;</span>
-
-<span class="nv">BUILD_CMD</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CCPE_BUILDER</span><span class="si">}</span><span class="s2"> </span><span class="si">${</span><span class="nv">SLURM_SUBMIT_DIR</span><span class="si">}</span><span class="s2">/build.sh&quot;</span>
+<span class="nv">CMAKE_DIR</span><span class="o">=</span><span class="s2">&quot;/work/y07/shared/utils/core/cmake/3.29.4&quot;</span>
 
 singularity<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>--cleanenv<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--bind<span class="w"> </span><span class="si">${</span><span class="nv">CCPE_BIND_ARGS</span><span class="si">}</span>,<span class="si">${</span><span class="nv">CMAKE_DIR</span><span class="si">}</span>,<span class="si">${</span><span class="nv">SLURM_SUBMIT_DIR</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--bind<span class="w"> </span><span class="si">${</span><span class="nv">CCPE_BIND_ARGS</span><span class="si">}</span>,<span class="si">${</span><span class="nv">CMAKE_DIR</span><span class="si">}</span>,<span class="si">${</span><span class="nv">PWD</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--env<span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="si">${</span><span class="nv">CCPE_LD_LIBRARY_PATH</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span><span class="si">${</span><span class="nv">CCPE_IMAGE_FILE</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">BUILD_CMD</span><span class="si">}</span>
+<span class="w">    </span><span class="si">${</span><span class="nv">CCPE_IMAGE_FILE</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">CCPE_BUILDER</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>/build.sh
 </code></pre></div>
 </div>
 </div>
@@ -3413,6 +3436,184 @@ singularity<span class="w"> </span><span class="nb">exec</span><span class="w"> 
 <p>The <code>submit-cmake-build.slurm</code> script shows how the <code>--bind</code> option can be used to make the <code>CMake</code> installation on ARCHER2
 accessible from within the container. The <code>build.sh</code> script can then call the <code>cmake</code> command directly (once the <code>CMake</code>
 bin directory has been added to the <code>PATH</code> environment variable).</p>
+<h3 id="containerised-rocm">Containerised ROCm</h3>
+<p>ROCm is AMD's software support for GPU programming; ROCm 5.2.3 is currently installed on ARCHER2.
+Newer versions of ROCm can be accessed via the containerised CPE modules. For example, <code>ccpe/23.12/rocm/5.6.0</code> provides access to ROCm 5.6.0 (with CPE 23.12), 
+In this way, ARCHER2 users can test more up-to-date ROCm compilers that target the AMD MI210 GPU platform, e.g. <code>amdclang</code>, <code>amdclang++</code>, <code>amdflang</code>.
+The same applies to ROCm-integrated software frameworks such as PyTorch.</p>
+<p>We'll now present a scenario showing how one can make use of the <code>ccpe/23.12/rocm/5.6.0</code> module to train a neural network using
+Python code that requires PyTorch 2.2.0. This is of interest since the version of ROCm directly installed on ARCHER2, 5.2.3, limits users
+to versions of PyTorch no newer than 1.13.1. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>An overview of the differences between PyTorch versions 2.2.0 and 1.13.1 can be found in the <a href="https://github.com/pytorch/pytorch/releases?page=2">official PyTorch release notes</a>.</p>
+</div>
+<p>We first setup a local Python custom environment from within the container, such that the environment's package files are written to the
+host ARCHER2 <code>/work</code> system. We'll then install to this custom environment the PyTorch 2.2.0 packages.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">submit-rocm-build.slurm</label><label for="__tabbed_5_2">pip-install.sh</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+<span class="kp">#SBATCH --job-name=ccpe-rocm-build</span>
+<span class="kp">#SBATCH --ntasks=8</span>
+<span class="kp">#SBATCH --time=00:10:00</span>
+<span class="kp">#SBATCH --account=&lt;budget code&gt;</span>
+<span class="kp">#SBATCH --partition=serial</span>
+<span class="kp">#SBATCH --qos=serial</span>
+<span class="kp">#SBATCH --export=none</span>
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
+
+module<span class="w"> </span>use<span class="w"> </span>/work/y07/shared/archer2-lmod/others/dev
+module<span class="w"> </span>load<span class="w"> </span>ccpe/23.12/rocm/5.6.0
+
+singularity<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>--cleanenv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--bind<span class="w"> </span><span class="si">${</span><span class="nv">CCPE_BIND_ARGS</span><span class="si">}</span>,<span class="si">${</span><span class="nv">PWD</span><span class="si">}</span><span class="w"> </span>--env<span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="si">${</span><span class="nv">CCPE_LD_LIBRARY_PATH</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="si">${</span><span class="nv">CCPE_IMAGE_FILE</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">        </span><span class="si">${</span><span class="nv">CCPE_ROCM_BUILDER</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span><span class="w"> </span>mypyenv<span class="w"> </span>pip-install.sh
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+pip<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span>--upgrade<span class="w"> </span>pip<span class="w"> </span>scipy
+
+pip<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span><span class="nv">torch</span><span class="o">==</span><span class="m">2</span>.2.0<span class="w"> </span><span class="nv">torchvision</span><span class="o">==</span><span class="m">0</span>.17.0<span class="w"> </span><span class="nv">torchaudio</span><span class="o">==</span><span class="m">2</span>.2.0<span class="w"> </span><span class="nv">torchtext</span><span class="o">==</span><span class="m">0</span>.17.0<span class="w"> </span>--index-url<span class="w"> </span>https://download.pytorch.org/whl/rocm5.6
+
+pip<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span>torchopt<span class="w"> </span>matplotlib
+
+<span class="c1"># downgrade numpy since the 2.2.0 torch modules were compiled with numpy 1.x</span>
+pip<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span><span class="s2">&quot;numpy&lt;2&quot;</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>The <code>CCPE</code> environment variables shown above (e.g., <code>CCPE_ROCM_BUILDER</code> and <code>CCPE_IMAGE_FILE</code>) are set by the loading of the <code>ccpe/23.12/rocm/5.6.0</code> module.
+The <code>CCPE_ROCM_BUILDER</code> variable holds the path to the script that prepares the containerised environment prior to the installation of the various Python packages
+listed in <code>pip-install.sh</code>. You can run <code>cat ${CCPE_ROCM_BUILDER}</code> (after loading the <code>ccpe/23.12/rocm/5.6.0</code> module) to take a closer look at what is going on.</p>
+<p>Run <code>sbatch submit-rocm-build.slurm</code> to establish the containerised Python environment. This should take 3-4 minutes to complete.</p>
+<p>We're now ready to run some Python code that makes use of the <code>func.torch</code> API, introduced in PyTorch 2.0.0. This API enables the development of
+purely functional (stateless) neural network models. The code example below, developed by Mario Dagreda, trains a Physics Informed Neural Network (PINN) to solve a one-dimensional wave equation
+using <code>func.torch</code> and <code>torchopt</code> (a functional NN optimiser). Please clone <a href="https://github.com/madagra/basic-pinn.git">Mario's basic-pinn</a> repository to obtain the code.</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/madagra/basic-pinn.git
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Mario Dagreda has also published two articles on Medium relevant to the example described here, <a href="https://medium.com/data-science/solving-differential-equations-with-neural-networks-afdcf7b8bcc4">Introduction to PINNs</a> and <a href="https://medium.com/data-science/introduction-to-functional-pytorch-b5bf739e1e6e">A Primer on Functional PyTorch</a>.</p>
+</div>
+<p>You will see that the code repo you've just cloned targets the CPU and so we'll need to change the code to ensure that the training and evaluation of the wave equation
+is indeed done on the GPU. Basically, this requires us to utilise the <code>to(DEVICE='cuda')</code> method such that the PINN model is moved to the GPU. The same is true
+for the input and evaluation data. In addition, we need to ensure that the model output is transferred back to CPU so that it can be plotted: this is done using the <code>cpu()</code> method.</p>
+<p>The two source files that need to be changed are located in the repository file tree at <code>./basic-pinn/basic_pinn</code>, see below for details.
+Any code that does not need to change is indicated by an ellipsis (<code>...</code>).</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><div class="tabbed-labels"><label for="__tabbed_6_1">wave_equation_1d.py</label><label for="__tabbed_6_2">plotting.py</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="o">...</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="c1">### Add code to initialise DEVICE ###</span>
+    <span class="n">DEVICE</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cuda&#39;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s1">&#39;cpu&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;DEVICE: </span><span class="si">{</span><span class="n">DEVICE</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="o">...</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">domain_sampler</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+        <span class="c1">### Append &quot;to(DEVICE)&quot; to line below ###</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">batch_size</span><span class="p">)</span><span class="o">.</span><span class="n">uniform_</span><span class="p">(</span><span class="n">domain_x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">domain_x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">DEVICE</span><span class="p">)</span>
+        <span class="c1">### Append &quot;to(DEVICE)&quot; to FloatTensor constructor in line below ###</span>
+        <span class="n">t</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">batch_size</span><span class="p">)</span><span class="o">.</span><span class="n">uniform_</span><span class="p">(</span><span class="n">domain_t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">domain_t</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">DEVICE</span><span class="p">))</span>
+        <span class="n">t_and_x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cartesian_prod</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">t_and_x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">t_and_x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># MLP model</span>
+    <span class="c1">### Append &quot;to(DEVICE)&quot; to line below ###</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">LinearNN</span><span class="p">(</span><span class="n">num_layers</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">num_hidden</span><span class="p">,</span> <span class="n">num_neurons</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">dim_hidden</span><span class="p">,</span> <span class="n">num_inputs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">DEVICE</span><span class="p">)</span>
+
+    <span class="o">...</span>
+
+    <span class="c1">### Append &quot;to(DEVICE)&quot; to line below ###</span>
+    <span class="n">x_eval</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">domain_x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">domain_x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mf">0.01</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">DEVICE</span><span class="p">)</span>
+    <span class="c1">### Append &quot;to(DEVICE)&quot; to line below ###</span>
+    <span class="n">t_eval</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">domain_t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">domain_t</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mf">0.1</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">DEVICE</span><span class="p">)</span>
+
+    <span class="n">_</span><span class="p">,</span> <span class="n">ani</span> <span class="o">=</span> <span class="n">animate_2d_solution</span><span class="p">(</span><span class="n">x_eval</span><span class="p">,</span> <span class="n">t_eval</span><span class="p">,</span> <span class="n">opt_params</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">ani</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;wave_equation_1d.gif&quot;</span><span class="p">,</span> <span class="n">writer</span><span class="o">=</span><span class="s2">&quot;pillow&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="o">...</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">animate_2d_solution</span><span class="p">(</span>
+    <span class="n">x_eval</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">t_eval</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">opt_params</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span>
+    <span class="n">fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">show</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Figure</span><span class="p">,</span> <span class="n">FuncAnimation</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Animate the solution of a 2-dimension problem in time and space</span>
+<span class="sd">    ...</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="o">...</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">init</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">x_eval</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">x_eval</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+        <span class="c1">### Replace &quot;detach()&quot; with &quot;cpu().detach()&quot; in line below ###</span>
+        <span class="n">y_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">fn</span><span class="p">(</span><span class="n">x_eval</span><span class="p">,</span> <span class="n">t</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">x_eval</span><span class="p">),</span> <span class="n">params</span><span class="o">=</span><span class="n">opt_params</span><span class="p">)</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">t_eval</span><span class="p">]</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">min</span><span class="p">,</span> <span class="n">y_values</span><span class="p">)),</span> <span class="nb">max</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">max</span><span class="p">,</span> <span class="n">y_values</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">line</span><span class="p">,</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">animate</span><span class="p">(</span><span class="n">frame</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">t_eval</span><span class="p">[</span><span class="n">frame</span><span class="p">]</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="n">x_eval</span><span class="p">,</span> <span class="n">t</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">x_eval</span><span class="p">),</span> <span class="n">params</span><span class="o">=</span><span class="n">opt_params</span><span class="p">)</span>
+        <span class="c1">### Replace &quot;detach()&quot; with &quot;cpu().detach()&quot; in line below ###</span>
+        <span class="n">line</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">x_eval</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">line</span><span class="p">,</span>
+
+    <span class="o">...</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Once you've completed the code edits, you can submit the Slurm script below to initiate the training of the PINN on a GPU. </p>
+<div class="tabbed-set tabbed-alternate" data-tabs="7:1"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><div class="tabbed-labels"><label for="__tabbed_7_1">submit-rocm-run.slurm</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+<span class="kp">#SBATCH --job-name=pinn-wave-eqn</span>
+<span class="kp">#SBATCH --nodes=1</span>
+<span class="kp">#SBATCH --gpus=1</span>
+<span class="kp">#SBATCH --time=00:10:00</span>
+<span class="kp">#SBATCH --account=&lt;budget code&gt;</span>
+<span class="kp">#SBATCH --partition=gpu</span>
+<span class="kp">#SBATCH --qos=gpu-shd</span>
+<span class="kp">#SBATCH --export=none</span>
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
+
+module<span class="w"> </span>use<span class="w"> </span>/work/y07/shared/archer2-lmod/others/dev
+module<span class="w"> </span>load<span class="w"> </span>ccpe/23.12/rocm/5.6.0
+
+singularity<span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--bind<span class="w"> </span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>,<span class="si">${</span><span class="nv">CCPE_HOST_ROOT</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--env<span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="si">${</span><span class="nv">CCPE_LD_LIBRARY_PATH</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="si">${</span><span class="nv">CCPE_IMAGE_FILE</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">        </span><span class="si">${</span><span class="nv">CCPE_ROCM_RUNNER</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span><span class="w"> </span>mypyenv<span class="w"> </span><span class="se">\</span>
+<span class="w">            </span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>/basic-pinn/basic_pinn/wave_equation_1d.py<span class="w"> </span>--batch-size<span class="w"> </span><span class="m">50</span><span class="w"> </span>--learning-rate<span class="w"> </span><span class="m">0</span>.0075<span class="w"> </span>--num-epochs<span class="w"> </span><span class="m">1500</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>The <code>cpe_23.12-rocm_5.6.0.sif</code> container image file (referenced by <code>${CCPE_IMAGE_FILE}</code>) is instantiated on the GPU node where it runs the <code>${CCPE_ROCM_RUNNER}</code> script,
+which activates the containerised custom Python environment preparatory to executing the <code>wave_equation_1d.py</code> code (courtesy of <a href="https://github.com/madagra/basic-pinn.git">Mario Dagreda</a>).
+The run should take 2-3 minutes.</p>
+<p>The output is a GIF animation (<code>wave_equation_1d.gif</code>) that shows an oscillating wave as inferred from the trained PINN.</p>
 
 
 
