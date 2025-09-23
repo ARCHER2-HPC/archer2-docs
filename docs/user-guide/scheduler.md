@@ -2399,12 +2399,11 @@ session starts.
 
 `pre-capabilityday` QoS limits:
 
-- Available for 12 hours
 - 1024 nodes available
 - Minimum job size: 256 nodes, maximum job size: 1024 nodes
     - Individual jobs steps (i.e. `srun` commands) within job scripts should also be a minimum of 256 nodes
     - Jobs that do not meet these limits will be killed
-- Maximum walltime: 20 minutes
+- Maximum walltime: 1 hour
 - Job numbers: 8 jobs maximum per budget code in the QoS
     - 1 job maximum running per budget code
 - High memory nodes are not available
@@ -2492,16 +2491,15 @@ session starts.
 
 `capabilityday` QoS limits:
 
-- Available for 42 hours
 - 4096 nodes available
 - Minimum job size: 512 nodes, maximum job size: 4096 nodes
     - Individual jobs steps (i.e. `srun` commands) within job scripts should also be a minimum of 512 nodes
     - Jobs that do not meet these limits will be killed
-- Maximum walltime: 2 hours
+- Maximum walltime: 3 hours
 - Job numbers: 16 jobs maximum per budget code in the QoS
     - 2 jobs maximum running per budget code
 - High memory nodes are not available
-- Users must have a valid, positive CU budget to be able to run jobs in the pre-Capability Day session
+- Users must have a valid, positive CU budget to be able to run jobs in the Capability Day session
 - Jobs are free
 
 #### Example Capability Day job submission script
