@@ -6667,14 +6667,13 @@ short test jobs to prepare for Capability Day.</p>
 session starts.</p>
 <p><code>pre-capabilityday</code> QoS limits:</p>
 <ul>
-<li>Available for 12 hours</li>
 <li>1024 nodes available</li>
 <li>Minimum job size: 256 nodes, maximum job size: 1024 nodes<ul>
 <li>Individual jobs steps (i.e. <code>srun</code> commands) within job scripts should also be a minimum of 256 nodes</li>
 <li>Jobs that do not meet these limits will be killed</li>
 </ul>
 </li>
-<li>Maximum walltime: 20 minutes</li>
+<li>Maximum walltime: 1 hour</li>
 <li>Job numbers: 8 jobs maximum per budget code in the QoS<ul>
 <li>1 job maximum running per budget code</li>
 </ul>
@@ -6756,20 +6755,19 @@ module<span class="w"> </span>load<span class="w"> </span>xthi
 session starts.</p>
 <p><code>capabilityday</code> QoS limits:</p>
 <ul>
-<li>Available for 42 hours</li>
 <li>4096 nodes available</li>
 <li>Minimum job size: 512 nodes, maximum job size: 4096 nodes<ul>
 <li>Individual jobs steps (i.e. <code>srun</code> commands) within job scripts should also be a minimum of 512 nodes</li>
 <li>Jobs that do not meet these limits will be killed</li>
 </ul>
 </li>
-<li>Maximum walltime: 2 hours</li>
+<li>Maximum walltime: 3 hours</li>
 <li>Job numbers: 16 jobs maximum per budget code in the QoS<ul>
 <li>2 jobs maximum running per budget code</li>
 </ul>
 </li>
 <li>High memory nodes are not available</li>
-<li>Users must have a valid, positive CU budget to be able to run jobs in the pre-Capability Day session</li>
+<li>Users must have a valid, positive CU budget to be able to run jobs in the Capability Day session</li>
 <li>Jobs are free</li>
 </ul>
 <h4 id="example-capability-day-job-submission-script">Example Capability Day job submission script</h4>
