@@ -827,6 +827,17 @@ Please note that "remote" is the name that you have chosen when running
     `-vv` flag to an rclone transfer forces rclone to output to the terminal and
     therefore avoids triggering the timeout process.
 
+### Batch data transfer
+
+While compute nodes in the standard partition are not connected to the
+internet and cannot be used for data transfer, the methods discussed
+above (e.g. `rclone`) are available from the serial partition by specifiying:
+
+```
+#SBATCH --partition=serial
+#SBATCH --qos=serial
+```
+
 ## SSH data transfer example: laptop/workstation to ARCHER2
 
 Here we have a short example demonstrating transfer of data directly
