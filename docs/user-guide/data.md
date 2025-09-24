@@ -46,7 +46,7 @@ Here are the main points you should consider:
 * **Be aware of encryption overheads.** When transferring data using `scp` (and `rsync` over `scp`)
   your data will be encrypted introducing a static overhead per file. This issue can be minimised by
   reducing the number files to be transferred by creating archives. You can also change the encryption
-  algorithm to one that involves minimal encryption. The fastest performing cipher that is commonly 
+  algorithm to one that involves minimal encryption. The fastest performing cipher that is commonly
   available in SSH at the moment is generally `aes128-ctr` as most common processors provide a
   hardware implementation.
 
@@ -67,7 +67,7 @@ suitable for different types of use.
 !!! important
     All users have a directory on one of the home file systems and on
     one of the work file systems. The directories are located at:
-    
+
     - `/home/[project ID]/[project ID]/[user ID]` (this is also set as your home directory)
     - `/work/[project ID]/[project ID]/[user ID]`
 
@@ -79,10 +79,10 @@ There are also three different types of node available to users:
    - Data analysis nodes
 
 Each type of node sees a different combination of the storage types.
-The following table shows which storage options are avalable on 
+The following table shows which storage options are available on
 different node types:
 
-| Storage | Login Nodes | Compute Nodes | Data analysis nodes | Notes     | 
+| Storage | Login Nodes | Compute Nodes | Data analysis nodes | Notes     |
 |---------|-------------|---------------|---------------------|-----------|
 | /home   | yes         | no            | yes                 | Incremental backup |
 | /work   | yes         | yes           | yes                 | No backup, high performance |
@@ -94,7 +94,7 @@ different node types:
     the compute nodes. This means that all data required by calculations at runtime
     (input data, application binaries, software libraries, etc.) must be placed on
     one of these file systems.
-    
+
     You may see "file not found" errors if you try to access data on the /home
     or RDFaaS file systems when running on the compute nodes.
 
@@ -124,7 +124,7 @@ PI or manager can split this quota up between users or groups of users
 if they wish.
 
 You can view any home file system quotas that apply to your account by
-logging into SAFE and navigating to the page for your ARCHER2 login 
+logging into SAFE and navigating to the page for your ARCHER2 login
 account.
 
 1. [Log into SAFE](https://safe.epcc.ed.ac.uk)
@@ -182,7 +182,7 @@ work file systems. The project PI or manager can split this quota up
 between users or groups of users if they wish.
 
 You can view any work file system quotas that apply to your account by
-logging into SAFE and navigating to the page for your ARCHER2 login 
+logging into SAFE and navigating to the page for your ARCHER2 login
 account.
 
 1. [Log into SAFE](https://safe.epcc.ed.ac.uk)
@@ -235,18 +235,18 @@ themselves using the `lfs quota` command. To do this:
 ### Solid state (NVMe) file system - scratch storage
 
 !!! important
-    The solid state storage system is configured as *scratch* storage with all files 
+    The solid state storage system is configured as *scratch* storage with all files
     that have not been accessed in the last 28 days being automatically deleted. The
 	script which performs this purge is run daily.
 
 !!! important
     Automatic deletion will be paused from 22 Aug 2025 to 13 Oct 2025. When automatic
-	deletion resumes on 14 Oct 2025, the usual policy will apply: all files 
+	deletion resumes on 14 Oct 2025, the usual policy will apply: all files
     that have not been accessed in the last 28 days being automatically deleted.
 
 The solid state storage file system is a 1 PB high performance parallel Lustre file system
 similar to the work file systems. However, unlike the work file systems, all of the
-disks are based solid state storage (NVMe) technology. This changes the performance characteristics of the 
+disks are based solid state storage (NVMe) technology. This changes the performance characteristics of the
 file system compared to the work file systems. Testing by the ARCHER2 CSE team at
 EPCC has shown that you may see I/O performance improvements from the solid state
 storage compared to the standard work Lustre file systems on ARCHER2 if your I/O model
@@ -282,7 +282,7 @@ You can find your directory on the file system at:
 /mnt/lustre/a2fs-nvme/work/<project code>/<project code>/<username>
 ```
 
-For example, if my username is `auser` and I am in project `t01`, I could find my 
+For example, if my username is `auser` and I am in project `t01`, I could find my
 solid state storage directory at:
 
 ```
@@ -303,7 +303,7 @@ You query quotas for the solid state file system in the same way as
 !!! bug
     Usage and quotas of the solid state file system are not yet available
     in SAFE - you should use commands such as `lfs quota -hp $(id -g) .`
-    to query quotas on the solid state file system. 
+    to query quotas on the solid state file system.
 
 #### Identifying files that are candidates for deletion
 
@@ -328,7 +328,7 @@ return instead files which have not been accessed for 21 or more days with:
 find /mnt/lustre/a2fs-nvme/work/<project code> -atime +21 -type f -print
 ```
 
-As you should not use the scratch storage long term but instead look to stage data 
+As you should not use the scratch storage long term but instead look to stage data
 on and off as required, keeping it in long term storage elsewhere, this can
 potentially help highlight files you have missed.
 
@@ -368,12 +368,12 @@ your RDFaaS directory will be at:
 The RDFaaS file systems are not available on the ARCHER2 compute nodes.
 
 !!! tip
-    If you are having issues accessing data on the RDFaaS file system then 
+    If you are having issues accessing data on the RDFaaS file system then
     please [contact the ARCHER2 Service Desk](https://www.archer2.ac.uk/support-access/servicedesk.html)
 
 #### Copying data from RDFaaS to Work file systems
 
-You should use the standard Linux `cp` command to copy data from the RDFaaS file 
+You should use the standard Linux `cp` command to copy data from the RDFaaS file
 system to other ARCHER2 file systems (usually `/work`). For example, to
 transfer the file `important-data.tar.gz` from the RDFaaS file system to
 `/work` you would use the following command (assuming you are user `auser`
@@ -384,12 +384,12 @@ cp /epsrc/e05/e05/auser/important-data.tar.gz /work/e05/e05/auser/
 ```
 
 (remember to replace the project code and username with your own username
-and project code. You may also need to use `/general` if your data was 
+and project code. You may also need to use `/general` if your data was
 there on the RDF file systems).
 
 ### Subprojects
 
-Some large projects may choose to split their resources into multiple subprojects. 
+Some large projects may choose to split their resources into multiple subprojects.
 These subprojects will have identifiers appended to the main project ID. For example,
 the `rse` subgroup of the `z19` project would have the ID `z19-rse`. If the main
 project has allocated storage quotas to the subproject the directories for this
@@ -483,7 +483,7 @@ with the project code. Somewhat confusingly however, projects can contain
 groups of their own, called [subprojects](#sharing-data-with-archer2-users-within-the-same-project-group), which can be assigned disk space
 quotas distinct from the project.
 
-    chown -R $USER:x01-subproject /work/x01/x01-subproject/$USER/my-folder 
+    chown -R $USER:x01-subproject /work/x01/x01-subproject/$USER/my-folder
 
 The `chown` command above changes the owning group for all the files within
 `my-folder` to the `x01-subproject` group. This might be necessary if previously
@@ -575,7 +575,7 @@ To extract files from a tar file, the option `-x` is used. For example:
     tar -b 2048 -xf mydata.tar
 
 will recover the contents of `mydata.tar` to the current working
-directory (using a block size of 1 MiB to improve Lustre performance and 
+directory (using a block size of 1 MiB to improve Lustre performance and
 reduce contention).
 
 To verify an existing tar file against a set of data, the `-d` (diff)
@@ -603,7 +603,7 @@ The zip file format is widely used for archiving files and is supported
 by most major operating systems. The utility to create zip files can be
 run from the command line as:
 
-    zip [options] mydata.zip [file(s)] 
+    zip [options] mydata.zip [file(s)]
 
 Common options are:
 
@@ -772,7 +772,7 @@ The Globus Command Line Interface (CLI) is also available on ARCHER2, see the Gl
 
 ARCHER2 provides a module for grid computing, `gct/6.2`, otherwise known
 as the Globus Grid Community Toolkit v6.2.20201212. This toolkit provides
-a command line interface for moving data to and from GridFTP servers. 
+a command line interface for moving data to and from GridFTP servers.
 
 Data transfers are managed by the `globus-url-copy` command. Full details
 concerning this command's use can be found in the [GCT 6.2 GridFTP User's Guide](https://gridcf.org/gct-docs/6.2/gridftp/user/index.html).
@@ -827,6 +827,17 @@ Please note that "remote" is the name that you have chosen when running
     `-vv` flag to an rclone transfer forces rclone to output to the terminal and
     therefore avoids triggering the timeout process.
 
+### Batch data transfer
+
+While compute nodes in the standard partition are not connected to the
+internet and cannot be used for data transfer, the methods discussed
+above (e.g. `rclone`) are available from the serial partition by specifying:
+
+```
+#SBATCH --partition=serial
+#SBATCH --qos=serial
+```
+
 ## SSH data transfer example: laptop/workstation to ARCHER2
 
 Here we have a short example demonstrating transfer of data directly
@@ -841,9 +852,9 @@ Before we can transfer of data to ARCHER2 we need to make sure we have an
 SSH key setup to access ARCHER2 from the system we are transferring data
 from. If you are using the same system that you use to log into ARCHER2 then
 you should be all set. If you want to use a different system you will need
-to generate a new SSH key there (or use SSH key forwarding) to allow you to 
+to generate a new SSH key there (or use SSH key forwarding) to allow you to
 connect to ARCHER2.
-   
+
 !!! tip
     Remember that you will need to use both a key and your password to
     transfer data to ARCHER2.
@@ -864,7 +875,7 @@ the SSH key in the file `~/.ssh/id_RSA_A2` on our local system:
 Note the use of the `-P` flag to allow partial transfer -- the same
 command could be used to restart the transfer after a loss of
 connection. The `-e` flag allows specification of the ssh command - we
-have used this to add the location of the identity file. 
+have used this to add the location of the identity file.
 The `-c` option specifies the cipher to be used as `aes128-ctr` which has been found to increase performance
 Unfortunately
 the `~` shortcut is not correctly expanded, so we have specified the
