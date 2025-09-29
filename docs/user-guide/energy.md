@@ -250,7 +250,7 @@ We then estimate the per-CU (nodeh) Scope 3 emissions by assuming a service life
 100% availability:
 
 ```
-7,320,000 kgCO2e / (5,860 nodes * 6 years * 365 days * 24 hours) = 0.023 kgCO2e/CU
+7,320,000 kgCO2e / (5,860 nodes * 7 years * 365 days * 24 hours) = 0.020 kgCO2e/CU
 ```
 
 Tools use a value of **0.023 kgCO<sub>2</sub>e/CU** for ARCHER2.
