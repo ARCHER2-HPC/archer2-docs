@@ -16,10 +16,10 @@ If you encounter any issues after the update, you should
 
 ## What is happening?
 
-The system software on all user-facing ARCHER2 nodes (login nodes, data analysis
-nodes and compute nodes) is being updated to a version of SUSE Linux Enterprise
-Server (SLES 15 SP4) that is decoupled from the HPE Cray Programming Environment
-(CPE) is being updated from 22.12 to 23.09.
+The system software on all user-facing ARCHER2 nodes (login nodes, data analysis nodes,
+and compute nodes) is being updated to a version of SUSE Linux Enterprise Server
+(SLES 15 SP4) that is decoupled from the HPE Cray sources. The HPE Cray Programming
+Environment (CPE) is being updated from 22.12 to 23.09.
 
 ## Why is this happening?
 
