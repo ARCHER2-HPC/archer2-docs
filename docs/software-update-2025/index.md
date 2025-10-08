@@ -11,7 +11,8 @@ If you encounter any issues after the update, you should
 - Users *should not* need to recompile software on updated ARCHER2
 - The default Cray Programming Environment (CPE) will change from 22.12 to 23.09
 - No changes are required to job submission scripts or module commands
-- There will be a short interruption (5-10 mins) of login access on 16 Oct 2025 
+- There will be a short interruption (5-10 mins) of login access on 16 Oct 2025
+- There is no impact on file system access or data stored on the ARCHER2 file systems
 
 ## What is happening?
 
