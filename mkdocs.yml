@@ -52,6 +52,7 @@ nav:
   - "ARCHER2 Known Issues": known-issues/index.md
   - "ARCHER2 Frequently Asked Questions":
     - "General FAQ": faq/index.md
+  - "Software update 2025 information": software-update-2025/index.md
   - "User and Best Practice Guide":
     - "Overview": user-guide/index.md
     - "Hardware": user-guide/hardware.md
