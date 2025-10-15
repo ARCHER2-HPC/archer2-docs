@@ -1,6 +1,6 @@
 # Spack
 
-!!! important
+!!! warning
     As noted below, the current Spack installation available through
     the module system is considered experimental, and its reliability may be
     decreased following the ARCHER2 upgrade that took place on 16 October 2025.
