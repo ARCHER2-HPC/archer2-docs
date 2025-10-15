@@ -43,8 +43,8 @@ for the remainder of its lifetime.
     * The old default version (22.12) is still available via `module load cpe/22.12`.
      [Documentation on using non-default CPE versions is available](https://docs.archer2.ac.uk/user-guide/dev-environment/ #switching-to-a-different-hpe-cray-programming-environment-cpe-release)
 
-* New version (1.20.1) of `libfabric` available but default is not changing
+<!-- * New version (1.20.1) of `libfabric` available but default is not changing
     * libfabric 1.20.1 is available via `module swap libfabric libfabric/1.20.1`
     * The default version remains at libfabric 1.12.1.2.2.0.0
     * In testing, some applications saw performance improvements with the new
-     libfabric while others experienced worse performance
+     libfabric while others experienced worse performance -->
