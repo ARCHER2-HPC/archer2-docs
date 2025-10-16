@@ -1,5 +1,14 @@
 # Spack
 
+!!! warning
+    As noted below, the current Spack installation available through
+    the module system is considered experimental, and its reliability may be
+    decreased following the ARCHER2 upgrade that took place on 16 October 2025.
+    If you wish to use Spack, rather than use the central installation you may
+    prefer to take the in-development configuration files available at
+    [GitHub](https://github.com/ARCHER2-HPC/archer2-spack) and adapt them for
+    use in your own installation.
+
 [Spack](https://github.com/spack/spack) is a package manager, a tool to assist
 with building and installing software as well as determining what dependencies
 are required and installing those. It was originally designed for use on HPC
@@ -417,4 +426,4 @@ options needed to get `configure` to find and use the correct library.
 ## Contributing
 
 If you develop a package for use on ARCHER2 please do consider opening a pull
-request to the [GitHub repository](https://github.com/EPCCed/spack-archer2).
+request to the [GitHub repository](https://github.com/ARCHER2-HPC/archer2-spack).

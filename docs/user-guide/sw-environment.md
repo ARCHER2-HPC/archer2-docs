@@ -87,11 +87,11 @@ versions you have presently loaded in your environment:
 auser@ln03:~> module list
 
 Currently Loaded Modules:
-  1) craype-x86-rome                         6) cce/15.0.0             11) PrgEnv-cray/8.3.3
-  2) libfabric/1.12.1.2.2.0.0                7) craype/2.7.19          12) bolt/0.8
-  3) craype-network-ofi                      8) cray-dsmml/0.2.2       13) epcc-setup-env
-  4) perftools-base/22.12.0                  9) cray-mpich/8.1.23      14) load-epcc-module
-  5) xpmem/2.5.2-2.4_3.30__gd0f7936.shasta  10) cray-libsci/22.12.1.1
+  1) craype-x86-rome               6) cce/16.0.1             11) PrgEnv-cray/8.4.0
+  2) libfabric/1.12.1.2.2.0.0      7) craype/2.7.23          12) bolt/0.8
+  3) craype-network-ofi            8) cray-dsmml/0.2.2       13) epcc-setup-env
+  4) perftools-base/23.09.0        9) cray-mpich/8.1.27      14) load-epcc-module
+  5) xpmem/0.2.119-1.3_0_gnoinfo  10) cray-libsci/23.09.1.1
 
 ```
 
@@ -111,46 +111,62 @@ currently available to load, use:
 ```
 auser@uan01:~> module avail
 
---------------------------- /work/y07/shared/archer2-lmod/utils/compiler/crayclang/10.0 ---------------------------
+-------------- /mnt/lustre/a2fs-work4/work/y07/shared/archer2-lmod/utils/compiler/crayclang/10.0 --------------
    darshan/3.3.1
 
------------------------------------- /work/y07/shared/archer2-lmod/python/core ------------------------------------
-   matplotlib/3.4.3    netcdf4/1.5.7    pytorch/1.10.0    scons/4.3.0    seaborn/0.11.2    tensorflow/2.7.0
+----------------------- /mnt/lustre/a2fs-work4/work/y07/shared/archer2-lmod/python/core -----------------------
+   globus-cli/3.32.0 (D)    netcdf4/1.6.4      (D)    pytorch/1.13.1-gpu        tensorflow/2.9.3
+   globus-cli/3.35.2        pytorch-gpu/1.13.1        pytorch/2.2.0      (D)    tensorflow/2.12.0 (D)
+   matplotlib/3.7.2         pytorch/1.10.2            scons/4.8.1               tensorflow/2.13.0
+   netcdf4/1.5.7            pytorch/1.13.0a0          seaborn/0.12.2
 
-------------------------------------- /work/y07/shared/archer2-lmod/libs/core -------------------------------------
-   aocl/3.1     (D)    gmp/6.2.1            matio/1.5.23        parmetis/4.0.3        slepc/3.14.1
-   aocl/4.0            gsl/2.7              metis/5.1.0         petsc/3.14.2          slepc/3.18.3       (D)
+------------------------ /mnt/lustre/a2fs-work4/work/y07/shared/archer2-lmod/libs/core ------------------------
+   aocl/3.1     (D)    gmp/6.3.0            mesa/23.3.3         parmetis/4.0.3        slepc/3.14.1
+   aocl/4.0            gsl/2.8              metis/5.1.0         petsc/3.14.2          slepc/3.18.3       (D)
    boost/1.72.0        hypre/2.18.0         mkl/2023.0.0        petsc/3.18.5   (D)    superlu-dist/6.4.0
    boost/1.81.0 (D)    hypre/2.25.0  (D)    mumps/5.3.5         scotch/6.1.0          superlu-dist/8.1.2 (D)
    eigen/3.4.0         libxml2/2.9.7        mumps/5.5.1  (D)    scotch/7.0.3   (D)    superlu/5.2.2
 
-------------------------------------- /work/y07/shared/archer2-lmod/apps/core -------------------------------------
-   castep/22.11                    namd/2.14                 (D)    py-chemshell/21.0.3
-   code_saturne/7.0.1-cce15        nektar/5.2.0                     quantum_espresso/6.8  (D)
-   code_saturne/7.0.1-gcc11 (D)    nwchem/7.0.2                     quantum_espresso/7.1
-   cp2k/cp2k-2023.1                onetep/6.1.9.0-CCE-LibSci (D)    tcl-chemshell/3.7.1
-   elk/elk-7.2.42                  onetep/6.1.9.0-GCC-LibSci        vasp/5/5.4.4.pl2-vtst
-   fhiaims/210716.3                onetep/6.1.9.0-GCC-MKL           vasp/5/5.4.4.pl2
-   gromacs/2022.4+plumed           openfoam/com/v2106               vasp/6/6.3.2-vtst
-   gromacs/2022.4           (D)    openfoam/com/v2212        (D)    vasp/6/6.3.2          (D)
-   lammps/17Feb2023                openfoam/org/v9.20210903
-   namd/2.14-nosmp                 openfoam/org/v10.20230119 (D)
+------------------------ /mnt/lustre/a2fs-work4/work/y07/shared/archer2-lmod/apps/core ------------------------
+   castep/23.11                    gromacs/2024.2                    onetep/6.1.43.0-GCC-MKL
+   castep/24.1              (D)    lammps-gpu/2Aug2024               onetep/7.3.86-CCE-LibSci
+   castep/25.11                    lammps-python/15Dec2023           onetep/7.3.86-GCC-LibSci
+   code_saturne/8.0.3-cce15        lammps/2Aug2024-GPU               onetep/7.3.86-GCC-MKL
+   code_saturne/8.0.3-gcc11 (D)    lammps/13Feb2024                  openfoam/com/v2106
+   cp2k/cp2k-8.2.0                 lammps/15Dec2023                  openfoam/com/v2212        (D)
+   cp2k/cp2k-9.1.0                 lammps/17Feb2023           (D)    openfoam/org/v9.20210903
+   cp2k/cp2k-2022.2                lammps/29Aug2024                  openfoam/org/v10.20230119 (D)
+   cp2k/cp2k-2023.1.xsmm           namd-gpu/3.0                      py-chemshell/23.0.3
+   cp2k/cp2k-2023.1                namd-nosmp/2.14                   quantum_espresso/6.8
+   cp2k/cp2k-2023.2                namd-nosmp/3.0             (D)    quantum_espresso/7.1      (D)
+   cp2k/cp2k-2024.1                namd/2.14-nosmp                   quantum_espresso/7.3.1
+   cp2k/cp2k-2024.2                namd/2.14                  (D)    tcl-chemshell/3.7.1
+   cp2k/cp2k-2024.3         (D)    namd/3.0-gpu                      vasp/5/5.4.4.pl2-vtst
+   elk/elk-7.2.42                  namd/3.0-nosmp                    vasp/5/5.4.4.pl2
+   fhiaims/221103.0                namd/3.0                          vasp/6/6.4.1-vtst
+   fhiaims/240920.0         (D)    nektar/5.2.0                      vasp/6/6.4.1
+   gromacs-gpu/2022.4              nektar/5.5.0               (D)    vasp/6/6.4.2-mkl19
+   gromacs/2022.4+plumed           nwchem/7.0.2                      vasp/6/6.4.2
+   gromacs/2022.4-GPU              nwchem/7.2.2               (D)    vasp/6/6.4.3              (D)
+   gromacs/2022.4           (D)    onetep/6.1.43.0-CCE-LibSci (D)    vasp/6/6.5.0
+   gromacs/2023.4                  onetep/6.1.43.0-GCC-LibSci
 
------------------------------------- /work/y07/shared/archer2-lmod/utils/core -------------------------------------
-   amd-uprof/3.6.449          darshan-util/3.3.1        imagemagick/7.1.0         reframe/4.1.0
-   forge/24.0                 epcc-reframe/0.2          ncl/6.6.2                 tcl/8.6.13
-   bolt/0.7                   epcc-setup-env     (L)    nco/5.0.3          (D)    tk/8.6.13
-   bolt/0.8          (L,D)    gct/v6.2.20201212         nco/5.0.5                 usage-analysis/1.2
-   cdo/1.9.9rc1               genmaskcpu/1.0            ncview/2.1.7              visidata/2.1
-   cdo/2.1.1         (D)      gnuplot/5.4.2-simg        other-software/1.0        vmd/1.9.3-gcc10
-   cmake/3.18.4               gnuplot/5.4.2      (D)    paraview/5.9.1     (D)    xthi/1.3
-   cmake/3.21.3      (D)      gnuplot/5.4.3             paraview/5.10.1
+----------------------- /mnt/lustre/a2fs-work4/work/y07/shared/archer2-lmod/utils/core ------------------------
+   amd-uprof/4.0.341         extra-compilers/1.0        imagemagick/6.8.9           python-wrapper/0.1
+   arm/forge/22.1.3          forge/22.1.3               imagemagick/7.1.0    (D)    reframe/4.2.1
+   blender/4.2.2             forge/24.0          (D)    likwid/5.4.1-archer2        spindle/0.13
+   bolt/0.8           (L)    forge/25.0.1               ncl/6.6.2                   tcl/8.6.13
+   cdo/2.1.1                 gct/v6.2.20201212          nco/5.1.6                   tk/8.6.13
+   cmake/3.18.4              gct/v6.2.20220524   (D)    ncview/2.1.11               usage-analysis/1.4
+   cmake/3.21.3              genmaskcpu/1.0             osu-benchmarks/5.4.1        visidata/2.1
+   cmake/3.29.4       (D)    gnuplot/5.4.2-simg         other-software/1.0          vmd/1.9.3-gcc11     (D)
+   darshan-util/3.3.1        gnuplot/5.4.2       (D)    paraview/5.10.1             vmd/1.9.3-mpi-gcc11
+   epcc-reframe/0.2          gnuplot/5.4.3              paraview/5.11.1             xthi/1.3
+   epcc-setup-env     (L)    graphviz/10.0.1            paraview/5.13.0      (D)
 
---------------------- /opt/cray/pe/lmod/modulefiles/mpi/crayclang/14.0/ofi/1.0/cray-mpich/8.0 ---------------------
-   cray-hdf5-parallel/1.12.2.1    cray-mpixlate/1.0.0.6    cray-parallel-netcdf/1.12.3.1
-
---------------------------- /opt/cray/pe/lmod/modulefiles/comnet/crayclang/14.0/ofi/1.0 ---------------------------
-   cray-mpich-abi/8.1.23    cray-mpich/8.1.23 (L)
+------------------- /opt/cray/pe/lmod/modulefiles/mpi/crayclang/14.0/ofi/1.0/cray-mpich/8.0 -------------------
+   cray-hdf5-parallel/1.12.2.1 (D)    cray-mpixlate/1.0.0.6        cray-parallel-netcdf/1.12.3.1 (D)
+   cray-hdf5-parallel/1.12.2.7        cray-mpixlate/1.0.2   (D)    cray-parallel-netcdf/1.12.3.7
 
 ...output trimmed...
 
@@ -177,8 +193,11 @@ available versions of the HPE Cray FFTW library, use:
 ```
 auser@ln03:~>  module avail cray-fftw
 
---------------------------------- /opt/cray/pe/lmod/modulefiles/cpu/x86-rome/1.0 ----------------------------------
-   cray-fftw/3.3.10.3
+------------------------------- /opt/cray/pe/lmod/modulefiles/cpu/x86-rome/1.0 --------------------------------
+   cray-fftw/3.3.10.3    cray-fftw/3.3.10.5 (D)
+
+  Where:
+   D:  Default Module
 
 Module defaults are chosen based on Find First Rules due to Name/Version/Version modules found in the module tree.
 See https://lmod.readthedocs.io/en/latest/060_locating.html for details.
@@ -230,18 +249,14 @@ The following is a list of the modules and extensions currently available:
 -----------------------------------------------------------------------------------------------
 
 ...output trimmed...
- 
-  cray-mpich-abi: cray-mpich-abi/8.1.23
 
-  cray-mpixlate: cray-mpixlate/1.0.0.6
+  cray-mrnet: cray-mrnet/5.0.4, cray-mrnet/5.1.1
 
-  cray-mrnet: cray-mrnet/5.0.4
+  cray-netcdf: cray-netcdf/4.9.0.1, cray-netcdf/4.9.0.7
 
-  cray-netcdf: cray-netcdf/4.9.0.1
+  cray-netcdf-hdf5parallel: cray-netcdf-hdf5parallel/4.9.0.1, cray-netcdf-hdf5parallel/4.9.0.7
 
-  cray-netcdf-hdf5parallel: cray-netcdf-hdf5parallel/4.9.0.1
-
-  cray-openshmemx: cray-openshmemx/11.5.7
+  cray-openshmemx: cray-openshmemx/11.5.7, cray-openshmemx/11.6.1
 
 ...output trimmed...
 
@@ -252,7 +267,7 @@ Now we know which versions are available, we can use
 it available:
 
 ```
-auser@ln03:~> module spider module spider cray-netcdf-hdf5parallel/4.9.0.1
+auser@ln03:~> module spider cray-netcdf-hdf5parallel/4.9.0.1
 
 ---------------------------------------------------------------------------------------------------------------
   cray-netcdf-hdf5parallel: cray-netcdf-hdf5parallel/4.9.0.1

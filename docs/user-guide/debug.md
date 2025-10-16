@@ -60,7 +60,7 @@ Launch `gdb4hpc`:
 You will get some information about this version of the program and,
 eventually, you will get a command prompt:
 
-    gdb4hpc 4.5 - Cray Line Mode Parallel Debugger
+    gdb4hpc 4.15.1 - Cray Line Mode Parallel Debugger
     With Cray Comparative Debugging Technology.
     Copyright 2007-2019 Cray Inc. All Rights Reserved.
     Copyright 1996-2016 University of Queensland. All Rights Reserved.

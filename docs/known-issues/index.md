@@ -9,6 +9,10 @@ active investigation by HPE Cray and the wider service.
 
 ## Open Issues
 
+### Application performance following 16 October 2025 upgrade (Added: 2025-10-16)
+
+CSE are aware that a small number of applications may be slightly slower than usual (1-2 per cent) with the current programming environment configuration. We are working on a solution to alleviate this. However, if you are significantly concerned, please contact the ARCHER2 Service Desk as there is a potential workaround that can be applied if required.
+
 ### ATP Module tries to write to /home from compute nodes (Added: 2024-04-29)
 
 The ATP Module tries to execute a `mkdir` command in the `/home` filesystem.

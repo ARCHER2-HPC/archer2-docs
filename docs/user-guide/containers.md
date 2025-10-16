@@ -300,7 +300,7 @@ ENV LD_LIBRARY_PATH=/usr/lib/libibverbs:$LD_LIBRARY_PATH
 A quick overview of what the above Dockerfile is doing:
 
  - The image is being bootstrapped from the `ubuntu:20.04` Docker image.
- - The first set of `RUN` sections with `apt-get` commands: install the base packages required from the Ubunntu package repos
+ - The first set of `RUN` sections with `apt-get` commands: install the base packages required from the Ubuntu package repos
  - MPICH install: downloads and compiles the MPICH 3.4.2 in a way that is compatible with Cray MPICH on ARCHER2
  - OSU MPI benchmarks install: downloads and compiles the OSU micro benchmarks
  - `ENV` sections: add the OSU benchmark executables to the PATH so they can be executed in the container without specifying the full path; set the correct paths to the network libraries within the container.
@@ -373,11 +373,11 @@ export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 
 # Set the LD_LIBRARY_PATH environment variable within the Singularity container
 # to ensure that it used the correct MPI libraries.
-export SINGULARITYENV_LD_LIBRARY_PATH="/opt/cray/pe/mpich/8.1.23/ofi/gnu/9.1/lib-abi-mpich:/opt/cray/pe/mpich/8.1.23/gtl/lib:/opt/cray/libfabric/1.12.1.2.2.0.0/lib64:/opt/cray/pe/gcc-libs:/opt/cray/pe/gcc-libs:/opt/cray/pe/lib64:/opt/cray/pe/lib64:/opt/cray/xpmem/default/lib64:/usr/lib64/libibverbs:/usr/lib64:/usr/lib64"
+export SINGULARITYENV_LD_LIBRARY_PATH="/opt/cray/pe/mpich/8.1.27/ofi/gnu/9.1/lib-abi-mpich:/opt/cray/pe/mpich/8.1.27/gtl/lib:/opt/cray/libfabric/1.12.1.2.2.0.0/lib64:/opt/cray/pe/gcc-libs:/opt/cray/pe/gcc-libs:/opt/cray/pe/lib64:/opt/xpmem/lib64:/usr/lib64/libibverbs:/usr/lib64:/usr/lib64"
 
 # This makes sure HPE Cray Slingshot interconnect libraries are available
 # from inside the container.
-export SINGULARITY_BIND="/opt/cray,/var/spool,/opt/cray/pe/mpich/8.1.23/ofi/gnu/9.1/lib-abi-mpich:/opt/cray/pe/mpich/8.1.23/gtl/lib,/etc/host.conf,/etc/libibverbs.d/mlx5.driver,/etc/libnl/classid,/etc/resolv.conf,/opt/cray/libfabric/1.12.1.2.2.0.0/lib64/libfabric.so.1,/opt/cray/pe/gcc-libs/libatomic.so.1,/opt/cray/pe/gcc-libs/libgcc_s.so.1,/opt/cray/pe/gcc-libs/libgfortran.so.5,/opt/cray/pe/gcc-libs/libquadmath.so.0,/opt/cray/pe/lib64/libpals.so.0,/opt/cray/pe/lib64/libpmi2.so.0,/opt/cray/pe/lib64/libpmi.so.0,/opt/cray/xpmem/default/lib64/libxpmem.so.0,/run/munge/munge.socket.2,/usr/lib64/libibverbs/libmlx5-rdmav34.so,/usr/lib64/libibverbs.so.1,/usr/lib64/libkeyutils.so.1,/usr/lib64/liblnetconfig.so.4,/usr/lib64/liblustreapi.so,/usr/lib64/libmunge.so.2,/usr/lib64/libnl-3.so.200,/usr/lib64/libnl-genl-3.so.200,/usr/lib64/libnl-route-3.so.200,/usr/lib64/librdmacm.so.1,/usr/lib64/libyaml-0.so.2"
+export SINGULARITY_BIND="/opt/cray,/var/spool,/opt/cray/pe/mpich/8.1.27/ofi/gnu/9.1/lib-abi-mpich:/opt/cray/pe/mpich/8.1.27/gtl/lib,/etc/host.conf,/etc/libibverbs.d/mlx5.driver,/etc/libnl/classid,/etc/resolv.conf,/opt/cray/libfabric/1.12.1.2.2.0.0/lib64/libfabric.so.1,/opt/cray/pe/gcc-libs/libatomic.so.1,/opt/cray/pe/gcc-libs/libgcc_s.so.1,/opt/cray/pe/gcc-libs/libgfortran.so.5,/opt/cray/pe/gcc-libs/libquadmath.so.0,/opt/cray/pe/lib64/libpals.so.0,/opt/cray/pe/lib64/libpmi2.so.0,/opt/cray/pe/lib64/libpmi.so.0,/opt/xpmem/lib64/libxpmem.so.0,/run/munge/munge.socket.2,/usr/lib64/libibverbs/libmlx5-rdmav34.so,/usr/lib64/libibverbs.so.1,/usr/lib64/libkeyutils.so.1,/usr/lib64/liblnetconfig.so.4,/usr/lib64/liblustreapi.so,/usr/lib64/libmunge.so.2,/usr/lib64/libnl-3.so.200,/usr/lib64/libnl-genl-3.so.200,/usr/lib64/libnl-route-3.so.200,/usr/lib64/librdmacm.so.1,/usr/lib64/libyaml-0.so.2,/usr/lib64/libjansson.so.4"
 
 # Launch the parallel job.
 srun --hint=nomultithread --distribution=block:block \
@@ -399,8 +399,8 @@ If the job runs correctly, you should see output similar to the following in you
 file:
 
 ```
-Lmod is automatically replacing "cray-mpich/8.1.23" with
-"cray-mpich-abi/8.1.23".
+Lmod is automatically replacing "cray-mpich/8.1.27" with
+"cray-mpich-abi/8.1.27".
 
 
 # OSU MPI Allreduce Latency Test v5.4.1
