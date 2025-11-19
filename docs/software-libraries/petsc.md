@@ -26,6 +26,13 @@ root of the installation if this is required.
 
 ### Version history
 
+=== "Upgrade 2025"
+
+    - Module `petsc/3.24.1` added as non-default November 2025 (PE 23.09)
+    - Module `petsc/3.18.5` installed as default May 2023 (PE 22.12)
+
+    Note: `petsc/3.24.1` disables MUMPS support.
+
 === "Upgrade 2023"
 
     - Module `petsc/3.18.5` installed as default May 2023 (PE 22.12)

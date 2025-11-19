@@ -26,6 +26,11 @@ environment if required.
 
 ### Version history
 
+=== "Upgrade 2025"
+
+    - module `hypre/2.33.0` added as non-default November 2025 (PE 23.09)
+    - module `hypre/2.25.0` installed as default May 2023 (PE 22.12)
+
 === "Upgrade 2023"
 
     - module `hypre/2.25.0` installed as default May 2023 (PE 22.12)
@@ -57,7 +62,5 @@ Archer2 [github repository](https://github.com/ARCHER2-HPC/pe-scripts/tree/cse-d
 HYPRE [home page](https://computing.llnl.gov/projects/hypre-scalable-linear-solvers-multigrid-methods)
 
 The latest HYPRE [user manual](https://hypre.readthedocs.io/en/latest/) (HTML)
-
-An older [pdf version](https://computing.llnl.gov/sites/default/files/public/hypre-2.11.2_usr_manual.pdf)
 
 HYPRE [github repository](https://github.com/hypre-space/hypre)

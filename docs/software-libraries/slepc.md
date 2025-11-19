@@ -18,6 +18,11 @@ installation.
 
 ### Version history
 
+=== "Upgrade 2025"
+
+    - Module `slepc/3.24.0` added as non-default November 2025 (PE 23.09)
+    - Module `slepc/3.18.3` installed as default May 2023 (PE 22.12)
+
 === "Upgrade 2023"
 
     - Module `slepc/3.18.3` installed as default May 2023 (PE 22.12)

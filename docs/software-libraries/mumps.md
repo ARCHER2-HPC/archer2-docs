@@ -27,6 +27,11 @@ installation for the current programming environment.
 
 ### Version history
 
+=== "Upgrade 2025"
+
+    - Module `mumps/5.8.1` added as non-default November 2025 (PE 23.09)
+    - Module `mumps/5.5.1` installed as default May 2023 (PE 22.12)
+
 === "Upgrade 2023"
 
     - Module `mumps/5.5.1` installed as default May 2023 (PE 22.12)
@@ -70,5 +75,5 @@ for further options and details.
 
 The [MUMPS home page](https://mumps-solver.org/index.php)
 
-MUMPS [user manual](https://mumps-solver.org/doc/userguide_5.6.0.pdf)
-(Version 5.6, pdf)
+MUMPS [user manual](https://mumps-solver.org/doc/userguide_5.8.1.pdf)
+(Version 5.8.1, pdf)
