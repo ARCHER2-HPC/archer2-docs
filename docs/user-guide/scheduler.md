@@ -2299,12 +2299,7 @@ other, higher-priority, jobs cannot be run. Although low priority jobs are not
 charged, you do need a valid, positive budget to be able to submit and run low
 priority jobs, i.e. you need at least 1 CU in your budget.
 
-Low priority access is always available and has the following limits:
-
-  - 1024 node maximum job size
-  - Maximum 16 low priority jobs submitted (including running) per user
-  - Maximum 16 low priority job running per user
-  - Maximum runtime of 24 hours
+Low priority access is always available. Consult the QoS table above for limits on low priority jobs.
 
 You submit a low priority job on ARCHER2 by using the `lowpriority` QoS. For example,
 you would usually have the following line in your job submission script sbatch
