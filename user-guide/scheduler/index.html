@@ -5414,7 +5414,7 @@ lists the active QoS on ARCHER2.</p>
 <td>16</td>
 <td>16</td>
 <td>standard</td>
-<td>Jobs not charged but requires at least 1 CU in budget to use.</td>
+<td>Jobs not charged but requires at least 1 CU in budget to use. Only available to UKRI-funded projects.</td>
 </tr>
 <tr>
 <td>serial</td>
@@ -7419,6 +7419,11 @@ sixteen OpenMP threads. Then the 8 MPI tasks with no threading from
 other, higher-priority, jobs cannot be run. Although low priority jobs are not
 charged, you do need a valid, positive budget to be able to submit and run low
 priority jobs, i.e. you need at least 1 CU in your budget.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Low priority access is only available for UKRI-funded projects. Other projects
+will not be able to use the low priority facility.</p>
+</div>
 <p>Low priority access is always available. Consult the QoS table above for limits on low priority jobs.</p>
 <p>You submit a low priority job on ARCHER2 by using the <code>lowpriority</code> QoS. For example,
 you would usually have the following line in your job submission script sbatch
