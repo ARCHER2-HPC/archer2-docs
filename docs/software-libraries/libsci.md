@@ -13,4 +13,4 @@ algebra, the corresponding C interfaces
 [ScaLAPACK](http://www.netlib.org/scalapack/) for parallel linear
 algebra. Type `man intro_libsci` for further details.
 
-Additionally there is GPU support available via the `cray-libsci_acc` module. More information can be found [here]().
+Additionally there is GPU support available via the `cray-libsci_acc` module. 
