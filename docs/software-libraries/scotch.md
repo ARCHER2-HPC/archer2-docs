@@ -41,6 +41,11 @@ user manuals for further details.
 
 ### Module version history
 
+=== "Upgrade 2025"
+
+    - Module `scotch/7.0.10` added as non-defualt November 2025 (PE 23.09)
+    - Module `scotch/7.0.3` installed as default May 2023 (PE 22.12)
+
 === "Upgrade 2023"
 
     - Module `scotch/7.0.3` installed May 2023 (PE 22.12)
@@ -89,7 +94,3 @@ separate script (`scotch.sh`) in the same location is used for version 6.
 ## Resources
 
 The [Scotch home page](https://www.labri.fr/perso/pelegrin/scotch/)
-
-Scotch [user manual](https://gforge.inria.fr/docman/view.php/248/8260/scotch_user6.0.pdf) (pdf)
-
-PT-Scotch [user manual](https://gforge.inria.fr/docman/view.php/248/8261/ptscotch_user6.0.pdf) (pdf)

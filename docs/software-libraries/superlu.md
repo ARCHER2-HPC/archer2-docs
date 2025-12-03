@@ -30,6 +30,11 @@ location of the installation for a given programming environment.
 
 ### Version history
 
+=== "Upgrade 2025"
+
+    - Module `superlu/7.0.1` added as non-default November 2025 (PE 23.09)
+    - Module `superlu/5.2.2` recompiled May 2023 (PE 22.12) remains the default
+
 === "Upgrade 2023"
 
     - Module `superlu/5.2.2` recompiled May 2023 (PE 22.12)
@@ -66,6 +71,11 @@ as the root of the installation for the current programming environment.
 
 
 ### Version history
+
+=== "Upgrade 2025"
+
+    - Module `superlu-dist/9.0.1` added as non-default November 2025 (PE 23.09)
+    - Module `superlu-dist/8.1.2` installed as default May 2023 (PE 22.12)
 
 === "Upgrade 2023"
 

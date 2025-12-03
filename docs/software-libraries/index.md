@@ -76,11 +76,6 @@ The following libraries will also made available by the ARCHER2 CSE team:
 
     AOCL (AMD Optimizing CPU Libraries) provides a set of numerical libraries optimised for AMD "Zen"-based processors. 
 
-- **ARPACK-NG** [*...details for ARPACK-NG on ARCHER2...*](arpack.md)
-
-    ARPACK-NG (Arnodli Package) computes eigenvalues and eigenvectors
-    of large sparse matrics.
-
 - **Boost** [*...details for Boost on ARCHER2...*](boost.md)
 
     Boost is a portable C++ library providing reference implementations
@@ -90,11 +85,6 @@ The following libraries will also made available by the ARCHER2 CSE team:
 
     Eigen is a C++ template library for linear algebra: matrices,
     vectors, numerical solvers, and related algorithms.
-
-- **GLM** [*...details for GLM on ARCHER2...*](glm.md)
-
-    GLM (GL Math library) is a C++ header-only library for performing
-    operations commonly encountered in graphics applications.
 
 - **Hypre** [*...details for HYPRE on ARCHER2...*](hypre.md)
 
@@ -140,11 +130,6 @@ The following libraries will also made available by the ARCHER2 CSE team:
 
 [800]: https://portal.nersc.gov/project/sparse/superlu/
 [810]: https://portal.nersc.gov/project/sparse/superlu/#superlu_dist
-
-- **Trilinos** [*...details for Trilinos on ARCHER2...*](trilinos.md)
-
-    [Trilinos](https://trilinos.github.io/) is a large collection of packages
-    for the solution of complex scientific and engineering problems.
 
 
 ### Integration with compiler environment
