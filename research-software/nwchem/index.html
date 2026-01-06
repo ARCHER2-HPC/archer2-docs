@@ -3073,6 +3073,15 @@ can handle: biomolecules, nanostructures, and solid-state system; from
 quantum to classical, and all combinations; Gaussian basis functions or
 plane-waves; scaling from one to thousands of processors; properties and
 relativity.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>NWChem is not part of the officially supported
+software on ARCHER2. While the ARCHER2 service desk is able to provide
+support for basic use of this software (e.g. access to software, writing
+job submission scripts) it does not generally provide detailed technical
+support for the software and you may be directed to seek support from
+other places if the service desk cannot answer the questions.</p>
+</div>
 <h2 id="useful-links">Useful Links</h2>
 <ul>
 <li><a href="https://nwchemgit.github.io/">NWChem home page</a></li>
@@ -3110,6 +3119,7 @@ the standard partition. It assumes that the input file is called
 
 <span class="c1"># Load the NWChem module, avoid any unintentional OpenMP threading by</span>
 <span class="c1"># setting OMP_NUM_THREADS, and launch the code.</span>
+module<span class="w"> </span>load<span class="w"> </span>other-software
 module<span class="w"> </span>load<span class="w"> </span>nwchem
 <span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
 
