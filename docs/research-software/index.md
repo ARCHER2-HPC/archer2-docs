@@ -31,10 +31,10 @@ fully-supported software stack are marked with *):
   - [NAMD](namd.md)
   - [Nektar++](nektarplusplus.md)
   - [NEMO](nemo.md)
-  - [NWChem](nwchem.md)
+  - [NWChem(*)](nwchem.md)
   - [ONETEP](onetep.md)
   - [OpenFOAM](openfoam.md)
-  - [ORCA(*)](orca.md)
+  - [ORCA](orca.md)
   - [Quantum Espresso](qe.md)
   - [VASP](vasp.md)
 

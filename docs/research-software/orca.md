@@ -2,14 +2,6 @@
 
 ORCA is an ab initio quantum chemistry program package that contains modern electronic structure methods including density functional theory, many-body perturbation, coupled cluster, multireference methods, and semi-empirical quantum chemistry methods. Its main field of application is larger molecules, transition metal complexes, and their spectroscopic properties. ORCA is developed in the research group of Frank Neese. The free version is available only for academic use at academic institutions.
 
-!!! important
-    ORCA is not part of the officially supported
-    software on ARCHER2. While the ARCHER2 service desk is able to provide
-    support for basic use of this software (e.g. access to software, writing
-    job submission scripts) it does not generally provide detailed technical
-    support for the software and you may be directed to seek support from
-    other places if the service desk cannot answer the questions.
-
 ## Useful Links
 
 - [ORCA Forum](https://orcaforum.kofo.mpg.de/app.php/portal)
@@ -37,7 +29,6 @@ physical core. It assumes that the input file is `my_calc.inp`
 #SBATCH --partition=standard
 #SBATCH --qos=standard
 
-module load other-software
 module load orca
 
 # Launch the ORCA calculation

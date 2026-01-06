@@ -10,6 +10,14 @@ quantum to classical, and all combinations; Gaussian basis functions or
 plane-waves; scaling from one to thousands of processors; properties and
 relativity.
 
+!!! important
+    NWChem is not part of the officially supported
+    software on ARCHER2. While the ARCHER2 service desk is able to provide
+    support for basic use of this software (e.g. access to software, writing
+    job submission scripts) it does not generally provide detailed technical
+    support for the software and you may be directed to seek support from
+    other places if the service desk cannot answer the questions.
+
 ## Useful Links
 
   - [NWChem home page](https://nwchemgit.github.io/)
@@ -54,6 +62,7 @@ the standard partition. It assumes that the input file is called
 
 # Load the NWChem module, avoid any unintentional OpenMP threading by
 # setting OMP_NUM_THREADS, and launch the code.
+module load other-software
 module load nwchem
 export OMP_NUM_THREADS=1
 
