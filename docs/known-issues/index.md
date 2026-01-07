@@ -18,17 +18,6 @@ CSE are aware that a small number of applications may be running slower than usu
 
 If you are significantly concerned, please contact the ARCHER2 Service Desk.
 
-### ATP Module tries to write to /home from compute nodes (Added: 2024-04-29)
-
-The ATP Module tries to execute a `mkdir` command in the `/home` filesystem.
-When running the ATP module on the compute nodes, this will lead to an error, as the compute nodes cannot access the `/home` filesystem.
-
-To circumvent the error, add the line:
-
-    export HOME=${HOME/home/work}
-
-in the slurm script, so that the ATP module will write to `/work` instead.
-
 ### When close to storage quota, jobs may slow down or produce corrupted files (Added: 2024-02-27)
 
 For situations where users are close to user or project quotas on work (Lustre) file systems we have
@@ -44,8 +33,10 @@ remove data to free up space or request more storage quota.
 
 ### e-mail alerts from Slurm do not work (Added: 2023-11-09)
 
-Email alerts from Slurm (`--mail-type` and `--mail-user` options) do not produce emails to users. We are investigating
-with Universtiy of Edinburgh Information Services to enable this Slurm feature in the future.
+Email alerts from Slurm (`--mail-type` and `--mail-user` options) do not
+produce emails to users. Unfortunately, external constraints related to
+monitoring of spam mean this will not be possible for the current
+service.
 
 ### Excessive memory use when using UCX communications protocol (Added: 2023-07-20)
 
@@ -78,14 +69,6 @@ srun --cpu-freq=2250000 ...
 
 You can find more information on [setting the CPU frequency in the User Guide](/user-guide/energy/#controlling-cpu-frequency).
 
-
-### Research Software
-
-There are several outstanding issues for the centrally installed Research Software:
-
-- **PLUMED** is not yet available. Currently, we recommend affected users to install a local version of the software.
-
-Users should also check individual software pages, for known limitations/ caveats, for the use of software on the Cray EX platform and Cray Linux Environment.
 
 ### Issues with RPATH for non-default library versions
 
@@ -135,16 +118,6 @@ export UCX_IB_REG_METHODS=direct
 
 !!! note
     Setting this flag may have an impact on code performance.
-
-### AOCC compiler fails to compile with NetCDF (Added: 2021-11-18)
-
-There is currently a problem with the module file which means cray-netcdf-hdf5parallel will not operate correctly in PrgEnv-aocc. An example of the error seen is:  
-
-```
-F90-F-0004-Corrupt or Old Module file /opt/cray/pe/netcdf-hdf5parallel/4.7.4.3/crayclang/9.1/include/netcdf.mod (netcdf.F90: 8)
-```
-
-The current workaround for this is to load module epcc-netcdf-hdf5parallel instead if PrgEnv-aocc is required.
 
 ### Slurm  `--export` option does not work in job submission script
 
