@@ -5,13 +5,18 @@ impacts and any known workarounds. Many of these issues are under
 active investigation by HPE Cray and the wider service.
 
 !!! info
-    This page was last reviewed on 9 November 2023
+    This page was last reviewed on 7 January 2026
 
 ## Open Issues
 
-### Application performance following 16 October 2025 upgrade (Added: 2025-10-16)
+### Application performance following 16 October 2025 upgrade (Updated: 2026-01-07)
 
-CSE are aware that a small number of applications may be slightly slower than usual (1-2 per cent) with the current programming environment configuration. We are working on a solution to alleviate this. However, if you are significantly concerned, please contact the ARCHER2 Service Desk as there is a potential workaround that can be applied if required.
+CSE are aware that a small number of applications may be running slower than usual
+
+- In some cases software is running slightly slower (1-2 per cent) with the current programming environment configuration.
+- In a small number of cases, software is intermittently running 10x slower than usual. Investigations into this issue are ongoing.
+
+If you are significantly concerned, please contact the ARCHER2 Service Desk.
 
 ### ATP Module tries to write to /home from compute nodes (Added: 2024-04-29)
 
@@ -27,7 +32,7 @@ in the slurm script, so that the ATP module will write to `/work` instead.
 ### When close to storage quota, jobs may slow down or produce corrupted files (Added: 2024-02-27)
 
 For situations where users are close to user or project quotas on work (Lustre) file systems we have
-seen cases of the following behaviour:
+seen cases of the following behaviour for codes compiled using `gfortran`:
 
 - Jobs run very slowly as IO slows down
 - IO calls seem to complete successfully but not all data is written (so output is corrupted)
