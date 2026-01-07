@@ -3652,23 +3652,20 @@ inspect the results, as discussed above.</p>
 environment variable to 1 on the login node:</p>
 <pre><code>module load atp
 export ATP_ENABLED=1
-# Fix for a known issue:
+export CTI_SLURM_OVERRIDE_MC=1
+
+# Include:
 export HOME=${HOME/home/work}
 </code></pre>
+<p>The last line is a workaround for a bug which means that ATP would
+write directories on the <code>/home</code> filesystem, which would fail.</p>
 <p>Then, launch your job using <code>srun</code> as a background task (by adding an
-<code>&amp;</code> at the end of the command). For example, if you are running an
-executable called <code>my_exe</code> using 256 processes, you would
-    run:</p>
-<pre><code>srun -n=256 --nodes=2 --ntasks-per-node=128 --cpus-per-task=1 --time=01:00:00 --export=ALL \
-            --account=[budget code] --partition=standard --qos=standard ./my_exe &amp;
+<code>&amp;</code> at the end of the command). For example:</p>
+<pre><code>srun --ntasks=128 ./my_exe &amp;
+wait
 </code></pre>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This example has set the job time limit to 1 hour -- if you
-need longer, change the <code>--time</code> command.</p>
-</div>
-<p>Once the job has finished running, load the <code>stat</code> module to view the
-results:</p>
+<p>Once the job has finished running, a number of files prefixed <code>apt</code> should
+have been created. To see the results, load the <code>stat</code> module:</p>
 <pre><code>module load cray-stat
 </code></pre>
 <p>and view the merged stack trace using:</p>
