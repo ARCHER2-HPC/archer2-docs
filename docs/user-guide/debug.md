@@ -496,23 +496,22 @@ environment variable to 1 on the login node:
 
     module load atp
     export ATP_ENABLED=1
-    # Fix for a known issue:
+    export CTI_SLURM_OVERRIDE_MC=1
+
+    # Include:
     export HOME=${HOME/home/work}
 
+The last line is a workaround for a bug which means that ATP would
+write directories on the `/home` filesystem, which would fail.
+
 Then, launch your job using `srun` as a background task (by adding an
-`&` at the end of the command). For example, if you are running an
-executable called `my_exe` using 256 processes, you would
-    run:
+`&` at the end of the command). For example:
 
-    srun -n=256 --nodes=2 --ntasks-per-node=128 --cpus-per-task=1 --time=01:00:00 --export=ALL \
-                --account=[budget code] --partition=standard --qos=standard ./my_exe &
+    srun --ntasks=128 ./my_exe &
+    wait
 
-!!! note
-    This example has set the job time limit to 1 hour -- if you
-    need longer, change the `--time` command.
-
-Once the job has finished running, load the `stat` module to view the
-results:
+Once the job has finished running, a number of files prefixed `apt` should
+have been created. To see the results, load the `stat` module:
 
     module load cray-stat
 
