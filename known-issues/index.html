@@ -514,17 +514,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#atp-module-tries-to-write-to-home-from-compute-nodes-added-2024-04-29" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ATP Module tries to write to /home from compute nodes (Added: 2024-04-29)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#when-close-to-storage-quota-jobs-may-slow-down-or-produce-corrupted-files-added-2024-02-27" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -569,17 +558,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#research-software" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Research Software
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#issues-with-rpath-for-non-default-library-versions" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -595,17 +573,6 @@
     <span class="md-ellipsis">
       
         MPI UCX ERROR: ivb_reg_mr
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#aocc-compiler-fails-to-compile-with-netcdf-added-2021-11-18" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        AOCC compiler fails to compile with NetCDF (Added: 2021-11-18)
       
     </span>
   </a>
@@ -3119,17 +3086,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#atp-module-tries-to-write-to-home-from-compute-nodes-added-2024-04-29" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ATP Module tries to write to /home from compute nodes (Added: 2024-04-29)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#when-close-to-storage-quota-jobs-may-slow-down-or-produce-corrupted-files-added-2024-02-27" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3174,17 +3130,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#research-software" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Research Software
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#issues-with-rpath-for-non-default-library-versions" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3200,17 +3145,6 @@
     <span class="md-ellipsis">
       
         MPI UCX ERROR: ivb_reg_mr
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#aocc-compiler-fails-to-compile-with-netcdf-added-2021-11-18" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        AOCC compiler fails to compile with NetCDF (Added: 2021-11-18)
       
     </span>
   </a>
@@ -3280,13 +3214,6 @@ active investigation by HPE Cray and the wider service.</p>
 <li>In a small number of cases, software is intermittently running 10x slower than usual. Investigations into this issue are ongoing.</li>
 </ul>
 <p>If you are significantly concerned, please contact the ARCHER2 Service Desk.</p>
-<h3 id="atp-module-tries-to-write-to-home-from-compute-nodes-added-2024-04-29">ATP Module tries to write to /home from compute nodes (Added: 2024-04-29)</h3>
-<p>The ATP Module tries to execute a <code>mkdir</code> command in the <code>/home</code> filesystem.
-When running the ATP module on the compute nodes, this will lead to an error, as the compute nodes cannot access the <code>/home</code> filesystem.</p>
-<p>To circumvent the error, add the line:</p>
-<pre><code>export HOME=${HOME/home/work}
-</code></pre>
-<p>in the slurm script, so that the ATP module will write to <code>/work</code> instead.</p>
 <h3 id="when-close-to-storage-quota-jobs-may-slow-down-or-produce-corrupted-files-added-2024-02-27">When close to storage quota, jobs may slow down or produce corrupted files (Added: 2024-02-27)</h3>
 <p>For situations where users are close to user or project quotas on work (Lustre) file systems we have
 seen cases of the following behaviour for codes compiled using <code>gfortran</code>:</p>
@@ -3296,15 +3223,17 @@ seen cases of the following behaviour for codes compiled using <code>gfortran</c
 <li>No "disk quota exceeded" error is seen</li>
 </ul>
 <p>If you see these symptoms: slower than expected performance, data corruption; then you should check
-if you are close to your storage quota (either user or project quota). If you are, you may be experiencing this issue. Either 
+if you are close to your storage quota (either user or project quota). If you are, you may be experiencing this issue. Either
 remove data to free up space or request more storage quota.</p>
 <h3 id="e-mail-alerts-from-slurm-do-not-work-added-2023-11-09">e-mail alerts from Slurm do not work (Added: 2023-11-09)</h3>
-<p>Email alerts from Slurm (<code>--mail-type</code> and <code>--mail-user</code> options) do not produce emails to users. We are investigating
-with Universtiy of Edinburgh Information Services to enable this Slurm feature in the future.</p>
+<p>Email alerts from Slurm (<code>--mail-type</code> and <code>--mail-user</code> options) do not
+produce emails to users. Unfortunately, external constraints related to
+monitoring of spam mean this will not be possible for the current
+service.</p>
 <h3 id="excessive-memory-use-when-using-ucx-communications-protocol-added-2023-07-20">Excessive memory use when using UCX communications protocol (Added: 2023-07-20)</h3>
 <p>We have seen cases when using the (non-default) UCX communications protocol where the peak in memory use is
 much higher than would be expected. This leads to jobs failing unexpectedly with an OOM (Out Of Memory) error.
-The workaround is to use Open Fabrics (OFI) communication protocol instead. OFI is the default protocol on 
+The workaround is to use Open Fabrics (OFI) communication protocol instead. OFI is the default protocol on
 ARCHER2 and so does not usually need to be explicitly loaded; but if you have UCX loaded, you can switch to
 OFI by adding the following lines to your submission script before you run your application:</p>
 <div class="highlight"><pre><span></span><code>module load craype-network-ofi
@@ -3321,12 +3250,6 @@ instead within the job submission script. i.e.:</p>
 <div class="highlight"><pre><span></span><code>srun --cpu-freq=2250000 ...
 </code></pre></div>
 <p>You can find more information on <a href="/user-guide/energy/#controlling-cpu-frequency">setting the CPU frequency in the User Guide</a>.</p>
-<h3 id="research-software">Research Software</h3>
-<p>There are several outstanding issues for the centrally installed Research Software:</p>
-<ul>
-<li><strong>PLUMED</strong> is not yet available. Currently, we recommend affected users to install a local version of the software.</li>
-</ul>
-<p>Users should also check individual software pages, for known limitations/ caveats, for the use of software on the Cray EX platform and Cray Linux Environment.</p>
 <h3 id="issues-with-rpath-for-non-default-library-versions">Issues with RPATH for non-default library versions</h3>
 <p>When you compile applications against non-default versions of libraries within the HPE
 Cray software stack and use the environment variable <code>CRAY_ADD_RPATH=yes</code> to try and encode
@@ -3364,11 +3287,6 @@ to try and workaround this error:</p>
 <p class="admonition-title">Note</p>
 <p>Setting this flag may have an impact on code performance.</p>
 </div>
-<h3 id="aocc-compiler-fails-to-compile-with-netcdf-added-2021-11-18">AOCC compiler fails to compile with NetCDF (Added: 2021-11-18)</h3>
-<p>There is currently a problem with the module file which means cray-netcdf-hdf5parallel will not operate correctly in PrgEnv-aocc. An example of the error seen is:  </p>
-<div class="highlight"><pre><span></span><code>F90-F-0004-Corrupt or Old Module file /opt/cray/pe/netcdf-hdf5parallel/4.7.4.3/crayclang/9.1/include/netcdf.mod (netcdf.F90: 8)
-</code></pre></div>
-<p>The current workaround for this is to load module epcc-netcdf-hdf5parallel instead if PrgEnv-aocc is required.</p>
 <h3 id="slurm-export-option-does-not-work-in-job-submission-script">Slurm  <code>--export</code> option does not work in job submission script</h3>
 <p>The option <code>--export=ALL</code> propagates all the environment variables from the login node to the compute node. If you include the option in the job submission script, it is wrongly ignored by Slurm. The current workaround is to include the option when the job submission script is launched. For instance:</p>
 <pre><code>sbatch --export=ALL myjob.slurm
