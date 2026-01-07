@@ -2884,10 +2884,11 @@
 <p>The CSE team has completed a review of the centrally supported software and will make changes during January 2026, deploying current versions of software and refreshing the list of application based on user demand.  </p>
 <p>The full list of changes is appended below, though significant changes are, as follows: </p>
 <ul>
-<li><a href="https://www.faccts.de/orca/">ORCA </a> will be added to the list of supported software to replace NWChem, which is being removed. </li>
+<li><a href="https://www.faccts.de/orca/">ORCA </a> will be added to the list of supported software</li>
+<li><a href="https://www.nwchem-sw.org/">NWChem</a> will be removed from the list of supported software (current installed versions will remain available on ARCHER2)</li>
 <li><a href="https://www.code-saturne.org/cms/web/">Code Saturne </a> Version 9.0 will be installed. </li>
-<li><a href="https://www.quantum-espresso.org/">QuantumEspresso </a> Versions 7.5 and Version 7.4.1 will be installed. </li>
-<li><a href="https://www.vasp.at/">VASP </a> Version 6.5.1 will be installed (and made the default). A version with VTST will also be installed.  </li>
+<li><a href="https://www.quantum-espresso.org/">QuantumEspresso </a> Versions 7.5 and Version 7.4.1 will be installed. </li>
+<li><a href="https://www.vasp.at/">VASP </a> Version 6.5.1 will be installed (and made the default). VASP 6.5.1 with VTST will also be installed.  </li>
 <li><a href="https://www.blender.org/">Blender </a> will be updated to Version 5.0. </li>
 <li><a href="https://code.mpimet.mpg.de/projects/cdo">Climate Data Operators (CDO) </a> will be updated to Version 2.5.4. </li>
 <li><a href="https://www.paraview.org/">Paraview </a> will be updated to Version 6.0.1. </li>
@@ -2919,35 +2920,35 @@
 </tr>
 <tr>
 <td>CP2K</td>
-<td>Add Version 2026.1 <br> Default changed to version 2025.2 (was 2024.3)</td>
+<td>Add Version 2026.1 <br/> Default changed to version 2025.2 (was 2024.3)</td>
 </tr>
 <tr>
 <td>FHI-aims</td>
-<td>Default changed to version 250822.0 (was 240920.0) <br> Add version 250822.0</td>
+<td>Default changed to version 250822.0 (was 240920.0) <br/> Add version 250822.0</td>
 </tr>
 <tr>
 <td>GROMACS</td>
-<td>Add version 2024.7 and version 2025.4  <br> Default changed to Version 2025.4</td>
+<td>Add version 2024.7 and version 2025.4  <br/> Default changed to Version 2025.4</td>
 </tr>
 <tr>
 <td>NAMD</td>
-<td>Add Version 3.0.2 (and make default). Also add Version 3.0.2 (No SMP) and Version 3.0.2 (GPU) <br> Remove Version 2.14 and Version 3.0</td>
+<td>Add Version 3.0.2 (and make default). Also add Version 3.0.2 (No SMP) and Version 3.0.2 (GPU) <br/> Remove Version 2.14 and Version 3.0</td>
 </tr>
 <tr>
 <td>NWChem</td>
-<td>Remove from list of supported packages - replace with ORCA</td>
+<td>Removed from the list of supported software (current installed versions will remain available on ARCHER2)</td>
 </tr>
 <tr>
 <td>ORCA</td>
-<td>Make ORCA a supported package to replace NWChem and install ORCA Version 6.1.0 (as default). <br> Version 5.0.3 and Version 6.0.0 already installed</td>
+<td>Make ORCA a supported package and install ORCA Version 6.1.0 (as default)</td>
 </tr>
 <tr>
 <td>Quantum Espresso</td>
-<td>Add versions 7.4.1 and 7.5 <br> Move default to Version 7.3.1 <br> Remove Version 6.8</td>
+<td>Add versions 7.4.1 and 7.5 <br/> Move default to Version 7.3.1 <br/> Remove Version 6.8</td>
 </tr>
 <tr>
 <td>VASP</td>
-<td>Install VASP 6.5.1 and make default <br> Also install VASP 6.5.1 with VTST</td>
+<td>Install VASP 6.5.1 and make default <br/> Also install VASP 6.5.1 with VTST</td>
 </tr>
 <tr>
 <td><strong>Libraries</strong></td>
@@ -3003,15 +3004,15 @@
 </tr>
 <tr>
 <td>Forge</td>
-<td>Change default to Version 25.0.1 <br> Remove Version 22.1.3</td>
+<td>Change default to Version 25.0.1 <br/> Remove Version 22.1.3</td>
 </tr>
 <tr>
 <td>Paraview</td>
-<td>Add Version 6.0.1  <br> Remove Versions 5.10.1 and 5.11.1</td>
+<td>Add Version 6.0.1  <br/> Remove Versions 5.10.1 and 5.11.1</td>
 </tr>
 <tr>
 <td>PyTorch</td>
-<td>Remove Version 1.10.2  <br> Upgrade CPU version to Version 2.9.1 (requires two modules: a source-code build for torch.distributed and a binary install that works with Horovod) <br> GPU version is dependent on ROCm version so must remain at Version 1.13.1</td>
+<td>Remove Version 1.10.2  <br/> Upgrade CPU version to Version 2.9.1 (requires two modules: a source-code build for torch.distributed and a binary install that works with Horovod) <br/> GPU version is dependent on ROCm version so must remain at Version 1.13.1</td>
 </tr>
 <tr>
 <td>SCons</td>
