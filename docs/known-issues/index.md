@@ -28,7 +28,7 @@ seen cases of the following behaviour for codes compiled using `gfortran`:
 - No "disk quota exceeded" error is seen
 
 If you see these symptoms: slower than expected performance, data corruption; then you should check
-if you are close to your storage quota (either user or project quota). If you are, you may be experiencing this issue. Either 
+if you are close to your storage quota (either user or project quota). If you are, you may be experiencing this issue. Either
 remove data to free up space or request more storage quota.
 
 ### e-mail alerts from Slurm do not work (Added: 2023-11-09)
@@ -42,7 +42,7 @@ service.
 
 We have seen cases when using the (non-default) UCX communications protocol where the peak in memory use is
 much higher than would be expected. This leads to jobs failing unexpectedly with an OOM (Out Of Memory) error.
-The workaround is to use Open Fabrics (OFI) communication protocol instead. OFI is the default protocol on 
+The workaround is to use Open Fabrics (OFI) communication protocol instead. OFI is the default protocol on
 ARCHER2 and so does not usually need to be explicitly loaded; but if you have UCX loaded, you can switch to
 OFI by adding the following lines to your submission script before you run your application:
 
@@ -126,7 +126,3 @@ The option `--export=ALL` propagates all the environment variables from the logi
     sbatch --export=ALL myjob.slurm
 
 ## Recently Resolved Issues
-
-
-
-
