@@ -1,14 +1,5 @@
 # Spack
 
-!!! warning
-    As noted below, the current Spack installation available through
-    the module system is considered experimental, and its reliability may be
-    decreased following the ARCHER2 upgrade that took place on 16 October 2025.
-    If you wish to use Spack, rather than use the central installation you may
-    prefer to take the in-development configuration files available at
-    [GitHub](https://github.com/ARCHER2-HPC/archer2-spack) and adapt them for
-    use in your own installation.
-
 [Spack](https://github.com/spack/spack) is a package manager, a tool to assist
 with building and installing software as well as determining what dependencies
 are required and installing those. It was originally designed for use on HPC
@@ -17,7 +8,9 @@ one another for different use cases -- for example different versions, built
 with different compilers, using MPI or hybrid MPI+OpenMP. Spack is principally
 written in Python but has a component written in Answer Set Programming (ASP)
 which is used to determine the required dependencies for a given package
-installation.
+installation. The [Spack feature
+overview](https://spack.readthedocs.io/en/latest/features.html) gives a
+high-level account of Spack's capabilities.
 
 Users are welcome to install Spack themselves in their own directories, but we
 are making an experimental installation tailored for ARCHER2 available
@@ -41,13 +34,13 @@ to users by default. You must firstly load the `other-software` module:
     auser@ln01:~> module load other-software
 
 Several modules with `spack` in their name will become visible to you. You
-should load the `spack` module:
+should load the `spack` module, which is by default version 1.0.2:
 
     auser@ln01:~> module load spack
 
 This configures Spack to place its cache on and install software to a directory
-called `.spack` in your base work directory, e.g. at
-`/work/t01/t01/auser/.spack`.
+called `.spack-1.0.2` in your base work directory, e.g. at
+`/work/t01/t01/auser/.spack-1.0.2`.
 
 At this point Spack is available to you via the `spack` command. You can get
 started with `spack help`, reading the [Spack
@@ -138,7 +131,7 @@ In any Spack command that requires as an argument a reference to an installed
 package, you can provide a hash reference to it rather than its spec. You can
 see the first part of the hash by running `spack find -l`, or the full hash with
 `spack find -L`. Then use the hash in a command by prefixing it with a forward
-slash, e.g. `wjy5dus` becomes `/wjy5dus`.
+slash, *e.g.* `wjy5dus` becomes `/wjy5dus`.
 
 If you have two packages installed which appear identical in `spack find` apart
 from their hash, you can differentiate them with `spack diff`:
@@ -179,7 +172,7 @@ userspace configuration.
 
 Your own configuration should fit in the user level scope. On ARCHER2 Spack is
 configured to, by default, place and look for your configuration files in your
-work directory at e.g. `/work/t01/t01/auser/.spack`. You can however override
+work directory at e.g. `/work/t01/t01/auser/.spack-1.0.2`. You can however override
 this to have Spack use any directory you choose by setting the
 `SPACK_USER_CONFIG_PATH` environment variable, for example:
 
@@ -194,7 +187,7 @@ running, for example:
 
     auser@ln01:~> spack config edit repos
 
-which would open your `repos.yaml` in `vim`.
+which would open your `repos.yaml` configuration file in `vim`.
 
 !!! tip
     If you would rather not use `vim`, you can change which editor is used by
@@ -202,8 +195,8 @@ which would open your `repos.yaml` in `vim`.
 
 The final configuration used by Spack is a compound of several scopes, from the
 Spack defaults which are overridden by the ARCHER2 system configuration files,
-which can then be overridden in turn by your own configurations. You can see
-what options are in use at any point by running, for example:
+which can then be overridden in turn by your own user scope configurations. You
+can see what options are in use at any point by running, for example:
 
     auser@ln01:~> spack config get config
 
@@ -216,14 +209,15 @@ configuration by running, for example to check `packages.yaml`:
 
 Unless you have already written a `packages.yaml` of your own, this will show a
 mix of options originating from the Spack defaults and also from an
-`archer2-user` directory which is where we have told Spack how to use packages
-from the HPE Cray Programming Environment.
+`archer2-user` directory within the central installation. The ARCHER2 CSE
+service have written the YAML files in this directory with the information
+required for Spack to use packages from the HPE Cray Programming Environment.
 
 If there is some behaviour in Spack that you want to change, looking at the
-output of `spack config get` and `spack config blame` may help to show what you
-would need to do. You can then write your own user scope configuration file to
-set the behaviour you want, which will override the option as set by the
-lower-level scopes.
+output of `spack config get` and `spack config blame` may show what you would
+need to do. You can then write your own user scope configuration file to set the
+behaviour you want and then set its location with `SPACK_USER_CONFIG_PATH`,
+which will override the option as set by the lower-level scopes.
 
 Please see the [Spack
 documentation](https://spack.readthedocs.io/en/latest/configuration.html) to
@@ -243,8 +237,8 @@ able to use these with no issues on ARCHER2 by simply running `spack install` as
 described above, but if you do run into problems in the interaction between
 Spack and the CPE compilers and libraries then you may wish to write your own.
 Where the ARCHER2 CSE service has encountered problems with packages we have
-provided our own in a repository located at
-`$SPACK_ROOT/var/spack/repos/archer2`.
+provided our own in a repository named `archer2` located at
+`$SPACK_BASE/repos/archer2/spack_repo/archer2`.
 
 ### Creating your own package repository
 
@@ -292,7 +286,7 @@ the directory it was created in, but Spack does allow it to be different. Both
 Running `spack find -N` will return the list of installed packages with their
 namespace. You'll see that they are then prefixed with the repository namespace,
 for example `builtin.bison@3.8.2` and `archer2.quantum-espresso@7.2`. In order
-to avoid ambiguity when managing package installation you can always prefix a
+to avoid ambiguity when managing package installations you can always prefix a
 spec with a repository namespace.
 
 If you don't include the repository in a spec, Spack will search in order all the
@@ -326,13 +320,13 @@ so you can run:
 
     auser@ln01:~> spack create https://www.code-saturne.org/releases/code_saturne-8.0.3.tar.gz
 
-Spack will determine from this the package name, the download URLs for all
+Spack will determine from this the package name and the download URLs for all
 versions X.Y.Z matching the
 `https://www.code-saturne.org/releases/code_saturne-X.Y.Z.tar.gz` pattern. It
-will then ask you interactively which of these you want to use. Finally, it will
-download the `.tar.gz` archives for those versions and calculate their
-checksums, then place all this information in the initial version of the package
-for you. This takes away a lot of the initial work!
+will then ask you interactively which of these you want to include in your
+package. Finally, it will download the `.tar.gz` archives for those versions and
+calculate their checksums, then place all this information in the initial
+version of the package for you. This takes away a lot of the initial work!
 
 At this point you can get to work on the package. You can edit an existing
 package by running
@@ -347,11 +341,14 @@ provide a source code download URL, you'll also see listed the versions you
 chose and their checksums.
 
 A package is implemented as a Python class. You'll see that by default it will
-inherit from the `AutotoolsPackage` class which defines how a package following
-the common `configure` > `make` > `make install` process should be built. You
-can change this to another build system, for example `CMakePackage`. If you
-want, you can have the class inherit from several different types of build
-system classes and choose between them at install time.
+inherit from the
+[`AutotoolsPackage`](https://spack.readthedocs.io/en/latest/build_systems/autotoolspackage.html)
+class which defines how a package following the common `configure` > `make` >
+`make install` process should be built. You can change this to another build
+system, for example
+[`CMakePackage`](https://spack.readthedocs.io/en/latest/build_systems/cmakepackage.html).
+If you want, you can have the class inherit from several different types of
+build system classes and choose between them at install time.
 
 Options must be provided to the build. For an `AutotoolsPackage` package, you
 can write a `configure_args` method which very simply returns a list of the
@@ -404,8 +401,8 @@ libraries to use in order to build against BLAS.
 
 Spack can provide the correct BLAS library search and link flags to be passed on
 to `configure` via `self.spec["blas"].libs`, a
-[`LibraryList`](https://spack.readthedocs.io/en/latest/llnl.util.html#llnl.util.filesystem.LibraryList)
-object. So, the Code_Saturne package uses the following `configure_args()`
+[`LibraryList` object](https://spack.readthedocs.io/en/latest/spack.llnl.util.html#spack.llnl.util.filesystem.LibraryList).
+So, the Code_Saturne package uses the following `configure_args()`
 method:
 
 ```python
@@ -426,4 +423,7 @@ options needed to get `configure` to find and use the correct library.
 ## Contributing
 
 If you develop a package for use on ARCHER2 please do consider opening a pull
-request to the [GitHub repository](https://github.com/ARCHER2-HPC/archer2-spack).
+request to the [ARCHER2 Spack
+repository](https://github.com/ARCHER2-HPC/archer2-spack) on GitHub or, for packages
+intended for general use, to the main [Spack package
+repository](https://github.com/spack/spack-packages).
