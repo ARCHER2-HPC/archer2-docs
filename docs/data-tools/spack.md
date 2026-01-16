@@ -238,7 +238,7 @@ described above, but if you do run into problems in the interaction between
 Spack and the CPE compilers and libraries then you may wish to write your own.
 Where the ARCHER2 CSE service has encountered problems with packages we have
 provided our own in a repository named `archer2` located at
-`$SPACK_ROOT/repos/archer2/spack_repo/archer2`.
+`$SPACK_BASE/repos/archer2/spack_repo/archer2`.
 
 ### Creating your own package repository
 
@@ -401,8 +401,8 @@ libraries to use in order to build against BLAS.
 
 Spack can provide the correct BLAS library search and link flags to be passed on
 to `configure` via `self.spec["blas"].libs`, a
-[`LibraryList`](https://spack.readthedocs.io/en/latest/spack.llnl.util.html#spack.llnl.util.filesystem.LibraryList)
-object. So, the Code_Saturne package uses the following `configure_args()`
+[`LibraryList` object](https://spack.readthedocs.io/en/latest/spack.llnl.util.html#spack.llnl.util.filesystem.LibraryList).
+So, the Code_Saturne package uses the following `configure_args()`
 method:
 
 ```python
@@ -423,7 +423,7 @@ options needed to get `configure` to find and use the correct library.
 ## Contributing
 
 If you develop a package for use on ARCHER2 please do consider opening a pull
-request to the [ARCHER2 GitHub
-repository](https://github.com/ARCHER2-HPC/archer2-spack) or, for packages
+request to the [ARCHER2 Spack
+repository](https://github.com/ARCHER2-HPC/archer2-spack) on GitHub or, for packages
 intended for general use, to the main [Spack package
 repository](https://github.com/spack/spack-packages).
