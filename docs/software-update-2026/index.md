@@ -24,7 +24,7 @@ The full list of changes is captured in the table below. If you have any questio
 | Py-ChemShell/Tcl-ChemShell | Remove Py-ChemShell Version 23.0.3 (deprecated) |
 | CP2K | Add Version 2026.1 <br/> Default changed to version 2025.2 (was 2024.3) |
 | FHI-aims | Default changed to version 250822.0 (was 240920.0) <br/> Add version 250822.0 |
-| GROMACS | Add version 2024.7 and version 2025.4  <br/> Default changed to Version 2025.4 |
+| GROMACS | Add version 2024.6 and version 2025.4  <br/> Default changed to Version 2025.4 |
 | NAMD | Add Version 3.0.2 (and make default). Also add Version 3.0.2 (No SMP) and Version 3.0.2 (GPU) <br/> Remove Version 2.14 and Version 3.0  |
 | NWChem | Removed from the list of supported software (current installed versions will remain available on ARCHER2) |
 | ORCA | Make ORCA a supported package and install ORCA Version 6.1.0 (as default)  |
