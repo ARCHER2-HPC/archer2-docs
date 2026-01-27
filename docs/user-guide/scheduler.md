@@ -2366,9 +2366,9 @@ Your request will be checked by the ARCHER2 User Administration team and, if app
 ## Capability Days
 
 !!! important
-    The next Capability Days session will be from Tue 7 Oct 2025 to Thu 9 Oct 2025:
-    - `pre-capabilityday` QoS: 0900-1900, Tue 7 Oct 2025
-    - `capabilityday` QoS: 0800 Wed 8 Oct - 1400 Wed 8 Oct 2025, 1500 Wed 8 Oct - 2000 Thu 9 Oct 2025
+    The next Capability Days session will be from Tue 3 Mar 2026 to Thu 5 Mar 2026:
+    - `pre-capabilityday` QoS: 0900-1900, Tue 3 Mar 2026
+    - `capabilityday` QoS: 0800 Wed 4 Mar - 1400 Thu 5 Mar 2026
 
 ARCHER2 Capability Days are a mechanism to allow users to run large scale (512 node or more) tests
 on the system free of charge. The motivations behind Capability Days are:
