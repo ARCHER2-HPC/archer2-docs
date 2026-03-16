@@ -3,10 +3,9 @@
 This section provides information on each of the centrally installed
 data analysis software and other software tools.
 
-The tools currently available in this section are (software that is installed or maintained
-by third-parties rather than the ARCHER2 service are marked with *):
+The tools currently available in this section are (software that is not part of the fully-supported software stack are marked with *):
 
-- [AMD &mu;Prof](amd-uprof.md): Profiling tools provided by AMD
+- [AMD &mu;Prof (\*)](amd-uprof.md): Profiling tools provided by AMD
 - [Linaro Forge](forge.md): Provides debugging and profiling tools for MPI parallel applications, and
 OpenMP or pthreads multi-threaded applications (and also hydrid MPI/OpenMP)
 - [Darshan](darshan.md): Lightweight IO characterisation and profiling tool
@@ -17,5 +16,5 @@ OpenMP or pthreads multi-threaded applications (and also hydrid MPI/OpenMP)
 - [ParaView](paraview.md): A data visualisation and analysis package 
 - [R](cray-r.md): The R statistical language
 - [Spack](spack.md): A tool to install and manage software packages
-- [VisiData](visidata.md): An interactive multitool for tabular data
+- [VisiData (\*)](visidata.md): An interactive multitool for tabular data
 - [VMD](vmd.md): A visualisation and analysis program for Molecular Dynamics
