@@ -6,6 +6,9 @@ unique to the AMD “Zen”-based processors and AMD INSTINCT™ MI Series accel
 uProf enables the developer to better understand the limiters of application performance
 and evaluate improvements.
 
+!!! important 
+    AMD &mu;Prof is not part of the officially supported software on ARCHER2. While the ARCHER2 service desk is able to provide support for basic use of this software (e.g. access to software, writing job submission scripts) it does not generally provide detailed technical support for the software and you may be directed to seek support from other places if the service desk cannot answer the questions.
+
 ## Accessing AMD &mu;Prof on ARCHER2
 
 To gain access to the AMD&mu;Prof tools on ARCHER2, you must load the module:
