@@ -125,6 +125,13 @@ narrow it down:
 You can see your packages' install locations using `spack find --paths` or
 `spack find -p`.
 
+!!! tip
+    The `spack load` command does not automatically set `LD_LIBRARY_PATH` or
+    other common build-related environment variables. As a result, when building
+    your own software, the build system may fail to locate required libraries. You
+    can set these variables manually, or consider generating module files from a
+    [Spack environment](#creating-an-environment).
+
 ### Maintaining your Spack installations
 
 In any Spack command that requires as an argument a reference to an installed
@@ -158,9 +165,78 @@ required:
 
 If you commonly use a set of Spack packages together you may want to consider
 using a Spack environment to assist you in their installation and management.
-Please see the [Spack
-documentation](https://spack.readthedocs.io/en/latest/environments.html) for
-more information.
+
+### Creating an environment
+
+You can create a local Spack environment to manage your software. Much like a
+Python virtual environment, a Spack environment provides an isolated space to
+install and manage a specific stack of software and its dependencies. On
+ARCHER2, this allows you to maintain a clean, reproducible configuration
+tailored to your project.
+
+To create an environment named `my_environment` in your current directory, use the
+following command:
+
+    auser@ln01:~> spack env create -d my_environment
+
+This creates a directory named `my_environment` containing the environment
+configuration. Before adding or loading packages, you must activate the
+environment using:
+
+    auser@ln01:~> spack env activate my_environment
+
+Add packages to your environment using the `spack add` command followed by the
+package spec. For example, to add the `gsl` package, run:
+
+    auser@ln01:~> spack add gsl
+
+Once you have added all the packages you wish to install, use the standard
+`spack install` command. When run within an active environment without
+additional arguments, Spack will automatically install all packages listed in
+the environment's configuration.
+
+    auser@ln01:~> spack install
+
+For more detailed information on managing environments, refer to the
+[Spack documentation](https://spack.readthedocs.io/en/latest/environments.html).
+
+### Generating and managing module files
+
+While packages can be loaded directly via `spack load`, generating standalone
+module files allows you to manage your software using standard system `module`
+commands. You can generate these files for any installed package, though *using
+an environment is the recommended way* to keep your software stacks organized
+and reproducible.
+
+To build or update your module tree, run the refresh command. If you are using
+an environment, ensure it is active first to include all its specific packages:
+
+    auser@ln01:~> spack env activate my_environment  # Recommended
+    auser@ln01:~> spack module lmod refresh --delete-tree -y
+
+By default, Spack creates these module files in your user configuration space:
+
+    $SPACK_USER_CONFIG_PATH/share/spack/modules/Core
+
+To make these modules available to your session, use the `module use` command:
+
+    auser@ln01:~> module use $SPACK_USER_CONFIG_PATH/share/spack/modules/Core
+
+Once the path is added, you can load your Spack-managed packages just like any
+other system module. For example:
+
+    auser@ln01:~> module load gsl
+
+If you prefer to store the module files in a custom location rather than the default
+user cache, you can configure a new root path and regenerate the tree:
+
+    auser@ln01:~> spack config add "modules:default:roots:lmod:<full_path_to_modulefiles>"
+    auser@ln01:~> spack module lmod refresh --delete-tree -y
+    auser@ln01:~> module use <full_path_to_modulefiles>
+
+To verify your current module configuration and root paths, run:
+
+    auser@ln01:~> spack config get modules | grep "lmod: "
 
 ## Custom configuration
 
