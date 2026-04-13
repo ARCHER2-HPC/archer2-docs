@@ -2403,7 +2403,7 @@ session starts.
     - Individual jobs steps (i.e. `srun` commands) within job scripts should also be a minimum of 256 nodes
     - Jobs that do not meet these limits will be killed
 - Maximum walltime: 1 hour
-- Job numbers: 8 jobs maximum per budget code in the QoS
+- Job numbers: 4 jobs maximum per budget code in the QoS
     - 1 job maximum running per budget code
 - High memory nodes are not available
 - Users must have a valid, positive CU budget to be able to run jobs in the pre-Capability Day session
@@ -2494,8 +2494,8 @@ session starts.
 - Minimum job size: 512 nodes, maximum job size: 4096 nodes
     - Individual jobs steps (i.e. `srun` commands) within job scripts should also be a minimum of 512 nodes
     - Jobs that do not meet these limits will be killed
-- Maximum walltime: 3 hours
-- Job numbers: 16 jobs maximum per budget code in the QoS
+- Maximum walltime: 2 hours
+- Job numbers: 8 jobs maximum per budget code in the QoS
     - 2 jobs maximum running per budget code
 - High memory nodes are not available
 - Users must have a valid, positive CU budget to be able to run jobs in the Capability Day session
