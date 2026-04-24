@@ -173,15 +173,15 @@ table:
 
 | PrgEnv        | Actual compiler | OpenMP Offload | HIP | OpenACC |
 | ------------- | --------------- | :------------: | :-: | :-----: |
-| `PrgEnv-amd`  | `amdflang`      |     ✅	   | ❌  |   ❌    |
+| `PrgEnv-amd`  | `amdflang`      |     ✅	   | ❌  |   ✅    |
 | `PrgEnv-amd`  | `amdclang`      |     ✅	   | ❌  |   ❌    |
 | `PrgEnv-amd`  | `amdclang++`    |     ✅	   | ✅  |   ❌    |
 | `PrgEnv-cray` | `crayftn`       |     ✅	   | ❌  |   ✅    |
 | `PrgEnv-cray` | `craycc`        |     ✅	   | ❌  |   ❌    |
 | `PrgEnv-cray` | `crayCC`        |     ✅	   | ✅  |   ❌    |
-| `PrgEnv-gnu`  | `gfortran`      |     ❌	   | ❌  |   ❌    |
-| `PrgEnv-gnu`  | `gcc`           |     ❌	   | ❌  |   ❌    |
-| `PrgEnv-gnu`  | `g++`           |     ❌         | ❌  |   ❌    |
+| `PrgEnv-gnu`  | `gfortran`      |     ✅	   | ❌  |   ❌    |
+| `PrgEnv-gnu`  | `gcc`           |     ✅	   | ❌  |   ❌    |
+| `PrgEnv-gnu`  | `g++`           |     ✅         | ❌  |   ❌    |
 
 
 It is generally recommended to do the following:
@@ -778,7 +778,7 @@ Runtime : ROCm Platform Runtime. Applies to all applications using the user mode
 
 #### HIP Environment variables
 
-[https://rocm.docs.amd.com/projects/HIP/en/docs-5.2.3/how_to_guides/debugging.html#summary-of-environment-variables-in-hip](https://rocm.docs.amd.com/projects/HIP/en/docs-5.2.3/how_to_guides/debugging.html#summary-of-environment-variables-in-hip)
+- [HIP Environment Variable Summary in ROCm documentation](https://rocm.docs.amd.com/projects/HIP/en/docs-6.3.3/how-to/debugging.html#hip-environment-variable-summary)
 
 ##### AMD_LOG_LEVEL
 
@@ -861,7 +861,8 @@ If the value is `1`, memory is coherent with host; if `0`, memory is not coheren
 
 #### OpenMP Environment variables
 
-[https://rocm.docs.amd.com/en/docs-5.2.3/reference/openmp/openmp.html#environment-variables](https://rocm.docs.amd.com/en/docs-5.2.3/reference/openmp/openmp.html#environment-variables)
+- [OpenMP Environment Variable Summary in ROCm documentation](https://rocm.docs.amd.com/projects/llvm-project/en/docs-6.3.3/conceptual/openmp.html#environment-variables)
+
 
 ##### OMP_DEFAULT_DEVICE
 
@@ -1198,7 +1199,7 @@ The documentation for HIPIFY is found [here](https://rocm.docs.amd.com/projects/
 ## Notes and useful links
 
 You should expect the software development environment to be similar to that
-available on the Frontier exascale system:
+available on the LUMI and Frontier systems:
 
 - [Programming environment](https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#programming-environment)
 - [Compiling](https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#compiling)
