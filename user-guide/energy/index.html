@@ -1247,10 +1247,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#scope-3-emissions" class="md-nav__link">
+  <a href="#embodied-upstream-scope-3-emissions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Scope 3 emissions
+        Embodied (upstream scope 3) emissions
       
     </span>
   </a>
@@ -1258,10 +1258,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#scope-2-emissions" class="md-nav__link">
+  <a href="#operational-scope-2-emissions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Scope 2 emissions
+        Operational (scope 2) emissions
       
     </span>
   </a>
@@ -3279,10 +3279,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#scope-3-emissions" class="md-nav__link">
+  <a href="#embodied-upstream-scope-3-emissions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Scope 3 emissions
+        Embodied (upstream scope 3) emissions
       
     </span>
   </a>
@@ -3290,10 +3290,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#scope-2-emissions" class="md-nav__link">
+  <a href="#operational-scope-2-emissions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Scope 2 emissions
+        Operational (scope 2) emissions
       
     </span>
   </a>
@@ -3618,94 +3618,37 @@ look at the Green Software Foundation <a href="https://learn.greensoftware.found
 significant variation from the current values as understanding of emissions values and 
 sources improves. </p>
 </div>
-<h4 id="scope-3-emissions">Scope 3 emissions</h4>
-<p>Scope 3 emissions from the ARCHER2 hardware have been estimated from a subset of the components that are expected to 
-make up the majority of the emissions. Note that there is a large amount of uncertainty for Scope 3 emissions due
-to lack of high quality Scope 3 emissions data from vendors. In particular, the number used for the compute node
-emissions is at the high end of estimated values and the actual value could be as much as 15% lower at around 
-900 kgCO<sub>2</sub>e/node.</p>
-<table>
-<thead>
-<tr>
-<th>Component</th>
-<th style="text-align: right;">Count</th>
-<th style="text-align: right;">Estimated kgCO<sub>2</sub>e per unit</th>
-<th style="text-align: right;">Estimated kgCO<sub>2</sub>e</th>
-<th style="text-align: right;">% Total Scope 3</th>
-<th>References</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Compute nodes</td>
-<td style="text-align: right;">5,860 nodes</td>
-<td style="text-align: right;">1,100</td>
-<td style="text-align: right;">6,400,000</td>
-<td style="text-align: right;">84%</td>
-<td>(1)</td>
-</tr>
-<tr>
-<td>Interconnect switches</td>
-<td style="text-align: right;">768 switches</td>
-<td style="text-align: right;">280</td>
-<td style="text-align: right;">150,000</td>
-<td style="text-align: right;">2%</td>
-<td>(2)</td>
-</tr>
-<tr>
-<td>Lustre HDD</td>
-<td style="text-align: right;">19,759,200 GB</td>
-<td style="text-align: right;">0.02</td>
-<td style="text-align: right;">400,000</td>
-<td style="text-align: right;">6%</td>
-<td>(3)</td>
-</tr>
-<tr>
-<td>Lustre SSD</td>
-<td style="text-align: right;">1,900,800 GB</td>
-<td style="text-align: right;">0.16</td>
-<td style="text-align: right;">300,000</td>
-<td style="text-align: right;">4%</td>
-<td>(3)</td>
-</tr>
-<tr>
-<td>NFS HDD</td>
-<td style="text-align: right;">3,240,000 GB</td>
-<td style="text-align: right;">0.02</td>
-<td style="text-align: right;">70,000</td>
-<td style="text-align: right;">1%</td>
-<td>(3)</td>
-</tr>
-<tr>
-<td>Total</td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;">7,320,000</td>
-<td style="text-align: right;">100%</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>We then estimate the per-CU (nodeh) Scope 3 emissions by assuming a service lifetime of 6 years and
+<h4 id="embodied-upstream-scope-3-emissions">Embodied (upstream scope 3) emissions</h4>
+<p>Embodied (upstream scope 3) emissions from the ARCHER2 hardware have been estimated from a subset of the components
+that are expected to make up the majority of the emissions. Note that there is a large amount of uncertainty for
+embodied emissions due to lack of high quality emissions data or a standardised approach for calculating these
+emissions. </p>
+<p>We have used the methodology from Tailpipe (which is based on the Boavizta approach) to estimate the embodied
+emissions from ARCHER2:</p>
+<ul>
+<li><a href="https://tailpipe.ai/methodology/embodied-emissions-methodology/">Tailpipe methodology</a></li>
+<li><a href="https://boavizta.org/en/blog/empreinte-de-la-fabrication-d-un-serveur">Boavizta approach</a></li>
+</ul>
+<p>| Component | Estimated kgCO<sub>2</sub>e | % Total Scope 3 |
+|---|--:|--:|--:|--:|---|
+| Compute nodes | 4,056,000 | 92% |
+| Interconnect switches | 187,000 | 4% |
+| Storage | 157,000 | 4% |
+| Total | | | 4,400,000 | 100% |</p>
+<p>We then estimate the per-CU (nodeh) embodied emissions by assuming a service lifetime of 6 years and
 100% availability:</p>
-<div class="highlight"><pre><span></span><code>7,320,000 kgCO2e / (5,860 nodes * 7 years * 365 days * 24 hours) = 0.020 kgCO2e/CU
+<div class="highlight"><pre><span></span><code>4,400,000 kgCO2e / (5,860 nodes x 6 years x 365 days x 24 hours) = 0.014 kgCO2e/CU
 </code></pre></div>
-<p>Tools use a value of <strong>0.023 kgCO<sub>2</sub>e/CU</strong> for ARCHER2.</p>
-<p>References:</p>
-<ol>
-<li><a href="https://doi.org/10.5281/zenodo.7692451">IRISCAST Final Report</a></li>
-<li>Estimate taken from IBM z16™ multi frame 24-port Ethernet Switch Product Carbon Footprint</li>
-<li><a href="https://arxiv.org/abs/2207.10793">Tannu and Nair, 2023</a></li>
-</ol>
-<h4 id="scope-2-emissions">Scope 2 emissions</h4>
-<p>Scope 2 emissions from ARCHER2 are zero as the service is supplied by 100% certified renewable energy.
-For information purposes we can calculate what the Scope 2 emissions would have been if the energy
+<p>Tools use a value of <strong>0.014 kgCO<sub>2</sub>e/CU</strong> for ARCHER2.</p>
+<h4 id="operational-scope-2-emissions">Operational (scope 2) emissions</h4>
+<p>Operational (scope 2) emissions from ARCHER2 are zero as the service is supplied by 100% certified renewable energy.
+For information purposes we can calculate what the operational emissions would have been if the energy
 was not 100% renewable energy using the methodology described below.</p>
 <p>We are aware that there is ongoing discussion in the sustainability community about the impact and
 effectiveness of certified renewable energy contracts that are supplied through UK National Grid
 connections. We are monitoring these discussions and taking advice from sustainability professionals
 on how we report and estimate ARCHER2 emissions.</p>
-<p>UK National Grid based Scope 2 emissions are calculated using the compute node energy use for particular
+<p>UK National Grid based operational emissions are calculated using the compute node energy use for particular
 jobs along with the carbon intensity of the South Scotland region of the UK National Grid at the start
 time of the job. The carbon intensity is retrieved from the <a href="carbonintensity.org.uk">carbonintensity.org.uk</a>
 web API.</p>
@@ -3777,7 +3720,7 @@ around 85% of the system power draw so to estimate energy use by additional comp
 </tr>
 </tbody>
 </table>
-<p>Current Scope 2 grid based emission calculations estimates do not include overheads from the electrical
+<p>The estimates above do not include overheads from the electrical
 and cooling plant, these will vary with outside weather conditions at the data centre but are typically
 less than 10%. As a conservative estimate, we add an additional 10% energy use to the total to 
 account for plant overheads. </p>
@@ -3815,26 +3758,26 @@ to provide an emissions estimate for all jobs run by the user <code>auser</code>
                          User:                auser
                  Period start:     2024-11-01T00:00
                    Period end:     2024-12-01T00:00
-                         Jobs:                  699
-                           CU:             3565.100
-      Compute node energy use:             1461.691 kWh
-    Other hardware energy use:              219.254 kWh (estimated)
-          Overhead energy use:              168.094 kWh (estimated)
-             Total energy use:             1849.039 kWh (estimated)
+                         Jobs:                   42
+                           CU:              847.795
+      Compute node energy use:              347.596 kWh
+    Other hardware energy use:               52.139 kWh (estimated)
+          Overhead energy use:               39.974 kWh (estimated)
+             Total energy use:              439.709 kWh (estimated)
 
   Emissions estimates:
       Scope 2:      0.000 kgCO2e (ARCHER2 is on 100% certified
                 renewable energy contract so scope 2 emissions are zero)
-      Scope 3:     81.997 kgCO2e (23.0 gCO2e/CU)
-        Total:     81.997 kgCO2e
+      Scope 3:     11.869 kgCO2e (14.0 gCO2e/CU)
+        Total:     11.869 kgCO2e
 
       Indicative emissions estimates for UK national grid energy mix
       in S. Scotland at start of job if ARCHER2 was not using
       renewable energy
-          Scope 2:     58.812 kgCO2e (1849.039 kWh)
-             Carbon Intensities (gCO2e/kWh): Q1: 4.0, Median: 36.5, Q3: 73.0
-          Scope 3:     81.997 kgCO2e (23.0 gCO2e/CU)
-            Total:    140.809 kgCO2e
+          Scope 2:     32.255 kgCO2e (439.709 kWh)
+             Carbon Intensities (gCO2e/kWh): Q1: 2.0, Median: 20.0, Q3: 102.5
+          Scope 3:     11.869 kgCO2e (14.0 gCO2e/CU)
+            Total:     44.124 kgCO2e
 
       Scope 2 carbon intensity values from carbonintensity.org.uk
 </code></pre></div>
@@ -3842,17 +3785,21 @@ to provide an emissions estimate for all jobs run by the user <code>auser</code>
 GHG emissions to other sources. e.g. for the same user report above, it 
 would add the following section to the end of the output.</p>
 <div class="highlight"><pre><span></span><code>   Emissions from job approximately equivalent to following food consumption:
-        |      Food |  Emissions (kgCO2e/100g) | Equivalent to (g) |
-        |-----------|--------------------------|-------------------|
-        |      Beef |                    12.47 |            657.56 |
-        |   Chicken |                     1.43 |           5734.08 |
-        |   Avocado |                     0.18 |          45554.05 |
-        | Chickpeas |                     0.04 |         204993.23 |
 
-  Emissions from job approximately equivalent to:
-        Daily emissions from 303.7 houses&#39; electricity use (in S. Scotland)
-        Emissions from flying 0.164 times across the Atlantic (500.00 kgCO2e/person)
-        Emissions from driving 304.8 miles (0.27 kgCO2e/mile, average UK car, petrol and diesel very similar)
+        |         Food |  Emissions (kgCO2e/100g) | Equivalent to (g) |
+        |--------------|--------------------------|-------------------|
+        |      UK Beef |                     2.50 |            474.77 |
+        |   UK Chicken |                     0.38 |           3123.45 |
+        |    Chickpeas |                     0.21 |           5651.96 |
+        |      Avocado |                     0.16 |           7418.20 |
+        |  UK Potatoes |                     0.03 |          39563.75 |
+
+   Emissions from job approximately equivalent to following research activities:
+
+        |                         Mode |  Emissions (kgCO2e) |        Equivalent to |
+        |------------------------------|---------------------|----------------------|
+        |                    Lab. work |                  11 | 1.079011 person-days |
+        |   RSS Sir David Attenborough |               75576 |        0.000157 days |
 </code></pre></div>
 <p>You can add the <code>--json</code> flag to obtain the emissions data from the tool in a machine-readable
 format.</p>
@@ -3866,28 +3813,28 @@ provide an estimate for the completed job with Job ID 7654321, you would use:</p
 <p>Typical output from the tool would look like:</p>
 <div class="highlight"><pre><span></span><code>  Job details:
                        Job ID:              7654321
-                        Start:  2024-11-11T20:51:25
-                       Budget:                  t01
-                        Nodes:                   20
-                      Runtime:               324000 s
-                           CU:             1800.000
-      Compute node energy use:              448.973 kWh
-    Other hardware energy use:               67.346 kWh (estimated)
-          Overhead energy use:               51.632 kWh (estimated)
-             Total energy use:              567.951 kWh (estimated)
+                        Start:  2026-01-27T11:53:04
+                       Budget:                   t01
+                        Nodes:                   64
+                      Runtime:                  870 s
+                           CU:               15.467
+      Compute node energy use:                7.740 kWh
+    Other hardware energy use:                1.161 kWh (estimated)
+          Overhead energy use:                0.890 kWh (estimated)
+             Total energy use:                9.791 kWh (estimated)
 
   Emissions estimates:
       Scope 2:      0.000 kgCO2e (ARCHER2 is on 100% certified
                 renewable energy contract so scope 2 emissions are zero)
-      Scope 3:     41.400 kgCO2e (23.0 gCO2e/CU)
-        Total:     41.400 kgCO2e
+      Scope 3:      0.217 kgCO2e (14.0 gCO2e/CU)
+        Total:      0.217 kgCO2e
 
       Indicative emissions estimates for UK national grid energy mix
       in S. Scotland at start of job if ARCHER2 was not using
       renewable energy
-          Scope 2:      9.655 kgCO2e (567.951 kWh, 17.0 gCO2e/kWh)
-          Scope 3:     41.400 kgCO2e (23.0 gCO2e/CU)
-            Total:     51.055 kgCO2e
+          Scope 2:      0.069 kgCO2e (9.791 kWh, 7.0 gCO2e/kWh)
+          Scope 3:      0.217 kgCO2e (14.0 gCO2e/CU)
+            Total:      0.285 kgCO2e
 
       Scope 2 carbon intensity values from carbonintensity.org.uk
 </code></pre></div>
@@ -3895,17 +3842,13 @@ provide an estimate for the completed job with Job ID 7654321, you would use:</p
 GHG emissions for the job to other sources. e.g. for the same job above, it 
 would add the following section to the end of the output.</p>
 <div class="highlight"><pre><span></span><code>   Emissions from job approximately equivalent to following food consumption:
-        |      Food |  Emissions (kgCO2e/100g) | Equivalent to (g) |
-        |-----------|--------------------------|-------------------|
-        |      Beef |                    12.47 |            332.00 |
-        |   Chicken |                     1.43 |           2895.10 |
-        |   Avocado |                     0.18 |          23000.00 |
-        | Chickpeas |                     0.04 |         103500.00 |
-
-  Emissions from job approximately equivalent to:
-        Daily emissions from 329.2 houses&#39; electricity use (in S. Scotland)
-        Emissions from flying 0.083 times across the Atlantic (500.00 kgCO2e/person)
-        Emissions from driving 153.9 miles (0.27 kgCO2e/mile, average UK car, petrol and diesel very similar)
+        |         Food |  Emissions (kgCO2e/100g) | Equivalent to (g) |
+        |--------------|--------------------------|-------------------|
+        |      UK Beef |                     2.50 |              8.66 |
+        |   UK Chicken |                     0.38 |             56.98 |
+        |    Chickpeas |                     0.21 |            103.11 |
+        |      Avocado |                     0.16 |            135.33 |
+        |  UK Potatoes |                     0.03 |            721.78 |
 </code></pre></div>
 <p>You can add the <code>--json</code> flag to obtain the emissions data from the tool in a machine-readable
 format.</p>
