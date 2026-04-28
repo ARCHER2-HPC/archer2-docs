@@ -243,11 +243,11 @@ emissions from ARCHER2:
 - [Boavizta approach](https://boavizta.org/en/blog/empreinte-de-la-fabrication-d-un-serveur )
 
 | Component | Estimated kgCO<sub>2</sub>e | % Total Scope 3 |
-|---|--:|--:|--:|--:|---|
+|---|--:|--:|
 | Compute nodes | 4,056,000 | 92% |
 | Interconnect switches | 187,000 | 4% |
 | Storage | 157,000 | 4% |
-| Total | | | 4,400,000 | 100% |
+| Total | 4,400,000 | 100% |
 
 We then estimate the per-CU (nodeh) embodied emissions by assuming a service lifetime of 6 years and
 100% availability:
