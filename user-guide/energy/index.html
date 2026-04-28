@@ -3629,12 +3629,37 @@ emissions from ARCHER2:</p>
 <li><a href="https://tailpipe.ai/methodology/embodied-emissions-methodology/">Tailpipe methodology</a></li>
 <li><a href="https://boavizta.org/en/blog/empreinte-de-la-fabrication-d-un-serveur">Boavizta approach</a></li>
 </ul>
-<p>| Component | Estimated kgCO<sub>2</sub>e | % Total Scope 3 |
-|---|--:|--:|--:|--:|---|
-| Compute nodes | 4,056,000 | 92% |
-| Interconnect switches | 187,000 | 4% |
-| Storage | 157,000 | 4% |
-| Total | | | 4,400,000 | 100% |</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th style="text-align: right;">Estimated kgCO<sub>2</sub>e</th>
+<th style="text-align: right;">% Total Scope 3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Compute nodes</td>
+<td style="text-align: right;">4,056,000</td>
+<td style="text-align: right;">92%</td>
+</tr>
+<tr>
+<td>Interconnect switches</td>
+<td style="text-align: right;">187,000</td>
+<td style="text-align: right;">4%</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td style="text-align: right;">157,000</td>
+<td style="text-align: right;">4%</td>
+</tr>
+<tr>
+<td>Total</td>
+<td style="text-align: right;">4,400,000</td>
+<td style="text-align: right;">100%</td>
+</tr>
+</tbody>
+</table>
 <p>We then estimate the per-CU (nodeh) embodied emissions by assuming a service lifetime of 6 years and
 100% availability:</p>
 <div class="highlight"><pre><span></span><code>4,400,000 kgCO2e / (5,860 nodes x 6 years x 365 days x 24 hours) = 0.014 kgCO2e/CU
