@@ -239,10 +239,6 @@ themselves using the `lfs quota` command. To do this:
     that have not been accessed in the last 28 days being automatically deleted. The
 	script which performs this purge is run daily.
 
-!!! important
-    Automatic deletion will be paused from 22 Aug 2025 to 13 Oct 2025. When automatic
-	deletion resumes on 14 Oct 2025, the usual policy will apply: all files
-    that have not been accessed in the last 28 days being automatically deleted.
 
 The solid state storage file system is a 1 PB high performance parallel Lustre file system
 similar to the work file systems. However, unlike the work file systems, all of the
