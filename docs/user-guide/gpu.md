@@ -411,16 +411,15 @@ You need to set an environment variable at runtime (e.g. in your job script) to 
 
 `export MPICH_GPU_SUPPORT_ENABLED=1`
 
-!!!important "Set FI_OFI_RXM_SAR_LIMIT higher for multinode MPI"
-   If you are running multinode MPI jobs on the GPU nodes, you may need to set a 
-   larger value for the `FI_OFI_RXM_SAR_LIMIT` environment variable. Testing has indicated that
-   1048576 bytes (1 MiB) is a useful starting point for this variable but you may need to go 
-   lower or higher than this depending on your application. Example setting for in a job
-   submission script:
-
-   ```bash
-   export FI_OFI_RXM_SAR_LIMIT=1048576
-   ```
+!!! important "Set FI_OFI_RXM_SAR_LIMIT higher for multinode MPI"
+    If you are running multinode MPI jobs on the GPU nodes, you may need to set a 
+    larger value for the `FI_OFI_RXM_SAR_LIMIT` environment variable. Testing has indicated that
+    1048576 bytes (1 MiB) is a useful starting point for this variable but you may need to go 
+    lower or higher than this depending on your application. Example setting for in a job
+    submission script:
+    ```bash
+    export FI_OFI_RXM_SAR_LIMIT=1048576
+    ```
 
 No additional or alternative MPI modules need to be loaded instead of the default `cray-mpich` module.
 
