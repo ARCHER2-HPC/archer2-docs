@@ -407,9 +407,20 @@ Documentation about integrating rocm with cmake can be found [here](https://rocm
 
 ## GPU-aware MPI
 
-Need to set an environment variable to enable GPU support in `cray-mpich`:
+You need to set an environment variable at runtime (e.g. in your job script) to enable GPU support in `cray-mpich`:
 
 `export MPICH_GPU_SUPPORT_ENABLED=1`
+
+!!!important "Set FI_OFI_RXM_SAR_LIMIT higher for multinode MPI"
+   If you are running multinode MPI jobs on the GPU nodes, you may need to set a 
+   larger value for the `FI_OFI_RXM_SAR_LIMIT` environment variable. Testing has indicated that
+   1048576 bytes (1 MiB) is a useful starting point for this variable but you may need to go 
+   lower or higher than this depending on your application. Example setting for in a job
+   submission script:
+
+   ```bash
+   export FI_OFI_RXM_SAR_LIMIT=1048576
+   ```
 
 No additional or alternative MPI modules need to be loaded instead of the default `cray-mpich` module.
 
@@ -579,6 +590,7 @@ on the compute node architecture.
 
 # Enable GPU-aware MPI
 export MPICH_GPU_SUPPORT_ENABLED=1
+export FI_OFI_RXM_SAR_LIMIT=1048576
 
 # Check assigned GPU
 srun --ntasks=1 rocm-smi
@@ -646,6 +658,7 @@ srun --ntasks=4 --cpus-per-task=8 \
 
 # Enable GPU-aware MPI
 export MPICH_GPU_SUPPORT_ENABLED=1
+export FI_OFI_RXM_SAR_LIMIT=1048576
 
 srun --ntasks=4 --cpus-per-task=8 \
      --hint=nomultithread --distribution=block:block \
@@ -713,6 +726,7 @@ srun --ntasks-per-node=4 --cpus-per-task=8 \
 
 # Enable GPU-aware MPI
 export MPICH_GPU_SUPPORT_ENABLED=1
+export FI_OFI_RXM_SAR_LIMIT=1048576
 
 srun --ntasks-per-node=4 --cpus-per-task=8 \
      --hint=nomultithread --distribution=block:block \
@@ -920,6 +934,21 @@ To display information pertaining to NIC selection set,
 
 `export MPICH_OFI_NIC_VERBOSE=2`
 
+
+#### OFI Environemnt Variabels
+
+##### FI_OFI_RXM_SAR_LIMIT
+
+This is a verbs;ofi_rxm libfabric ENV variable. Set this environment variable to control the SAR (Segmentation And Reassembly) protocol. The
+SAR protocol breaks a message into smaller units before transmission and reassembles them into the proper order at the receiving end. Messages
+of size greater than this (in bytes) are transmitted via rendezvous protocol. Setting this to 0 disables SAR protocol entirely. When set to 0,
+messages will be transferred by either the eager or rendezvous protocols. Only applies to Slingshot 10.
+
+Default: 262144
+
+```bash
+export FI_OFI_RXM_SAR_LIMIT=1048576
+```
 
 ## Debugging
 
