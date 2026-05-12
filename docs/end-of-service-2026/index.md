@@ -26,3 +26,14 @@ The documentation currently covers
     + How do I apply for access to HPC for my work?
 - [Getting help](support.md)
     + Where can I ask questions about the end of the ARCHER2 service?
+
+## Summary of user impacts
+
+- Data no longer accessible
+- No login available
+- Data in SAFE retained for 2 years then deleted
+
+## Recommended action
+
+- Review data held on ARCHER2 and transfer off anything you want to keep as
+  soon as possible
