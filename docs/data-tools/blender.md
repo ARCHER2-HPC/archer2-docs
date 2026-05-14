@@ -52,8 +52,5 @@ The full list of command line arguments can be found in [Blender's documentation
 
 To automatise this process addons like the one available in [blender4science](https://github.com/EPCCed/blender4science/) are helpful as they allow to submit multiple identical jobs and handles the parallelisation to render each frame only once.
 
-!!! note Blender doesn't work on ARCHER2 GPU nodes at the moment due to incompatibilities with the rocm version available
-
-
-
-
+!!! note
+    Blender cannot be run on the ARCHER2 AMD MI210 GPU nodes as that hardware does not support the Cycles render engine.

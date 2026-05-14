@@ -433,7 +433,7 @@ but can be made accessible by running `module use` with the right path.
 
 ```bash
 module use /work/y07/shared/archer2-lmod/others/dev
-module load ccpe/25.03
+module load ccpe/25.09
 ```
 
 The purpose of the `ccpe` module(s) is to allow developers to check that their code compiles with the
@@ -445,15 +445,15 @@ is upgraded.
 !!! note
     The Containerised CPEs support CCE and GCC compilers, but not AOCC compilers.
 
-The `ccpe/25.03` module provides access to CPE 25.03 via a Singularity image file, located at
-`/work/y07/shared/utils/dev/ccpe/25.03/cpe_25.03.sif`. Singularity containers can be run such that locations
+The `ccpe/25.09` module provides access to CPE 25.09 via a Singularity image file, located at
+`/work/y07/shared/utils/dev/ccpe/25.09/cpe_25.09.sif`. Singularity containers can be run such that locations
 on the host file system are still visible. This means source code stored on `/work` can be compiled from
 inside the CPE container. And any output resulting from the compilation, such as object files, libraries
 and executables, can be written to `/work` also. This ability to bind to locations on the host is
 necessary as the container is immutable, i.e., you cannot write files to the container itself.
 
 Any executable resulting from a containerised CPE build should also be run from within the container,
-allowing one to test the performance of the containerised libraries, e.g., `libmpi_cray`, `libpmi2`, `libfabric`.
+allowing one to test the performance of the containerised libraries, e.g., `libmpi_cray`, `libpmi2`.
 
 We'll now show how to build and run a simple Hello World MPI example using a containerised CPE.
 
@@ -535,9 +535,9 @@ Examples of these files are given below.
     ```
 
 The `ldd` command at the end of the build script is simply there to confirm that the code is indeed linked to
-containerised libraries that form part of the CPE 25.03 release.
+containerised libraries that form part of the CPE 25.09 release.
 
-The next step is to launch a job (via `sbatch`) on a serial node that instantiates the containerised CPE 25.03
+The next step is to launch a job (via `sbatch`) on a serial node that instantiates the containerised CPE 25.09
 image and builds the Hello World MPI code.
 
 === "submit-build.slurm"
@@ -555,7 +555,7 @@ image and builds the Hello World MPI code.
     export OMP_NUM_THREADS=1
 
     module use /work/y07/shared/archer2-lmod/others/dev
-    module load ccpe/25.03
+    module load ccpe/25.09
 
     singularity exec --cleanenv \
         --bind ${CCPE_BIND_ARGS},${PWD} --env LD_LIBRARY_PATH=${CCPE_LD_LIBRARY_PATH} \
@@ -563,7 +563,7 @@ image and builds the Hello World MPI code.
     ```
 
 The `CCPE` environment variables shown above (e.g., `CCPE_BUILDER` and `CCPE_IMAGE_FILE`) are set by the
-loading of the `ccpe/25.03` module. The `CCPE_BUILDER` variable holds the path to the script that prepares the
+loading of the `ccpe/25.09` module. The `CCPE_BUILDER` variable holds the path to the script that prepares the
 containerised environment prior to running the `build.sh` script. You can run `cat ${CCPE_BUILDER}` to take
 a closer look at what is going on.
 
@@ -591,7 +591,7 @@ compute nodes using the `srun` command.
     export OMP_NUM_THREADS=1
 
     module use /work/y07/shared/archer2-lmod/others/dev
-    module load ccpe/25.03
+    module load ccpe/25.09
 
     srun --distribution=block:block --hint=nomultithread --chdir=${PWD} \
         singularity exec --bind ${CCPE_BIND_ARGS},${PWD} --env LD_LIBRARY_PATH=${CCPE_LD_LIBRARY_PATH} \
@@ -599,15 +599,15 @@ compute nodes using the `srun` command.
     ```
 
 If you wish you can at runtime replace a containerised library with its host equivalent. You may for example decide to
-do this for a low-level communications library such as `libfabric` or `libpmi`. This can be done by adding (before the
-`srun` command) something like the following line to the `submit-run.slurm` file.
+do this for a low-level communications library such as `libpmi`. This can be done by adding (before the `srun` command)
+something like the following line to the `submit-run.slurm` file.
 
 ```bash
-source ${CCPE_SET_HOST_PATH} "/opt/cray/pe/pmi" "6.1.8" "lib"
+source ${CCPE_SET_HOST_PATH} "/opt/cray/pe/pmi" "6.1.12" "lib"
 ```
 
-As of August 2025, the versions of PMI available on ARCHER2 are 6.1.8 (CPE 22.12) and 6.1.12 (CPE 23.09), and so the
-command above would allow you to isolate the impact of the containerised PMI library, which for CPE 25.03 is PMI 6.1.15.
+As of May 2026, the versions of PMI available on ARCHER2 are 6.1.8 (CPE 22.12) and 6.1.12 (CPE 23.09), and so the
+command above would allow you to isolate the impact of the containerised PMI library, which for CPE 25.09 is PMI 6.1.16.
 To see how the setting of the host library is done, simply run `cat ${CCPE_SET_HOST_PATH}` after loading the `ccpe` module.
 
 An MPI code that just prints a message from each rank is obviously very simple. Real-world codes such as CP2K or GROMACS
@@ -630,7 +630,7 @@ software is installed.
     export OMP_NUM_THREADS=1
     
     module use /work/y07/shared/archer2-lmod/others/dev
-    module load ccpe/25.03
+    module load ccpe/25.09
     
     CMAKE_DIR="/work/y07/shared/utils/core/cmake/3.29.4"
     
@@ -646,20 +646,16 @@ bin directory has been added to the `PATH` environment variable).
 
 ### Containerised ROCm
 
-ROCm is AMD's software support for GPU programming; ROCm 5.2.3 is currently installed on ARCHER2.
-Newer versions of ROCm can be accessed via the containerised CPE modules. For example, `ccpe/23.12/rocm/5.6.0` provides access to ROCm 5.6.0 (with CPE 23.12), 
-In this way, ARCHER2 users can test more up-to-date ROCm compilers that target the AMD MI210 GPU platform, e.g. `amdclang`, `amdclang++`, `amdflang`.
-The same applies to ROCm-integrated software frameworks such as PyTorch.
+ROCm is AMD's software support for GPU programming and ROCm 6.3.4 is the version currently installed on the ARCHER2 GPU nodes.
+However, since the ARCHER2 compute does not permit access to the outside world, one cannot download ROCm6-compatible Python packages
+from within an interactive session hosted on a GPU node. To solve this problem HPE have provided a containerised CPE with ROCm included.
+For example, `ccpe/25.09-rocm-6.3.4` provides access to ROCm 6.3.4 (with CPE 25.09).
 
-We'll now present a scenario showing how one can make use of the `ccpe/23.12/rocm/5.6.0` module to train a neural network using
-Python code that requires PyTorch 2.2.0. This is of interest since the version of ROCm directly installed on ARCHER2, 5.2.3, limits users
-to versions of PyTorch no newer than 1.13.1. 
-
-!!! note
-    An overview of the differences between PyTorch versions 2.2.0 and 1.13.1 can be found in the [official PyTorch release notes](https://github.com/pytorch/pytorch/releases?page=2).
+We'll now present a scenario showing how one can make use of the `ccpe/25.09-rocm-6.3.4` module to setup a Python environment, preparatory
+to training a neural network using PyTorch.  
 
 We first setup a local Python custom environment from within the container, such that the environment's package files are written to the
-host ARCHER2 `/work` system. We'll then install to this custom environment the PyTorch 2.2.0 packages.
+host ARCHER2 `/work` system. We'll then install to this custom environment the PyTorch packages.
 
 === "submit-rocm-build.slurm"
     ```slurm
@@ -676,10 +672,11 @@ host ARCHER2 `/work` system. We'll then install to this custom environment the P
     export OMP_NUM_THREADS=1
 
     module use /work/y07/shared/archer2-lmod/others/dev
-    module load ccpe/23.12/rocm/5.6.0
+    module load ccpe/25.09-rocm-6.3.4
 
     singularity exec --cleanenv \
-        --bind ${CCPE_BIND_ARGS},${PWD} --env LD_LIBRARY_PATH=${CCPE_LD_LIBRARY_PATH} \
+        --bind ${CCPE_BIND_ARGS},${PWD} \
+        --env LD_LIBRARY_PATH=${CCPE_LD_LIBRARY_PATH} \
         ${CCPE_IMAGE_FILE} \
             ${CCPE_ROCM_BUILDER} ${PWD} mypyenv pip-install.sh
     ```
@@ -689,19 +686,16 @@ host ARCHER2 `/work` system. We'll then install to this custom environment the P
 
     pip install --user --upgrade pip scipy
 
-    pip install --user torch==2.2.0 torchvision==0.17.0 torchaudio==2.2.0 torchtext==0.17.0 --index-url https://download.pytorch.org/whl/rocm5.6
+    pip install --user torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm6.3
 
-    pip install --user torchopt matplotlib
-
-    # downgrade numpy since the 2.2.0 torch modules were compiled with numpy 1.x
-    pip install --user "numpy<2"
+    pip install --user torchtext torchopt matplotlib
     ```
 
-The `CCPE` environment variables shown above (e.g., `CCPE_ROCM_BUILDER` and `CCPE_IMAGE_FILE`) are set by the loading of the `ccpe/23.12/rocm/5.6.0` module.
+The `CCPE` environment variables shown above (e.g., `CCPE_ROCM_BUILDER` and `CCPE_IMAGE_FILE`) are set by the loading of the `ccpe/25.09-rocm-6.3.4` module.
 The `CCPE_ROCM_BUILDER` variable holds the path to the script that prepares the containerised environment prior to the installation of the various Python packages
-listed in `pip-install.sh`. You can run `cat ${CCPE_ROCM_BUILDER}` (after loading the `ccpe/23.12/rocm/5.6.0` module) to take a closer look at what is going on.
+listed in `pip-install.sh`. You can run `cat ${CCPE_ROCM_BUILDER}` (after loading the `ccpe/25.09-rocm-6.3.4` module) to take a closer look at what is going on.
 
-Run `sbatch submit-rocm-build.slurm` to establish the containerised Python environment. This should take 3-4 minutes to complete.
+Run `sbatch submit-rocm-build.slurm` to establish the containerised Python environment. This should take 5-6 minutes to complete.
 
 We're now ready to run some Python code that makes use of the `func.torch` API, introduced in PyTorch 2.0.0. This API enables the development of
 purely functional (stateless) neural network models. The code example below, developed by Mario Dagreda, trains a Physics Informed Neural Network (PINN) to solve a one-dimensional wave equation
@@ -811,17 +805,17 @@ Once you've completed the code edits, you can submit the Slurm script below to i
     export OMP_NUM_THREADS=1
 
     module use /work/y07/shared/archer2-lmod/others/dev
-    module load ccpe/23.12/rocm/5.6.0
+    module load ccpe/25.09-rocm-6.3.4
 
     singularity exec \
-        --bind ${PWD},${CCPE_HOST_ROOT} \
+        --bind ${CCPE_BIND_ARGS},${PWD} \
         --env LD_LIBRARY_PATH=${CCPE_LD_LIBRARY_PATH} \
         ${CCPE_IMAGE_FILE} \
             ${CCPE_ROCM_RUNNER} ${PWD} mypyenv \
                 ${PWD}/basic-pinn/basic_pinn/wave_equation_1d.py --batch-size 50 --learning-rate 0.0075 --num-epochs 1500
     ```
 
-The `cpe_23.12-rocm_5.6.0.sif` container image file (referenced by `${CCPE_IMAGE_FILE}`) is instantiated on the GPU node where it runs the `${CCPE_ROCM_RUNNER}` script,
+The `cpe_25.09-rocm_6.3.4.sif` container image file (referenced by `${CCPE_IMAGE_FILE}`) is instantiated on the GPU node where it runs the `${CCPE_ROCM_RUNNER}` script,
 which activates the containerised custom Python environment preparatory to executing the `wave_equation_1d.py` code (courtesy of [Mario Dagreda](https://github.com/madagra/basic-pinn.git)).
 The run should take 2-3 minutes.
 
