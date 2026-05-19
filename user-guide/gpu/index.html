@@ -1369,17 +1369,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#supported-software" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Supported software
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#running-jobs-on-the-gpu-nodes" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1479,17 +1468,6 @@
   
     <nav class="md-nav" aria-label="Interactive jobs">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#using-salloc" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Using salloc
-      
-    </span>
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#using-srun" class="md-nav__link">
@@ -1713,6 +1691,34 @@
     <span class="md-ellipsis">
       
         MPICH_OFI_NIC_VERBOSE
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ofi-environemnt-variabels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OFI Environemnt Variabels
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OFI Environemnt Variabels">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fi_ofi_rxm_sar_limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FI_OFI_RXM_SAR_LIMIT
       
     </span>
   </a>
@@ -3927,17 +3933,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#supported-software" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Supported software
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#running-jobs-on-the-gpu-nodes" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4037,17 +4032,6 @@
   
     <nav class="md-nav" aria-label="Interactive jobs">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#using-salloc" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Using salloc
-      
-    </span>
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#using-srun" class="md-nav__link">
@@ -4282,6 +4266,34 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#ofi-environemnt-variabels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OFI Environemnt Variabels
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OFI Environemnt Variabels">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fi_ofi_rxm_sar_limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FI_OFI_RXM_SAR_LIMIT
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4442,6 +4454,9 @@ using AMD GPUs.</p>
 <p class="admonition-title">Important</p>
 <p>The GPU component is very small and so is aimed at software development and
 testing rather than to be used for production research.</p>
+<p>As this is an experimental testing platform, users may find that not all functions
+work as expected. If you run into any issues, please contact the
+<a href="mailto:support@archer2.ac.uk">ARCHER2 Service Desk</a>.</p>
 </div>
 <h2 id="hardware-available">Hardware available</h2>
 <p>The GPU Development Platform consists of 4 compute nodes each with:
@@ -4459,6 +4474,15 @@ testing rather than to be used for production research.</p>
 standard ARCHER2 login nodes. Details of the scheduler limits and configuration
 and example job submission scripts are provided below.</p>
 <h2 id="compiling-software-for-the-gpu-compute-nodes">Compiling software for the GPU compute nodes</h2>
+<div class="admonition important">
+<p class="admonition-title">Compile on the GPU nodes</p>
+<p>All compilation <strong>must</strong> be performed on the GPU nodes themselves via an interactive
+session as the programming environment to support the GPUs is not available on the 
+ARCHER2 login nodes.</p>
+<p>You can get an interactive session on a GPU node using the <code>srun</code> command:</p>
+<div class="highlight"><pre><span></span><code>srun --export=PATH --partition=gpu --qos=gpu-shd --gpus=1 --time=2:0:0 --pty /bin/bash
+</code></pre></div>
+</div>
 <h3 id="overview">Overview</h3>
 <p>As a quick summary, the recommended procedure for compiling code that
 offloads to the AMD GPUs is as follows:</p>
@@ -4521,12 +4545,17 @@ support in the AMD LLVM Fortran compiler. In these hybrid environments
 <code>ftn</code> therefore calls <code>gfortran</code> or <code>crayftn</code> instead of <code>amdflang</code>.</p>
 <p>Details about the underlying compiler being called by a compiler
 wrapper can be checked using the <code>--version</code> flag, for example:</p>
-<div class="highlight"><pre><span></span><code>&gt; module load PrgEnv-amd
+<div class="highlight"><pre><span></span><code>&gt; srun --export=PATH --partition=gpu --qos=gpu-shd --gpus=1 --time=6:0:0 --pty /bin/bash
+
+...wait for session to start...
+
+&gt; module load PrgEnv-amd
 &gt; cc --version
-AMD clang version 14.0.0 (https://github.com/RadeonOpenCompute/llvm-project roc-5.2.3 22324 d6c88e5a78066d5d7a1e8db6c5e3e9884c6ad10e)
+AMD clang version 18.0.0git (https://github.com/RadeonOpenCompute/llvm-project roc-6.3.4 25012 e5bf7e55c91490b07c49d8960fa7983d864936c4)
 Target: x86_64-unknown-linux-gnu
 Thread model: posix
-InstalledDir: /opt/rocm-5.2.3/llvm/bin
+InstalledDir: /opt/rocm-6.3.4/lib/llvm/bin
+Configuration file: /opt/rocm-6.3.4/lib/llvm/bin/clang.cfg
 </code></pre></div>
 <h3 id="rocm">ROCm</h3>
 <p>Access to AMD's ROCm software stack is provided through the <code>rocm</code>
@@ -4551,8 +4580,8 @@ HIPIFY (<code>hipify-clang</code> or <code>hipify-perl</code> command), which en
 translation of CUDA to HIP code. See also the <a href="#hipify">section below on
 HIPIFY</a>.</p>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>ARCHER2 currently provides access to a legacy version of ROCm, <code>rocm/5.2.3</code>. However, it is now possible to use a more recent version via a containerised HPE Cray Programming Environment module, <code>ccpe/23.12/rocm/5.6.0</code>, see <a href="../containers/#containerised-rocm">Containerised ROCm</a> for more details.</p>
+<p class="admonition-title">ROCm version</p>
+<p>ARCHER2 currently provides access to ROCm 6.3.4.</p>
 </div>
 <h3 id="gpu-target">GPU target</h3>
 <p>Regardless of what approach you use, you will need to tell the
@@ -4589,7 +4618,7 @@ table:</p>
 <td><code>amdflang</code></td>
 <td style="text-align: center;">✅</td>
 <td style="text-align: center;">❌</td>
-<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
 </tr>
 <tr>
 <td><code>PrgEnv-amd</code></td>
@@ -4629,28 +4658,32 @@ table:</p>
 <tr>
 <td><code>PrgEnv-gnu</code></td>
 <td><code>gfortran</code></td>
-<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
 <td style="text-align: center;">❌</td>
 <td style="text-align: center;">❌</td>
 </tr>
 <tr>
 <td><code>PrgEnv-gnu</code></td>
 <td><code>gcc</code></td>
-<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
 <td style="text-align: center;">❌</td>
 <td style="text-align: center;">❌</td>
 </tr>
 <tr>
 <td><code>PrgEnv-gnu</code></td>
 <td><code>g++</code></td>
-<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
 <td style="text-align: center;">❌</td>
 <td style="text-align: center;">❌</td>
 </tr>
 </tbody>
 </table>
 <p>It is generally recommended to do the following:</p>
-<div class="highlight"><pre><span></span><code>module load PrgEnv-xxx
+<div class="highlight"><pre><span></span><code>srun --export=PATH --partition=gpu --qos=gpu-shd --gpus=1 --time=6:0:0 --pty /bin/bash
+
+...wait for session to start...
+
+module load PrgEnv-xxx
 module load rocm
 module load craype-accel-amd-gfx90a
 module load craype-x86-milan
@@ -4673,7 +4706,11 @@ parsing. For example:</p>
 <p>To use the compiler wrappers to compile code that offloads to GPU with
 OpenMP directives, first load the desired PrgEnv module and other
 necessary modules:</p>
-<div class="highlight"><pre><span></span><code>module load PrgEnv-xxx
+<div class="highlight"><pre><span></span><code>srun --export=PATH --partition=gpu --qos=gpu-shd --gpus=1 --time=6:0:0 --pty /bin/bash
+
+...wait for session to start...
+
+module load PrgEnv-xxx
 module load rocm
 module load craype-accel-amd-gfx90a
 module load craype-x86-milan
@@ -4682,10 +4719,7 @@ module load craype-x86-milan
 option to the wrapper when compiling. For example:</p>
 <div class="highlight"><pre><span></span><code>ftn -fopenmp source.f90
 </code></pre></div>
-<p>This should work under <code>PrgEnv-amd</code> and <code>PrgEnv-cray</code>, but not under
-PrgEnv-gnu as GCC 11.2.0 is the most recent version of GCC available
-on ARCHER2 and OpenMP offload to AMD MI200 series GPUs is only
-supported by GCC 13 and later.</p>
+<p>This should work under <code>PrgEnv-amd</code>, <code>PrgEnv-cray</code> and <code>PrgEnv-gnu</code>.</p>
 <p>You may find that offload directives introduced in more recent
 versions of the OpenMP standard, e.g. versions later than OpenMP 4.5,
 fail to compile with some compilers. Under <code>PrgEnv-cray</code> an explicit
@@ -4704,7 +4738,11 @@ endif()
 <p>To compile C or C++ code that uses HIP written specifically to offload
 to AMD GPUs, first load the desired PrgEnv module (either <code>PrgEnv-amd</code>
 or <code>PrgEnv-cray</code>) and other necessary modules:</p>
-<div class="highlight"><pre><span></span><code>module load PrgEnv-xxx
+<div class="highlight"><pre><span></span><code>srun --export=PATH --partition=gpu --qos=gpu-shd --gpus=1 --time=6:0:0 --pty /bin/bash
+
+...wait for session to start...
+
+module load PrgEnv-xxx
 module load rocm
 module load craype-accel-amd-gfx90a
 module load craype-x86-milan
@@ -4736,7 +4774,11 @@ HIP code non-HIP code, it is possible to use a different compiler than
 <h4 id="openacc">OpenACC</h4>
 <p>Offloading using OpenACC directives on ARCHER2 is only supported by
 the Cray Fortran compiler. You should therefore load the following:</p>
-<div class="highlight"><pre><span></span><code>module load PrgEnv-cray
+<div class="highlight"><pre><span></span><code>srun --export=PATH --partition=gpu --qos=gpu-shd --gpus=1 --time=6:0:0 --pty /bin/bash
+
+...wait for session to start...
+
+module load PrgEnv-cray
 module load rocm
 module load craype-accel-amd-gfx90a
 module load craype-x86-milan
@@ -4787,8 +4829,18 @@ the <code>LIBS</code> environment variable prior to linking, as:</p>
 <h3 id="cmake">Cmake</h3>
 <p>Documentation about integrating rocm with cmake can be found <a href="https://rocm.docs.amd.com/en/docs-5.2.3/understand/cmake_packages.html">here</a>.</p>
 <h2 id="gpu-aware-mpi">GPU-aware MPI</h2>
-<p>Need to set an environment variable to enable GPU support in <code>cray-mpich</code>:</p>
+<p>You need to set an environment variable at runtime (e.g. in your job script) to enable GPU support in <code>cray-mpich</code>:</p>
 <p><code>export MPICH_GPU_SUPPORT_ENABLED=1</code></p>
+<div class="admonition important">
+<p class="admonition-title">Set FI_OFI_RXM_SAR_LIMIT higher for multinode MPI</p>
+<p>If you are running multinode MPI jobs on the GPU nodes, you may need to set a 
+larger value for the <code>FI_OFI_RXM_SAR_LIMIT</code> environment variable. Testing has indicated that
+1048576 bytes (1 MiB) is a useful starting point for this variable but you may need to go 
+lower or higher than this depending on your application. Example setting for in a job
+submission script:
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">FI_OFI_RXM_SAR_LIMIT</span><span class="o">=</span><span class="m">1048576</span>
+</code></pre></div></p>
+</div>
 <p>No additional or alternative MPI modules need to be loaded instead of the default <code>cray-mpich</code> module.</p>
 <p>This supports GPU-GPU transfers:</p>
 <ul>
@@ -4808,6 +4860,12 @@ Therefore NUMA effects are to be expected in multi-node communication. More deta
 <li><a href="https://rocm.docs.amd.com/en/docs-5.2.3/reference/gpu_libraries/c%2B%2B_primitives.html">C++ primitive Libraries</a></li>
 </ul>
 <h2 id="python-environment">Python Environment</h2>
+<div class="admonition important">
+<p class="admonition-title">Internet access not available from GPU nodes</p>
+<p>There is no internet access available from the GPU nodes so commands to install python
+packages from the internet (e.g. <code>pip3</code>, <code>conda</code>) cannot be used with the ARCHER2
+GPU nodes at the moment.</p>
+</div>
 <p>The <code>cray-python</code> module can be used as normal for the GPU partition with <code>mpi4py</code> package that is installed by default. <code>mpi4py</code> uses <code>cray-mpich</code> under the hood and in the same way as the CPU compute nodes.</p>
 <p>However unless specifically compiled for GPU-GPU communication certain python packages/frameworks that try to take advantage of the fast links between GPUs by calling MPI on GPU pointers may have issues. To set the environment correctly for a given python program the following snippet can be added to load the required <code>libmpi_gtl_hsa</code> library:</p>
 <div class="highlight"><pre><span></span><code>from os import environ
@@ -4817,13 +4875,6 @@ if environ.get(&quot;MPICH_GPU_SUPPORT_ENABLED&quot;, False):
 
 from mpi4py import MPI
 </code></pre></div>
-<h2 id="supported-software">Supported software</h2>
-<p>The ARCHER2 GPU development platform is intended for code development, testing and experimentation and will not have supported centrally installed versions of codes as is the case for the standard ARCHER2 CPU compute nodes. However some builds are being made available to users by members of CSE to under a best effort approach to support the community.</p>
-<p>Codes that have modules targeting GPUs are:</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Will be filled out as applications are compiled and made available.</p>
-</div>
 <h2 id="running-jobs-on-the-gpu-nodes">Running jobs on the GPU nodes</h2>
 <p>To run a GPU job, you must specify a GPU partition and a
 quality of service (QoS) as well as the number of GPUs required. You
@@ -4936,6 +4987,21 @@ srun --ntasks=1 --cpus-per-task=1 ./my_gpu_program.x
 <h3 id="multiple-gpu-on-a-single-node-shared-node-access-max-2-gpu">Multiple GPU on a single node - shared node access (max. 2 GPU)</h3>
 <p>This example requests two GPUs on a potentially shared node and launch using two
 MPI processes (one per GPU) with one MPI process per CPU NUMA region.</p>
+<div class="admonition important">
+<p class="admonition-title">Use a wrapper script to pin GPUs to processes</p>
+<p>To get the correct pinning of GPUs to MPI processes, you should use a small
+wrapper script:</p>
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+
+gpu_map=(0 1 2 3)
+myGPU=${gpu_map[SLURM_LOCALID]}
+echo ${SLURM_LOCALID} &quot; &quot; ${myGPU}                                                                                      
+export ROCR_VISIBLE_DEVICES=${myGPU}
+exec $*
+</code></pre></div>
+<p>In the examples below, this script has been saved as <code>gpu-bind.sh</code> and made 
+executable with <code>chmod u+x gpu-bind.sh</code>.</p>
+</div>
 <p>We use the <code>--cpus-per-task=8</code> option to <code>srun</code> to set the stride between the two
 MPI processes to 8 physical cores. This places the MPI processes on separate NUMA
 regions to ensure they are associated with the correct GPU that is closest to them
@@ -4953,6 +5019,7 @@ on the compute node architecture.</p>
 
 # Enable GPU-aware MPI
 export MPICH_GPU_SUPPORT_ENABLED=1
+export FI_OFI_RXM_SAR_LIMIT=1048576
 
 # Check assigned GPU
 srun --ntasks=1 rocm-smi
@@ -4961,15 +5028,30 @@ srun --ntasks=1 rocm-smi
 module load xthi
 srun --ntasks=2 --cpus-per-task=8 \
      --hint=nomultithread --distribution=block:block \
-     xthi
+     ./gpu-bind.sh xthi
 
 srun --ntasks=2 --cpus-per-task=8 \
      --hint=nomultithread --distribution=block:block \
-     ./my_gpu_program.x
+     ./gpu-bind.sh ./my_gpu_program.x
 </code></pre></div>
 <h3 id="multiple-gpu-on-a-single-node-exclusive-node-access-max-4-gpu">Multiple GPU on a single node - exclusive node access (max. 4 GPU)</h3>
 <p>This example requests four GPUs on a single node and launches the program using four
 MPI processes (one per GPU) with one MPI process per CPU NUMA region.</p>
+<div class="admonition important">
+<p class="admonition-title">Use a wrapper script to pin GPUs to processes</p>
+<p>To get the correct pinning of GPUs to MPI processes, you should use a small
+wrapper script:</p>
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+
+gpu_map=(0 1 2 3)
+myGPU=${gpu_map[SLURM_LOCALID]}
+echo ${SLURM_LOCALID} &quot; &quot; ${myGPU}                                                                                      
+export ROCR_VISIBLE_DEVICES=${myGPU}
+exec $*
+</code></pre></div>
+<p>In the examples below, this script has been saved as <code>gpu-bind.sh</code> and made 
+executable with <code>chmod u+x gpu-bind.sh</code>.</p>
+</div>
 <p>We use the <code>--cpus-per-task=8</code> option to <code>srun</code> to set the stride between the
 MPI processes to 8 physical cores. This places the MPI processes on separate NUMA
 regions to ensure they are associated with the correct GPU that is closest to them
@@ -4994,14 +5076,15 @@ srun --ntasks=1 rocm-smi
 module load xthi
 srun --ntasks=4 --cpus-per-task=8 \
      --hint=nomultithread --distribution=block:block \
-     xthi
+     ./gpu-bind.sh xthi
 
 # Enable GPU-aware MPI
 export MPICH_GPU_SUPPORT_ENABLED=1
+export FI_OFI_RXM_SAR_LIMIT=1048576
 
 srun --ntasks=4 --cpus-per-task=8 \
      --hint=nomultithread --distribution=block:block \
-     ./my_gpu_program.x
+     ./gpu-bind.sh ./my_gpu_program.x
 </code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -5011,6 +5094,21 @@ and then specify the number of nodes you want with <code>--nodes=1</code>.</p>
 <h3 id="multiple-gpu-on-multiple-nodes-exclusive-node-access-max-8-gpu">Multiple GPU on multiple nodes - exclusive node access (max. 8 GPU)</h3>
 <p>This example requests eight GPUs across two nodes and launches the program using eight
 MPI processes (one per GPU) with one MPI process per CPU NUMA region.</p>
+<div class="admonition important">
+<p class="admonition-title">Use a wrapper script to pin GPUs to processes</p>
+<p>To get the correct pinning of GPUs to MPI processes, you should use a small
+wrapper script:</p>
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+
+gpu_map=(0 1 2 3)
+myGPU=${gpu_map[SLURM_LOCALID]}
+echo ${SLURM_LOCALID} &quot; &quot; ${myGPU}                                                                                      
+export ROCR_VISIBLE_DEVICES=${myGPU}
+exec $*
+</code></pre></div>
+<p>In the examples below, this script has been saved as <code>gpu-bind.sh</code> and made 
+executable with <code>chmod u+x gpu-bind.sh</code>.</p>
+</div>
 <p>We use the <code>--cpus-per-task=8</code> option to <code>srun</code> to set the stride between the
 MPI processes to 8 physical cores. This places the MPI processes on separate NUMA
 regions to ensure they are associated with the correct GPU that is closest to them
@@ -5040,14 +5138,15 @@ done
 module load xthi
 srun --ntasks-per-node=4 --cpus-per-task=8 \
      --hint=nomultithread --distribution=block:block \
-     xthi
+     ./gpu-bind.sh xthi
 
 # Enable GPU-aware MPI
 export MPICH_GPU_SUPPORT_ENABLED=1
+export FI_OFI_RXM_SAR_LIMIT=1048576
 
 srun --ntasks-per-node=4 --cpus-per-task=8 \
      --hint=nomultithread --distribution=block:block \
-     ./my_gpu_program.x
+     ./gpu-bind.sh ./my_gpu_program.x
 </code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -5055,52 +5154,17 @@ srun --ntasks-per-node=4 --cpus-per-task=8 \
 and then specify the number of nodes you want with, for example, <code>--nodes=2</code>.</p>
 </div>
 <h3 id="interactive-jobs">Interactive jobs</h3>
-<h4 id="using-salloc">Using <code>salloc</code></h4>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>This method does not give you an interactive shell on a GPU compute node. If you
-want an interactive shell on the GPU compute nodes, see the <code>srun</code> method described
-below.</p>
+<div class="admonition important">
+<p class="admonition-title">Compile on the GPU nodes</p>
+<p>All compilation <strong>must</strong> be performed on the GPU nodes themselves via an interactive
+session as the programming environment to support the GPUs is not available on the 
+ARCHER2 login nodes.</p>
 </div>
-<p>If you wish to have a terminal to perform interactive testing, you can
-use the <code>salloc</code> command to reserve the resources so you can use <code>srun</code> commands interactively.
-For example, to request 1 GPU for 20 minutes you would use (remember to replace <code>t01</code> with your
-budget code):</p>
-<div class="highlight"><pre><span></span><code>auser@ln04:/work/t01/t01/auser&gt; salloc --gpus=1 --time=00:20:00 --partition=gpu --qos=gpu-shd --account=t01
-salloc: Pending job allocation 5335731
-salloc: job 5335731 queued and waiting for resources
-salloc: job 5335731 has been allocated resources
-salloc: Granted job allocation 5335731
-salloc: Waiting for resource configuration
-salloc: Nodes nid200001 are ready for job
-
-auser@ln04:/work/t01/t01/auser&gt; export OMP_NUM_THREADS=1
-auser@ln04:/work/t01/t01/auser&gt; srun rocm-smi
-
-
-======================= ROCm System Management Interface =======================
-================================= Concise Info =================================
-GPU  Temp   AvgPwr  SCLK    MCLK     Fan  Perf  PwrCap  VRAM%  GPU%
-0    31.0c  43.0W   800Mhz  1600Mhz  0%   auto  300.0W    0%   0%
-================================================================================
-============================= End of ROCm SMI Log ==============================
-
-
-srun: error: nid200001: tasks 0: Exited with exit code 2
-srun: launch/slurm: _step_signal: Terminating StepId=5335731.0
-
-auser@ln04:/work/t01/t01/auser&gt; module load xthi
-auser@ln04:/work/t01/t01/auser&gt; srun --ntasks=1 --cpus-per-task=8 --hint=nomultithread xthi
-Node summary for    1 nodes:
-Node    0, hostname nid200001, mpi   1, omp   1, executable xthi
-MPI summary: 1 ranks
-Node    0, rank    0, thread   0, (affinity =  0-7)
-</code></pre></div>
 <h4 id="using-srun">Using <code>srun</code></h4>
 <p>If you want an interactive terminal on a GPU node then you can use the <code>srun</code> command to achieve this.
 For example, to request 1 GPU for 20 minutes with an interactive terminal on a GPU compute node you
 would use (remember to replace <code>t01</code> with your budget code):</p>
-<div class="highlight"><pre><span></span><code>auser@ln04:/work/t01/t01/auser&gt; srun --gpus=1 --time=00:20:00 --partition=gpu --qos=gpu-shd --account=z19 --pty /bin/bash
+<div class="highlight"><pre><span></span><code>auser@ln04:/work/t01/t01/auser&gt; srun --gpus=1 --time=00:20:00 --partition=gpu --qos=gpu-shd --account=t01 --pty /bin/bash
 srun: job 5335771 queued and waiting for resources
 srun: job 5335771 has been allocated resources
 auser@nid200001:/work/t01/t01/auser&gt;
@@ -5117,9 +5181,9 @@ GPU  Temp   AvgPwr  SCLK    MCLK     Fan  Perf  PwrCap  VRAM%  GPU%
 ============================= End of ROCm SMI Log ==============================
 </code></pre></div>
 <div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Launching parallel jobs on GPU nodes from an interactive shell on a GPU node is not straightforward so you should either
-use job submission scripts or the <code>salloc</code> method of interactive use described above.</p>
+<p class="admonition-title">Launch parallel applications using job submission scripts</p>
+<p>Launching parallel jobs on GPU nodes from an interactive shell on a GPU node is not straightforward
+so you should use job submission scripts as described above.</p>
 </div>
 <h3 id="environment-variables">Environment variables</h3>
 <h5 id="rocr_visible_devices">ROCR_VISIBLE_DEVICES</h5>
@@ -5127,7 +5191,9 @@ use job submission scripts or the <code>salloc</code> method of interactive use 
 <p>Runtime : ROCm Platform Runtime. Applies to all applications using the user mode ROCm software stack.</p>
 <p><code>export ROCR_VISIBLE_DEVICES="0,GPU-DEADBEEFDEADBEEF"</code></p>
 <h4 id="hip-environment-variables">HIP Environment variables</h4>
-<p><a href="https://rocm.docs.amd.com/projects/HIP/en/docs-5.2.3/how_to_guides/debugging.html#summary-of-environment-variables-in-hip">https://rocm.docs.amd.com/projects/HIP/en/docs-5.2.3/how_to_guides/debugging.html#summary-of-environment-variables-in-hip</a></p>
+<ul>
+<li><a href="https://rocm.docs.amd.com/projects/HIP/en/docs-6.3.3/how-to/debugging.html#hip-environment-variable-summary">HIP Environment Variable Summary in ROCm documentation</a></li>
+</ul>
 <h5 id="amd_log_level">AMD_LOG_LEVEL</h5>
 <p>Enable HIP log on different Level.</p>
 <p><code>export AMD_LOG_LEVEL=1</code></p>
@@ -5188,7 +5254,9 @@ use job submission scripts or the <code>salloc</code> method of interactive use 
 <p><code>export HIP_HOST_COHERENT=1</code></p>
 <p>If the value is <code>1</code>, memory is coherent with host; if <code>0</code>, memory is not coherent between host and GPU.</p>
 <h4 id="openmp-environment-variables">OpenMP Environment variables</h4>
-<p><a href="https://rocm.docs.amd.com/en/docs-5.2.3/reference/openmp/openmp.html#environment-variables">https://rocm.docs.amd.com/en/docs-5.2.3/reference/openmp/openmp.html#environment-variables</a></p>
+<ul>
+<li><a href="https://rocm.docs.amd.com/projects/llvm-project/en/docs-6.3.3/conceptual/openmp.html#environment-variables">OpenMP Environment Variable Summary in ROCm documentation</a></li>
+</ul>
 <h5 id="omp_default_device">OMP_DEFAULT_DEVICE</h5>
 <p>Default device used for OpenMP target offloading.</p>
 <p>Runtime : OpenMP Runtime. Applies only to applications using OpenMP offloading.</p>
@@ -5217,6 +5285,15 @@ use job submission scripts or the <code>salloc</code> method of interactive use 
 <h5 id="mpich_ofi_nic_verbose">MPICH_OFI_NIC_VERBOSE</h5>
 <p>To display information pertaining to NIC selection set,</p>
 <p><code>export MPICH_OFI_NIC_VERBOSE=2</code></p>
+<h4 id="ofi-environemnt-variabels">OFI Environemnt Variabels</h4>
+<h5 id="fi_ofi_rxm_sar_limit">FI_OFI_RXM_SAR_LIMIT</h5>
+<p>This is a verbs;ofi_rxm libfabric ENV variable. Set this environment variable to control the SAR (Segmentation And Reassembly) protocol. The
+SAR protocol breaks a message into smaller units before transmission and reassembles them into the proper order at the receiving end. Messages
+of size greater than this (in bytes) are transmitted via rendezvous protocol. Setting this to 0 disables SAR protocol entirely. When set to 0,
+messages will be transferred by either the eager or rendezvous protocols. Only applies to Slingshot 10.</p>
+<p>Default: 262144</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">FI_OFI_RXM_SAR_LIMIT</span><span class="o">=</span><span class="m">1048576</span>
+</code></pre></div>
 <h2 id="debugging">Debugging</h2>
 <p>GPU debugging via Forge DDT is available. See the
 <a href="../../data-tools/forge/">ARCHER2 Forge page</a> for details of how to use the
@@ -5434,7 +5511,7 @@ GPU[3]          : Memory Activity: 319854295
 <p>The documentation for HIPIFY is found <a href="https://rocm.docs.amd.com/projects/HIPIFY/en/docs-5.2.3/index.html">here</a>.</p>
 <h2 id="notes-and-useful-links">Notes and useful links</h2>
 <p>You should expect the software development environment to be similar to that
-available on the Frontier exascale system:</p>
+available on the LUMI and Frontier systems:</p>
 <ul>
 <li><a href="https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#programming-environment">Programming environment</a></li>
 <li><a href="https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#compiling">Compiling</a></li>
