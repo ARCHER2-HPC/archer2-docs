@@ -3029,7 +3029,10 @@ blender<span class="w"> </span>-b<span class="w"> </span>scene.blend<span class=
 </code></pre></div>
 <p>The full list of command line arguments can be found in <a href="https://docs.blender.org/manual/en/4.2/advanced/command_line/arguments.html">Blender's documentation</a>. Note that with blender, the order of the arguments is important. </p>
 <p>To automatise this process addons like the one available in <a href="https://github.com/EPCCed/blender4science/">blender4science</a> are helpful as they allow to submit multiple identical jobs and handles the parallelisation to render each frame only once.</p>
-<p>!!! note Blender doesn't work on ARCHER2 GPU nodes at the moment due to incompatibilities with the rocm version available</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Blender cannot be run on the ARCHER2 AMD MI210 GPU nodes as that hardware does not support the Cycles render engine.</p>
+</div>
 
 
 

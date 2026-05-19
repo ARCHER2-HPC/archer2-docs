@@ -3061,29 +3061,65 @@ by ensembles of weather simulations, see link below for more details.</p>
 <p>There are two DeepCam training datasets available on ARCHER2. A <strong>62 GB</strong> mini dataset (<code>/work/z19/shared/mlperf-hpc/deepcam/mini</code>), and a much larger
 <strong>8.9 TB</strong> dataset (<code>/work/z19/shared/mlperf-hpc/deepcam/full</code>).</p>
 <h3 id="deepcam-on-gpu">DeepCam on GPU</h3>
-<p>A binary install of PyTorch 1.13.1 suitable for ROCm 5.2.3 has been installed according to the instructions linked below.</p>
-<p><a href="https://github.com/hpc-uk/build-instructions/blob/main/pyenvs/pytorch/build_pytorch_1.13.1_archer2_gpu.md">https://github.com/hpc-uk/build-instructions/blob/main/pyenvs/pytorch/build_pytorch_1.13.1_archer2_gpu.md</a></p>
-<p>This install can be accessed by loading the <code>pytorch/1.13.1-gpu</code> module.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>For GPU, ARCHER2 currently provides access to a legacy version of <a href="../gpu/#rocm">ROCm</a>, <code>rocm/5.2.3</code>. This means that users cannot run on GPU a version of PyTorch more recent than 1.13.1. However, it is possible to run PyTorch 2.2.0 via a containerised HPE Cray Programming Environment module, one that features ROCm 5.6.0, see <a href="../containers/#containerised-rocm">Containerised ROCm</a> for details.</p>
-</div>
-<p>As DeepCam is an <a href="https://ieeexplore.ieee.org/document/9238612">MLPerf</a> benchmark, you may wish to base a local python environment on <code>pytorch/1.13.1-gpu</code>
+<p>As DeepCam is an <a href="https://ieeexplore.ieee.org/document/9238612">MLPerf</a> benchmark, you may wish to base a custom python environment on <code>pytorch/2.9.1-gpu</code>
 so that you have the opportunity to install additional python packages that support MLPerf logging, as well as extra features pertinent to DeepCam (e.g., dynamic learning rates).</p>
-<p>The following instructions show how to create such an environment.</p>
+<p>The <code>pytorch/2.9.1-gpu</code> module requires Python 3.11.7 as that version of Python is the one installed on the GPU nodes.
+On the login and CPU nodes however, the latest version of Python is 3.10.10 and so the <code>pytorch/2.9.1-gpu</code> module cannot be loaded from those locations
+unless you are running within a container that has <code>cray-python/3.11.7</code> and <code>rocm/6.3.4</code>. Fortunately, there exists a containerised ROCm 6.3.4 image that
+includes Python 3.11.7.</p>
+<p>The commands below instantiate the ROCm container image (see the <a href="../containers/#containerised-rocm">Containerised ROCm</a> section for more details).</p>
+<div class="highlight"><pre><span></span><code>module<span class="w"> </span>use<span class="w"> </span>/work/y07/shared/archer2-lmod/others/dev
+module<span class="w"> </span>load<span class="w"> </span>ccpe/25.09-rocm-6.3.4
+
+singularity<span class="w"> </span>shell<span class="w"> </span>--cleanenv<span class="w"> </span>--bind<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="p">/home/work</span><span class="si">}</span>/pyenvs<span class="w"> </span><span class="si">${</span><span class="nv">CCPE_IMAGE_FILE</span><span class="si">}</span>
+</code></pre></div>
+<p>From within the container, we can download the necessary Python wheels that are compatible with Python 3.11. Note, we wouldn't be able to do this from
+a GPU node as that environment does not have access to the outside world.</p>
+<p>The commands for running inside the container are listed below.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">source</span><span class="w"> </span>/etc/bash.bashrc.local
+
+module<span class="w"> </span>-q<span class="w"> </span>load<span class="w"> </span>craype-x86-milan
+module<span class="w"> </span>-q<span class="w"> </span>load<span class="w"> </span>craype-accel-amd-gfx90a
+module<span class="w"> </span>-q<span class="w"> </span>load<span class="w"> </span>rocm
+module<span class="w"> </span>-q<span class="w"> </span>load<span class="w"> </span>PrgEnv-gnu
+module<span class="w"> </span>-q<span class="w"> </span>load<span class="w"> </span>cray-python
+
+<span class="nv">PRFX</span><span class="o">=</span><span class="si">${</span><span class="nv">HOME</span><span class="p">/home/work</span><span class="si">}</span>/pyenvs
+<span class="nv">PYVENV_ROOT</span><span class="o">=</span><span class="si">${</span><span class="nv">PRFX</span><span class="si">}</span>/mlperf-pt-gpu
+
+mkdir<span class="w"> </span>-p<span class="w"> </span><span class="si">${</span><span class="nv">PYVENV_ROOT</span><span class="si">}</span>
+<span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">PYVENV_ROOT</span><span class="si">}</span>
+
+mkdir<span class="w"> </span>-p<span class="w"> </span><span class="si">${</span><span class="nv">PYVENV_ROOT</span><span class="si">}</span>/wheels-wheel
+<span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">PYVENV_ROOT</span><span class="si">}</span>/wheels-wheel
+pip<span class="w"> </span>download<span class="w"> </span>--no-cache-dir<span class="w"> </span>wheel
+
+mkdir<span class="w"> </span>-p<span class="w"> </span><span class="si">${</span><span class="nv">PYVENV_ROOT</span><span class="si">}</span>/wheels-deepcam
+<span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">PYVENV_ROOT</span><span class="si">}</span>/wheels-deepcam
+pip<span class="w"> </span>download<span class="w"> </span>--no-cache-dir<span class="w"> </span>h5py<span class="w"> </span>mlperf-logging<span class="w"> </span>warmup-scheduler
+
+<span class="nb">exit</span>
+</code></pre></div>
+<p>We've now returned to the login node.
+Next, we launch a job on the GPU node, to complete the setup of the custom Python environment for DeepCam.</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
-module<span class="w"> </span>-q<span class="w"> </span>load<span class="w"> </span>pytorch/1.13.1-gpu
+<span class="c1">#SBATCH --job-name=deepcam-pyenv</span>
+<span class="c1">#SBATCH --account=[budget code]</span>
+<span class="c1">#SBATCH --partition=gpu</span>
+<span class="c1">#SBATCH --qos=gpu-shd</span>
+<span class="c1">#SBATCH --nodes=1</span>
+<span class="c1">#SBATCH --gpus=1</span>
+<span class="c1">#SBATCH --time=00:20:00</span>
+<span class="c1">#SBATCH --exclusive</span>
+
+
+module<span class="w"> </span>-q<span class="w"> </span>load<span class="w"> </span>pytorch/2.9.1-gpu
 
 <span class="nv">PYTHON_TAG</span><span class="o">=</span>python<span class="sb">`</span><span class="nb">echo</span><span class="w"> </span><span class="si">${</span><span class="nv">CRAY_PYTHON_LEVEL</span><span class="si">}</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d.<span class="w"> </span>-f1-2<span class="sb">`</span>
 
 <span class="nv">PRFX</span><span class="o">=</span><span class="si">${</span><span class="nv">HOME</span><span class="p">/home/work</span><span class="si">}</span>/pyenvs
 <span class="nv">PYVENV_ROOT</span><span class="o">=</span><span class="si">${</span><span class="nv">PRFX</span><span class="si">}</span>/mlperf-pt-gpu
-<span class="nv">PYVENV_SITEPKGS</span><span class="o">=</span><span class="si">${</span><span class="nv">PYVENV_ROOT</span><span class="si">}</span>/lib/<span class="si">${</span><span class="nv">PYTHON_TAG</span><span class="si">}</span>/site-packages
-
-mkdir<span class="w"> </span>-p<span class="w"> </span><span class="si">${</span><span class="nv">PYVENV_ROOT</span><span class="si">}</span>
-<span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">PYVENV_ROOT</span><span class="si">}</span>
-
 
 python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>--system-site-packages<span class="w"> </span><span class="si">${</span><span class="nv">PYVENV_ROOT</span><span class="si">}</span>
 
@@ -3091,64 +3127,58 @@ extend-venv-activate<span class="w"> </span><span class="si">${</span><span clas
 
 <span class="nb">source</span><span class="w"> </span><span class="si">${</span><span class="nv">PYVENV_ROOT</span><span class="si">}</span>/bin/activate
 
+<span class="nb">export</span><span class="w"> </span><span class="nv">PIP_CACHE_DIR</span><span class="o">=</span><span class="si">${</span><span class="nv">PYVENV_ROOT</span><span class="si">}</span>/.cache/pip
 
-mkdir<span class="w"> </span>-p<span class="w"> </span><span class="si">${</span><span class="nv">PYVENV_ROOT</span><span class="si">}</span>/repos
-<span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">PYVENV_ROOT</span><span class="si">}</span>/repos
+<span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">PYVENV_ROOT</span><span class="si">}</span>/wheels-wheel
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--no-build-isolation<span class="w"> </span>*
 
-git<span class="w"> </span>clone<span class="w"> </span>-b<span class="w"> </span>hpc-1.0-branch<span class="w"> </span>https://github.com/mlcommons/logging<span class="w"> </span>mlperf-logging
-python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>mlperf-logging
-
-rm<span class="w"> </span><span class="si">${</span><span class="nv">PYVENV_SITEPKGS</span><span class="si">}</span>/mlperf-logging.egg-link
-mv<span class="w"> </span>./mlperf-logging/mlperf_logging<span class="w"> </span><span class="si">${</span><span class="nv">PYVENV_SITEPKGS</span><span class="si">}</span>/
-mv<span class="w"> </span>./mlperf-logging/mlperf_logging.egg-info<span class="w"> </span><span class="si">${</span><span class="nv">PYVENV_SITEPKGS</span><span class="si">}</span>/
-
-python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/ildoonet/pytorch-gradual-warmup-lr.git
-
-deactivate
+<span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">PYVENV_ROOT</span><span class="si">}</span>/wheels-deepcam
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--no-build-isolation<span class="w"> </span>*
 </code></pre></div>
-<p>In order to run a DeepCam training job, you must first clone the <a href="https://github.com/mlcommons/hpc/tree/main">MLCommons HPC github repo</a>.</p>
-<div class="highlight"><pre><span></span><code>mkdir ${HOME/home/work}/tests
-cd ${HOME/home/work}/tests
+<p>To prepare for running a DeepCam training job, we must clone the <a href="https://github.com/mlcommons/hpc/tree/main">MLCommons HPC github repo</a>,
+which can be done from the login node.</p>
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="p">/home/work</span><span class="si">}</span>/tests
+<span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="p">/home/work</span><span class="si">}</span>/tests
 
-git clone https://github.com/mlcommons/hpc.git mlperf-hpc
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/mlcommons/hpc.git<span class="w"> </span>mlperf-hpc
 
-cd ./mlperf-hpc/deepcam/src/deepCam
+<span class="nb">cd</span><span class="w"> </span>./mlperf-hpc/deepcam/src/deepCam
 </code></pre></div>
 <p>You are now ready to run the following DeepCam submission script via the <code>sbatch</code> command.</p>
-<div class="highlight"><pre><span></span><code>#!/bin/bash
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
-#SBATCH --job-name=deepcam
-#SBATCH --account=[budget code]
-#SBATCH --partition=gpu
-#SBATCH --qos=gpu-exc
-#SBATCH --nodes=2
-#SBATCH --gpus=8
-#SBATCH --time=01:00:00
-#SBATCH --exclusive
+<span class="c1">#SBATCH --job-name=deepcam</span>
+<span class="c1">#SBATCH --account=[budget code]</span>
+<span class="c1">#SBATCH --partition=gpu</span>
+<span class="c1">#SBATCH --qos=gpu-exc</span>
+<span class="c1">#SBATCH --nodes=2</span>
+<span class="c1">#SBATCH --gpus=8</span>
+<span class="c1">#SBATCH --time=01:00:00</span>
+<span class="c1">#SBATCH --exclusive</span>
 
 
-JOB_OUTPUT_PATH=./results/${SLURM_JOB_ID}
-mkdir -p ${JOB_OUTPUT_PATH}/logs
+<span class="nv">JOB_OUTPUT_PATH</span><span class="o">=</span>./results/<span class="si">${</span><span class="nv">SLURM_JOB_ID</span><span class="si">}</span>
+mkdir<span class="w"> </span>-p<span class="w"> </span><span class="si">${</span><span class="nv">JOB_OUTPUT_PATH</span><span class="si">}</span>/logs
 
-source ${HOME/home/work}/pyenvs/mlperf-pt-gpu/bin/activate
+<span class="nb">source</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="p">/home/work</span><span class="si">}</span>/pyenvs/mlperf-pt-gpu/bin/activate
 
-export OMP_NUM_THREADS=1
-export HOME=${HOME/home/work}
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">HOME</span><span class="o">=</span><span class="si">${</span><span class="nv">HOME</span><span class="p">/home/work</span><span class="si">}</span>
 
-srun --ntasks=8 --tasks-per-node=4 \
-     --cpu-bind=verbose,map_cpu:0,8,16,24 --hint=nomultithread \
-     python train.py \
-         --run_tag test \
-         --data_dir_prefix /work/z19/shared/mlperf-hpc/deepcam/mini \
-         --output_dir ${JOB_OUTPUT_PATH} \
-     --wireup_method nccl-slurm \
-     --max_epochs 64 \
-     --local_batch_size 1
+srun<span class="w"> </span>--ntasks<span class="o">=</span><span class="m">8</span><span class="w"> </span>--tasks-per-node<span class="o">=</span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>--cpu-bind<span class="o">=</span>verbose,map_cpu:0,8,16,24<span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>python<span class="w"> </span>train.py<span class="w"> </span><span class="se">\</span>
+<span class="w">         </span>--run_tag<span class="w"> </span><span class="nb">test</span><span class="w"> </span><span class="se">\</span>
+<span class="w">         </span>--data_dir_prefix<span class="w"> </span>/work/z19/shared/mlperf-hpc/deepcam/mini<span class="w"> </span><span class="se">\</span>
+<span class="w">         </span>--output_dir<span class="w"> </span><span class="si">${</span><span class="nv">JOB_OUTPUT_PATH</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>--wireup_method<span class="w"> </span>nccl-slurm<span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>--max_epochs<span class="w"> </span><span class="m">64</span><span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>--local_batch_size<span class="w"> </span><span class="m">1</span>
 
-mv slurm-${SLURM_JOB_ID}.out ${JOB_OUTPUT_PATH}/slurm.out
+mv<span class="w"> </span>slurm-<span class="si">${</span><span class="nv">SLURM_JOB_ID</span><span class="si">}</span>.out<span class="w"> </span><span class="si">${</span><span class="nv">JOB_OUTPUT_PATH</span><span class="si">}</span>/slurm.out
 </code></pre></div>
 <p>The job submission script activates the python environment that was setup earlier, but that particular command (<code>source ${HOME/home/work}/pyenvs/mlperf-pt-gpu/bin/activate</code>)
-could be replaced by <code>module -q load pytorch/1.13.1-gpu</code> if you are not running DeepCam and have no need for additional Python packages such as <code>mlperf-logging</code> and <code>warmup-scheduler</code>.</p>
+could be replaced by <code>module -q load pytorch/2.9.1-gpu</code> if you are not running DeepCam and have no need for additional Python packages such as <code>mlperf-logging</code> and <code>warmup-scheduler</code>.</p>
 <p>In the script above, we specify four tasks per node, one for each GPU. These tasks are evenly spaced across the node so as to maximise the communications
 bandwidth between the host and the GPU devices. Note, PyTorch is not using Cray MPICH for inter-task communications, which is instead being handled by the 
 ROCm Collective Communications Library (RCCL), hence the <code>--wireup_method nccl-slurm</code> option (<code>nccl-slurm</code> works as an alias for <code>rccl-slurm</code> in this context).</p>
@@ -3211,14 +3241,14 @@ ROCm Collective Communications Library (RCCL), hence the <code>--wireup_method n
 <a href="https://horovod.readthedocs.io/en/stable/index.html">Horovod</a> to handle (via MPI) inter-task communications. We must instead build PyTorch from source so that we can link <code>torch.distributed</code>
 to the correct Cray MPICH libraries.</p>
 <p>The instructions for doing such a build can be found here,
-<a href="https://github.com/hpc-uk/build-instructions/blob/main/pyenvs/pytorch/build_pytorch_1.13.0a0_from_source_archer2_cpu.md">https://github.com/hpc-uk/build-instructions/blob/main/pyenvs/pytorch/build_pytorch_1.13.0a0_from_source_archer2_cpu.md</a>.</p>
-<p>This install can be accessed by loading the <code>pytorch/1.13.0a0</code> module.
-Please note, PyTorch source version <code>1.13.0a0</code> corresponds to PyTorch package version <code>1.13.1</code>.</p>
+<a href="https://github.com/hpc-uk/build-instructions/blob/main/pyenvs/pytorch/build_pytorch_2.9.1a0_from_source_archer2_cpu.md">https://github.com/hpc-uk/build-instructions/blob/main/pyenvs/pytorch/build_pytorch_2.9.1a0_from_source_archer2_cpu.md</a>.</p>
+<p>This install can be accessed by loading the <code>pytorch/2.9.1a0</code> module.
+Please note, PyTorch source version <code>2.9.1a0</code> corresponds to PyTorch package version <code>2.9.1</code>.</p>
 <p>Once again, as we are running the DeepCam benchmark, we'll need to setup a local Python environment for installing the MLPerf logging package.
-This time the local environment is based on the <code>pytorch/1.13.0a0</code> module.</p>
+This time the local environment is based on the <code>pytorch/2.9.1a0</code> module.</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
-module<span class="w"> </span>-q<span class="w"> </span>load<span class="w"> </span>pytorch/1.13.0a0
+module<span class="w"> </span>-q<span class="w"> </span>load<span class="w"> </span>pytorch/2.9.1a0
 
 <span class="nv">PYTHON_TAG</span><span class="o">=</span>python<span class="sb">`</span><span class="nb">echo</span><span class="w"> </span><span class="si">${</span><span class="nv">CRAY_PYTHON_LEVEL</span><span class="si">}</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d.<span class="w"> </span>-f1-2<span class="sb">`</span>
 
@@ -3237,17 +3267,15 @@ extend-venv-activate<span class="w"> </span><span class="si">${</span><span clas
 <span class="nb">source</span><span class="w"> </span><span class="si">${</span><span class="nv">PYVENV_ROOT</span><span class="si">}</span>/bin/activate
 
 
-mkdir<span class="w"> </span>-p<span class="w"> </span><span class="si">${</span><span class="nv">PYVENV_ROOT</span><span class="si">}</span>/repos
-<span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">PYVENV_ROOT</span><span class="si">}</span>/repos
+mkdir<span class="w"> </span>-p<span class="w"> </span><span class="si">${</span><span class="nv">PYVENV_ROOT</span><span class="si">}</span>/wheels
+<span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">PYVENV_ROOT</span><span class="si">}</span>/wheels
 
-git<span class="w"> </span>clone<span class="w"> </span>-b<span class="w"> </span>hpc-1.0-branch<span class="w"> </span>https://github.com/mlcommons/logging<span class="w"> </span>mlperf-logging
-python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>mlperf-logging
+pip<span class="w"> </span>download<span class="w"> </span>--no-cache-dir<span class="w"> </span>wheel
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--no-build-isolation<span class="w"> </span>*
 
-rm<span class="w"> </span><span class="si">${</span><span class="nv">PYVENV_SITEPKGS</span><span class="si">}</span>/mlperf-logging.egg-link
-mv<span class="w"> </span>./mlperf-logging/mlperf_logging<span class="w"> </span><span class="si">${</span><span class="nv">PYVENV_SITEPKGS</span><span class="si">}</span>/
-mv<span class="w"> </span>./mlperf-logging/mlperf_logging.egg-info<span class="w"> </span><span class="si">${</span><span class="nv">PYVENV_SITEPKGS</span><span class="si">}</span>/
+pip<span class="w"> </span>download<span class="w"> </span>--no-cache-dir<span class="w"> </span>h5py<span class="w"> </span>mlperf-logging<span class="w"> </span>warmup-scheduler
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--no-build-isolation<span class="w"> </span>*
 
-python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/ildoonet/pytorch-gradual-warmup-lr.git
 
 deactivate
 </code></pre></div>
