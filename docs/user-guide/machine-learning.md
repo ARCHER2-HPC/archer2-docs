@@ -22,34 +22,76 @@ There are two DeepCam training datasets available on ARCHER2. A **62 GB** mini d
 
 ### DeepCam on GPU
 
-A binary install of PyTorch 1.13.1 suitable for ROCm 5.2.3 has been installed according to the instructions linked below.
-
-[https://github.com/hpc-uk/build-instructions/blob/main/pyenvs/pytorch/build_pytorch_1.13.1_archer2_gpu.md](https://github.com/hpc-uk/build-instructions/blob/main/pyenvs/pytorch/build_pytorch_1.13.1_archer2_gpu.md)
-
-This install can be accessed by loading the `pytorch/1.13.1-gpu` module.
-
-!!! note
-    For GPU, ARCHER2 currently provides access to a legacy version of [ROCm](gpu.md#rocm), `rocm/5.2.3`. This means that users cannot run on GPU a version of PyTorch more recent than 1.13.1. However, it is possible to run PyTorch 2.2.0 via a containerised HPE Cray Programming Environment module, one that features ROCm 5.6.0, see [Containerised ROCm](containers.md/#containerised-rocm) for details.
-
-As DeepCam is an [MLPerf](https://ieeexplore.ieee.org/document/9238612) benchmark, you may wish to base a local python environment on `pytorch/1.13.1-gpu`
+As DeepCam is an [MLPerf](https://ieeexplore.ieee.org/document/9238612) benchmark, you may wish to base a custom python environment on `pytorch/2.9.1-gpu`
 so that you have the opportunity to install additional python packages that support MLPerf logging, as well as extra features pertinent to DeepCam (e.g., dynamic learning rates).
 
-The following instructions show how to create such an environment.
+The `pytorch/2.9.1-gpu` module requires Python 3.11.7 as that version of Python is the one installed on the GPU nodes.
+On the login and CPU nodes however, the latest version of Python is 3.10.10 and so the `pytorch/2.9.1-gpu` module cannot be loaded from those locations
+unless you are running within a container that has `cray-python/3.11.7` and `rocm/6.3.4`. Fortunately, there exists a containerised ROCm 6.3.4 image that
+includes Python 3.11.7.
+
+The commands below instantiate the ROCm container image (see the [Containerised ROCm](./containers.md#containerised-rocm) section for more details).
+
+```bash
+module use /work/y07/shared/archer2-lmod/others/dev
+module load ccpe/25.09-rocm-6.3.4
+
+singularity shell --cleanenv --bind ${HOME/home/work}/pyenvs ${CCPE_IMAGE_FILE}
+```
+
+From within the container, we can download the necessary Python wheels that are compatible with Python 3.11. Note, we wouldn't be able to do this from
+a GPU node as that environment does not have access to the outside world.
+
+The commands for running inside the container are listed below.
+
+```bash
+source /etc/bash.bashrc.local
+
+module -q load craype-x86-milan
+module -q load craype-accel-amd-gfx90a
+module -q load rocm
+module -q load PrgEnv-gnu
+module -q load cray-python
+
+PRFX=${HOME/home/work}/pyenvs
+PYVENV_ROOT=${PRFX}/mlperf-pt-gpu
+
+mkdir -p ${PYVENV_ROOT}
+cd ${PYVENV_ROOT}
+
+mkdir -p ${PYVENV_ROOT}/wheels-wheel
+cd ${PYVENV_ROOT}/wheels-wheel
+pip download --no-cache-dir wheel
+
+mkdir -p ${PYVENV_ROOT}/wheels-deepcam
+cd ${PYVENV_ROOT}/wheels-deepcam
+pip download --no-cache-dir h5py mlperf-logging warmup-scheduler
+
+exit
+```
+
+We've now returned to the login node.
+Next, we launch a job on the GPU node, to complete the setup of the custom Python environment for DeepCam.
 
 ```bash
 #!/bin/bash
 
-module -q load pytorch/1.13.1-gpu
+#SBATCH --job-name=deepcam-pyenv
+#SBATCH --account=[budget code]
+#SBATCH --partition=gpu
+#SBATCH --qos=gpu-shd
+#SBATCH --nodes=1
+#SBATCH --gpus=1
+#SBATCH --time=00:20:00
+#SBATCH --exclusive
+
+
+module -q load pytorch/2.9.1-gpu
 
 PYTHON_TAG=python`echo ${CRAY_PYTHON_LEVEL} | cut -d. -f1-2`
 
 PRFX=${HOME/home/work}/pyenvs
 PYVENV_ROOT=${PRFX}/mlperf-pt-gpu
-PYVENV_SITEPKGS=${PYVENV_ROOT}/lib/${PYTHON_TAG}/site-packages
-
-mkdir -p ${PYVENV_ROOT}
-cd ${PYVENV_ROOT}
-
 
 python -m venv --system-site-packages ${PYVENV_ROOT}
 
@@ -57,25 +99,19 @@ extend-venv-activate ${PYVENV_ROOT}
 
 source ${PYVENV_ROOT}/bin/activate
 
+export PIP_CACHE_DIR=${PYVENV_ROOT}/.cache/pip
 
-mkdir -p ${PYVENV_ROOT}/repos
-cd ${PYVENV_ROOT}/repos
+cd ${PYVENV_ROOT}/wheels-wheel
+python -m pip install --no-build-isolation *
 
-git clone -b hpc-1.0-branch https://github.com/mlcommons/logging mlperf-logging
-python -m pip install -e mlperf-logging
-
-rm ${PYVENV_SITEPKGS}/mlperf-logging.egg-link
-mv ./mlperf-logging/mlperf_logging ${PYVENV_SITEPKGS}/
-mv ./mlperf-logging/mlperf_logging.egg-info ${PYVENV_SITEPKGS}/
-
-python -m pip install git+https://github.com/ildoonet/pytorch-gradual-warmup-lr.git
-
-deactivate
+cd ${PYVENV_ROOT}/wheels-deepcam
+python -m pip install --no-build-isolation *
 ```
 
-In order to run a DeepCam training job, you must first clone the [MLCommons HPC github repo](https://github.com/mlcommons/hpc/tree/main).
+To prepare for running a DeepCam training job, we must clone the [MLCommons HPC github repo](https://github.com/mlcommons/hpc/tree/main),
+which can be done from the login node.
 
-```
+```bash
 mkdir ${HOME/home/work}/tests
 cd ${HOME/home/work}/tests
 
@@ -86,7 +122,7 @@ cd ./mlperf-hpc/deepcam/src/deepCam
 
 You are now ready to run the following DeepCam submission script via the `sbatch` command.
 
-```
+```bash
 #!/bin/bash
 
 #SBATCH --job-name=deepcam
@@ -121,7 +157,7 @@ mv slurm-${SLURM_JOB_ID}.out ${JOB_OUTPUT_PATH}/slurm.out
 ```
 
 The job submission script activates the python environment that was setup earlier, but that particular command (`source ${HOME/home/work}/pyenvs/mlperf-pt-gpu/bin/activate`)
-could be replaced by `module -q load pytorch/1.13.1-gpu` if you are not running DeepCam and have no need for additional Python packages such as `mlperf-logging` and `warmup-scheduler`.
+could be replaced by `module -q load pytorch/2.9.1-gpu` if you are not running DeepCam and have no need for additional Python packages such as `mlperf-logging` and `warmup-scheduler`.
 
 In the script above, we specify four tasks per node, one for each GPU. These tasks are evenly spaced across the node so as to maximise the communications
 bandwidth between the host and the GPU devices. Note, PyTorch is not using Cray MPICH for inter-task communications, which is instead being handled by the 
@@ -198,18 +234,18 @@ PyTorch can also be run on the ARCHER2 CPU nodes. However, since the DeepCam use
 to the correct Cray MPICH libraries.
 
 The instructions for doing such a build can be found here,
-[https://github.com/hpc-uk/build-instructions/blob/main/pyenvs/pytorch/build_pytorch_1.13.0a0_from_source_archer2_cpu.md](https://github.com/hpc-uk/build-instructions/blob/main/pyenvs/pytorch/build_pytorch_1.13.0a0_from_source_archer2_cpu.md).
+[https://github.com/hpc-uk/build-instructions/blob/main/pyenvs/pytorch/build_pytorch_2.9.1a0_from_source_archer2_cpu.md](https://github.com/hpc-uk/build-instructions/blob/main/pyenvs/pytorch/build_pytorch_2.9.1a0_from_source_archer2_cpu.md).
 
-This install can be accessed by loading the `pytorch/1.13.0a0` module.
-Please note, PyTorch source version `1.13.0a0` corresponds to PyTorch package version `1.13.1`.
+This install can be accessed by loading the `pytorch/2.9.1a0` module.
+Please note, PyTorch source version `2.9.1a0` corresponds to PyTorch package version `2.9.1`.
 
 Once again, as we are running the DeepCam benchmark, we'll need to setup a local Python environment for installing the MLPerf logging package.
-This time the local environment is based on the `pytorch/1.13.0a0` module.
+This time the local environment is based on the `pytorch/2.9.1a0` module.
 
 ```bash
 #!/bin/bash
 
-module -q load pytorch/1.13.0a0
+module -q load pytorch/2.9.1a0
 
 PYTHON_TAG=python`echo ${CRAY_PYTHON_LEVEL} | cut -d. -f1-2`
 
@@ -228,17 +264,15 @@ extend-venv-activate ${PYVENV_ROOT}
 source ${PYVENV_ROOT}/bin/activate
 
 
-mkdir -p ${PYVENV_ROOT}/repos
-cd ${PYVENV_ROOT}/repos
+mkdir -p ${PYVENV_ROOT}/wheels
+cd ${PYVENV_ROOT}/wheels
 
-git clone -b hpc-1.0-branch https://github.com/mlcommons/logging mlperf-logging
-python -m pip install -e mlperf-logging
+pip download --no-cache-dir wheel
+python -m pip install --no-build-isolation *
 
-rm ${PYVENV_SITEPKGS}/mlperf-logging.egg-link
-mv ./mlperf-logging/mlperf_logging ${PYVENV_SITEPKGS}/
-mv ./mlperf-logging/mlperf_logging.egg-info ${PYVENV_SITEPKGS}/
+pip download --no-cache-dir h5py mlperf-logging warmup-scheduler
+python -m pip install --no-build-isolation *
 
-python -m pip install git+https://github.com/ildoonet/pytorch-gradual-warmup-lr.git
 
 deactivate
 ```
