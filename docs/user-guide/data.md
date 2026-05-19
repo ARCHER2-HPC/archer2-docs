@@ -506,18 +506,34 @@ transferred and where the data is going.
      performed by other users of the system will interact strongly with
      those you perform so reducing the number of such operations you
      use, may reduce variability in your IO timings.
-   - **Network speed** - Data transfer performance can be limited by
+   - **Network speed** - Data transfer performance between different locations can be limited by
      network speed. More importantly it is limited by the slowest
      section of the network between source and destination.
    - **Firewall speed** - Most modern networks are protected by some
      form of firewall that filters out malicious traffic. This
      filtering has some overhead and can result in a reduction in data
-     transfer performance. The needs of a general purpose network that
+     transfer performance between different locations. The needs of a general purpose network that
      hosts email/web-servers and desktop machines are quite different
      from a research network that needs to support high volume data
      transfers. If you are trying to transfer data to or from a host on
      a general purpose network you may find the firewall for that
      network will limit the transfer rate you can achieve.
+
+### Transferring data between ARCHER2 file systems
+
+For internal data transfers between ARCHER2 file systems (home. work, solid state scratch,
+RDFaaS) we recommend using the `cp` command. This can be used in parallel on different
+data chunks for large data transfers and placed in a serial job submission script if needed.
+
+!!! warning "Do not use `mv` to transfer data between file systems"
+    You should not use the `mv` command to transfer data between different file systems
+    as there is a chance of data loss if something goes wrong during the transfer process.
+    Always use a command such as `cp` that preserves the original copy of the data so you
+    can check for integrity before deleting the original copy.
+
+
+
+### Transferring data to/from ARCHER2
 
 The method you use to transfer data to/from ARCHER2 will depend on how
 much you want to transfer and where to. The methods we cover in this
