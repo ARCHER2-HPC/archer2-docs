@@ -1023,6 +1023,28 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#transferring-data-between-archer2-file-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transferring data between ARCHER2 file systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transferring-data-tofrom-archer2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transferring data to/from ARCHER2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#archiving" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3624,6 +3646,28 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#transferring-data-between-archer2-file-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transferring data between ARCHER2 file systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transferring-data-tofrom-archer2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transferring data to/from ARCHER2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#archiving" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4248,19 +4292,31 @@ transferred and where the data is going.</p>
      performed by other users of the system will interact strongly with
      those you perform so reducing the number of such operations you
      use, may reduce variability in your IO timings.</li>
-<li><strong>Network speed</strong> - Data transfer performance can be limited by
+<li><strong>Network speed</strong> - Data transfer performance between different locations can be limited by
      network speed. More importantly it is limited by the slowest
      section of the network between source and destination.</li>
 <li><strong>Firewall speed</strong> - Most modern networks are protected by some
      form of firewall that filters out malicious traffic. This
      filtering has some overhead and can result in a reduction in data
-     transfer performance. The needs of a general purpose network that
+     transfer performance between different locations. The needs of a general purpose network that
      hosts email/web-servers and desktop machines are quite different
      from a research network that needs to support high volume data
      transfers. If you are trying to transfer data to or from a host on
      a general purpose network you may find the firewall for that
      network will limit the transfer rate you can achieve.</li>
 </ul>
+<h3 id="transferring-data-between-archer2-file-systems">Transferring data between ARCHER2 file systems</h3>
+<p>For internal data transfers between ARCHER2 file systems (home. work, solid state scratch,
+RDFaaS) we recommend using the <code>cp</code> command. This can be used in parallel on different
+data chunks for large data transfers and placed in a serial job submission script if needed.</p>
+<div class="admonition warning">
+<p class="admonition-title">Do not use <code>mv</code> to transfer data between file systems</p>
+<p>You should not use the <code>mv</code> command to transfer data between different file systems
+as there is a chance of data loss if something goes wrong during the transfer process.
+Always use a command such as <code>cp</code> that preserves the original copy of the data so you
+can check for integrity before deleting the original copy.</p>
+</div>
+<h3 id="transferring-data-tofrom-archer2">Transferring data to/from ARCHER2</h3>
 <p>The method you use to transfer data to/from ARCHER2 will depend on how
 much you want to transfer and where to. The methods we cover in this
 guide are:</p>
