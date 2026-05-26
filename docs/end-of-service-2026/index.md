@@ -14,9 +14,9 @@ These pages provide information for users on the end of the ARCHER2
 UK National Supercomputing Service. They will be updated with information
 as more details become available.
 
-The documentation currently covers
+This documentation currently covers:
 
-- [Timeline for end of ARCHER2 service](timeline.md)
+- [Timeline for end of ARCHER2 service](#timeline-overview)
     + When will login access end?
     + When will job submission end?
     + When will data access end?
@@ -36,15 +36,41 @@ The documentation currently covers
 
 ## Timeline overview
 
-[TBC]
+The table below gives more detail on the ARCHER2 end of service timeline. More precise timings
+will be added closer to the end of service.
+
+| Item | Time/Date | Notes |
+|---|---|---|
+| End of /home, /work, solid state scratch data access | 21 Nov 2026 |  |
+| End of RDFaaS data access | 21 Nov 2026 |  |
+| End of job submission | 21 Nov 2026 | While job submission will be available to end of service, you will not be able to access data produced by jobs that run to the end once the service has ended. |
+| End of login access | 21 Nov 2026 |  |
+| End of VAST RDF service | TBC |  |
 
 ## Summary of user impacts
 
-- Data no longer accessible
-- No login available
-- Data in SAFE retained for 2 years then deleted
+After the end of the ARCHER2 service:
+
+- Data on /home, /work, solid state scratch and RDFaaS will no longer be accessible
+- No login will be available
+- Personal data in SAFE will be retained for 2 years then deleted as per the [SAFE Personal Data and Privacy Policy](https://www.archer2.ac.uk/about/policies/safe_privacy_policy.html)
+- SAFE access will continue to be available for you to access historic ARCHER2 use data
+- ARCHER2 website will continue to be available
 
 ## Recommended actions
 
-- Review data held on ARCHER2 and transfer off anything you want to keep as
-  soon as possible
+We strongly recommend that users and projects review any data held on ARCHER2 file systems and
+transfer data you wish to keep to a different location  as soon as possible.
+
+!!! important "Do not leave data transfer too late"
+    Do not leave data transfer too late or you may find you do not have time to overcome 
+    performance bottlnecks or other issues.
+
+The documentation contains useful advice on tools and techniques for data transfer:
+
+- [Archiving and Data Transfer](https://docs.archer2.ac.uk/user-guide/data/#archiving-and-data-transfer)
+
+You may also be able to access the [VAST RDF service]() to store data beyond the lifetime of ARCHER2 for
+use on other UK national HPC facilities.
+
+If you have any questions about transferring data, please [contact the ARCHER2 Service Desk](https://www.archer2.ac.uk/support-access/servicedesk.html).
