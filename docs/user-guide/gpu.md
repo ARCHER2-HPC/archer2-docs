@@ -179,10 +179,9 @@ table:
 | `PrgEnv-cray` | `crayftn`       |     ✅	   | ❌  |   ✅    |
 | `PrgEnv-cray` | `craycc`        |     ✅	   | ❌  |   ❌    |
 | `PrgEnv-cray` | `crayCC`        |     ✅	   | ✅  |   ❌    |
-| `PrgEnv-gnu`  | `gfortran`      |     ✅	   | ❌  |   ❌    |
-| `PrgEnv-gnu`  | `gcc`           |     ✅	   | ❌  |   ❌    |
-| `PrgEnv-gnu`  | `g++`           |     ✅         | ❌  |   ❌    |
-
+| `PrgEnv-gnu`  | `gfortran`      |     ❌	   | ❌  |   ❌    |
+| `PrgEnv-gnu`  | `gcc`           |     ❌	   | ❌  |   ❌    |
+| `PrgEnv-gnu`  | `g++`           |     ❌         | ❌  |   ❌    |
 
 It is generally recommended to do the following:
 
@@ -241,7 +240,7 @@ option to the wrapper when compiling. For example:
 ftn -fopenmp source.f90
 ```
 
-This should work under `PrgEnv-amd`, `PrgEnv-cray` and `PrgEnv-gnu`.
+This should work under `PrgEnv-amd` and `PrgEnv-cray`. 
 
 You may find that offload directives introduced in more recent
 versions of the OpenMP standard, e.g. versions later than OpenMP 4.5,
