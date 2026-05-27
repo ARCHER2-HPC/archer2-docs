@@ -4658,21 +4658,21 @@ table:</p>
 <tr>
 <td><code>PrgEnv-gnu</code></td>
 <td><code>gfortran</code></td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
 <td style="text-align: center;">❌</td>
 <td style="text-align: center;">❌</td>
 </tr>
 <tr>
 <td><code>PrgEnv-gnu</code></td>
 <td><code>gcc</code></td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
 <td style="text-align: center;">❌</td>
 <td style="text-align: center;">❌</td>
 </tr>
 <tr>
 <td><code>PrgEnv-gnu</code></td>
 <td><code>g++</code></td>
-<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
 <td style="text-align: center;">❌</td>
 <td style="text-align: center;">❌</td>
 </tr>
@@ -4719,7 +4719,7 @@ module load craype-x86-milan
 option to the wrapper when compiling. For example:</p>
 <div class="highlight"><pre><span></span><code>ftn -fopenmp source.f90
 </code></pre></div>
-<p>This should work under <code>PrgEnv-amd</code>, <code>PrgEnv-cray</code> and <code>PrgEnv-gnu</code>.</p>
+<p>This should work under <code>PrgEnv-amd</code> and <code>PrgEnv-cray</code>. </p>
 <p>You may find that offload directives introduced in more recent
 versions of the OpenMP standard, e.g. versions later than OpenMP 4.5,
 fail to compile with some compilers. Under <code>PrgEnv-cray</code> an explicit
