@@ -19,12 +19,12 @@ Summary of impact and advice for data on ARCHER2 at end of service
 ## File systems on ARCHER2
 
 | File system | End of access | User data locations | Notes |
-|---|---|---|
-| ARCHER2 home | 21 Nov 2026 | /home/<project ID/<group ID>/<user ID> | No access to any data beyond end of access date |
-| ARCHER2 work | 21 Nov 2026 | /work/<project ID/<group ID>/<user ID> | No access to any data beyond end of access date |
-| ARCHER2 solid state scratch | 21 Nov 2026 | /mnt/lustre/a2fs-nvme/<project ID/<group ID>/<user ID> | No access to any data beyond end of access date |
-| RDFaaS | 21 Nov 2026 | /epsrc/<project ID/<group ID>/<user ID> <br/> /general/<project ID/<group ID>/<user ID> | No access to any data beyond end of access date |
-| RDS | TBC | TBC | To allow limited capacity storage beyond the lifetime of ARCHER2 |
+|---|---|---|---|
+| ARCHER2 home | 21 Nov 2026 | `/home/[project ID]/[group ID]/[user ID]` | No access to any data beyond end of access date |
+| ARCHER2 work | 21 Nov 2026 | `/work/[project ID]/[group ID]/[user ID]` | No access to any data beyond end of access date |
+| ARCHER2 solid state scratch | 21 Nov 2026 | `/mnt/lustre/a2fs-nvme/[project ID]/[group ID]/[user ID]` | No access to any data beyond end of access date |
+| RDFaaS | 21 Nov 2026 | `/epsrc/[project ID]/[group ID]/[user ID]` <br/> `/general/[project ID]/[group ID]/[user ID]` | No access to any data beyond end of access date |
+| RDS | TBC | TBC | Planned to allow limited capacity storage beyond the lifetime of ARCHER2 |
 
 ## Data transfer
 

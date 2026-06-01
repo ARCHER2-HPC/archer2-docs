@@ -53,7 +53,11 @@ nav:
   - "ARCHER2 Frequently Asked Questions":
     - "General FAQ": faq/index.md
   - "ARCHER2 end of service 2026":
-    - "Overview": end-of-service-2026/index.md
+    - "Overview and timeline": end-of-service-2026/index.md
+    - "Data and data transfer": end-of-service-2026/data.md
+    - "Personal data on SAFE": end-of-service-2026/safe.md
+    - "HPC access beyond ARCHER2": end-of-service-2026/next-services.md
+    - "Getting support": end-of-service-2026/support.md
   - "User and Best Practice Guide":
     - "Overview": user-guide/index.md
     - "Hardware": user-guide/hardware.md
