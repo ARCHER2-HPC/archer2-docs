@@ -18,12 +18,14 @@ At the time of writing, 6 NCR resources have been confirmed by UKRI but NCR-spec
 routes have not been published yet. Some resources provide legacy access routes which 
 researchers can use:
 
-- [Baskerville NCR (University of Birmingham)](https://www.baskerville.ac.uk/) - no access available yet
-- Charger NCR (UCL) - no access available yet
-- [Cirrus NCR (EPCC, Univeristy of Edinburgh)](https://www.cirrus.ac.uk) - test, academic and industry access routes available
-- [Isambard 3 NCR (University of Bristol)](https://docs.isambard.ac.uk/access/#isambard-3) - no general access available yet
-- [Mary Coombes NCR (Hartree Centre, STFC)](https://www.hartree.stfc.ac.uk/technologies/mary-coombs/) - industry access routes available
-- Zenith NCR (University of Cambridge) - no access available yet
+| Service | Current access routes |
+|---|---|
+| [Baskerville NCR (University of Birmingham)](https://www.baskerville.ac.uk/) | No access available |
+| Charger NCR (UCL) | No access available |
+| [Cirrus NCR (EPCC, Univeristy of Edinburgh)](https://www.cirrus.ac.uk) | Test, academic and industry access routes available |
+| [Isambard 3 NCR (University of Bristol)](https://docs.isambard.ac.uk/access/#isambard-3) | No general access available |
+| [Mary Coombes NCR (Hartree Centre, STFC)](https://www.hartree.stfc.ac.uk/technologies/mary-coombs/) | Industry access routes available |
+| Zenith NCR (University of Cambridge) | No access available |
 
 **EuroHPC**
 
