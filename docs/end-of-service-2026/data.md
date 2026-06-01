@@ -7,9 +7,9 @@ Summary of impact and advice for data on ARCHER2 at end of service
   + This applies to the following file systems: ARCHER2 home, ARCHER2 work, solid state scratch and RDFaaS
 - Plan and start transfers early to avoid congestion close to end of service
 
-!!! note "Data storage beyond the end of ARCHER2"
+!!! note "Research Data Storage (RDS): data storage beyond the end of ARCHER2: "
     We are working on plans to provide capacity to store data for some time after the end of
-    ARCHER2 on a storage system that will be accessible directly from ARCHER2. We will provide
+    ARCHER2 on a storage system that will be accessible directly from ARCHER2 - the RDS system. We will provide
     more details to users as they become available but you should expect the capacity of this
     storage to be a small fraction of current quotas on the ARCHER2 work file system so you
     should not plan for this storage system to have the capacity to store the majority of data
@@ -24,6 +24,7 @@ Summary of impact and advice for data on ARCHER2 at end of service
 | ARCHER2 work | 21 Nov 2026 | /work/<project ID/<group ID>/<user ID> | No access to any data beyond end of access date |
 | ARCHER2 solid state scratch | 21 Nov 2026 | /mnt/lustre/a2fs-nvme/<project ID/<group ID>/<user ID> | No access to any data beyond end of access date |
 | RDFaaS | 21 Nov 2026 | /epsrc/<project ID/<group ID>/<user ID> <br/> /general/<project ID/<group ID>/<user ID> | No access to any data beyond end of access date |
+| RDS | TBC | TBC | To allow limited capacity storage beyond the lifetime of ARCHER2 |
 
 ## Data transfer
 
