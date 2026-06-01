@@ -1,7 +1,7 @@
 # ARCHER2 End of Service
 
 !!! important "Last update"
-    This documentation was last updated on 11 May 2026
+    This documentation was last updated on 1 June 2026
 
 
 !!! warning "ARCHER2 End of Service"
