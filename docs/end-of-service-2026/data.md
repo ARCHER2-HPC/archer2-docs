@@ -5,16 +5,19 @@ Summary of impact and advice for data on ARCHER2 at end of service
 - All data on ARCHER2 file systems will not be available in any form after end of service -
   any data you wish to keep *must* be transferred to a different location.
   + This applies to the following file systems: ARCHER2 home, ARCHER2 work, solid state scratch and RDFaaS
+- We are planning a new RDF file system to be mounted on ARCHER2 that users can use for data storage beyond
+  end of ARCHER2 - capacity will be limited so projects will need to carefully consider what data they 
+  want to store on this system.
 - Plan and start transfers early to avoid congestion close to end of service
 
-!!! note "Research Data Storage (RDS): data storage beyond the end of ARCHER2: "
+!!! note "New Research Data Facility (RDF): data storage beyond the end of ARCHER2: "
     We are working on plans to provide capacity to store data for some time after the end of
-    ARCHER2 on a storage system that will be accessible directly from ARCHER2 - the RDS system. We will provide
-    more details to users as they become available but you should expect the capacity of this
-    storage to be a small fraction of current quotas on the ARCHER2 work file system so you
+    ARCHER2 on a storage system that will be accessible directly from ARCHER2 - the new RDF.
+    We will provide more details to users on how to get access and use this storage as they
+    become available but you should expect the capacity of this storage to be a small fraction
+    of current quotas on the ARCHER2 work file system so you
     should not plan for this storage system to have the capacity to store the majority of data
-    you have on ARCHER2. The safest approach is still to transfer any important data off ARCHER2
-    to other locations before the end of service.
+    you have on ARCHER2.
 
 ## File systems on ARCHER2
 

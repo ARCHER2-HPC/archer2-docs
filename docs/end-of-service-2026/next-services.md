@@ -1,6 +1,7 @@
 # HPC service access beyond ARCHER2
 
-In this section we provide links to other HPC services that researchers
+In this section we provide information for UKRI projects with ARCHER2 access
+that stretches past the end of service and links to other HPC services that researchers
 may be able to access beyond the lifetime of ARCHER2. 
 
 !!! note "Not an exhaustive list or guarantee of access"
@@ -9,6 +10,25 @@ may be able to access beyond the lifetime of ARCHER2.
     to. The inclusion of a system on this list does not guarantee you are eligible for access
     nor that you are guaranteed to gain access if you are eligible. It is provided for 
     convenience only.
+
+## Projects with ARCHER2 access beyond the end of service
+
+**UKRI-funded projects**
+
+If your UKRI-funded project has ARCHER2 access that extends beyond the end of the ARCHER2
+service as part of the awarded project resources, then UKRI will be in touch with the
+project PI to discuss HPC access after the ARCHER2 service has finished.
+
+**Academic projects funded by non-UKRI awards**
+
+If you have a non-UKRI award with access to ARCHER2, you should look for access from another
+facility such as those listed below.
+
+**Industry projects**
+
+Industry projects wishing to continue with HPC access beyond ARCHER2 should get in touch
+via the contact listed on the [ARCHER2 Industrial Engagement](https://www.archer2.ac.uk/community/industry/)
+page.
 
 ## UK national HPC facilities
 
@@ -26,6 +46,11 @@ researchers can use:
 | [Isambard 3 NCR (University of Bristol)](https://docs.isambard.ac.uk/access/#isambard-3) | No general access available |
 | [Mary Coombes NCR (Hartree Centre, STFC)](https://www.hartree.stfc.ac.uk/technologies/mary-coombs/) | Industry access routes available |
 | Zenith NCR (University of Cambridge) | No access available |
+
+!!! tip "Cirrus is the only NCR where you can currently apply for academic access"
+    While the Cirrus NCR is the only service that has access routes available to academic
+    researchers right now, access routes to the other NCRs are expected to become available
+    later in 2026 and early 2027.
 
 **EuroHPC**
 

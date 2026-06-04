@@ -41,7 +41,8 @@ will be added closer to the end of service.
 
 | Item | Time/Date | Notes |
 |---|---|---|
-| End of /home, /work, solid state scratch data access | 21 Nov 2026 |  |
+| RDF data access start | TBC Summer 2026 | New RDF for data storage beyond end of ARCHER2 |
+| End of home, work, solid state scratch file system access | 21 Nov 2026 |  |
 | End of RDFaaS data access | 21 Nov 2026 |  |
 | End of job submission | 21 Nov 2026 | While job submission will be available to end of service, you will not be able to access data produced by jobs that run to the end once the service has ended. |
 | End of login access | 21 Nov 2026 |  |
@@ -50,20 +51,22 @@ will be added closer to the end of service.
 
 After the end of the ARCHER2 service:
 
-- Data on /home, /work, solid state scratch and RDFaaS will no longer be accessible
+- Data on home, work, solid state scratch and RDFaaS file systems will no longer be accessible
 - No login will be available
 - Personal data in SAFE will be retained for 2 years then deleted as per the [SAFE Personal Data and Privacy Policy](https://www.archer2.ac.uk/about/policies/safe_privacy_policy.html)
+- New RDF for data storage will extend beyond end of ARCHER2
 - SAFE access will continue to be available for you to access historic ARCHER2 use data
+- Projects with ARCHER2 projects that extend beyond the end of service will be contacted by UKRI about continued access to HPC facilities
 - ARCHER2 website will continue to be available
 
-!!! note "Research Data Storage (RDS): data storage beyond the end of ARCHER2: "
+!!! note "New Research Data Facility (RDF): data storage beyond the end of ARCHER2: "
     We are working on plans to provide capacity to store data for some time after the end of
-    ARCHER2 on a storage system that will be accessible directly from ARCHER2 - the RDS system. We will provide
-    more details to users as they become available but you should expect the capacity of this
-    storage to be a small fraction of current quotas on the ARCHER2 work file system so you
-    should not plan for this storage system to have the capacity to store the majority of data
-    you have on ARCHER2. The safest approach is still to transfer any important data off ARCHER2
-    to other locations before the end of service.
+    ARCHER2 on a storage system that will be accessible directly from ARCHER2 - the new RDF.
+    We will provide more details to users on how to get access and use this storage as they
+    become available but you should expect the capacity of this storage to be a small fraction
+    of current quotas on the ARCHER2 work file system. You
+    should not plan for this storage system to be able to store the majority of data
+    you have on ARCHER2.
 
 ## Recommended actions
 
@@ -72,13 +75,13 @@ transfer data you wish to keep to a different location  as soon as possible.
 
 !!! important "Do not leave data transfer too late"
     Do not leave data transfer too late or you may find you do not have time to overcome 
-    performance bottlnecks or other issues.
+    performance bottlenecks or other issues.
 
 The documentation contains useful advice on tools and techniques for data transfer:
 
 - [Archiving and Data Transfer](https://docs.archer2.ac.uk/user-guide/data/#archiving-and-data-transfer)
 
-You may also be able to access the *Research Data Storage (RDS)* system to store data beyond the
+You may also be able to access the new *Research Data Facility (RDF)* system to store data beyond the
 lifetime of ARCHER2 for use on other UK national HPC facilities. We will add more information here
 as it becomes available.
 
