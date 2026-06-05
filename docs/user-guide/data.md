@@ -207,7 +207,7 @@ The `lustrequota` command shows all quotas (user, group and project)
 that may apply to your account. For example:
 
 ```bash
-aturner@ln01:~> lustrequota
+auser@ln01:~> lustrequota
 
 # Current Lustre quota and use
  -      User : auser
