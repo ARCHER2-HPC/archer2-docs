@@ -197,7 +197,36 @@ account.
     exactly up to date with the situation on the systems themselves.
 
 You can also examine up to date quotas and usage on the ARCHER2 systems
-themselves using the `lfs quota` command. To do this:
+themselves. The easiest way to do this is to use the `lustrequota` command
+provide by the ARCHER2 support team at EPCC but you can also use the
+standard using the `lfs quota` command.
+
+##### Using `lustrequota`
+
+The `lustrequota` command shows all quotas (user, group and project)
+that may apply to your account. For example:
+
+```bash
+aturner@ln01:~> lustrequota
+
+# Current Lustre quota and use
+ -      User : auser
+ -   Project : t01
+ - Directory : /mnt/lustre/a2fs-work2/work/t01
+
+                     Type     Quota       Use     Files
+                     ----     -----       ---     -----
+            Project (t01)    48.82T    34.17T  39956222 (Applies to files owned by t01)
+             User (auser)        0k    2.618T   2616381 (Applies to files owned by user auser)
+    Group (t01-quotatest)        1G   1.332G*         7 (Applies to files owned by t01-quotatest)
+```
+
+The command automatically identifies the correct work file system to 
+query for your directories.
+
+##### Using `lfs quota`
+
+To do this:
 
 - Change directory to the work directory where you want to check the
    quota. For example, if I wanted to check the quota for user `auser` in
