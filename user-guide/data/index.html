@@ -826,6 +826,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Quotas on the work file systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-lustrequota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using lustrequota
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-lfs-quota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using lfs quota
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -3449,6 +3477,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Quotas on the work file systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-lustrequota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using lustrequota
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-lfs-quota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using lfs quota
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -4048,7 +4104,29 @@ account.</p>
 exactly up to date with the situation on the systems themselves.</p>
 </div>
 <p>You can also examine up to date quotas and usage on the ARCHER2 systems
-themselves using the <code>lfs quota</code> command. To do this:</p>
+themselves. The easiest way to do this is to use the <code>lustrequota</code> command
+provide by the ARCHER2 support team at EPCC but you can also use the
+standard using the <code>lfs quota</code> command.</p>
+<h5 id="using-lustrequota">Using <code>lustrequota</code></h5>
+<p>The <code>lustrequota</code> command shows all quotas (user, group and project)
+that may apply to your account. For example:</p>
+<div class="highlight"><pre><span></span><code>aturner@ln01:~&gt;<span class="w"> </span>lustrequota
+
+<span class="c1"># Current Lustre quota and use</span>
+<span class="w"> </span>-<span class="w">      </span>User<span class="w"> </span>:<span class="w"> </span>auser
+<span class="w"> </span>-<span class="w">   </span>Project<span class="w"> </span>:<span class="w"> </span>t01
+<span class="w"> </span>-<span class="w"> </span>Directory<span class="w"> </span>:<span class="w"> </span>/mnt/lustre/a2fs-work2/work/t01
+
+<span class="w">                     </span>Type<span class="w">     </span>Quota<span class="w">       </span>Use<span class="w">     </span>Files
+<span class="w">                     </span>----<span class="w">     </span>-----<span class="w">       </span>---<span class="w">     </span>-----
+<span class="w">            </span>Project<span class="w"> </span><span class="o">(</span>t01<span class="o">)</span><span class="w">    </span><span class="m">48</span>.82T<span class="w">    </span><span class="m">34</span>.17T<span class="w">  </span><span class="m">39956222</span><span class="w"> </span><span class="o">(</span>Applies<span class="w"> </span>to<span class="w"> </span>files<span class="w"> </span>owned<span class="w"> </span>by<span class="w"> </span>t01<span class="o">)</span>
+<span class="w">             </span>User<span class="w"> </span><span class="o">(</span>auser<span class="o">)</span><span class="w">        </span>0k<span class="w">    </span><span class="m">2</span>.618T<span class="w">   </span><span class="m">2616381</span><span class="w"> </span><span class="o">(</span>Applies<span class="w"> </span>to<span class="w"> </span>files<span class="w"> </span>owned<span class="w"> </span>by<span class="w"> </span>user<span class="w"> </span>auser<span class="o">)</span>
+<span class="w">    </span>Group<span class="w"> </span><span class="o">(</span>t01-quotatest<span class="o">)</span><span class="w">        </span>1G<span class="w">   </span><span class="m">1</span>.332G*<span class="w">         </span><span class="m">7</span><span class="w"> </span><span class="o">(</span>Applies<span class="w"> </span>to<span class="w"> </span>files<span class="w"> </span>owned<span class="w"> </span>by<span class="w"> </span>t01-quotatest<span class="o">)</span>
+</code></pre></div>
+<p>The command automatically identifies the correct work file system to 
+query for your directories.</p>
+<h5 id="using-lfs-quota">Using <code>lfs quota</code></h5>
+<p>To do this:</p>
 <ul>
 <li>Change directory to the work directory where you want to check the
    quota. For example, if I wanted to check the quota for user <code>auser</code> in
