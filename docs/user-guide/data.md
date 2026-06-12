@@ -825,22 +825,30 @@ concerning this command's use can be found in the [GCT 6.2 GridFTP User's Guide]
 
 ### Data transfer using `rclone`
 
-[Rclone](https://rclone.org/) is a command-line program to manage files on cloud
-storage. You can transfer files directly to/from cloud storage services, such as
-MS OneDrive and Dropbox. The program preserves timestamps and verifies checksums
-at all times.
+[Rclone](https://rclone.org/) is a versatile command-line program for transferring
+data. It can interface with various cloud storage services, such as MS OneDrive
+and Dropbox, as well as copying files locally or over SFTP. The program preserves
+timestamps and verifies checksums at all times.
 
-First of all, you must download and unzip `rclone` on ARCHER2:
+`rclone` is not installed centrally on ARCHER2, so first of all you must download
+a binary package and unzip it:
 ```bash
-wget https://downloads.rclone.org/v1.62.2/rclone-v1.62.2-linux-amd64.zip
-unzip rclone-v1.62.2-linux-amd64.zip
-cd rclone-v1.62.2-linux-amd64/
+wget https://downloads.rclone.org/v1.74.3/rclone-v1.74.3-linux-amd64.zip
+unzip rclone-v1.74.3-linux-amd64.zip
+cd rclone-v1.74.3-linux-amd64/
 ```
 
-The previous code snippet uses rclone v1.62.2, which was the latest version when
+The previous code snippet uses rclone v1.74.3, which was the latest version when
 these instructions were written.
 
-Configure rclone using `./rclone config`. This will guide you through an
+Note that `rclone` supports many options and sub-commands that are not covered
+here. Please refer to the [official rclone documentation](https://rclone.org/docs/)
+for full details.
+
+#### Cloud storage
+
+First we will cover using `rclone` to copy data to a cloud storage system.
+Configure `rclone` using `./rclone config`. This will guide you through an
 interactive setup process where you can make a new remote (called `remote`).
 See the following for detailed instructions for:
 
@@ -856,17 +864,70 @@ from your laptop to ARCHER2. The rclone website contains further instructions on
 Once all the above is done, you're ready to go. If you want to copy a directory,
 please use:
 
-```rclone copy <archer2_directory> remote:<cloud_directory>```
+```./rclone copy <archer2_directory> remote:<cloud_directory>```
 
 Please note that "remote" is the name that you have chosen when running
 `rclone config`. To copy files, please use:
 
-```rclone copyto <archer2_file> remote:<cloud_file>```
+```./rclone copyto <archer2_file> remote:<cloud_file>```
 
 !!! note
     If the session times out while the data transfer takes place, adding the
     `-vv` flag to an rclone transfer forces rclone to output to the terminal and
     therefore avoids triggering the timeout process.
+
+#### Local file transfer
+
+It is possible to use `rclone` to copy files locally, for example from one
+of ARCHER2's file systems to another. One advantage of using `rclone` for this
+is that it supports parallel data transfer, copying multiple files
+simultaneously for better performance. To copy local files, simply specify the
+source and destination directory paths:
+
+```./rclone copy <archer2_directory> <another_archer2_directory>```
+
+By default `rclone` will run 4 transfers simultaneously. However this can
+be customised using the `--transfers` option:
+
+```./rclone --transfers 8 copy <archer2_directory> <another_archer2_directory>```
+
+#### SFTP transfers
+
+Using its SFTP storage type, `rclone` can transfer files to and from other
+systems (for example, other HPC services or compute clusters) that support
+SSH. As described above for cloud storage access, SFTP must be configured by
+adding a new remote to `rclone` before it can be used, by running
+`./rclone config`. This command will guide you through the interactive setup
+process. For SFTP, the most important items are the hostname, the username,
+and the password if required. If the system you are accessing requires an SSH
+key, you can either provide the path to the private key and its passphrase as
+part of the setup process, or you can use `ssh-agent` to make the key
+available.
+
+For many of the options, the default value will usually work fine. For full
+details of the SFTP setup process, see [rclone's SFTP documentation](https://rclone.org/sftp/).
+
+Once you have set up the SFTP remote, it can be used in the same way as a
+cloud remote:
+
+```./rclone copy <archer2_directory> remote:<sftp_directory>```
+
+"remote" is the name you have chosen when running `rclone config`.
+
+If your transfers are taking a long time, you can pass the `--progress`
+option to see how they are progressing:
+
+```./rclone --progress copy <archer2_directory> remote:<sftp_directory>```
+
+You may also want to tune the `--transfers` option which specifies how many
+files `rclone` will attempt to transfer in parallel (default 4). With some
+hosts you may have to reduce this number for the transfers to operate
+reliably, due to poor network connectivity, or security policies that limit
+the number of connections allowed. Conversely, if you have a good connection
+to the remote server, you may wish to increase this number to speed up your
+transfer:
+
+```./rclone --progress --transfers 8 copy <archer2_directory> remote:<sftp_directory>```
 
 ### Batch data transfer
 
