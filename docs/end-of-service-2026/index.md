@@ -6,9 +6,8 @@
 
 !!! warning "ARCHER2 End of Service"
     The ARCHER2 service is scheduled to end on 21 November 2026.
-    After this date, you will no longer be able to access any data that
-    was stored on the ARCHER2 home, work and solid state scratch file
-    systems.
+    After this date, you will no longer be able to connect to the ARCHER2 login nodes or access any data that
+    was stored on the ARCHER2 home, work and solid state scratch file systems.
 
 These pages provide information for users on the end of the ARCHER2 
 UK National Supercomputing Service. They will be updated with information
