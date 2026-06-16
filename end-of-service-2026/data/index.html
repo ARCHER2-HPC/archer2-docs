@@ -2888,17 +2888,22 @@
 <ul>
 <li>All data on ARCHER2 file systems will not be available in any form after end of service -
   any data you wish to keep <em>must</em> be transferred to a different location.</li>
-<li>This applies to the following file systems: ARCHER2 home, ARCHER2 work, solid state scratch and RDFaaS</li>
-<li>The Research Data Facility as a Service (RDFaaS) will be available for EPSRC users to store data on beyond the ARCHER2 Service. Users will be responsible for transferring their own data and capacity will be limited so projects will need to carefully consider what data they 
-  want to store on this system.</li>
-<li>The JASMIN Data Facility will be available for NERC users to store data on beyond the ARCHER2 Service.   </li>
+<li>This applies to the following file systems: ARCHER2 home, ARCHER2 work, solid state scratch and current RDFaaS</li>
+<li>There will be new hardware provisioned for an RDF storage system before the end of the ARCHER2 service. Users can<br />
+  transfer data for storage beyond the end of ARCHER2 - capacity will be limited so projects will need to carefully
+  consider what data they want to store on this system.</li>
 <li>Plan and start transfers early to avoid congestion close to end of service</li>
 </ul>
 <div class="admonition note">
-<p class="admonition-title">Data storage beyond the end of ARCHER2: </p>
-<p>We will provide more detailed instructions to users on how to get access and transfer data to RDFaaS and JASMIN before the end of the ARCHER2 Service. This will include user documentation and webinars where users can ask questions. 
-Users should expect the capacity of this storage to be a fraction of current quotas on the ARCHER2 work file system so you
-should carefully consider what data you need to store.</p>
+<p class="admonition-title">New Research Data Facility (RDF) hardware: data storage beyond the end of ARCHER2: </p>
+<p>We are working on plans to provide capacity to store data for some time after the end of
+ARCHER2 on a new RDF storage system that will be accessible directly from ARCHER2.
+Users/projects will be responsible for copying data from current ARCHER2 file systems
+(including RDFaaS file systems) to the new RDF.
+We will provide more details to users on how to get access and use this storage as they
+become available but you should expect the capacity of this storage to be a fraction
+of current quotas on the ARCHER2 work file system. You should not plan for this storage
+system to be able to store the majority of data you have on ARCHER2.</p>
 </div>
 <h2 id="file-systems-on-archer2">File systems on ARCHER2</h2>
 <table>
@@ -2930,10 +2935,16 @@ should carefully consider what data you need to store.</p>
 <td>No access to any data beyond end of access date</td>
 </tr>
 <tr>
-<td>RDFaaS</td>
-<td>beyond ARCHER2 Service</td>
+<td>Current RDFaaS</td>
+<td>21 Nov 2026</td>
 <td><code>/epsrc/[project ID]/[group ID]/[user ID]</code> <br/> <code>/general/[project ID]/[group ID]/[user ID]</code></td>
-<td>Data will need to be transferred from ARCHER2</td>
+<td>No access to any data beyond end of access date</td>
+</tr>
+<tr>
+<td>New RDF storage</td>
+<td>Beyond ARCHER2 end of service</td>
+<td>TBC</td>
+<td>Storage available Summer 2026</td>
 </tr>
 </tbody>
 </table>
@@ -2949,6 +2960,15 @@ the system:</p>
 <li><a href="https://docs.archer2.ac.uk/user-guide/data/#rsync">rsync</a> - for serial data transfers over SSH to remote systems and local laptops/workstations</li>
 <li><a href="https://docs.archer2.ac.uk/user-guide/data/#data-transfer-via-globus">Globus Online</a> - for large-scale data transfers to remote facilities with a Globus endpoint (e.g. <a href="https://help.jasmin.ac.uk/docs/data-transfer/globus-transfers-with-jasmin/">JASMIN</a>)</li>
 </ul>
+<div class="admonition tip">
+<p class="admonition-title">NERC-supported projects can use JASMIN for data storage</p>
+<p>NERC-supported projects have been granted access to data storage resources on
+<a href="https://www.jasmin.ac.uk/">JASMIN</a>. Please see teh JASMIN website for details
+on how to transfer data (<a href="https://docs.archer2.ac.uk/user-guide/data/#data-transfer-via-globus">Globus Online</a>
+is supported for data transfers to JASMIN). If you have any questions on JASMIN
+access for your NERC-supported project, please contact the 
+<a href="mailto:hpc@nerc.ukri.org">NERC HPC Team</a>.</p>
+</div>
 
 
 
