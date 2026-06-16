@@ -47,11 +47,6 @@ researchers can use:
 | [Mary Coombes NCR (Hartree Centre, STFC)](https://www.hartree.stfc.ac.uk/technologies/mary-coombs/) | Industry access routes available |
 | Zenith NCR (University of Cambridge) | No access currently available |
 
-!!! tip "Cirrus is the only NCR where you can currently apply for academic access"
-    While the Cirrus NCR is the only service that has access routes available to academic
-    researchers right now, access routes to the other NCRs are expected to become available
-    later in 2026 and early 2027.
-
 **EuroHPC**
 
 [EuroHPC](https://www.eurohpc-ju.europa.eu/index_en) provides access to supercomputers across
