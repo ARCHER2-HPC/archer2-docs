@@ -15,9 +15,15 @@ may be able to access beyond the lifetime of ARCHER2.
 
 **UKRI-funded/supported projects**
 
-If your UKRI-funded project has ARCHER2 access that extends beyond the end of the ARCHER2
+If your UKRI-funded/supported project has ARCHER2 access that extends beyond the end of the ARCHER2
 service as part of the awarded project resources, then UKRI will be in touch with the
 project PI to discuss HPC access after the ARCHER2 service has finished.
+
+If you have questions on access beyond ARCHER2 for your UKRI-funded/supported project you can
+get in touch using the following details
+
+- EPSRC Research Infrastructure Team: [researchinfrastructure@epsrc.ukri.org](mailto:researchinfrastructure@epsrc.ukri.org)
+- NERC HPC Team: [hpc@nerc.ukri.org](mailto:hpc@nerc.ukri.org)
 
 **Industry projects**
 
@@ -53,9 +59,9 @@ researchers can use:
 Europe for academic researchers and industry users. See their website for specific calls and
 information on how to get access.
 
-## Related non-HPC services
+## Related services
 
-There are also non-HPC services available which may be of interest. Details of how to access these
+There are also other services available which may be of interest. Details of how to access these
 facilities can be found on their specific websites.
 
 - [JASMIN - The UK's data analysis facility for environmental science](https://jasmin.ac.uk)
