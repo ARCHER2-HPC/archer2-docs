@@ -5,19 +5,15 @@ Summary of impact and advice for data on ARCHER2 at end of service
 - All data on ARCHER2 file systems will not be available in any form after end of service -
   any data you wish to keep *must* be transferred to a different location.
   + This applies to the following file systems: ARCHER2 home, ARCHER2 work, solid state scratch and RDFaaS
-- There will be new hardware provisioned for the RDFaaS before the end of the ARCHER2 service. Users can transfer data for storage beyond
-  the end of ARCHER2 - capacity will be limited so projects will need to carefully consider what data they 
+- The Research Data Facility as a Service (RDFaaS) will be available for EPSRC users to store data on beyond the ARCHER2 Service. Users will be responsible for transferring their own data and capacity will be limited so projects will need to carefully consider what data they 
   want to store on this system.
+- The JASMIN Data Facility will be available for NERC users to store data on beyond the ARCHER2 Service.   
 - Plan and start transfers early to avoid congestion close to end of service
 
-!!! note "Research Data Facility as a Service (RDFaaS): data storage beyond the end of ARCHER2: "
-    We are working on plans to provide capacity to store data for some time after the end of
-    ARCHER2 on a storage system that will be accessible directly from ARCHER2. 
-    We will provide more details to users on how to get access and use this storage as they
-    become available but you should expect the capacity of this storage to be a fraction
-    of current quotas on the ARCHER2 work file system so you
-    should not plan for this storage system to have the capacity to store the majority of data
-    you have on ARCHER2.
+!!! note "Data storage beyond the end of ARCHER2: "
+    We will provide more detailed instructions to users on how to get access and transfer data to RDFaaS and JASMIN before the end of the ARCHER2 Service. This will include user documentation and webinars where users can ask questions. 
+    Users should expect the capacity of this storage to be a fraction of current quotas on the ARCHER2 work file system so you
+    should carefully consider what data you need to store.
 
 ## File systems on ARCHER2
 
