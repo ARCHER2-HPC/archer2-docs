@@ -56,11 +56,10 @@ will be added closer to the end of service.
 
 | Item | Time/Date | Notes |
 |---|---|---|
-| New RDF data access start | TBC Summer 2026 | New RDF for data storage beyond end of ARCHER2 |
 | End of home, work, solid state scratch file system access | 21 Nov 2026 |  |
-| End of current RDFaaS data access | 21 Nov 2026 |  |
 | End of job submission | 21 Nov 2026 | While job submission will be available to end of service, you will not be able to access data produced by jobs that run to the end once the service has ended. |
 | End of login access | 21 Nov 2026 |  |
+| RDFaaS | Continues beyond the end of ARCHER2 service | Data will need to be transferred by users from /epsrc and /general before end of ARCHER2 service. Details will be provided to users once they are available. |
 
 ## Summary of user impacts
 
