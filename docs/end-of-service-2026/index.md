@@ -6,12 +6,20 @@
 !!! warning "ARCHER2 End of Service"
     The ARCHER2 service is scheduled to end on 21 November 2026.
     After this date, you will no longer be able to connect to the ARCHER2 login nodes or access any data that
-    was stored on the ARCHER2 home, work and solid state scratch file systems. You will no longer be able
-    to access any data on the current RDFaaS file systems after the end of the ARCHER2 service either.
-    
-    A replacement RDF storage system is being commissioned to allow users to store some data beyond the end
-    of the ARCHER2 service and this should be available to active ARCHER2 projects within the next couple 
-    of months.
+    was stored on the ARCHER2 home, work and solid state scratch file systems.
+
+    RDFaaS will be available beyond the end of the ARCHER2 service but users will need to transfer data
+    from current file system to it before the end of ARCHER2 - including data
+    on /epsrc and /general. Detailed instructions on how to access continuing RDFaaS storage will be
+    provided as soon as they are available.
+
+!!! tip "NERC-supported projects can use JASMIN for data storage"
+    NERC-supported projects have been granted access to data storage resources on
+    [JASMIN](https://www.jasmin.ac.uk/). Please see teh JASMIN website for details
+    on how to transfer data ([Globus Online](https://docs.archer2.ac.uk/user-guide/data/#data-transfer-via-globus)
+    is supported for data transfers to JASMIN). If you have any questions on JASMIN
+    access for your NERC-supported project, please contact the 
+    [NERC HPC Team](mailto:hpc@nerc.ukri.org).
 
 !!! important "Do not leave data transfer too late"
     Do not leave data transfer too late or you may find you do not have time to overcome 
@@ -59,8 +67,7 @@ will be added closer to the end of service.
 After the end of the ARCHER2 service:
 
 - Data on home, work, solid state scratch file systems will not be accessible beyond the end of the ARCHER2 service
-- Data on current RDFaaS file systems will no longer be accessible beyond the end of the ARCHER2 service
-- RDF hardware will be refreshed to allow data storage to extend beyond the end of the ARCHER2 service - users will be responsible for copying data to the new RDFaaS hardware
+- RDFaaS will continue beyond the lifetime of ARCHER2 but users will need to transfer data from /epsrc and /general - more details will be provided as soon as they are available
 - No login access will be available beyond the end of the ARCHER2 service
 - Personal data in SAFE will be retained for 2 years then deleted as per the SAFE Personal Data and Privacy Policy
 - SAFE access will continue to be available for you to access historic ARCHER2 use data
@@ -68,14 +75,12 @@ After the end of the ARCHER2 service:
 - Industry projects with ARCHER2 access that extend beyond the end of service will be contacted by EPCC about continued access to HPC facilities
 - ARCHER2 website will continue to be available beyond the end of the ARCHER2 service
 
-!!! note "New Research Data Facility (RDF) hardware: data storage beyond the end of ARCHER2: "
-    We are working on plans to provide capacity to store data for some time after the end of
-    ARCHER2 on a new RDF storage system that will be accessible directly from ARCHER2.
-    Users/projects will be responsible for copying data from current ARCHER2 file systems
-    (including RDFaaS file systems) to the new RDF.
-    We will provide more details to users on how to get access and use this storage as they
-    become available but you should expect the capacity of this storage to be a fraction
-    of current quotas on the ARCHER2 work file system. You should not plan for this storage
+!!! note "RDFaaS: data storage beyond the end of ARCHER2: "
+    RDFaaS will be available beyond the end of the ARCHER2 service but users will need to transfer data
+    from current file system to it before the end of ARCHER2 - including data
+    on /epsrc and /general. Detailed instructions on how to access continuing RDFaaS storage will be
+    provided as soon as they are available but you should expect the capacity of this storage to be a
+    fraction of current quotas on the ARCHER2 work file system. You should not plan for this storage
     system to be able to store the majority of data you have on ARCHER2.
 
 ## Recommended actions
