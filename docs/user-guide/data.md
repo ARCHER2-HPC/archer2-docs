@@ -317,18 +317,14 @@ solid state storage directory at:
 #### Quotas on solid state file system
 
 !!! important
-    All projects have the same, large quota of 250,000 GiB on the solid state
-    file system to allow them to use it as a scratch file system. Remember, any
+    All projects have large quotas on the solid state
+    file system (which may vary from project to project) to allow them to use it as a scratch file system. Remember, any
     files that have not been accessed in the last 28 days will be automatically
     deleted.
 
 You query quotas for the solid state file system in the same way as
 [quotas on the work file systems](#quotas-on-the-work-file-systems).
 
-!!! bug
-    Usage and quotas of the solid state file system are not yet available
-    in SAFE - you should use commands such as `lfs quota -hp $(id -g) .`
-    to query quotas on the solid state file system.
 
 #### Identifying files that are candidates for deletion
 
