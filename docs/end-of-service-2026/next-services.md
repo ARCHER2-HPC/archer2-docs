@@ -16,8 +16,10 @@ may be able to access beyond the lifetime of ARCHER2.
 **UKRI-funded/supported projects**
 
 If your UKRI-funded/supported project has ARCHER2 access that extends beyond the end of the ARCHER2
-service as part of the awarded project resources, then UKRI will be in touch with the
-project PI to discuss HPC access after the ARCHER2 service has finished.
+service as part of the awarded project resources, you should have received communication from UKRI
+to the Project Lead or HPC Lead regarding HPC access after the end of the ARCHER2 service. If you
+believe you should have been contacted about this and have not received an email from UKRI please
+contact [researchinfrastructure@epsrc.ukri.org](mailto:researchinfrastructure@epsrc.ukri.org).
 
 If you have questions on access beyond ARCHER2 for your UKRI-funded/supported project you can
 get in touch using the following details

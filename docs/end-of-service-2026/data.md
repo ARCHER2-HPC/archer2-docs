@@ -42,7 +42,7 @@ The key tools for transferring data off ARCHER2 are:
 
 !!! tip "NERC-supported projects can use JASMIN for data storage"
     NERC-supported projects have been granted access to data storage resources on
-    [JASMIN](https://www.jasmin.ac.uk/). Please see teh JASMIN website for details
+    [JASMIN](https://www.jasmin.ac.uk/). Please see the JASMIN website for details
     on how to transfer data ([Globus Online](https://docs.archer2.ac.uk/user-guide/data/#data-transfer-via-globus)
     is supported for data transfers to JASMIN). If you have any questions on JASMIN
     access for your NERC-supported project, please contact the 

@@ -70,8 +70,8 @@ After the end of the ARCHER2 service:
 - No login access will be available beyond the end of the ARCHER2 service
 - Personal data in SAFE will be retained for 2 years then deleted as per the SAFE Personal Data and Privacy Policy
 - SAFE access will continue to be available for you to access historic ARCHER2 use data
-- Academic projects with ARCHER2 access that extend beyond the end of service will be contacted by UKRI about continued access to HPC facilities
-- Industry projects with ARCHER2 access that extend beyond the end of service will be contacted by EPCC about continued access to HPC facilities
+- Academic projects with ARCHER2 access that extend beyond the end of service have been contacted by UKRI about continued access to HPC facilities
+- Industry projects with ARCHER2 access that extend beyond the end of service have been contacted by EPCC about continued access to HPC facilities
 - ARCHER2 website will continue to be available beyond the end of the ARCHER2 service
 
 !!! note "RDFaaS: data storage beyond the end of ARCHER2: "
