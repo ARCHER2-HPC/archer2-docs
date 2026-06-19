@@ -4281,19 +4281,13 @@ solid state storage directory at:</p>
 <h4 id="quotas-on-solid-state-file-system">Quotas on solid state file system</h4>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>All projects have the same, large quota of 250,000 GiB on the solid state
-file system to allow them to use it as a scratch file system. Remember, any
+<p>All projects have large quotas on the solid state
+file system (which may vary from project to project) to allow them to use it as a scratch file system. Remember, any
 files that have not been accessed in the last 28 days will be automatically
 deleted.</p>
 </div>
 <p>You query quotas for the solid state file system in the same way as
 <a href="#quotas-on-the-work-file-systems">quotas on the work file systems</a>.</p>
-<div class="admonition bug">
-<p class="admonition-title">Bug</p>
-<p>Usage and quotas of the solid state file system are not yet available
-in SAFE - you should use commands such as <code>lfs quota -hp $(id -g) .</code>
-to query quotas on the solid state file system.</p>
-</div>
 <h4 id="identifying-files-that-are-candidates-for-deletion">Identifying files that are candidates for deletion</h4>
 <p>You can identify which files you own that are candidates for imminent deletion at the
 next daily scratch file system purge using the <code>find</code> command in the following format:</p>
