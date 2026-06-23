@@ -10,10 +10,10 @@ Summary of impact and advice for data on ARCHER2 at end of service
   consider what data they want to store on this system.
 - Plan and start transfers early to avoid congestion close to end of service
 
-!!! note "RDFaaS: data storage beyond the end of ARCHER2: "
+!!! note "RDFaaS: data storage beyond the end of ARCHER2"
     RDFaaS will be available beyond the end of the ARCHER2 service but users will need to transfer data
-    from current file system to it before the end of ARCHER2 - including data
-    on /epsrc and /general. Detailed instructions on how to access continuing RDFaaS storage will be
+    on /epsrc and /general to an updated local mount path before the end of the ARCHER2 service. Detailed
+    instructions on how to access continuing RDFaaS storage will be
     provided as soon as they are available but you should expect the capacity of this storage to be a
     fraction of current quotas on the ARCHER2 work file system. You should not plan for this storage
     system to be able to store the majority of data you have on ARCHER2.
@@ -25,7 +25,7 @@ Summary of impact and advice for data on ARCHER2 at end of service
 | ARCHER2 home | 21 Nov 2026 | `/home/[project ID]/[group ID]/[user ID]` | No access to any data beyond end of access date |
 | ARCHER2 work | 21 Nov 2026 | `/work/[project ID]/[group ID]/[user ID]` | No access to any data beyond end of access date |
 | ARCHER2 solid state scratch | 21 Nov 2026 | `/mnt/lustre/a2fs-nvme/[project ID]/[group ID]/[user ID]` | No access to any data beyond end of access date |
-| RDFaaS | Beyond ARCHER2 end of service | TBC | Data will need to be transferred by users from /epsrc and /general before end of ARCHER2 service. Details will be provided to users once they are available. |
+| RDFaaS | Beyond ARCHER2 end of service | TBC | Data will need to be transferred by users from /epsrc and /general to a different local mount point before end of ARCHER2 service. Details will be provided to users once they are available. |
 
 ## Data transfer
 

@@ -29,9 +29,9 @@ get in touch using the following details
 
 **Industry projects**
 
-Industry projects wishing to continue with HPC access beyond ARCHER2 should get in touch
-via the contact listed on the [ARCHER2 Industrial Engagement](https://www.archer2.ac.uk/community/industry/)
-page.
+Industry projects on ARCHER2 should have been contacted by EPCC to discuss arrangements beyond
+the end of the ARCHER2 service. If you have not been contacted by EPCC or have any questions,
+please get in touch via the contact listed on the [ARCHER2 Industrial Engagement](https://www.archer2.ac.uk/community/industry/) page.
 
 **Other projects**
 

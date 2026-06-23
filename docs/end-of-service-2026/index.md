@@ -1,7 +1,7 @@
 # ARCHER2 End of Service
 
 !!! important "Last update"
-    This documentation was last updated on 16 June 2026
+    This documentation was last updated on 23 June 2026
 
 !!! warning "ARCHER2 End of Service"
     The ARCHER2 service is scheduled to end on 21 November 2026.
@@ -56,17 +56,17 @@ will be added closer to the end of service.
 
 | Item | Time/Date | Notes |
 |---|---|---|
-| End of home, work, solid state scratch file system access | 21 Nov 2026 |  |
+| End of home, work, solid state scratch file system access | 21 Nov 2026 | There will be no access to any data on these file systems beyond the end of the ARCHER2 service. |
 | End of job submission | 21 Nov 2026 | While job submission will be available to end of service, you will not be able to access data produced by jobs that run to the end once the service has ended. |
 | End of login access | 21 Nov 2026 |  |
-| RDFaaS | Continues beyond the end of ARCHER2 service | Data will need to be transferred by users from /epsrc and /general before end of ARCHER2 service. Details will be provided to users once they are available. |
+| RDFaaS | Continues beyond the end of ARCHER2 service | Data will need to be transferred by users from /epsrc and /general to new local mount location before end of ARCHER2 service. Details will be provided to users once they are available. |
 
 ## Summary of user impacts
 
 After the end of the ARCHER2 service:
 
 - Data on home, work, solid state scratch file systems will not be accessible beyond the end of the ARCHER2 service
-- RDFaaS will continue beyond the lifetime of ARCHER2 but users will need to transfer data from /epsrc and /general - more details will be provided as soon as they are available
+- RDFaaS will continue beyond the lifetime of ARCHER2 but users will need to transfer data from /epsrc and /general to a different local mount point on ARCHER2 - more details will be provided as soon as they are available
 - No login access will be available beyond the end of the ARCHER2 service
 - Personal data in SAFE will be retained for 2 years then deleted as per the SAFE Personal Data and Privacy Policy
 - SAFE access will continue to be available for you to access historic ARCHER2 use data
@@ -74,10 +74,10 @@ After the end of the ARCHER2 service:
 - Industry projects with ARCHER2 access that extend beyond the end of service have been contacted by EPCC about continued access to HPC facilities
 - ARCHER2 website will continue to be available beyond the end of the ARCHER2 service
 
-!!! note "RDFaaS: data storage beyond the end of ARCHER2: "
+!!! note "RDFaaS: data storage beyond the end of ARCHER2"
     RDFaaS will be available beyond the end of the ARCHER2 service but users will need to transfer data
-    from current file system to it before the end of ARCHER2 - including data
-    on /epsrc and /general. Detailed instructions on how to access continuing RDFaaS storage will be
+    on /epsrc and /general to an updated local mount path before the end of the ARCHER2 service. Detailed
+    instructions on how to access continuing RDFaaS storage will be
     provided as soon as they are available but you should expect the capacity of this storage to be a
     fraction of current quotas on the ARCHER2 work file system. You should not plan for this storage
     system to be able to store the majority of data you have on ARCHER2.
