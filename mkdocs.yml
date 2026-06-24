@@ -44,6 +44,12 @@ markdown_extensions:
 
 nav:
   - "Documentation overview": index.md
+  - "End of Service 2026":
+    - "Overview": end-of-service-2026/index.md
+    - "Data on ARCHER2": end-of-service-2026/data.md
+    - "EPCC SAFE": end-of-service-2026/safe.md
+    - "HPC beyond ARCHER2": end-of-service-2026/next-services.md
+    - "Getting help": end-of-service-2026/support.md
   - "Quickstart":
     - "Overview": quick-start/overview.md
     - "Quickstart for users": quick-start/quickstart-users.md
