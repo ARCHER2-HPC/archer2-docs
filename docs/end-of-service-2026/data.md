@@ -39,18 +39,7 @@ the [Cirrus National Compute Resource (NCR)](https://www.cirrus.ac.uk).
 If you do not already have access to the NSCDS, you should ask your project PI or project manager
 to request access via the [ARCHER2 Service Desk](https://www.archer2.ac.uk/support-access/servicedesk.html).
 
-### Transferring data to NSCDS
-
-You can use standard tools such as `cp` to copy small datasets to the NSCDS. For larger amounts of 
-data, you may wish to consider using `rclone` to copy data in a parallel way. This use of rclone
-is documented at:
-
-- [Using rclone for local data transfer](../user-guide/data.md#local-file-transfer)
-
-As NSCDS is available on the data analysis nodes so you can put data transfer processes in 
-serial jobs if they are going to take a long time, see:
-
-- [Running serial jobs](user-guide/analysis.md#requesting-resources-on-the-data-analysis-nodes-using-slurm)
+### Location of directories on NSCDS
 
 If you have access to the NSCDS, your directories will be at:
 
@@ -67,6 +56,27 @@ your NSCDS directory will be at:
 
 !!! important "NSCDS not on compute nodes"
     The NSCDS is not available on the ARCHER2 compute nodes.
+
+### Organising your data on the NSCDS
+
+As the NSCDS will be available across multiple services, you may wish to create an `archer2`
+subdirectory in your space to ensure that your ARCHER2 data does not get accidentally overwritten
+or confused with data you generate on other services where NSCDS is available. 
+
+### Transferring data to NSCDS
+
+You can use standard tools such as `cp` to copy small datasets to the NSCDS. For larger amounts of 
+data, you may wish to consider using `rclone` to copy data in a parallel way. This use of rclone
+is documented at:
+
+- [Using rclone for local data transfer](../user-guide/data.md#local-file-transfer)
+
+As NSCDS is available on the data analysis nodes so you can put data transfer processes in 
+serial jobs if they are going to take a long time, see:
+
+- [Running serial jobs](user-guide/analysis.md#requesting-resources-on-the-data-analysis-nodes-using-slurm)
+
+
 
 ## Data transfer
 

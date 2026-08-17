@@ -438,6 +438,11 @@ your NSCDS directory will be at:
 /nscds/e05/e05/auser
 ```
 
+!!! tip "Organising your data on the NSCDS"
+    As the NSCDS will be available across multiple services, you may wish to create an `archer2`
+    subdirectory in your space to ensure that your ARCHER2 data does not get accidentally overwritten
+    or confused with data you generate on other services where NSCDS is available.
+
 !!! important "NSCDS not on compute nodes"
     The NSCDS is not available on the ARCHER2 compute nodes.
 
@@ -445,7 +450,7 @@ your NSCDS directory will be at:
     If you are having issues accessing data on the NSCDS then
     please [contact the ARCHER2 Service Desk](https://www.archer2.ac.uk/support-access/servicedesk.html)
 
-#### Copying data from NSCDS to Work file systems
+#### Copying data to NSCDS from Work file systems
 
 You can use the standard Linux `cp` command to copy data from other ARCHER2 file
 systems to NSCDS or vice versa. For example, to
