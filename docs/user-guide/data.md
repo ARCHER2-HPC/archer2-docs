@@ -59,10 +59,10 @@ There are a number of different data storage types available to users:
    - Work file systems
    - Solid state (NVMe) file system
    - RDFaaS (RDF as a Service) file systems (`/epsrc` and `/general`)
+   - NSCDS (National Supercomputing Centre Data Store)
 
 Each type of storage has different characteristics and policies, and is
 suitable for different types of use.
-
 
 !!! important
     All users have a directory on one of the home file systems and on
@@ -88,6 +88,7 @@ different node types:
 | /work   | yes         | yes           | yes                 | No backup, high performance |
 | Solid state (NVMe)   | yes         | yes           | yes                 | No backup, high performance |
 | RDFaaS  | yes         | no            | yes                 | Disaster recovery backup |
+| NSCDS   | yes         | no            | yes                 | No backup |
 
 !!! important
     Only the work file systems and the solid state (NVMe) file system are visible on
@@ -95,8 +96,8 @@ different node types:
     (input data, application binaries, software libraries, etc.) must be placed on
     one of these file systems.
 
-    You may see "file not found" errors if you try to access data on the /home
-    or RDFaaS file systems when running on the compute nodes.
+    You may see "file not found" errors if you try to access data on the /home,
+    RDFaaS or NSCDS file systems when running on the compute nodes.
 
 ### Home file systems
 
@@ -407,6 +408,83 @@ cp /epsrc/e05/e05/auser/important-data.tar.gz /work/e05/e05/auser/
 (remember to replace the project code and username with your own username
 and project code. You may also need to use `/general` if your data was
 there on the RDF file systems).
+
+### NSCDS 
+
+The NSCDS (National Supercomputing Centre Data Storage) provides
+storage capacity for projects to store data beyond the lifetime of ARCHER2
+and access it from other systems hosted by EPCC, UK National Supercomputing Centre
+(e.g. [the Cirrus National Compute Resource](https://www.cirrus.ac.uk))
+
+!!! warning
+    The NSCDS is not backed up at all.
+
+!!! tip
+    Not all projects on ARCHER2 have access to the NSCDS, if you do
+    have access, this will show up in the login account page on SAFE for your
+    ARCHER2 login account.
+
+If you have access to NSCDS, you will have a directory in `/nscds`. You can find
+your directory on the NSCDS at:
+
+```
+/nscds/<project code>/<project code>/<username>
+```
+
+For example, if your username is `auser` and you are in the `e05` project, then
+your NSCDS directory will be at:
+
+```
+/nscds/e05/e05/auser
+```
+
+!!! important "NSCDS not on compute nodes"
+    The NSCDS is not available on the ARCHER2 compute nodes.
+
+!!! tip "Asking for help"
+    If you are having issues accessing data on the NSCDS then
+    please [contact the ARCHER2 Service Desk](https://www.archer2.ac.uk/support-access/servicedesk.html)
+
+#### Copying data from NSCDS to Work file systems
+
+You can use the standard Linux `cp` command to copy data from other ARCHER2 file
+systems to NSCDS or vice versa. For example, to
+transfer the file `important-data.tar.gz` from the work file system to
+NSCDS you would use the following command (assuming you are user `auser`
+in project `e05`):
+
+```
+cp /work/e05/e05/auser/important-data.tar.gz /nscds/e05/e05/auser/
+```
+
+(remember to replace the project code and username with your own username
+and project code).
+
+!!! tip "Use rclone parallel local data transfers for large datasets"
+    If you are transferring a large amount of data to NSCDS, you should consider
+    using [rclone local data transfer](#local-file-transfer) (perhaps in a 
+    serial job submission script) rather than using the basic `cp` command.
+
+#### Quotas on the NSCDS file system
+
+As for the other ARCHER2 storage systems, all projects are assigned a quota on the
+NSCDS. The project PI or manager can split this quota up
+between users or groups of users if they wish.
+
+You can view any NSCDS quotas that apply to your account by
+logging into SAFE and navigating to the page for your ARCHER2 login
+account.
+
+1. [Log into SAFE](https://safe.epcc.ed.ac.uk)
+2. Use the "Login accounts" menu and select your ARCHER2 login account
+3. The "Login account details" table lists any user or group quotas that
+   are linked with your account. (If there is no quota shown for a row
+   then you have an unlimited quota for that item, but you may still may
+   be limited by another quota.)
+
+!!! tip
+    Quota and usage data on SAFE is updated twice daily so may not be
+    exactly up to date with the situation on the systems themselves.
 
 ### Subprojects
 

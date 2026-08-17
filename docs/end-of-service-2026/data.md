@@ -5,17 +5,16 @@ Summary of impact and advice for data on ARCHER2 at end of service
 - All data on ARCHER2 file systems will not be available in any form after end of service -
   any data you wish to keep *must* be transferred to a different location.
   + This applies to the following file systems: ARCHER2 home, ARCHER2 work, solid state scratch and current RDFaaS
-- There will be new hardware provisioned for an RDF storage system before the end of the ARCHER2 service. Users can  
-  transfer data for storage beyond the end of ARCHER2 - capacity will be limited so projects will need to carefully
+- Projects/users can use the new NSCDS (National Supercomputing Centre Data Store) to store some data
+  beyond the lifetime of ARCHER2. Capacity will be limited so projects will need to carefully
   consider what data they want to store on this system.
 - Plan and start transfers early to avoid congestion close to end of service
 
-!!! note "RDFaaS: data storage beyond the end of ARCHER2"
-    RDFaaS will be available beyond the end of the ARCHER2 service but users will need to transfer data
-    on /epsrc and /general to an updated local mount path before the end of the ARCHER2 service. Detailed
-    instructions on how to access continuing RDFaaS storage will be
-    provided as soon as they are available but you should expect the capacity of this storage to be a
-    fraction of current quotas on the ARCHER2 work file system. You should not plan for this storage
+!!! note "NSCDS: Data storage beyond the end of ARCHER2"
+    The new NSCDS will be available beyond the end of the ARCHER2 service but users will need to transfer data
+    from other ARCHER2 file systems to this storage before the end of service. Detailed
+    instructions on how to access this new storage are available in the [Data section](data.md), the capacity
+    of this storage is fraction of current quotas on the ARCHER2 file systems. You should not plan for this storage
     system to be able to store the majority of data you have on ARCHER2.
 
 ## File systems on ARCHER2
@@ -25,7 +24,49 @@ Summary of impact and advice for data on ARCHER2 at end of service
 | ARCHER2 home | 21 Nov 2026 | `/home/[project ID]/[group ID]/[user ID]` | No access to any data beyond end of access date |
 | ARCHER2 work | 21 Nov 2026 | `/work/[project ID]/[group ID]/[user ID]` | No access to any data beyond end of access date |
 | ARCHER2 solid state scratch | 21 Nov 2026 | `/mnt/lustre/a2fs-nvme/[project ID]/[group ID]/[user ID]` | No access to any data beyond end of access date |
-| RDFaaS | Beyond ARCHER2 end of service | TBC | Data will need to be transferred by users from /epsrc and /general to a different local mount point before end of ARCHER2 service. Details will be provided to users once they are available. |
+| RDFaaS changing to NSCDS | Beyond end of ARCHER2 service | `/nscds/[project ID]/[group ID]/[user ID]` | Data will need to be transferred by users from /epsrc and /general to new NSCDS |
+
+## NSCDS
+
+The NSCDS (National Supercomputing Centre Data Store) is available on ARCHER2 and provides
+limited capacity for projects to store data beyond the lifetime of ARCHER2 on a storage
+platform that will be available on other facilities hosted by
+[EPCC, UK National Supercomputing Centre](https://www.epcc.ed.ac.uk), for example 
+the [Cirrus National Compute Resource (NCR)](https://www.cirrus.ac.uk).
+
+### Requesting access to the NSCDS
+
+If you do not already have access to the NSCDS, you should ask your project PI or project manager
+to request access via the [ARCHER2 Service Desk](https://www.archer2.ac.uk/support-access/servicedesk.html).
+
+### Transferring data to NSCDS
+
+You can use standard tools such as `cp` to copy small datasets to the NSCDS. For larger amounts of 
+data, you may wish to consider using `rclone` to copy data in a parallel way. This use of rclone
+is documented at:
+
+- [Using rclone for local data transfer](../user-guide/data.md#local-file-transfer)
+
+As NSCDS is available on the data analysis nodes so you can put data transfer processes in 
+serial jobs if they are going to take a long time, see:
+
+- [Running serial jobs](user-guide/analysis.md#requesting-resources-on-the-data-analysis-nodes-using-slurm)
+
+If you have access to the NSCDS, your directories will be at:
+
+```
+/nscds/<project code>/<project code>/<username>
+```
+
+For example, if your username is `auser` and you are in the `e05` project, then
+your NSCDS directory will be at:
+
+```
+/nscds/e05/e05/auser
+```
+
+!!! important "NSCDS not on compute nodes"
+    The NSCDS is not available on the ARCHER2 compute nodes.
 
 ## Data transfer
 
