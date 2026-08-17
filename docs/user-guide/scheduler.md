@@ -423,7 +423,7 @@ For a full list of see [Job Reasons](https://slurm.schedmd.com/squeue.html#lbAF)
 ## Output from Slurm jobs
 
 Slurm places standard output (STDOUT) and standard error (STDERR) for
-each job in the file `slurm_<JobID>.out`. This file appears in the job's
+each job in the file `slurm-<JobID>.out`. This file appears in the job's
 working directory once your job starts running.
 
 !!! hint
