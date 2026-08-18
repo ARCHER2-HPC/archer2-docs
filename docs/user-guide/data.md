@@ -491,6 +491,15 @@ account.
     Quota and usage data on SAFE is updated twice daily so may not be
     exactly up to date with the situation on the systems themselves.
 
+You can also query quotas that apply to your current NSCDS directory from the
+the command line using the `df -h $PWD` command, for example:
+
+```
+auser@uan01:/nscds/e05/e05/auser> df -h $PWD
+Filesystem                          Size  Used Avail Use% Mounted on
+fs02.naidin.epcc.ed.ac.uk:/archer2  8.8T  1.8G  8.8T   1% /mnt/nfs/nscds
+```
+
 ### Subprojects
 
 Some large projects may choose to split their resources into multiple subprojects.
