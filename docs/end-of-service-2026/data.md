@@ -4,18 +4,20 @@ Summary of impact and advice for data on ARCHER2 at end of service
 
 - All data on ARCHER2 file systems will not be available in any form after end of service -
   any data you wish to keep *must* be transferred to a different location.
-  + This applies to the following file systems: ARCHER2 home, ARCHER2 work, solid state scratch and current RDFaaS
-- Projects/users can use the new NSCDS (National Supercomputing Centre Data Store) to store some data
-  beyond the lifetime of ARCHER2. Capacity will be limited so projects will need to carefully
+  + This applies to the following file systems: ARCHER2 home, ARCHER2 work and solid state scratch
+- RDFaaS data will be retained until end of Mar 2027
+- Projects/users can use the new NSCDS (National Supercomputing Centre Data Store) to store limited data
+  beyond the lifetime of ARCHER2. This sotrage system will be accessible from other systems hosted at EPCC
+  such as Cirrus. Capacity will be limited so projects will need to carefully
   consider what data they want to store on this system.
 - Plan and start transfers early to avoid congestion close to end of service
 
-!!! note "NSCDS: Data storage beyond the end of ARCHER2"
-    The new NSCDS will be available beyond the end of the ARCHER2 service but users will need to transfer data
-    from other ARCHER2 file systems to this storage before the end of service. Detailed
-    instructions on how to access this new storage are available in the [Data section](data.md), the capacity
-    of this storage is fraction of current quotas on the ARCHER2 file systems. You should not plan for this storage
-    system to be able to store the majority of data you have on ARCHER2.
+!!! tip "RDFaaS and NSCDS: Data storage beyond the lifetime of ARCHER2"
+    The RDFaaS will retain data until end of Mar 2027. We are also providing a new location for 
+    projects to store limited amounts of data beyond the end of ARCHER2: the NSCDS
+    (National Supercomputing Centre Data Store). Users will need to transfer data from current file systems to it before
+    the end of ARCHER2. More detailed instructions on this are provided in the [Data section](data.md) of this short guide.
+    You should not plan for this storage to be able to host all the data you currently have on ARCHER2.
 
 ## File systems on ARCHER2
 
@@ -25,6 +27,8 @@ Summary of impact and advice for data on ARCHER2 at end of service
 | ARCHER2 work | 21 Nov 2026 | `/work/[project ID]/[group ID]/[user ID]` | No access to any data beyond end of access date |
 | ARCHER2 solid state scratch | 21 Nov 2026 | `/mnt/lustre/a2fs-nvme/[project ID]/[group ID]/[user ID]` | No access to any data beyond end of access date |
 | RDFaaS changing to NSCDS | Beyond end of ARCHER2 service | `/nscds/[project ID]/[group ID]/[user ID]` | Data will need to be transferred by users from /epsrc and /general to new NSCDS |
+| RDFaaS | `/epsrc` and `/general` | 31 Mar 2027 | Data on RDFaaS will be retained until 31 Mar 2027 |
+| NSCDS | mid-2028 | `/nscds/[project ID]/[group ID]/[user ID]` | Location for data that can accessed from other EPCC services (e.g. Cirrus) beyond the end of ARCHER2 |
 
 ## NSCDS
 
@@ -75,8 +79,6 @@ As NSCDS is available on the data analysis nodes so you can put data transfer pr
 serial jobs if they are going to take a long time, see:
 
 - [Running serial jobs](user-guide/analysis.md#requesting-resources-on-the-data-analysis-nodes-using-slurm)
-
-
 
 ## Data transfer
 

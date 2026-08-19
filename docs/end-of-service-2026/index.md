@@ -1,19 +1,18 @@
 # ARCHER2 End of Service
 
 !!! important "Last update"
-    This documentation was last updated on 18 August 2026
+    This documentation was last updated on 19 August 2026
 
 !!! warning "ARCHER2 End of Service"
     The ARCHER2 service is scheduled to end on 21 November 2026.
     After this date, you will no longer be able to connect to the ARCHER2 login nodes or access any data that
     was stored on the ARCHER2 home, work and solid state scratch file systems.
 
-!!! tip "Data storage beyond the lifetime of ARCHER2"
-    The RDFaaS is changing to the NSCDS (National Supercomputing Centre Data Store). The NSCDS
-    has been made available on ARCHER2 for projects to store limited amounts of data beyond
-    the lifetime of ARCHER2. Users will need to transfer data from current file systems to it before
-    the end of ARCHER2 - including data any on RDFaaS /epsrc and /general that they wish to store. More
-    detailed instructions on this are provided in the [Data section](data.md) of this short guide.
+!!! tip "RDFaaS and NSCDS: Data storage beyond the lifetime of ARCHER2"
+    The RDFaaS will retain data until end of Mar 2027. We are also providing a new location for 
+    projects to store limited amounts of data beyond the end of ARCHER2: the NSCDS
+    (National Supercomputing Centre Data Store). Users will need to transfer data from current file systems to it before
+    the end of ARCHER2. More detailed instructions on this are provided in the [Data section](data.md) of this short guide.
 
 !!! tip "NERC-supported projects can use JASMIN for data storage"
     NERC-supported projects have been granted access to data storage resources on
@@ -61,15 +60,16 @@ will be added closer to the end of service.
 | End of home, work, solid state scratch file system access | 21 Nov 2026 | There will be no access to any data on these file systems beyond the end of the ARCHER2 service. |
 | End of job submission | 21 Nov 2026 | While job submission will be available to end of service, you will not be able to access data produced by jobs that run to the end once the service has ended. |
 | End of login access | 21 Nov 2026 |  |
-| RDFaaS changing to NSCDS | 27 Aug 2026 | Data will need to be transferred by users from /epsrc and /general to new NSCDS. |
+| RDFaaS | 31 Mar 2027 | Data on RDFaaS will be retained until 31 Mar 2027 |
+| NSCDS | Starts from 3 Sep 2026 | Location for data that can accessed from other services such as Cirrus beyond the end of ARCHER2 |
 
 ## Summary of user impacts
 
 After the end of the ARCHER2 service:
 
 - Data on home, work, solid state scratch file systems will not be accessible beyond the end of the ARCHER2 service
-- The RDFaaS will change into the NSCDS which will extend beyond the lifetime of ARCHER2 - users are responsible for
-  transferring any data they wish to keep to the new NSCDS
+- The RDFaaS will retain data until end of Mar 2027
+- NSCDS will extend beyond the lifetime of ARCHER2 - users are responsible for transferring any data they wish to keep to this location
 - No login access will be available beyond the end of the ARCHER2 service
 - Personal data in SAFE will be retained for 2 years then deleted as per the SAFE Personal Data and Privacy Policy
 - SAFE access will continue to be available for you to access historic ARCHER2 use data
@@ -77,12 +77,12 @@ After the end of the ARCHER2 service:
 - Industry projects with ARCHER2 access that extend beyond the end of service have been contacted by EPCC about continued access to HPC facilities
 - ARCHER2 website will continue to be available beyond the end of the ARCHER2 service
 
-!!! note "NSCDS: Data storage beyond the end of ARCHER2"
-    The new NSCDS will be available beyond the end of the ARCHER2 service but users will need to transfer data
-    from other ARCHER2 file systems to this storage before the end of service. Detailed
-    instructions on how to access this new storage are available in the [Data section](data.md), the capacity
-    of this storage is fraction of current quotas on the ARCHER2 file systems. You should not plan for this storage
-    system to be able to store the majority of data you have on ARCHER2.
+!!! tip "RDFaaS and NSCDS: Data storage beyond the lifetime of ARCHER2"
+    The RDFaaS will retain data until end of Mar 2027. We are also providing a new location for 
+    projects to store limited amounts of data beyond the end of ARCHER2: the NSCDS
+    (National Supercomputing Centre Data Store). Users will need to transfer data from current file systems to it before
+    the end of ARCHER2. More detailed instructions on this are provided in the [Data section](data.md) of this short guide.
+    You should not plan for this storage to be able to host all the data you currently have on ARCHER2.
 
 ## Recommended actions
 
