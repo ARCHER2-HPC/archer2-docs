@@ -3135,8 +3135,8 @@ module<span class="w"> </span>load<span class="w"> </span>qchem
 <span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
 
-<span class="nb">export</span><span class="w"> </span><span class="nv">SLURM_HINT</span><span class="o">=</span><span class="s2">&quot;nomultithread&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">SLURM_DISTRIBUTION</span><span class="o">=</span><span class="s2">&quot;block:block&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SLURM_HINT</span><span class="o">=</span><span class="s2">"nomultithread"</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SLURM_DISTRIBUTION</span><span class="o">=</span><span class="s2">"block:block"</span>
 
 qchem<span class="w"> </span>-slurm<span class="w"> </span>-nt<span class="w"> </span><span class="nv">$OMP_NUM_THREADS</span><span class="w"> </span>hf3c.in<span class="w"> </span>hf3c.out
 </code></pre></div>

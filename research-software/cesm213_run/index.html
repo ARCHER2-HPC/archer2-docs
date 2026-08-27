@@ -3476,7 +3476,7 @@ This could have two causes:
 <h3 id="known-issues-and-common-problems">Known Issues and Common Problems</h3>
 <h4 id="input-data-errors">Input data errors</h4>
 <p>Occasionally, the input data for a case is not downloaded correctly. Unfortunately, in these cases the checksum test run by the <code>check_input_data</code> script will not catch the corrupted fields in the file. The error message displayed can vary somewhat, but a common error message is</p>
-<div class="highlight"><pre><span></span><code><span class="go">ERROR timeaddmonths(): MM out of range&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="go">ERROR timeaddmonths(): MM out of range"</span>
 </code></pre></div>
 <p>You can often spot these errors by examining the log as described above, as the error will occur shortly after a file has been read. If this happens, delete the file in question from your <code>cesm_inputdata</code> directory and rerun</p>
 <p><div class="highlight"><pre><span></span><code><span class="go">./check_input_data --download</span>
@@ -3522,7 +3522,7 @@ If this option is not possible however, and your simulation absolutely needs to 
 <p>While this behaviour has so far only been observed for WACCM-X jobs, it is possible that this behaviour can occur with other compsets</p>
 <h4 id="job-failing-instantly-with-undefined-environment-variable">Job Failing instantly with undefined environment variable</h4>
 <p>There is a small possibility that your job may initially fail with the error message</p>
-<p><div class="highlight"><pre><span></span><code>ERROR: Undefined env var &#39;CESM_ROOT&#39;
+<p><div class="highlight"><pre><span></span><code>ERROR: Undefined env var 'CESM_ROOT'
 </code></pre></div>
 This could have two causes:
 1. You do not have the CESM2/2.1.3 module loaded. This module needs to be loaded when running the case as well as when building the case. Try running again after having run <code>module load CESM2/2.1.3</code>

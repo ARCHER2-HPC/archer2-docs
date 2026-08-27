@@ -3570,7 +3570,7 @@ This can also sometimes lead to performance increases.</p>
 <span class="c1">#   This prevents any threaded system libraries from automatically</span>
 <span class="c1">#   using threading.</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">4</span><span class="w">  </span><span class="c1"># Set to number of threads per process</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_PLACES</span><span class="o">=</span><span class="s2">&quot;cores(128)&quot;</span><span class="w">  </span><span class="c1"># Set to total number of threads</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_PLACES</span><span class="o">=</span><span class="s2">"cores(128)"</span><span class="w">  </span><span class="c1"># Set to total number of threads</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">OMP_PROC_BIND</span><span class="o">=</span><span class="nb">true</span><span class="w">  </span><span class="c1"># Required if we want to underpopulate nodes</span>
 
 <span class="c1"># Ensure the cpus-per-task option is propagated to srun commands</span>

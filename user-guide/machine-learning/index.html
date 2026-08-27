@@ -3395,7 +3395,7 @@ ROCm Collective Communications Library (RCCL), hence the <code>--wireup_method n
 
     <span class="c1">#set up logging</span>
     <span class="n">pargs</span><span class="o">.</span><span class="n">logging_frequency</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">pargs</span><span class="o">.</span><span class="n">logging_frequency</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-    <span class="n">log_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pargs</span><span class="o">.</span><span class="n">output_dir</span><span class="p">,</span> <span class="s2">&quot;logs&quot;</span><span class="p">,</span> <span class="n">pargs</span><span class="o">.</span><span class="n">run_tag</span> <span class="o">+</span> <span class="s2">&quot;.log&quot;</span><span class="p">))</span>
+    <span class="n">log_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pargs</span><span class="o">.</span><span class="n">output_dir</span><span class="p">,</span> <span class="s2">"logs"</span><span class="p">,</span> <span class="n">pargs</span><span class="o">.</span><span class="n">run_tag</span> <span class="o">+</span> <span class="s2">".log"</span><span class="p">))</span>
     <span class="o">...</span>
 
     <span class="n">writer</span> <span class="o">=</span> <span class="n">SummaryWriter</span><span class="p">()</span>
@@ -3425,8 +3425,8 @@ ROCm Collective Communications Library (RCCL), hence the <code>--wireup_method n
 
     <span class="o">...</span>
 
-    <span class="n">writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="s2">&quot;Accuracy/train&quot;</span><span class="p">,</span> <span class="n">iou_avg_train</span><span class="p">,</span> <span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="s2">&quot;Loss/train&quot;</span><span class="p">,</span> <span class="n">loss_avg_train</span><span class="p">,</span> <span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="s2">"Accuracy/train"</span><span class="p">,</span> <span class="n">iou_avg_train</span><span class="p">,</span> <span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="s2">"Loss/train"</span><span class="p">,</span> <span class="n">loss_avg_train</span><span class="p">,</span> <span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">step</span>
 </code></pre></div>
@@ -3488,14 +3488,14 @@ to the selected communications method. You will need to edit the <code>mpi</code
 
 <span class="k">def</span><span class="w"> </span><span class="nf">init</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">batchnorm_group_size</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
 
-    <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;nccl-openmpi&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">"nccl-openmpi"</span><span class="p">:</span>
 
     <span class="o">...</span>
 
-    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;mpi&quot;</span><span class="p">:</span>
-        <span class="n">rank</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;SLURM_PROCID&quot;</span><span class="p">))</span>
-        <span class="n">world_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;SLURM_NTASKS&quot;</span><span class="p">))</span>
-        <span class="n">dist</span><span class="o">.</span><span class="n">init_process_group</span><span class="p">(</span><span class="n">backend</span> <span class="o">=</span> <span class="s2">&quot;mpi&quot;</span><span class="p">,</span>
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">"mpi"</span><span class="p">:</span>
+        <span class="n">rank</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"SLURM_PROCID"</span><span class="p">))</span>
+        <span class="n">world_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"SLURM_NTASKS"</span><span class="p">))</span>
+        <span class="n">dist</span><span class="o">.</span><span class="n">init_process_group</span><span class="p">(</span><span class="n">backend</span> <span class="o">=</span> <span class="s2">"mpi"</span><span class="p">,</span>
                                 <span class="n">rank</span> <span class="o">=</span> <span class="n">rank</span><span class="p">,</span>
                                 <span class="n">world_size</span> <span class="o">=</span> <span class="n">world_size</span><span class="p">)</span>
 

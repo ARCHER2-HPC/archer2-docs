@@ -3918,17 +3918,17 @@ library is picked up at runtime.</p>
 supported for Fortran and some other languages). The initialisation and
 closing macros or functions must be called from the serial section of the code.</p>
 <div class="highlight"><pre><span></span><code><span class="p">...</span><span class="w"> </span><span class="c1">// other includes</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;likwid-marker.h&gt;</span><span class="c1">  </span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;likwid-marker.h&gt;</span><span class="w">  </span>
 <span class="p">...</span>
 <span class="n">LIKWID_MARKER_INIT</span><span class="p">;</span><span class="w">   </span><span class="c1">// macro call to setup measurement system</span>
 <span class="p">...</span>
-<span class="n">LIKWID_MARKER_REGISTER</span><span class="p">(</span><span class="s">&quot;myregion&quot;</span><span class="p">);</span><span class="w"> </span><span class="c1">// recommended to reduce overhead</span>
+<span class="n">LIKWID_MARKER_REGISTER</span><span class="p">(</span><span class="s">"myregion"</span><span class="p">);</span><span class="w"> </span><span class="c1">// recommended to reduce overhead</span>
 <span class="c1">// if OpenMP is used then this should be called in a parallel region</span>
 <span class="c1">// same is true for stop/start calls</span>
 
-<span class="n">LIKWID_MARKER_START</span><span class="p">(</span><span class="s">&quot;myregion&quot;</span><span class="p">);</span>
+<span class="n">LIKWID_MARKER_START</span><span class="p">(</span><span class="s">"myregion"</span><span class="p">);</span>
 <span class="p">...</span><span class="w"> </span><span class="c1">// code region of interest</span>
-<span class="n">LIKWID_MARKER_STOP</span><span class="p">(</span><span class="s">&quot;myregion&quot;</span><span class="p">);</span>
+<span class="n">LIKWID_MARKER_STOP</span><span class="p">(</span><span class="s">"myregion"</span><span class="p">);</span>
 
 <span class="n">LIKWID_MARKER_CLOSE</span><span class="p">;</span>
 </code></pre></div>

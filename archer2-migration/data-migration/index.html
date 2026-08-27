@@ -3192,7 +3192,7 @@ authenticate:</p>
 
 # Issue appropriate rsync command
 
-rsync -av --stats --progress --rsh=&quot;ssh -i ${HOME}/.ssh/id_rsa_batch&quot; \
+rsync -av --stats --progress --rsh="ssh -i ${HOME}/.ssh/id_rsa_batch" \
       user-01@login-4c.archer2.ac.uk:/work/proj01/proj01/user-01/src \
       /work/proj01/proj01/user-01/destination
 </code></pre></div>

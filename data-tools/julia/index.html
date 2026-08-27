@@ -3228,20 +3228,20 @@ wget<span class="w"> </span>https://julialang-s3.julialang.org/bin/linux/x64/1.6
 tar<span class="w"> </span>zxvf<span class="w"> </span>julia-1.6.6-linux-x86_64.tar.gz
 rm<span class="w"> </span>./julia-1.6.6-linux-x86_64.tar.gz
 
-<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH</span><span class="s2">:</span><span class="nv">$WORK</span><span class="s2">/julia-1.6.6/bin&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$PATH</span><span class="s2">:</span><span class="nv">$WORK</span><span class="s2">/julia-1.6.6/bin"</span>
 
 mkdir<span class="w"> </span>./.julia
-<span class="nb">export</span><span class="w"> </span><span class="nv">JULIA_DEPOT_PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$WORK</span><span class="s2">/.julia&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH</span><span class="s2">:</span><span class="nv">$WORK</span><span class="s2">/</span><span class="nv">$JULIA_DEPOT_PATH</span><span class="s2">/bin&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">JULIA_DEPOT_PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$WORK</span><span class="s2">/.julia"</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$PATH</span><span class="s2">:</span><span class="nv">$WORK</span><span class="s2">/</span><span class="nv">$JULIA_DEPOT_PATH</span><span class="s2">/bin"</span>
 </code></pre></div>
 <p>At this point you should have a working installation of Julia! The environment
 variables will however be cleared when you log out of the terminal. You can
 set them in the <code>.bashrc</code> file so that they're automatically defined every time
 you log in by adding the following lines to the end of the file <code>~/.bashrc</code></p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">WORK</span><span class="o">=</span><span class="s2">&quot;/work/t01/t01/auser&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">JULIA_DEPOT_PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$WORK</span><span class="s2">/.julia&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH</span><span class="s2">:</span><span class="nv">$WORK</span><span class="s2">/julia-1.6.6/bin&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH</span><span class="s2">:</span><span class="nv">$JULIA_DEPOT_PATH</span><span class="s2">/bin&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">WORK</span><span class="o">=</span><span class="s2">"/work/t01/t01/auser"</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">JULIA_DEPOT_PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$WORK</span><span class="s2">/.julia"</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$PATH</span><span class="s2">:</span><span class="nv">$WORK</span><span class="s2">/julia-1.6.6/bin"</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$PATH</span><span class="s2">:</span><span class="nv">$JULIA_DEPOT_PATH</span><span class="s2">/bin"</span>
 </code></pre></div>
 <h2 id="installing-packages-and-using-environments">Installing packages and using environments</h2>
 <p>Julia has a built in package manager which can be used to install registered
@@ -3257,7 +3257,7 @@ julia<span class="w"> </span>--project<span class="o">=</span><span class="nv">$
 <p>This launches Julia in the <code>MyTestEnv</code> environment. You can then install
 packages as usual using the normal commands in the Julia terminal. E.g.</p>
 <div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="n">Pkg</span>
-<span class="n">Pkg</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&quot;Oceananigans&quot;</span><span class="p">)</span>
+<span class="n">Pkg</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">"Oceananigans"</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="configuring-mpijl">Configuring MPI.jl</h2>
 <p>The <code>MPI.jl</code> package doesn't use the system MPICH implementation by default.
@@ -3266,10 +3266,10 @@ to load the <code>cray-mpich</code> module and define some environment variables
 for further details). Then you can launch Julia in an environment of your
 choice, ready to build.</p>
 <div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>cray-mpich/8.1.23
-<span class="nb">export</span><span class="w"> </span><span class="nv">JULIA_MPI_BINARY</span><span class="o">=</span><span class="s2">&quot;system&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">JULIA_MPI_PATH</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">JULIA_MPI_LIBRARY</span><span class="o">=</span><span class="s2">&quot;/opt/cray/pe/mpich/8.1.23/ofi/gnu/9.1/lib/libmpi.so&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">JULIA_MPIEXEC</span><span class="o">=</span><span class="s2">&quot;srun&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">JULIA_MPI_BINARY</span><span class="o">=</span><span class="s2">"system"</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">JULIA_MPI_PATH</span><span class="o">=</span><span class="s2">""</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">JULIA_MPI_LIBRARY</span><span class="o">=</span><span class="s2">"/opt/cray/pe/mpich/8.1.23/ofi/gnu/9.1/lib/libmpi.so"</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">JULIA_MPIEXEC</span><span class="o">=</span><span class="s2">"srun"</span>
 
 julia<span class="w"> </span>--project<span class="o">=</span>&lt;&lt;path<span class="w"> </span>to<span class="w"> </span>environment&gt;&gt;
 </code></pre></div>
@@ -3277,8 +3277,8 @@ julia<span class="w"> </span>--project<span class="o">=</span>&lt;&lt;path<span 
 following code. The final line installs the <code>mpiexecjl</code> command which should
 be used instead of <code>srun</code> to launch mpi processes.</p>
 <p><div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="n">Pkg</span>
-<span class="n">Pkg</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="s">&quot;MPI&quot;</span><span class="p">;</span><span class="w"> </span><span class="n">verbose</span><span class="o">=</span><span class="nb">true</span><span class="p">)</span>
-<span class="n">MPI</span><span class="o">.</span><span class="n">install_mpiexecjl</span><span class="p">(</span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;mpiexecjl&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">force</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"> </span><span class="n">verbose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">)</span>
+<span class="n">Pkg</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="s">"MPI"</span><span class="p">;</span><span class="w"> </span><span class="n">verbose</span><span class="o">=</span><span class="nb">true</span><span class="p">)</span>
+<span class="n">MPI</span><span class="o">.</span><span class="n">install_mpiexecjl</span><span class="p">(</span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"mpiexecjl"</span><span class="p">,</span><span class="w"> </span><span class="n">force</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"> </span><span class="n">verbose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">)</span>
 </code></pre></div>
 The <code>mpiexecjl</code> command will be installed in the directory that <code>JULIA_DEPOT_PATH</code>
 points too.</p>
@@ -3319,10 +3319,10 @@ module<span class="w"> </span>load<span class="w"> </span>cray-mpich/8.1.23
 <span class="c1"># Define some paths</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">WORK</span><span class="o">=</span>/work/t01/t01/auser
 
-<span class="nb">export</span><span class="w"> </span><span class="nv">JULIA</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$WORK</span><span class="s2">/julia-1.6.6/bin/julia&quot;</span><span class="w">  </span><span class="c1"># The julia executable</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH</span><span class="s2">:</span><span class="nv">$WORK</span><span class="s2">/julia-1.6.6/bin&quot;</span><span class="w">  </span><span class="c1"># The folder of the julia executable</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">JULIA_DEPOT_PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$WORK</span><span class="s2">/.julia&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">MPIEXECJL</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$JULIA_DEPOT_PATH</span><span class="s2">/bin/mpiexecjl&quot;</span><span class="w">  </span><span class="c1"># The path to the mpiexexjl executable</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">JULIA</span><span class="o">=</span><span class="s2">"</span><span class="nv">$WORK</span><span class="s2">/julia-1.6.6/bin/julia"</span><span class="w">  </span><span class="c1"># The julia executable</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$PATH</span><span class="s2">:</span><span class="nv">$WORK</span><span class="s2">/julia-1.6.6/bin"</span><span class="w">  </span><span class="c1"># The folder of the julia executable</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">JULIA_DEPOT_PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$WORK</span><span class="s2">/.julia"</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">MPIEXECJL</span><span class="o">=</span><span class="s2">"</span><span class="nv">$JULIA_DEPOT_PATH</span><span class="s2">/bin/mpiexecjl"</span><span class="w">  </span><span class="c1"># The path to the mpiexexjl executable</span>
 
 <span class="nv">$MPIEXECJL</span><span class="w"> </span>--project<span class="o">=</span><span class="nv">$WORK</span>/MyTestEnv<span class="w"> </span>-n<span class="w"> </span><span class="m">24</span><span class="w"> </span><span class="nv">$JULIA</span><span class="w"> </span>./MyMpiJuliaScript.jl
 </code></pre></div>

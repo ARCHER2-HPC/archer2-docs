@@ -3901,9 +3901,9 @@ to <code>configure</code> via <code>self.spec["blas"].libs</code>, a
 So, the Code_Saturne package uses the following <code>configure_args()</code>
 method:</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">configure_args</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="n">blas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spec</span><span class="p">[</span><span class="s2">&quot;blas&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">libs</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;--with-blas-lib=</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">blas</span><span class="o">.</span><span class="n">search_flags</span><span class="p">),</span>
-            <span class="s2">&quot;--with-blas-libs=</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">blas</span><span class="o">.</span><span class="n">link_flags</span><span class="p">)]</span>
+    <span class="n">blas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spec</span><span class="p">[</span><span class="s2">"blas"</span><span class="p">]</span><span class="o">.</span><span class="n">libs</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"--with-blas-lib=</span><span class="si">{0}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">blas</span><span class="o">.</span><span class="n">search_flags</span><span class="p">),</span>
+            <span class="s2">"--with-blas-libs=</span><span class="si">{0}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">blas</span><span class="o">.</span><span class="n">link_flags</span><span class="p">)]</span>
     <span class="k">return</span> <span class="n">args</span>
 </code></pre></div>
 <p>Here the <code>blas.search_flags</code> attribute is resolved to a <code>-L</code> library search flag

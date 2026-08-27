@@ -6698,7 +6698,7 @@ module<span class="w"> </span>load<span class="w"> </span>xthi
 <span class="c1">#   scontrol converts the condensed node IDs in the sbatch environment</span>
 <span class="c1">#   variable into a list of full node IDs that we can use with srun to</span>
 <span class="c1">#   ensure the subjobs are placed on the correct node. e.g. this converts</span>
-<span class="c1">#   &quot;nid[001234,002345]&quot; to &quot;nid001234 nid002345&quot;</span>
+<span class="c1">#   "nid[001234,002345]" to "nid001234 nid002345"</span>
 <span class="nv">nodelist</span><span class="o">=</span><span class="k">$(</span>scontrol<span class="w"> </span>show<span class="w"> </span>hostnames<span class="w"> </span><span class="nv">$SLURM_JOB_NODELIST</span><span class="k">)</span>
 
 <span class="c1"># Loop over the nodes assigned to the job</span>
@@ -7330,7 +7330,7 @@ communicator, we might run:</p>
 <span class="c1"># We must specify correctly the total number of nodes required.</span>
 <span class="kp">#SBATCH --nodes=3</span>
 
-<span class="nv">SHARED_ARGS</span><span class="o">=</span><span class="s2">&quot;--distribution=block:block --hint=nomultithread&quot;</span>
+<span class="nv">SHARED_ARGS</span><span class="o">=</span><span class="s2">"--distribution=block:block --hint=nomultithread"</span>
 
 <span class="nb">srun</span><span class="w"> </span>--het-group<span class="o">=</span><span class="m">0</span><span class="w"> </span>--nodes<span class="o">=</span><span class="m">1</span><span class="w"> </span>--ntasks-per-node<span class="o">=</span><span class="m">8</span><span class="w"> </span><span class="si">${</span><span class="nv">SHARED_ARGS</span><span class="si">}</span><span class="w"> </span>./xthi-a<span class="w"> </span>:<span class="w"> </span><span class="se">\</span>
 <span class="w"> </span>--het-group<span class="o">=</span><span class="m">1</span><span class="w"> </span>--nodes<span class="o">=</span><span class="m">2</span><span class="w"> </span>--ntasks-per-node<span class="o">=</span><span class="m">4</span><span class="w"> </span><span class="si">${</span><span class="nv">SHARED_ARGS</span><span class="si">}</span><span class="w"> </span>./xthi-b
@@ -7416,8 +7416,8 @@ task has one thread. An appropriate Slurm submission might be:</p>
 
 <span class="kp">#SBATCH --nodes=2</span>
 
-<span class="nv">SHARED_ARGS</span><span class="o">=</span><span class="s2">&quot;--distribution=block:block --hint=nomultithread \</span>
-<span class="s2">              --nodes=1 --ntasks-per-node=8 --cpus-per-task=16&quot;</span>
+<span class="nv">SHARED_ARGS</span><span class="o">=</span><span class="s2">"--distribution=block:block --hint=nomultithread \</span>
+<span class="s2">              --nodes=1 --ntasks-per-node=8 --cpus-per-task=16"</span>
 
 <span class="c1"># Do not set OMP_NUM_THREADS in the calling environment</span>
 
@@ -7534,9 +7534,9 @@ and, once the username has been selected, the budget you want to charge the rese
 <h2 id="capability-days">Capability Days</h2>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>The next Capability Days session will be from Tue 12 May 2026 to Thu 14 May 2026:
-- <code>pre-capabilityday</code> QoS: 0900-1900, Tue 12 May 2026
-- <code>capabilityday</code> QoS: 0800 Tue 13 May - 1400 Thu 14 May 2026</p>
+<p>The next Capability Days session will be from Tue 15 Sep 2026 to Thu 17 Sep 2026:
+- <code>pre-capabilityday</code> QoS: 0900-1900, Tue 15 Sep 2026
+- <code>capabilityday</code> QoS: 0800 Wed 16 Sep - 1400 Thu 17 Sep 2026</p>
 </div>
 <p>ARCHER2 Capability Days are a mechanism to allow users to run large scale (512 node or more) tests
 on the system free of charge. The motivations behind Capability Days are:</p>
@@ -7599,52 +7599,6 @@ module<span class="w"> </span>load<span class="w"> </span>xthi
 
 <span class="nb">srun</span><span class="w"> </span>--hint<span class="o">=</span>multithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>my_app.x
 </code></pre></div>
-<!--
-### NERC Capability reservation
-
-The NERC Capability reservation is typically available directly before the full Capability Day session and allows
-short test jobs to prepare for Capability Day.
-
-Submit to the `NERCcapability` *reservation*. Jobs can be submitted ahead of time and will start when the NERC Capability
-reservatoin starts.
-
-`NERCcapability` reservation limits:
-
-- Only available to users in NERC projects
-- Available for 8 hours
-- 1024 nodes available
-- Maximum job size: 1024 nodes
-- Maximum walltime: 8 hours (reservation length)
-    - We will monitor use of the reservation to ensure multiple users get a chance to run
-    - Any long jobs blocking access for other users will be killed
-- High memory nodes are not available
-- Jobs are free
-
-#### Example NERC Capability reservation job submission script
-
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="kp">#SBATCH --job-name=NERC_capability_job</span>
-<span class="kp">#SBATCH --nodes=256</span>
-<span class="kp">#SBATCH --ntasks-per-node=8</span>
-<span class="kp">#SBATCH --cpus-per-task=16</span>
-<span class="kp">#SBATCH --time=1:0:0</span>
-<span class="kp">#SBATCH --partition=standard</span>
-<span class="kp">#SBATCH --reservation=NERCcapability</span>
-<span class="kp">#SBATCH --qos=reservation</span>
-<span class="kp">#SBATCH --account=t01</span>
-
-<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">16</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_PLACES</span><span class="o">=</span>cores
-<span class="nb">export</span><span class="w"> </span><span class="nv">SRUN_CPUS_PER_TASK</span><span class="o">=</span><span class="nv">$SLURM_CPUS_PER_TASK</span>
-
-<span class="c1"># Check process/thread placement</span>
-module<span class="w"> </span>load<span class="w"> </span>xthi
-<span class="nb">srun</span><span class="w"> </span>--hint<span class="o">=</span>multithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>xthi<span class="w"> </span>&gt;<span class="w"> </span>placement-<span class="si">${</span><span class="nv">SLURM_JOBID</span><span class="si">}</span>.out
-
-<span class="nb">srun</span><span class="w"> </span>--hint<span class="o">=</span>multithread<span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>my_app.x
-</code></pre></div>
--->
-
 <h3 id="capability-day-session">Capability Day session</h3>
 <p>The Capability Day session is typically available directly after the pre-Capability Day session.</p>
 <p>Submit to the <code>capability</code> QoS. Jobs can be submitted ahead of time and will start when the Capability Day

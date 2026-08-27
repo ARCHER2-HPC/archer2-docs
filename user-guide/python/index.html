@@ -3637,15 +3637,15 @@ adding the initialisation to shell configuration files, you should edit your <co
 to remove the conda initialisation entries. This means deleting the lines that look something
 like:</p>
 <div class="highlight"><pre><span></span><code># &gt;&gt;&gt; conda initialize &gt;&gt;&gt;
-# !! Contents within this block are managed by &#39;conda init&#39; !!
-__conda_setup=&quot;$(&#39;/work/t01/t01/auser/miniconda3/bin/conda&#39; &#39;shell.bash&#39; &#39;hook&#39; 2&gt; /dev/null)&quot;
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/work/t01/t01/auser/miniconda3/bin/conda' 'shell.bash' 'hook' 2&gt; /dev/null)"
 if [ $? -eq 0 ]; then
-eval &quot;$__conda_setup&quot;
+eval "$__conda_setup"
 else
-if [ -f &quot;/work/t01/t01/auser/miniconda3/etc/profile.d/conda.sh&quot; ]; then
-. &quot;/work/t01/t01/auser/miniconda3/etc/profile.d/conda.sh&quot;
+if [ -f "/work/t01/t01/auser/miniconda3/etc/profile.d/conda.sh" ]; then
+. "/work/t01/t01/auser/miniconda3/etc/profile.d/conda.sh"
 else
-export PATH=&quot;/work/t01/t01/auser/miniconda3/bin:$PATH&quot;
+export PATH="/work/t01/t01/auser/miniconda3/bin:$PATH"
 fi
 fi
 unset __conda_setup
@@ -3859,20 +3859,20 @@ might look something like this:</p>
 <div class="highlight"><pre><span></span><code>from dask_jobqueue import SLURMCluster
 cluster = SLURMCluster(cores=128, 
                        processes=16,
-                       memory=&#39;256GB&#39;,
-                       queue=&#39;standard&#39;,
-                       header_skip=[&#39;--mem&#39;],
-                       job_extra=[&#39;--qos=&quot;standard&quot;&#39;],
-                       python=&#39;srun python&#39;,
-                       project=&#39;z19&#39;,
-                       walltime=&quot;01:00:00&quot;,
-                       shebang=&quot;#!/bin/bash --login&quot;,
-                       local_directory=&#39;$PWD&#39;,
-                       interface=&#39;hsn0&#39;,
-                       env_extra=[&#39;module load cray-python&#39;,
-                                  &#39;export PYTHONUSERBASE=/work/t01/t01/auser/.local/&#39;,
-                                  &#39;export PATH=$PYTHONUSERBASE/bin:$PATH&#39;,
-                                  &#39;export PYTHONPATH=$PYTHONUSERBASE/lib/python3.8/site-packages:$PYTHONPATH&#39;])
+                       memory='256GB',
+                       queue='standard',
+                       header_skip=['--mem'],
+                       job_extra=['--qos="standard"'],
+                       python='srun python',
+                       project='z19',
+                       walltime="01:00:00",
+                       shebang="#!/bin/bash --login",
+                       local_directory='$PWD',
+                       interface='hsn0',
+                       env_extra=['module load cray-python',
+                                  'export PYTHONUSERBASE=/work/t01/t01/auser/.local/',
+                                  'export PATH=$PYTHONUSERBASE/bin:$PATH',
+                                  'export PYTHONPATH=$PYTHONUSERBASE/lib/python3.8/site-packages:$PYTHONPATH'])
 
 
 

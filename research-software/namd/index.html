@@ -3315,7 +3315,7 @@ module<span class="w"> </span>load<span class="w"> </span>namd
 <span class="nb">export</span><span class="w"> </span><span class="nv">OMP_PLACES</span><span class="o">=</span>cores
 
 <span class="c1"># Record PPN in the output file</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Number of worker threads PPN = </span><span class="nv">$PPN</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"Number of worker threads PPN = </span><span class="nv">$PPN</span><span class="s2">"</span>
 
 <span class="c1"># Run NAMD</span>
 <span class="nb">srun</span><span class="w"> </span>--distribution<span class="o">=</span>block:block<span class="w"> </span>--hint<span class="o">=</span>nomultithread<span class="w"> </span>namd2<span class="w"> </span>+setcpuaffinity<span class="w"> </span>+ppn<span class="w"> </span><span class="nv">$PPN</span><span class="w"> </span>input.namd

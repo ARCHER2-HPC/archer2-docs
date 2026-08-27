@@ -4894,7 +4894,7 @@ the underlying compiler. This can be done by using the
 file. Optionally piping the resulting output to the command <code>tr " "
 "\n"</code> so that flags are split over lines may be convenient for visual
 parsing. For example:</p>
-<div class="highlight"><pre><span></span><code>&gt; CC -craype-verbose source.cpp | tr &quot; &quot; &quot;\n&quot;
+<div class="highlight"><pre><span></span><code>&gt; CC -craype-verbose source.cpp | tr " " "\n"
 </code></pre></div>
 <h4 id="openmp-offload">OpenMP Offload</h4>
 <p>To use the compiler wrappers to compile code that offloads to GPU with
@@ -4923,7 +4923,7 @@ command <code>man intro_openmp</code>.</p>
 <p>When using the <code>CMake</code> build system with the Cray/GPU compilers the generated
 link line may not correctly link OpenMP - see https://gitlab.kitware.com/cmake/cmake/-/issues/26129.
 A potential solution is to add code equivalent to:</p>
-<div class="highlight"><pre><span></span><code>if(${CMAKE_Fortran_COMPILER_ID} STREQUAL &quot;Cray&quot;)
+<div class="highlight"><pre><span></span><code>if(${CMAKE_Fortran_COMPILER_ID} STREQUAL "Cray")
   target_link_options(&lt;target&gt; INTERFACE -h omp)
 endif()
 </code></pre></div>
@@ -5063,9 +5063,9 @@ GPU nodes at the moment.</p>
 <p>The <code>cray-python</code> module can be used as normal for the GPU partition with <code>mpi4py</code> package that is installed by default. <code>mpi4py</code> uses <code>cray-mpich</code> under the hood and in the same way as the CPU compute nodes.</p>
 <p>However unless specifically compiled for GPU-GPU communication certain python packages/frameworks that try to take advantage of the fast links between GPUs by calling MPI on GPU pointers may have issues. To set the environment correctly for a given python program the following snippet can be added to load the required <code>libmpi_gtl_hsa</code> library:</p>
 <div class="highlight"><pre><span></span><code>from os import environ
-if environ.get(&quot;MPICH_GPU_SUPPORT_ENABLED&quot;, False):
+if environ.get("MPICH_GPU_SUPPORT_ENABLED", False):
     from ctypes import CDLL, RTLD_GLOBAL
-    CDLL(f&quot;{environ.get(&#39;CRAY_MPICH_ROOTDIR&#39;)}/gtl/lib/libmpi_gtl_hsa.so&quot;, mode=RTLD_GLOBAL)
+    CDLL(f"{environ.get('CRAY_MPICH_ROOTDIR')}/gtl/lib/libmpi_gtl_hsa.so", mode=RTLD_GLOBAL)
 
 from mpi4py import MPI
 </code></pre></div>
@@ -5189,7 +5189,7 @@ wrapper script:</p>
 
 gpu_map=(0 1 2 3)
 myGPU=${gpu_map[SLURM_LOCALID]}
-echo ${SLURM_LOCALID} &quot; &quot; ${myGPU}                                                                                      
+echo ${SLURM_LOCALID} " " ${myGPU}                                                                                      
 export ROCR_VISIBLE_DEVICES=${myGPU}
 exec $*
 </code></pre></div>
@@ -5239,7 +5239,7 @@ wrapper script:</p>
 
 gpu_map=(0 1 2 3)
 myGPU=${gpu_map[SLURM_LOCALID]}
-echo ${SLURM_LOCALID} &quot; &quot; ${myGPU}                                                                                      
+echo ${SLURM_LOCALID} " " ${myGPU}                                                                                      
 export ROCR_VISIBLE_DEVICES=${myGPU}
 exec $*
 </code></pre></div>
@@ -5296,7 +5296,7 @@ wrapper script:</p>
 
 gpu_map=(0 1 2 3)
 myGPU=${gpu_map[SLURM_LOCALID]}
-echo ${SLURM_LOCALID} &quot; &quot; ${myGPU}                                                                                      
+echo ${SLURM_LOCALID} " " ${myGPU}                                                                                      
 export ROCR_VISIBLE_DEVICES=${myGPU}
 exec $*
 </code></pre></div>
