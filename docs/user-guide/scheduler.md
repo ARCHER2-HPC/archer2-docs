@@ -2366,9 +2366,9 @@ Your request will be checked by the ARCHER2 User Administration team and, if app
 ## Capability Days
 
 !!! important
-    The next Capability Days session will be from Tue 12 May 2026 to Thu 14 May 2026:
-    - `pre-capabilityday` QoS: 0900-1900, Tue 12 May 2026
-    - `capabilityday` QoS: 0800 Tue 13 May - 1400 Thu 14 May 2026
+    The next Capability Days session will be from Tue 15 Sep 2026 to Thu 17 Sep 2026:
+    - `pre-capabilityday` QoS: 0900-1900, Tue 15 Sep 2026
+    - `capabilityday` QoS: 0800 Wed 16 Sep - 1400 Thu 17 Sep 2026
 
 ARCHER2 Capability Days are a mechanism to allow users to run large scale (512 node or more) tests
 on the system free of charge. The motivations behind Capability Days are:
@@ -2432,54 +2432,6 @@ srun --hint=multithread --distribution=block:block xthi > placement-${SLURM_JOBI
 
 srun --hint=multithread --distribution=block:block my_app.x
 ```
-
-<!--
-### NERC Capability reservation
-
-The NERC Capability reservation is typically available directly before the full Capability Day session and allows
-short test jobs to prepare for Capability Day.
-
-Submit to the `NERCcapability` *reservation*. Jobs can be submitted ahead of time and will start when the NERC Capability
-reservatoin starts.
-
-`NERCcapability` reservation limits:
-
-- Only available to users in NERC projects
-- Available for 8 hours
-- 1024 nodes available
-- Maximum job size: 1024 nodes
-- Maximum walltime: 8 hours (reservation length)
-    - We will monitor use of the reservation to ensure multiple users get a chance to run
-    - Any long jobs blocking access for other users will be killed
-- High memory nodes are not available
-- Jobs are free
-
-#### Example NERC Capability reservation job submission script
-
-```slurm
-#!/bin/bash
-#SBATCH --job-name=NERC_capability_job
-#SBATCH --nodes=256
-#SBATCH --ntasks-per-node=8
-#SBATCH --cpus-per-task=16
-#SBATCH --time=1:0:0
-#SBATCH --partition=standard
-#SBATCH --reservation=NERCcapability
-#SBATCH --qos=reservation
-#SBATCH --account=t01
-
-export OMP_NUM_THREADS=16
-export OMP_PLACES=cores
-export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
-
-# Check process/thread placement
-module load xthi
-srun --hint=multithread --distribution=block:block xthi > placement-${SLURM_JOBID}.out
-
-srun --hint=multithread --distribution=block:block my_app.x
-```
--->
-
 
 ### Capability Day session
 
