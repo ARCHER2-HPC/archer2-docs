@@ -416,6 +416,10 @@ storage capacity for projects to store data beyond the lifetime of ARCHER2
 and access it from other systems hosted by EPCC, UK National Supercomputing Centre
 (e.g. [the Cirrus National Compute Resource](https://www.cirrus.ac.uk))
 
+!!! important "NSCDS available from 9 Sep 2026"
+    The NSCDS will be available to users from 9 Sep 2026 and will be accessible to ARCHER2
+    projects with data on it until at least 31 Mar 2027 and likely to mid-2028.
+
 !!! warning
     The NSCDS is not backed up at all.
 
@@ -439,12 +443,13 @@ your NSCDS directory will be at:
 ```
 
 !!! tip "Organising your data on the NSCDS"
-    As the NSCDS will be available across multiple services, you may wish to create an `archer2`
+    As the NSCDS will be available across multiple services, we advise that you create an `archer2`
     subdirectory in your space to ensure that your ARCHER2 data does not get accidentally overwritten
-    or confused with data you generate on other services where NSCDS is available.
+    or confused with data you generate on other services where NSCDS is available. 
 
 !!! important "NSCDS not on compute nodes"
-    The NSCDS is not available on the ARCHER2 compute nodes.
+    The NSCDS is not available on the ARCHER2 compute nodes. It is available on the
+    ARCHER2 login nodes and the data analysis nodes available via the "serial" QoS.
 
 !!! tip "Asking for help"
     If you are having issues accessing data on the NSCDS then
