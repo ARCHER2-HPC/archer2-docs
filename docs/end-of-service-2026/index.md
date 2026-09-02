@@ -8,7 +8,7 @@
     After this date, you will no longer be able to connect to the ARCHER2 login nodes or access any data that
     was stored on the ARCHER2 home, work and solid state scratch file systems.
 
-!!! tip "RDFaaS and NSCDS: Data storage beyond the lifetime of ARCHER2"
+!!! tip "RDFaaS and NSCDS/EPCCfs: Data storage beyond the lifetime of ARCHER2"
     The RDFaaS will retain data until end of Mar 2027. We are also providing a new location for 
     projects to store limited amounts of data beyond the end of ARCHER2: NSCDS/EPCCfs. Users
     will need to transfer data from current file systems to it before the end of ARCHER2. More
@@ -77,7 +77,7 @@ After the end of the ARCHER2 service:
 - Industry projects with ARCHER2 access that extend beyond the end of service have been contacted by EPCC about continued access to HPC facilities
 - ARCHER2 website will continue to be available beyond the end of the ARCHER2 service
 
-!!! tip "RDFaaS and NSCDS: Data storage beyond the lifetime of ARCHER2"
+!!! tip "RDFaaS and NSCDS/EPCCfs: Data storage beyond the lifetime of ARCHER2"
     The RDFaaS will retain data until end of Mar 2027. We are also providing a new location for 
     projects to store limited amounts of data beyond the end of ARCHER2: the NSCDS/EPCCfs. Users
     will need to transfer data from current file systems to it before
