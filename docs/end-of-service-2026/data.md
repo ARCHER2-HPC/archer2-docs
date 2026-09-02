@@ -4,28 +4,86 @@ Summary of impact and advice for data on ARCHER2 at end of service
 
 - All data on ARCHER2 file systems will not be available in any form after end of service -
   any data you wish to keep *must* be transferred to a different location.
-  + This applies to the following file systems: ARCHER2 home, ARCHER2 work, solid state scratch and current RDFaaS
-- There will be new hardware provisioned for an RDF storage system before the end of the ARCHER2 service. Users can  
-  transfer data for storage beyond the end of ARCHER2 - capacity will be limited so projects will need to carefully
+  + This applies to the following file systems: ARCHER2 home, ARCHER2 work and solid state scratch
+- RDFaaS data will be retained until end of Mar 2027
+- Projects/users can use the new NSCDS/EPCCfs to store limited data
+  beyond the lifetime of ARCHER2. This storage system will be accessible from other systems hosted at EPCC
+  such as Cirrus. Capacity will be limited so projects will need to carefully
   consider what data they want to store on this system.
 - Plan and start transfers early to avoid congestion close to end of service
 
-!!! note "RDFaaS: data storage beyond the end of ARCHER2"
-    RDFaaS will be available beyond the end of the ARCHER2 service but users will need to transfer data
-    on /epsrc and /general to an updated local mount path before the end of the ARCHER2 service. Detailed
-    instructions on how to access continuing RDFaaS storage will be
-    provided as soon as they are available but you should expect the capacity of this storage to be a
-    fraction of current quotas on the ARCHER2 work file system. You should not plan for this storage
-    system to be able to store the majority of data you have on ARCHER2.
+!!! tip "RDFaaS and NSCDS/EPCCfs: Data storage beyond the lifetime of ARCHER2"
+    The RDFaaS will retain data until end of Mar 2027. We are also providing a new location for 
+    projects to store limited amounts of data beyond the end of ARCHER2: the NSCDS/EPCCfs.
+    Users will need to transfer data from current file systems to it before
+    the end of ARCHER2. More detailed instructions on this are provided in the [Data section](data.md) of this short guide.
+    You should not plan for this storage to be able to host all the data you currently have on ARCHER2.
 
 ## File systems on ARCHER2
 
 | File system | End of access | User data locations | Notes |
 |---|---|---|---|
-| ARCHER2 home | 21 Nov 2026 | `/home/[project ID]/[group ID]/[user ID]` | No access to any data beyond end of access date |
-| ARCHER2 work | 21 Nov 2026 | `/work/[project ID]/[group ID]/[user ID]` | No access to any data beyond end of access date |
-| ARCHER2 solid state scratch | 21 Nov 2026 | `/mnt/lustre/a2fs-nvme/[project ID]/[group ID]/[user ID]` | No access to any data beyond end of access date |
-| RDFaaS | Beyond ARCHER2 end of service | TBC | Data will need to be transferred by users from /epsrc and /general to a different local mount point before end of ARCHER2 service. Details will be provided to users once they are available. |
+| ARCHER2 home | 17:00 GMT, Fri 20 Nov 2026 | `/home/[project ID]/[group ID]/[user ID]` | No access to any data beyond end of access date |
+| ARCHER2 work | 17:00 GMT, Fri 20 Nov 2026 | `/work/[project ID]/[group ID]/[user ID]` | No access to any data beyond end of access date |
+| ARCHER2 solid state scratch | 17:00 GMT, Fri 20 Nov 2026 | `/mnt/lustre/a2fs-nvme/[project ID]/[group ID]/[user ID]` | No access to any data beyond end of access date |
+| RDFaaS changing to NSCDS | Beyond end of ARCHER2 service | `/nscds/[project ID]/[group ID]/[user ID]` | Data will need to be transferred by users from /epsrc and /general to new NSCDS |
+| RDFaaS | `/epsrc` and `/general` | 31 Mar 2027 | Data on RDFaaS will be retained until 31 Mar 2027 |
+| NSCDS/EPCCfs | at least 31 Mar 2027 and likely to mid-2028 | `/nscds/[project ID]/[group ID]/[user ID]` | Location for data that can accessed from other services (e.g. Cirrus NCR) beyond the end of ARCHER2. Available from 9 Sep 2026 |
+
+## NSCDS/EPCCfs
+
+NSCDS/EPCCfs will be available on ARCHER2 from 9 Sep 2026 and provides
+limited capacity for projects to store data beyond the lifetime of ARCHER2 on a storage
+platform that will be available on other facilities hosted by
+[EPCC, UK National Supercomputing Centre](https://www.epcc.ed.ac.uk), for example 
+the [Cirrus National Compute Resource (NCR)](https://www.cirrus.ac.uk).
+
+!!! important "NSCDS/EPCCfs available from 9 Sep 2026"
+    NSCDS/EPCCfs will be available to users from 9 Sep 2026 and will be accessible to ARCHER2
+    projects with data on it until at least 31 Mar 2027 and likely to mid-2028.
+
+### Requesting access to the NSCDS/EPCCfs
+
+If you do not already have access to NSCDS/EPCCfs, you should ask your project PI or project manager
+to request access via the [ARCHER2 Service Desk](https://www.archer2.ac.uk/support-access/servicedesk.html).
+
+### Location of directories on NSCDS/EPCCfs
+
+If you have access to NSCDS/EPCCfs, your directories will be at:
+
+```
+/nscds/<project code>/<project code>/<username>
+```
+
+For example, if your username is `auser` and you are in the `e05` project, then
+your NSCDS/EPCCfs directory will be at:
+
+```
+/nscds/e05/e05/auser
+```
+
+!!! important "NSCDS/EPCCfs not on compute nodes"
+    NSCDS/EPCCfs is not available on the ARCHER2 compute nodes. It is available on the
+    ARCHER2 login nodes and the data analysis nodes available via the "serial" QoS.
+
+### Organising your data on NSCDS/EPCCfs
+
+As NSCDS/EPCCfs will be available across multiple services, we advise that you create an `archer2`
+subdirectory in your space to ensure that your ARCHER2 data does not get accidentally overwritten
+or confused with data you generate on other services where NSCDS/EPCCfs is available. 
+
+### Transferring data to NSCDS
+
+You can use standard tools such as `cp` to copy small datasets to NSCDS/EPCCfs. For larger amounts of 
+data, you may wish to consider using `rclone` to copy data in a parallel way. This use of rclone
+is documented at:
+
+- [Using rclone for local data transfer](../user-guide/data.md#local-file-transfer)
+
+As NSCDS/EPCCfs is available on the data analysis nodes so you can put data transfer processes in 
+serial jobs if they are going to take a long time, see:
+
+- [Running serial jobs](user-guide/analysis.md#requesting-resources-on-the-data-analysis-nodes-using-slurm)
 
 ## Data transfer
 
