@@ -61,7 +61,7 @@ will be added closer to the end of service.
 | End of job submission | 17:00 GMT, Fri 20 Nov 2026 | While job submission will be available to end of service, you will not be able to access data produced by jobs that run to the end once the service has ended. |
 | End of login access | 17:00 GMT, Fri 20 Nov 2026 |  |
 | RDFaaS | 31 Mar 2027 | Data on RDFaaS will be retained until 31 Mar 2027 |
-| NSCDS/EPCCfs | Starts from 9 Sep 2026 | Location for data that can accessed from other services such as Cirrus beyond the end of ARCHER2 |
+| NSCDS/EPCCfs | Starts from 9 Sep 2026 | Location for data that can accessed from other services such as [Cirrus NCR](https://www.cirrus.ac.uk) beyond the end of ARCHER2 |
 
 ## Summary of user impacts
 
