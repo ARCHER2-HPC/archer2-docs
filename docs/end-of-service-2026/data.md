@@ -71,7 +71,7 @@ As NSCDS/EPCCfs will be available across multiple services, we advise that you c
 subdirectory in your space to ensure that your ARCHER2 data does not get accidentally overwritten
 or confused with data you generate on other services where NSCDS/EPCCfs is available. 
 
-### Transferring data to NSCDS
+### Transferring data to NSCDS/EPCCfs
 
 You can use standard tools such as `cp` to copy small datasets to NSCDS/EPCCfs. For larger amounts of 
 data, you may wish to consider using `rclone` to copy data in a parallel way. This use of rclone
