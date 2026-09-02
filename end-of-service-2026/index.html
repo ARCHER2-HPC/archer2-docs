@@ -3177,17 +3177,20 @@
 <h1 id="archer2-end-of-service">ARCHER2 End of Service</h1>
 <div class="admonition important">
 <p class="admonition-title">Last update</p>
-<p>This documentation was last updated on 23 June 2026</p>
+<p>This documentation was last updated on 2 September 2026</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">ARCHER2 End of Service</p>
-<p>The ARCHER2 service is scheduled to end on 21 November 2026.
+<p>The ARCHER2 service is scheduled to end at 17:00 GMT on Friday 20 November 2026.
 After this date, you will no longer be able to connect to the ARCHER2 login nodes or access any data that
 was stored on the ARCHER2 home, work and solid state scratch file systems.</p>
-<p>RDFaaS will be available beyond the end of the ARCHER2 service but users will need to transfer data
-from current file system to it before the end of ARCHER2 - including data
-on /epsrc and /general. Detailed instructions on how to access continuing RDFaaS storage will be
-provided as soon as they are available.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">RDFaaS and NSCDS/EPCCfs: Data storage beyond the lifetime of ARCHER2</p>
+<p>The RDFaaS will retain data until end of Mar 2027. We are also providing a new location for 
+projects to store limited amounts of data beyond the end of ARCHER2: NSCDS/EPCCfs. Users
+will need to transfer data from current file systems to it before the end of ARCHER2. More
+detailed instructions on this are provided in the <a href="data/">Data section</a> of this short guide.</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">NERC-supported projects can use JASMIN for data storage</p>
@@ -3250,23 +3253,28 @@ will be added closer to the end of service.</p>
 <tbody>
 <tr>
 <td>End of home, work, solid state scratch file system access</td>
-<td>21 Nov 2026</td>
+<td>17:00 GMT, Fri 20 Nov 2026</td>
 <td>There will be no access to any data on these file systems beyond the end of the ARCHER2 service.</td>
 </tr>
 <tr>
 <td>End of job submission</td>
-<td>21 Nov 2026</td>
+<td>17:00 GMT, Fri 20 Nov 2026</td>
 <td>While job submission will be available to end of service, you will not be able to access data produced by jobs that run to the end once the service has ended.</td>
 </tr>
 <tr>
 <td>End of login access</td>
-<td>21 Nov 2026</td>
+<td>17:00 GMT, Fri 20 Nov 2026</td>
 <td></td>
 </tr>
 <tr>
 <td>RDFaaS</td>
-<td>Continues beyond the end of ARCHER2 service</td>
-<td>Data will need to be transferred by users from /epsrc and /general to new local mount location before end of ARCHER2 service. Details will be provided to users once they are available.</td>
+<td>31 Mar 2027</td>
+<td>Data on RDFaaS will be retained until 31 Mar 2027</td>
+</tr>
+<tr>
+<td>NSCDS</td>
+<td>Starts from 9 Sep 2026</td>
+<td>Location for data that can accessed from other services such as Cirrus beyond the end of ARCHER2</td>
 </tr>
 </tbody>
 </table>
@@ -3274,7 +3282,8 @@ will be added closer to the end of service.</p>
 <p>After the end of the ARCHER2 service:</p>
 <ul>
 <li>Data on home, work, solid state scratch file systems will not be accessible beyond the end of the ARCHER2 service</li>
-<li>RDFaaS will continue beyond the lifetime of ARCHER2 but users will need to transfer data from /epsrc and /general to a different local mount point on ARCHER2 - more details will be provided as soon as they are available</li>
+<li>The RDFaaS will retain data until end of Mar 2027</li>
+<li>NSCDS will extend beyond the lifetime of ARCHER2 - users are responsible for transferring any data they wish to keep to this location</li>
 <li>No login access will be available beyond the end of the ARCHER2 service</li>
 <li>Personal data in SAFE will be retained for 2 years then deleted as per the SAFE Personal Data and Privacy Policy</li>
 <li>SAFE access will continue to be available for you to access historic ARCHER2 use data</li>
@@ -3282,14 +3291,13 @@ will be added closer to the end of service.</p>
 <li>Industry projects with ARCHER2 access that extend beyond the end of service have been contacted by EPCC about continued access to HPC facilities</li>
 <li>ARCHER2 website will continue to be available beyond the end of the ARCHER2 service</li>
 </ul>
-<div class="admonition note">
-<p class="admonition-title">RDFaaS: data storage beyond the end of ARCHER2</p>
-<p>RDFaaS will be available beyond the end of the ARCHER2 service but users will need to transfer data
-on /epsrc and /general to an updated local mount path before the end of the ARCHER2 service. Detailed
-instructions on how to access continuing RDFaaS storage will be
-provided as soon as they are available but you should expect the capacity of this storage to be a
-fraction of current quotas on the ARCHER2 work file system. You should not plan for this storage
-system to be able to store the majority of data you have on ARCHER2.</p>
+<div class="admonition tip">
+<p class="admonition-title">RDFaaS and NSCDS/EPCCfs: Data storage beyond the lifetime of ARCHER2</p>
+<p>The RDFaaS will retain data until end of Mar 2027. We are also providing a new location for 
+projects to store limited amounts of data beyond the end of ARCHER2: the NSCDS/EPCCfs. Users
+will need to transfer data from current file systems to it before
+the end of ARCHER2. More detailed instructions on this are provided in the <a href="data/">Data section</a> of this short guide.
+You should not plan for this storage to be able to host all the data you currently have on ARCHER2.</p>
 </div>
 <h2 id="recommended-actions">Recommended actions</h2>
 <p>We strongly recommend that users and projects review any data held on ARCHER2 file systems and
@@ -3303,9 +3311,9 @@ performance bottlenecks or other issues.</p>
 <ul>
 <li><a href="https://docs.archer2.ac.uk/user-guide/data/#archiving-and-data-transfer">Archiving and Data Transfer</a></li>
 </ul>
-<p>You may also be able to access the new <em>Research Data Facility (RDF)</em> hardware to store data beyond the
-lifetime of ARCHER2 for use on other UK national HPC facilities. We will add more information here
-as it becomes available.</p>
+<p>You may also be able to access the new <em>NSCDS/EPCCfs</em> storage to store data beyond the
+lifetime of ARCHER2 for use on other UK national HPC facilities. See the <a href="data/">Data section</a>
+for more details.</p>
 <p>If you have any questions about transferring data, please <a href="https://www.archer2.ac.uk/support-access/servicedesk.html">contact the ARCHER2 Service Desk</a>.</p>
 
 

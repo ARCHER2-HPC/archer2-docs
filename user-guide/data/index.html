@@ -1145,6 +1145,45 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#nscdsepccfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NSCDS/EPCCfs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NSCDS/EPCCfs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#copying-data-to-nscdsepccfs-from-other-archer2-file-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Copying data to NSCDS/EPCCfs from other ARCHER2 file systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quotas-on-nscdsepccfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quotas on NSCDS/EPCCfs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#subprojects" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3835,6 +3874,45 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#nscdsepccfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NSCDS/EPCCfs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NSCDS/EPCCfs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#copying-data-to-nscdsepccfs-from-other-archer2-file-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Copying data to NSCDS/EPCCfs from other ARCHER2 file systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quotas-on-nscdsepccfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quotas on NSCDS/EPCCfs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#subprojects" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4220,6 +4298,7 @@ There are a number of different data storage types available to users:</p>
 <li>Work file systems</li>
 <li>Solid state (NVMe) file system</li>
 <li>RDFaaS (RDF as a Service) file systems (<code>/epsrc</code> and <code>/general</code>)</li>
+<li>NSCDS (National Supercomputing Centre Data Store)</li>
 </ul>
 <p>Each type of storage has different characteristics and policies, and is
 suitable for different types of use.</p>
@@ -4280,6 +4359,13 @@ different node types:</p>
 <td>yes</td>
 <td>Disaster recovery backup</td>
 </tr>
+<tr>
+<td>NSCDS</td>
+<td>yes</td>
+<td>no</td>
+<td>yes</td>
+<td>No backup</td>
+</tr>
 </tbody>
 </table>
 <div class="admonition important">
@@ -4288,8 +4374,8 @@ different node types:</p>
 the compute nodes. This means that all data required by calculations at runtime
 (input data, application binaries, software libraries, etc.) must be placed on
 one of these file systems.</p>
-<p>You may see "file not found" errors if you try to access data on the /home
-or RDFaaS file systems when running on the compute nodes.</p>
+<p>You may see "file not found" errors if you try to access data on the /home,
+RDFaaS or NSCDS file systems when running on the compute nodes.</p>
 </div>
 <h3 id="home-file-systems">Home file systems</h3>
 <p>There are four independent home file-systems. Every project has an
@@ -4540,6 +4626,92 @@ in project <code>e05</code>):</p>
 <p>(remember to replace the project code and username with your own username
 and project code. You may also need to use <code>/general</code> if your data was
 there on the RDF file systems).</p>
+<h3 id="nscdsepccfs">NSCDS/EPCCfs</h3>
+<p>The NSCDS/EPCCfs provides
+storage capacity for projects to store data beyond the lifetime of ARCHER2
+and access it from other systems hosted by EPCC, UK National Supercomputing Centre
+(e.g. <a href="https://www.cirrus.ac.uk">the Cirrus National Compute Resource</a>)</p>
+<div class="admonition important">
+<p class="admonition-title">NSCDS/EPCCfs available from 9 Sep 2026</p>
+<p>NSCDS/EPCCfs will be available to users from 9 Sep 2026 and will be accessible to ARCHER2
+projects with data on it until at least 31 Mar 2027 and likely to mid-2028.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>NSCDS/EPCCfs is not backed up at all.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Not all projects on ARCHER2 have access to NSCDS/EPCCfs, if you do
+have access, this will show up in the login account page on SAFE for your
+ARCHER2 login account.</p>
+</div>
+<p>If you have access to NSCDS/EPCCfs, you will have a directory in <code>/nscds</code>. You can find
+your directory on NSCDS/EPCCfs at:</p>
+<div class="highlight"><pre><span></span><code>/nscds/&lt;project code&gt;/&lt;project code&gt;/&lt;username&gt;
+</code></pre></div>
+<p>For example, if your username is <code>auser</code> and you are in the <code>e05</code> project, then
+your NSCDS/EPCCfs directory will be at:</p>
+<div class="highlight"><pre><span></span><code>/nscds/e05/e05/auser
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Organising your data on NSCDS/EPCCfs</p>
+<p>As NSCDS/EPCCfs will be available across multiple services, we advise that you create an <code>archer2</code>
+subdirectory in your space to ensure that your ARCHER2 data does not get accidentally overwritten
+or confused with data you generate on other services where NSCDS/EPCCfs is available. </p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">NSCDS/EPCCfs not on compute nodes</p>
+<p>NSCDS/EPCCfs is not available on the ARCHER2 compute nodes. It is available on the
+ARCHER2 login nodes and the data analysis nodes available via the "serial" QoS.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Asking for help</p>
+<p>If you are having issues with NSCDS/EPCCfs then
+please <a href="https://www.archer2.ac.uk/support-access/servicedesk.html">contact the ARCHER2 Service Desk</a></p>
+</div>
+<h4 id="copying-data-to-nscdsepccfs-from-other-archer2-file-systems">Copying data to NSCDS/EPCCfs from other ARCHER2 file systems</h4>
+<p>You can use the standard Linux <code>cp</code> command to copy data from other ARCHER2 file
+systems to NSCDS/EPCCfs or vice versa. For example, to
+transfer the file <code>important-data.tar.gz</code> from the work file system to
+NSCDS/EPCCfs you would use the following command (assuming you are user <code>auser</code>
+in project <code>e05</code>):</p>
+<div class="highlight"><pre><span></span><code>cp /work/e05/e05/auser/important-data.tar.gz /nscds/e05/e05/auser/
+</code></pre></div>
+<p>(remember to replace the project code and username with your own username
+and project code).</p>
+<div class="admonition tip">
+<p class="admonition-title">Use rclone parallel local data transfers for large datasets</p>
+<p>If you are transferring a large amount of data to NSCDS/EPCCfs, you should consider
+using <a href="#local-file-transfer">rclone local data transfer</a> (perhaps in a 
+serial job submission script) rather than using the basic <code>cp</code> command.</p>
+</div>
+<h4 id="quotas-on-nscdsepccfs">Quotas on NSCDS/EPCCfs</h4>
+<p>As for the other ARCHER2 storage systems, all projects are assigned a quota on
+NSCDS/EPCCfs. The project PI or manager can split this quota up
+between users or groups of users if they wish.</p>
+<p>You can view any NSCDS/EPCCfs quotas that apply to your account by
+logging into SAFE and navigating to the page for your ARCHER2 login
+account.</p>
+<ol>
+<li><a href="https://safe.epcc.ed.ac.uk">Log into SAFE</a></li>
+<li>Use the "Login accounts" menu and select your ARCHER2 login account</li>
+<li>The "Login account details" table lists any user or group quotas that
+   are linked with your account. (If there is no quota shown for a row
+   then you have an unlimited quota for that item, but you may still may
+   be limited by another quota.)</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Quota and usage data on SAFE is updated twice daily so may not be
+exactly up to date with the situation on the systems themselves.</p>
+</div>
+<p>You can also query quotas that apply to your current NSCDS/EPCCfs directory from the
+the command line using the <code>df -h $PWD</code> command, for example:</p>
+<div class="highlight"><pre><span></span><code>auser@uan01:/nscds/e05/e05/auser&gt; df -h $PWD
+Filesystem                          Size  Used Avail Use% Mounted on
+fs02.naidin.epcc.ed.ac.uk:/archer2  8.8T  1.8G  8.8T   1% /mnt/nfs/nscds
+</code></pre></div>
 <h3 id="subprojects">Subprojects</h3>
 <p>Some large projects may choose to split their resources into multiple subprojects.
 These subprojects will have identifiers appended to the main project ID. For example,
