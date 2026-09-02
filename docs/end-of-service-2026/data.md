@@ -26,7 +26,6 @@ Summary of impact and advice for data on ARCHER2 at end of service
 | ARCHER2 home | 17:00 GMT, Fri 20 Nov 2026 | `/home/[project ID]/[group ID]/[user ID]` | No access to any data beyond end of access date |
 | ARCHER2 work | 17:00 GMT, Fri 20 Nov 2026 | `/work/[project ID]/[group ID]/[user ID]` | No access to any data beyond end of access date |
 | ARCHER2 solid state scratch | 17:00 GMT, Fri 20 Nov 2026 | `/mnt/lustre/a2fs-nvme/[project ID]/[group ID]/[user ID]` | No access to any data beyond end of access date |
-| RDFaaS changing to NSCDS | Beyond end of ARCHER2 service | `/nscds/[project ID]/[group ID]/[user ID]` | Data will need to be transferred by users from /epsrc and /general to new NSCDS |
 | RDFaaS | `/epsrc` and `/general` | 31 Mar 2027 | Data on RDFaaS will be retained until 31 Mar 2027 |
 | NSCDS/EPCCfs | at least 31 Mar 2027 and likely to mid-2028 | `/nscds/[project ID]/[group ID]/[user ID]` | Location for data that can accessed from other services (e.g. Cirrus NCR) beyond the end of ARCHER2. Available from 9 Sep 2026 |
 
