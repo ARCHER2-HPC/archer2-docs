@@ -70,9 +70,9 @@ After the end of the ARCHER2 service:
 
 - Data on home, work, solid state scratch file systems will not be accessible beyond the end of the ARCHER2 service
 - The RDFaaS will retain data until end of Mar 2027
-  + Projects/users with data on RDFaaS will be able to access the storage to transfer data to different locations after ARCHER2 ends using standard tools such as scp/sftp/rsync/rclone.
+   + Projects/users with data on RDFaaS will be able to access the storage to transfer data to different locations after ARCHER2 ends using standard tools such as scp/sftp/rsync/rclone.
 - NSCDS/EPCCfs will extend beyond the lifetime of ARCHER2 - users are responsible for transferring any data they wish to keep to this location
-  + Projects/users with data on NSCDS/EPCCfs will be able to access the storage to transfer data to different locations after ARCHER2 ends using standard tools such as scp/sftp/rsync/rclone and Globus Online.
+   + Projects/users with data on NSCDS/EPCCfs will be able to access the storage to transfer data to different locations after ARCHER2 ends using standard tools such as scp/sftp/rsync/rclone and Globus Online.
 - No login access will be available beyond the end of the ARCHER2 service
 - Personal data in SAFE will be retained for 2 years then deleted as per the SAFE Personal Data and Privacy Policy
 - SAFE access will continue to be available for you to access historic ARCHER2 use data
