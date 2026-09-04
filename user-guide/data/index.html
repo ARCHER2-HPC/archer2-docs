@@ -4298,7 +4298,7 @@ There are a number of different data storage types available to users:</p>
 <li>Work file systems</li>
 <li>Solid state (NVMe) file system</li>
 <li>RDFaaS (RDF as a Service) file systems (<code>/epsrc</code> and <code>/general</code>)</li>
-<li>NSCDS (National Supercomputing Centre Data Store)</li>
+<li>NSCDS/EPCCfs</li>
 </ul>
 <p>Each type of storage has different characteristics and policies, and is
 suitable for different types of use.</p>
@@ -4357,14 +4357,14 @@ different node types:</p>
 <td>yes</td>
 <td>no</td>
 <td>yes</td>
-<td>Disaster recovery backup</td>
+<td>No backup. Available beyond end of ARCHER2.</td>
 </tr>
 <tr>
 <td>NSCDS</td>
 <td>yes</td>
 <td>no</td>
 <td>yes</td>
-<td>No backup</td>
+<td>No backup. Available beyond end of ARCHER2.</td>
 </tr>
 </tbody>
 </table>
@@ -4603,6 +4603,12 @@ if they are deleted by mistake or otherwise lost.</p>
 <p>Not all projects on ARCHER2 have access to RDFaaS, if you do have access, this
 will show up in the login account page on SAFE for your ARCHER2 login account.</p>
 </div>
+<div class="admonition tip">
+<p class="admonition-title">RDFaaS available beyond end of ARCHER2 to 31 Mar 2027</p>
+<p>RDFaaS data will be retained until end of Mar 2027. Projects/users with data on
+RDFaaS will be able to access the storage to transfer data to different locations
+after ARCHER2 ends using standard tools such as scp/sftp/rsync/rclone.</p>
+</div>
 <p>If you have access to RDFaaS, you will have a directory in one of two file systems:
 either <code>/epsrc</code> or <code>/general</code>.</p>
 <p>For example, if your username is <code>auser</code> and you are in the <code>e05</code> project, then
@@ -4645,6 +4651,15 @@ projects with data on it until at least 31 Mar 2027 and likely to mid-2028.</p>
 <p>Not all projects on ARCHER2 have access to NSCDS/EPCCfs, if you do
 have access, this will show up in the login account page on SAFE for your
 ARCHER2 login account.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">NSCSDS/EPCCfs available beyond end of ARCHER2</p>
+<p>Projects/users can use the new NSCDS/EPCCfs to store limited data beyond
+the lifetime of ARCHER2 to at least 31 Mar 2027 and likely to mid-2028. This
+storage system will be accessible from other systems hosted at EPCC such as Cirrus.
+Projects/users with data on NSCDS/EPCCfs will be able to access the storage to
+transfer data to different locations after ARCHER2 ends using standard tools such
+as scp/sftp/rsync/rclone and Globus Online.</p>
 </div>
 <p>If you have access to NSCDS/EPCCfs, you will have a directory in <code>/nscds</code>. You can find
 your directory on NSCDS/EPCCfs at:</p>
