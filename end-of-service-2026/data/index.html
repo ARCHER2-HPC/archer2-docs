@@ -3281,10 +3281,14 @@
   any data you wish to keep <em>must</em> be transferred to a different location.</li>
 <li>This applies to the following file systems: ARCHER2 home, ARCHER2 work and solid state scratch</li>
 <li>RDFaaS data will be retained until end of Mar 2027</li>
+<li>Projects/users with data on RDFaaS will be able to access the storage to transfer data to different
+    locations after ARCHER2 ends using standard tools such as scp/sftp/rsync/rclone.</li>
 <li>Projects/users can use the new NSCDS/EPCCfs to store limited data
   beyond the lifetime of ARCHER2. This storage system will be accessible from other systems hosted at EPCC
   such as Cirrus. Capacity will be limited so projects will need to carefully
   consider what data they want to store on this system.</li>
+<li>Projects/users with data on NSCDS/EPCCfs will be able to access the storage to transfer data to different
+    locations after ARCHER2 ends using standard tools such as scp/sftp/rsync/rclone and Globus Online.</li>
 <li>Plan and start transfers early to avoid congestion close to end of service</li>
 </ul>
 <div class="admonition tip">
@@ -3292,8 +3296,8 @@
 <p>The RDFaaS will retain data until end of Mar 2027. We are also providing a new location for 
 projects to store limited amounts of data beyond the end of ARCHER2: the NSCDS/EPCCfs.
 Users will need to transfer data from current file systems to it before
-the end of ARCHER2. More detailed instructions on this are provided in the <a href="./">Data section</a> of this short guide.
-You should not plan for this storage to be able to host all the data you currently have on ARCHER2.</p>
+the end of ARCHER2. You should not plan for this storage to be able to host all the data
+you currently have on ARCHER2.</p>
 </div>
 <h2 id="file-systems-on-archer2">File systems on ARCHER2</h2>
 <table>
@@ -3328,13 +3332,13 @@ You should not plan for this storage to be able to host all the data you current
 <td>RDFaaS</td>
 <td><code>/epsrc</code> and <code>/general</code></td>
 <td>31 Mar 2027</td>
-<td>Data on RDFaaS will be retained until 31 Mar 2027</td>
+<td>Data on RDFaaS will be retained until 31 Mar 2027. Access via scp/sftp/rsync/rclone to download data beyond end of ARCHER2.</td>
 </tr>
 <tr>
 <td>NSCDS/EPCCfs</td>
 <td>at least 31 Mar 2027 and likely to mid-2028</td>
 <td><code>/nscds/[project ID]/[group ID]/[user ID]</code></td>
-<td>Location for data that can accessed from other services (e.g. Cirrus NCR) beyond the end of ARCHER2. Available from 9 Sep 2026</td>
+<td>Location for data that can accessed from other services (e.g. Cirrus NCR) beyond the end of ARCHER2. Also access via scp/sftp/rsync/rclone and Globus Online beyond end of ARCHER2. Available from 9 Sep 2026.</td>
 </tr>
 </tbody>
 </table>
@@ -3343,7 +3347,8 @@ You should not plan for this storage to be able to host all the data you current
 limited capacity for projects to store data beyond the lifetime of ARCHER2 on a storage
 platform that will be available on other facilities hosted by
 <a href="https://www.epcc.ed.ac.uk">EPCC, UK National Supercomputing Centre</a>, for example 
-the <a href="https://www.cirrus.ac.uk">Cirrus National Compute Resource (NCR)</a>.</p>
+the <a href="https://www.cirrus.ac.uk">Cirrus National Compute Resource (NCR)</a>. Access will also
+be available via scp/sftp/rsync/rclone and Globus Online beyond end of ARCHER2.</p>
 <div class="admonition important">
 <p class="admonition-title">NSCDS/EPCCfs available from 9 Sep 2026</p>
 <p>NSCDS/EPCCfs will be available to users from 9 Sep 2026 and will be accessible to ARCHER2
