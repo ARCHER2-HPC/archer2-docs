@@ -36,7 +36,8 @@ Summary of impact and advice for data on ARCHER2 at end of service
 ## NSCDS/EPCCfs
 
 NSCDS/EPCCfs will be available on ARCHER2 from 9 Sep 2026 and provides
-limited capacity for projects to store data beyond the lifetime of ARCHER2 on a storage
+limited capacity for projects that have national HPC resources allocated
+beyond the end of ARCHER2 to store data beyond the lifetime of ARCHER2 on a storage
 platform that will be available on other facilities hosted by
 [EPCC, UK National Supercomputing Centre](https://www.epcc.ed.ac.uk), for example 
 the [Cirrus National Compute Resource (NCR)](https://www.cirrus.ac.uk). Access will also
@@ -50,6 +51,11 @@ be available via scp/sftp/rsync/rclone and Globus Online beyond end of ARCHER2.
 
 If you do not already have access to NSCDS/EPCCfs, you should ask your project PI or project manager
 to request access via the [ARCHER2 Service Desk](https://www.archer2.ac.uk/support-access/servicedesk.html).
+
+!!! important "Only available to projects running beyond ARCHER2"
+    Only projects with national HPC allocations running beyond the end of ARCHER2 will
+    be granted access to NSCDS/EPCCfs. Projects that finish at or before the end of 
+    ARCHER2 should ensure they have moved all data off the system before it ends.
 
 ### Location of directories on NSCDS/EPCCfs
 

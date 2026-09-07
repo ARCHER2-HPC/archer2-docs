@@ -425,6 +425,11 @@ and access it from other systems hosted by EPCC, UK National Supercomputing Cent
     NSCDS/EPCCfs will be available to users from 9 Sep 2026 and will be accessible to ARCHER2
     projects with data on it until at least 31 Mar 2027 and likely to mid-2028.
 
+!!! important "Only available to projects running beyond ARCHER2"
+    Only projects with national HPC allocations running beyond the end of ARCHER2 will
+    be granted access to NSCDS/EPCCfs. Projects that finish at or before the end of 
+    ARCHER2 should ensure they have moved all data off the system before it ends.
+
 !!! warning
     NSCDS/EPCCfs is not backed up at all.
 
