@@ -13,7 +13,7 @@ may be able to access beyond the lifetime of ARCHER2.
 
 ## Projects with ARCHER2 access beyond the end of service
 
-**UKRI-funded/supported projects**
+### UKRI-funded/supported projects
 
 If your UKRI-funded/supported project has ARCHER2 access that extends beyond the end of the ARCHER2
 service as part of the awarded project resources, you should have received communication from UKRI
@@ -27,7 +27,15 @@ get in touch using the following details
 - EPSRC Research Infrastructure Team: [researchinfrastructure@epsrc.ukri.org](mailto:researchinfrastructure@epsrc.ukri.org)
 - NERC HPC Team: [hpc@nerc.ukri.org](mailto:hpc@nerc.ukri.org)
 
-**Industry projects**
+#### NCR migration information
+
+UKRI have notified some projects that they will be migrating to the new National Compute Resources (NCRs)
+from ARCHER2. Some NCRs have provided specific documentation to help users from ARCHER2 to migrate to
+their services:
+
+- [Cirrus NCR migration documentation](https://docs.cirrus.ac.uk/archer2-migration-2026/)
+
+### Industry projects
 
 Industry projects on ARCHER2 should have been contacted by EPCC to discuss arrangements beyond
 the end of the ARCHER2 service. If you have not been contacted by EPCC or have any questions,
