@@ -9,11 +9,11 @@ Summary of impact and advice for data on ARCHER2 at end of service
     + Projects/users with data on RDFaaS will be able to access the storage to transfer data to different
       locations after ARCHER2 ends using standard tools such as scp/sftp/rsync/rclone.
 - Projects/users can use the new NSCDS/EPCCfs to store limited data
-  beyond the lifetime of ARCHER2. This storage system will be accessible from other systems hosted at EPCC
-  such as Cirrus. Capacity will be limited so projects will need to carefully
+  beyond the lifetime of ARCHER2.  Capacity will be limited so projects will need to carefully
   consider what data they want to store on this system.
     + Projects/users with data on NSCDS/EPCCfs will be able to access the storage to transfer data to different
       locations after ARCHER2 ends using standard tools such as scp/sftp/rsync/rclone and Globus Online.
+    + This storage system will also be directly accessible from other systems hosted at EPCC such as Cirrus.
 - Plan and start transfers early to avoid congestion close to end of service
 
 !!! tip "RDFaaS and NSCDS/EPCCfs: Data storage beyond the lifetime of ARCHER2"
