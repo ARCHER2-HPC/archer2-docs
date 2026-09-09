@@ -8,17 +8,17 @@ Summary of impact and advice for data on ARCHER2 at end of service
 - RDFaaS data will be retained until end of Mar 2027
     + Projects/users with data on RDFaaS will be able to access the storage to transfer data to different
       locations after ARCHER2 ends using standard tools such as scp/sftp/rsync/rclone.
-- Projects/users can use the new NSCDS/EPCCfs to store limited data
+- Projects/users can use the new NSCDS/EPCCFS to store limited data
   beyond the lifetime of ARCHER2.  Capacity will be limited so projects will need to carefully
   consider what data they want to store on this system.
-    + Projects/users with data on NSCDS/EPCCfs will be able to access the storage to transfer data to different
+    + Projects/users with data on NSCDS/EPCCFS will be able to access the storage to transfer data to different
       locations after ARCHER2 ends using standard tools such as scp/sftp/rsync/rclone and Globus Online.
     + This storage system will also be directly accessible from other systems hosted at EPCC such as Cirrus.
 - Plan and start transfers early to avoid congestion close to end of service
 
-!!! tip "RDFaaS and NSCDS/EPCCfs: Data storage beyond the lifetime of ARCHER2"
+!!! tip "RDFaaS and NSCDS/EPCCFS: Data storage beyond the lifetime of ARCHER2"
     The RDFaaS will retain data until end of Mar 2027. We are also providing a new location for 
-    projects to store limited amounts of data beyond the end of ARCHER2: the NSCDS/EPCCfs.
+    projects to store limited amounts of data beyond the end of ARCHER2: the NSCDS/EPCCFS.
     Users will need to transfer data from current file systems to it before
     the end of ARCHER2. You should not plan for this storage to be able to host all the data
     you currently have on ARCHER2.
@@ -31,11 +31,11 @@ Summary of impact and advice for data on ARCHER2 at end of service
 | ARCHER2 work | 17:00 GMT, Fri 20 Nov 2026 | `/work/[project ID]/[group ID]/[user ID]` | No access to any data beyond end of access date |
 | ARCHER2 solid state scratch | 17:00 GMT, Fri 20 Nov 2026 | `/mnt/lustre/a2fs-nvme/[project ID]/[group ID]/[user ID]` | No access to any data beyond end of access date |
 | RDFaaS | 31 Mar 2027 | `/epsrc` and `/general`  | Data on RDFaaS will be retained until 31 Mar 2027. Access via scp/sftp/rsync/rclone to download data beyond end of ARCHER2. Access and quotas will be frozen in state as they are at end of ARCHER2 service. |
-| NSCDS/EPCCfs | at least 31 Mar 2027 and likely to mid-2028 | `/nscds/[project ID]/[group ID]/[user ID]` | Location for data that can accessed from other services (e.g. Cirrus NCR) beyond the end of ARCHER2. Also access via scp/sftp/rsync/rclone and Globus Online beyond end of ARCHER2.  Access and quotas can be managed via SAFE even beyond end of ARCHER2 service. Available from 9 Sep 2026. |
+| NSCDS/EPCCFS | at least 31 Mar 2027 and likely to mid-2028 | `/nscds/[project ID]/[group ID]/[user ID]` | Location for data that can accessed from other services (e.g. Cirrus NCR) beyond the end of ARCHER2. Also access via scp/sftp/rsync/rclone and Globus Online beyond end of ARCHER2.  Access and quotas can be managed via SAFE even beyond end of ARCHER2 service. Available from 9 Sep 2026. |
 
-## NSCDS/EPCCfs
+## NSCDS/EPCCFS
 
-NSCDS/EPCCfs will be available on ARCHER2 from 9 Sep 2026 and provides
+NSCDS/EPCCFS will be available on ARCHER2 from 9 Sep 2026 and provides
 limited capacity for projects that have national HPC resources allocated
 beyond the end of ARCHER2 to store data beyond the lifetime of ARCHER2 on a storage
 platform that will be available on other facilities hosted by
@@ -43,54 +43,54 @@ platform that will be available on other facilities hosted by
 the [Cirrus National Compute Resource (NCR)](https://www.cirrus.ac.uk). Access will also
 be available via scp/sftp/rsync/rclone and Globus Online beyond end of ARCHER2.
 
-!!! important "NSCDS/EPCCfs available from 9 Sep 2026"
-    NSCDS/EPCCfs will be available to users from 9 Sep 2026 and will be accessible to ARCHER2
+!!! important "NSCDS/EPCCFS available from 9 Sep 2026"
+    NSCDS/EPCCFS will be available to users from 9 Sep 2026 and will be accessible to ARCHER2
     projects with data on it until at least 31 Mar 2027 and likely to mid-2028.
 
-### Requesting access to the NSCDS/EPCCfs
+### Requesting access to the NSCDS/EPCCFS
 
-If you do not already have access to NSCDS/EPCCfs, you should ask your project PI or project manager
+If you do not already have access to NSCDS/EPCCFS, you should ask your project PI or project manager
 to request access via the [ARCHER2 Service Desk](https://www.archer2.ac.uk/support-access/servicedesk.html).
 
 !!! important "Only available to projects running beyond ARCHER2"
     Only projects with national HPC allocations running beyond the end of ARCHER2 will
-    be granted access to NSCDS/EPCCfs. Projects that finish at or before the end of 
+    be granted access to NSCDS/EPCCFS. Projects that finish at or before the end of 
     ARCHER2 should ensure they have moved all data off the system before it ends.
 
-### Location of directories on NSCDS/EPCCfs
+### Location of directories on NSCDS/EPCCFS
 
-If you have access to NSCDS/EPCCfs, your directories will be at:
+If you have access to NSCDS/EPCCFS, your directories will be at:
 
 ```
 /nscds/<project code>/<project code>/<username>
 ```
 
 For example, if your username is `auser` and you are in the `e05` project, then
-your NSCDS/EPCCfs directory will be at:
+your NSCDS/EPCCFS directory will be at:
 
 ```
 /nscds/e05/e05/auser
 ```
 
-!!! important "NSCDS/EPCCfs not on compute nodes"
-    NSCDS/EPCCfs is not available on the ARCHER2 compute nodes. It is available on the
+!!! important "NSCDS/EPCCFS not on compute nodes"
+    NSCDS/EPCCFS is not available on the ARCHER2 compute nodes. It is available on the
     ARCHER2 login nodes and the data analysis nodes available via the "serial" QoS.
 
-### Organising your data on NSCDS/EPCCfs
+### Organising your data on NSCDS/EPCCFS
 
-As NSCDS/EPCCfs will be available across multiple services, we advise that you create an `archer2`
+As NSCDS/EPCCFS will be available across multiple services, we advise that you create an `archer2`
 subdirectory in your space to ensure that your ARCHER2 data does not get accidentally overwritten
-or confused with data you generate on other services where NSCDS/EPCCfs is available. 
+or confused with data you generate on other services where NSCDS/EPCCFS is available. 
 
-### Transferring data to NSCDS/EPCCfs
+### Transferring data to NSCDS/EPCCFS
 
-You can use standard tools such as `cp` to copy small datasets to NSCDS/EPCCfs. For larger amounts of 
+You can use standard tools such as `cp` to copy small datasets to NSCDS/EPCCFS. For larger amounts of 
 data, you may wish to consider using `rclone` to copy data in a parallel way. This use of rclone
 is documented at:
 
 - [Using rclone for local data transfer](../user-guide/data.md#local-file-transfer)
 
-As NSCDS/EPCCfs is available on the data analysis nodes so you can put data transfer processes in 
+As NSCDS/EPCCFS is available on the data analysis nodes so you can put data transfer processes in 
 serial jobs if they are going to take a long time, see:
 
 - [Running serial jobs](user-guide/analysis.md#requesting-resources-on-the-data-analysis-nodes-using-slurm)
