@@ -1165,7 +1165,40 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="NSCDS/EPCCFS">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#requesting-access-to-the-nscdsepccfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requesting access to the NSCDS/EPCCFS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-your-account-for-access-to-nscdsepccfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting up your account for access to NSCDS/EPCCFS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#location-of-directories-on-nscdsepccfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Location of directories on NSCDS/EPCCFS
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Location of directories on NSCDS/EPCCFS">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3894,7 +3927,40 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="NSCDS/EPCCFS">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#requesting-access-to-the-nscdsepccfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requesting access to the NSCDS/EPCCFS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-your-account-for-access-to-nscdsepccfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting up your account for access to NSCDS/EPCCFS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#location-of-directories-on-nscdsepccfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Location of directories on NSCDS/EPCCFS
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Location of directories on NSCDS/EPCCFS">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -4679,6 +4745,33 @@ Projects/users with data on NSCDS/EPCCFS will be able to access the storage to
 transfer data to different locations after ARCHER2 ends using standard tools such
 as scp/sftp/rsync/rclone and Globus Online.</p>
 </div>
+<h3 id="requesting-access-to-the-nscdsepccfs">Requesting access to the NSCDS/EPCCFS</h3>
+<p>If you do not already have access to NSCDS/EPCCFS, you should ask your project PI or project manager
+to request access via the <a href="https://www.archer2.ac.uk/support-access/servicedesk.html">ARCHER2 Service Desk</a>.</p>
+<div class="admonition important">
+<p class="admonition-title">Only available to projects running beyond ARCHER2</p>
+<p>Only projects with national HPC allocations running beyond the end of ARCHER2 will
+be granted access to NSCDS/EPCCFS. Projects that finish at or before the end of 
+ARCHER2 should ensure they have moved all data off the system before it ends.</p>
+</div>
+<h3 id="setting-up-your-account-for-access-to-nscdsepccfs">Setting up your account for access to NSCDS/EPCCFS</h3>
+<p>Once your project has been granted access to NSCDS/EPCCFS, you will need to setup your
+account to access the storage system.</p>
+<p>As the NSCDS/EPCCFS is based off a different authetication system then supports ARCHER2, you
+<em>must</em> request a new account on the Cirrus NCR system to be able to access the storage
+system - this new account must be in the same project you are storing data for and must 
+have an identical username to your ARCHER2 account.</p>
+<p>Step-by-step instructions:</p>
+<ol>
+<li>Login to <a href="https://safe.epcc.ed.ac.uk">SAFE</a></li>
+<li>From the top menu, select <em>Login accounts -&gt; Request login account</em></li>
+<li>Enter the project ID (<strong>this must match the project ID on ARCHER2</strong>), click "Next"</li>
+<li>Select "Cirrus" as the machine, click "Next"</li>
+<li>Enter <strong>the same username as you have on ARCHER2</strong>, click "Request". (Note: you do not need to supply an SSH key or set MFA token at this stage.)</li>
+<li>You will receive an email as soon as your account has been setup - once this has happened, you will 
+   be able to access NSCDS/EPCCFS on ARCHER2</li>
+</ol>
+<h3 id="location-of-directories-on-nscdsepccfs">Location of directories on NSCDS/EPCCFS</h3>
 <p>If you have access to NSCDS/EPCCFS, you will have a directory in <code>/nscds</code>. You can find
 your directory on NSCDS/EPCCFS at:</p>
 <div class="highlight"><pre><span></span><code>/nscds/&lt;project code&gt;/&lt;project code&gt;/&lt;username&gt;
