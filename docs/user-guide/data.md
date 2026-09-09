@@ -422,7 +422,7 @@ and access it from other systems hosted by EPCC, UK National Supercomputing Cent
 (e.g. [the Cirrus National Compute Resource](https://www.cirrus.ac.uk))
 
 !!! important "NSCDS/EPCCFS available from 9 Sep 2026"
-    NSCDS/EPCCFS will be available to users from 9 Sep 2026 and will be accessible to ARCHER2
+    NSCDS/EPCCFS has been available to users from 9 Sep 2026 and will be accessible to ARCHER2
     projects with data on it until at least 31 Mar 2027 and likely to mid-2028.
 
 !!! important "Only available to projects running beyond ARCHER2"

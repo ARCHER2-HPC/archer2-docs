@@ -31,11 +31,11 @@ Summary of impact and advice for data on ARCHER2 at end of service
 | ARCHER2 work | 17:00 GMT, Fri 20 Nov 2026 | `/work/[project ID]/[group ID]/[user ID]` | No access to any data beyond end of access date |
 | ARCHER2 solid state scratch | 17:00 GMT, Fri 20 Nov 2026 | `/mnt/lustre/a2fs-nvme/[project ID]/[group ID]/[user ID]` | No access to any data beyond end of access date |
 | RDFaaS | 31 Mar 2027 | `/epsrc` and `/general`  | Data on RDFaaS will be retained until 31 Mar 2027. Access via scp/sftp/rsync/rclone to download data beyond end of ARCHER2. Access and quotas will be frozen in state as they are at end of ARCHER2 service. |
-| NSCDS/EPCCFS | at least 31 Mar 2027 and likely to mid-2028 | `/nscds/[project ID]/[group ID]/[user ID]` | Location for data that can accessed from other services (e.g. Cirrus NCR) beyond the end of ARCHER2. Also access via scp/sftp/rsync/rclone and Globus Online beyond end of ARCHER2.  Access and quotas can be managed via SAFE even beyond end of ARCHER2 service. Available from 9 Sep 2026. |
+| NSCDS/EPCCFS | at least 31 Mar 2027 and likely to mid-2028 | `/nscds/[project ID]/[group ID]/[user ID]` | Location for data that can accessed from other services (e.g. Cirrus NCR) beyond the end of ARCHER2. Also access via scp/sftp/rsync/rclone and Globus Online beyond end of ARCHER2.  Access and quotas can be managed via SAFE even beyond end of ARCHER2 service. |
 
 ## NSCDS/EPCCFS
 
-NSCDS/EPCCFS will be available on ARCHER2 from 9 Sep 2026 and provides
+NSCDS/EPCCFS has been available since 9 Sep 2026 and provides
 limited capacity for projects that have national HPC resources allocated
 beyond the end of ARCHER2 to store data beyond the lifetime of ARCHER2 on a storage
 platform that will be available on other facilities hosted by
@@ -44,7 +44,7 @@ the [Cirrus National Compute Resource (NCR)](https://www.cirrus.ac.uk). Access w
 be available via scp/sftp/rsync/rclone and Globus Online beyond end of ARCHER2.
 
 !!! important "NSCDS/EPCCFS available from 9 Sep 2026"
-    NSCDS/EPCCFS will be available to users from 9 Sep 2026 and will be accessible to ARCHER2
+    NSCDS/EPCCFS has been available to users from 9 Sep 2026 and will be accessible to ARCHER2
     projects with data on it until at least 31 Mar 2027 and likely to mid-2028.
 
 ### Requesting access to the NSCDS/EPCCFS
