@@ -446,6 +446,38 @@ and access it from other systems hosted by EPCC, UK National Supercomputing Cent
 	transfer data to different locations after ARCHER2 ends using standard tools such
 	as scp/sftp/rsync/rclone and Globus Online.
 
+### Requesting access to the NSCDS/EPCCFS
+
+If you do not already have access to NSCDS/EPCCFS, you should ask your project PI or project manager
+to request access via the [ARCHER2 Service Desk](https://www.archer2.ac.uk/support-access/servicedesk.html).
+
+!!! important "Only available to projects running beyond ARCHER2"
+    Only projects with national HPC allocations running beyond the end of ARCHER2 will
+    be granted access to NSCDS/EPCCFS. Projects that finish at or before the end of 
+    ARCHER2 should ensure they have moved all data off the system before it ends.
+
+### Setting up your account for access to NSCDS/EPCCFS
+
+Once your project has been granted access to NSCDS/EPCCFS, you will need to setup your
+account to access the storage system.
+
+As the NSCDS/EPCCFS is based off a different authetication system then supports ARCHER2, you
+*must* request a new account on the Cirrus NCR system to be able to access the storage
+system - this new account must be in the same project you are storing data for and must 
+have an identical username to your ARCHER2 account.
+
+Step-by-step instructions:
+
+1. Login to [SAFE](https://safe.epcc.ed.ac.uk)
+2. From the top menu, select *Login accounts -> Request login account*
+3. Enter the project ID (**this must match the project ID on ARCHER2**), click "Next"
+4. Select "Cirrus" as the machine, click "Next"
+5. Enter **the same username as you have on ARCHER2**, click "Request". (Note: you do not need to supply an SSH key or set MFA token at this stage.)
+6. You will receive an email as soon as your account has been setup - once this has happened, you will 
+   be able to access NSCDS/EPCCFS on ARCHER2
+
+### Location of directories on NSCDS/EPCCFS
+
 If you have access to NSCDS/EPCCFS, you will have a directory in `/nscds`. You can find
 your directory on NSCDS/EPCCFS at:
 
