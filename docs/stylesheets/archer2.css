@@ -2,3 +2,32 @@
   --md-primary-fg-color:        #33806E;
   --md-accent-fg-color: #33806E;
 }
+
+.announce {
+  padding: 1em;
+  background: darkred;
+  color: white;
+  border-radius: 6px;
+  padding: 0.5em;
+}
+
+.announce a {
+  background: darkred;
+  color: white;
+  text-decoration: underline;
+}
+.announce a:hover {
+  background: darkred;
+  color: white;
+  text-decoration: underline;
+}
+.announce a:active {
+  background: darkred;
+  color: white;
+  text-decoration: underline;
+}
+.announce a:visited {
+  background: darkred;
+  color: white;
+  text-decoration: underline;
+}

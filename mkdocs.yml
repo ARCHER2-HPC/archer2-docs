@@ -1,5 +1,6 @@
 theme:
   name: material
+  custom_dir: overrides
   favicon: favicon.ico
   logo: images/archer2_white_transparent.png
   palette:
