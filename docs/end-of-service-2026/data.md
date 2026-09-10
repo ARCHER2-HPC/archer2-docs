@@ -115,6 +115,13 @@ serial jobs if they are going to take a long time, see:
 
 - [Running serial jobs](user-guide/analysis.md#requesting-resources-on-the-data-analysis-nodes-using-slurm)
 
+### Snapshots on NSCDS/EPCCFS
+
+NSCDS/EPCCFS retain snapshots which can be used to recover past versions of files.
+Snapshots are taken weekly (for each of the past two weeks), daily (for each
+of the past two days) and hourly (for each of the last 6 hours). You can
+access the snapshots at `.snapshot` from any given directory on NSCDS/EPCCFS.
+
 ## Data transfer
 
 The ARCHER2 documentation contains specific guidance on archiving and transferring data off 

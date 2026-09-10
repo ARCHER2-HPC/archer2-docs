@@ -505,7 +505,7 @@ your NSCDS/EPCCFS directory will be at:
     If you are having issues with NSCDS/EPCCFS then
     please [contact the ARCHER2 Service Desk](https://www.archer2.ac.uk/support-access/servicedesk.html)
 
-#### Copying data to NSCDS/EPCCFS from other ARCHER2 file systems
+### Copying data to NSCDS/EPCCFS from other ARCHER2 file systems
 
 You can use the standard Linux `cp` command to copy data from other ARCHER2 file
 systems to NSCDS/EPCCFS or vice versa. For example, to
@@ -525,7 +525,7 @@ and project code).
     using [rclone local data transfer](#local-file-transfer) (perhaps in a 
     serial job submission script) rather than using the basic `cp` command.
 
-#### Quotas on NSCDS/EPCCFS
+### Quotas on NSCDS/EPCCFS
 
 As for the other ARCHER2 storage systems, all projects are assigned a quota on
 NSCDS/EPCCFS. The project PI or manager can split this quota up
@@ -555,7 +555,14 @@ Filesystem                          Size  Used Avail Use% Mounted on
 fs02.naidin.epcc.ed.ac.uk:/archer2  8.8T  1.8G  8.8T   1% /mnt/nfs/nscds
 ```
 
-### Subprojects
+### Snapshots on NSCDS/EPCCFS
+
+NSCDS/EPCCFS retain snapshots which can be used to recover past versions of files.
+Snapshots are taken weekly (for each of the past two weeks), daily (for each
+of the past two days) and hourly (for each of the last 6 hours). You can
+access the snapshots at `.snapshot` from any given directory on NSCDS/EPCCFS.
+
+## Subprojects
 
 Some large projects may choose to split their resources into multiple subprojects.
 These subprojects will have identifiers appended to the main project ID. For example,
