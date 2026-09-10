@@ -1198,8 +1198,7 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Location of directories on NSCDS/EPCCFS">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#copying-data-to-nscdsepccfs-from-other-archer2-file-systems" class="md-nav__link">
@@ -1223,16 +1222,11 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-        
           <li class="md-nav__item">
-  <a href="#subprojects" class="md-nav__link">
+  <a href="#snapshots-on-nscdsepccfs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Subprojects
+        Snapshots on NSCDS/EPCCFS
       
     </span>
   </a>
@@ -1241,6 +1235,17 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#subprojects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Subprojects
+      
+    </span>
+  </a>
   
 </li>
       
@@ -3960,8 +3965,7 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Location of directories on NSCDS/EPCCFS">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#copying-data-to-nscdsepccfs-from-other-archer2-file-systems" class="md-nav__link">
@@ -3985,16 +3989,11 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-        
           <li class="md-nav__item">
-  <a href="#subprojects" class="md-nav__link">
+  <a href="#snapshots-on-nscdsepccfs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Subprojects
+        Snapshots on NSCDS/EPCCFS
       
     </span>
   </a>
@@ -4003,6 +4002,17 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#subprojects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Subprojects
+      
+    </span>
+  </a>
   
 </li>
       
@@ -4796,7 +4806,7 @@ ARCHER2 login nodes and the data analysis nodes available via the "serial" QoS.<
 <p>If you are having issues with NSCDS/EPCCFS then
 please <a href="https://www.archer2.ac.uk/support-access/servicedesk.html">contact the ARCHER2 Service Desk</a></p>
 </div>
-<h4 id="copying-data-to-nscdsepccfs-from-other-archer2-file-systems">Copying data to NSCDS/EPCCFS from other ARCHER2 file systems</h4>
+<h3 id="copying-data-to-nscdsepccfs-from-other-archer2-file-systems">Copying data to NSCDS/EPCCFS from other ARCHER2 file systems</h3>
 <p>You can use the standard Linux <code>cp</code> command to copy data from other ARCHER2 file
 systems to NSCDS/EPCCFS or vice versa. For example, to
 transfer the file <code>important-data.tar.gz</code> from the work file system to
@@ -4812,7 +4822,7 @@ and project code).</p>
 using <a href="#local-file-transfer">rclone local data transfer</a> (perhaps in a 
 serial job submission script) rather than using the basic <code>cp</code> command.</p>
 </div>
-<h4 id="quotas-on-nscdsepccfs">Quotas on NSCDS/EPCCFS</h4>
+<h3 id="quotas-on-nscdsepccfs">Quotas on NSCDS/EPCCFS</h3>
 <p>As for the other ARCHER2 storage systems, all projects are assigned a quota on
 NSCDS/EPCCFS. The project PI or manager can split this quota up
 between users or groups of users if they wish.</p>
@@ -4838,7 +4848,12 @@ the command line using the <code>df -h $PWD</code> command, for example:</p>
 Filesystem                          Size  Used Avail Use% Mounted on
 fs02.naidin.epcc.ed.ac.uk:/archer2  8.8T  1.8G  8.8T   1% /mnt/nfs/nscds
 </code></pre></div>
-<h3 id="subprojects">Subprojects</h3>
+<h3 id="snapshots-on-nscdsepccfs">Snapshots on NSCDS/EPCCFS</h3>
+<p>NSCDS/EPCCFS retain snapshots which can be used to recover past versions of files.
+Snapshots are taken weekly (for each of the past two weeks), daily (for each
+of the past two days) and hourly (for each of the last 6 hours). You can
+access the snapshots at <code>.snapshot</code> from any given directory on NSCDS/EPCCFS.</p>
+<h2 id="subprojects">Subprojects</h2>
 <p>Some large projects may choose to split their resources into multiple subprojects.
 These subprojects will have identifiers appended to the main project ID. For example,
 the <code>rse</code> subgroup of the <code>z19</code> project would have the ID <code>z19-rse</code>. If the main
