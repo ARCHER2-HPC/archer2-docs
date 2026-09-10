@@ -446,7 +446,7 @@ and access it from other systems hosted by EPCC, UK National Supercomputing Cent
 	transfer data to different locations after ARCHER2 ends using standard tools such
 	as scp/sftp/rsync/rclone and Globus Online.
 
-### Requesting access to the NSCDS/EPCCFS
+#### Requesting access to the NSCDS/EPCCFS
 
 If you do not already have access to NSCDS/EPCCFS, you should ask your project PI or project manager
 to request access via the [ARCHER2 Service Desk](https://www.archer2.ac.uk/support-access/servicedesk.html).
@@ -456,7 +456,7 @@ to request access via the [ARCHER2 Service Desk](https://www.archer2.ac.uk/suppo
     be granted access to NSCDS/EPCCFS. Projects that finish at or before the end of 
     ARCHER2 should ensure they have moved all data off the system before it ends.
 
-### Setting up your account for access to NSCDS/EPCCFS
+#### Setting up your account for access to NSCDS/EPCCFS
 
 Once your project has been granted access to NSCDS/EPCCFS, you will need to setup your
 account to access the storage system.
@@ -476,7 +476,7 @@ Step-by-step instructions:
 6. You will receive an email as soon as your account has been setup - once this has happened, you will 
    be able to access NSCDS/EPCCFS on ARCHER2
 
-### Location of directories on NSCDS/EPCCFS
+#### Location of directories on NSCDS/EPCCFS
 
 If you have access to NSCDS/EPCCFS, you will have a directory in `/nscds`. You can find
 your directory on NSCDS/EPCCFS at:
@@ -505,7 +505,7 @@ your NSCDS/EPCCFS directory will be at:
     If you are having issues with NSCDS/EPCCFS then
     please [contact the ARCHER2 Service Desk](https://www.archer2.ac.uk/support-access/servicedesk.html)
 
-### Copying data to NSCDS/EPCCFS from other ARCHER2 file systems
+#### Copying data to NSCDS/EPCCFS from other ARCHER2 file systems
 
 You can use the standard Linux `cp` command to copy data from other ARCHER2 file
 systems to NSCDS/EPCCFS or vice versa. For example, to
@@ -525,7 +525,7 @@ and project code).
     using [rclone local data transfer](#local-file-transfer) (perhaps in a 
     serial job submission script) rather than using the basic `cp` command.
 
-### Quotas on NSCDS/EPCCFS
+#### Quotas on NSCDS/EPCCFS
 
 As for the other ARCHER2 storage systems, all projects are assigned a quota on
 NSCDS/EPCCFS. The project PI or manager can split this quota up
@@ -555,14 +555,14 @@ Filesystem                          Size  Used Avail Use% Mounted on
 fs02.naidin.epcc.ed.ac.uk:/archer2  8.8T  1.8G  8.8T   1% /mnt/nfs/nscds
 ```
 
-### Snapshots on NSCDS/EPCCFS
+#### Snapshots on NSCDS/EPCCFS
 
 NSCDS/EPCCFS retain snapshots which can be used to recover past versions of files.
 Snapshots are taken weekly (for each of the past two weeks), daily (for each
 of the past two days) and hourly (for each of the last 6 hours). You can
 access the snapshots at `.snapshot` from any given directory on NSCDS/EPCCFS.
 
-## Subprojects
+### Subprojects
 
 Some large projects may choose to split their resources into multiple subprojects.
 These subprojects will have identifiers appended to the main project ID. For example,
@@ -577,13 +577,13 @@ Your Linux home directory will generally not be changed when you are made a memb
 of a subproject so you must change directories manually (or change the ownership of
 files) to make use of this different storage quota allocation.
 
-## Sharing data with other ARCHER2 users
+### Sharing data with other ARCHER2 users
 
 How you share data with other ARCHER2 users depends on whether or not
 they belong to the same project as you. Each project has two shared
 folders that can be used for sharing data.
 
-### Sharing data with ARCHER2 users in your project
+#### Sharing data with ARCHER2 users in your project
 
 Each project has an *inner* shared folder.
 
@@ -594,7 +594,7 @@ place any data you wish to share with other project members in this
 directory. For example, if your project code is x01 the inner shared
 folder would be located at `/work/x01/x01/shared`.
 
-### Sharing data with  ARCHER2 users within the same project group
+#### Sharing data with  ARCHER2 users within the same project group
 
 Some projects have [subprojects](#subprojects) (also often referred to as a 'project groups' or sub-budgets)   e.g. project e123 might have a project group e123-fred  for a sub-group of researchers working with Fred.
 
@@ -612,7 +612,7 @@ and all members of the ```/work/e123/e123-fred``` group will be able to use the 
 	```chown -R $USER:e123-fred /work/e123/e123-fred/ ...```
 
 
-### Sharing data with all ARCHER2 users
+#### Sharing data with all ARCHER2 users
 
 Each project also has an *outer* shared folder.:
 
@@ -624,7 +624,7 @@ users who are not members of your project in this directory. For example,
 if your project code is x01 the outer shared folder would be located
 at `/work/x01/shared`.
 
-### Permissions
+#### Permissions
 
 You should check the permissions of any files that you place in the shared area,
 especially if those files were created in your own ARCHER2 account. Files of the
@@ -650,7 +650,7 @@ The `-R` option ensures that the read permission is enabled recursively and
 the `+X` guarantees that the user(s) you're sharing the folder with can access
 the subdirectories below `my-shared-folder`.
 
-### Sharing data between projects and subprojects
+#### Sharing data between projects and subprojects
 
 Every file has an *owner* group that specifies access permissions for users
 belonging to that group. It's usually the case that the group id is synonymous
