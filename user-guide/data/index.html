@@ -1165,7 +1165,8 @@
     </span>
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="NSCDS/EPCCFS">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#requesting-access-to-the-nscdsepccfs" class="md-nav__link">
@@ -1237,8 +1238,8 @@
     </nav>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#subprojects" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1248,8 +1249,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#sharing-data-with-other-archer2-users" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1313,6 +1314,11 @@
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -3932,7 +3938,8 @@
     </span>
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="NSCDS/EPCCFS">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#requesting-access-to-the-nscdsepccfs" class="md-nav__link">
@@ -4004,8 +4011,8 @@
     </nav>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#subprojects" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4015,8 +4022,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#sharing-data-with-other-archer2-users" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4080,6 +4087,11 @@
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -4755,7 +4767,7 @@ Projects/users with data on NSCDS/EPCCFS will be able to access the storage to
 transfer data to different locations after ARCHER2 ends using standard tools such
 as scp/sftp/rsync/rclone and Globus Online.</p>
 </div>
-<h3 id="requesting-access-to-the-nscdsepccfs">Requesting access to the NSCDS/EPCCFS</h3>
+<h4 id="requesting-access-to-the-nscdsepccfs">Requesting access to the NSCDS/EPCCFS</h4>
 <p>If you do not already have access to NSCDS/EPCCFS, you should ask your project PI or project manager
 to request access via the <a href="https://www.archer2.ac.uk/support-access/servicedesk.html">ARCHER2 Service Desk</a>.</p>
 <div class="admonition important">
@@ -4764,7 +4776,7 @@ to request access via the <a href="https://www.archer2.ac.uk/support-access/serv
 be granted access to NSCDS/EPCCFS. Projects that finish at or before the end of 
 ARCHER2 should ensure they have moved all data off the system before it ends.</p>
 </div>
-<h3 id="setting-up-your-account-for-access-to-nscdsepccfs">Setting up your account for access to NSCDS/EPCCFS</h3>
+<h4 id="setting-up-your-account-for-access-to-nscdsepccfs">Setting up your account for access to NSCDS/EPCCFS</h4>
 <p>Once your project has been granted access to NSCDS/EPCCFS, you will need to setup your
 account to access the storage system.</p>
 <p>As the NSCDS/EPCCFS is based off a different authetication system then supports ARCHER2, you
@@ -4781,7 +4793,7 @@ have an identical username to your ARCHER2 account.</p>
 <li>You will receive an email as soon as your account has been setup - once this has happened, you will 
    be able to access NSCDS/EPCCFS on ARCHER2</li>
 </ol>
-<h3 id="location-of-directories-on-nscdsepccfs">Location of directories on NSCDS/EPCCFS</h3>
+<h4 id="location-of-directories-on-nscdsepccfs">Location of directories on NSCDS/EPCCFS</h4>
 <p>If you have access to NSCDS/EPCCFS, you will have a directory in <code>/nscds</code>. You can find
 your directory on NSCDS/EPCCFS at:</p>
 <div class="highlight"><pre><span></span><code>/nscds/&lt;project code&gt;/&lt;project code&gt;/&lt;username&gt;
@@ -4806,7 +4818,7 @@ ARCHER2 login nodes and the data analysis nodes available via the "serial" QoS.<
 <p>If you are having issues with NSCDS/EPCCFS then
 please <a href="https://www.archer2.ac.uk/support-access/servicedesk.html">contact the ARCHER2 Service Desk</a></p>
 </div>
-<h3 id="copying-data-to-nscdsepccfs-from-other-archer2-file-systems">Copying data to NSCDS/EPCCFS from other ARCHER2 file systems</h3>
+<h4 id="copying-data-to-nscdsepccfs-from-other-archer2-file-systems">Copying data to NSCDS/EPCCFS from other ARCHER2 file systems</h4>
 <p>You can use the standard Linux <code>cp</code> command to copy data from other ARCHER2 file
 systems to NSCDS/EPCCFS or vice versa. For example, to
 transfer the file <code>important-data.tar.gz</code> from the work file system to
@@ -4822,7 +4834,7 @@ and project code).</p>
 using <a href="#local-file-transfer">rclone local data transfer</a> (perhaps in a 
 serial job submission script) rather than using the basic <code>cp</code> command.</p>
 </div>
-<h3 id="quotas-on-nscdsepccfs">Quotas on NSCDS/EPCCFS</h3>
+<h4 id="quotas-on-nscdsepccfs">Quotas on NSCDS/EPCCFS</h4>
 <p>As for the other ARCHER2 storage systems, all projects are assigned a quota on
 NSCDS/EPCCFS. The project PI or manager can split this quota up
 between users or groups of users if they wish.</p>
@@ -4848,12 +4860,12 @@ the command line using the <code>df -h $PWD</code> command, for example:</p>
 Filesystem                          Size  Used Avail Use% Mounted on
 fs02.naidin.epcc.ed.ac.uk:/archer2  8.8T  1.8G  8.8T   1% /mnt/nfs/nscds
 </code></pre></div>
-<h3 id="snapshots-on-nscdsepccfs">Snapshots on NSCDS/EPCCFS</h3>
+<h4 id="snapshots-on-nscdsepccfs">Snapshots on NSCDS/EPCCFS</h4>
 <p>NSCDS/EPCCFS retain snapshots which can be used to recover past versions of files.
 Snapshots are taken weekly (for each of the past two weeks), daily (for each
 of the past two days) and hourly (for each of the last 6 hours). You can
 access the snapshots at <code>.snapshot</code> from any given directory on NSCDS/EPCCFS.</p>
-<h2 id="subprojects">Subprojects</h2>
+<h3 id="subprojects">Subprojects</h3>
 <p>Some large projects may choose to split their resources into multiple subprojects.
 These subprojects will have identifiers appended to the main project ID. For example,
 the <code>rse</code> subgroup of the <code>z19</code> project would have the ID <code>z19-rse</code>. If the main
@@ -4864,11 +4876,11 @@ storage will be found at, for example:
 <p>Your Linux home directory will generally not be changed when you are made a member
 of a subproject so you must change directories manually (or change the ownership of
 files) to make use of this different storage quota allocation.</p>
-<h2 id="sharing-data-with-other-archer2-users">Sharing data with other ARCHER2 users</h2>
+<h3 id="sharing-data-with-other-archer2-users">Sharing data with other ARCHER2 users</h3>
 <p>How you share data with other ARCHER2 users depends on whether or not
 they belong to the same project as you. Each project has two shared
 folders that can be used for sharing data.</p>
-<h3 id="sharing-data-with-archer2-users-in-your-project">Sharing data with ARCHER2 users in your project</h3>
+<h4 id="sharing-data-with-archer2-users-in-your-project">Sharing data with ARCHER2 users in your project</h4>
 <p>Each project has an <em>inner</em> shared folder.</p>
 <pre><code>/work/[project code]/[project code]/shared
 </code></pre>
@@ -4876,7 +4888,7 @@ folders that can be used for sharing data.</p>
 place any data you wish to share with other project members in this
 directory. For example, if your project code is x01 the inner shared
 folder would be located at <code>/work/x01/x01/shared</code>.</p>
-<h3 id="sharing-data-with-archer2-users-within-the-same-project-group">Sharing data with  ARCHER2 users within the same project group</h3>
+<h4 id="sharing-data-with-archer2-users-within-the-same-project-group">Sharing data with  ARCHER2 users within the same project group</h4>
 <p>Some projects have <a href="#subprojects">subprojects</a> (also often referred to as a 'project groups' or sub-budgets)   e.g. project e123 might have a project group e123-fred  for a sub-group of researchers working with Fred.</p>
 <p>Often project groups do not have a disk quota set, but if the project PI <a href="https://epcced.github.io/safe-docs/safe-for-managers/#how-can-i-create-a-quota-for-a-project-group-or-move-space-between-quotas">does set up a group disk quota</a> e.g. for /work then additional directories are created:</p>
 <pre><code>/work/e123/e123-fred
@@ -4889,7 +4901,7 @@ folder would be located at <code>/work/x01/x01/shared</code>.</p>
 <p>If files are copied from their usual directories they will keep the original ownership. To grant ownership to the group:</p>
 <p><code>chown -R $USER:e123-fred /work/e123/e123-fred/ ...</code></p>
 </div>
-<h3 id="sharing-data-with-all-archer2-users">Sharing data with all ARCHER2 users</h3>
+<h4 id="sharing-data-with-all-archer2-users">Sharing data with all ARCHER2 users</h4>
 <p>Each project also has an <em>outer</em> shared folder.:</p>
 <pre><code>/work/[project code]/shared
 </code></pre>
@@ -4898,7 +4910,7 @@ system. You can place any data you wish to share with other ARCHER2
 users who are not members of your project in this directory. For example,
 if your project code is x01 the outer shared folder would be located
 at <code>/work/x01/shared</code>.</p>
-<h3 id="permissions">Permissions</h3>
+<h4 id="permissions">Permissions</h4>
 <p>You should check the permissions of any files that you place in the shared area,
 especially if those files were created in your own ARCHER2 account. Files of the
 latter type are likely to be readable by you only.</p>
@@ -4918,7 +4930,7 @@ chmod -R g+Xr /work/x01/x01/shared/my-shared-folder
 <p>The <code>-R</code> option ensures that the read permission is enabled recursively and
 the <code>+X</code> guarantees that the user(s) you're sharing the folder with can access
 the subdirectories below <code>my-shared-folder</code>.</p>
-<h3 id="sharing-data-between-projects-and-subprojects">Sharing data between projects and subprojects</h3>
+<h4 id="sharing-data-between-projects-and-subprojects">Sharing data between projects and subprojects</h4>
 <p>Every file has an <em>owner</em> group that specifies access permissions for users
 belonging to that group. It's usually the case that the group id is synonymous
 with the project code. Somewhat confusingly however, projects can contain
