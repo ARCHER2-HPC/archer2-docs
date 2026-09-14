@@ -118,8 +118,8 @@ serial jobs if they are going to take a long time, see:
 ### Snapshots on NSCDS/EPCCFS
 
 NSCDS/EPCCFS retain snapshots which can be used to recover past versions of files.
-Snapshots are taken weekly (for each of the past two weeks), daily (for each
-of the past two days) and hourly (for each of the last 6 hours). You can
+Snapshots are taken weekly (for each of the past 5 weeks), daily (for each
+of the past 8 days) and hourly (for each of the last 25 hours). You can
 access the snapshots at `.snapshot` from any given directory on NSCDS/EPCCFS.
 
 ## Data transfer
