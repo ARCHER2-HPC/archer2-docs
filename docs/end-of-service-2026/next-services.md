@@ -34,6 +34,7 @@ from ARCHER2. Some NCRs have provided specific documentation to help users from 
 their services:
 
 - [Cirrus NCR migration documentation](https://docs.cirrus.ac.uk/archer2-migration-2026/)
+- [Zenith NCR documentation](https://docs.hpc.cam.ac.uk/user-guide/zenith-quickstart.html)
 
 ### Industry projects
 
@@ -61,7 +62,7 @@ researchers can use:
 | [Cirrus NCR (EPCC, Univeristy of Edinburgh)](https://www.cirrus.ac.uk) | Test, academic and industry access routes available |
 | [Isambard 3 NCR (University of Bristol)](https://docs.isambard.ac.uk/access/#isambard-3) | No general access currently available |
 | [Mary Coombes NCR (Hartree Centre, STFC)](https://www.hartree.stfc.ac.uk/technologies/mary-coombs/) | Industry access routes available |
-| Zenith NCR (University of Cambridge) | No access currently available |
+| [Zenith NCR (University of Cambridge)](https://docs.hpc.cam.ac.uk/user-guide/zenith-quickstart.html) | No access currently available |
 
 **EuroHPC**
 
