@@ -4976,13 +4976,14 @@ transferred and where the data is going.</p>
 </ul>
 <h3 id="transferring-data-between-archer2-file-systems">Transferring data between ARCHER2 file systems</h3>
 <p>For internal data transfers between ARCHER2 file systems (home. work, solid state scratch,
-RDFaaS) we recommend using the <code>cp</code> command. This can be used in parallel on different
-data chunks for large data transfers and placed in a serial job submission script if needed.</p>
+NSCDS/EPCCFS, RDFaaS) we recommend using the <code>cp</code> command or the <code>rclone</code> tool. <code>rclone</code>
+transfers data in parallel on different data chunks for large data transfers and can be placed
+in a serial job submission script if needed.</p>
 <div class="admonition warning">
 <p class="admonition-title">Do not use <code>mv</code> to transfer data between file systems</p>
 <p>You should not use the <code>mv</code> command to transfer data between different file systems
 as there is a chance of data loss if something goes wrong during the transfer process.
-Always use a command such as <code>cp</code> that preserves the original copy of the data so you
+Always use a command such as <code>cp</code>/<code>rclone</code> that preserves the original copy of the data so you
 can check for integrity before deleting the original copy.</p>
 </div>
 <h3 id="transferring-data-tofrom-archer2">Transferring data to/from ARCHER2</h3>
@@ -4994,6 +4995,8 @@ guide are:</p>
      transferring data and can be used up to moderate amounts of data.
      If you are transferring data to your workstation/laptop then this
      is the method you will use.</li>
+<li><strong>rclone</strong> - Useful for transferring large amounts of data in
+     parallel and for transferring to cloud storage systems (e.g. AWS S3, OneDrive).</li>
 <li><strong>GridFTP</strong> - It is sometimes more convenient to transfer large
      amounts of data (&gt; 100 GBs) using GridFTP servers.</li>
 </ul>
@@ -5210,14 +5213,10 @@ in <a href="https://help.jasmin.ac.uk/article/4997-transfers-from-archer2">the J
 data. It can interface with various cloud storage services, such as MS OneDrive
 and Dropbox, as well as copying files locally or over SFTP. The program preserves
 timestamps and verifies checksums at all times.</p>
-<p><code>rclone</code> is not installed centrally on ARCHER2, so first of all you must download
-a binary package and unzip it:
-<div class="highlight"><pre><span></span><code>wget<span class="w"> </span>https://downloads.rclone.org/v1.74.3/rclone-v1.74.3-linux-amd64.zip
-unzip<span class="w"> </span>rclone-v1.74.3-linux-amd64.zip
-<span class="nb">cd</span><span class="w"> </span>rclone-v1.74.3-linux-amd64/
-</code></pre></div></p>
-<p>The previous code snippet uses rclone v1.74.3, which was the latest version when
-these instructions were written.</p>
+<p><code>rclone</code> is available as a module on ARCHER2 which you need to load (interactively
+or in a job submission script before you can use it):</p>
+<div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>rclone
+</code></pre></div>
 <p>Note that <code>rclone</code> supports many options and sub-commands that are not covered
 here. Please refer to the <a href="https://rclone.org/docs/">official rclone documentation</a>
 for full details.</p>
@@ -5237,10 +5236,14 @@ from your laptop to ARCHER2. The rclone website contains further instructions on
 <a href="https://rclone.org/remote_setup/">configuring rclone on a remote machine without web browser.</a></p>
 <p>Once all the above is done, you're ready to go. If you want to copy a directory,
 please use:</p>
-<p><code>./rclone copy &lt;archer2_directory&gt; remote:&lt;cloud_directory&gt;</code></p>
+<div class="highlight"><pre><span></span><code>module load rclone
+rclone copy &lt;archer2_directory&gt; remote:&lt;cloud_directory&gt;
+</code></pre></div>
 <p>Please note that "remote" is the name that you have chosen when running
 <code>rclone config</code>. To copy files, please use:</p>
-<p><code>./rclone copyto &lt;archer2_file&gt; remote:&lt;cloud_file&gt;</code></p>
+<div class="highlight"><pre><span></span><code>module load rclone
+rclone copyto &lt;archer2_file&gt; remote:&lt;cloud_file&gt;
+</code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If the session times out while the data transfer takes place, adding the
@@ -5253,10 +5256,14 @@ of ARCHER2's file systems to another. One advantage of using <code>rclone</code>
 is that it supports parallel data transfer, copying multiple files
 simultaneously for better performance. To copy local files, simply specify the
 source and destination directory paths:</p>
-<p><code>./rclone copy &lt;archer2_directory&gt; &lt;another_archer2_directory&gt;</code></p>
+<div class="highlight"><pre><span></span><code>module load rclone
+rclone copy &lt;archer2_directory&gt; &lt;another_archer2_directory&gt;
+</code></pre></div>
 <p>By default <code>rclone</code> will run 4 transfers simultaneously. However this can
 be customised using the <code>--transfers</code> option:</p>
-<p><code>./rclone --transfers 8 copy &lt;archer2_directory&gt; &lt;another_archer2_directory&gt;</code></p>
+<div class="highlight"><pre><span></span><code>module load rclone
+rclone --transfers 8 copy &lt;archer2_directory&gt; &lt;another_archer2_directory&gt;
+</code></pre></div>
 <h4 id="sftp-transfers">SFTP transfers</h4>
 <p>Using its SFTP storage type, <code>rclone</code> can transfer files to and from other
 systems (for example, other HPC services or compute clusters) that support
@@ -5272,11 +5279,15 @@ available.</p>
 details of the SFTP setup process, see <a href="https://rclone.org/sftp/">rclone's SFTP documentation</a>.</p>
 <p>Once you have set up the SFTP remote, it can be used in the same way as a
 cloud remote:</p>
-<p><code>./rclone copy &lt;archer2_directory&gt; remote:&lt;sftp_directory&gt;</code></p>
+<div class="highlight"><pre><span></span><code>module load rclone
+rclone copy &lt;archer2_directory&gt; remote:&lt;sftp_directory&gt;
+</code></pre></div>
 <p>"remote" is the name you have chosen when running <code>rclone config</code>.</p>
 <p>If your transfers are taking a long time, you can pass the <code>--progress</code>
 option to see how they are progressing:</p>
-<p><code>./rclone --progress copy &lt;archer2_directory&gt; remote:&lt;sftp_directory&gt;</code></p>
+<div class="highlight"><pre><span></span><code>module load rclone
+rclone --progress copy &lt;archer2_directory&gt; remote:&lt;sftp_directory&gt;
+</code></pre></div>
 <p>You may also want to tune the <code>--transfers</code> option which specifies how many
 files <code>rclone</code> will attempt to transfer in parallel (default 4). With some
 hosts you may have to reduce this number for the transfers to operate
@@ -5284,7 +5295,9 @@ reliably, due to poor network connectivity, or security policies that limit
 the number of connections allowed. Conversely, if you have a good connection
 to the remote server, you may wish to increase this number to speed up your
 transfer:</p>
-<p><code>./rclone --progress --transfers 8 copy &lt;archer2_directory&gt; remote:&lt;sftp_directory&gt;</code></p>
+<div class="highlight"><pre><span></span><code>module load rclone
+rclone --progress --transfers 8 copy &lt;archer2_directory&gt; remote:&lt;sftp_directory&gt;
+</code></pre></div>
 <h3 id="batch-data-transfer">Batch data transfer</h3>
 <p>While compute nodes in the standard partition are not connected to the
 internet and cannot be used for data transfer, the methods discussed
