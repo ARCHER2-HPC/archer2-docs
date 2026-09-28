@@ -113,7 +113,7 @@ is documented at:
 As NSCDS/EPCCFS is available on the data analysis nodes so you can put data transfer processes in 
 serial jobs if they are going to take a long time, see:
 
-- [Running serial jobs](user-guide/analysis.md#requesting-resources-on-the-data-analysis-nodes-using-slurm)
+- [Running serial jobs](../user-guide/analysis.md#requesting-resources-on-the-data-analysis-nodes-using-slurm)
 
 ### Snapshots on NSCDS/EPCCFS
 
