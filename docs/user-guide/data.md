@@ -1051,6 +1051,15 @@ module load rclone
 rclone --transfers 8 copy <archer2_directory> <another_archer2_directory>
 ```
 
+!!! tip "`rclone` does not preserve symlinks"
+    Copying using `rclone` does not preserve symlinks - it can either make
+    a note of the symlinks in dedicated files (using the `--links` option)
+    or follow symlinks and copy the files it finds (using the `--copy-links`
+    option).
+
+    If you have lots of symlinks you wish to preserve then you should use
+    `rsync` or `cp` instead.
+
 #### SFTP transfers
 
 Using its SFTP storage type, `rclone` can transfer files to and from other
