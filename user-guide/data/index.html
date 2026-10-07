@@ -5264,6 +5264,15 @@ be customised using the <code>--transfers</code> option:</p>
 <div class="highlight"><pre><span></span><code>module load rclone
 rclone --transfers 8 copy &lt;archer2_directory&gt; &lt;another_archer2_directory&gt;
 </code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title"><code>rclone</code> does not preserve symlinks</p>
+<p>Copying using <code>rclone</code> does not preserve symlinks - it can either make
+a note of the symlinks in dedicated files (using the <code>--links</code> option)
+or follow symlinks and copy the files it finds (using the <code>--copy-links</code>
+option).</p>
+<p>If you have lots of symlinks you wish to preserve then you should use
+<code>rsync</code> or <code>cp</code> instead.</p>
+</div>
 <h4 id="sftp-transfers">SFTP transfers</h4>
 <p>Using its SFTP storage type, <code>rclone</code> can transfer files to and from other
 systems (for example, other HPC services or compute clusters) that support
