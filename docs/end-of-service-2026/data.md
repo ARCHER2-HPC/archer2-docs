@@ -7,7 +7,8 @@ Summary of impact and advice for data on ARCHER2 at end of service
     + This applies to the following file systems: ARCHER2 home, ARCHER2 work and solid state scratch
 - RDFaaS data will be retained until end of Mar 2027
     + Projects/users with data on RDFaaS will be able to access the storage to transfer data to different
-      locations after ARCHER2 ends using standard tools such as scp/sftp/rsync/rclone.
+      locations after ARCHER2 ends using standard tools such as scp/sftp/rsync/rclone from Cirrus.
+    + There will be a gap of around 2-3 weeks between end of ARCHER2 and RDFaaS availability on Cirrus. 
 - Projects/users can use the new NSCDS/EPCCFS to store limited data
   beyond the lifetime of ARCHER2.  Capacity will be limited so projects will need to carefully
   consider what data they want to store on this system.
@@ -30,7 +31,7 @@ Summary of impact and advice for data on ARCHER2 at end of service
 | ARCHER2 home | 17:00 GMT, Fri 20 Nov 2026 | `/home/[project ID]/[group ID]/[user ID]` | No access to any data beyond end of access date |
 | ARCHER2 work | 17:00 GMT, Fri 20 Nov 2026 | `/work/[project ID]/[group ID]/[user ID]` | No access to any data beyond end of access date |
 | ARCHER2 solid state scratch | 17:00 GMT, Fri 20 Nov 2026 | `/mnt/lustre/a2fs-nvme/[project ID]/[group ID]/[user ID]` | No access to any data beyond end of access date |
-| RDFaaS | 31 Mar 2027 | `/epsrc` and `/general`  | Data on RDFaaS will be retained until 31 Mar 2027. Access via scp/sftp/rsync/rclone to download data beyond end of ARCHER2. Access and quotas will be frozen in state as they are at end of ARCHER2 service. |
+| RDFaaS | 31 Mar 2027 | `/epsrc` and `/general`  | Data on RDFaaS will be retained until 31 Mar 2027. Access via scp/sftp/rsync/rclone on Cirrus to download data beyond end of ARCHER2. Access and quotas will be frozen in state as they are at end of ARCHER2 service.  There will be a gap of around 2-3 weeks between end of ARCHER2 and RDFaaS availability on Cirrus.  |
 | NSCDS/EPCCFS | at least 31 Mar 2027 and likely to mid-2028 | `/nscds/[project ID]/[group ID]/[user ID]` | Location for data that can accessed from other services (e.g. Cirrus NCR) beyond the end of ARCHER2. Also access via scp/sftp/rsync/rclone and Globus Online beyond end of ARCHER2.  Access and quotas can be managed via SAFE even beyond end of ARCHER2 service. |
 
 ## NSCDS/EPCCFS
