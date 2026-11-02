@@ -2327,6 +2327,9 @@ particular time e.g. for a demonstration or course.
     start time. If requesting a reservation for a Monday at 18:00, please ensure this is
     received by the Friday at 12:00 the latest. The same applies over Service Holidays.
 
+    To maximise availablility before service end, reservations will not be acceptaed that
+    run past 17:00 GMT on Fri 13 Nov 2026.
+
 !!! note
     Reservations are only valid for standard compute nodes, high memory compute nodes
     and/or PP nodes cannot be included in reservations.
@@ -2366,9 +2369,7 @@ Your request will be checked by the ARCHER2 User Administration team and, if app
 ## Capability Days
 
 !!! important
-    The next Capability Days session will be from Tue 20 Oct 2026 to Thu 22 Oct 2026:
-    - `pre-capabilityday` QoS: 0900-1900, Tue 20 Oct 2026
-    - `capabilityday` QoS: 0800 Wed 21 Oct - 1400 Thu 22 Oct 2026
+    There will be no more Capability Day sessions on ARCHER2 before the end of service.
 
 ARCHER2 Capability Days are a mechanism to allow users to run large scale (512 node or more) tests
 on the system free of charge. The motivations behind Capability Days are:
