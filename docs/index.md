@@ -6,7 +6,7 @@ can find more information on the service and the research it supported on
 the [ARCHER2 website](https://www.archer2.ac.uk).
 
 The ARCHER2 Service was a world class advanced computing resource for UK
-researchers. ARCHER2 is provided by [UKRI](https://www.ukri.org/),
+researchers. ARCHER2 was provided by [UKRI](https://www.ukri.org/),
 [EPCC](https://www.epcc.ed.ac.uk/), [Cray (an HPE
 company)](https://www.cray.com/) and the [University of
 Edinburgh](https://www.ed.ac.uk/).
