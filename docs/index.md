@@ -1,10 +1,11 @@
 # ARCHER2 User Documentation
 
-ARCHER2 is the next generation UK National Supercomputing Service. You
-can find more information on the service and the research it supports on
+ARCHER2 was the UK National Supercomputing Service from Dec 2020 to Nov 2026.
+It is no longer operational. You
+can find more information on the service and the research it supported on
 the [ARCHER2 website](https://www.archer2.ac.uk).
 
-The ARCHER2 Service is a world class advanced computing resource for UK
+The ARCHER2 Service was a world class advanced computing resource for UK
 researchers. ARCHER2 is provided by [UKRI](https://www.ukri.org/),
 [EPCC](https://www.epcc.ed.ac.uk/), [Cray (an HPE
 company)](https://www.cray.com/) and the [University of
